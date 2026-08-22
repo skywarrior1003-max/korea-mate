@@ -1,0 +1,783 @@
+{
+  "schema_version": "normalized-v1",
+  "city": "jeju",
+  "as_of": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "recommended_courses": [
+    {
+      "id": "jeju-C-001",
+      "title": "제주 올레 7코스 (외돌개~월평 포구)",
+      "title_en": "Jeju Olle Trail Course 7 (Oedolgae to Wollang Port)",
+      "theme": "서귀포 해안 절경 트레킹",
+      "traveler_fit": "트레킹 경험자, 해안 절벽·해안선 경관 선호, 장거리 도보 가능",
+      "recommended_reason": "제주올레 공식 운영 대표 해안 코스. 기암절벽 외돌개 출발, 서귀포 해안선을 따라 17.6km를 걷는 코스. 탁 트인 바다·절벽·포구를 지나는 제주 해안 트레킹의 정수. 공식 스탬프 보관함 운영. 제주올레길 27개 코스 중 인지도 최상위.",
+      "duration": "약 5~6시간 (17.6km)",
+      "days": 1,
+      "seasonality": "연중 가능 (봄·가을 최적. 여름 오전 이른 출발 권장. 태풍 시즌 주의)",
+      "difficulty": "중급 (해안 절벽 구간·일부 급경사 포함)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "외돌개 (출발점)",
+          "name_en": "Oedolgae Rock (start)",
+          "canonical_id": "jeju-CNTS_000000000018409",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "외돌개 canonical 확인: jeju-CNTS_000000000018409 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "서귀포 해안선 (구간)",
+          "name_en": "Seogwipo Coastline (route section)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "서귀포 해안 구간 area 개념 — RELATION_OR_AREA_ONLY",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "법환포구",
+          "name_en": "Beophwan Port",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "법환포구 별도 canonical 미확인",
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "월평 포구 (종착점)",
+          "name_en": "Wollang Port (end)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "월평 포구 별도 canonical 미확인",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "제주올레 (Jeju Olle)",
+        "source_url": "https://www.jejuolle.org/course-info/course7",
+        "as_of": "2026-08-22",
+        "review_by": "2027-03-01",
+        "note": "코스 경로·거리·소요 시간은 jejuolle.org에서 재확인 권장"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-C-002",
+      "title": "한라산 영실 고산 트레킹",
+      "title_en": "Hallasan Yeongsil Alpine Trail",
+      "theme": "한라산 영실기암·고산식물·윗세오름",
+      "traveler_fit": "트레킹 경험자, 한라산 고산 풍경 선호, 백록담 정상보다 고산식물·기암 풍경 선호",
+      "recommended_reason": "한라산 국립공원 공식 탐방로. 영실기암(병풍바위·오백나한)을 지나 윗세오름 대피소까지 이어지는 3.7km 코스. 정상 백록담 미도달이나 고산식물 군락·전망대 조망 탁월. 성판악 정상 코스 대비 소요 시간 절반 이하로 접근성 우수.",
+      "duration": "약 5~6시간 (왕복, 영실주차장 기준 7.4km)",
+      "days": 1,
+      "seasonality": "연중 (봄 철쭉 4~5월, 여름 고산식물, 가을 단풍 최인기. 겨울 아이젠 필수)",
+      "difficulty": "중급 (급경사 구간, 하강 시 주의)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "영실탐방안내소 (출발점)",
+          "name_en": "Yeongsil Visitor Center (start)",
+          "canonical_id": "jeju-CNTS_000000000019973",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "한라산국립공원영실탐방로 canonical 확인: jeju-CNTS_000000000019973 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "영실기암 (병풍바위·오백나한)",
+          "name_en": "Yeongsil Rocks (Byeongpung Bawi / Obaek Nahan)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "영실기암 area 개념 — canonical 미포함. RELATION_OR_AREA_ONLY",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "윗세오름 대피소 (종착·회귀점)",
+          "name_en": "Witseoreum Shelter (turnaround point)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "윗세오름 대피소 별도 canonical 미확인",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "국립공원공단 한라산국립공원",
+        "source_url": "https://www.hallasan.go.kr/contents/info.php",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01",
+        "note": "입산 시간·통제 정보는 방문 전 hallasan.go.kr 공식 확인 필수"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-C-003",
+      "title": "제주 동부 유네스코 자연유산 1일 코스",
+      "title_en": "Jeju East — UNESCO World Natural Heritage Day Course",
+      "theme": "UNESCO 세계자연유산·용암동굴·일출봉·천연기념물 숲",
+      "traveler_fit": "일반 관광객, 세계자연유산 관심, 자유여행 렌터카",
+      "recommended_reason": "제주 대표 UNESCO 자연유산 3곳(성산일출봉·만장굴·비자림)을 1일에 묶는 VisitJeju 공식 추천 동부 투어. 성산일출봉(일출 명소·분화구 등반) → 섭지코지(해안 절경 옵션) → 만장굴(세계 최장 용암동굴 중 하나) → 비자림(국내 최대 비자나무 군락). 각 장소 이동 시 렌터카 필수.",
+      "duration": "약 7~9시간 (렌터카 이동 포함)",
+      "days": 1,
+      "seasonality": "연중 (성산일출봉 일출은 여름~가을 맑은 날 권장. 만장굴 연중 쾌적)",
+      "difficulty": "쉬움~보통 (성산일출봉 계단 포함)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "성산일출봉 (UNESCO 세계자연유산)",
+          "name_en": "Seongsan Ilchulbong (UNESCO World Natural Heritage)",
+          "canonical_id": "jeju-CONT_000000000500349",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "성산일출봉 canonical 확인: jeju-CONT_000000000500349 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "섭지코지 (옵션)",
+          "name_en": "Seopjikoji (optional stop)",
+          "canonical_id": "jeju-CONT_000000000500343",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "섭지코지 canonical 확인: jeju-CONT_000000000500343 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "만장굴 (UNESCO 거문오름 용암동굴계)",
+          "name_en": "Manjanggul Cave (UNESCO Geomunoreum Lava Tube System)",
+          "canonical_id": "jeju-CONT_000000000500182",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "만장굴 canonical 확인: jeju-CONT_000000000500182 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "비자림 (천연기념물 제374호)",
+          "name_en": "Bijarim Forest (Natural Monument No. 374)",
+          "canonical_id": "jeju-CONT_000000000500270",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "비자림 canonical 확인: jeju-CONT_000000000500270 (attraction, ACTIVE)",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/more/itinerary",
+        "as_of": "2026-08-22",
+        "review_by": "2027-03-01"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-C-R01",
+      "title": "사려니숲길 + 용눈이오름 동부 중산간 코스",
+      "title_en": "Saryeoni Forest + Yongnuni Oreum — East Midland Course",
+      "theme": "제주 중산간 숲길·오름 탐방",
+      "traveler_fit": "자연·숲 선호, 중급 트레커, 가족 단위",
+      "recommended_reason": "사려니숲길(제주 대표 삼나무숲)과 동부 오름 대표 용눈이오름(분화구 능선 조망)을 묶는 중산간 반나절 코스. 두 곳 모두 제주 공식 추천 명소.",
+      "duration": "반나절~하루 (4~6시간)",
+      "days": 0.5,
+      "seasonality": "연중 (봄·가을 최적. 사려니숲 여름 녹음 뛰어남)",
+      "difficulty": "보통 (사려니숲 평탄, 용눈이오름 경사 있음)",
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "사려니숲길",
+          "name_en": "Saryeoni Forest Road",
+          "canonical_id": "jeju-CONT_000000000500281",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "사려니숲길 canonical 확인: jeju-CONT_000000000500281 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "용눈이오름",
+          "name_en": "Yongnuni Oreum",
+          "canonical_id": "jeju-CONT_000000000500466",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "용눈이오름 canonical 확인: jeju-CONT_000000000500466 (attraction, ACTIVE)",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/more/itinerary",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-C-R02",
+      "title": "우도 당일 섬 투어",
+      "title_en": "Udo Island Day Tour",
+      "theme": "제주 부속 섬·우도봉·홍조단괴해빈",
+      "traveler_fit": "섬 투어 선호, 자전거/전기차 체험, 독특한 경관",
+      "recommended_reason": "제주 성산포항 출발 여객선으로 약 15분 이동. 우도봉 등반·비양도 조망·홍조단괴해빈(독특한 분홍빛 백사장) 등 제주 부속 섬 특유의 경관. 섬 내 자전거·전동킥보드·전기차 대여 이용 가능.",
+      "duration": "당일 (4~6시간, 여객선 포함)",
+      "days": 1,
+      "seasonality": "연중 (여름 성수기 매우 혼잡. 이른 첫 배 권장)",
+      "difficulty": "쉬움 (우도봉 등반 포함 시 보통)",
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "우도봉 (등반)",
+          "name_en": "Udong Peak (hike)",
+          "canonical_id": "jeju-CNTS_000000000022519",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "우도봉 canonical 확인: jeju-CNTS_000000000022519 (attraction, ACTIVE)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "서빈백사해수욕장 (홍조단괴해빈)",
+          "name_en": "Seobinbaeksa Beach (coral sand beach)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "서빈백사 별도 canonical 미확인 — RELATION_OR_AREA_ONLY",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/attractions/beaches",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01"
+      },
+      "as_of": "2026-08-22"
+    }
+  ],
+  "excluded_stale_recommended_now": [
+    {
+      "name": "제주 왕벚꽃 축제",
+      "reason": "봄 한정 계절 행사. 기준일(2026-08-22) 비해당."
+    },
+    {
+      "name": "제주 들불 축제",
+      "reason": "봄 한정 행사. 기준일 비해당."
+    },
+    {
+      "name": "서귀포 칠십리 축제",
+      "reason": "가을 한정 행사. 기준일(8월) 비해당. 9월 이후 추천 가능."
+    }
+  ],
+  "recommended_now": [
+    {
+      "id": "jeju-RN-001",
+      "name": "협재·금능 해수욕장 하계 시즌",
+      "name_en": "Hyeopjae & Geumneung Beach — Summer Season",
+      "category": "해변·해수욕 (계절 시즌)",
+      "why_now": "제주 서부 에메랄드빛 해변 협재·금능이 하계 공식 해수욕장 시즌(6~8월) 운영 중. 방문 전 대비 안전요원·샤워시설 완비. 8월은 제주 해수욕 최성수기. VisitJeju 여름 공식 해변 특집 추천 장소.",
+      "valid_from": "2026-06-20",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "jeju-CONT_000000000500697",
+      "canonical_ids_all": [
+        {
+          "canonical_id": "jeju-CONT_000000000500697",
+          "id_note": "canonical 확인: ACTIVE"
+        },
+        {
+          "canonical_id": "jeju-CONT_000000000500079",
+          "id_note": "canonical 확인: ACTIVE"
+        }
+      ],
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/attractions/beaches",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-RN-002",
+      "name": "이호테우해수욕장 & 빨강말등대 하계 야경",
+      "name_en": "Iho Tewoo Beach & Red Horse Lighthouse — Summer Night",
+      "category": "해변·야경 (계절 시즌)",
+      "why_now": "이호테우해수욕장은 제주시 대표 시내 해수욕장으로 하계 운영 중. 특히 빨강(말 형상) 등대는 제주 공식 야경 명소로 VisitJeju 야간관광 특집 항목. 제주공항에서 차로 10분 거리로 접근 용이. 8월 하절기 저녁 방문 특히 인기.",
+      "valid_from": "2026-06-20",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "jeju-CNTS_200000000007344",
+      "canonical_ids_all": [
+        {
+          "canonical_id": "jeju-CNTS_200000000007344",
+          "id_note": "canonical 확인: ACTIVE"
+        },
+        {
+          "canonical_id": "jeju-CNTS_000000000019997",
+          "id_note": "canonical 확인: ACTIVE"
+        }
+      ],
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/see-do/sea-leisure",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-RN-003",
+      "name": "서귀포 야간관광 — 새연교 & 천지연폭포 야간",
+      "name_en": "Seogwipo Night Tour — Saeyeongyeo Bridge & Cheonjiyeon Falls (Night)",
+      "category": "야간관광 (하절기 특화)",
+      "why_now": "서귀포시 공식 야간관광 프로그램. 새연교(서귀포항 연결 교량, 야간 조명)와 천지연폭포(야간 개방)를 연계한 하절기 저녁 코스. 낮의 폭염을 피해 서귀포 야간 보행이 VisitJeju 여름 야간관광 추천 콘텐츠.",
+      "valid_from": "2026-06-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "jeju-CONT_000000000500312",
+      "canonical_ids_all": [
+        {
+          "canonical_id": "jeju-CONT_000000000500312",
+          "id_note": "canonical 확인: ACTIVE"
+        },
+        {
+          "canonical_id": "jeju-CONT_000000000500618",
+          "id_note": "canonical 확인: ACTIVE"
+        }
+      ],
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "서귀포시 / VisitJeju",
+        "source_url": "https://www.visitjeju.net/en/more/theme/nighttour",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-RN-R01",
+      "name": "제주 국제 관악제",
+      "name_en": "Jeju International Wind Instrument Festival",
+      "category": "음악 축제",
+      "why_now": "제주 서귀포를 중심으로 매년 8월에 개최되는 국제 관악 축제. 야외 공연·실내 콘서트 포함. 외국인 관람 무료/저렴한 공연 다수. 수십 년간 지속된 공신력 있는 축제.",
+      "valid_from": "2026-08 (exact date TBC)",
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "EVENT_OR_TEMPORARY_CONTENT",
+      "is_reserve": true,
+      "source": {
+        "provider": "제주국제관악제 조직위원회",
+        "source_url": "https://www.visitjeju.net/en/experience/festival",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeju-RN-R02",
+      "name": "한라산 어리목 하절기 새벽 트레킹",
+      "name_en": "Hallasan Eorimok Dawn Trekking — Summer Cool Mountain",
+      "category": "자연·트레킹 (하절기 특화)",
+      "why_now": "8월 한여름 제주 폭염을 피해 이른 새벽(5~6시) 한라산 어리목 코스 탐방이 VisitJeju 여름 특집으로 소개. 해발 1,100m 고산지대 선선함. 영실과 연결 탐방도 가능.",
+      "valid_from": "2026-06-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "jeju-CNTS_000000000020151",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": true,
+      "source": {
+        "provider": "국립공원공단 한라산 / VisitJeju",
+        "source_url": "https://www.hallasan.go.kr/contents/info.php",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    }
+  ],
+  "official_guides": [
+    {
+      "id": "jeju-G-001",
+      "title": "VisitJeju 공식 관광 가이드 (KO)",
+      "type": "웹 가이드 / 공식 관광 정보",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "제주관광공사 (Jeju Tourism Organization)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeju-G-002",
+      "title": "VisitJeju Official Travel Guide (EN)",
+      "type": "Web Guide / Official Tourism Information",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Jeju Tourism Organization (제주관광공사)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeju-G-003",
+      "title": "VisitJeju 公式旅行ガイド (JA)",
+      "type": "ウェブガイド / 公式観光情報",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "済州観光公社 (Jeju Tourism Organization)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeju-G-004",
+      "title": "VisitJeju 官方旅游指南 (ZH-CN)",
+      "type": "网络指南 / 官方旅游信息",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "济州旅游公社 (Jeju Tourism Organization)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeju-G-005",
+      "title": "제주 관광지도 (다국어)",
+      "type": "관광지도 (PDF / 인쇄물)",
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "제주관광공사",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-03-01"
+    },
+    {
+      "id": "jeju-G-006",
+      "title": "Jeju Olle 공식 코스 지도 (KO/EN/JA/ZH)",
+      "type": "트레킹 코스 지도",
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "사단법인 제주올레 (Jeju Olle Inc.)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-03-01"
+    },
+    {
+      "id": "jeju-G-007",
+      "title": "한라산 국립공원 탐방 안내 (KO/EN)",
+      "type": "국립공원 탐방 안내도",
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "국립공원공단 한라산국립공원관리소",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2026-12-01"
+    },
+    {
+      "id": "jeju-G-008",
+      "title": "VisitJeju 테마 가이드 — 음식관광 (KO/EN)",
+      "type": "테마 음식 가이드",
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "제주관광공사",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    }
+  ],
+  "travel_utility": [
+    {
+      "id": "jeju-U-001",
+      "category": "공항 → 제주시내 버스",
+      "title": "제주공항 → 제주시내 급행버스 (100번·110번)",
+      "summary": {
+        "ko": "제주국제공항 1층 출국장 앞 버스정류장. 100번·110번 급행버스로 제주시 주요 지점 이동. 600번 버스는 서귀포 방면 직행."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "제주특별자치도 버스정보시스템",
+      "source_url": "https://bus.jeju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·노선번호 변동 가능. 출발 전 bus.jeju.go.kr 확인 권장."
+    },
+    {
+      "id": "jeju-U-002",
+      "category": "렌터카",
+      "title": "제주 렌터카 (사실상 필수 교통수단)",
+      "summary": {
+        "ko": "제주는 대중교통만으로는 오름·중산간·해안 명소 접근이 제한적. 렌터카가 사실상 필수. 제주공항 인근 렌터카 업체 밀집. 사전 예약 강력 권장 (성수기 매진 빠름)."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "한국렌터카사업조합 / 제주렌터카협회",
+      "source_url": "https://www.visitjeju.net/en/map-brochure/rent-car",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-003",
+      "category": "시내·간선·순환버스",
+      "title": "제주 버스 노선 체계",
+      "summary": {
+        "ko": "제주 버스는 급행(100번대)·간선(200~300번대)·지선(400~500번대)·순환(800번대)으로 구성. 제주시↔서귀포 간선 및 주요 관광지 연결. 버스 이용 시 카카오버스 앱 추천."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "제주특별자치도 버스정보시스템",
+      "source_url": "https://bus.jeju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-004",
+      "category": "택시",
+      "title": "제주 택시 이용 안내",
+      "summary": {
+        "ko": "제주시·서귀포시 전역 일반 택시·콜택시 이용 가능. 카카오T 앱 호출 가능. 공항·주요 관광지 앞 택시 상시 대기."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": "제주특별자치도 / 한국국제관광택시",
+      "source_url": "https://www.intltaxi.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-005",
+      "category": "우도 여객선",
+      "title": "성산포항 → 우도 여객선",
+      "summary": {
+        "ko": "우도 방문은 성산포항 여객선 필수. 일 다수 편 운항. 우도 내 자전거·전동킥보드·전기차 대여 이용 가능."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": "우도 여객선 운항사 (성산항 여객선 터미널)",
+      "source_url": "https://www.udoferry.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·운항 편수·시간 계절별 변동. 출발 전 확인 필수."
+    },
+    {
+      "id": "jeju-U-006",
+      "category": "마라도 여객선",
+      "title": "모슬포항 → 마라도 여객선",
+      "summary": {
+        "ko": "한국 최남단 마라도(천연기념물)는 모슬포항 출발 여객선 이용. 소규모 섬 방문 특수 경험."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": "마라도 여객선 운항사",
+      "source_url": "https://www.visitjeju.net/en/see-do/island-tour",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·운항 시간 변동 가능. 출발 전 확인 필수."
+    },
+    {
+      "id": "jeju-U-007",
+      "category": "교통카드",
+      "title": "T-money 교통카드",
+      "summary": {
+        "ko": "제주 버스·일부 택시에서 T-money 교통카드 사용 가능. 편의점(세븐일레븐·CU 등)에서 구매·충전. 환승 할인 적용."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "한국스마트카드 (T-money)",
+      "source_url": "https://www.t-money.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-008",
+      "category": "관광안내소",
+      "title": "제주 관광안내소",
+      "summary": {
+        "ko": "제주국제공항 1층·제주시청·서귀포시청·중문관광단지 등 주요 거점에 관광안내소 운영. 한국어·영어·일본어·중국어 안내 가능."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "제주관광공사 / 제주특별자치도",
+      "source_url": "https://www.visitjeju.net/en/plan/visitor-center",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-009",
+      "category": "관광 전화 안내",
+      "title": "1330 한국관광공사 관광안내전화",
+      "summary": {
+        "ko": "24시간 연중무휴 관광안내 전화. 한국어·영어·일본어·중국어 지원."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "한국관광공사",
+      "source_url": "https://www.visitkorea.or.kr/intro/cs/cs_01_01.kto",
+      "as_of": "2026-08-22",
+      "review_by": "2028-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-010",
+      "category": "제주 올레 여권",
+      "title": "제주올레 여권 (Olle Passport)",
+      "summary": {
+        "ko": "제주올레 공식 운영 스탬프 수첩. 27개 코스 시작점·종착점 스탬프 보관함에서 날인. 올레 탐방 기념품으로 인기."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja"
+      ],
+      "provider": "사단법인 제주올레",
+      "source_url": "https://www.jejuolle.org/en/jeju-olle-passport",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-011",
+      "category": "세금환급 (Tax Refund)",
+      "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+      "summary": {
+        "ko": "외국인 관광객은 사후 면세점(Tax Free) 표시 가게에서 구매 시 부가가치세(VAT 10%) 환급 가능. 출국 전 공항 세관 창구에서 처리."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "한국 기획재정부 / 세관",
+      "source_url": "https://www.visitkorea.or.kr/intro/si/si_2_3_2.kto",
+      "as_of": "2026-08-22",
+      "review_by": "2028-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeju-U-012",
+      "category": "짐 보관·배송",
+      "title": "제주공항 수하물 보관 서비스",
+      "summary": {
+        "ko": "제주국제공항 내 코인로커 및 수하물 보관 서비스 운영. 당일 이동 중 짐 보관 가능."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": "제주국제공항 (한국공항공사)",
+      "source_url": "https://www.airport.co.kr/jeju/main.do",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    }
+  ],
+  "source_summary": {
+    "source_files": [
+      "data/regional-recommendations/jeju/jeju-recommended-courses-v1.json",
+      "data/regional-recommendations/jeju/jeju-recommended-now-v1.json",
+      "data/regional-recommendations/jeju/jeju-official-guides-v1.json",
+      "data/regional-recommendations/jeju/jeju-travel-utility-v1.json"
+    ],
+    "source_course_key": "final_recommended_courses",
+    "source_rn_stale_key": "stale_or_excluded",
+    "stop_structure_in_source": "mixed_or_list"
+  },
+  "quality_metadata": {
+    "source_courses_final": 3,
+    "source_courses_reserve": 2,
+    "normalized_courses_total": 5,
+    "normalized_courses_final": 3,
+    "normalized_courses_reserve": 2,
+    "total_course_stops": 15,
+    "course_stops_final": 11,
+    "course_stops_reserve": 4,
+    "source_rn_final": 3,
+    "source_rn_reserve": 2,
+    "source_rn_stale": 3,
+    "normalized_rn_final": 3,
+    "normalized_rn_reserve": 2,
+    "normalized_guides": 8,
+    "normalized_utility": 12,
+    "course_stop_linkage": {
+      "EXACT_CANONICAL_LINK": 9,
+      "RELATION_OR_AREA_ONLY": 6
+    },
+    "rn_linkage": {
+      "EXACT_CANONICAL_LINK": 4,
+      "EVENT_OR_TEMPORARY_CONTENT": 1
+    },
+    "source_records_dropped": 0,
+    "recommendation_records_dropped": 0,
+    "provenance_dropped": 0,
+    "known_issues": []
+  }
+}

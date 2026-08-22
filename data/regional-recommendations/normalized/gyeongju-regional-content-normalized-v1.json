@@ -1,0 +1,766 @@
+{
+  "schema_version": "normalized-v1",
+  "city": "gyeongju",
+  "as_of": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "recommended_courses": [
+    {
+      "id": "gyeongju-C-001",
+      "title": "경주 시내권 핵심 바이블",
+      "title_en": "Core Gyeongju City Center: The Essential",
+      "theme": "신라 역사·문화유산 — 박물관·왕릉·첨성대·야경",
+      "traveler_fit": [
+        "초방문자",
+        "가족",
+        "커플",
+        "솔로"
+      ],
+      "recommended_reason": "3km 반경 내에 신라 천년의 핵심을 집약한 표준 코스. 국립경주박물관부터 첨성대·대릉원·동궁과 월지까지 도보·자전거로 커버 가능하며, 월성 발굴현장(활성 발굴)과 황리단길(카페·레스토랑 거리)로 고대와 현대를 연결.",
+      "duration": "1~2일",
+      "days": null,
+      "seasonality": "연중 (봄 벚꽃·가을 단풍 성수기)",
+      "difficulty": null,
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "국립경주박물관",
+          "name_en": "National Gyeongju Museum",
+          "canonical_id": "gyeongju-GJ01-0009",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "월정교",
+          "name_en": "Woljeong Bridge",
+          "canonical_id": "gyeongju-GJ01-0014",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "첨성대",
+          "name_en": "Cheomseongdae Observatory",
+          "canonical_id": "gyeongju-GJ01-0036",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "대릉원",
+          "name_en": "Daereungwon Royal Tomb Complex",
+          "canonical_id": "gyeongju-GJ01-0033",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "동궁과 월지",
+          "name_en": "Donggung Palace & Wolji Pond",
+          "canonical_id": "gyeongju-GJ01-0017",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "월성 발굴현장",
+          "name_en": "Wolseong Excavation Site",
+          "canonical_id": "gyeongju-GJ01-0056",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "황리단길",
+          "name_en": "Hwangridan-gil Street",
+          "canonical_id": "gyeongju-GJ01-0042",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2297",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-C-002",
+      "title": "달빛테라피 '경주야경산책'",
+      "title_en": "Moonlight Therapy: Gyeongju Night Walk",
+      "theme": "야간관광 — 일몰 이후 역사 유적지 야경·야시장",
+      "traveler_fit": [
+        "커플",
+        "친구그룹",
+        "야간관광 선호",
+        "사진여행"
+      ],
+      "recommended_reason": "2.7km·도보 약 60분으로 황리단길 루프탑 카페에서 출발해 대릉원·첨성대·계림·월정교·동궁과 월지(야간 조명)·중앙시장 야시장까지 연결. 동궁과 월지 야간 수면 반영 야경은 경주의 시그니처 포토스팟.",
+      "duration": "반나절 (저녁~야간, 약 3시간 이상)",
+      "days": null,
+      "seasonality": "연중 (봄·여름 야간 최성수기, 동궁과 월지 조명 연중 운영)",
+      "difficulty": null,
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "황리단길 루프탑 카페",
+          "name_en": "Hwangridan-gil Rooftop Café (start point)",
+          "canonical_id": "gyeongju-GJ01-0042",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "대릉원",
+          "name_en": "Daereungwon Royal Tomb Complex",
+          "canonical_id": "gyeongju-GJ01-0033",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "첨성대",
+          "name_en": "Cheomseongdae Observatory",
+          "canonical_id": "gyeongju-GJ01-0036",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "계림",
+          "name_en": "Gyerim Forest",
+          "canonical_id": "gyeongju-GJ01-0001",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "월정교",
+          "name_en": "Woljeong Bridge (night illumination)",
+          "canonical_id": "gyeongju-GJ01-0014",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 6,
+          "name": "동궁과 월지",
+          "name_en": "Donggung Palace & Wolji Pond (야간 조명)",
+          "canonical_id": "gyeongju-GJ01-0017",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 7,
+          "name": "중앙시장 야시장",
+          "name_en": "Jungang Market Night Market",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털 — 도보여행 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2299",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-C-003",
+      "title": "삼릉가는 길 — 두바퀴로 누비는 신라 흥망의 길",
+      "title_en": "Route to Samneung: Cycling the Rise and Fall of Silla",
+      "theme": "자전거·역사 — 신라 발상지·왕릉·석불·솔숲",
+      "traveler_fit": [
+        "자전거 여행자",
+        "역사 관심",
+        "자연·솔숲 선호",
+        "20-40대"
+      ],
+      "recommended_reason": "12km 반나절 자전거 코스. 월정교(신라 다리)에서 출발해 오릉(신라 건국 시조 능), 나정(박혁거세 출생지), 포석정지(신라 왕실 연회터), 배동석조여래삼존입상(7세기 석불)을 거쳐 솔숲 속 삼릉까지. 신라의 흥망을 지형 위에서 체험하는 코스.",
+      "duration": "반나절 (약 4시간)",
+      "days": null,
+      "seasonality": "봄·가을 (여름은 덥지만 가능, 겨울은 도로 상태 확인 필요)",
+      "difficulty": "하 (low)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "월정교",
+          "name_en": "Woljeong Bridge (start)",
+          "canonical_id": "gyeongju-GJ01-0014",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "오릉",
+          "name_en": "Oryeong (Five Royal Tombs)",
+          "canonical_id": "gyeongju-GJ01-0054",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "나정",
+          "name_en": "Najeong (Birthplace of Park Hyeokgeose)",
+          "canonical_id": "gyeongju-GJ01-0049",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "포석정지",
+          "name_en": "Poseokjeong Site",
+          "canonical_id": "gyeongju-GJ01-0062",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "배동석조여래삼존입상",
+          "name_en": "Baedong Stone Buddha Triad",
+          "canonical_id": "gyeongju-KTO12-128634",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "KTO source, candidate match by name search",
+          "stop_role": null
+        },
+        {
+          "sequence": 6,
+          "name": "삼릉",
+          "name_en": "Samneung (Three Royal Tombs)",
+          "canonical_id": "gyeongju-GJ01-0127",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 7,
+          "name": "플레이스씨",
+          "name_en": "Place C (cultural complex)",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털 — 자전거 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2300",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-C-R01",
+      "title": "버스타GO '알짜배기 경주여행' (Route 10)",
+      "title_en": "Route 10 Bus: Essential Gyeongju Tour",
+      "theme": "대중교통 — 시내버스 1대로 주요 관광지 순환",
+      "traveler_fit": [
+        "자가 이동수단 없는 개인 여행자",
+        "단기 방문자"
+      ],
+      "recommended_reason": null,
+      "duration": "자유 (하차 자유)",
+      "days": null,
+      "seasonality": null,
+      "difficulty": null,
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "터미널",
+          "name_en": "Gyeongju Express Bus Terminal",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "경주역",
+          "name_en": "Gyeongju Station",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "첨성대",
+          "name_en": "Cheomseongdae Observatory",
+          "canonical_id": "gyeongju-GJ01-0036",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "분황사",
+          "name_en": "Bunhwangsa Temple",
+          "canonical_id": "gyeongju-GJ01-0022",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "보문관광단지",
+          "name_en": "Bomun Tourist Complex",
+          "canonical_id": "gyeongju-GJ01-0099",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 6,
+          "name": "경주월드",
+          "name_en": "Gyeongju World",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 7,
+          "name": "엑스포공원",
+          "name_en": "Expo Park",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 8,
+          "name": "불국사",
+          "name_en": "Bulguksa Temple",
+          "canonical_id": null,
+          "linkage_type": "UNCERTAIN",
+          "relation_note": "RESERVE — 불국사 canonical ID 미확인(좌표 35.79°N, 별도 확인 필요)",
+          "stop_role": null
+        },
+        {
+          "sequence": 9,
+          "name": "국립경주박물관",
+          "name_en": "National Gyeongju Museum",
+          "canonical_id": "gyeongju-GJ01-0009",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 10,
+          "name": "동궁과 월지",
+          "name_en": "Donggung Palace & Wolji Pond",
+          "canonical_id": "gyeongju-GJ01-0017",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털 — 버스여행 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2301",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "excluded_stale_recommended_now": [
+    {
+      "name": "경주 벚꽃축제",
+      "reason": "봄 한정 계절 행사. 기준일(2026-08-21) 비해당."
+    },
+    {
+      "name": "경주 신라도기축제",
+      "reason": "봄 한정 계절 행사. 기준일 비해당."
+    },
+    {
+      "name": "신라문화제 (신라문화축전)",
+      "reason": "가을 한정. 기준일 비해당."
+    },
+    {
+      "name": "에밀레 신라종소리축제",
+      "reason": "가을 한정. 기준일 비해당."
+    },
+    {
+      "name": "경주국제뮤직페스티벌",
+      "reason": "기준일(2026-08-21) 기준 대체로 종료 또는 종료 근접. 정확한 2026년 일정 공식 미확인. 안전하게 excluded 처리."
+    },
+    {
+      "name": "양윤정 <낙원-정원> 전시",
+      "reason": "기준일(2026-08-21) 활성 중이나 2일 후 종료(8-23). 단기 개인 전시로 현재 추천에 부적합."
+    }
+  ],
+  "recommended_now": [
+    {
+      "id": "gyeongju-RN-001",
+      "name": "2026 봉황대뮤직스퀘어 (8월 시리즈)",
+      "name_en": "2026 Bonghwangdae Music Square — August Series",
+      "category": "야외 공연·음악회",
+      "why_now": "2026년 5~10월 매주 금요일 야간 상설공연으로 운영되는 경주시 공식 야외 음악 시리즈. 8월 시리즈(8월 14~28일)가 현재 진행 중. 봉황대 특설무대에서 다양한 장르 공연.",
+      "valid_from": "2026-08-14",
+      "valid_to": "2026-08-28",
+      "review_by": "2026-10-31",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-RN-002",
+      "name": "2026 한수원아트페스티벌 특별전 <한국 미술, 조선 후기부터 현대까지>",
+      "name_en": "2026 KHNP Art Festival Special Exhibition: Korean Art from Late Joseon to the Present",
+      "category": "미술 전시",
+      "why_now": "경주 알천미술관(4층 Hae 갤러리)에서 2026년 6월 30일~10월 18일 진행 중인 대형 기획전. 조선 후기~현대까지 한국 미술사를 조망. 기준일 현재 운영 중.",
+      "valid_from": "2026-06-30",
+      "valid_to": "2026-10-18",
+      "review_by": "2026-10-18",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2393&code_uid=300",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-RN-003",
+      "name": "FLYING — 경주 대표 넌버벌 퍼포먼스",
+      "name_en": "FLYING — Gyeongju's Signature Non-verbal Performance",
+      "category": "공연 (비언어극)",
+      "why_now": "체조·리듬스포츠·무술·무용을 결합한 비언어 공연. 4월~연말 상설 운영 중. 외국인 여행자에게 언어 장벽 없이 즐길 수 있는 경주 대표 퍼포먼스로 공식 포털에 연중 상설로 안내됨.",
+      "valid_from": "2026-04-01",
+      "valid_to": "2026-12-31",
+      "review_by": "2027-01-01",
+      "canonical_id": "gyeongju-GJ01-0093",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-RN-R01",
+      "name": "동궁과 월지 야간 조명",
+      "name_en": "Donggung Palace & Wolji Pond — Night Illumination",
+      "category": "야간관광 (연중 상설)",
+      "why_now": "경주 대표 야경 명소. 동궁과 월지의 수면 반영 야간 조명은 연중 운영. 여름 야간 관광 대표 스팟.",
+      "valid_from": null,
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": "gyeongju-GJ01-0017",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": true,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2267",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "gyeongju-RN-R02",
+      "name": "교촌마을 신라오기 공연",
+      "name_en": "Gyochon Village Silla Ogi Performance",
+      "category": "전통 공연 (월별 정기)",
+      "why_now": "봄~가을 시즌 월 1회 정기 공연. 최치원 작품 기반 창작 역사 연극. 기준일 기준 시즌 활성이나 월별 정확한 날짜 미확인으로 reserve 처리.",
+      "valid_from": null,
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": true,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "official_guides": [
+    {
+      "id": "gyeongju-G-KO-001",
+      "title": "경주시 관광안내지도",
+      "type": "tourism_map",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "경주시",
+      "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2367&reqType=1",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "gyeongju-G-KO-002",
+      "title": "관광지도 미리보기 (디지털)",
+      "type": "digital_map_preview",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "경주시",
+      "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2372",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "gyeongju-G-KO-003",
+      "title": "사적지 길라잡이 (유네스코 세계유산 경주 역사유적지구)",
+      "type": "heritage_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "경주시",
+      "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=4084",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "gyeongju-G-KO-004",
+      "title": "경주시 관광책자 e-book 시리즈",
+      "type": "ebook_series",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "경주시",
+      "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2395",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "gyeongju-G-MULTI-001",
+      "title": "나만의 문화유산 해설사 (My Cultural Heritage Guide App)",
+      "type": "mobile_app_guide",
+      "locales": [],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "문화재청 (Cultural Heritage Administration of Korea, cha.go.kr)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    }
+  ],
+  "travel_utility": [
+    {
+      "id": "gyeongju-U-001",
+      "category": "경주 도착 교통",
+      "title": "신경주역(KTX) vs 경주역(일반열차) — 외국인 방문자 핵심 정보",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-002",
+      "category": "시내버스 (관광 특화 노선)",
+      "title": "10번 버스 — 알짜배기 경주여행",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-003",
+      "category": "관광지 입장료",
+      "title": "경주 주요 관광지 입장료",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-004",
+      "category": "관광안내소",
+      "title": "경주시 관광안내소 (4개소)",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-005",
+      "category": "짐보관",
+      "title": "경주 짐보관 서비스 (20개소)",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-006",
+      "category": "무료 문화관광해설 서비스",
+      "title": "경주 문화관광해설사 (무료 다국어 해설)",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-007",
+      "category": "여행 안내 핫라인",
+      "title": "관광 안내 전화",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "gyeongju-U-008",
+      "category": "공공 Wi-Fi",
+      "title": "경주 관광지 공공 Wi-Fi",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    }
+  ],
+  "source_summary": {
+    "source_files": [
+      "data/regional-recommendations/gyeongju/gyeongju-recommended-courses-v1.json",
+      "data/regional-recommendations/gyeongju/gyeongju-recommended-now-v1.json",
+      "data/regional-recommendations/gyeongju/gyeongju-official-guides-v1.json",
+      "data/regional-recommendations/gyeongju/gyeongju-travel-utility-v1.json"
+    ],
+    "source_course_key": "final_courses",
+    "source_rn_stale_key": "stale_or_excluded",
+    "stop_structure_in_source": "dict_by_day"
+  },
+  "quality_metadata": {
+    "source_courses_final": 3,
+    "source_courses_reserve": 1,
+    "normalized_courses_total": 4,
+    "normalized_courses_final": 3,
+    "normalized_courses_reserve": 1,
+    "total_course_stops": 31,
+    "course_stops_final": 21,
+    "course_stops_reserve": 10,
+    "source_rn_final": 3,
+    "source_rn_reserve": 2,
+    "source_rn_stale": 6,
+    "normalized_rn_final": 3,
+    "normalized_rn_reserve": 2,
+    "normalized_guides": 5,
+    "normalized_utility": 8,
+    "course_stop_linkage": {
+      "EXACT_CANONICAL_LINK": 24,
+      "TRUE_NEW_PLACE_CANDIDATE": 2,
+      "RELATION_OR_AREA_ONLY": 4,
+      "UNCERTAIN": 1
+    },
+    "rn_linkage": {
+      "RELATION_OR_AREA_ONLY": 3,
+      "EXACT_CANONICAL_LINK": 2
+    },
+    "source_records_dropped": 0,
+    "recommendation_records_dropped": 0,
+    "provenance_dropped": 0,
+    "known_issues": [
+      "id_linkage_summary.total_stops_final_courses=14 vs physical=21: 요약값은 고유 장소 수 기준. 정규화는 물리적 등장 수 기준.",
+      "불국사 UNCERTAIN: 좌표 불일치로 canonical ID 미확인. 현재 final courses에서 미포함 — reserve course에서 수동 재확인 권장.",
+      "가이드 EN/JA/ZH=0: 경주 공식 포털 다국어 가이드 부재."
+    ]
+  }
+}

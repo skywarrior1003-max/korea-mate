@@ -1,0 +1,1097 @@
+{
+  "schema_version": "normalized-v1",
+  "city": "busan",
+  "as_of": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "recommended_courses": [
+    {
+      "id": "busan-C-001",
+      "title": "2박 3일에 완성하는 부산 완전정복",
+      "title_en": "Complete Busan in 2 Nights, 3 Days",
+      "theme": "종합 — 사찰·역사·해안·도시 명소 전반",
+      "traveler_fit": [
+        "가족",
+        "커플",
+        "친구",
+        "솔로"
+      ],
+      "recommended_reason": "부산 전역을 동서로 아우르는 표준 코스. 범어사·해동용궁사 등 사찰부터 태종대·해운대 해안, 감천문화마을·용두산공원까지 부산의 핵심 스팟을 최소 이동으로 커버.",
+      "duration": "2박 3일",
+      "days": null,
+      "seasonality": "연중",
+      "difficulty": null,
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "범어사",
+          "name_en": "Beomeosa Temple",
+          "canonical_id": "busan-A-00202",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "동래읍성",
+          "name_en": "Dongnae Eupseong Fortress",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "복천동고분박물관",
+          "name_en": "Bokcheon Museum",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "해동용궁사",
+          "name_en": "Haedong Yonggungsa Temple",
+          "canonical_id": "busan-A-00007",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "송정해수욕장",
+          "name_en": "Songjeong Beach",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "해운대해수욕장",
+          "name_en": "Haeundae Beach",
+          "canonical_id": "busan-A-00070",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "오륙도스카이워크",
+          "name_en": "Oryukdo Skypark",
+          "canonical_id": "busan-A-00022",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "태종대",
+          "name_en": "Taejongdae Park",
+          "canonical_id": "busan-A-00004",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "영도대교",
+          "name_en": "Yeongdo Bridge",
+          "canonical_id": "busan-A-00191",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "용두산공원",
+          "name_en": "Yongdusan Park",
+          "canonical_id": "busan-A-00065",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "감천문화마을",
+          "name_en": "Gamcheon Culture Village",
+          "canonical_id": "busan-A-00212",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "송도해수욕장·케이블카",
+          "name_en": "Songdo Beach & Cable Car",
+          "canonical_id": "busan-A-00027",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "다대포해수욕장",
+          "name_en": "Dadaepo Beach",
+          "canonical_id": "busan-A-00177",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "장림포구",
+          "name_en": "Jangnim Port",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "을숙도·낙동강하구",
+          "name_en": "Eulseukdo Island / Nakdong River Estuary",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=392&lang_cd=ko",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "busan-C-002",
+      "title": "1박 2일에 완성하는 부산 해안선 완전정복",
+      "title_en": "Complete Busan Coastline in 1 Night, 2 Days",
+      "theme": "해안선 집중 — 절벽·포구·해안산책로·해수욕장",
+      "traveler_fit": [
+        "일반관광객",
+        "가족",
+        "커플",
+        "사진여행"
+      ],
+      "recommended_reason": "영도-태종대-해운대-광안리 해안을 연결하는 해양 특화 코스. 흰여울문화마을 절벽 뷰, 오륙도스카이워크, 이기대 산책로 등 부산의 바다를 집중적으로 체험.",
+      "duration": "1박 2일",
+      "days": null,
+      "seasonality": "연중 (봄·여름 성수기)",
+      "difficulty": null,
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "영도대교",
+          "name_en": "Yeongdo Bridge",
+          "canonical_id": "busan-A-00191",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "흰여울문화마을",
+          "name_en": "Huinnyeoul Culture Village",
+          "canonical_id": "busan-A-00001",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "절영해안산책로",
+          "name_en": "Jeoryeong Coastal Walking Path",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "태종대",
+          "name_en": "Taejongdae Park",
+          "canonical_id": "busan-A-00004",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "국제시장",
+          "name_en": "Gukje (International) Market",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 6,
+          "name": "부평깡통시장",
+          "name_en": "Bupyeong Kkangtong Market",
+          "canonical_id": "busan-A-00204",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 7,
+          "name": "용두산공원",
+          "name_en": "Yongdusan Park",
+          "canonical_id": "busan-A-00065",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "해운대해수욕장",
+          "name_en": "Haeundae Beach",
+          "canonical_id": "busan-A-00070",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "부산아쿠아리움",
+          "name_en": "Busan Aquarium",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "동백해안산책로·누리마루APEC하우스",
+          "name_en": "Dongbaek Coastal Path & Nurimaru APEC House",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "오륙도스카이워크",
+          "name_en": "Oryukdo Skypark",
+          "canonical_id": "busan-A-00022",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 5,
+          "name": "이기대해안산책로",
+          "name_en": "Igidae Coastal Walking Path",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 6,
+          "name": "광안리해수욕장·광안대교",
+          "name_en": "Gwangalli Beach & Gwangandaegyo Bridge",
+          "canonical_id": "busan-A-00185",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=320&lang_cd=ko",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "busan-C-003",
+      "title": "친구들과 함께하는 2박 3일 부산 뚜벅이 여행 코스",
+      "title_en": "2-Night 3-Day Busan Friends & Transit Travel Course",
+      "theme": "친구 여행 · 대중교통 — 카페거리·해리단길·해안뷰·서부 해안",
+      "traveler_fit": [
+        "친구그룹",
+        "20-30대",
+        "대중교통 선호"
+      ],
+      "recommended_reason": "버스·지하철만으로 이동 가능하도록 설계. 전포카페거리·해리단길 등 MZ세대 핫스팟 + 청사포다릿돌전망대 포토존 + 서부 다대포 일몰까지.",
+      "duration": "2박 3일",
+      "days": null,
+      "seasonality": "봄·여름",
+      "difficulty": null,
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "부산역",
+          "name_en": "Busan Station",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "삼정타워",
+          "name_en": "Samjeong Tower",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "전포카페거리",
+          "name_en": "Jeonpo Café Street",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "호천마을",
+          "name_en": "Hocheon Village",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "해리단길",
+          "name_en": "Haeridan-gil",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "해운대해변열차·스카이캡슐",
+          "name_en": "Haeundae Beach Train / Sky Capsule",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "청사포다릿돌전망대",
+          "name_en": "Cheongsapo Darittol Observation Deck",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "광안리해수욕장·민락수변공원",
+          "name_en": "Gwangalli Beach & Millak Waterfront Park",
+          "canonical_id": "busan-A-00185",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 1,
+          "name": "장림포구",
+          "name_en": "Jangnim Port",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "몰운대해안데크길",
+          "name_en": "Molundae Coastal Deck Trail",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "다대포해수욕장·고우니생태길",
+          "name_en": "Dadaepo Beach & Gouni Ecological Trail",
+          "canonical_id": "busan-A-00177",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=1211&lang_cd=ko",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "busan-C-R01",
+      "title": "반짝임이 가득한 겨울의 부산",
+      "title_en": "Sparkling Winter in Busan",
+      "theme": "겨울·야간관광 — 일루미네이션·전망대·크리스마스",
+      "traveler_fit": [
+        "커플",
+        "가족"
+      ],
+      "recommended_reason": null,
+      "duration": "당일 또는 1박",
+      "days": null,
+      "seasonality": "겨울 (12월–1월)",
+      "difficulty": null,
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "밀락더마켓",
+          "name_en": "Millak Luche Festa (Millak Waterfront Park illumination)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "X the SKY 전망대",
+          "name_en": "X the SKY Observatory (LCT Landmark Tower 98-100F)",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "부산 자유도매시장",
+          "name_en": "Busan Jayou Wholesale Market",
+          "canonical_id": null,
+          "linkage_type": "TRUE_NEW_PLACE_CANDIDATE",
+          "relation_note": null,
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "광안리해수욕장 (광안리 디셈버)",
+          "name_en": "Gwangalli Beach — Gwangalli December",
+          "canonical_id": "busan-A-00185",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": null,
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=2619&lang_cd=ko",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "excluded_stale_recommended_now": [
+    {
+      "name": "포켓몬 메가페스타 2026 in 부산",
+      "reason": "기준일(2026-08-21) 이전 종료"
+    },
+    {
+      "name": "2026 북항 오션 SUP FESTA",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "렛츠런파크 SUN 더 워터페스티벌",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 부산항 축제",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 더 레드 모먼트 부산",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 부산모빌리티쇼",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 별바다부산 나이트마켓",
+      "reason": "기준일 이전 종료"
+    }
+  ],
+  "recommended_now": [
+    {
+      "id": "busan-RN-001",
+      "name": "2026 별바다부산 나이트페스타",
+      "name_en": "2026 Starry Night in Busan Night Festa",
+      "category": "야간관광 축제",
+      "why_now": "2026년 8월 1일부터 12월 31일까지 진행 중인 공식 야간관광 행사 시리즈. 현재 운영 중이며 visitbusan.net에서 2026 메인 야간 콘텐츠로 집중 홍보 중.",
+      "valid_from": "2026-08-01",
+      "valid_to": "2026-12-31",
+      "review_by": "2026-12-31",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": false,
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/v/7ABD",
+        "sub_events_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000204012000000",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "busan-RN-002",
+      "name": "해운대·광안리 여름 해수욕장 시즌",
+      "name_en": "Haeundae & Gwangalli Beach — Summer Peak Season",
+      "category": "계절 명소 (해수욕장)",
+      "why_now": "7월~8월은 부산 해수욕장 공식 개장 시즌. visitbusan.net 홈페이지에서 해운대해수욕장(busan-A-00070)이 현재 featured attraction으로 표출되고 있으며, 여름 시즌 특화 추천 장소임.",
+      "valid_from": "2026-07-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": false,
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/en/index.do",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "busan-RN-R01",
+      "name": "감천문화마을",
+      "name_en": "Gamcheon Culture Village",
+      "category": "문화관광지",
+      "why_now": "visitbusan.net 홈페이지에서 현재 featured attraction으로 표출 중. 다만 연중 운영 evergreen 관광지이므로 시즌 특화 현재성은 낮음.",
+      "valid_from": null,
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": "busan-A-00212",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": true,
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000401001000000",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "official_guides": [
+    {
+      "id": "busan-G-EN-001",
+      "title": "BUSAN TOUR MAP",
+      "type": "tourism_map",
+      "locales": [
+        "en"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-002",
+      "title": "A Trip to Busan With Various Themes",
+      "type": "themed_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-003",
+      "title": "MUST-VISIT Hot places in Busan",
+      "type": "destination_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-004",
+      "title": "BUSAN METRO TRIP",
+      "type": "transit_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-005",
+      "title": "2026 Taste of Busan",
+      "type": "food_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-006",
+      "title": "2026 Starry Night in BUSAN",
+      "type": "night_tourism_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-EN-007",
+      "title": "Busan Tourist Map in Large Letters",
+      "type": "accessibility_map",
+      "locales": [
+        "en"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-KO-001",
+      "title": "부산관광지도",
+      "type": "tourism_map",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "부산광역시 / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-KO-002",
+      "title": "도시철도로 떠나는 부산여행",
+      "type": "transit_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "부산광역시 / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-KO-003",
+      "title": "2026 부산의 맛",
+      "type": "food_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "부산광역시 / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-KO-004",
+      "title": "갈맷길 관광 가이드북 'YOLO Tripking'",
+      "type": "trail_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "부산광역시",
+      "source_url": "https://www.busan.go.kr/galmaetgil/notice03/1544717",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-001",
+      "title": "釜山観光地図",
+      "type": "tourism_map",
+      "locales": [
+        "ja"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-002",
+      "title": "テーマで楽しむ プサン旅行",
+      "type": "themed_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-003",
+      "title": "必ず行くべき 釜山旅行ベスト15",
+      "type": "destination_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-004",
+      "title": "都市鉄道で 旅する 釜山旅行",
+      "type": "transit_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-005",
+      "title": "2026 釜山の味",
+      "type": "food_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-006",
+      "title": "2026 星の海釜山 ナイトフェスタ",
+      "type": "night_tourism_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-JA-007",
+      "title": "新しい釜蔚慶を 発見する",
+      "type": "regional_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-001",
+      "title": "釜山旅游地图",
+      "type": "tourism_map",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-002",
+      "title": "享受不同主题的 釜山旅行",
+      "type": "themed_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-003",
+      "title": "15处釜山 必游景点",
+      "type": "destination_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-004",
+      "title": "乘坐都市铁路 开启 釜山之旅",
+      "type": "transit_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-005",
+      "title": "2026 釜山味道",
+      "type": "food_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-006",
+      "title": "2026 星海釜山夜光节",
+      "type": "night_tourism_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "2026",
+      "issue_date": "2026",
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "busan-G-ZH-007",
+      "title": "发现不一样的釜蔚庆",
+      "type": "regional_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": "current",
+      "issue_date": null,
+      "provider": "Busan Metropolitan City / Visit Busan",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    }
+  ],
+  "travel_utility": [
+    {
+      "id": "busan-U-001",
+      "category": "도시철도",
+      "title": "부산 도시철도 (Busan Metro)",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-002",
+      "category": "시내버스",
+      "title": "부산 시내버스",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-003",
+      "category": "공항리무진",
+      "title": "김해국제공항 ↔ 해운대 리무진버스",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-004",
+      "category": "교통카드",
+      "title": "Hanaro Card (하나로카드) / T-money",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-005",
+      "category": "동백패스",
+      "title": "동백패스 (Dongbaek Pass) — 대중교통 통합 할인제",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-006",
+      "category": "택시",
+      "title": "부산 택시",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "busan-U-007",
+      "category": "여행 안내 핫라인",
+      "title": "부산 관광 안내 전화",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    }
+  ],
+  "source_summary": {
+    "source_files": [
+      "data/regional-recommendations/busan/busan-recommended-courses-v1.json",
+      "data/regional-recommendations/busan/busan-recommended-now-v1.json",
+      "data/regional-recommendations/busan/busan-official-guides-v1.json",
+      "data/regional-recommendations/busan/busan-travel-utility-v1.json"
+    ],
+    "source_course_key": "final_courses",
+    "source_rn_stale_key": "expired_excluded",
+    "stop_structure_in_source": "dict_by_day"
+  },
+  "quality_metadata": {
+    "source_courses_final": 3,
+    "source_courses_reserve": 1,
+    "normalized_courses_total": 4,
+    "normalized_courses_final": 3,
+    "normalized_courses_reserve": 1,
+    "total_course_stops": 43,
+    "course_stops_final": 39,
+    "course_stops_reserve": 4,
+    "source_rn_final": 2,
+    "source_rn_reserve": 1,
+    "source_rn_stale": 7,
+    "normalized_rn_final": 2,
+    "normalized_rn_reserve": 1,
+    "normalized_guides": 25,
+    "normalized_utility": 7,
+    "course_stop_linkage": {
+      "EXACT_CANONICAL_LINK": 21,
+      "TRUE_NEW_PLACE_CANDIDATE": 18,
+      "RELATION_OR_AREA_ONLY": 4
+    },
+    "rn_linkage": {
+      "RELATION_OR_AREA_ONLY": 2,
+      "EXACT_CANONICAL_LINK": 1
+    },
+    "source_records_dropped": 0,
+    "recommendation_records_dropped": 0,
+    "provenance_dropped": 0,
+    "known_issues": [
+      "NEW_CANDIDATE 18건: 전포카페거리·해리단길 등 canonical 미연결. 실제 place 생성 없음."
+    ]
+  }
+}

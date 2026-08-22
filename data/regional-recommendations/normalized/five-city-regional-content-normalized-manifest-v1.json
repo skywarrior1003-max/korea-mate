@@ -1,0 +1,50 @@
+{
+  "task": "TASK-FIVE-CITY-REGIONAL-CONTENT-NORMALIZED-CONTRACT-V1",
+  "schema_version": "normalized-v1",
+  "generated_at": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "source_base_commit": "cf681ea",
+  "cities": [
+    "busan",
+    "gyeongju",
+    "seoul",
+    "jeju",
+    "jeonju"
+  ],
+  "normalized_files": [
+    "data/regional-recommendations/normalized/busan-regional-content-normalized-v1.json",
+    "data/regional-recommendations/normalized/gyeongju-regional-content-normalized-v1.json",
+    "data/regional-recommendations/normalized/seoul-regional-content-normalized-v1.json",
+    "data/regional-recommendations/normalized/jeju-regional-content-normalized-v1.json",
+    "data/regional-recommendations/normalized/jeonju-regional-content-normalized-v1.json"
+  ],
+  "linkage_enum": [
+    "EXACT_CANONICAL_LINK",
+    "STRONG_CANONICAL_LINK",
+    "RELATION_OR_AREA_ONLY",
+    "EVENT_OR_TEMPORARY_CONTENT",
+    "TRUE_NEW_PLACE_CANDIDATE",
+    "UNCERTAIN"
+  ],
+  "schema_variants_found": {
+    "legacy_v1": [
+      "busan",
+      "gyeongju"
+    ],
+    "v2": [
+      "seoul",
+      "jeju",
+      "jeonju"
+    ]
+  },
+  "normalization_rules": {
+    "canonical_id": "EXACT: existing_city_spots_id / existing_canonical_id / canonical_id — first non-null. null kept as null.",
+    "linkage_type": "Jeonju: from linkage_type field. Gyeongju: from new_place_candidate flag + notes. Others: inferred from canonical_id presence + id_note.",
+    "stops_flattened": "Dict-by-day (Busan C-001, Gyeongju C-001) and list formats unified to list[stop].",
+    "rn_canonical_ids": "Single-field (Busan/Gyeongju/Seoul) and list-field (Jeju/Jeonju) both represented as primary canonical_id + optional canonical_ids_all.",
+    "guide_locales": "locale='multi' + locale_coverage → list. Single locale → [locale]. Always list.",
+    "utility_locales": "Dict {locale: bool} and list [locale] both normalized to list of active locales.",
+    "utility_summary": "summary_ko / summary_en / summary_ja / summary_zh-CN → {ko:..., en:..., ...}. Omit if null.",
+    "stale_excluded": "Not included in recommended_now. Preserved in excluded_stale_recommended_now array."
+  }
+}

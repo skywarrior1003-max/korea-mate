@@ -1,0 +1,770 @@
+{
+  "schema_version": "normalized-v1",
+  "city": "jeonju",
+  "as_of": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "recommended_courses": [
+    {
+      "id": "jeonju-C-001",
+      "title": "전주 한옥마을 핵심 도보 코스",
+      "title_en": "Jeonju Hanok Village Core Walking Route",
+      "theme": "역사·전통문화·도보",
+      "traveler_fit": "모든 여행자 / 전주 첫 방문자 필수코스",
+      "recommended_reason": "경기전(조선 태조 어진 봉안·국보 317호)→전동성당(전통과 근대 공존·국내 최초 석조성당)→풍남문(전주읍성 남문·국보 308호)→한옥마을 골목→청연루·남천교 5구간을 이어 전주의 역사·문화·건축 핵심을 2~3시간 안에 경험할 수 있는 전주시 공식 추천 대표 코스. VisitJeonju(tour.jeonju.go.kr) 및 KTO 공식 추천 1순위 동선.",
+      "duration": "2~3",
+      "days": 0.5,
+      "seasonality": [
+        "spring",
+        "autumn",
+        "summer_evening"
+      ],
+      "difficulty": "easy",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "경기전",
+          "name_en": "Gyeonggijeon Shrine",
+          "canonical_id": "OFF-10115",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "조선 태조 이성계 어진 봉안. 보물·국보 다수 소재. 국가사적 제339호.",
+          "stop_role": "출발점·핵심 방문지"
+        },
+        {
+          "sequence": 2,
+          "name": "전동성당",
+          "name_en": "Jeondong Catholic Cathedral",
+          "canonical_id": "OFF-9752",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "1914년 완공. 국내 최초 서양식 석조성당. 전주읍성 성돌 사용. 경기전과 마주보며 전통·근대 대비가 인상적.",
+          "stop_role": "핵심 방문지"
+        },
+        {
+          "sequence": 3,
+          "name": "풍남문",
+          "name_en": "Pungnammun Gate",
+          "canonical_id": "OFF-9746",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주읍성 남문. 보물 제308호. 전주 구도심과 한옥마을 경계. 주변 광장이 도심 연결 허브.",
+          "stop_role": "핵심 방문지"
+        },
+        {
+          "sequence": 4,
+          "name": "전주한옥마을",
+          "name_en": "Jeonju Hanok Village",
+          "canonical_id": "OFF-16109",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "700여 채 한옥 밀집 지구. 한복 체험·공예·음식 등 복합. 태조로·은행로 골목 자유 탐방.",
+          "stop_role": "체류·탐방 구역"
+        },
+        {
+          "sequence": 5,
+          "name": "청연루·남천교",
+          "name_en": "Cheongyeonru Pavilion & Namcheon Bridge",
+          "canonical_id": "OFF-16086",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주천 남천교 위 누각. 한옥마을 서쪽 경계. 전주천 야경 조망 포인트.",
+          "stop_role": "마무리 경유지"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-C-002",
+      "title": "전주천·오목대 역사 산책 코스",
+      "title_en": "Jeonjucheon Stream & Omokdae Historical Walk",
+      "theme": "역사·자연·도보",
+      "traveler_fit": "역사·산책 선호 여행자 / C-001 다음 날 또는 반나절 추가",
+      "recommended_reason": "전주천변 산책로를 따라 오목대·이목대(이성계 축연지, 전주한옥마을 최고 조망)와 한벽당(보물 제합격, 전주팔경 1경), 조경단(태조·조선 왕실 발상지 기념비)을 잇는 역사 탐방 코스. 전주천(OFF-9774) 생태하천을 걸으며 도시 조망이 가능. 전주시 공식 역사탐방 추천동선과 일치.",
+      "duration": "2~3",
+      "days": 0.5,
+      "seasonality": [
+        "spring",
+        "autumn",
+        "summer_evening"
+      ],
+      "difficulty": "easy",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "전주천",
+          "name_en": "Jeonjucheon Stream",
+          "canonical_id": "OFF-9774",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "한옥마을 인접 생태하천. 산책로 정비 완료. 전주 사계절 도보 명소. 오목대·이목대의 area context.",
+          "stop_role": "출발·산책로"
+        },
+        {
+          "sequence": 2,
+          "name": "한벽당",
+          "name_en": "Hanbeoktang Pavilion",
+          "canonical_id": "OFF-9741",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "고려 말~조선 초 건립. 전주팔경 제1경. 전주천 절벽 위 정자. 전주 최고 정취 명소 중 하나.",
+          "stop_role": "핵심 방문지"
+        },
+        {
+          "sequence": 3,
+          "name": "오목대·이목대",
+          "name_en": "Omokdae & Imokdae Pavilions",
+          "canonical_id": "OFF-9742",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "이성계가 황산대첩 후 귀환 축연을 연 장소. 이목대는 조선 왕실 발상지 추정. 한옥마을 전경 최고 조망대.",
+          "stop_role": "핵심 방문지·조망"
+        },
+        {
+          "sequence": 4,
+          "name": "조경단",
+          "name_en": "Jogyeongdan Altar",
+          "canonical_id": "OFF-16087",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "조선 왕실 시조 이한(전주이씨 시조) 제단. 오목대 인근. 한국 전통 제단 건축. 사적 제339호 구역 인근.",
+          "stop_role": "마무리 방문지"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-C-003",
+      "title": "전주 전통문화 체험 & 미식 1일 코스",
+      "title_en": "Jeonju Traditional Culture & Food Full-Day Route",
+      "theme": "음식·미식·전통공예·시장",
+      "traveler_fit": "음식·체험 선호 여행자 / 1박2일 여행자 두 번째 날",
+      "recommended_reason": "전주비빔밥 전문 거리·남부시장·청년몰·전통술박물관·한지박물관·야시장(주말)까지 전주의 음식·공예·시장 문화를 집중 경험하는 1일 코스. 전주 음식문화는 UNESCO 창의도시 네트워크 미식 분야 선정(2012). tour.jeonju.go.kr 공식 음식관광 추천동선과 일치.",
+      "duration": "6~8",
+      "days": 1,
+      "seasonality": [
+        "all"
+      ],
+      "difficulty": "easy",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "남부시장·청년몰",
+          "name_en": "Nambu Market & Youth Mall",
+          "canonical_id": "OFF-16084",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주 전통 재래시장. 청년몰은 젊은 상인 로컬 음식·공예 집합. 전주비빔밥·쌀국수 등 먹거리 집중.",
+          "stop_role": "출발점·시장 탐방"
+        },
+        {
+          "sequence": 2,
+          "name": "전주비빔밥 거리 (풍남동)",
+          "name_en": "Jeonju Bibimbap Restaurant Street (Pungnamdong)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "풍남문~경기전 인근 풍남동 일대에 전주비빔밥 전문 식당 밀집. 개별 식당은 canonical 미등록이나 해당 지구는 한옥마을 area 내 포함. tour.jeonju.go.kr 음식관광 추천 지구.",
+          "stop_role": "미식 핵심"
+        },
+        {
+          "sequence": 3,
+          "name": "전주전통술박물관",
+          "name_en": "Jeonju Traditional Liquor Museum",
+          "canonical_id": "OFF-9796",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주 막걸리·소주 등 전통주 제조 과정 전시 및 시음 체험. 전주 3대 특산 전통주 문화 이해.",
+          "stop_role": "체험·관람"
+        },
+        {
+          "sequence": 4,
+          "name": "전주한지박물관",
+          "name_en": "Jeonju Hanji Museum",
+          "canonical_id": "OFF-9780",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전통 한지(닥나무 종이) 제조 과정 전시 및 체험. 전주 한지는 세계기록문화유산에 조선왕조실록 보존지로 기여. 수공예 체험 프로그램 운영.",
+          "stop_role": "체험·관람"
+        },
+        {
+          "sequence": 5,
+          "name": "남부시장 한옥마을 야시장",
+          "name_en": "Nambu Market Hanok Village Night Market",
+          "canonical_id": "OFF-16085",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "매주 금·토 저녁 운영(4월~10월). 로컬 음식·공연·공예 야시장. 전주 야간관광 대표 프로그램.",
+          "stop_role": "마무리·야간 체험"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 / UNESCO 창의도시 미식 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-C-R01",
+      "title": "덕진공원·전주향교 산책 코스",
+      "title_en": "Deokjin Park & Jeonju Hyanggyo Nature & History Walk",
+      "theme": "자연·역사·계절",
+      "traveler_fit": null,
+      "recommended_reason": null,
+      "duration": "2~3",
+      "days": 0.5,
+      "seasonality": [
+        "summer_lotus",
+        "spring_cherry"
+      ],
+      "difficulty": null,
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "덕진공원",
+          "name_en": "Deokjin Park",
+          "canonical_id": "OFF-9772",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주 시민 공원. 대형 연못과 연꽃 단지. 7~8월 연꽃 절정. 덕진교·연꽃 포토존.",
+          "stop_role": "출발·핵심"
+        },
+        {
+          "sequence": 2,
+          "name": "전주향교",
+          "name_en": "Jeonju Hyanggyo (Confucian Academy)",
+          "canonical_id": "OFF-9751",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "고려 성종 시기 창건·조선 태종 대 현 위치 이전. 경기전 근처. 국가사적. 전통 유교 교육기관 건축 보존.",
+          "stop_role": "역사 방문지"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-C-R02",
+      "title": "완산칠봉꽃동산·한벽당 계절 코스",
+      "title_en": "Wansanchilbong Flower Garden & Hanbeoktang Seasonal Route",
+      "theme": "자연·계절·역사",
+      "traveler_fit": null,
+      "recommended_reason": null,
+      "duration": "2~3",
+      "days": 0.5,
+      "seasonality": [
+        "spring",
+        "autumn"
+      ],
+      "difficulty": null,
+      "is_reserve": true,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "완산꽃동산(완산칠봉꽃동산)",
+          "name_en": "Wansan Flower Garden (Wansanchilbong)",
+          "canonical_id": "OFF-13964",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주 시내 근교 야산. 봄 벚꽃·진달래, 가을 코스모스로 유명. 전주시 공식 계절 관광지.",
+          "stop_role": "핵심"
+        },
+        {
+          "sequence": 2,
+          "name": "한벽당",
+          "name_en": "Hanbeoktang Pavilion",
+          "canonical_id": "OFF-9741",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "전주팔경 제1경. C-002에서도 등장하는 전주 핵심 명소. 완산칠봉에서 차로 15분.",
+          "stop_role": "역사 방문지"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    }
+  ],
+  "excluded_stale_recommended_now": [
+    {
+      "name": "전주 국제영화제 (JIFF)",
+      "reason": "봄 한정 행사. 기준일(2026-08-22) 비해당. canonical: KTO-2861680(제8회 전주국제단편영화제) EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 막걸리 축제",
+      "reason": "가을 한정 행사. 기준일 비해당. canonical: KTO-3381612 EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 제야축제",
+      "reason": "연말 한정 행사. 기준일 비해당. canonical: KTO-2642299 EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 세계소리축제 (가을)",
+      "reason": "기준일(8월) 아직 미개최. 9월 이후 추천 가능. RN-R02로 reserve 분류."
+    }
+  ],
+  "recommended_now": [
+    {
+      "id": "jeonju-RN-001",
+      "name": "남부시장 한옥마을 야시장 (하계 주말 운영)",
+      "name_en": "Nambu Market Hanok Village Night Market — Summer Weekend",
+      "category": "야시장·시장 (계절 프로그램)",
+      "why_now": "전주 남부시장이 매주 금·토 저녁(18:00~23:00 내외) 야시장을 운영 중. 운영 기간 4월~10월 사이 기준일(2026-08-22) 하계 시즌 한창. 전주 로컬 음식(비빔밥·두부두루치기·초코파이 등 다양한 먹거리)·공예·공연을 동시에 체험 가능. tour.jeonju.go.kr 공식 야간관광 특집 추천 프로그램. 전주 방문자 사이 입소문이 높은 공식 인정 야간 프로그램.",
+      "valid_from": "2026-04-01",
+      "valid_to": "2026-10-31",
+      "review_by": "2026-11-01",
+      "canonical_id": "OFF-16085",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "전주시 / 남부시장 야시장 운영위",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-RN-002",
+      "name": "덕진공원 하계 연꽃 후기 시즌",
+      "name_en": "Deokjin Park Summer Lotus — Late Season",
+      "category": "자연·계절 (하계 연꽃 시즌)",
+      "why_now": "덕진공원 대형 연못의 연꽃이 7월 중순~8월 중순 절정을 지나 8월 하순 현재 후기 시즌 진행 중. 연꽃과 함께 수련(수면 위 연꽃)이 여전히 감상 가능. 덕진공원은 전주 시민 여름 나들이 명소로 tour.jeonju.go.kr 여름 추천 장소 등재. 2026-08-22 기준 후기 시즌으로 조기 방문 권장(8월 말까지).",
+      "valid_from": "2026-07-15",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "OFF-9772",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-RN-003",
+      "name": "경기전·한옥마을 하계 야간 개방",
+      "name_en": "Gyeonggijeon Shrine & Hanok Village — Summer Night Program",
+      "category": "야간관광 (하절기 특화)",
+      "why_now": "경기전은 하절기(6~8월) 야간 특별개방 프로그램(달빛 경기전)을 운영하여 일반 관람 시간 이후 야간 입장이 가능. 한옥마을 전체도 여름 저녁 방문객이 가장 많은 성수기로 야간 상점·공연·한복 체험이 활발히 운영 중. tour.jeonju.go.kr 하절기 야간관광 특집 추천.",
+      "valid_from": "2026-06-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "canonical_id": "OFF-10115",
+      "canonical_ids_all": [
+        {
+          "canonical_id": "OFF-10115",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. 조선 태조 이성계 어진 봉안. 전주 대표 유적."
+        },
+        {
+          "canonical_id": "OFF-16109",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. 한옥마을 구역 개념 통합 엔티티."
+        }
+      ],
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "전주시 / 경기전 관리소 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-RN-R01",
+      "name": "전주전통술박물관 막걸리 체험 (하절기 실내 대안)",
+      "name_en": "Jeonju Traditional Liquor Museum — Makgeolli Experience (Summer Indoor)",
+      "category": "체험·문화 (실내)",
+      "why_now": "8월 폭염 피해 전주 전통주(막걸리·소주) 제조 과정 관람 및 시음 체험 가능한 실내 시설. 전주는 전통주 문화로 유명하며 tour.jeonju.go.kr 음식·문화체험 특집 등재. 연중 운영이어서 계절 특화성이 낮아 RESERVE 분류.",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "review_by": null,
+      "canonical_id": "OFF-9796",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": true,
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    },
+    {
+      "id": "jeonju-RN-R02",
+      "name": "전주 세계소리축제 (가을 예고)",
+      "name_en": "Jeonju World Sound Festival — Autumn Preview",
+      "category": "음악·공연 축제",
+      "why_now": "전주 세계소리축제는 매년 9월 말~10월 초 국립민속국악원·한국소리문화의전당 등지에서 개최되는 국제 전통음악 축제. 세계 각국 전통음악·판소리·국악을 무료~저가로 즐길 수 있어 외국인 방문자에게 특히 유익. 기준일(2026-08-22) 아직 미개최이나 9월 방문 예정자에게 유용.",
+      "valid_from": "2026-09 (exact date TBC)",
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "EVENT_OR_TEMPORARY_CONTENT",
+      "is_reserve": true,
+      "source": {
+        "provider": "전주세계소리축제 조직위원회",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      },
+      "as_of": "2026-08-22"
+    }
+  ],
+  "official_guides": [
+    {
+      "id": "jeonju-G-001",
+      "title": "전주시 공식 관광 포털 (KO)",
+      "type": "웹 가이드 / 공식 관광 정보 포털",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "전주시 (Jeonju Metropolitan City)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeonju-G-002",
+      "title": "Jeonju Official Tourism Portal (EN)",
+      "type": "Web Guide / Official Tourism Information Portal",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Jeonju Metropolitan City",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeonju-G-003",
+      "title": "全州市 公式観光ポータル (JA)",
+      "type": "ウェブガイド / 公式観光情報ポータル",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "全州市 (전주시)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeonju-G-004",
+      "title": "全州市官方旅游指南 (ZH-CN)",
+      "type": "网络指南 / 官方旅游信息门户",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "全州市 (전주시)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "jeonju-G-005",
+      "title": "전주 관광지도 (다국어 인쇄물)",
+      "type": "관광지도 (인쇄물/PDF)",
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "전주시 관광과",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-03-01"
+    },
+    {
+      "id": "jeonju-G-006",
+      "title": "전주한옥마을 공식 방문자 가이드 (KO/EN)",
+      "type": "한옥마을 방문자 가이드 / 브로셔",
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "전주시 한옥마을 관리사무소",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-03-01"
+    },
+    {
+      "id": "jeonju-G-007",
+      "title": "전주 전통음식·미식 가이드 (KO/EN) — 비빔밥·막걸리",
+      "type": "음식 관광 가이드",
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "전주시 관광 / UNESCO 창의도시 미식 (tour.jeonju.go.kr)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    }
+  ],
+  "travel_utility": [
+    {
+      "id": "jeonju-U-001",
+      "category": "광역 교통 → 전주",
+      "title": "KTX/SRT 전주역 도착 → 한옥마을·도심 이동",
+      "summary": {
+        "ko": "전주역(KTX·SRT 정차)에서 한옥마을까지 버스 5-1번·119번 이용 약 15~20분, 택시 약 10분(요금 ~5,000~6,000원). 도보 약 25분. 전주역은 경기전·한옥마을에서 약 2km. 역 내 관광안내소 및 버스 안내 표지판 있음.",
+        "en": "From Jeonju Station (KTX/SRT): take bus 5-1 or 119 (~15-20 min, T-money accepted) or taxi (~10 min, ~₩5,000-6,000) to reach Hanok Village. Walking distance ~25 min."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja"
+      ],
+      "provider": "전주시 / 코레일",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "버스 노선·요금 변동 가능. 방문 전 전주 버스정보시스템(bis.jeonju.go.kr) 확인 권장."
+    },
+    {
+      "id": "jeonju-U-002",
+      "category": "광역 교통 → 전주",
+      "title": "전주 고속/시외버스터미널 → 관광지 이동",
+      "summary": {
+        "ko": "전주고속버스터미널·전주시외버스터미널은 전주 시내에 위치. 터미널에서 한옥마을까지 시내버스 또는 택시로 15~25분. 서울(센트럴시티·동서울) ↔ 전주 고속버스 약 2시간 30분~3시간. 버스터미널에서 전주역보다 한옥마을 방향 접근이 더 용이한 경우 있음.",
+        "en": "Jeonju Intercity/Express Bus Terminal is centrally located. Express buses from Seoul (Central City, East Seoul) take ~2.5-3 hours. From terminal to Hanok Village: bus or taxi 15-25 min."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "전주시 / 코버스 / 이지티켓",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "버스 요금·시간은 변동 가능. 고속버스 예매 www.kobus.co.kr 또는 앱."
+    },
+    {
+      "id": "jeonju-U-003",
+      "category": "시내 교통",
+      "title": "전주 시내버스 (한옥마을·주요 관광지 노선)",
+      "summary": {
+        "ko": "전주 시내버스 운영. 한옥마을 핵심 노선: 5-1번(전주역↔한옥마을), 119번(한옥마을 경유). 기본요금 ~1,500원(성인·카드). T-money 교통카드 사용 가능. 환승 할인 적용. 배차 간격 15~20분 내외. 버스 노선 정보: 전주 버스정보시스템(bis.jeonju.go.kr).",
+        "en": "City buses connect major sights. Key routes for Hanok Village: bus 5-1 (Jeonju Station ↔ Hanok Village), bus 119. Fare ~₩1,500/adult (T-money card). Transfer discounts apply."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja"
+      ],
+      "provider": "전주시 버스정보시스템",
+      "source_url": "http://bis.jeonju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "요금·노선 변동 가능. 방문 전 bis.jeonju.go.kr 또는 카카오맵 확인 권장."
+    },
+    {
+      "id": "jeonju-U-004",
+      "category": "시내 교통",
+      "title": "전주 택시",
+      "summary": {
+        "ko": "전주 택시 기본요금 ~4,000원대(2024년 기준·변동 가능). 한옥마을 내부는 차량 통행 제한 구역 있음 → 인근 주차장 하차 후 도보 이동 필요. 카카오T 앱 호출 가능. 심야 할증 적용. 전주역↔한옥마을 ~5,000~6,000원 예상.",
+        "en": "Taxis available throughout Jeonju. Base fare ~₩4,000 (may change). Kakao T app works for hailing. Note: vehicle access restricted inside Hanok Village core — alight nearby and walk. Jeonju Station → Hanok Village: ~₩5,000-6,000."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "전주시 / 카카오T",
+      "source_url": "https://www.kakaomobility.com",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "기본요금은 지자체 결정에 따라 변동 가능. 방문 전 카카오T 또는 현지 안내 확인."
+    },
+    {
+      "id": "jeonju-U-005",
+      "category": "한옥마을 내부 이동",
+      "title": "전주한옥마을 내부 도보 특성 (차량통행 제한)",
+      "summary": {
+        "ko": "전주한옥마을 핵심 구역(태조로·은행로 등)은 차량 통행 제한 구역. 대부분의 명소(경기전·전동성당·풍남문·골목)는 도보로 15~30분 이내 접근 가능. 전동 킥보드는 일부 구역 이용 제한. 돌바닥·한옥 진입로는 휠체어 접근에 일부 제한 있음.",
+        "en": "The Hanok Village core is largely vehicle-restricted — most sights (Gyeonggijeon, Jeondong Cathedral, Pungnammun) are within 15-30 min walking distance of each other. Electric scooters restricted in some areas. Stone alleys may limit wheelchair access."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "전주시 한옥마을 관리사무소",
+      "source_url": "https://hanok.jeonju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeonju-U-006",
+      "category": "교통카드",
+      "title": "T-money 교통카드",
+      "summary": {
+        "ko": "전주 시내버스 T-money 카드 사용 가능. 전주역·버스터미널 인근 편의점(GS25·CU·세븐일레븐 등)에서 발급(~3,000원) 및 충전 가능. 후불 교통카드(국내 은행 체크·신용카드) 도 시내버스 사용 가능. 외국인 방문자는 선불 T-money 권장.",
+        "en": "T-money cards work on Jeonju city buses. Purchase (~₩3,000) and top-up at convenience stores (GS25, CU, 7-Eleven) near Jeonju Station or bus terminal. Foreign visitors recommended to use prepaid T-money."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "T-money (선불) / 각 카드사 (후불)",
+      "source_url": "https://www.t-money.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeonju-U-007",
+      "category": "관광안내소",
+      "title": "전주 관광안내소 (한옥마을·전주역·터미널)",
+      "summary": {
+        "ko": "주요 안내소: (1) 한옥마을 관광안내소 (경기전 앞) — 지도·관광 정보·다국어 상담, (2) 전주역 관광안내소, (3) 전주고속버스터미널 안내소. 한국어·영어·일본어·중국어 대응 (수준 상이). 무료 관광지도 배포.",
+        "en": "Key visitor centers: (1) Hanok Village Tourism Info Center (in front of Gyeonggijeon) — maps, multilingual info; (2) Jeonju Station; (3) Express Bus Terminal. KO/EN/JA/ZH support available (levels vary)."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "전주시 관광과",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "운영시간은 계절·요일에 따라 상이. 방문 전 tour.jeonju.go.kr 확인."
+    },
+    {
+      "id": "jeonju-U-008",
+      "category": "관광 안내 전화",
+      "title": "1330 관광안내전화 (한국관광공사)",
+      "summary": {
+        "ko": "한국관광공사 운영 24시간 관광안내전화. 전화번호: 1330 (국내) / +82-2-1330 (해외). 한국어·영어·일본어·중국어 상담 가능. 전주 관광정보·교통·숙박 등 문의 가능.",
+        "en": "KTO-operated tourism hotline, 24/7. Call 1330 (domestic) or +82-2-1330 (international). Available in KO/EN/JA/ZH. Can assist with Jeonju travel information, transport, and accommodation."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": "한국관광공사 (KTO)",
+      "source_url": "https://www.visitkorea.or.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": null
+    },
+    {
+      "id": "jeonju-U-009",
+      "category": "짐 보관",
+      "title": "전주역 코인로커 / 짐 보관",
+      "summary": {
+        "ko": "전주역 내 코인로커 설치(소·중·대 크기, ~3,000~5,000원/회). 한옥마을 내부에는 별도 공식 짐보관소 없음(일부 게스트하우스·카페 유료 보관 가능). 당일치기 방문자는 전주역 코인로커 이용 후 도보·버스로 이동 권장.",
+        "en": "Coin lockers at Jeonju Station (S/M/L sizes, ~₩3,000-5,000/use). No official luggage storage in Hanok Village core — some guesthouses/cafes may offer paid storage. Day-trippers recommended to use station lockers before heading to Hanok Village."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "한국철도공사 (코레일) / 전주역",
+      "source_url": "https://www.letskorail.com",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "코인로커 수·요금 변동 가능. 성수기 만실 가능성 있음."
+    },
+    {
+      "id": "jeonju-U-010",
+      "category": "환전·결제",
+      "title": "전주 환전 및 결제 정보",
+      "summary": {
+        "ko": "한옥마을 인근 KB국민은행·신한은행·우리은행 지점에서 외화 환전 가능. ATM(Global/Mastercard 호환): 한옥마을 인근 및 편의점 ATM. 한옥마을 내 상점 대부분 카드결제 가능. 일부 소규모 노점·식당은 현금만 가능 — 소액 원화 현금 휴대 권장. 전주페이(지역화폐)는 외국인 이용 불가.",
+        "en": "Currency exchange: bank branches near Hanok Village (KB, Shinhan, Woori). ATMs available at convenience stores and banks — Mastercard/Visa networks supported. Most shops in Hanok Village accept cards. Small vendors/stalls may be cash-only — carry some Korean won. Jeonjupay (local currency) not available to foreign visitors."
+      },
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": "전주시 / 각 은행",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "환율·수수료 변동. 방문 전 각 은행 확인."
+    }
+  ],
+  "source_summary": {
+    "source_files": [
+      "data/regional-recommendations/jeonju/jeonju-recommended-courses-v1.json",
+      "data/regional-recommendations/jeonju/jeonju-recommended-now-v1.json",
+      "data/regional-recommendations/jeonju/jeonju-official-guides-v1.json",
+      "data/regional-recommendations/jeonju/jeonju-travel-utility-v1.json"
+    ],
+    "source_course_key": "final_recommended_courses",
+    "source_rn_stale_key": "stale_or_excluded",
+    "stop_structure_in_source": "mixed_or_list"
+  },
+  "quality_metadata": {
+    "source_courses_final": 3,
+    "source_courses_reserve": 2,
+    "normalized_courses_total": 5,
+    "normalized_courses_final": 3,
+    "normalized_courses_reserve": 2,
+    "total_course_stops": 18,
+    "course_stops_final": 14,
+    "course_stops_reserve": 4,
+    "source_rn_final": 3,
+    "source_rn_reserve": 2,
+    "source_rn_stale": 4,
+    "normalized_rn_final": 3,
+    "normalized_rn_reserve": 2,
+    "normalized_guides": 7,
+    "normalized_utility": 10,
+    "course_stop_linkage": {
+      "EXACT_CANONICAL_LINK": 17,
+      "RELATION_OR_AREA_ONLY": 1
+    },
+    "rn_linkage": {
+      "EXACT_CANONICAL_LINK": 4,
+      "EVENT_OR_TEMPORARY_CONTENT": 1
+    },
+    "source_records_dropped": 0,
+    "recommendation_records_dropped": 0,
+    "provenance_dropped": 0,
+    "known_issues": [
+      "utility_count_summary.locale_ja=6 오타 (실제=7). 기반 데이터 정상.",
+      "남부시장 FUTURE_MERGE_REQUIRED: OFF-16084(청년몰)+OFF-16085(야시장) 별도 entity 유지."
+    ]
+  }
+}
