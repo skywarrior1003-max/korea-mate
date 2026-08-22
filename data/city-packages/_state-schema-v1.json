@@ -1,0 +1,48 @@
+{
+  "_comment": "GoKoreaMate City Package State Schema v1 — 이 파일은 스키마 참조용. 실제 state는 data/city-packages/<slug>/city-package-state.json",
+  "_schema": "city-package-state-v1",
+  "_contract": "docs/data-collection/new-city-package/multicity-new-city-package-contract-v1.md",
+
+  "city_slug": "CITY_SLUG",
+  "city_name_ko": "도시명(한국어)",
+  "city_name_en": "City Name (English)",
+  "as_of": "YYYY-MM-DD",
+  "contract_sha": "CONTRACT_BRANCH_HEAD_SHA",
+  "validator_sha": "VALIDATOR_BRANCH_HEAD_SHA",
+  "common_policy_pin": "MULTICITY_COMMON_BRANCH_SHA",
+  "created_at": "YYYY-MM-DDThh:mm:ssZ",
+  "updated_at": "YYYY-MM-DDThh:mm:ssZ",
+  "current_phase": "P0|P1|P2|P3|P4|P5|P6|P7|P8|P9|P10|P11|DONE|BLOCKED",
+
+  "phases": {
+    "P0":  {"id": "P0",  "name": "INIT",              "status": "NOT_STARTED|IN_PROGRESS|PASS|HOLD|FAIL|NOT_APPLICABLE", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P1":  {"id": "P1",  "name": "SOURCE_CAPABILITY", "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P2":  {"id": "P2",  "name": "FOOD",              "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P3":  {"id": "P3",  "name": "NONFOOD",           "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P4":  {"id": "P4",  "name": "EVENT",             "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P5":  {"id": "P5",  "name": "MULTILINGUAL",      "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P6":  {"id": "P6",  "name": "MEDIA_NAV",         "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P7":  {"id": "P7",  "name": "REGIONAL",          "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P8":  {"id": "P8",  "name": "FINAL_MANIFEST",    "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P9":  {"id": "P9",  "name": "VALIDATOR",         "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P10": {"id": "P10", "name": "EXTERNAL_CHECK",    "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null},
+    "P11": {"id": "P11", "name": "FINAL_FREEZE",      "status": "NOT_STARTED", "started_at": null, "completed_at": null, "checkpoint_path": null, "artifacts": [], "notes": "", "last_error": null}
+  },
+
+  "validator_result": null,
+
+  "external_checks": [
+    {
+      "gate": "G-XX",
+      "reason": "validator detail string",
+      "required_evidence": "사람이 확인해야 할 내용",
+      "resolved": false,
+      "resolution_evidence": "",
+      "resolved_at": null
+    }
+  ],
+
+  "safe_for_main_intake": null,
+  "final_freeze": null,
+  "targeted_action_required": []
+}
