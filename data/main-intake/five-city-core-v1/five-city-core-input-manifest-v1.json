@@ -1,0 +1,259 @@
+{
+ "active_per_city": {
+  "busan": 958,
+  "gyeongju": 299,
+  "jeju": 1496,
+  "jeonju": 236,
+  "seoul": 1837
+ },
+ "active_total": 4826,
+ "category_mapping": {
+  "DIRECT_MAP": 4304,
+  "NORMALIZE_MAP": 522
+ },
+ "deferred_fields": [
+  "eligibility",
+  "guide_award",
+  "opening_hours",
+  "phone",
+  "subway_access"
+ ],
+ "images": {
+  "display_eligible": 3867,
+  "not_eligible": 697,
+  "rights_status": {
+   "IMAGE_RIGHTS_CLEARED": 2,
+   "KTO_OFFICIAL": 10,
+   "KTO_TYPE_UNKNOWN": 174,
+   "OPERATOR_ASSUMED_REVIEW": 254,
+   "RIGHTS_UNKNOWN": 254,
+   "SOCIAL_CDN_REVIEW": 15,
+   "Type1": 27,
+   "Type3": 36,
+   "VG_RESTAURANT_OFFICIAL": 102,
+   "VISITBUSAN_OFFICIAL": 627,
+   "VISITJEJU_OFFICIAL": 1227,
+   "VISITSEOUL_OFFICIAL": 1836
+  }
+ },
+ "inputs": {
+  "busan_food": {
+   "branch": "data/busan-food-discovery-v1",
+   "city": "busan",
+   "kind": "json-records",
+   "path": "data/tourapi/normalized/busan/busan-food-194-canonical-v1.json",
+   "rows": 194,
+   "sha": "40ecc06",
+   "sha256": "3467849970287f2a503bb96999206e5320422a5528e8a8363169d60ac9a787a5"
+  },
+  "busan_food_ml": {
+   "branch": "data/busan-multilingual-v1",
+   "city": "busan",
+   "kind": "jsonl",
+   "path": "data/tourapi/multilingual/busan/busan-food-multilingual-enrichment-v1.jsonl",
+   "rows": 909,
+   "sha": "c4305f3",
+   "sha256": "1db550f1f422b5be43451cc690fd71b7329844e2c4b04c4d295c5f8e026725b8"
+  },
+  "busan_nonfood": {
+   "branch": "data/busan-nonfood-complete-v1",
+   "city": "busan",
+   "kind": "json-records",
+   "path": "data/tourapi/normalized/busan/busan-nonfood-canonical-v1.json",
+   "rows": 853,
+   "sha": "26fb3af",
+   "sha256": "aeeeb2991af2ef70b0dab36cf2faae997a9bf0d8954ad703f2861404be9d5b3c"
+  },
+  "busan_nonfood_ml": {
+   "branch": "data/busan-multilingual-v1",
+   "city": "busan",
+   "kind": "jsonl",
+   "path": "data/tourapi/multilingual/busan/busan-nonfood-multilingual-enrichment-v1.jsonl",
+   "rows": 673,
+   "sha": "c4305f3",
+   "sha256": "95cf297e883bf8b10aa9a90615ac836b752cd0a4766ac77b1cdb3e480ddd99c7"
+  },
+  "gyeongju": {
+   "branch": "data/five-city-regional-content-handoff-v1",
+   "city": "gyeongju",
+   "kind": "jsonl",
+   "path": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+   "rows": 302,
+   "sha": "922cce0",
+   "sha256": "74214c0f825f53a74a1c4aaad9cadc5ba002eeb6d19091e136a2e8ead61704ba"
+  },
+  "gyeongju_images": {
+   "branch": "data/five-city-regional-content-handoff-v1",
+   "city": "gyeongju",
+   "kind": "jsonl",
+   "path": "data/gyeongju-final-release/gyeongju-city-spot-images-import-v1.jsonl",
+   "rows": 169,
+   "sha": "922cce0",
+   "sha256": "e2eeee572e63ac2ca8d27db32803956e364c51d9fa553e5f90e1f55cb8aa926d"
+  },
+  "gyeongju_sources": {
+   "branch": "data/five-city-regional-content-handoff-v1",
+   "city": "gyeongju",
+   "kind": "jsonl",
+   "path": "data/gyeongju-final-release/gyeongju-city-spot-sources-import-v1.jsonl",
+   "rows": 302,
+   "sha": "922cce0",
+   "sha256": "dbb9397f39eecdbef92efb7426c955fd85ed0d40024b23b3251c0ce1ccfa21ab"
+  },
+  "jeju": {
+   "branch": "data/jeju-multilingual-v1",
+   "city": "jeju",
+   "kind": "jsonl",
+   "path": "data/jeju-final-release/jeju-canonical-places-v1.jsonl",
+   "rows": 1607,
+   "sha": "649d169",
+   "sha256": "afee12cdf0360329f1b38cbf5c3b297c476818cd1499ad0f4b204d14146dc390"
+  },
+  "jeju_ml": {
+   "branch": "data/jeju-multilingual-v1",
+   "city": "jeju",
+   "kind": "jsonl",
+   "path": "data/jeju-multilingual-v1/jeju-multilingual-enrichment-v1.jsonl",
+   "rows": 4447,
+   "sha": "649d169",
+   "sha256": "f2507e5a808fd81c76088c70f4e8edc8b085d0ff6595cfc5b3422240b6e35824"
+  },
+  "jeonju": {
+   "branch": "data/jeonju-multilingual-v1",
+   "city": "jeonju",
+   "kind": "json-catalog",
+   "path": "data/jeonju-raw-collection-v1/jeonju-final-service-catalog-v1.json",
+   "rows": 423,
+   "sha": "436fe37",
+   "sha256": "da498b04458a71fefcecaa7e6efbeab3aa641e643f570830e8fa5073e7ddf27b"
+  },
+  "jeonju_ml": {
+   "branch": "data/jeonju-multilingual-v1",
+   "city": "jeonju",
+   "kind": "jsonl",
+   "path": "data/jeonju-multilingual-v1/jeonju-multilingual-enrichment-v1.jsonl",
+   "rows": 236,
+   "sha": "436fe37",
+   "sha256": "af45f07239af89799d1fa58baac960ec61a4876bf15467b0e4c9c2cb4b6f99cd"
+  },
+  "seoul": {
+   "branch": "data/seoul-multilingual-v1",
+   "city": "seoul",
+   "kind": "jsonl",
+   "path": "data/seoul-final-release/seoul-canonical-places-v1.jsonl",
+   "rows": 1838,
+   "sha": "e9e9967",
+   "sha256": "5ccc1cc070deab48051f05a75cc0d4fc63b3cac1c863c243ef2bb50b357f24b0"
+  },
+  "seoul_ml": {
+   "branch": "data/seoul-multilingual-v1",
+   "city": "seoul",
+   "kind": "jsonl",
+   "path": "data/seoul-multilingual-v1/seoul-multilingual-enrichment-v1.jsonl",
+   "rows": 5068,
+   "sha": "e9e9967",
+   "sha256": "d60df0140ef599e0f43989e54194625f1ac7200c9dbfddd08f16d4b842137713"
+  }
+ },
+ "intake_fields": [
+  "name",
+  "name_l10n",
+  "description",
+  "desc_l10n",
+  "why_l10n",
+  "category",
+  "subcategory",
+  "address",
+  "district",
+  "lat",
+  "lng",
+  "official_url",
+  "opening_hours",
+  "tags",
+  "image_url",
+  "sources",
+  "images"
+ ],
+ "locale_mapping": {
+  "join_keys_normalized": [
+   "canonical_place_id",
+   "canonical_id",
+   "candidate_id"
+  ],
+  "zh-CN": "zh"
+ },
+ "main_snapshot": {
+  "path": "main-city-spots-snapshot-2026-08-22-v1.jsonl",
+  "rows": 714,
+  "sha256": "f3407c1eaff46ee91f7ad8653156dc00aa88229fc0b166c22c50a3d3a66644c2",
+  "user_data": false
+ },
+ "opening_hours_policy": {
+  "NO_SOURCE_VALUE": 2558,
+  "RAW_VALUE_DEFER": 1729,
+  "SAFE_STRUCTURED_IMPORT": 539
+ },
+ "outputs": {
+  "active": {
+   "path": "five-city-core-active-v1.jsonl",
+   "rows": 4826,
+   "sha256": "4bcfda43453de75d29417e316506ce9ac2108301cdcf4443cc405aec1c2c5d2e"
+  },
+  "crosswalk": {
+   "path": "five-city-core-crosswalk-v1.jsonl",
+   "sha256": "a7ae49a1702d70f60807fd0a58df2c8657b7793844c45f526932a0833a07620a"
+  },
+  "deferred": {
+   "path": "five-city-core-deferred-fields-v1.jsonl",
+   "rows": 10594,
+   "sha256": "abef6fbc4fc2fbdd244d4d51d9c178261567ab770233de3b62015f30a37b9a73"
+  },
+  "images": {
+   "path": "five-city-core-images-v1.jsonl",
+   "rows": 4564,
+   "sha256": "319ccc6ab5c1af1ada1b32400c72464957d00d85e209e878861d0fd4d6a395c4"
+  },
+  "main_classification": {
+   "path": "five-city-core-main-classification-v1.jsonl",
+   "sha256": "fe9f61fd3a8f7086e32f478f7a81fac853cace33de22cf8193f1a31f5ed8e0a7"
+  },
+  "sources": {
+   "path": "five-city-core-sources-v1.jsonl",
+   "rows": 6129,
+   "sha256": "b34592aeffa8861368acc548e51e57a46ed53903d4521ecb8c63fe6e19ebdda6"
+  }
+ },
+ "package": "five-city-core-v1",
+ "pins_verified": {
+  "busan_food": "40ecc06",
+  "busan_food_ml": "c4305f3",
+  "busan_nonfood": "26fb3af",
+  "busan_nonfood_ml": "c4305f3",
+  "gyeongju": "922cce0",
+  "gyeongju_images": "922cce0",
+  "gyeongju_sources": "922cce0",
+  "jeju": "649d169",
+  "jeju_ml": "649d169",
+  "jeonju": "436fe37",
+  "jeonju_ml": "436fe37",
+  "seoul": "e9e9967",
+  "seoul_ml": "e9e9967"
+ },
+ "schema_version": "intake-v1",
+ "sources_by_type": {
+  "busan-food-canonical": 194,
+  "busan-nonfood-canonical": 764,
+  "busan6260000-attractionservice": 212,
+  "busan6260000-engservice2": 77,
+  "busan6260000-festivalservice": 4,
+  "busan6260000-foodservice": 142,
+  "busan6260000-korservice2": 262,
+  "busan6260000-visitbusancontent": 524,
+  "gyeongju-city": 234,
+  "kto": 290,
+  "visitjeju": 1486,
+  "visitjeonju": 103,
+  "visitseoul": 1837
+ },
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1"
+}

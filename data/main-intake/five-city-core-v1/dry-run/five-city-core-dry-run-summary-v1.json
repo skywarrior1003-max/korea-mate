@@ -1,0 +1,67 @@
+{
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
+ "mode": "dry-run",
+ "input_manifest_sha256": "eae9ebf8344a63c8fc7eae75f7e5d84222f867dfd169d2ca931921b8154855dc",
+ "run_id": "35ae794b641cdef2",
+ "counts": {
+  "active_input": 4826,
+  "match_replace": 461,
+  "new": 4168,
+  "ambiguous_skipped": 197,
+  "excluded_skipped": 3,
+  "existing_id_preserved": 461,
+  "delete": 0
+ },
+ "arithmetic_ok": true,
+ "expected_universe": {
+  "active_total": 4826,
+  "writes": 4629,
+  "skipped": 200
+ },
+ "per_city": {
+  "busan": {
+   "before": 412,
+   "updates": 162,
+   "inserts": 627,
+   "projected_after": 1039
+  },
+  "gyeongju": {
+   "before": 302,
+   "updates": 299,
+   "inserts": 0,
+   "projected_after": 302
+  },
+  "jeju": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 1495,
+   "projected_after": 1495
+  },
+  "jeonju": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 226,
+   "projected_after": 226
+  },
+  "seoul": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 1820,
+   "projected_after": 1820
+  }
+ },
+ "projected_total_city_spots": 4882,
+ "null_policy_counts": {
+  "REPLACE_WITH_VALUE": 4284,
+  "INTENTIONALLY_CLEAR": 8,
+  "NO_SOURCE_VALUE": 4006,
+  "PRESERVE_RUNTIME_FIELD": 0,
+  "MANUAL_REVIEW": 0
+ },
+ "sources_upserts": 5594,
+ "images_upserts": 4368,
+ "change_manifest_sha256": "0671df99bbca1334e68c23057647f16f353f76f37629beac6e9c38b0e661a667",
+ "errors": 0,
+ "delete_actions": 0,
+ "db_write_executed": false
+}

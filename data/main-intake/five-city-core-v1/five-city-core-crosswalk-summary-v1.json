@@ -1,0 +1,86 @@
+{
+ "active_total": 4826,
+ "ambiguous_breakdown": {
+  "DUPLICATE_CANONICAL": 197
+ },
+ "busan_food_tier1": 97,
+ "decisions_total": {
+  "AMBIGUOUS": 197,
+  "MATCH_REPLACE": 461,
+  "NEW": 4168
+ },
+ "delete_decisions": 0,
+ "existing_id_preserved": 461,
+ "id_change_required": 0,
+ "inputs": {
+  "busan_food": {
+   "rows": 194,
+   "sha256": "3467849970287f2a503bb96999206e5320422a5528e8a8363169d60ac9a787a5"
+  },
+  "busan_nonfood": {
+   "rows": 853,
+   "sha256": "aeeeb2991af2ef70b0dab36cf2faae997a9bf0d8954ad703f2861404be9d5b3c"
+  },
+  "gyeongju": {
+   "rows": 302,
+   "sha256": "74214c0f825f53a74a1c4aaad9cadc5ba002eeb6d19091e136a2e8ead61704ba"
+  },
+  "jeju": {
+   "rows": 1607,
+   "sha256": "afee12cdf0360329f1b38cbf5c3b297c476818cd1499ad0f4b204d14146dc390"
+  },
+  "jeonju": {
+   "rows": 423,
+   "sha256": "da498b04458a71fefcecaa7e6efbeab3aa641e643f570830e8fa5073e7ddf27b"
+  },
+  "seoul": {
+   "rows": 1838,
+   "sha256": "5ccc1cc070deab48051f05a75cc0d4fc63b3cac1c863c243ef2bb50b357f24b0"
+  }
+ },
+ "main_714_classification": {
+  "ACTIVE_MATCHED": 461,
+  "DUPLICATE_REVIEW": 3,
+  "EXCLUDED_FROM_SERVICE_REVIEW": 231,
+  "LEGACY_ONLY_VALID": 19
+ },
+ "per_city": {
+  "busan": {
+   "AMBIGUOUS": 169,
+   "MATCH_REPLACE": 162,
+   "NEW": 627
+  },
+  "gyeongju": {
+   "EXCLUDED_IDENTITY_ONLY": 3,
+   "MATCH_REPLACE": 299
+  },
+  "jeju": {
+   "AMBIGUOUS": 1,
+   "NEW": 1495
+  },
+  "jeonju": {
+   "AMBIGUOUS": 10,
+   "NEW": 226
+  },
+  "seoul": {
+   "AMBIGUOUS": 17,
+   "NEW": 1820
+  }
+ },
+ "pins": {
+  "busan_food": "40ecc06",
+  "busan_food_ml": "c4305f3",
+  "busan_nonfood": "26fb3af",
+  "busan_nonfood_ml": "c4305f3",
+  "gyeongju": "922cce0",
+  "gyeongju_images": "922cce0",
+  "gyeongju_sources": "922cce0",
+  "jeju": "649d169",
+  "jeju_ml": "649d169",
+  "jeonju": "436fe37",
+  "jeonju_ml": "436fe37",
+  "seoul": "e9e9967",
+  "seoul_ml": "e9e9967"
+ },
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1"
+}
