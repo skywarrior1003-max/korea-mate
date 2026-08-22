@@ -36,7 +36,7 @@ import { chunk } from "../src/lib/city-spots-paging.ts";
 
 function arg(name: string): string | undefined { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : undefined; }
 const flags = new Set(process.argv.slice(2).filter(a => a.startsWith("--")));
-const pkg = resolve(arg("--package") ?? "data/main-intake/five-city-core-v1");
+const pkg = resolve(arg("--package") ?? "data/main-intake/five-city-core-v2");   // v2 = Gyeongju Food 105 + Seoul final-freeze (v1 = R2 historical plan)
 const mode = flags.has("--stage") ? "stage" : flags.has("--pre-stage-snapshot") ? "pre-stage-snapshot" : flags.has("--publish-sql") ? "publish-sql" : flags.has("--stage-plan") ? "stage-plan" : flags.has("--apply") ? "apply-legacy" : "dry-run";
 
 function sha256(buf: Buffer | string): string { return createHash("sha256").update(buf).digest("hex"); }

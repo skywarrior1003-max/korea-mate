@@ -1,0 +1,271 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-STAGE-WRITER-COMPLETION-V1",
+ "mode": "dry-run",
+ "input_manifest_sha256": "fb3677b73d039e137043164bfa67a8fdd74e3710c99d1d085119d4df6f207480",
+ "run_id": "a4f3889fd3667e26",
+ "expected_from_manifest": {
+  "active_total": 4829,
+  "match_replace": 368,
+  "new": 4291,
+  "confirmed_twin": 170,
+  "review_required": 0,
+  "excluded": 97,
+  "main_rows": 714,
+  "hide_legacy": 327
+ },
+ "manifest_assertion_diffs": [],
+ "counts": {
+  "active_input": 4829,
+  "match_replace": 368,
+  "new": 4291,
+  "confirmed_twin_skipped": 170,
+  "review_required_skipped": 0,
+  "excluded_skipped": 97,
+  "active_distinct": 4659,
+  "writeable_active": 4659,
+  "existing_id_preserved": 368,
+  "lossy_category": 0,
+  "heuristic_twin_auto_merge": 0,
+  "evidenceless_skip": 0,
+  "delete": 0
+ },
+ "arithmetic_ok": true,
+ "artifact_trust": {
+  "SOURCE_ACTIVE_RECORD_COUNT": 4829,
+  "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
+  "REVIEW_REQUIRED_COUNT": 0,
+  "ACTIVE_DISTINCT_COUNT": 4659,
+  "WRITEABLE_ACTIVE_COUNT": 4659,
+  "HEURISTIC_TWIN_AUTO_MERGE_COUNT": 0,
+  "ARTIFACT_EVIDENCELESS_SKIP_COUNT": 0,
+  "decision_basis": {
+   "MAIN_EXPLICIT_DECISION_TABLE": 64,
+   "ARTIFACT_SERVICE_STATUS": 4291,
+   "ARTIFACT_SOURCE_LINEAGE": 466,
+   "ARTIFACT_IDENTITY_RESOLUTION": 7,
+   "OWNER_TARGETED_RESOLUTION": 1
+  }
+ },
+ "data_trust_policy": {
+  "final_over_legacy": true,
+  "legacy_numeric_id_preserved": true,
+  "no_source_value": "payload 제외(no-op; legacy 승인 아님)",
+  "intentionally_clear": "null",
+  "legacy_image_fallback": false,
+  "legacy_source_auto_carry": false,
+  "delete": 0
+ },
+ "identity": {
+  "new_row_strategy": "lookup-before-insert on city_spots.(source_type, external_id) partial UNIQUE + conflict re-lookup",
+  "source_type": "canonical",
+  "external_id_format": "<city>:<canonical_id>",
+  "package_version_coupled": false
+ },
+ "stage_plan": {
+  "chunks": 26,
+  "update_chunks": 4,
+  "insert_chunks": 22,
+  "new_staged_unpublished": 4291,
+  "legacy_hidden_in_stage": 0,
+  "plan_sha256": "23e0fae8ce848d1e12d7d6c1b77c29d7279d647cab2fdaa7a0f752ef2b41529d"
+ },
+ "relation_preflight": {
+  "source_planned": 5505,
+  "image_planned": 4292,
+  "source_unresolved": 0,
+  "image_unresolved": 0,
+  "source_conflicts": [],
+  "image_conflicts": [],
+  "rights_violations": [],
+  "source_primary_conflicts": 0,
+  "image_primary_conflicts": 0,
+  "skipped_not_written_rows": 511,
+  "source_conflict_count": 0,
+  "image_conflict_count": 0,
+  "rights_violation_count": 0
+ },
+ "constraint_blockers": {
+  "current_schema": "uq_city_spots_city_name removed by 057 (applied 2026-08-22) — collisions below are informational only",
+  "city_name_collision_count": 13,
+  "city_name_collisions": [
+   {
+    "city": "busan",
+    "name": "Tonshou",
+    "members": [
+     "main#208",
+     "main#287(busan-G-00004)"
+    ]
+   },
+   {
+    "city": "jeonju",
+    "name": "전주드림랜드",
+    "members": [
+     "KTO-2790515",
+     "OFF-16676"
+    ]
+   },
+   {
+    "city": "jeonju",
+    "name": "진미반점",
+    "members": [
+     "KTO-2870672",
+     "KTO-3444028"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Delhi India",
+    "members": [
+     "seoul-food-v1-0681",
+     "seoul-food-v1-1226"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Eid",
+    "members": [
+     "seoul-food-v1-0601",
+     "seoul-food-v1-1259"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Hwagyesa Temple",
+    "members": [
+     "seoul-KOP002021",
+     "seoul-KOP033829"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Korea House",
+    "members": [
+     "seoul-food-v1-0032",
+     "seoul-food-v1-1185"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Nammi Plant Lab",
+    "members": [
+     "seoul-food-v1-0680",
+     "seoul-food-v1-0907"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Persian Palace",
+    "members": [
+     "seoul-food-v1-0503",
+     "seoul-food-v1-1010"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Play with K",
+    "members": [
+     "seoul-KOPmcgru1",
+     "seoul-KOPv7nwyv"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sanchon",
+    "members": [
+     "seoul-food-v1-0576",
+     "seoul-food-v1-1189"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sleep No More Seoul",
+    "members": [
+     "seoul-KOPokonim",
+     "seoul-KOPtpyykt"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sultan Kebab",
+    "members": [
+     "seoul-food-v1-0527",
+     "seoul-food-v1-0817"
+    ]
+   }
+  ],
+  "display_name_artificial_rename_count": 0
+ },
+ "gate_b_visibility": {
+  "publish_updates": 368,
+  "publish_inserts": 4291,
+  "hide_legacy": 327,
+  "preserved_visible_legacy": 15,
+  "owner_override_published": 4,
+  "untouched_other": 0,
+  "projected_visible_rows": 4678,
+  "projected_hidden_rows": 327,
+  "gate_column": "is_published",
+  "migration": "056 applied 2026-08-22"
+ },
+ "gate_c_category": {
+  "lossy_mapping_count": 0
+ },
+ "per_city": {
+  "busan": {
+   "before": 412,
+   "updates": 163,
+   "inserts": 625,
+   "projected_after": 1037,
+   "visible_after": 807,
+   "hidden_after": 230
+  },
+  "gyeongju": {
+   "before": 302,
+   "updates": 205,
+   "inserts": 97,
+   "projected_after": 399,
+   "visible_after": 302,
+   "hidden_after": 97
+  },
+  "jeju": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 1496,
+   "projected_after": 1496,
+   "visible_after": 1496,
+   "hidden_after": 0
+  },
+  "jeonju": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 236,
+   "projected_after": 236,
+   "visible_after": 236,
+   "hidden_after": 0
+  },
+  "seoul": {
+   "before": 0,
+   "updates": 0,
+   "inserts": 1837,
+   "projected_after": 1837,
+   "visible_after": 1837,
+   "hidden_after": 0
+  }
+ },
+ "projected_total_city_spots": 5005,
+ "null_policy_counts": {
+  "REPLACE_WITH_VALUE": 3359,
+  "INTENTIONALLY_CLEAR": 8,
+  "FINAL_ABSENT_CLEAR": 1236,
+  "NO_SOURCE_VALUE": 2021,
+  "PRESERVE_RUNTIME_FIELD": 0,
+  "MANUAL_REVIEW": 0,
+  "VISIBILITY_GATE": 4659
+ },
+ "sources_upserts": 5505,
+ "images_upserts": 4292,
+ "change_manifest_sha256": "c43ee6625b44498183ed440e9ef00a1bfe41693692ff00115c6ad21424e80bd3",
+ "errors": 0,
+ "delete_actions": 0,
+ "db_write_executed": false
+}

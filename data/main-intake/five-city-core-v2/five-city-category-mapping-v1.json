@@ -1,0 +1,285 @@
+{
+ "contract": {
+  "preservation_rule": "semantic != runtime → subcategory = semantic token; raw subcategory → deferred content_meta.subcategory_raw. semantic == runtime → subcategory = raw.",
+  "recoverability": "semantic == category OR subcategory == semantic (row 단위 검산)",
+  "runtime_compat_vocabulary": [
+   "accommodation",
+   "attraction",
+   "event",
+   "nature",
+   "restaurant"
+  ],
+  "semantic_vocabulary": [
+   "accommodation",
+   "activity",
+   "attraction",
+   "culture",
+   "event",
+   "heritage",
+   "nature",
+   "restaurant",
+   "shopping",
+   "specialty"
+  ]
+ },
+ "lossy_mapping_count": 0,
+ "lossy_rows": [],
+ "mappings": [
+  {
+   "city": "busan",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 710,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "attraction",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "busan",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 4,
+   "runtime_category": "event",
+   "semantic_category": "event",
+   "source_category": "event",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "busan",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 50,
+   "runtime_category": "nature",
+   "semantic_category": "nature",
+   "source_category": "nature",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "busan",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 194,
+   "runtime_category": "restaurant",
+   "semantic_category": "restaurant",
+   "source_category": "restaurant",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "gyeongju",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 197,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "attraction",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "gyeongju",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 105,
+   "runtime_category": "restaurant",
+   "semantic_category": "restaurant",
+   "source_category": "restaurant",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeju",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 1230,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "attraction",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeju",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 10,
+   "runtime_category": "event",
+   "semantic_category": "event",
+   "source_category": "event",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 256,
+   "runtime_category": "restaurant",
+   "semantic_category": "restaurant",
+   "source_category": "food",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 5,
+   "runtime_category": "accommodation",
+   "semantic_category": "accommodation",
+   "source_category": "ACCOMMODATION_HANOK_REVIEW",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred",
+   "rows": 1,
+   "runtime_category": "attraction",
+   "semantic_category": "activity",
+   "source_category": "ACTIVITY_EXPERIENCE",
+   "subcategory": "activity"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 68,
+   "runtime_category": "restaurant",
+   "semantic_category": "restaurant",
+   "source_category": "FOOD",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred",
+   "rows": 72,
+   "runtime_category": "attraction",
+   "semantic_category": "culture",
+   "source_category": "PLACE_CULTURAL",
+   "subcategory": "culture"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 12,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "PLACE_GENERAL",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred",
+   "rows": 25,
+   "runtime_category": "attraction",
+   "semantic_category": "heritage",
+   "source_category": "PLACE_HERITAGE",
+   "subcategory": "heritage"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 12,
+   "runtime_category": "nature",
+   "semantic_category": "nature",
+   "source_category": "PLACE_NATURE",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 34,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "PLACE_TOURISM",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "runtime == semantic(정규화만) — 의미 손실 없음",
+   "rows": 4,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "PLACE_TOURISM_REVIEW",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "jeonju",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred",
+   "rows": 3,
+   "runtime_category": "attraction",
+   "semantic_category": "shopping",
+   "source_category": "SPECIALTY_INTEREST",
+   "subcategory": "shopping"
+  },
+  {
+   "city": "seoul",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 526,
+   "runtime_category": "attraction",
+   "semantic_category": "attraction",
+   "source_category": "attraction",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "seoul",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 22,
+   "runtime_category": "nature",
+   "semantic_category": "nature",
+   "source_category": "nature",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "seoul",
+   "lossy": false,
+   "mapping_type": "DIRECT",
+   "notes": "runtime == semantic — subcategory 는 원본 세부 분류 그대로",
+   "rows": 1259,
+   "runtime_category": "restaurant",
+   "semantic_category": "restaurant",
+   "source_category": "restaurant",
+   "subcategory": "<source raw subcategory as-is>"
+  },
+  {
+   "city": "seoul",
+   "lossy": false,
+   "mapping_type": "NORMALIZED",
+   "notes": "semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred",
+   "rows": 30,
+   "runtime_category": "attraction",
+   "semantic_category": "shopping",
+   "source_category": "shopping",
+   "subcategory": "shopping"
+  }
+ ],
+ "schema_change_required": 0,
+ "task": "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
+ "ui_scope": "data contract only — Search/Explore 카테고리 UI 는 Product Surface 단계"
+}

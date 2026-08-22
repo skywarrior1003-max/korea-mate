@@ -29,11 +29,11 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_TOTAL, PINNED_INPUTS, REPO, file_sha256, load_input, seoul_description, strip_html, to_float, verify_pins,
+    EXPECTED_TOTAL, PACKAGE_DIR, PINNED_INPUTS, REPO, VISITGYEONGJU_SOURCE_TYPE, file_sha256, load_input, seoul_description, strip_html, to_float, verify_pins,
     write_json, write_jsonl,
 )
 
-OUT_DIR = os.path.join(REPO, "data", "main-intake", "five-city-core-v1")
+OUT_DIR = os.path.join(REPO, "data", "main-intake", PACKAGE_DIR)
 MAIN_CATEGORIES = {"attraction", "restaurant", "nature", "event", "accommodation"}
 LOCALE_MAP = {"ko": "ko", "en": "en", "ja": "ja", "zh-CN": "zh", "zh": "zh"}
 
@@ -309,7 +309,9 @@ def main() -> None:
     for c in sorted(data["gyeongju"], key=lambda x: x["candidate_id"]):
         cid = c["candidate_id"]
         if cid not in active_ids:
-            continue
+            continue   # old GJ08 Food 102 (RETIRED) · EXCLUDED 3 은 active 가 아니다 — VG 105 가 Food slice
+        if cid.startswith("gyeongju-GJ08-"):
+            raise SystemExit(f"old GJ08 Food row still active in crosswalk: {cid}")
         en_title = c.get("official_en_title") if c.get("en_status") not in ("missing", "none") else None
         descs = {"ko": c.get("description_ko"), "en": c.get("official_en_description") or None}
         prov = c.get("provenance") or {}
@@ -327,6 +329,37 @@ def main() -> None:
                       note=im.get("rights_note"), primary=bool(im.get("is_primary")), as_of=im.get("as_of"))
         defer(cid, "phone", c.get("phone"), "gyeongju-canonical-places-v1", "city_spots 에 phone 컬럼 없음", "content_meta.phone")
         defer(cid, "admission", c.get("admission"), "gyeongju-canonical-places-v1", "entry_fee 형식 미확인", "entry_fee(검토 후)")
+
+    # ── 경주 VisitGyeongju Food 105 (REINTEGRATION-PREP-V1) ──────────────────
+    # 공식 4개국어(ko/en/ja/zh) 100% 제공 — 그대로 저장(번역·fallback·cross-locale 복사 0). zh-CN → zh adapter(LOCALE_MAP).
+    # Main name = title_en · description = desc_en · address = address_ko(공식 한국어 주소) · district = VisitGyeongju area ·
+    # official_url = 영문 공식 페이지 · opening_hours raw(hours_en) 는 기존 정책대로 구조화 시도/deferred · phone/address l10n 은 deferred.
+    vg_ml = defaultdict(dict)
+    for r in data["gyeongju_food_vg_ml"]:
+        loc = LOCALE_MAP.get(r.get("locale") or "")
+        if loc:
+            vg_ml[r["vg_id"]][loc] = r
+    for r in sorted(data["gyeongju_food_vg"], key=lambda x: x["replacement_candidate_id"]):
+        cid = r["replacement_candidate_id"]
+        if cid not in active_ids:
+            continue
+        m = vg_ml.get(r["vg_id"], {})
+        if set(m) != {"ko", "en", "ja", "zh"}:
+            raise SystemExit(f"{cid}: multilingual handoff locales {sorted(m)} != ko/en/ja/zh")
+        titles = {loc: (m[loc].get("title") or r.get(f"title_{loc}")) for loc in ("ko", "en", "ja", "zh")}
+        descs = {loc: (m[loc].get("description") or r.get(f"desc_{loc}") or None) for loc in ("ko", "en", "ja", "zh")}
+        row = base_row(cid, "gyeongju", "restaurant", None, name_en=titles["en"], name_ko=titles["ko"], names={"en": titles["en"], "ja": titles["ja"], "zh": titles["zh"]},
+                       descs=descs, address=r.get("address_ko"), district=r.get("area"), lat=to_float(r.get("lat")), lng=to_float(r.get("lng")),
+                       official_url=r.get("source_url_en") or r.get("source_url_ko"), hours_raw=r.get("hours_en"), tags=None,
+                       owned=("district", "official_url", "opening_hours"),
+                       provenance={"artifact": "gyeongju-vg-food-105-service-v2", "vg_id": r["vg_id"], "match_to_existing": r.get("match_to_existing"),
+                                   "existing_canonical_id": r.get("existing_canonical_id"), "rights_status": m["ko"].get("rights_status"),
+                                   "coordinate_source": "package(lat/lng present)" if r.get("lat") is not None else "MISSING(geocoding required — no centroid/guess)"})
+        active.append(row)
+        add_source(cid, VISITGYEONGJU_SOURCE_TYPE, r["vg_id"], url=r.get("source_url_ko"), tier="OFFICIAL_TOURISM_BODY", primary=True, as_of="2026-08-22")
+        defer(cid, "phone", r.get("phone"), "gyeongju-vg-food-105-service-v2", "city_spots 에 phone 컬럼 없음", "content_meta.phone")
+        defer(cid, "address_l10n", {k: r.get(f"address_{k}") for k in ("en", "ja", "zh") if r.get(f"address_{k}")}, "gyeongju-vg-food-105-service-v2", "city_spots 에 address l10n 컬럼 없음", "content_meta.address_l10n")
+        defer(cid, "source_url_l10n", {k: r.get(f"source_url_{k}") for k in ("ko", "ja", "zh") if r.get(f"source_url_{k}")}, "gyeongju-vg-food-105-service-v2", "locale 별 공식 페이지 URL", "content_meta.source_url_l10n")
 
     # ── 서울 1,837 · 제주 1,496 ────────────────────────────────────────────
     for key, city, ml_key, ml_id in [("seoul", "seoul", "seoul_ml", "canonical_place_id"), ("jeju", "jeju", "jeju_ml", "canonical_place_id")]:
@@ -462,7 +495,7 @@ def main() -> None:
     per_city = Counter(r["city"] for r in active)
     manifest = {
         "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-V1 → FINAL-ARTIFACT-ALIGNMENT-V1",
-        "package": "five-city-core-v1", "schema_version": "intake-v1.4(058-writer-correction: field ownership, multi source keys)",
+        "package": PACKAGE_DIR, "schema_version": "intake-v1.5(gyeongju-food-105 reintegration + seoul final-freeze)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},

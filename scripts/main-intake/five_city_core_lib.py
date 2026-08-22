@@ -77,10 +77,30 @@ PINNED_INPUTS: dict[str, dict[str, Any]] = {
         "city": "jeonju", "branch": "data/jeonju-multilingual-v1", "sha": "436fe37",
         "path": "data/jeonju-multilingual-v1/jeonju-multilingual-enrichment-v1.jsonl", "kind": "jsonl",
     },
+    # TASK-GYEONGJU-FOOD-105-FIVE-CITY-REINTEGRATION-PREP-V1 — VisitGyeongju 공식 Food 105 (authoritative Food slice).
+    # old GJ08 Food 102 는 active intake 에서 완전 제외(retire → PUBLISH hide). Attraction 197(GJ01/KTO1)은 기존 gyeongju pin 그대로.
+    "gyeongju_food_vg": {
+        "city": "gyeongju", "branch": "data/gyeongju-food-105-multilingual-full-content-v1", "sha": "a90fbed",
+        "path": "data/gyeongju-food-105-multilingual-full-content-v1/gyeongju-vg-food-105-service-v2.jsonl", "kind": "jsonl",
+    },
+    "gyeongju_food_vg_ml": {
+        "city": "gyeongju", "branch": "data/gyeongju-food-105-multilingual-full-content-v1", "sha": "a90fbed",
+        "path": "data/gyeongju-food-105-multilingual-full-content-v1/gyeongju-vg-food-105-multilingual-handoff-v2.jsonl", "kind": "jsonl",
+    },
 }
 
-EXPECTED_ACTIVE = {"busan_food": 194, "busan_nonfood": 764, "gyeongju": 299, "seoul": 1837, "jeju": 1496, "jeonju": 236}
-EXPECTED_TOTAL = 4826
+# generated package dir — v2 = Gyeongju Food 105 + Seoul final-freeze. v1(4,826 plan) 은 R2 evidence 로 보존(덮어쓰기 금지).
+PACKAGE_DIR = "five-city-core-v2"
+# 도시별 ACTIVE 기대값(service universe). gyeongju = Attraction 197 (canonical GJ01/KTO1) · gyeongju_food_vg = VisitGyeongju Food 105.
+EXPECTED_ACTIVE = {"busan_food": 194, "busan_nonfood": 764, "gyeongju": 197, "gyeongju_food_vg": 105, "seoul": 1837, "jeju": 1496, "jeonju": 236}
+EXPECTED_TOTAL = 4829
+OLD_GJ08_FOOD_ACTIVE = 102
+GYEONGJU_FOOD_RETIRED_CLASS = "GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE"
+VISITGYEONGJU_SOURCE_TYPE = "visitgyeongju"   # 기존 convention(visitseoul·visitjeju·visitjeonju)과 동일 패턴
+# 화수브루어리 1건 targeted resolution (Owner 허용, §13). 근거: 두 공식 관광 source(gyeongju.go.kr 식당 서비스 · visitgyeongju.or.kr)의
+# 등록 상호 완전 일치 + 동일 지번(보문로 465-67; 'A동 1층 101호' vs '1층' 은 호실 표기 차이) — 리뷰/사용자 데이터 0, 전화번호 차이(0507 안심번호 vs 휴대폰)만으로 분리 판정 안 함.
+HWASU_BREWERY = {"old_canonical_id": "gyeongju-GJ08-6917", "vg_id": "535f4149060609450a4104474351404740", "decision": "SAME",
+                 "basis": "OWNER_TARGETED_RESOLUTION", "evidence": "official title exact match (화수브루어리) + official lot address equal (경주시 보문로 465-67; unit-level wording only) across two official tourism sources; phone difference (0507 virtual vs 010) not used as separation evidence"}
 
 
 def git_show(ref: str, path: str) -> str:

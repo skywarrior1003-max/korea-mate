@@ -36,9 +36,10 @@ export function deriveExpectedCounts(manifest: InputManifest, summary: Crosswalk
   const exp: ExpectedCounts = {
     active_total: summary.active_total,
     match_replace: n("MATCH_REPLACE"), new: n("NEW"), confirmed_twin: n("CONFIRMED_TWIN"), review_required: n("REVIEW_REQUIRED"),
-    excluded: Object.values(summary.per_city ?? {}).reduce((a, c) => a + (c.EXCLUDED_IDENTITY_ONLY ?? 0), 0),
+    // 비ACTIVE skip = EXCLUDED(identity 만 확정) + RETIRED_FROM_SERVICE(old GJ08 Food 94, REINTEGRATION-PREP-V1: physical row 유지·PUBLISH hide)
+    excluded: Object.values(summary.per_city ?? {}).reduce((a, c) => a + (c.EXCLUDED_IDENTITY_ONLY ?? 0) + (c.RETIRED_FROM_SERVICE ?? 0), 0),
     main_rows: manifest.main_snapshot.rows,
-    hide_legacy: (summary.main_714_classification?.EXCLUDED_FROM_SERVICE_REVIEW ?? 0) + (summary.main_714_classification?.DUPLICATE_REVIEW ?? 0),
+    hide_legacy: (summary.main_714_classification?.EXCLUDED_FROM_SERVICE_REVIEW ?? 0) + (summary.main_714_classification?.DUPLICATE_REVIEW ?? 0) + (summary.main_714_classification?.GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE ?? 0),
   };
   const sum = exp.match_replace + exp.new + exp.confirmed_twin + exp.review_required;
   if (sum !== exp.active_total) throw new Error(`crosswalk summary decisions ${sum} != active_total ${exp.active_total}`);

@@ -1,0 +1,72 @@
+{
+ "expected_after_stage": {
+  "per_city_physical": {
+   "busan": 1037,
+   "gyeongju": 399,
+   "jeju": 1496,
+   "jeonju": 236,
+   "seoul": 1837
+  },
+  "physical_city_spots": 5005,
+  "published_false": 4291,
+  "published_null": 0,
+  "published_true": 714
+ },
+ "hard_delete": 0,
+ "package": "five-city-core-v2",
+ "phases": {
+  "A1_keep_current_valid": {
+   "op": "idempotent PATCH with new plan writes (same Final values)",
+   "rows": 360
+  },
+  "A2_preserve_id_replace_with_visitgyeongju": {
+   "op": "PATCH existing numeric id with VisitGyeongju official values",
+   "rows": 8
+  },
+  "A3_restore_pre_r2_retire_rows": {
+   "artifact": "five-city-r2-restore-plan-v1.jsonl",
+   "op": "PATCH only R2-changed approved fields back to snapshot before-values; is_published untouched",
+   "rows": 94,
+   "writer_note": "importer needs a Phase A3 restore step (reads restore plan) before R3 execution"
+  },
+  "B_new_insert": {
+   "op": "lookup-before-insert, key-set subgroups, is_published=false",
+   "per_city": {
+    "busan": 625,
+    "gyeongju": 97,
+    "jeju": 1496,
+    "jeonju": 236,
+    "seoul": 1837
+   },
+   "rows": 4291
+  },
+  "C_mapping": {
+   "rows": 4291
+  },
+  "D_sources": "new Final source plan (v2)",
+  "E_images": "new Final image plan (v2)",
+  "VERIFY": "DB totals · NEW false · user counts pre==post · relation integrity"
+ },
+ "production_baseline": {
+  "canonical_namespace": 0,
+  "city_spots": 714,
+  "images": 169,
+  "published_false": 0,
+  "published_true": 714,
+  "r2_match_completed": 462,
+  "r2_new_inserted": 0,
+  "r2_phase_a_applied": true,
+  "sources": 302
+ },
+ "publish_hide_union": {
+  "consistent": true,
+  "final_publish_hide_unique_count": 327,
+  "gyeongju_food_retire_count": 94,
+  "hard_delete": 0,
+  "old_legacy_hide_count": 233,
+  "overlap": 0,
+  "v2_main_classification_hide_count": 327
+ },
+ "publish_not_executed": true,
+ "task": "TASK-FIVE-CITY-CORE-PRODUCTION-STAGE-V1-R3 (plan only — not executed)"
+}

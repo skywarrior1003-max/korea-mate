@@ -89,7 +89,7 @@ test("C2: TS 어댑터 — DIRECT/NORMALIZED 와 semantic 왕복", () => {
 test("B1: is_published 는 VISIBILITY 소유 — 게이트 값으로 쓰인다", () => {
   const d = decideField("is_published", true, undefined);
   assert.equal(d.policy, "VISIBILITY_GATE"); assert.equal(d.value, true); assert.ok(isWritePolicy(d.policy));
-  assert.deepEqual([...HIDE_CLASSES], ["EXCLUDED_FROM_SERVICE_REVIEW", "DUPLICATE_REVIEW"]);
+  assert.deepEqual([...HIDE_CLASSES], ["EXCLUDED_FROM_SERVICE_REVIEW", "DUPLICATE_REVIEW", "GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE"]);   // + old GJ08 Food retire (REINTEGRATION-PREP-V1); v1 package has 0 retired rows → 233 unchanged
 });
 
 test("I1: fixture — artifact twin SKIP · REVIEW_REQUIRED SKIP · publish true · 승인 legacy hide · LEGACY_ONLY_VALID/Owner override 유지 · DELETE 없음", () => {

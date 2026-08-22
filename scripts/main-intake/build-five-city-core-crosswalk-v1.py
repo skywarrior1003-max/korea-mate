@@ -40,12 +40,12 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_ACTIVE, EXPECTED_TOTAL, PINNED_INPUTS, REPO, git_show, km, ko_part, load_input, norm,
+    EXPECTED_ACTIVE, EXPECTED_TOTAL, GYEONGJU_FOOD_RETIRED_CLASS, HWASU_BREWERY, OLD_GJ08_FOOD_ACTIVE, PACKAGE_DIR, PINNED_INPUTS, REPO, git_show, km, ko_part, load_input, norm,
     verify_pins, write_json, write_jsonl,
 )
 
-OUT_DIR = os.path.join(REPO, "data", "main-intake", "five-city-core-v1")
-MAIN_SNAPSHOT = os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl")
+OUT_DIR = os.path.join(REPO, "data", "main-intake", PACKAGE_DIR)
+MAIN_SNAPSHOT = os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl")   # Production baseline(714) — R2 는 행 추가 0·identity 불변
 
 # ── ARTIFACT TRUST: 근거 유형(decision_basis) ─────────────────────────────────────────
 BASIS_SOURCE_LINEAGE = "ARTIFACT_SOURCE_LINEAGE"          # artifact 가 기록한 source/uc_seq/discovery lineage
@@ -247,10 +247,27 @@ def main() -> None:
         if r["city"] == "gyeongju":
             for s in r["sources"]:
                 key_to_main[s["source_key"]] = r["main_city_spot_id"]
+    # VisitGyeongju Food 105 (REINTEGRATION-PREP-V1): old GJ08 Food 102 는 active 에서 retire, VG 105 가 Food slice.
+    vg, sha_vg = load_input("gyeongju_food_vg")
+    inputs_meta["gyeongju_food_vg"] = {"rows": len(vg), "sha256": sha_vg}
+    vg_existing = {r["existing_canonical_id"]: r for r in vg if r.get("existing_canonical_id")}
+    gj08_main: dict[str, int] = {}
+    retired: list[dict] = []
     for c in gj:
         mid = key_to_main.get(c["candidate_id"])
         if mid is None:
             raise SystemExit(f"gyeongju bridge broken: {c['candidate_id']}")
+        is_gj08 = c["candidate_id"].startswith("gyeongju-GJ08-")
+        if is_gj08 and c.get("service_status") == "ACTIVE":
+            gj08_main[c["candidate_id"]] = mid
+            if c["candidate_id"] in vg_existing:
+                continue   # identity 는 VG 행이 이어받는다(아래) — numeric id 보존
+            add("gyeongju", c["candidate_id"], "RETIRED_FROM_SERVICE", basis=BASIS_SERVICE_STATUS, main_id=mid, tier="TIER1", confidence="HIGH",
+                method="owner_decision_gj08_food_superseded", evidence="VisitGyeongju Food 105 authoritative; old GJ08 Food not in new active Final (no 102+105 merge, no supplement)",
+                service_status="RETIRED", legacy=GYEONGJU_FOOD_RETIRED_CLASS, notes="physical row 유지(hard delete 0) · R3 에서 R2-before snapshot 변경 필드 복구 · PUBLISH 에서 is_published=false")
+            main_cls[mid] = {"class": GYEONGJU_FOOD_RETIRED_CLASS, "canonical_id": c["candidate_id"], "notes": "old GJ08 Food retired from service — publish hide candidate, no delete"}
+            retired.append({"main_city_spot_id": mid, "old_canonical_id": c["candidate_id"]})
+            continue
         if c.get("service_status") == "ACTIVE":
             add("gyeongju", c["candidate_id"], "MATCH_REPLACE", basis=BASIS_SOURCE_LINEAGE, main_id=mid, tier="TIER1", confidence="HIGH",
                 method="source_key==candidate_id", evidence=f"city_spot_sources.source_key={c['candidate_id']}")
@@ -260,6 +277,38 @@ def main() -> None:
                 method="source_key==candidate_id", evidence="service_status=EXCLUDED", service_status="EXCLUDED",
                 legacy="EXCLUDED_FROM_SERVICE_REVIEW", notes="identity 확정이지만 service 밖 — write 제외·삭제 금지")
             main_cls[mid] = {"class": "EXCLUDED_FROM_SERVICE_REVIEW", "canonical_id": c["candidate_id"]}
+    if len(gj08_main) != OLD_GJ08_FOOD_ACTIVE:
+        raise SystemExit(f"old GJ08 Food active {len(gj08_main)} != {OLD_GJ08_FOOD_ACTIVE}")
+    for r in sorted(vg, key=lambda x: x["replacement_candidate_id"]):
+        cid = r["replacement_candidate_id"]
+        if r.get("service_status") != "SERVICE_ACTIVE":
+            raise SystemExit(f"{cid}: unexpected service_status {r.get('service_status')}")
+        old = r.get("existing_canonical_id")
+        if r["match_to_existing"] == "MATCH_EXISTING":
+            mid = gj08_main[old]
+            add("gyeongju", cid, "MATCH_REPLACE", basis=BASIS_IDENTITY_RESOLUTION, main_id=mid, tier="TIER1", confidence="HIGH",
+                method="package_match_to_existing==MATCH_EXISTING", evidence=f"package existing_canonical_id={old} (definite MATCH 7) → main#{mid} via city_spot_sources.source_key",
+                notes="PRESERVE_ID_AND_REPLACE: numeric id 보존, VisitGyeongju 공식 값으로 교체")
+            main_cls[mid] = {"class": "ACTIVE_MATCHED", "canonical_id": cid, "previous_canonical_id": old, "evidence": "VisitGyeongju package MATCH_EXISTING"}
+        elif r["match_to_existing"] == "REVIEW_EXISTING":
+            if old != HWASU_BREWERY["old_canonical_id"] or r["vg_id"] != HWASU_BREWERY["vg_id"]:
+                raise SystemExit(f"unexpected REVIEW_EXISTING row {cid}")
+            mid = gj08_main[old]
+            if HWASU_BREWERY["decision"] == "SAME":
+                add("gyeongju", cid, "MATCH_REPLACE", basis=HWASU_BREWERY["basis"], main_id=mid, tier="TIER1", confidence="HIGH",
+                    method="targeted_official_identity_resolution", evidence=HWASU_BREWERY["evidence"], notes="화수브루어리 targeted resolution (Owner §13) → SAME: PRESERVE_ID_AND_REPLACE")
+                main_cls[mid] = {"class": "ACTIVE_MATCHED", "canonical_id": cid, "previous_canonical_id": old, "evidence": "targeted resolution SAME"}
+            else:
+                add("gyeongju", cid, "REVIEW_REQUIRED", basis=BASIS_REVIEW_REQUIRED, main_id=None, tier="REVIEW", confidence="LOW",
+                    method="targeted_official_identity_resolution", evidence=HWASU_BREWERY["evidence"], notes="화수브루어리 identity unresolved")
+        else:
+            add("gyeongju", cid, "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH",
+                method="package_match_to_existing==NEW_VISITGYEONGJU", evidence="VisitGyeongju Food not bridged to any Main row (package crosswalk; no name/address/coordinate heuristics in Main)")
+    gj_food_transition = {"old_gj08_active": len(gj08_main), "vg_rows": len(vg),
+                          "preserve_id_and_replace": sum(1 for d in decisions if d["city"] == "gyeongju" and d["canonical_id"].startswith("gyeongju-VG08-") and d["decision"] == "MATCH_REPLACE"),
+                          "new_insert": sum(1 for d in decisions if d["canonical_id"].startswith("gyeongju-VG08-") and d["decision"] == "NEW"),
+                          "retire_from_service": len(retired), "review_required": sum(1 for d in decisions if d["canonical_id"].startswith("gyeongju-VG08-") and d["decision"] == "REVIEW_REQUIRED"),
+                          "hwasu_brewery": HWASU_BREWERY}
 
     # ── 부산 Food ───────────────────────────────────────────────────────────
     food, sha = load_input("busan_food")
@@ -452,7 +501,9 @@ def main() -> None:
     for d in active:
         per_city[d["city"]][d["decision"]] += 1
     for d in decisions:
-        if d["service_status"] != "ACTIVE":
+        if d["service_status"] == "RETIRED":
+            per_city[d["city"]]["RETIRED_FROM_SERVICE"] += 1
+        elif d["service_status"] != "ACTIVE":
             per_city[d["city"]]["EXCLUDED_IDENTITY_ONLY"] += 1
     totals = Counter(d["decision"] for d in active)
     if len(active) != EXPECTED_TOTAL:
@@ -462,7 +513,9 @@ def main() -> None:
         cnt = sum(1 for d in active if d["city"] == city and (
             (k == "busan_food" and d["canonical_id"].startswith("busan-G-")) or
             (k == "busan_nonfood" and not d["canonical_id"].startswith("busan-G-")) or
-            k not in ("busan_food", "busan_nonfood")))
+            (k == "gyeongju" and not d["canonical_id"].startswith("gyeongju-VG08-")) or
+            (k == "gyeongju_food_vg" and d["canonical_id"].startswith("gyeongju-VG08-")) or
+            k not in ("busan_food", "busan_nonfood", "gyeongju", "gyeongju_food_vg")))
         if cnt != exp:
             raise SystemExit(f"{k} active {cnt} != {exp}")
     # Main 714 분류 — 미분류 행은 PRESERVE_UNTOUCHED
@@ -502,7 +555,8 @@ def main() -> None:
                          "release_reason": "artifact 에 명시적 identity/relation 근거 없음 — Main 휴리스틱(이름·주소·좌표) 판정 해제"})
     write_jsonl(prev_path, sorted(released, key=lambda r: (r["city"], r["canonical_id"])))
     summary = {
-        "task": "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1",
+        "task": "TASK-GYEONGJU-FOOD-105-FIVE-CITY-REINTEGRATION-PREP-V1 (← FINAL-ARTIFACT-ALIGNMENT-V1)",
+        "package": PACKAGE_DIR, "gyeongju_food_transition": gj_food_transition,
         "pins": pins, "inputs": inputs_meta,
         "active_total": len(active), "decisions_total": totals,
         "per_city": {c: dict(v) for c, v in sorted(per_city.items())},

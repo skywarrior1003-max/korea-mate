@@ -89,7 +89,7 @@ export interface IntakeRow {
 /** Main 714 분류(five-city-core-main-classification-v1.jsonl) — 숨길 legacy 를 고르는 유일한 입력 */
 export interface MainClassificationRow { main_city_spot_id: number; city: string; class: string; }
 /** 숨기는 분류 — 이 둘만. LEGACY_ONLY_VALID·PRESERVE_UNTOUCHED 는 노출 유지(오너 결정 전까지) */
-export const HIDE_CLASSES = ["EXCLUDED_FROM_SERVICE_REVIEW", "DUPLICATE_REVIEW"] as const;
+export const HIDE_CLASSES = ["EXCLUDED_FROM_SERVICE_REVIEW", "DUPLICATE_REVIEW", "GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE"] as const;   // GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE: old GJ08 Food 94 (REINTEGRATION-PREP-V1) — physical row 유지, PUBLISH 에서 hide
 /** Owner 가 유지 확정한 legacy — published 유지 · 플래너 후보 포함 · id 보존 */
 export const OWNER_OVERRIDE_CLASS = "OWNER_OVERRIDE_KEEP_PUBLISHED";
 
