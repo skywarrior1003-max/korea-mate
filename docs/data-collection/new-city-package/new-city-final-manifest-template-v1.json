@@ -1,0 +1,199 @@
+{
+  "_comment": "GoKoreaMate New City Final Manifest Template v1 — machine-readable. Copy and fill for each new city. See §제13조 of multicity-new-city-package-contract-v1.md",
+  "_schema": "new-city-final-manifest-v1",
+  "_contract": "docs/data-collection/new-city-package/multicity-new-city-package-contract-v1.md",
+
+  "city": "CITY_NAME",
+  "package_version": "v1",
+  "approved_sha": "CANONICAL_BRANCH_SHA",
+  "common_policy_pin": "COMMON_BRANCH_SHA_AT_BRANCH_POINT",
+  "schema_version": "new-city-final-manifest-v1",
+  "generated_as_of": "YYYY-MM-DDThh:mm:ssZ",
+
+  "canonical_id": {
+    "type": "source-derived | internal-sequential | mixed",
+    "format_example": "city-PREFIX-XXXXX",
+    "source_id_available": "YES | NO | PARTIAL",
+    "deterministic": "YES | NO",
+    "cross_run_stable": "YES | NO",
+    "known_limitations": ""
+  },
+
+  "universe": {
+    "_note": "All counts must satisfy: discovered = canonical + (pre-canonical-review items). canonical = service_active + excluded + relation_context + expired + review. arithmetic_valid must be true.",
+    "discovered_count": 0,
+    "canonical_count": 0,
+    "service_active_count": 0,
+    "excluded_count": 0,
+    "relation_context_count": 0,
+    "expired_count": 0,
+    "review_count": 0,
+    "arithmetic_check": "service_active + excluded + relation_context + expired + review = canonical",
+    "arithmetic_valid": false
+  },
+
+  "category_counts": {
+    "_note": "service_active rows only. Keys are actual city taxonomy values.",
+    "attraction": 0,
+    "restaurant": 0,
+    "nature": 0,
+    "shopping": 0,
+    "event": 0,
+    "other": 0,
+    "total_check": "sum of above = universe.service_active_count"
+  },
+
+  "identity": {
+    "canonical_id_count": 0,
+    "canonical_id_duplicate_count": 0,
+    "source_key_coverage": 0,
+    "source_key_coverage_pct": 0.0,
+    "source_key_duplicate_count": 0,
+    "missing_strong_identity_count": 0,
+    "primary_match_key": "source_key | candidate_id | ...",
+    "secondary_match_keys": []
+  },
+
+  "data_readiness": {
+    "coord_valid_count": 0,
+    "coord_missing_count": 0,
+    "nav_ready_count": 0,
+    "nav_missing_count": 0,
+    "image_display_eligible_count": 0,
+    "image_missing_count": 0,
+    "image_provenance_count": 0,
+    "description_ko_count": 0,
+    "description_ko_missing_count": 0
+  },
+
+  "locale": {
+    "ko": {
+      "title_count": 0,
+      "description_count": 0,
+      "gap_count": 0,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 0,
+        "NOT_COLLECTED": 0,
+        "FETCH_GAP": 0,
+        "REVIEW_REQUIRED": 0
+      }
+    },
+    "en": {
+      "title_count": 0,
+      "description_count": 0,
+      "gap_count": 0,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 0,
+        "COLLECTION_GAP": 0,
+        "SOURCE_NO_LOCALE": 0,
+        "FETCH_GAP": 0,
+        "GOOGLE_TRANSLATE_ONLY": 0
+      }
+    },
+    "ja": {
+      "title_count": 0,
+      "description_count": 0,
+      "gap_count": 0,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 0,
+        "COLLECTION_GAP": 0,
+        "SOURCE_NO_LOCALE": 0
+      }
+    },
+    "zh-CN": {
+      "title_count": 0,
+      "description_count": 0,
+      "gap_count": 0,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 0,
+        "COLLECTION_GAP": 0,
+        "SOURCE_NO_LOCALE": 0
+      },
+      "zh_key_mapping_note": "Main DB zh-CN → locale key mapping required at intake"
+    }
+  },
+
+  "crosswalk": {
+    "_note": "Populated at intake time by Main developer. Fill at Final Package if pre-calculable.",
+    "tier1_eligible_count": 0,
+    "tier2_eligible_count": 0,
+    "tier3_required_count": 0,
+    "new_intake_count": 0,
+    "legacy_only_count": 0,
+    "matching_key_primary": "",
+    "matching_key_secondary": []
+  },
+
+  "artifacts": [
+    {
+      "id": "core_canonical",
+      "path": "data/{city}-final-release/{city}-canonical-places-v1.jsonl",
+      "type": "JSONL",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 0,
+      "filter_for_service": "service_status=SERVICE_ACTIVE",
+      "branch": "data/{city}-targeted-completion-v1",
+      "sha": "BRANCH_HEAD_SHA",
+      "encoding": "utf-8 | utf-8-sig"
+    },
+    {
+      "id": "multilingual",
+      "path": "data/{city}-multilingual/{city}-multilingual-final-v1.json",
+      "type": "JSON",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 0,
+      "branch": "data/{city}-multilingual-v1",
+      "sha": "BRANCH_HEAD_SHA"
+    },
+    {
+      "id": "regional_normalized",
+      "path": "data/regional-recommendations/normalized/{city}-regional-content-normalized-v1.json",
+      "type": "JSON",
+      "runtime_allowed": true,
+      "layer": "B",
+      "schema": "normalized-v1",
+      "branch": "data/five-city-regional-content-handoff-v1",
+      "sha": "BRANCH_HEAD_SHA"
+    },
+    {
+      "id": "release_summary",
+      "path": "data/{city}-final-release/{city}-canonical-release-summary-v1.json",
+      "type": "JSON",
+      "runtime_allowed": false,
+      "layer": "A_META",
+      "branch": "data/{city}-targeted-completion-v1",
+      "sha": "BRANCH_HEAD_SHA"
+    }
+  ],
+
+  "release_gate": {
+    "_ref": "§제14조 Release Gate G-01~G-15",
+    "G-01_universe_arithmetic": "PASS|FAIL",
+    "G-02_canonical_id_unique": "PASS|FAIL",
+    "G-03_source_key_unique": "PASS|FAIL|NA",
+    "G-04_service_excluded_separation": "PASS|FAIL",
+    "G-05_required_artifacts_exist": "PASS|FAIL",
+    "G-06_manifest_row_count_match": "PASS|FAIL",
+    "G-07_provenance_coverage": "PASS|WARN",
+    "G-08_coord_arithmetic": "PASS|FAIL",
+    "G-09_ko_title_coverage": "PASS|FAIL",
+    "G-10_image_count_match": "PASS|FAIL",
+    "G-11_regional_linkage_arithmetic": "PASS|WARN|NA",
+    "G-12_no_raw_path_in_core": "PASS|FAIL",
+    "G-13_sha_match_approved": "PASS|FAIL",
+    "G-14_local_origin_match": "PASS|FAIL",
+    "G-15_reproducibility_recorded": "PASS|WARN",
+    "FINAL_FREEZE_READY": "YES|NO|HOLD"
+  },
+
+  "release": {
+    "reproducibility": "fixed_as_of=YYYY-MM-DD; sort=candidate_id_asc; deterministic=YES|NO",
+    "known_issues": [],
+    "targeted_qa_required": false,
+    "targeted_qa_items": [],
+    "safe_for_main_intake": "YES|NO|HOLD",
+    "main_intake_recommendation": "FINAL_ARTIFACT_INTAKE"
+  }
+}
