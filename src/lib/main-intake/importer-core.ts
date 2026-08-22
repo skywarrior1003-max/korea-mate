@@ -81,6 +81,9 @@ export interface IntakeRow {
   image_url: string | null;
   source_category?: string | null;
   semantic_category?: string | null;
+  /** 058-WRITER-CORRECTION: intake 가 매핑에서 기록한 Final 소유 필드 / deferred 필드 (Main 추측 금지) */
+  owned_fields?: string[];
+  deferred_fields?: string[];
 }
 
 /** Main 714 분류(five-city-core-main-classification-v1.jsonl) — 숨길 legacy 를 고르는 유일한 입력 */
@@ -194,7 +197,7 @@ export function planImport(input: {
   const inserts: InsertAction[] = [];
   const skips: SkipAction[] = [];
   const noWrite: NoWriteAction[] = [];
-  const policyCounts: Record<NullPolicy, number> = { REPLACE_WITH_VALUE: 0, INTENTIONALLY_CLEAR: 0, NO_SOURCE_VALUE: 0, PRESERVE_RUNTIME_FIELD: 0, MANUAL_REVIEW: 0, VISIBILITY_GATE: 0 };
+  const policyCounts: Record<NullPolicy, number> = { REPLACE_WITH_VALUE: 0, INTENTIONALLY_CLEAR: 0, FINAL_ABSENT_CLEAR: 0, NO_SOURCE_VALUE: 0, PRESERVE_RUNTIME_FIELD: 0, MANUAL_REVIEW: 0, VISIBILITY_GATE: 0 };
   const visibilityUpdates: VisibilityAction[] = [];
   const classById = new Map((input.mainClassification ?? []).map(r => [r.main_city_spot_id, r.class]));
   let lossyCategory = 0;
@@ -242,7 +245,7 @@ export function planImport(input: {
       const writes: Record<string, unknown> = {};
       for (const f of SOURCE_FIELDS) {
         const oldValue = f === "image_url" ? old.legacy_image_url : f === "name" ? old.canonical_title : (old as unknown as Record<string, unknown>)[f];
-        const d = decideField(f, (row as unknown as Record<string, unknown>)[f], oldValue);
+        const d = decideField(f, (row as unknown as Record<string, unknown>)[f], oldValue, { finalOwned: (row.owned_fields ?? []).includes(f), deferred: (row.deferred_fields ?? []).includes(f) });
         fields.push(d);
         policyCounts[d.policy] += 1;
         if (isWritePolicy(d.policy)) writes[f] = d.value;

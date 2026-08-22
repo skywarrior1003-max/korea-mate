@@ -12,6 +12,7 @@
 export type NullPolicy =
   | "REPLACE_WITH_VALUE"
   | "INTENTIONALLY_CLEAR"
+  | "FINAL_ABSENT_CLEAR"     // Final 이 소유하는 필드인데 공식 값 없음이 확정 → legacy 로 보충하지 않고 clear (058-WRITER-CORRECTION §7)
   | "NO_SOURCE_VALUE"
   | "PRESERVE_RUNTIME_FIELD"
   | "MANUAL_REVIEW" | "VISIBILITY_GATE";
@@ -84,7 +85,12 @@ function sourceState(v: unknown): FieldDecision["sourceState"] {
 /**
  * 한 필드에 대해 무엇을 할지 정한다. 런타임/수동/참조 필드는 source 값이 있어도 쓰지 않는다.
  */
-export function decideField(field: string, sourceValue: unknown, oldValue: unknown): FieldDecision {
+/**
+ * ctx.finalOwned  : 이 행의 artifact 가 해당 필드를 Final 필드로 매핑함(intake row.owned_fields). 값이 없으면 "공식 값 없음" 확정 → FINAL_ABSENT_CLEAR.
+ * ctx.deferred    : 값은 있으나 schema 로 구조화되지 못해 sidecar 로 보존(intake row.deferred_fields) → DB 컬럼 no-op.
+ * ctx 없음(NOT_OWNED/RUNTIME_DERIVED) → NO_SOURCE_VALUE(no-op). Main 이 ownership 을 추측하지 않는다 — intake 가 매핑에서 기계적으로 기록한다.
+ */
+export function decideField(field: string, sourceValue: unknown, oldValue: unknown, ctx: { finalOwned?: boolean; deferred?: boolean } = {}): FieldDecision {
   const owner = FIELD_OWNERSHIP[field];
   const state = sourceState(sourceValue);
   if (owner === undefined) return { field, policy: "MANUAL_REVIEW", sourceState: state };
@@ -93,10 +99,12 @@ export function decideField(field: string, sourceValue: unknown, oldValue: unkno
   if (owner === "VISIBILITY") return { field, policy: "VISIBILITY_GATE", value: sourceValue === true, sourceState: state };
   if (state === "value") return { field, policy: "REPLACE_WITH_VALUE", value: sourceValue, sourceState: state };
   if (isLegacyClearCandidate(field, oldValue)) return { field, policy: "INTENTIONALLY_CLEAR", value: null, sourceState: state };
+  if (ctx.deferred) return { field, policy: "NO_SOURCE_VALUE", sourceState: state };
+  if (ctx.finalOwned) return { field, policy: "FINAL_ABSENT_CLEAR", value: null, sourceState: state };
   return { field, policy: "NO_SOURCE_VALUE", sourceState: state };
 }
 
 /** 쓸 값이 실제로 있는 policy 만 UPDATE 에 싣는다 */
 export function isWritePolicy(p: NullPolicy): boolean {
-  return p === "REPLACE_WITH_VALUE" || p === "INTENTIONALLY_CLEAR" || p === "VISIBILITY_GATE";
+  return p === "REPLACE_WITH_VALUE" || p === "INTENTIONALLY_CLEAR" || p === "FINAL_ABSENT_CLEAR" || p === "VISIBILITY_GATE";
 }

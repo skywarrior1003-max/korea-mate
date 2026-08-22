@@ -172,9 +172,19 @@ def main() -> None:
             out[str(cid)][loc] = r
         return out
 
+    # Field ownership (TASK-FIVE-CITY-CORE-MIGRATION-058-AND-WRITER-CORRECTION-V1 §7~8):
+    #   FINAL_OWNED  = 이 artifact 타입이 Final 필드로 매핑하는 컬럼(값이 없으면 "공식 값 없음" 확정 → clear)
+    #   NOT_OWNED    = 매핑이 None 상수인 컬럼(artifact 에 그 필드가 없음 → no-op)
+    #   DEFERRED     = 값은 있으나 schema 로 구조화되지 못해 sidecar 로 보존(no-op)
+    #   RUNTIME_DERIVED = map_url · naver_map_url (계약 §4, 런타임 생성) → no-op
+    #   why_it_matters/why_l10n 은 어떤 artifact 도 소유하지 않는다(NOT_OWNED).
+    ALWAYS_OWNED = ("name", "name_l10n", "description", "desc_l10n", "category", "subcategory", "address", "lat", "lng", "image_url")
+
     def base_row(cid: str, city: str, cat_src, sub_src, *, name_en, name_ko, names: dict, descs: dict, address, district,
-                 lat, lng, official_url, hours_raw, tags, why_ko=None, provenance=None) -> dict:
+                 lat, lng, official_url, hours_raw, tags, why_ko=None, provenance=None, owned: tuple = ()) -> dict:
         cat, sub, kind, semantic, sub_raw_deferred = map_category(cat_src, sub_src)
+        owned_fields = sorted(set(ALWAYS_OWNED) | set(owned))
+        deferred_fields: list[str] = []
         cat_map_rows[(city, (cat_src or "").strip(), semantic)] = cat_map_rows.get((city, (cat_src or "").strip(), semantic), 0) + 1
         if sub_raw_deferred:
             defer(cid, "subcategory_raw", sub_raw_deferred, "artifact", "semantic 토큰이 subcategory 를 차지 — 원본 세부 분류는 content_meta 로", "content_meta.subcategory_raw")
@@ -185,6 +195,7 @@ def main() -> None:
         hours_policy[pol] += 1
         if raw:
             defer(cid, "opening_hours", raw, "artifact", "RAW_VALUE_DEFER: 구조화 불가(복수 구간/요일)", "content_meta.hours_raw")
+            deferred_fields.append("opening_hours")   # 값은 있으나 구조화 불가 → DB 컬럼은 no-op
         en_name = (name_en or names.get("en") or "").strip() or None
         d = decision[cid]
         return {
@@ -192,6 +203,7 @@ def main() -> None:
             "decision": d["decision"], "main_city_spot_id": d["main_city_spot_id"], "tier": d["tier"],
             "category": cat, "subcategory": sub, "category_mapping": kind,
             "source_category": (cat_src or "").strip() or None, "semantic_category": semantic,
+            "owned_fields": owned_fields, "deferred_fields": deferred_fields,
             # Main `name` = 영문 대표명(계약 §4). 영문이 없으면 한글명을 name 에 두고 NO_SOURCE_VALUE 로 표시한다.
             "name": en_name or (name_ko or None), "name_en_status": "REPLACE_WITH_VALUE" if en_name else "NO_SOURCE_VALUE",
             "name_l10n": l10n(ko=name_ko, en=en_name, ja=names.get("ja"), zh=names.get("zh")),
@@ -222,24 +234,19 @@ def main() -> None:
         r = base_row(cid, "busan", "restaurant", c.get("category_ko"), name_en=c.get("name_en"), name_ko=c.get("name_ko"),
                      names=names, descs=descs, address=c.get("address_ko"), district=c.get("district_ko"),
                      lat=c.get("latitude"), lng=c.get("longitude"), official_url=None, hours_raw=None, tags=c.get("tags"),
+                     owned=("district", "tags"),
                      provenance={"artifact": "busan-food-194-canonical-v1", "discovery_ids": c.get("discovery_candidate_ids"),
                                  "guide": c.get("guide_source"), "coord_status": c.get("coord_status"), "as_of": (api.get("as_of") or "")[:10] or None})
         active.append(r)
         add_source(cid, "busan-food-canonical", cid, primary=True, tier=c.get("guide_source"), as_of=r["provenance"]["as_of"])
-        # city_spot_sources 는 (city_spot_id, source_type) UNIQUE — provider 당 1행. artifact 가 좌표 authority 로 지정한 uc_seq
-        # (api_recovery_v1.coord_authority_v1.uc_seq) 를 그 1행으로 쓰고, 나머지 matched_uc_seqs 는 deferred 로 보존한다(중복 제거).
+        # Final 의 모든 matched_uc_seqs 를 정식 source 행으로 보존(migration 058 이 provider 당 다중 key 허용).
+        # 완전히 같은 (entity, source_type, source_key) 의 중복 직렬화만 접는다(Owner 승인: exact duplicate 41).
         seqs = []
         for seq in api.get("matched_uc_seqs") or []:
             if seq not in seqs:
                 seqs.append(seq)
-        auth = ((api.get("coord_authority_v1") or {}).get("uc_seq"))
-        if auth in seqs:
-            seqs = [auth] + [q for q in seqs if q != auth]
-        if seqs:
-            add_source(cid, "busan6260000-foodservice", seqs[0], tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
-            if len(seqs) > 1:
-                defer(cid, "source_keys_extra", {"busan6260000-foodservice": seqs[1:]}, "busan-food-194-canonical-v1",
-                      "city_spot_sources 는 provider 당 1행(UNIQUE city_spot_id,source_type) — 추가 uc_seq 는 provenance sidecar 로", "content_meta.source_keys_extra")
+        for seq in seqs:
+            add_source(cid, "busan6260000-foodservice", seq, tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
         st = c.get("image_status")
         if c.get("image_url") and st in ("OFFICIAL_IMAGE_RESOLVED", "BUSINESS_IMAGE_RESOLVED"):
             rights = "VISITBUSAN_OFFICIAL" if st == "OFFICIAL_IMAGE_RESOLVED" else "BUSINESS_PROVIDED"
@@ -262,12 +269,13 @@ def main() -> None:
         r = base_row(cid, "busan", c.get("category"), None, name_en=c.get("name_en"), name_ko=c.get("name_ko"), names=names,
                      descs=descs, address=c.get("address_ko"), district=None, lat=c.get("lat"), lng=c.get("lng"),
                      official_url=c.get("source_url"), hours_raw=c.get("hours"), tags=None,
+                     owned=("official_url", "opening_hours"),
                      provenance={"artifact": "busan-nonfood-canonical-v1", "primary_source": prov.get("primary_source"),
                                  "source_keys": prov.get("source_keys"), "as_of": (prov.get("enriched_at") or "")[:10] or None})
         active.append(r)
         add_source(cid, "busan-nonfood-canonical", cid, primary=True, tier=c.get("release_class"), as_of=r["provenance"]["as_of"])
-        # source_keys 예: 'AttractionService:288:ko' · 'VisitBusanContent:attraction:288:en' → provider 당 1행(UNIQUE city_spot_id,source_type):
-        # 번호(uc_seq)만 key 로 쓰고 locale/category 변형은 접는다. 같은 provider 에 번호가 여럿이면 첫 번호가 행, 나머지는 deferred.
+        # source_keys 예: 'AttractionService:288:ko' · 'VisitBusanContent:attraction:288:en' → 번호(uc_seq)만 key 로 쓰고
+        # locale/category 변형(같은 번호)은 하나로 접는다(exact duplicate). 같은 provider 의 다른 번호는 각각 행(migration 058).
         seen_prov: dict[str, list[str]] = {}
         for sk in prov.get("source_keys") or []:
             parts = str(sk).split(":")
@@ -281,10 +289,8 @@ def main() -> None:
             if num not in seen_prov[stype]:
                 seen_prov[stype].append(num)
         for stype, nums in seen_prov.items():
-            add_source(cid, stype, nums[0], tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
-            if len(nums) > 1:
-                defer(cid, "source_keys_extra", {stype: nums[1:]}, "busan-nonfood-canonical-v1",
-                      "city_spot_sources 는 provider 당 1행 — 추가 번호는 provenance sidecar 로", "content_meta.source_keys_extra")
+            for num in nums:   # 같은 provider 의 서로 다른 번호는 각각 정식 source 행(058). 동일 번호의 locale 변형만 접음.
+                add_source(cid, stype, num, tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
         if c.get("image_url"):
             ir = c.get("image_rights")
             if ir == "usable":
@@ -310,6 +316,7 @@ def main() -> None:
         r = base_row(cid, "gyeongju", c.get("category"), c.get("subcategory"), name_en=en_title, name_ko=c.get("title_ko"), names={},
                      descs=descs, address=c.get("address"), district=c.get("district"), lat=c.get("lat"), lng=c.get("lng"),
                      official_url=c.get("official_url"), hours_raw=c.get("opening_hours"), tags=None,
+                     owned=("district", "official_url", "opening_hours"),
                      provenance={"artifact": "gyeongju-canonical-places-v1", "primary_source": prov.get("primary_source"),
                                  "as_of": c.get("as_of"), "quality_tier": c.get("quality_tier"), "source_tier": c.get("source_tier")})
         active.append(r)
@@ -335,6 +342,7 @@ def main() -> None:
             r = base_row(cid, city, c.get("category"), c.get("sub_category_raw"), name_en=None, name_ko=c.get("title_ko"), names=names,
                          descs=descs, address=c.get("address"), district=None, lat=c.get("lat"), lng=c.get("lng"),
                          official_url=c.get("homepage"), hours_raw=c.get("opening_hours_raw"), tags=c.get("tags") if isinstance(c.get("tags"), list) else None,
+                         owned=("official_url", "opening_hours", "tags"),
                          provenance={"artifact": f"{city}-canonical-places-v1", "source_tier": c.get("source_tier"), "final_class": c.get("final_class"),
                                      "coord_source": c.get("coord_source"), "as_of": None})
             active.append(r)
@@ -359,6 +367,7 @@ def main() -> None:
         descs = {"en": (m.get("en") or {}).get("short_description"), "ja": (m.get("ja") or {}).get("short_description"), "zh": (m.get("zh") or {}).get("short_description")}
         r = base_row(cid, "jeonju", c.get("domain"), c.get("menu"), name_en=None, name_ko=c.get("display_name"), names=names, descs=descs,
                      address=c.get("kto_addr"), district=None, lat=c.get("lat"), lng=c.get("lng"), official_url=c.get("source_url"), hours_raw=None, tags=None,
+                     owned=("official_url",),
                      provenance={"artifact": "jeonju-final-service-catalog-v1", "source": c.get("source"), "match_type": c.get("match_type"), "as_of": "2026-08-18"})
         active.append(r)
         # ARTIFACT TRUST: OFF 레코드의 kto_cid 는 좌표 근접 crossmatch 후보이지 provenance 가 아니다(FINAL-ARTIFACT-ALIGNMENT).
@@ -447,7 +456,7 @@ def main() -> None:
     per_city = Counter(r["city"] for r in active)
     manifest = {
         "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-V1 → FINAL-ARTIFACT-ALIGNMENT-V1",
-        "package": "five-city-core-v1", "schema_version": "intake-v1.3(final-artifact-alignment)",
+        "package": "five-city-core-v1", "schema_version": "intake-v1.4(058-writer-correction: field ownership, multi source keys)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},

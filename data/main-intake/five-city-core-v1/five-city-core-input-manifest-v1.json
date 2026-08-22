@@ -31,7 +31,6 @@
   "opening_hours",
   "phone",
   "relation",
-  "source_keys_extra",
   "subcategory_raw",
   "subway_access"
  ],
@@ -214,7 +213,7 @@
   "active": {
    "path": "five-city-core-active-v1.jsonl",
    "rows": 4826,
-   "sha256": "e4c27751dc6f0f9988aa9057df9497d598b744b126fdf30f41efc34fb1c0a372"
+   "sha256": "db59f06e1399fba2c72ec93d67cd60b8ed46afbea4a2bdeafd731acd9ece6eb3"
   },
   "category_mapping": {
    "path": "five-city-category-mapping-v1.json",
@@ -226,8 +225,8 @@
   },
   "deferred": {
    "path": "five-city-core-deferred-fields-v1.jsonl",
-   "rows": 10776,
-   "sha256": "cf64d0cea051fa4f6f63ccd5bccda7dd9b0c9ebd377c169dbbd6e10d4921a041"
+   "rows": 10760,
+   "sha256": "69476a4c3814fa297f595d59d98696cfa274b5c60904083cc6cb38c2c0c38b8d"
   },
   "heuristic_twin_release": {
    "path": "five-city-core-heuristic-twin-release-v1.jsonl",
@@ -248,8 +247,8 @@
   },
   "sources": {
    "path": "five-city-core-sources-v1.jsonl",
-   "rows": 5827,
-   "sha256": "0cee4f93566ff3a1d4e415fb8adbc5fd0704fc645b6ae2ad7634098be4493a1b"
+   "rows": 5843,
+   "sha256": "4cd79bcac98076a5246cabb1ba88bc389a5b44ec34ab59069d57ee9d83acfb83"
   },
   "twin_resolution": {
    "path": "five-city-core-twin-resolution-v1.jsonl",
@@ -272,14 +271,14 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "schema_version": "intake-v1.3(final-artifact-alignment)",
+ "schema_version": "intake-v1.4(058-writer-correction: field ownership, multi source keys)",
  "sources_by_type": {
   "busan-food-canonical": 194,
   "busan-nonfood-canonical": 764,
   "busan6260000-attractionservice": 212,
   "busan6260000-engservice2": 77,
   "busan6260000-festivalservice": 4,
-  "busan6260000-foodservice": 119,
+  "busan6260000-foodservice": 135,
   "busan6260000-korservice2": 262,
   "busan6260000-visitbusancontent": 323,
   "gyeongju-city": 234,

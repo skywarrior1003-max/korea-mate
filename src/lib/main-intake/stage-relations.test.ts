@@ -19,7 +19,7 @@ const pkgReady = existsSync(new URL(PKG + "five-city-core-sources-v1.jsonl", ROO
 const T = { url: "https://example.supabase.co", serviceKey: "k" };
 
 type Row = Record<string, unknown> & { id: number };
-/** 가짜 PostgREST: GET(eq/in 필터) · POST(return=representation, UNIQUE 검사) · PATCH(by id) · DELETE 거부 */
+/** 가짜 PostgREST(058 적용 후 schema): GET(eq/in 필터) · POST(return=representation, UNIQUE 검사) · PATCH(by id) · DELETE 거부 */
 function fakeDb(seed: { city_spots?: Row[]; city_spot_sources?: Row[]; city_spot_images?: Row[]; user?: Record<string, number> } = {}) {
   const tables: Record<string, Row[]> = { city_spots: [...(seed.city_spots ?? [])], city_spot_sources: [...(seed.city_spot_sources ?? [])], city_spot_images: [...(seed.city_spot_images ?? [])] };
   const userCounts = seed.user ?? { itineraries: 68, trip_moments: 0, user_spots: 4, place_reports: 9 };
@@ -27,7 +27,7 @@ function fakeDb(seed: { city_spots?: Row[]; city_spot_sources?: Row[]; city_spot
   const uniq = (table: string, row: Row, exclude?: number): string | null => {
     const rows = tables[table]!.filter(r => r.id !== exclude);
     const dup = (pred: (r: Row) => boolean, name: string) => rows.some(pred) ? name : null;
-    if (table === "city_spot_sources") return dup(r => r.source_type === row.source_type && r.source_key === row.source_key, "uq_city_spot_sources_source") ?? dup(r => r.city_spot_id === row.city_spot_id && r.source_type === row.source_type, "uq_city_spot_sources_spot_provider") ?? (row.is_primary ? dup(r => r.city_spot_id === row.city_spot_id && r.is_primary === true, "uq_city_spot_sources_primary") : null);
+    if (table === "city_spot_sources") return dup(r => r.source_type === row.source_type && r.source_key === row.source_key, "uq_city_spot_sources_source")   /* 058: uq_city_spot_sources_spot_provider 제거 — (city_spot_id, source_type) 는 더 이상 UNIQUE 아님 */ ?? (row.is_primary ? dup(r => r.city_spot_id === row.city_spot_id && r.is_primary === true, "uq_city_spot_sources_primary") : null);
     if (table === "city_spot_images") { if (row.display_eligible && ["RIGHTS_UNKNOWN", "KTO_TYPE_UNKNOWN"].includes(String(row.rights_status))) return "csi_unknown_rights_not_public"; return dup(r => r.city_spot_id === row.city_spot_id && r.image_url === row.image_url, "uq_city_spot_images_spot_url") ?? (row.is_primary ? dup(r => r.city_spot_id === row.city_spot_id && r.is_primary === true, "uq_city_spot_images_primary") : null); }
     if (table === "city_spots") return row.external_id ? dup(r => r.source_type === row.source_type && r.external_id === row.external_id, "idx_city_spots_source_external") : null;
     return null;
@@ -49,16 +49,17 @@ function fakeDb(seed: { city_spots?: Row[]; city_spot_sources?: Row[]; city_spot
 const src = (o: Partial<ResolvedSource> & { canonical_id: string; city_spot_id: number; source_type: string; source_key: string }): ResolvedSource => ({ candidate_id: null, source_url: null, source_tier: "T", is_primary: false, as_of: "2026-08-18", ...o });
 const img = (o: Partial<ResolvedImage> & { canonical_id: string; city_spot_id: number; image_url: string }): ResolvedImage => ({ rights_status: "VISITSEOUL_OFFICIAL", attribution_required: true, rights_note: null, display_eligible: true, is_primary: false, sort_order: 0, as_of: null, ...o });
 
-test("S1/S3/S4/S8: exact identity → reuse+sync · 같은 spot/provider 다른 key → Final 로 갱신 · 재실행 중복 0 · DELETE 0", async () => {
+test("S1/S3/S4/S8: exact identity → reuse+sync · 같은 spot/provider 다른 key → 별도 행 INSERT(058, legacy 행은 보존) · 재실행 중복 0 · DELETE 0", async () => {
   const db = fakeDb({ city_spot_sources: [{ id: 1, city_spot_id: 287, source_type: "busan-food-canonical", source_key: "busan-G-00004", is_primary: true, source_url: null, source_tier: "old", candidate_id: null, as_of: null }, { id: 2, city_spot_id: 287, source_type: "busan6260000-foodservice", source_key: "999", is_primary: false, source_url: null, source_tier: "OFFICIAL_API", candidate_id: null, as_of: null }] });
   const finals = [src({ canonical_id: "busan-G-00004", city_spot_id: 287, source_type: "busan-food-canonical", source_key: "busan-G-00004", is_primary: true, source_tier: "busan-mat-2026" }), src({ canonical_id: "busan-G-00004", city_spot_id: 287, source_type: "busan6260000-foodservice", source_key: "1506" }), src({ canonical_id: "busan-G-00004", city_spot_id: 287, source_type: "visitbusan-web", source_key: "x1" })];
   const r1 = await syncSourcesChunk(db.fetchLike, T, finals);
-  assert.deepEqual({ reused: r1.reused_exact, updated: r1.updated_to_final, inserted: r1.inserted, unchanged: r1.unchanged }, { reused: 1, updated: 1, inserted: 1, unchanged: 0 });
-  assert.equal(db.tables.city_spot_sources.find(r => r.id === 2)!.source_key, "1506", "Case C: Final key 로 동기화");
+  assert.deepEqual({ reused: r1.reused_exact, updated: r1.updated_to_final, inserted: r1.inserted, unchanged: r1.unchanged }, { reused: 1, updated: 1, inserted: 2, unchanged: 0 });
+  assert.equal(db.tables.city_spot_sources.find(r => r.id === 2)!.source_key, "999", "058: legacy 행을 다른 key 로 덮어쓰지 않음(관계 의미 불변) — Final key 는 별도 행");
+  assert.equal(db.tables.city_spot_sources.filter(r => r.city_spot_id === 287 && r.source_type === "busan6260000-foodservice").length, 2);
   assert.equal(db.tables.city_spot_sources.find(r => r.id === 1)!.source_tier, "busan-mat-2026", "Case A: Final 값 우선");
   const r2 = await syncSourcesChunk(db.fetchLike, T, finals);
   assert.deepEqual({ inserted: r2.inserted, unchanged: r2.unchanged }, { inserted: 0, unchanged: 3 });
-  assert.equal(db.tables.city_spot_sources.length, 3); assert.equal(db.deletes(), 0);
+  assert.equal(db.tables.city_spot_sources.length, 4, "legacy 2 + Final INSERT 2(1506·x1) — legacy 999 보존, DELETE 0"); assert.equal(db.deletes(), 0);
   assert.equal(db.tables.city_spot_sources.filter(r => r.city_spot_id === 287 && r.is_primary).length, 1);
 });
 
@@ -89,7 +90,7 @@ test("S6/T2: unresolved actual id → write 전 실패 · 구조 preflight 가 U
   assert.equal(p.source_unresolved, 0); assert.equal(p.rights_violations.length, 1);
   const dupSpot = resolveRelationTargets({ sources: [...S, { ...S[1]!, source_key: "b", is_primary: true }], images: [], crosswalk: xw, newIdByCanonical: new Map([["n1", 5001]]) });
   const p2 = preflightRelations(dupSpot);
-  assert.ok(p2.source_conflicts.some(c => c.startsWith("provider 287|kto"))); assert.equal(p2.source_primary_conflicts, 1);
+  assert.deepEqual(p2.source_conflicts, [], "058: 같은 provider 다른 key 는 구조 충돌 아님"); assert.equal(p2.source_primary_conflicts, 1);
 });
 
 test("I1~I9: Final image 동기화 · Final 에 없는 legacy image 비노출/비주요화 · Final 없음→legacy fallback 없음 · RIGHTS_UNKNOWN · source_id · 재실행 · primary ≤1 · DELETE 0", async () => {
@@ -147,7 +148,7 @@ test("R: 실제 package — Final source/image plan 이 schema 구조 검사를 
   const ph = new Map(plan.inserts.map((i, idx) => [i.canonical_id, -(idx + 1)]));
   const r = resolveRelationTargets({ sources: S, images: I, crosswalk: xw, newIdByCanonical: ph });
   const p = preflightRelations(r);
-  assert.equal(p.source_planned, 5486); assert.equal(p.image_planned, 4394);
+  assert.equal(p.source_planned, 5502); assert.equal(p.image_planned, 4394);
   assert.equal(p.source_unresolved, 0); assert.equal(p.image_unresolved, 0);
   assert.deepEqual(p.source_conflicts, []); assert.deepEqual(p.image_conflicts, []); assert.deepEqual(p.rights_violations, []);
   assert.equal(p.source_primary_conflicts, 0); assert.equal(p.image_primary_conflicts, 0);

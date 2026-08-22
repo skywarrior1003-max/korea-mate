@@ -1,8 +1,8 @@
 {
  "task": "TASK-FIVE-CITY-CORE-STAGE-WRITER-COMPLETION-V1",
- "mode": "pre-stage-snapshot",
- "input_manifest_sha256": "ba360b4c09cd9544d8321a62ba1fb4b15052fc75bf68f8b41eccadddbeec3e91",
- "run_id": "ff9676639a589d90",
+ "mode": "dry-run",
+ "input_manifest_sha256": "04018103c5669cabdaabfcd356c86648a07deef5039369b203fc68ce1e3fc241",
+ "run_id": "f8abf0cf5f75e55f",
  "expected_from_manifest": {
   "active_total": 4826,
   "match_replace": 462,
@@ -65,10 +65,10 @@
   "insert_chunks": 21,
   "new_staged_unpublished": 4194,
   "legacy_hidden_in_stage": 0,
-  "plan_sha256": "2a071978eb95a36edff1cb9db4532e38c7f99f9a5ea9d0e5d0c84c56f53fc16d"
+  "plan_sha256": "84154f22ed41baafa51a918bf828923dca8ba3fce48504f74dcc7ee0d3fe2db6"
  },
  "relation_preflight": {
-  "source_planned": 5486,
+  "source_planned": 5502,
   "image_planned": 4394,
   "source_unresolved": 0,
   "image_unresolved": 0,
@@ -254,14 +254,15 @@
  "null_policy_counts": {
   "REPLACE_WITH_VALUE": 4296,
   "INTENTIONALLY_CLEAR": 8,
-  "NO_SOURCE_VALUE": 4012,
+  "FINAL_ABSENT_CLEAR": 1424,
+  "NO_SOURCE_VALUE": 2588,
   "PRESERVE_RUNTIME_FIELD": 0,
   "MANUAL_REVIEW": 0,
   "VISIBILITY_GATE": 4656
  },
- "sources_upserts": 5486,
+ "sources_upserts": 5502,
  "images_upserts": 4394,
- "change_manifest_sha256": "510fa42e9b70a3fab5186118fa6cc03abcaa609f57379c412246f2f5513e85b0",
+ "change_manifest_sha256": "8ec0f6f7cc04907d8f8a43de511d511fb112e43d3a1fadb34cfc24bf0603ebd4",
  "errors": 0,
  "delete_actions": 0,
  "db_write_executed": false

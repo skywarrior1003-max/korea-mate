@@ -1,0 +1,24 @@
+-- 058_city_spot_sources_allow_multi_source_keys_per_provider.sql
+-- TASK-FIVE-CITY-CORE-MIGRATION-058-AND-WRITER-CORRECTION-V1 — provider 당 source 1행 제한 제거
+--
+-- 왜
+--   045 의 uq_city_spot_sources_spot_provider = UNIQUE (city_spot_id, source_type) 는 "한 장소에 한 provider 는 한 행" 을 강제한다.
+--   5도시 Final artifact 에는 같은 service entity 가 같은 provider 의 서로 다른 valid source_key(uc_seq)를 여러 개 가진다
+--   (부산 Food 16건). Owner 결정(2026-08-22): Final source relation 을 sidecar 로 접지 않고 정식 city_spot_sources 행으로 그대로
+--   저장한다 → 이 UNIQUE 만 제거한다.
+--
+-- 유지되는 것
+--   · uq_city_spot_sources_source  UNIQUE (source_type, source_key)          — source identity 는 그대로 유일
+--   · uq_city_spot_sources_primary UNIQUE (city_spot_id) WHERE is_primary     — 장소당 primary source 는 그대로 1개
+--   · FK city_spot_id → city_spots(id) ON DELETE CASCADE · idx_city_spot_sources_spot (city_spot_id) · CHECK 길이 제약
+--
+-- 의존처 감사(2026-08-22, READ-ONLY)
+--   · 런타임: city_spot_sources 를 직접 읽는 곳은 functions/api/user-spots/[id]/canonical-image.ts 의 images→sources(source_url) join 뿐
+--     (images.source_id FK 경유) — (city_spot_id, source_type) 유일성에 의존하지 않음.
+--   · importer(stage-relations.ts): identity = (source_type, source_key), 조회는 city_spot_id / (source_type, source_key in …).
+--   · Production 실측: city_spot_sources 302행(전부 경주), (city_spot_id, source_type) 중복 0 → 제거 즉시 영향 0.
+--
+-- 하지 않는 것: 데이터 UPDATE/DELETE · 새 컬럼 · RLS/GRANT/POLICY 변경 · 다른 테이블 변경.
+-- 적용: Supabase Dashboard SQL Editor 에서 사람이 직접. `supabase db push` 금지. 이 파일이 repo 에 있다는 것이 적용을 뜻하지 않는다.
+
+drop index if exists public.uq_city_spot_sources_spot_provider;

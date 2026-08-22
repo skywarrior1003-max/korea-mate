@@ -8,7 +8,8 @@
 //   · name/address/좌표 heuristic 0. 데이터 재검증 0. DELETE 0. 사용자 테이블 접근 0.
 //
 // schema(045/046, Production 실측과 동일)
-//   city_spot_sources: UNIQUE(source_type, source_key) · UNIQUE(city_spot_id, source_type) · partial UNIQUE(city_spot_id) WHERE is_primary
+//   city_spot_sources: UNIQUE(source_type, source_key) · partial UNIQUE(city_spot_id) WHERE is_primary
+//     (migration 058: UNIQUE(city_spot_id, source_type) 제거 → 같은 provider 의 서로 다른 source_key 가 여러 행 가능. identity = (source_type, source_key))
 //   city_spot_images : UNIQUE(city_spot_id, image_url) · partial UNIQUE(city_spot_id) WHERE is_primary · CHECK(not(display_eligible and rights in UNKNOWN))
 //   partial unique 는 PostgREST on_conflict 로 추론되지 않으므로 모든 쓰기는 lookup-first + exact-id PATCH/plain INSERT 다.
 
@@ -62,15 +63,15 @@ export interface RelationPreflight {
 /** 품질 검증이 아니라 "DB 에 넣을 수 있는가" 만 본다(schema UNIQUE/CHECK/length). */
 export function preflightRelations(r: ReturnType<typeof resolveRelationTargets>): RelationPreflight {
   const sc: string[] = []; const ic: string[] = []; const rv: string[] = [];
-  const byTypeKey = new Map<string, Set<number>>(); const bySpotType = new Map<string, number>(); const primaryPerSpot = new Map<number, number>();
+  const byTypeKey = new Map<string, Set<number>>(); const exact = new Map<string, number>(); const primaryPerSpot = new Map<number, number>();
   for (const s of r.sources) {
     if (s.source_type.length < 1 || s.source_type.length > 64 || s.source_key.length < 1 || s.source_key.length > 128) sc.push(`length ${s.canonical_id} ${s.source_type}`);
     const k1 = `${s.source_type}|${s.source_key}`; byTypeKey.set(k1, (byTypeKey.get(k1) ?? new Set()).add(s.city_spot_id));
-    const k2 = `${s.city_spot_id}|${s.source_type}`; bySpotType.set(k2, (bySpotType.get(k2) ?? 0) + 1);
+    const k3 = `${s.city_spot_id}|${k1}`; exact.set(k3, (exact.get(k3) ?? 0) + 1);
     if (s.is_primary) primaryPerSpot.set(s.city_spot_id, (primaryPerSpot.get(s.city_spot_id) ?? 0) + 1);
   }
   for (const [k, spots] of byTypeKey) if (spots.size > 1) sc.push(`identity ${k} → ${spots.size} spots`);
-  for (const [k, n] of bySpotType) if (n > 1) sc.push(`provider ${k} × ${n}`);
+  for (const [k, n] of exact) if (n > 1) sc.push(`exact duplicate relation ${k} × ${n}`);   // 같은 provider 의 다른 key 는 058 이후 정상(행 여러 개)
   const spc = [...primaryPerSpot.values()].filter(n => n > 1).length;
   const byUrl = new Map<string, number>(); const imgPrimary = new Map<number, number>();
   for (const i of r.images) {
@@ -126,10 +127,7 @@ export async function syncSourcesChunk(f: FetchLike, t: RestTarget, finals: Reso
     const rows = await getJson<ExistingSource>(f, t, `city_spot_sources?select=id,city_spot_id,source_type,source_key,candidate_id,source_url,source_tier,is_primary,as_of&source_type=eq.${encodeURIComponent(type)}&source_key=in.(${inList(keys)})`);
     for (const e of rows) existingByIdentity.set(`${e.source_type}|${e.source_key}`, e);
   }
-  const existingSpotType = new Map<string, ExistingSource>();
-  for (const e of existingBySpot) existingSpotType.set(`${e.city_spot_id}|${e.source_type}`, e);
   const finalKeys = new Set(finals.map(s => `${s.source_type}|${s.source_key}`));
-  const finalSpotType = new Set(finals.map(s => `${s.city_spot_id}|${s.source_type}`));
 
   // Case B: identity 가 다른 spot 에 존재 → 실패(자동 remap 금지)
   for (const s of finals) {
@@ -141,20 +139,19 @@ export async function syncSourcesChunk(f: FetchLike, t: RestTarget, finals: Reso
   for (const s of finals) if (s.is_primary) finalPrimaryBySpot.set(s.city_spot_id, s);
   for (const e of existingBySpot) {
     const fp = finalPrimaryBySpot.get(e.city_spot_id);
-    const isFinalPrimaryRow = fp && (`${e.source_type}|${e.source_key}` === `${fp.source_type}|${fp.source_key}` || (`${e.city_spot_id}|${e.source_type}` === `${fp.city_spot_id}|${fp.source_type}`));
+    const isFinalPrimaryRow = fp && `${e.source_type}|${e.source_key}` === `${fp.source_type}|${fp.source_key}`;
     if (e.is_primary && fp && !isFinalPrimaryRow) { await patchById(f, t, "city_spot_sources", e.id, { is_primary: false }); e.is_primary = false; }
   }
   // Final 행 적용
   const toInsert: ResolvedSource[] = [];
   for (const s of finals) {
     const body = { city_spot_id: s.city_spot_id, source_type: s.source_type, source_key: s.source_key, candidate_id: s.candidate_id, source_url: s.source_url, source_tier: s.source_tier, is_primary: s.is_primary, as_of: s.as_of };
-    const exact = existingByIdentity.get(`${s.source_type}|${s.source_key}`);
-    const sameProvider = existingSpotType.get(`${s.city_spot_id}|${s.source_type}`);
-    const row = exact ?? sameProvider;   // Case A (exact) 또는 Case C (같은 spot/provider, 다른 key → Final 로 동기화)
+    const row = existingByIdentity.get(`${s.source_type}|${s.source_key}`);   // identity 는 (source_type, source_key) 뿐 — 같은 provider 의 다른 key 는 별도 행(058)
     if (row) {
       const diff = Object.entries(body).filter(([k, v]) => !sameValue((row as unknown as Record<string, unknown>)[k], v));
       if (diff.length === 0) { r.unchanged += 1; }
-      else { await patchById(f, t, "city_spot_sources", row.id, Object.fromEntries(diff)); if (exact) r.reused_exact += 1; else r.updated_to_final += 1; }
+      else { await patchById(f, t, "city_spot_sources", row.id, Object.fromEntries(diff)); r.updated_to_final += 1; }
+      r.reused_exact += 1;
       r.sourceIdByKey.set(`${s.source_type}|${s.source_key}`, row.id);
     } else toInsert.push(s);
   }
@@ -170,12 +167,12 @@ export async function syncSourcesChunk(f: FetchLike, t: RestTarget, finals: Reso
       }
       const missing = toInsert.filter(s => !r.sourceIdByKey.has(`${s.source_type}|${s.source_key}`));
       if (missing.length > 0) throw new StageIdentityError(`source conflict recovery incomplete: ${missing.length} rows`);
-      r.reused_exact += toInsert.length;
+      r.reused_exact += toInsert.length;   // race 로 생긴 동일 identity 행 재사용
     } else throw new StageIdentityError(`source insert failed: HTTP ${ins.status}`);
   }
-  // Case D: Final 에 없는 legacy source — 비주요화(보존). 이미 false 면 no-op.
+  // Case D: Final 에 없는 legacy source — 비주요화(보존). 이미 false 면 no-op. 관계 의미는 바꾸지 않는다.
   for (const e of existingBySpot) {
-    if (finalKeys.has(`${e.source_type}|${e.source_key}`) || finalSpotType.has(`${e.city_spot_id}|${e.source_type}`)) continue;
+    if (finalKeys.has(`${e.source_type}|${e.source_key}`)) continue;
     if (e.is_primary) { await patchById(f, t, "city_spot_sources", e.id, { is_primary: false }); r.legacy_demoted += 1; }
   }
   return r;
