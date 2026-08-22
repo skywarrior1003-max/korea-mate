@@ -1,14 +1,36 @@
 {
  "active_total": 4826,
- "busan_food_tier1": 97,
+ "artifact_trust": {
+  "ACTIVE_DISTINCT_COUNT": 4656,
+  "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
+  "REVIEW_REQUIRED_COUNT": 35,
+  "SOURCE_ACTIVE_RECORD_COUNT": 4826,
+  "WRITEABLE_ACTIVE_COUNT": 4621,
+  "artifact_evidenceless_skip_count": 0,
+  "decision_basis": {
+   "ARTIFACT_IDENTITY_RESOLUTION": 33,
+   "ARTIFACT_SERVICE_STATUS": 4162,
+   "ARTIFACT_SOURCE_LINEAGE": 568,
+   "MAIN_EXPLICIT_DECISION_TABLE": 64,
+   "UNRESOLVED_AFTER_ARTIFACT_INSPECTION": 2
+  },
+  "heuristic_twin_auto_merge_count": 0,
+  "heuristic_twins_released": 29,
+  "jeonju_identity_review_count": 33,
+  "jeonju_main_added_unresolved": 2,
+  "twin_relations": {
+   "SAME_SOURCE_ENTITY": 170
+  }
+ },
+ "busan_food_tier1": 99,
  "decisions_total": {
-  "CONFIRMED_TWIN": 195,
-  "MATCH_REPLACE": 461,
-  "NEW": 4169,
-  "TRUE_AMBIGUOUS": 1
+  "CONFIRMED_TWIN": 170,
+  "MATCH_REPLACE": 462,
+  "NEW": 4159,
+  "REVIEW_REQUIRED": 35
  },
  "delete_decisions": 0,
- "existing_id_preserved": 461,
+ "existing_id_preserved": 462,
  "id_change_required": 0,
  "inputs": {
   "busan_food": {
@@ -37,33 +59,37 @@
   }
  },
  "main_714_classification": {
-  "ACTIVE_MATCHED": 461,
+  "ACTIVE_MATCHED": 462,
   "DUPLICATE_REVIEW": 3,
-  "EXCLUDED_FROM_SERVICE_REVIEW": 231,
-  "LEGACY_ONLY_VALID": 19
+  "EXCLUDED_FROM_SERVICE_REVIEW": 230,
+  "LEGACY_ONLY_VALID": 15,
+  "OWNER_OVERRIDE_KEEP_PUBLISHED": 4
  },
+ "owner_override_keep_published": [
+  7,
+  28,
+  29,
+  42
+ ],
  "per_city": {
   "busan": {
-   "CONFIRMED_TWIN": 169,
-   "MATCH_REPLACE": 162,
-   "NEW": 627
+   "CONFIRMED_TWIN": 170,
+   "MATCH_REPLACE": 163,
+   "NEW": 625
   },
   "gyeongju": {
    "EXCLUDED_IDENTITY_ONLY": 3,
    "MATCH_REPLACE": 299
   },
   "jeju": {
-   "CONFIRMED_TWIN": 1,
-   "NEW": 1495
+   "NEW": 1496
   },
   "jeonju": {
-   "CONFIRMED_TWIN": 9,
-   "NEW": 227
+   "NEW": 201,
+   "REVIEW_REQUIRED": 35
   },
   "seoul": {
-   "CONFIRMED_TWIN": 16,
-   "NEW": 1820,
-   "TRUE_AMBIGUOUS": 1
+   "NEW": 1837
   }
  },
  "pins": {
@@ -81,32 +107,5 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
- "twin_resolution": {
-  "confirmed_twin_record_count": 195,
-  "per_city": {
-   "busan": {
-    "SAME_ENTITY_TWIN": 169
-   },
-   "jeju": {
-    "SAME_ENTITY_TWIN": 1
-   },
-   "jeonju": {
-    "DISTINCT_ENTITY": 2,
-    "SAME_ENTITY_TWIN": 9
-   },
-   "seoul": {
-    "SAME_ENTITY_TWIN": 16,
-    "TRUE_AMBIGUOUS": 1
-   }
-  },
-  "relations": {
-   "DISTINCT_ENTITY": 2,
-   "SAME_ENTITY_TWIN": 195,
-   "TRUE_AMBIGUOUS": 1
-  },
-  "source_active_record_count": 4826,
-  "true_ambiguous_count": 1,
-  "unique_service_place_count": 4631
- }
+ "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1"
 }

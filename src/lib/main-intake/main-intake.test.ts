@@ -63,7 +63,7 @@ test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, CONFIRME
   const crosswalk: CrosswalkRow[] = [
     { city: "busan", canonical_id: "busan-A-00070", service_status: "ACTIVE", main_city_spot_id: 1, decision: "MATCH_REPLACE", tier: "TIER2" },
     { city: "busan", canonical_id: "busan-A-00999", service_status: "ACTIVE", main_city_spot_id: null, decision: "NEW", tier: "NEW" },
-    { city: "busan", canonical_id: "busan-VB-1", service_status: "ACTIVE", main_city_spot_id: null, decision: "CONFIRMED_TWIN", tier: "SAME_ENTITY_TWIN", twin_of: "busan-A-00070" },
+    { city: "busan", canonical_id: "busan-VB-1", service_status: "ACTIVE", main_city_spot_id: null, decision: "CONFIRMED_TWIN", decision_basis: "ARTIFACT_SOURCE_LINEAGE", tier: "SAME_SOURCE_ENTITY", twin_of: "busan-A-00070" },
     { city: "gyeongju", canonical_id: "gyeongju-GJ01-0092", service_status: "EXCLUDED", main_city_spot_id: 5, decision: "EXCLUDED", tier: "TIER1" },
   ];
   const plan = planImport({ intake, sources: [] as SourceRow[], images: [] as ImageRow[], crosswalk, main, expectedActiveTotal: 3 });
@@ -86,7 +86,7 @@ test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, CONFIRME
 
 const pkgReady = existsSync(new URL(PKG + "five-city-core-input-manifest-v1.json", ROOT));
 
-test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 보존, historical 228 미쓰기, 쌍둥이 SKIP", { skip: !pkgReady }, () => {
+test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 보존, historical 227 미쓰기, 쌍둥이 SKIP", { skip: !pkgReady }, () => {
   const intake = readJsonl<IntakeRow>("five-city-core-active-v1.jsonl");
   const sources = readJsonl<SourceRow>("five-city-core-sources-v1.jsonl");
   const images = readJsonl<ImageRow>("five-city-core-images-v1.jsonl");
@@ -96,26 +96,26 @@ test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 
   const plan = planImport({ intake, sources, images, crosswalk, main, expectedActiveTotal: 4826 });
   assert.deepEqual(plan.errors, []);
   assert.equal(plan.counts.active_input, 4826);
-  assert.equal(plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped, 4826);
+  assert.equal(plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.review_required_skipped, 4826);
   assert.equal(plan.counts.delete, 0);
   // 경주 ACTIVE 299 → 전부 기존 id UPDATE, EXCLUDED 3 은 SKIP
   assert.equal(plan.updates.filter(u => u.city === "gyeongju").length, 299);
   assert.equal(plan.skips.filter(s => s.city === "gyeongju" && s.reason.startsWith("service_status")).length, 3);
   assert.equal(plan.inserts.filter(i => i.city === "gyeongju").length, 0);
-  // 부산 Food direct 97 (TIER1) 보존
+  // 부산 Food artifact lineage 99 (TIER1) 보존
   const busanFoodT1 = crosswalk.filter(c => c.city === "busan" && c.canonical_id.startsWith("busan-G-") && c.tier === "TIER1");
-  assert.equal(busanFoodT1.length, 97);
+  assert.equal(busanFoodT1.length, 99);   // 97 discovery-id + 2 artifact recovery lineage(G-00004→#287, G-00144→#160)
   assert.ok(busanFoodT1.every(c => plan.updates.some(u => u.main_city_spot_id === c.main_city_spot_id)));
   // historical busan-F 는 어떤 UPDATE/INSERT 에도 나타나지 않는다
   const historical = main.filter(m => m.city === "busan" && m.legacy_external_id && !plan.updates.some(u => u.main_city_spot_id === m.main_city_spot_id));
-  assert.equal(historical.length, 228);
+  assert.equal(historical.length, 227);   // 228 − #287(톤쇼우 부산대점) − #160(언양불고기)(artifact lineage 로 MATCH) + #407(슌사이쿠보: 옛 TIER2 이름/주소 bridge 폐기 → legacy 복귀)
   // Gate B: mainClassification 없이 계획하면 legacy 는 전부 NO_WRITE (숨김은 분류가 있을 때만)
   assert.ok(plan.no_write.filter(n => n.city === "busan").length >= 228);
   assert.equal(plan.visibility_updates.length, 0);
-  // 쌍둥이는 SKIP, 대표는 쓰인다 (Gate A: 195 SAME + 1 TRUE_AMBIGUOUS)
+  // 쌍둥이는 SKIP, 대표는 쓰인다 (ARTIFACT TRUST: 부산 uc_seq 근거 170 · 전주 REVIEW_REQUIRED 35 보류)
   const twins = plan.skips.filter(s => s.reason.startsWith("SKIP_TWIN"));
-  assert.equal(twins.length, 195);
-  assert.equal(plan.skips.filter(s => s.reason.startsWith("SKIP_TRUE_AMBIGUOUS")).length, 1);
+  assert.equal(twins.length, 170);
+  assert.equal(plan.skips.filter(s => s.reason.startsWith("SKIP_REVIEW_REQUIRED")).length, 35);
   for (const t of twins.slice(0, 50)) assert.ok(plan.updates.some(u => u.canonical_id === t.twin_of) || plan.inserts.some(i => i.canonical_id === t.twin_of), `twin_of ${t.twin_of} 가 쓰이지 않음`);
   // 서울·제주·전주는 INSERT 만
   for (const city of ["seoul", "jeju", "jeonju"]) assert.equal(plan.updates.filter(u => u.city === city).length, 0);

@@ -212,7 +212,7 @@
   "active": {
    "path": "five-city-core-active-v1.jsonl",
    "rows": 4826,
-   "sha256": "b3989f1ea90888a19d00fd2751874355410f860f7112bc7bbc73061ec46be596"
+   "sha256": "f6b7a0f3d104975df5e19a8bc223d9583a45c6f9e45823cbcd1fb75e15251188"
   },
   "category_mapping": {
    "path": "five-city-category-mapping-v1.json",
@@ -220,21 +220,29 @@
   },
   "crosswalk": {
    "path": "five-city-core-crosswalk-v1.jsonl",
-   "sha256": "52cdfe980ef52cc247f7f658c1de6499d37000450d62c5ef8e6ccc87e5d86823"
+   "sha256": "9bd627751078203217a50b8484818ddbfdb3970b1dde205f82489abde808e11a"
   },
   "deferred": {
    "path": "five-city-core-deferred-fields-v1.jsonl",
    "rows": 10725,
    "sha256": "7b79cb2c0b91e4d5f686b7c8dae03473a575be31f54c08590fcecbe39f4f45d0"
   },
+  "heuristic_twin_release": {
+   "path": "five-city-core-heuristic-twin-release-v1.jsonl",
+   "sha256": "b71247b7b157406ab19c2e2a266c54ed58044bd9c5e3357bf550bc439bd90cd6"
+  },
   "images": {
    "path": "five-city-core-images-v1.jsonl",
    "rows": 4564,
    "sha256": "319ccc6ab5c1af1ada1b32400c72464957d00d85e209e878861d0fd4d6a395c4"
   },
+  "jeonju_identity_review_handoff": {
+   "path": "jeonju-identity-review-handoff-v1.jsonl",
+   "sha256": "5dc637f0348291f5246172e1eb47e0a796916175be4fa16ac2d73b44b26389fa"
+  },
   "main_classification": {
    "path": "five-city-core-main-classification-v1.jsonl",
-   "sha256": "fe9f61fd3a8f7086e32f478f7a81fac853cace33de22cf8193f1a31f5ed8e0a7"
+   "sha256": "cad7276d9ac86be85d0777501571178bbf4b896b7aaf79f46de5464a8359af96"
   },
   "sources": {
    "path": "five-city-core-sources-v1.jsonl",
@@ -243,7 +251,7 @@
   },
   "twin_resolution": {
    "path": "five-city-core-twin-resolution-v1.jsonl",
-   "sha256": "7b3b82903372467c4d37dfc719b7d2cab4e66ba70c404884af8934750c135a94"
+   "sha256": "45e9ebe0ab6d803e4e6e7d9d4de1ad06672b30acd80a9fdcc1d30cf67c326917"
   }
  },
  "package": "five-city-core-v1",
@@ -262,7 +270,7 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "schema_version": "intake-v1.1(preprod-gate)",
+ "schema_version": "intake-v1.2(artifact-trust)",
  "sources_by_type": {
   "busan-food-canonical": 194,
   "busan-nonfood-canonical": 764,
@@ -278,5 +286,5 @@
   "visitjeonju": 103,
   "visitseoul": 1837
  },
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → TASK-FIVE-CITY-CORE-PREPROD-GATE-V1"
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1"
 }

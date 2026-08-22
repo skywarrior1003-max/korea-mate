@@ -18,9 +18,14 @@ build-five-city-core-crosswalk-v1 — 5도시 ACTIVE canonical ↔ Main city_spo
   부산 NonFood : Main 85행을 한글명·좌표·주소·공식 URL·지역 정체성으로 Main 에서 직접 판정한
            표(BUSAN_NONFOOD_DECISIONS). 넓은 면적 entity 는 좌표 차이로 다른 장소로 보지 않는다.
   서울·제주·전주 : Main 0 → NEW.
-  아티팩트 내부 쌍둥이(같은 이름 ≤150m) : Gate A(TASK-FIVE-CITY-CORE-PREPROD-GATE-V1) 에서 구성원마다 최종 판정 —
-           SAME_ENTITY_TWIN → CONFIRMED_TWIN(대표만 write) · DISTINCT_ENTITY → NEW · TRUE_AMBIGUOUS → 판정 전 SKIP.
-           대표는 lib.resolve_twins 의 근거 규칙(provenance 등급→깨끗한 고유명→이미지→설명→URL→id)으로 고른다.
+  ARTIFACT TRUST RULE (TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1):
+           FINAL VALIDATED ARTIFACT > MAIN HEURISTIC. Main 은 이름·주소·전화·좌표 유사성으로 identity 를 만들지 않는다.
+           · 같은 장소의 두 번째 레코드(CONFIRMED_TWIN)는 artifact 가 스스로 증명하는 경우만 — 부산 provenance.source_keys 의
+             같은 uc_seq(AttractionService:N ↔ VisitBusanContent:attraction:N). 서울·제주·전주는 관계 필드가 없으므로 병합 0.
+           · 부산 Food ↔ Main 은 artifact 가 기록한 lineage(discovery_candidate_ids·canonical_discovery_id·image_recovery_v1.disc_id·
+             identity_removed_cids) 와 legacy external_id 의 일치만 인정. 이름/주소/좌표 bridge(옛 TIER2) 폐기.
+           · 전주 artifact 가 identity_review=True 로 남긴 레코드는 REVIEW_REQUIRED — 병합도 삭제도 하지 않고 write 에서 보류.
+           · 모든 decision 에 decision_basis 를 남긴다(NAME/ADDRESS/COORDINATE_HEURISTIC 금지).
 
 DB 접근 0 · 쓰기 0.
 """
@@ -34,46 +39,86 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_ACTIVE, EXPECTED_TOTAL, PINNED_INPUTS, REPO, km, ko_part, load_input, norm, resolve_twins,
+    EXPECTED_ACTIVE, EXPECTED_TOTAL, PINNED_INPUTS, REPO, git_show, km, ko_part, load_input, norm,
     verify_pins, write_json, write_jsonl,
 )
 
 OUT_DIR = os.path.join(REPO, "data", "main-intake", "five-city-core-v1")
 MAIN_SNAPSHOT = os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl")
 
-# ── Gate A (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1): 쌍둥이 최종 판정표 ─────────────────────
-# 자동 규칙(이름 동일 + 주소 동일/≤30m → 같은 장소)으로 못 정하는 쌍만 Main 에서 직접 보고 적는다.
-# 키는 (작은 id, 큰 id) 정렬 쌍. 근거는 artifact 값(이름·주소·좌표·설명)만 — 새 웹 조사 없음.
-TWIN_SAME_ENTITY: dict[tuple[str, str], str] = {
-    ("KTO-147684", "OFF-9751"): "전주향교 — 같은 향교 경내(향교길 119-6 / 139, 106m). KTO 좌표는 다른 출입구. 같은 entity",
+# ── ARTIFACT TRUST: 근거 유형(decision_basis) ─────────────────────────────────────────
+BASIS_SOURCE_LINEAGE = "ARTIFACT_SOURCE_LINEAGE"          # artifact 가 기록한 source/uc_seq/discovery lineage
+BASIS_IDENTITY_RESOLUTION = "ARTIFACT_IDENTITY_RESOLUTION"  # artifact 의 identity_review / resolution verdict
+BASIS_SERVICE_STATUS = "ARTIFACT_SERVICE_STATUS"            # artifact 의 service_status/final_status 그대로
+BASIS_MAIN_DECISION_TABLE = "MAIN_EXPLICIT_DECISION_TABLE"  # 사람이 행 단위로 적은 Main 판정표(BUSAN_NONFOOD_DECISIONS)
+BASIS_LEGACY_PRESERVE = "LEGACY_REFERENCE_PRESERVE"
+BASIS_OWNER_OVERRIDE = "OWNER_OVERRIDE"
+BASIS_REVIEW_REQUIRED = "REVIEW_REQUIRED"
+BASIS_UNRESOLVED = "UNRESOLVED_AFTER_ARTIFACT_INSPECTION"
+FORBIDDEN_BASIS = {"NAME_HEURISTIC", "ADDRESS_HEURISTIC", "COORDINATE_HEURISTIC"}
+
+# Main 이 artifact 를 끝까지 읽고도 관계를 확정할 수 없어 보류하는 레코드(병합·삭제 아님). 근거는 보고서 §1-1.
+JEONJU_UNRESOLVED_AFTER_INSPECTION: dict[str, str] = {
+    "OFF-16676": "전주드림랜드(official 16676): crossmatch 는 kto_cid=126626(전주동물원)로, 복구된 표시명은 드림랜드로 — artifact 내부 충돌",
+    "KTO-2790515": "전주드림랜드(KTO 2790515): OFF-16676 과 같은 표시명이지만 artifact 가 연결하지 않음 — 판정 전 보류",
 }
-TWIN_DISTINCT: dict[tuple[str, str], str] = {
-    ("KTO-129786", "OFF-9756"): "OFF-9756 는 국립전주박물관 경내의 어린이박물관(en 'Jeonju Children's Museum', 설명 'A Hands-On Museum Where Children…'), "
-                               "KTO-129786 는 국립전주박물관 본관 — 복합시설 내부의 별개 entity(125m)",
+# Owner 가 유지하기로 확정한 부산 legacy(기존 id 보존 · is_published 유지 · 플래너 후보 포함). #7/#29 는 둘 다 '이기대' 행.
+OWNER_OVERRIDE_KEEP_PUBLISHED: dict[int, str] = {
+    7: "이기대 해안산책로(Igidae Coastal Walk) — Owner 확정 유지",
+    28: "오륙도 스카이워크 — Owner 확정 유지",
+    29: "이기대 해안산책로(Igidae Coastal Trail) — Owner 확정 유지(이기대 2행 중 하나)",
+    42: "더베이101 — Owner 확정 유지",
 }
-TWIN_TRUE_AMBIGUOUS: dict[str, str] = {
-    "seoul-food-v1-0909": "사마르칸트시티 — 이름은 같으나 등록 주소가 다름(마른내로 159-4 vs 을지로42길 16 성산빌딩, 92m). "
-                          "같은 식당의 주소 표기 차이인지 별도 지점인지 artifact 만으로 확정 불가 → 판정 전 SKIP",
-}
-BUSAN_PREFIX_PROV = {"A": 0, "K": 1, "E": 2, "VB": 3}   # entity API 레코드 < page 레코드
+def _load_previous_heuristic_twins() -> dict[str, dict]:
+    """a14ba83 의 twin-resolution(휴리스틱 판정) — 해제 기록용. git 객체에서 읽으므로 재생성과 무관하게 고정."""
+    out: dict[str, dict] = {}
+    try:
+        txt = git_show("a14ba83", "data/main-intake/five-city-core-v1/five-city-core-twin-resolution-v1.jsonl")
+    except Exception:
+        return out
+    for line in txt.splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        if r.get("representative_canonical_id"):
+            out[r["member_canonical_id"]] = {"relation": r["relation"], "rep": r["representative_canonical_id"], "rule": r.get("deterministic_rule")}
+    return out
 
 
-def busan_features(r: dict) -> dict:
-    pre = r["canonical_id"].split("-")[1]
-    return {"prov": BUSAN_PREFIX_PROV.get(pre, 9), "name_ko": r.get("name_ko"), "img": 1 if r.get("image_url") else 0,
-            "desc": 1 if (r.get("description_ko") or r.get("description_en")) else 0,
-            "url": 1 if (r.get("official_url") or r.get("source_url")) else 0, "source_type": f"busan-{pre}"}
+PREVIOUS_HEURISTIC_TWINS = _load_previous_heuristic_twins()
+UC_SEQ_RE = re.compile(r":(\d+)(?::[a-z\-]+)?$", re.I)
+PRIMARY_SOURCE_ROLE = {"busan_official_api": 0, "kto_tourapi": 1, "visitbusan_web": 2}   # entity API 레코드 < 웹 페이지 레코드
 
 
-def seoul_jeju_features(r: dict) -> dict:
-    return {"prov": 0, "name_ko": r.get("title_ko"), "img": 1 if (r.get("image_url") and r.get("image_display_eligible")) else 0,
-            "desc": 1 if (r.get("description_ko") and not str(r.get("description_ko")).startswith(".se-")) else 0,
-            "url": 1 if r.get("homepage") else 0, "source_type": r.get("source_tier")}
+def by_kto_of(rows: list[dict], off_id: str) -> str | None:
+    r = next((x for x in rows if x.get("candidate_id") == off_id), None)
+    return str(r.get("kto_cid")) if r and r.get("kto_cid") else None
 
 
-def jeonju_features(r: dict) -> dict:
-    return {"prov": 0 if r.get("source") == "OFFICIAL" else 1, "name_ko": r.get("display_name"), "img": 0,
-            "desc": 1 if r.get("description_en") else 0, "url": 1 if r.get("source_url") else 0, "source_type": r.get("source")}
+def uc_seqs(r: dict) -> set[str]:
+    """artifact provenance.source_keys 의 부산 공식 콘텐츠 번호(uc_seq). 예: AttractionService:288:ko → 288"""
+    out = set()
+    for k in (r.get("provenance") or {}).get("source_keys") or []:
+        m = re.search(r":(\d+)", k)
+        if m:
+            out.add(m.group(1))
+    return out
+
+
+def food_lineage(c: dict) -> dict[str, str]:
+    """부산 Food canonical 이 artifact 에 기록한 discovery/recovery lineage id → 기록된 필드명"""
+    out: dict[str, str] = {}
+    for i in c.get("discovery_candidate_ids") or []:
+        out.setdefault(i, "discovery_candidate_ids")
+    if c.get("canonical_discovery_id"):
+        out.setdefault(c["canonical_discovery_id"], "canonical_discovery_id")
+    ir = c.get("image_recovery_v1") or {}
+    if ir.get("disc_id"):
+        out.setdefault(ir["disc_id"], "image_recovery_v1.disc_id")
+    for i in c.get("identity_removed_cids") or []:
+        out.setdefault(i, "identity_removed_cids")
+    return out
+
 
 # ── 부산 NonFood: Main 85행 직접 판정표 (canonical 의 name_ko·좌표·주소로 확인) ──────
 # decision: M = MATCH_REPLACE(canonical → 이 Main id 보존) · L = LEGACY_ONLY_VALID(대응 canonical 없음)
@@ -178,12 +223,14 @@ def main() -> None:
     main_cls: dict[int, dict] = {}
     inputs_meta: dict[str, dict] = {}
 
-    def add(city: str, cid: str, decision: str, *, main_id: int | None = None, tier: str, confidence: str,
+    def add(city: str, cid: str, decision: str, *, basis: str, main_id: int | None = None, tier: str, confidence: str,
             method: str, evidence: str, notes: str = "", legacy: str | None = None, twin_of: str | None = None,
             service_status: str = "ACTIVE") -> None:
+        if basis in FORBIDDEN_BASIS:
+            raise SystemExit(f"forbidden decision basis {basis} for {cid}")
         decisions.append({
             "city": city, "canonical_id": cid, "service_status": service_status,
-            "main_city_spot_id": main_id, "decision": decision, "tier": tier, "confidence": confidence,
+            "main_city_spot_id": main_id, "decision": decision, "decision_basis": basis, "tier": tier, "confidence": confidence,
             "match_method": method, "evidence": evidence, "legacy_status": legacy,
             "reference_sensitive": main_id is not None,
             "twin_of": twin_of, "notes": notes,
@@ -202,11 +249,11 @@ def main() -> None:
         if mid is None:
             raise SystemExit(f"gyeongju bridge broken: {c['candidate_id']}")
         if c.get("service_status") == "ACTIVE":
-            add("gyeongju", c["candidate_id"], "MATCH_REPLACE", main_id=mid, tier="TIER1", confidence="HIGH",
+            add("gyeongju", c["candidate_id"], "MATCH_REPLACE", basis=BASIS_SOURCE_LINEAGE, main_id=mid, tier="TIER1", confidence="HIGH",
                 method="source_key==candidate_id", evidence=f"city_spot_sources.source_key={c['candidate_id']}")
             main_cls[mid] = {"class": "ACTIVE_MATCHED", "canonical_id": c["candidate_id"]}
         else:
-            add("gyeongju", c["candidate_id"], "EXCLUDED", main_id=mid, tier="TIER1", confidence="HIGH",
+            add("gyeongju", c["candidate_id"], "EXCLUDED", basis=BASIS_SERVICE_STATUS, main_id=mid, tier="TIER1", confidence="HIGH",
                 method="source_key==candidate_id", evidence="service_status=EXCLUDED", service_status="EXCLUDED",
                 legacy="EXCLUDED_FROM_SERVICE_REVIEW", notes="identity 확정이지만 service 밖 — write 제외·삭제 금지")
             main_cls[mid] = {"class": "EXCLUDED_FROM_SERVICE_REVIEW", "canonical_id": c["candidate_id"]}
@@ -218,55 +265,28 @@ def main() -> None:
                    if r["city"] == "busan" and r["legacy_external_id"]}
     main_food_unmatched = {r["main_city_spot_id"]: r for r in main_rows if r["city"] == "busan" and r["category"] == "restaurant"}
     food_active = sorted((c for c in food if c.get("current_state") == "ACTIVE"), key=lambda x: x["canonical_id"])
-    # 1차: discovery-id bridge(TIER1) 를 먼저 전부 확정한다 — 같은 Main 행이 2차 규칙에 다시 잡히지 않게.
-    tier1_done: set[str] = set()
+    # artifact-explicit identity bridge 만 쓴다: canonical 이 기록한 lineage id(discovery_candidate_ids ·
+    # canonical_discovery_id · image_recovery_v1.disc_id · identity_removed_cids) 가 Main legacy external_id 와 같을 때.
+    # 이름·주소·좌표로 Main 행을 찾는 규칙(옛 TIER2)은 금지 — 동명 타지점(톤쇼우 광안리/부산대)을 Main 이 판단하지 않는다.
     for c in food_active:
-        ids = c.get("discovery_candidate_ids") or ([c["canonical_discovery_id"]] if c.get("canonical_discovery_id") else [])
-        hits = sorted({ext_to_main[i] for i in ids if i in ext_to_main and ext_to_main[i] in main_food_unmatched})
-        if hits:
-            mid = hits[0]
-            add("busan", c["canonical_id"], "MATCH_REPLACE", main_id=mid, tier="TIER1", confidence="HIGH",
-                method="discovery_id==legacy_external_id", evidence=f"{ids}",
+        lin = food_lineage(c)
+        hits = {ext_to_main[i]: f for i, f in lin.items() if i in ext_to_main}
+        mids = sorted(set(hits))
+        if len(mids) > 1:
+            raise SystemExit(f"{c['canonical_id']}: lineage points to several Main rows {mids} — 사람이 본다")
+        if mids:
+            mid = mids[0]
+            if mid not in main_food_unmatched:
+                raise SystemExit(f"main#{mid} targeted twice (second: {c['canonical_id']})")
+            fields = sorted({hits[mid]} | {f for i, f in lin.items() if i in ext_to_main and ext_to_main[i] == mid})
+            add("busan", c["canonical_id"], "MATCH_REPLACE", basis=BASIS_SOURCE_LINEAGE, main_id=mid, tier="TIER1", confidence="HIGH",
+                method="artifact_lineage_id==legacy_external_id", evidence=f"{[i for i in lin if i in ext_to_main and ext_to_main[i] == mid]} via {fields}",
                 notes="legacy 좌표는 미검증(계약 §16) — canonical 좌표로 교체")
-            main_cls[mid] = {"class": "ACTIVE_MATCHED", "canonical_id": c["canonical_id"]}
+            main_cls[mid] = {"class": "ACTIVE_MATCHED", "canonical_id": c["canonical_id"], "evidence": f"artifact lineage {fields}"}
             main_food_unmatched.pop(mid, None)
-            tier1_done.add(c["canonical_id"])
-    # 2차: 같은 지점 확인 — (a) 한글 상호 정확 일치 + ≤300m, 또는 (b) Main 상호에 한글이 없으면
-    # 도로명 주소 끝부분 동일 + 로마자 상호 유사 ≥0.8 + ≤50m. 이름만 같고 멀면 다른 지점(NEW).
-    import difflib
-    for c in food_active:
-        if c["canonical_id"] in tier1_done:
-            continue
-        nk = norm(c.get("name_ko"))
-        ne = norm(re.split(r"[(（]", c.get("name_en") or "")[0])
-        best = None
-        for mid, r in main_food_unmatched.items():
-            d = km(c.get("latitude"), c.get("longitude"), r["lat"], r["lng"])
-            if d is None:
-                continue
-            mk = ko_part(r["canonical_title"])
-            if mk:
-                same = nk and (nk == mk or nk.replace("본점", "") == mk.replace("본점", ""))
-                if same and d <= 0.3:
-                    best = (mid, round(d * 1000), "ko_name+coord<=300m")
-                    break
-            else:
-                me = norm(re.split(r"[(（]", r["canonical_title"])[0])
-                ca, ma = norm(c.get("address_ko")), norm(r.get("address"))
-                # 도로명+번지 끝부분이 같으면 같은 주소 — 시·구 접두사 유무 차이는 무시한다
-                addr_same = bool(ca) and bool(ma) and min(len(ca), len(ma)) >= 8 and (ca.endswith(ma) or ma.endswith(ca))
-                sim = difflib.SequenceMatcher(None, ne, me).ratio() if ne and me else 0
-                if addr_same and sim >= 0.8 and d <= 0.05:
-                    best = (mid, round(d * 1000), f"address_tail+romanized_name(sim={sim:.2f})+coord<=50m")
-                    break
-        if best:
-            add("busan", c["canonical_id"], "MATCH_REPLACE", main_id=best[0], tier="TIER2", confidence="HIGH",
-                method=best[2], evidence=f"main#{best[0]} {best[1]}m")
-            main_cls[best[0]] = {"class": "ACTIVE_MATCHED", "canonical_id": c["canonical_id"]}
-            main_food_unmatched.pop(best[0], None)
         else:
-            add("busan", c["canonical_id"], "NEW", tier="NEW", confidence="HIGH",
-                method="no_main_counterpart", evidence="discovery id ∉ Main · 한글 상호/주소 불일치(동명이면 다른 지점)")
+            add("busan", c["canonical_id"], "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH",
+                method="no_artifact_lineage_to_main", evidence="artifact lineage ∉ Main legacy external_id (이름/주소/좌표 bridge 불사용)")
     for mid, r in main_food_unmatched.items():
         cls = "EXCLUDED_FROM_SERVICE_REVIEW" if r["legacy_external_id"] else "LEGACY_ONLY_VALID"
         main_cls[mid] = {"class": cls, "canonical_id": None,
@@ -274,27 +294,58 @@ def main() -> None:
 
     twin_resolution: list[dict] = []
 
-    def add_twin(city: str, cid: str, rel: dict) -> None:
-        rep = rel["representative_canonical_id"]
-        if rel["relation"] == "SAME_ENTITY_TWIN":
-            add(city, cid, "CONFIRMED_TWIN", tier="SAME_ENTITY_TWIN", confidence=rel["confidence"],
-                method=rel["deterministic_rule"], evidence=rel["reason"], twin_of=rep,
-                notes="같은 장소의 두 번째 레코드 — 대표(twin_of)만 write, 이 행은 SKIP_TWIN")
-        else:
-            add(city, cid, "TRUE_AMBIGUOUS", tier="TWIN_UNRESOLVED", confidence=rel["confidence"],
-                method=rel["deterministic_rule"], evidence=rel["reason"], twin_of=rep,
-                notes="같은 장소인지 확정 불가 — 판정 전까지 write 제외(SKIP_TRUE_AMBIGUOUS). 삭제·병합 아님")
-
     # ── 부산 NonFood ────────────────────────────────────────────────────────
     nf_all, sha = load_input("busan_nonfood")
     inputs_meta["busan_nonfood"] = {"rows": len(nf_all), "sha256": sha}
     nf = [r for r in nf_all if r.get("service_status") == "ACTIVE"]
     nf_by = {r["canonical_id"]: r for r in nf}
-    twins, res = resolve_twins(nf, name_keys=("name_ko", "name_en"), lat_key="lat", lng_key="lng", id_key="canonical_id",
-                               features=busan_features, addr_key="address_ko", same_entity=TWIN_SAME_ENTITY, distinct=TWIN_DISTINCT,
-                               true_ambiguous=TWIN_TRUE_AMBIGUOUS, city="busan")
-    twin_resolution.extend(res)
-    twin_rel = {r["member_canonical_id"]: r for r in res}
+    # artifact provenance.source_keys 의 같은 uc_seq 를 공유하는 레코드 = 같은 source entity (artifact 자체 근거).
+    seq_idx: dict[str, list[str]] = defaultdict(list)
+    for r in sorted(nf, key=lambda x: x["canonical_id"]):
+        for sq in sorted(uc_seqs(r)):
+            seq_idx[sq].append(r["canonical_id"])
+    parent: dict[str, str] = {}
+
+    def find(x: str) -> str:
+        while parent.get(x, x) != x:
+            x = parent[x]
+        return x
+
+    for sq, ids in sorted(seq_idx.items()):
+        for other in ids[1:]:
+            a, b = find(ids[0]), find(other)
+            if a != b:
+                parent[b] = a
+    groups: dict[str, list[str]] = defaultdict(list)
+    for r in nf:
+        groups[find(r["canonical_id"])].append(r["canonical_id"])
+    twins: dict[str, str] = {}
+    for members in groups.values():
+        if len(members) < 2:
+            continue
+        # 대표 = artifact primary_source 역할(entity API 레코드 < 웹 페이지) → canonical_id 오름차순. identity 판단이 아니라 표기 선택.
+        rep_id = sorted(members, key=lambda c: (PRIMARY_SOURCE_ROLE.get((nf_by[c].get("provenance") or {}).get("primary_source"), 9), c))[0]
+        for m in members:
+            if m == rep_id:
+                continue
+            twins[m] = rep_id
+            shared = sorted(uc_seqs(nf_by[m]) & uc_seqs(nf_by[rep_id]))
+            if not shared:
+                raise SystemExit(f"twin without shared uc_seq: {m} / {rep_id}")
+            twin_resolution.append({
+                "city": "busan", "member_canonical_id": m, "representative_canonical_id": rep_id,
+                "relation": "SAME_SOURCE_ENTITY", "decision_basis": BASIS_SOURCE_LINEAGE,
+                "reason": f"artifact provenance.source_keys share uc_seq {shared}",
+                "evidence": {"shared_uc_seq": shared,
+                             "member_source_keys": sorted((nf_by[m].get("provenance") or {}).get("source_keys") or []),
+                             "representative_source_keys": sorted((nf_by[rep_id].get("provenance") or {}).get("source_keys") or []),
+                             "member_primary_source": (nf_by[m].get("provenance") or {}).get("primary_source"),
+                             "representative_primary_source": (nf_by[rep_id].get("provenance") or {}).get("primary_source"),
+                             "category_same": nf_by[m].get("category") == nf_by[rep_id].get("category")},
+                "source_type": f"busan-{m.split('-')[1]}", "category": nf_by[m].get("category"), "confidence": "HIGH",
+                "deterministic_rule": "artifact:shared_uc_seq_in_provenance.source_keys", "runtime_write": False,
+                "notes": "artifact 가 같은 공식 콘텐츠 번호로 기록한 두 레코드 — 대표만 write, 이 행은 SKIP_TWIN",
+            })
     matched_canon: dict[str, int] = {}
     for mid, (dec, cid, why) in sorted(BUSAN_NONFOOD_DECISIONS.items()):
         r = by_main[mid]
@@ -316,38 +367,68 @@ def main() -> None:
         cid = c["canonical_id"]
         if cid in matched_canon:
             mid = matched_canon[cid]
-            add("busan", cid, "MATCH_REPLACE", main_id=mid, tier="TIER2", confidence="HIGH",
-                method="main_direct_resolution(name_ko+coord+address)", evidence=BUSAN_NONFOOD_DECISIONS[mid][2])
+            add("busan", cid, "MATCH_REPLACE", basis=BASIS_MAIN_DECISION_TABLE, main_id=mid, tier="TIER2", confidence="HIGH",
+                method="BUSAN_NONFOOD_DECISIONS(row-level human table)", evidence=BUSAN_NONFOOD_DECISIONS[mid][2],
+                notes="자동 규칙이 아니라 행 단위 판정표 — Owner 가 재검토할 수 있게 basis 를 남긴다")
         elif cid in twins:
-            add_twin("busan", cid, twin_rel[cid])
+            add("busan", cid, "CONFIRMED_TWIN", basis=BASIS_SOURCE_LINEAGE, tier="SAME_SOURCE_ENTITY", confidence="HIGH",
+                method="artifact:shared_uc_seq", evidence=f"shared uc_seq {sorted(uc_seqs(nf_by[cid]) & uc_seqs(nf_by[twins[cid]]))}",
+                twin_of=twins[cid], notes="같은 source entity 의 두 번째 레코드 — 대표(twin_of)만 write, 이 행은 SKIP_TWIN")
         else:
-            add("busan", cid, "NEW", tier="NEW", confidence="HIGH", method="no_main_counterpart",
+            add("busan", cid, "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH", method="no_main_counterpart",
                 evidence="Main nonfood 85 판정표에 대응 없음")
 
     # ── 서울 · 제주 · 전주 (Main 0) ─────────────────────────────────────────
-    for key, city, id_key, name_keys, lat_key, lng_key, active_pred in [
-        ("seoul", "seoul", "candidate_id", ("title_ko",), "lat", "lng", lambda r: r.get("service_status") == "ACTIVE"),
-        ("jeju", "jeju", "candidate_id", ("title_ko",), "lat", "lng", lambda r: r.get("service_status") == "ACTIVE"),
-        ("jeonju", "jeonju", "candidate_id", ("display_name",), "lat", "lng", lambda r: r.get("final_status") == "ACTIVE_SERVICE"),
+    # 쌍둥이 탐지 없음: 이 세 artifact 에는 관계/중복 필드가 없고, artifact 가 둘 다 ACTIVE 로 둔 레코드는 둘 다 service entity 다.
+    # 전주만 artifact 의 identity_review=True(REVIEW_REQUIRED 잔여) 를 그대로 보류한다.
+    jeonju_handoff: list[dict] = []
+    res_by_sid: dict[str, list[dict]] = defaultdict(list)
+    res_by_kto: dict[str, list[dict]] = defaultdict(list)
+    ident = json.loads(git_show(PINNED_INPUTS["jeonju"]["sha"], "data/jeonju-raw-collection-v1/jeonju-identity-resolution-v1.json").lstrip("\ufeff"))
+    for rr in ident.get("resolutions") or []:
+        res_by_sid[str(rr.get("official_sid"))].append(rr)
+        res_by_kto[str(rr.get("kto_contentid"))].append(rr)
+    for key, city, id_key, active_pred in [
+        ("seoul", "seoul", "candidate_id", lambda r: r.get("service_status") == "ACTIVE"),
+        ("jeju", "jeju", "candidate_id", lambda r: r.get("service_status") == "ACTIVE"),
+        ("jeonju", "jeonju", "candidate_id", lambda r: r.get("final_status") == "ACTIVE_SERVICE"),
     ]:
         rows, sha = load_input(key)
         inputs_meta[key] = {"rows": len(rows), "sha256": sha}
         act = [r for r in rows if active_pred(r)]
-        tw, res = resolve_twins(act, name_keys=name_keys, lat_key=lat_key, lng_key=lng_key, id_key=id_key,
-                                features=jeonju_features if city == "jeonju" else seoul_jeju_features,
-                                addr_key="kto_addr" if city == "jeonju" else "address", same_entity=TWIN_SAME_ENTITY,
-                                distinct=TWIN_DISTINCT, true_ambiguous=TWIN_TRUE_AMBIGUOUS, city=city)
-        twin_resolution.extend(res)
-        rel = {r["member_canonical_id"]: r for r in res}
+        act_ids = {r[id_key] for r in act}
         for r in sorted(act, key=lambda x: x[id_key]):
             cid = r[id_key]
-            if cid in tw:
-                add_twin(city, cid, rel[cid])
-            elif cid in rel and rel[cid]["relation"] == "DISTINCT_ENTITY":
-                add(city, cid, "NEW", tier="NEW", confidence="HIGH", method="twin_candidate_resolved_distinct",
-                    evidence=rel[cid]["reason"], notes="쌍둥이 후보였으나 다른 entity 로 확정 — 독립 레코드")
-            else:
-                add(city, cid, "NEW", tier="NEW", confidence="HIGH", method="main_has_no_rows", evidence="Main city_spots city=0")
+            if city == "jeonju" and (r.get("identity_review") or cid in JEONJU_UNRESOLVED_AFTER_INSPECTION):
+                own = bool(r.get("identity_review"))
+                kto_cp = f"KTO-{r.get('kto_cid')}" if r.get("kto_cid") and cid.startswith("OFF-") else None
+                off_cp = next((o for o in act_ids if o.startswith("OFF-") and by_kto_of(rows, o) == cid.replace("KTO-", "")), None) if cid.startswith("KTO-") else None
+                verdicts = (res_by_sid.get(str(r.get("sid"))) if cid.startswith("OFF-") else res_by_kto.get(str(r.get("kto_cid")))) or []
+                verdict_txt = "; ".join(f"{v.get('official_sid')}↔{v.get('kto_contentid')}:{v.get('classification')}({v.get('reason')})" for v in verdicts) or "(identity-resolution 에 없음)"
+                reason = ("artifact identity_review=True · " + verdict_txt) if own else JEONJU_UNRESOLVED_AFTER_INSPECTION[cid]
+                add(city, cid, "REVIEW_REQUIRED", basis=BASIS_IDENTITY_RESOLUTION if own else BASIS_UNRESOLVED,
+                    tier="ARTIFACT_IDENTITY_REVIEW" if own else "UNRESOLVED_AFTER_ARTIFACT_INSPECTION", confidence="N/A",
+                    method="artifact.identity_review" if own else "main_artifact_inspection", evidence=reason,
+                    twin_of=kto_cp or off_cp,
+                    notes="artifact 의 identity gate 잔여 — Main 은 병합·삭제·판정하지 않고 write 보류(SKIP_REVIEW_REQUIRED)")
+                jeonju_handoff.append({
+                    "canonical_id": cid, "source": r.get("source"), "source_id": r.get("sid") or r.get("kto_cid"),
+                    "linked_counterpart_id": kto_cp or off_cp, "linked_kto_cid": r.get("kto_cid") or None,
+                    "artifact_identity_review": bool(r.get("identity_review")), "artifact_match_type": r.get("match_type"),
+                    "artifact_resolution": [{k: v.get(k) for k in ("official_sid", "kto_contentid", "classification", "reason", "dist_m")} for v in verdicts],
+                    "current_service_status": r.get("final_status"), "name": r.get("display_name"),
+                    "category": r.get("domain"), "subcategory": r.get("menu"), "phone": r.get("phone") or None,
+                    "address": r.get("kto_addr"), "lat": r.get("lat"), "lng": r.get("lng"),
+                    "source_url": r.get("source_url") or None, "provenance": {"artifact": "jeonju-final-service-catalog-v1", "sha": PINNED_INPUTS["jeonju"]["sha"], "coord_source": r.get("coord_source"), "name_source": r.get("name_source")},
+                    "current_crosswalk": "REVIEW_REQUIRED (Main write 보류)",
+                    "unresolved_reason": reason,
+                    "main_added_unresolved": not own,
+                    "required_final_verdict_enum": ["SAME_SOURCE_ENTITY", "DISTINCT_ENTITY", "DISTINCT_BRANCH", "CONTAINED_SUBENTITY", "KEEP_BOTH", "EXCLUDE_ONE", "OTHER_EXISTING_ARTIFACT_VERDICT"],
+                    "note": "재수집 아님 — 이미 수집된 artifact 근거로 identity gate 마감만 요청",
+                })
+                continue
+            add(city, cid, "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH",
+                method="artifact_active_no_main_rows", evidence="artifact ACTIVE · Main city_spots city=0 · 쌍둥이 탐지 없음(관계 필드 없음)")
 
     # ── 검산 ────────────────────────────────────────────────────────────────
     active = [d for d in decisions if d["service_status"] == "ACTIVE"]
@@ -371,6 +452,13 @@ def main() -> None:
     # Main 714 분류 — 미분류 행은 PRESERVE_UNTOUCHED
     for r in main_rows:
         main_cls.setdefault(r["main_city_spot_id"], {"class": "PRESERVE_UNTOUCHED", "canonical_id": None})
+    # Owner override: 유지 확정 legacy 3곳(이기대 2행 포함) — id 보존 · published 유지 · 플래너 후보 포함
+    for mid, why in OWNER_OVERRIDE_KEEP_PUBLISHED.items():
+        prev = main_cls[mid]["class"]
+        if prev != "LEGACY_ONLY_VALID":
+            raise SystemExit(f"owner override #{mid} expected LEGACY_ONLY_VALID, got {prev}")
+        main_cls[mid] = {**main_cls[mid], "class": "OWNER_OVERRIDE_KEEP_PUBLISHED", "previous_class": prev,
+                         "decision_basis": BASIS_OWNER_OVERRIDE, "notes": why}
     main_out = [{"main_city_spot_id": mid, "city": by_main[mid]["city"], "category": by_main[mid]["category"],
                  "canonical_title": by_main[mid]["canonical_title"], **main_cls[mid], "delete": False}
                 for mid in sorted(main_cls)]
@@ -383,19 +471,40 @@ def main() -> None:
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"), main_out)
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"),
                 sorted(twin_resolution, key=lambda r: (r["city"], r["member_canonical_id"])))
+    write_jsonl(os.path.join(OUT_DIR, "jeonju-identity-review-handoff-v1.jsonl"), sorted(jeonju_handoff, key=lambda r: r["canonical_id"]))
+    # 해제한 Main 휴리스틱 쌍둥이 — 이전 twin-resolution(a14ba83) 과의 차이를 기록한다
+    prev_path = os.path.join(OUT_DIR, "five-city-core-heuristic-twin-release-v1.jsonl")
+    released = []
+    new_members = {r["member_canonical_id"] for r in twin_resolution}
+    dec_by = {d["canonical_id"]: d for d in decisions}
+    for cid, old in PREVIOUS_HEURISTIC_TWINS.items():
+        if cid in new_members:
+            continue
+        d = dec_by[cid]
+        released.append({"canonical_id": cid, "city": d["city"], "previous_relation": old["relation"], "previous_representative": old["rep"],
+                         "previous_rule": old["rule"], "new_decision": d["decision"], "new_decision_basis": d["decision_basis"],
+                         "release_reason": "artifact 에 명시적 identity/relation 근거 없음 — Main 휴리스틱(이름·주소·좌표) 판정 해제"})
+    write_jsonl(prev_path, sorted(released, key=lambda r: (r["city"], r["canonical_id"])))
     summary = {
-        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
+        "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
         "pins": pins, "inputs": inputs_meta,
         "active_total": len(active), "decisions_total": totals,
         "per_city": {c: dict(v) for c, v in sorted(per_city.items())},
-        "twin_resolution": {
-            "relations": dict(Counter(r["relation"] for r in twin_resolution)),
-            "per_city": {c: dict(Counter(r["relation"] for r in twin_resolution if r["city"] == c)) for c in sorted({r["city"] for r in twin_resolution})},
-            "source_active_record_count": len(active),
-            "confirmed_twin_record_count": totals.get("CONFIRMED_TWIN", 0),
-            "true_ambiguous_count": totals.get("TRUE_AMBIGUOUS", 0),
-            "unique_service_place_count": len(active) - totals.get("CONFIRMED_TWIN", 0),
+        "artifact_trust": {
+            "decision_basis": dict(Counter(d["decision_basis"] for d in decisions)),
+            "heuristic_twin_auto_merge_count": 0,
+            "artifact_evidenceless_skip_count": sum(1 for d in active if d["decision"] == "CONFIRMED_TWIN" and d["decision_basis"] != BASIS_SOURCE_LINEAGE),
+            "twin_relations": dict(Counter(r["relation"] for r in twin_resolution)),
+            "heuristic_twins_released": len(released),
+            "SOURCE_ACTIVE_RECORD_COUNT": len(active),
+            "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": totals.get("CONFIRMED_TWIN", 0),
+            "REVIEW_REQUIRED_COUNT": totals.get("REVIEW_REQUIRED", 0),
+            "jeonju_identity_review_count": sum(1 for d in active if d["decision"] == "REVIEW_REQUIRED" and d["decision_basis"] == BASIS_IDENTITY_RESOLUTION),
+            "jeonju_main_added_unresolved": sum(1 for d in active if d["decision"] == "REVIEW_REQUIRED" and d["decision_basis"] == BASIS_UNRESOLVED),
+            "ACTIVE_DISTINCT_COUNT": len(active) - totals.get("CONFIRMED_TWIN", 0),
+            "WRITEABLE_ACTIVE_COUNT": totals.get("MATCH_REPLACE", 0) + totals.get("NEW", 0),
         },
+        "owner_override_keep_published": sorted(OWNER_OVERRIDE_KEEP_PUBLISHED),
         "existing_id_preserved": len(matched_ids),
         "id_change_required": 0, "delete_decisions": 0,
         "main_714_classification": dict(main_counts),

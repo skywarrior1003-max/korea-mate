@@ -25,7 +25,9 @@ import { join, resolve } from "node:path";
 import { planImport, changeManifestRows, type CrosswalkRow, type ImageRow, type IntakeRow, type MainClassificationRow, type MainSnapshotRow, type SourceRow } from "../src/lib/main-intake/importer-core.ts";
 
 const EXPECTED_ACTIVE_TOTAL = 4826;       // SOURCE_ACTIVE_RECORD_COUNT
-const EXPECTED_UNIQUE_PLACES = 4631;      // UNIQUE_SERVICE_PLACE_COUNT = ACTIVE − CONFIRMED_TWIN(195)
+// ARTIFACT TRUST: 같은 source entity skip 은 artifact 근거(부산 uc_seq)로만 — 170. ACTIVE_DISTINCT = 4,826 − 170 = 4,656
+const EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS = 170;
+const EXPECTED_ACTIVE_DISTINCT = EXPECTED_ACTIVE_TOTAL - EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS;
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(name);
@@ -81,13 +83,14 @@ const plan = planImport({ intake, sources, images, crosswalk, main, mainClassifi
 const projectedTotal = Object.values(plan.per_city).reduce((a, c) => a + c.projected_after, 0);
 const projectedVisible = Object.values(plan.per_city).reduce((a, c) => a + c.visible_after, 0);
 const projectedHidden = Object.values(plan.per_city).reduce((a, c) => a + c.hidden_after, 0);
-const expectedUniverse = { active_total: EXPECTED_ACTIVE_TOTAL, unique_places: EXPECTED_UNIQUE_PLACES, writes: plan.counts.match_replace + plan.counts.new,
-  skipped: plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped + plan.counts.excluded_skipped };
-// Gate A 산술: ACTIVE = MATCH + NEW + CONFIRMED_TWIN + TRUE_AMBIGUOUS · UNIQUE = MATCH + NEW + TRUE_AMBIGUOUS
+const expectedUniverse = { active_total: EXPECTED_ACTIVE_TOTAL, active_distinct: EXPECTED_ACTIVE_DISTINCT, writes: plan.counts.match_replace + plan.counts.new,
+  skipped: plan.counts.confirmed_twin_skipped + plan.counts.review_required_skipped + plan.counts.excluded_skipped };
+// ARTIFACT TRUST 산술: ACTIVE = MATCH + NEW + CONFIRMED_TWIN(artifact) + REVIEW_REQUIRED · ACTIVE_DISTINCT = ACTIVE − CONFIRMED_TWIN
 const arithmeticOk =
-  plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped === plan.counts.active_input
-  && plan.counts.unique_service_places === EXPECTED_UNIQUE_PLACES
-  && plan.counts.unique_service_places + plan.counts.confirmed_twin_skipped === plan.counts.active_input;
+  plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.review_required_skipped === plan.counts.active_input
+  && plan.counts.confirmed_twin_skipped === EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS
+  && plan.counts.active_distinct === EXPECTED_ACTIVE_DISTINCT
+  && plan.counts.heuristic_twin_auto_merge === 0 && plan.counts.evidenceless_skip === 0;
 
 // ── 5. 출력 (결정적: 시각 없음, 정렬 고정) ───────────────────────────────────
 const outDir = join(pkg, "dry-run");
@@ -103,19 +106,29 @@ writeFileSync(join(outDir, "five-city-core-id-mapping-v1.jsonl"), idMap.map(r =>
 writeFileSync(join(outDir, "five-city-core-skipped-v1.jsonl"), plan.skips.map(r => JSON.stringify(r)).join("\n") + "\n", "utf8");
 writeFileSync(join(outDir, "five-city-core-errors-v1.json"), JSON.stringify(plan.errors, null, 1) + "\n", "utf8");
 const summary = {
-  task: "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
+  task: "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
   mode: "dry-run",
   input_manifest_sha256: manifestHash,
   run_id: sha256(manifestHash + changeText).slice(0, 16),   // 입력+계획의 해시 — 같은 입력이면 같은 run id
   counts: plan.counts,
   arithmetic_ok: arithmeticOk,
   expected_universe: expectedUniverse,
-  gate_a: {
+  artifact_trust: {
     SOURCE_ACTIVE_RECORD_COUNT: plan.counts.active_input,
-    CONFIRMED_TWIN_RECORD_COUNT: plan.counts.confirmed_twin_skipped,
-    TRUE_AMBIGUOUS_COUNT: plan.counts.true_ambiguous_skipped,
-    UNIQUE_SERVICE_PLACE_COUNT: plan.counts.unique_service_places,
-    SKIP_TWIN: plan.counts.confirmed_twin_skipped, SKIP_TRUE_AMBIGUOUS: plan.counts.true_ambiguous_skipped,
+    ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT: plan.counts.confirmed_twin_skipped,
+    REVIEW_REQUIRED_COUNT: plan.counts.review_required_skipped,
+    ACTIVE_DISTINCT_COUNT: plan.counts.active_distinct,
+    WRITEABLE_ACTIVE_COUNT: plan.counts.writeable_active,
+    HEURISTIC_TWIN_AUTO_MERGE_COUNT: plan.counts.heuristic_twin_auto_merge,
+    ARTIFACT_EVIDENCELESS_SKIP_COUNT: plan.counts.evidenceless_skip,
+    decision_basis: crosswalk.filter(c => c.service_status === "ACTIVE").reduce<Record<string, number>>((a, c) => { const k = c.decision_basis ?? "none"; a[k] = (a[k] ?? 0) + 1; return a; }, {}),
+    provisional_until_review_gate: plan.counts.review_required_skipped > 0,
+  },
+  constraint_blockers: {
+    current_schema: "uq_city_spots_city_name (013) — migration 057 적용 전까지 아래 충돌은 INSERT/UPDATE blocker",
+    city_name_collision_count: plan.constraint_blockers.city_name_collisions.length,
+    city_name_collisions: plan.constraint_blockers.city_name_collisions,
+    display_name_artificial_rename_count: 0,
   },
   gate_b_visibility: { ...plan.visibility, projected_visible_rows: projectedVisible, projected_hidden_rows: projectedHidden, gate_column: "is_published", migration: "056_city_spots_is_published.sql (created, NOT applied)" },
   gate_c_category: { lossy_mapping_count: plan.counts.lossy_category },

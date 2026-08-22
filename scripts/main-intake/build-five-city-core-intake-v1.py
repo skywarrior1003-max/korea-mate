@@ -403,8 +403,8 @@ def main() -> None:
 
     per_city = Counter(r["city"] for r in active)
     manifest = {
-        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
-        "package": "five-city-core-v1", "schema_version": "intake-v1.1(preprod-gate)",
+        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
+        "package": "five-city-core-v1", "schema_version": "intake-v1.2(artifact-trust)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},
@@ -416,6 +416,8 @@ def main() -> None:
             "crosswalk": {"path": "five-city-core-crosswalk-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-crosswalk-v1.jsonl"))},
             "main_classification": {"path": "five-city-core-main-classification-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"))},
             "twin_resolution": {"path": "five-city-core-twin-resolution-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"))},
+            "heuristic_twin_release": {"path": "five-city-core-heuristic-twin-release-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-heuristic-twin-release-v1.jsonl"))},
+            "jeonju_identity_review_handoff": {"path": "jeonju-identity-review-handoff-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "jeonju-identity-review-handoff-v1.jsonl"))},
             "category_mapping": {"path": "five-city-category-mapping-v1.json", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-category-mapping-v1.json"))},
         },
         "category_semantic": {"lossy_mapping_count": len(lossy), "rows_by_semantic": dict(Counter(r["semantic_category"] for r in active))},

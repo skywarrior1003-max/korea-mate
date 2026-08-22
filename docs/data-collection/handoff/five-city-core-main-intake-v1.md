@@ -2,6 +2,7 @@
 
 TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 · 2026-08-22 · Production write 0
 §10 Pre-Production Gate (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1 · 2026-08-22) — §3 의 '쌍둥이 197 = AMBIGUOUS' 과 §6·§7 의 게이트 권장은 §10 으로 **대체**된다.
+§11 ARTIFACT TRUST (TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1 · 2026-08-22) — **§10-1 의 Gate A 쌍둥이 판정(195/1/4,631)은 폐기**되고 §11 로 대체된다.
 
 ## 1. 무엇인가
 
@@ -161,3 +162,49 @@ run_id `6218ce73e836f370` · 입력 manifest sha256 `eae3bfc8…29abb5` · chang
 3. importer apply 구현(트랜잭션·change manifest 보관·rollback manifest) → **DB write**: UPDATE 461(is_published=true) · INSERT 4,169(true) · VISIBILITY_UPDATE 234(false) · sources/images upsert.
 4. **즉시 재빌드·배포** → `/place/<new id>` 4,169 페이지 생성(총 4,883). 3→4 사이가 유일한 404 창이므로 연속 실행.
 5. 사후: TRUE_AMBIGUOUS 1건·LEGACY_ONLY_VALID 19건 노출 여부·DUPLICATE_REVIEW 3쌍 처리(삭제 아님) Owner 결정.
+
+## 11. ARTIFACT TRUST — identity correction (TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1 · 2026-08-22) · DECIDED
+
+### 11-0. MAIN DATA INTEGRATION TRUST RULE
+- **final validated city artifact 는 Main 의 input SSOT 다.** Main 은 4,826건의 품질을 다시 검수하지 않는다.
+- **FINAL VALIDATED ARTIFACT > MAIN HEURISTIC.** artifact 의 identity / service status / relation 을 우선한다. 이름 유사·주소 동일·전화 동일·좌표 근접·같은 건물·같은 provider 는 Main 의 merge 규칙이 아니다(보조 evidence 일 뿐).
+- Main 이 PARENT/CHILD/SUBENTITY/SAME_ENTITY 관계를 새로 만들지 않는다. artifact 에 구분이 있으면 그대로, 없으면 artifact 의 review status 를 따른다.
+- `review_required` 는 원래 data collection track(보조컴퓨터 identity gate)에서 마감한다 — 재수집·전체 재검수가 아니라 이미 수집된 근거로 판정만.
+- legacy DB 제약(`uq_city_spots_city_name`)을 만족시키려고 검증된 표시명/identity 를 왜곡하지 않는다 → 제약 쪽을 고친다(migration 057).
+- Owner Priority 유지: **City Package architecture = POST-LAUNCH FOUNDATION**. 현재 우선순위 = 5도시 Production integration 완료 → GoKoreaMate 오픈용 UI/function/design 구현 복귀.
+
+### 11-1. a14ba83 Gate A 쌍둥이 195건의 재분류 (artifact 근거만)
+| 분류 | 건수 | 처리 |
+|---|---|---|
+| A. ARTIFACT_CONFIRMED_SAME_SOURCE_ENTITY — 부산 `provenance.source_keys` 의 같은 uc_seq(`AttractionService:N` ↔ `VisitBusanContent:attraction:N`) | **170**(A↔VB 170쌍; 옛 166 + 이름이 달라 옛 규칙이 못 잡던 3쌍 + 아미동 A-00109↔VB-876) | `CONFIRMED_TWIN` / `SAME_SOURCE_ENTITY`, basis `ARTIFACT_SOURCE_LINEAGE`. 대표 = primary_source 역할(entity API < 웹 페이지) |
+| D. NO_RELATION_EVIDENCE — Main 휴리스틱 해제 | **29**: 부산 2(VB-548 신세계, A-00109 아미동 기사형) · 서울 17 · 제주 1 · 전주 9 | 둘 다 원래 ACTIVE 레코드로 복원(NEW). `five-city-core-heuristic-twin-release-v1.jsonl` |
+| C. ARTIFACT_REVIEW_REQUIRED — 전주 `identity_review=True` | **33** (+ Main 보류 2: 전주드림랜드 OFF-16676/KTO-2790515 `UNRESOLVED_AFTER_ARTIFACT_INSPECTION`) | `REVIEW_REQUIRED`, write 보류, 병합·삭제 없음. `jeonju-identity-review-handoff-v1.jsonl`(35행) |
+| B. ARTIFACT_DISTINCT | 나머지 전부 | 그대로 intake |
+
+부산 Food ↔ Main 브리지는 artifact 가 기록한 lineage(`discovery_candidate_ids` · `canonical_discovery_id` · `image_recovery_v1.disc_id` · `identity_removed_cids`) 와 legacy `external_id` 일치만 인정 → 97 + **2 복구**(`busan-G-00004`→#287 톤쇼우 부산대점, `busan-G-00144`→#160 광안리 언양불고기부산집). 옛 TIER2(주소 끝+로마자 상호 유사) 폐기 → `busan-G-00164` 슌사이쿠보는 NEW, #407 은 legacy 보존. 부산 NonFood 64 MATCH 는 행 단위 사람 판정표(`BUSAN_NONFOOD_DECISIONS`, basis `MAIN_EXPLICIT_DECISION_TABLE`)로 자동 규칙이 아니며 Owner 가 재검토할 수 있게 basis 를 남겼다.
+
+### 11-2. 재산정 (provisional — 전주 REVIEW_REQUIRED 35 미반영)
+SOURCE_ACTIVE 4,826 = MATCH_REPLACE **462** + NEW **4,159** + ARTIFACT_SAME_ENTITY_SKIP **170** + REVIEW_REQUIRED **35**. ACTIVE_DISTINCT 4,656 · WRITEABLE_ACTIVE 4,621 · HEURISTIC_TWIN_AUTO_MERGE 0 · EVIDENCELESS_SKIP 0.
+Main 714: ACTIVE_MATCHED 462 · EXCLUDED_FROM_SERVICE_REVIEW 230 · DUPLICATE_REVIEW 3 · LEGACY_ONLY_VALID 15 · **OWNER_OVERRIDE_KEEP_PUBLISHED 4**(#7·#29 이기대, #28 오륙도 스카이워크, #42 더베이101 — id 보존·published 유지·플래너 후보 포함). LEGACY_ONLY_VALID 15 는 일괄 hide 하지 않는다(Owner 결정 대기 목록: #5,6,23,32,39,50,55,57,61,64,68,81,82,93,94).
+Projected DB: total **4,873**(714+4,159) · visible **4,640**(462+4,159+15+4) · hidden **233**(230+3). 도시별 after(visible/hidden): busan 1,037(807/230) · gyeongju 302(299/3) · seoul 1,837 · jeju 1,496 · jeonju 201(+보류 35).
+dry-run 2회 동일: run_id `fcc0894262096c22` · input manifest `fad19e68…a37d77` · change manifest `58418313…9b3613` · errors 0 · sources 5,552 · images 4,360 · DELETE 0.
+
+### 11-3. `(city,name)` 충돌 12건 — 표시명 변형 0, migration 057 로 해소
+현재 schema(`uq_city_spots_city_name`, 013) 기준 INSERT/UPDATE blocker: busan Tonshou(#208 legacy ↔ #287←G-00004) · jeonju 진미반점(KTO-2870672/3444028, 별도 지점) · seoul Play with K(2회차) · Korea House(코리아하우스/한국의집) · Eid(이드 2건, 관계 없음) · Delhi India · Hwagyesa Temple · Nammi Plant Lab · Persian Palace · Sanchon · Sleep No More Seoul · Sultan Kebab(서울 POST/MEDIA 동명 쌍 — artifact 관계 필드 없음, 둘 다 write).
+**migration `057_city_spots_drop_city_name_unique.sql`(파일만, 미적용)**: `DROP CONSTRAINT uq_city_spots_city_name` + 비유니크 `(city,name)` 인덱스. 의존처 감사: 런타임 (city,name) 조회 0 · importer identity = numeric id/canonical/(source_type,external_id) · RPC 025/048 EXISTS 사전검사 유지(제약명 분기만 사장) · `scripts/import-spots.ts`(legacy CSV, 미연결) 폐기 대상 · `matchCitySpot` 은 동명 여러 개면 null(ambiguity-safe).
+6쌍 artifact verdict: 전주드림랜드 UNRESOLVED(보류) · 이드 관계 없음(둘 다 write) · 진미반점 DISTINCT_BRANCH · Play with K DISTINCT_ENTITY(회차) · Korea House DISTINCT_ENTITY · Tonshou G-00004=#287 SAME_SOURCE(lineage), #208 DISTINCT_BRANCH. merge 0 · rename 0.
+
+### 11-4. 보조컴퓨터 전달용 exact task summary (복사용)
+```
+TASK-JEONJU-IDENTITY-GATE-FINALIZATION-V1 (targeted · 재수집 아님)
+범위: data/main-intake/five-city-core-v1/jeonju-identity-review-handoff-v1.jsonl 의 35건만
+  · 33건 = jeonju-final-service-catalog-v1 에서 identity_review=True(match_type AMBIGUOUS, identity-resolution INSUFFICIENT_EVIDENCE)
+  · 2건 = 전주드림랜드 OFF-16676 / KTO-2790515 (Main 이 artifact 를 읽고도 관계 확정 불가)
+요청: 각 행에 required_final_verdict_enum 중 하나(SAME_SOURCE_ENTITY·DISTINCT_ENTITY·DISTINCT_BRANCH·CONTAINED_SUBENTITY·KEEP_BOTH·EXCLUDE_ONE·
+      OTHER_EXISTING_ARTIFACT_VERDICT)를 기존 artifact 근거로 기록 (기존 terminology 가 있으면 그것 우선)
+금지: 5도시 재수집 · 4,826 재검수 · 전주 전체 재수집 · 새 broad web research
+산출: 35행 verdict 파일 + 근거 필드 → Main 은 이를 crosswalk 에 번역만 한다
+```
+
+### 11-5. Production rollout 계약(유지·미실행)
+MIGRATION(056·057, 순서는 Production TASK 에서 확정) → VISIBILITY CODE(게이트 ON) → **STAGE**(NEW 는 `is_published=false` 로 INSERT, MATCH 는 기존 id UPDATE, `INSERT … RETURNING id` 로 `canonical_id → city_spots.id` 매핑 artifact 저장) → **BUILD**(false 상태 신규 `/place` 정적 페이지 생성) → **PUBLISH**(매핑 id 목록만 true) → **REBUILD**(robots/sitemap/metadata 정상화). 404-free.

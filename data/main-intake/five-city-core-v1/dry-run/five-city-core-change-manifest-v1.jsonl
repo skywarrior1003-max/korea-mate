@@ -54,6 +54,7 @@
 {"action":"UPDATE","main_city_spot_id":83,"canonical_id":"busan-A-00209","city":"busan","fields_changed":["address","category","desc_l10n","description","image_url","is_published","lat","lng","name","name_l10n"],"old":{"name":"Choryang Ibagu-gil","category":"nature","had_image":true},"new":{"name":"Choryang Ibagu-gil: A Storytelling Walk through History","category":"attraction","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"NO_SOURCE_VALUE","district":"NO_SOURCE_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"NO_SOURCE_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":233,"canonical_id":"busan-G-00001","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Maparam Haemuljjim Haemultang Guseo Main Branch (마파람 해물찜 해물탕 구서본점)","category":"restaurant","had_image":false},"new":{"name":"Maparam Haemul Jjim","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":244,"canonical_id":"busan-G-00003","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Lee Heung-yong Bakery PSU Branch (이흥용과자점 부산대점)","category":"restaurant","had_image":false},"new":{"name":"Lee Heung-yong Bakery (PNU)","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
+{"action":"UPDATE","main_city_spot_id":287,"canonical_id":"busan-G-00004","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Tonshou PNU Branch(톤쇼우 부산대점)","category":"restaurant","had_image":false},"new":{"name":"Tonshou","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":260,"canonical_id":"busan-G-00005","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Phomantico PNU Branch (부산대 포맨티코)","category":"restaurant","had_image":false},"new":{"name":"PNU Fomentiko","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":357,"canonical_id":"busan-G-00007","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Momos","category":"restaurant","had_image":false},"new":{"name":"Momos Coffee","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":3,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":136,"canonical_id":"busan-G-00010","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Bong Sikdang (봉식당)","category":"restaurant","had_image":false},"new":{"name":"Bong Restaurant","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
@@ -124,6 +125,7 @@
 {"action":"UPDATE","main_city_spot_id":371,"canonical_id":"busan-G-00140","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"611WoodFire","category":"restaurant","had_image":false},"new":{"name":"611 Wood Fire","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":413,"canonical_id":"busan-G-00141","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"100.1.pyeongnaeng(백일평냉)","category":"restaurant","had_image":false},"new":{"name":"Baekil Pyeongnaeng","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":319,"canonical_id":"busan-G-00142","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Donggyeong bapsang","category":"restaurant","had_image":false},"new":{"name":"Donggyeong Bapsang","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":3,"images_upsert":1}
+{"action":"UPDATE","main_city_spot_id":160,"canonical_id":"busan-G-00144","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Gwangalli Eonyang  Bulgogi Busanjip","category":"restaurant","had_image":false},"new":{"name":"Gwangalli Eonyang Bulgogi","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":274,"canonical_id":"busan-G-00147","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Go-ok (고옥)","category":"restaurant","had_image":false},"new":{"name":"Go-ok","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":410,"canonical_id":"busan-G-00149","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Namcheonmeonga(남천면가)","category":"restaurant","had_image":false},"new":{"name":"Namcheon Myeonga","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":363,"canonical_id":"busan-G-00150","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Alcheon Sundae  Gopchang Jeongeol  Jeonmunjeom","category":"restaurant","had_image":false},"new":{"name":"Alcheon Sundae","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
@@ -133,7 +135,6 @@
 {"action":"UPDATE","main_city_spot_id":360,"canonical_id":"busan-G-00161","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"TOBUK BAKERY (토북 베이커리)","category":"restaurant","had_image":false},"new":{"name":"Tobuk Bakery","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":142,"canonical_id":"busan-G-00162","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"BANCO (방코)","category":"restaurant","had_image":false},"new":{"name":"Banco","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":100,"canonical_id":"busan-G-00163","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Manho-galmi Shabu Shabu (만호갈미 샤브샤브)","category":"restaurant","had_image":false},"new":{"name":"Manho Galmi Shabu","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
-{"action":"UPDATE","main_city_spot_id":407,"canonical_id":"busan-G-00164","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Shunsai Kubo","category":"restaurant","had_image":false},"new":{"name":"Shunsai Kubo (Hwamyeong)","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":1,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":227,"canonical_id":"busan-G-00165","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Pyeongyangjip (평양집)","category":"restaurant","had_image":false},"new":{"name":"Pyeongyang House","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":370,"canonical_id":"busan-G-00166","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Gombo Sikdang","category":"restaurant","had_image":false},"new":{"name":"Gombo Restaurant","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
 {"action":"UPDATE","main_city_spot_id":299,"canonical_id":"busan-G-00167","city":"busan","fields_changed":["address","category","desc_l10n","description","district","image_url","is_published","lat","lng","name","name_l10n","subcategory","tags"],"old":{"name":"Samnak Hadong Jaecheopguk","category":"restaurant","had_image":false},"new":{"name":"Hadong Jaecheop","category":"restaurant","has_image":true},"null_policy":{"name":"REPLACE_WITH_VALUE","name_l10n":"REPLACE_WITH_VALUE","description":"REPLACE_WITH_VALUE","desc_l10n":"REPLACE_WITH_VALUE","why_it_matters":"NO_SOURCE_VALUE","why_l10n":"NO_SOURCE_VALUE","category":"REPLACE_WITH_VALUE","subcategory":"REPLACE_WITH_VALUE","district":"REPLACE_WITH_VALUE","address":"REPLACE_WITH_VALUE","lat":"REPLACE_WITH_VALUE","lng":"REPLACE_WITH_VALUE","official_url":"NO_SOURCE_VALUE","map_url":"NO_SOURCE_VALUE","naver_map_url":"NO_SOURCE_VALUE","opening_hours":"NO_SOURCE_VALUE","tags":"REPLACE_WITH_VALUE","image_url":"REPLACE_WITH_VALUE","is_published":"VISIBILITY_GATE"},"sources_upsert":2,"images_upsert":1}
@@ -526,6 +527,7 @@
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00106","canonical_id":"busan-A-00106","city":"busan","name":"In Search of Busan’s Old History, Somak Village in Uam-dong","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00107","canonical_id":"busan-A-00107","city":"busan","name":"Busan Healing Forest","category":"attraction","has_image":true,"sources_upsert":4,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00108","canonical_id":"busan-A-00108","city":"busan","name":"구덕문화공원(한)","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:busan-A-00109","canonical_id":"busan-A-00109","city":"busan","name":"Ami-dong Tombstone Culture Village, a hope built on the cemetery","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00110","canonical_id":"busan-A-00110","city":"busan","name":"Fishing Villages: Best Relaxing Getaways in Busan","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00111","canonical_id":"busan-A-00111","city":"busan","name":"Turn Toward Busan","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-A-00112","canonical_id":"busan-A-00112","city":"busan","name":"Dareumsan Recreational Forest in Gijang","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
@@ -621,7 +623,6 @@
 {"action":"INSERT","placeholder_id":"NEW:busan-E-00006","canonical_id":"busan-E-00006","city":"busan","name":"The beautiful harmony in the night sky of Busan, Busan Fireworks Festival","category":"event","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-E-00019","canonical_id":"busan-E-00019","city":"busan","name":"Busan International Rock Festival","category":"event","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00002","canonical_id":"busan-G-00002","city":"busan","name":"Digeut","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:busan-G-00004","canonical_id":"busan-G-00004","city":"busan","name":"Tonshou","category":"restaurant","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00006","canonical_id":"busan-G-00006","city":"busan","name":"Italian Uncle","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00008","canonical_id":"busan-G-00008","city":"busan","name":"Dangmiok Beef Bone Soup","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00009","canonical_id":"busan-G-00009","city":"busan","name":"Briand French Pastry","category":"restaurant","has_image":true,"sources_upsert":2,"images_upsert":1}
@@ -691,7 +692,6 @@
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00138","canonical_id":"busan-G-00138","city":"busan","name":"Hanwolgwan","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00139","canonical_id":"busan-G-00139","city":"busan","name":"Binetto","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00143","canonical_id":"busan-G-00143","city":"busan","name":"Bibibjae","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:busan-G-00144","canonical_id":"busan-G-00144","city":"busan","name":"Gwangalli Eonyang Bulgogi","category":"restaurant","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00145","canonical_id":"busan-G-00145","city":"busan","name":"Anmok","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00146","canonical_id":"busan-G-00146","city":"busan","name":"Le Sens","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00148","canonical_id":"busan-G-00148","city":"busan","name":"New Rou Men Guanzhi","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
@@ -702,6 +702,7 @@
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00158","canonical_id":"busan-G-00158","city":"busan","name":"Miso Odeng","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00159","canonical_id":"busan-G-00159","city":"busan","name":"Ssangdungi Pork Soup","category":"restaurant","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00160","canonical_id":"busan-G-00160","city":"busan","name":"Shabuniji","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:busan-G-00164","canonical_id":"busan-G-00164","city":"busan","name":"Shunsai Kubo (Hwamyeong)","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00168","canonical_id":"busan-G-00168","city":"busan","name":"Grandma Jaecheop","category":"restaurant","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00171","canonical_id":"busan-G-00171","city":"busan","name":"Jeonjitgan (Sinpyeong)","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:busan-G-00173","canonical_id":"busan-G-00173","city":"busan","name":"Flower Village Mountain Fish Soup","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
@@ -1077,14 +1078,12 @@
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-545","canonical_id":"busan-VB-545","city":"busan","name":"Lotte Gwangbok Store with\u000bmusic fountain and observatory","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-546","canonical_id":"busan-VB-546","city":"busan","name":"Lotte Department Store Centum City Store","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-547","canonical_id":"busan-VB-547","city":"busan","name":"Lotte Department Store Dongnae Store","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:busan-VB-548","canonical_id":"busan-VB-548","city":"busan","name":"Shinsegae Centum City Department Store","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-552","canonical_id":"busan-VB-552","city":"busan","name":"Fall in love with the exotic shopping street! Busan Premium Outlets","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-554","canonical_id":"busan-VB-554","city":"busan","name":"NC Department Store Haeundae Store","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-555","canonical_id":"busan-VB-555","city":"busan","name":"NC Department Store Pusan National University Store","category":"attraction","has_image":true,"sources_upsert":3,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:busan-VB-804","canonical_id":"busan-VB-804","city":"busan","name":"상상하던 동화 속 그 마을, 기장 도예 관광 힐링촌 테마숲","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:busan-VB-813","canonical_id":"busan-VB-813","city":"busan","name":"누나의 길, 한국신발관","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-819","canonical_id":"busan-VB-819","city":"busan","name":"머물고 싶은 쇼핑센터 IKEA동부산점","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-839","canonical_id":"busan-VB-839","city":"busan","name":"Enjoy Kayaking Down The River","category":"nature","has_image":true,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:busan-VB-859","canonical_id":"busan-VB-859","city":"busan","name":"오늘의산책_구덕문화공원","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:busan-VB-986","canonical_id":"busan-VB-986","city":"busan","name":"금정산성문화체험촌","category":"attraction","has_image":true,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_000000000000597","canonical_id":"jeju-CNTS_000000000000597","city":"jeju","name":"아라고나이트 고온천(디아넥스호텔)","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_000000000000614","canonical_id":"jeju-CNTS_000000000000614","city":"jeju","name":"비체올린","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -1899,6 +1898,7 @@
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014224","canonical_id":"jeju-CNTS_300000000014224","city":"jeju","name":"제주올레사진관","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014259","canonical_id":"jeju-CNTS_300000000014259","city":"jeju","name":"제주 바다하늘다이브센터","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014265","canonical_id":"jeju-CNTS_300000000014265","city":"jeju","name":"한복더하기","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014268","canonical_id":"jeju-CNTS_300000000014268","city":"jeju","name":"제주도공방 노꼬메","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014276","canonical_id":"jeju-CNTS_300000000014276","city":"jeju","name":"업다이브","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014303","canonical_id":"jeju-CNTS_300000000014303","city":"jeju","name":"암퀘스트 농업회사법인 주식회사","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:jeju-CNTS_300000000014327","canonical_id":"jeju-CNTS_300000000014327","city":"jeju","name":"소금막해변","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -2585,11 +2585,13 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-126621","canonical_id":"KTO-126621","city":"jeonju","name":"오목대와 이목대","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-126626","canonical_id":"KTO-126626","city":"jeonju","name":"전주동물원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-126627","canonical_id":"KTO-126627","city":"jeonju","name":"완산공원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-127611","canonical_id":"KTO-127611","city":"jeonju","name":"치명자산성지","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-129786","canonical_id":"KTO-129786","city":"jeonju","name":"국립전주박물관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-129937","canonical_id":"KTO-129937","city":"jeonju","name":"미술관 솔","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-129974","canonical_id":"KTO-129974","city":"jeonju","name":"전주문화원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-130055","canonical_id":"KTO-130055","city":"jeonju","name":"전북특별자치도립국악원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-130357","canonical_id":"KTO-130357","city":"jeonju","name":"전주공예품전시관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-130445","canonical_id":"KTO-130445","city":"jeonju","name":"전주역사박물관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-130712","canonical_id":"KTO-130712","city":"jeonju","name":"농업과학관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-131192","canonical_id":"KTO-131192","city":"jeonju","name":"전북특별자치도교육청 전주학생교육문화관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-132326","canonical_id":"KTO-132326","city":"jeonju","name":"전주 남부시장","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2597,9 +2599,12 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-133416","canonical_id":"KTO-133416","city":"jeonju","name":"삼일관","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-133601","canonical_id":"KTO-133601","city":"jeonju","name":"전라회관","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-133604","canonical_id":"KTO-133604","city":"jeonju","name":"벽계가든","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:KTO-147684","canonical_id":"KTO-147684","city":"jeonju","name":"전주향교","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1586889","canonical_id":"KTO-1586889","city":"jeonju","name":"목우헌","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-1586964","canonical_id":"KTO-1586964","city":"jeonju","name":"전주자연생태관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1587082","canonical_id":"KTO-1587082","city":"jeonju","name":"오송제","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1592606","canonical_id":"KTO-1592606","city":"jeonju","name":"천양정","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-1594231","canonical_id":"KTO-1594231","city":"jeonju","name":"동학혁명기념관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1594308","canonical_id":"KTO-1594308","city":"jeonju","name":"예종대왕태실 및 비","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1594374","canonical_id":"KTO-1594374","city":"jeonju","name":"전주전통한지원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-1594500","canonical_id":"KTO-1594500","city":"jeonju","name":"전주목판서화체험관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2623,14 +2628,17 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-229955","canonical_id":"KTO-229955","city":"jeonju","name":"전주 이강주","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2445701","canonical_id":"KTO-2445701","city":"jeonju","name":"전북도청도서관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2599911","canonical_id":"KTO-2599911","city":"jeonju","name":"전주 초코파이 체험장","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-2605804","canonical_id":"KTO-2605804","city":"jeonju","name":"팔복예술공장","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2606240","canonical_id":"KTO-2606240","city":"jeonju","name":"전주 산성벽화마을","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2606577","canonical_id":"KTO-2606577","city":"jeonju","name":"전주 동문예술거리","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-2606578","canonical_id":"KTO-2606578","city":"jeonju","name":"전주부채문화관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2606585","canonical_id":"KTO-2606585","city":"jeonju","name":"서학동사진미술관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2606603","canonical_id":"KTO-2606603","city":"jeonju","name":"자만마을 벽화갤러리","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2610549","canonical_id":"KTO-2610549","city":"jeonju","name":"예원당(한옥체험 예원당)","category":"accommodation","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2610985","canonical_id":"KTO-2610985","city":"jeonju","name":"전주 한옥숙박 체험관","category":"accommodation","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2708322","canonical_id":"KTO-2708322","city":"jeonju","name":"이화고택","category":"accommodation","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2721611","canonical_id":"KTO-2721611","city":"jeonju","name":"첫마중길 여행자도서관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-2721624","canonical_id":"KTO-2721624","city":"jeonju","name":"학산숲속시집도서관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2740671","canonical_id":"KTO-2740671","city":"jeonju","name":"마시랑게","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2743346","canonical_id":"KTO-2743346","city":"jeonju","name":"육일식당","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2750859","canonical_id":"KTO-2750859","city":"jeonju","name":"아중호수","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2643,7 +2651,6 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783379","canonical_id":"KTO-2783379","city":"jeonju","name":"씨플랫 송천에코점","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783390","canonical_id":"KTO-2783390","city":"jeonju","name":"물빛정원","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783878","canonical_id":"KTO-2783878","city":"jeonju","name":"기지제·기지제 수변공원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:KTO-2790515","canonical_id":"KTO-2790515","city":"jeonju","name":"전주드림랜드","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840189","canonical_id":"KTO-2840189","city":"jeonju","name":"한울밥상","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840235","canonical_id":"KTO-2840235","city":"jeonju","name":"호남각","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840571","canonical_id":"KTO-2840571","city":"jeonju","name":"전라도음식이야기","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2686,6 +2693,7 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-2932644","canonical_id":"KTO-2932644","city":"jeonju","name":"그림그림케이크","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-298199","canonical_id":"KTO-298199","city":"jeonju","name":"남고사(전주)","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-3065483","canonical_id":"KTO-3065483","city":"jeonju","name":"전주 도깨비 시장","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-3065503","canonical_id":"KTO-3065503","city":"jeonju","name":"전주 대사습청","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-3065596","canonical_id":"KTO-3065596","city":"jeonju","name":"전북대학교 문회루","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-3066280","canonical_id":"KTO-3066280","city":"jeonju","name":"전주일몽","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-3066402","canonical_id":"KTO-3066402","city":"jeonju","name":"전북특별자치도 관광기념품 100선 판매관","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2705,18 +2713,14 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-485691","canonical_id":"KTO-485691","city":"jeonju","name":"학소암(전주)","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-667442","canonical_id":"KTO-667442","city":"jeonju","name":"옛날팥죽집","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-843552","canonical_id":"KTO-843552","city":"jeonju","name":"노랑토랑","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-10076","canonical_id":"OFF-10076","city":"jeonju","name":"Jeonju Museum of History","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10114","canonical_id":"OFF-10114","city":"jeonju","name":"Jeolla Gamyeong","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10115","canonical_id":"OFF-10115","city":"jeonju","name":"Gyeonggijeon Shrine","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10116","canonical_id":"OFF-10116","city":"jeonju","name":"Namgosanseong Fortress · Namgosa Temple","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10118","canonical_id":"OFF-10118","city":"jeonju","name":"Donggosanseong Fortress·Donggosa Temple","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11815","canonical_id":"OFF-11815","city":"jeonju","name":"Jeonju Gijeopnori Training Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11816","canonical_id":"OFF-11816","city":"jeonju","name":"Jeonju Millennium Hanji Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-11923","canonical_id":"OFF-11923","city":"jeonju","name":"만경대 암각서","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11924","canonical_id":"OFF-11924","city":"jeonju","name":"남고진 사적비","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11925","canonical_id":"OFF-11925","city":"jeonju","name":"덕진공원 3층석탑","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-11926","canonical_id":"OFF-11926","city":"jeonju","name":"전북대 석불입상","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-11927","canonical_id":"OFF-11927","city":"jeonju","name":"박진 효자비","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11928","canonical_id":"OFF-11928","city":"jeonju","name":"시사재","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-12346","canonical_id":"OFF-12346","city":"jeonju","name":"Jeonju Ice Skating Stadium","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13042","canonical_id":"OFF-13042","city":"jeonju","name":"전주 기령당","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
@@ -2727,57 +2731,39 @@
 {"action":"INSERT","placeholder_id":"NEW:OFF-13622","canonical_id":"OFF-13622","city":"jeonju","name":"Baekseok Park","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13844","canonical_id":"OFF-13844","city":"jeonju","name":"Jeonju Garden Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13964","canonical_id":"OFF-13964","city":"jeonju","name":"Wansanchilbong Peak (Wansan Park)","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-14617","canonical_id":"OFF-14617","city":"jeonju","name":"A fan museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-14711","canonical_id":"OFF-14711","city":"jeonju","name":"BUNKER THE SPACE","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-15637","canonical_id":"OFF-15637","city":"jeonju","name":"Jeonghyesa Temple","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16021","canonical_id":"OFF-16021","city":"jeonju","name":"Girinbong","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16022","canonical_id":"OFF-16022","city":"jeonju","name":"Jaman Mural Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16023","canonical_id":"OFF-16023","city":"jeonju","name":"Geonjisan Forest Tiny Library","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16024","canonical_id":"OFF-16024","city":"jeonju","name":"Daga Traveler’s Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16025","canonical_id":"OFF-16025","city":"jeonju","name":"Yeonhwajeong Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16084","canonical_id":"OFF-16084","city":"jeonju","name":"Nambu Market & Youth Mall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16085","canonical_id":"OFF-16085","city":"jeonju","name":"Nambu Market Hanok Village Night Market","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16086","canonical_id":"OFF-16086","city":"jeonju","name":"Cheongyeonru & Namcheongyo","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16087","canonical_id":"OFF-16087","city":"jeonju","name":"Jogyeongdan Shrine","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16088","canonical_id":"OFF-16088","city":"jeonju","name":"Dongmun Secondhand Book Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16089","canonical_id":"OFF-16089","city":"jeonju","name":"Donghak Peasant Revolution Memorial Hall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16091","canonical_id":"OFF-16091","city":"jeonju","name":"Jeonju World Cup Stadium","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16092","canonical_id":"OFF-16092","city":"jeonju","name":"Jeonju Cinema Studio & Jeonju Digital Independent Cinema","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16104","canonical_id":"OFF-16104","city":"jeonju","name":"어린이박물관","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16109","canonical_id":"OFF-16109","city":"jeonju","name":"Jeonju Hanok Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16133","canonical_id":"OFF-16133","city":"jeonju","name":"자매갈비전골","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16220","canonical_id":"OFF-16220","city":"jeonju","name":"White Western-style House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16310","canonical_id":"OFF-16310","city":"jeonju","name":"베테랑칼국수","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16357","canonical_id":"OFF-16357","city":"jeonju","name":"짜앤짬이야기","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16364","canonical_id":"OFF-16364","city":"jeonju","name":"Jeonju Jungang Cathedral","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16670","canonical_id":"OFF-16670","city":"jeonju","name":"Hanbyeokgul","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16671","canonical_id":"OFF-16671","city":"jeonju","name":"Jeonju Sago (History Repository)","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16672","canonical_id":"OFF-16672","city":"jeonju","name":"Saekjang Rice Mill","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16673","canonical_id":"OFF-16673","city":"jeonju","name":"Seohak-dong Art Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16674","canonical_id":"OFF-16674","city":"jeonju","name":"Palbok-dong Fringe Tree Railroad","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16675","canonical_id":"OFF-16675","city":"jeonju","name":"Seohak Art Village Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16676","canonical_id":"OFF-16676","city":"jeonju","name":"전주드림랜드","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16677","canonical_id":"OFF-16677","city":"jeonju","name":"Ajung Lake Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16678","canonical_id":"OFF-16678","city":"jeonju","name":"Hanok Village Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16679","canonical_id":"OFF-16679","city":"jeonju","name":"Yaho Saengtae Mamkkeot Forest Playground","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-16680","canonical_id":"OFF-16680","city":"jeonju","name":"Wansan Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16681","canonical_id":"OFF-16681","city":"jeonju","name":"Jjokgureum Library","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-17128","canonical_id":"OFF-17128","city":"jeonju","name":"Tradi-Lounge","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-17295","canonical_id":"OFF-17295","city":"jeonju","name":"Jeonju Innovation City Complex Cultural Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-17463","canonical_id":"OFF-17463","city":"jeonju","name":"메르밀진미집 본점","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9736","canonical_id":"OFF-9736","city":"jeonju","name":"Seunggwangjae","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9737","canonical_id":"OFF-9737","city":"jeonju","name":"Pungpaejigwan (Jeonju Gaeksa)","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9738","canonical_id":"OFF-9738","city":"jeonju","name":"Chimyeongjasan Holy Ground","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9740","canonical_id":"OFF-9740","city":"jeonju","name":"Hakindang House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9741","canonical_id":"OFF-9741","city":"jeonju","name":"Hanbyeokdang Pavilion","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9742","canonical_id":"OFF-9742","city":"jeonju","name":"Jeonjucheon Stream","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9746","canonical_id":"OFF-9746","city":"jeonju","name":"Pungnammun Gate","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9747","canonical_id":"OFF-9747","city":"jeonju","name":"Cheonmajung-gil Tourist Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9749","canonical_id":"OFF-9749","city":"jeonju","name":"Haksan Forest Poem Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9750","canonical_id":"OFF-9750","city":"jeonju","name":"Kkotsim, Jeonju Municipal Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9751","canonical_id":"OFF-9751","city":"jeonju","name":"Jeonjuhyanggyo Local Confucian School","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9752","canonical_id":"OFF-9752","city":"jeonju","name":"Jeondong Catholic Cathedral","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9755","canonical_id":"OFF-9755","city":"jeonju","name":"Jeonbuk Arts Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9756","canonical_id":"OFF-9756","city":"jeonju","name":"Jeonju Children's Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9757","canonical_id":"OFF-9757","city":"jeonju","name":"Gijije Circular Trail","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9758","canonical_id":"OFF-9758","city":"jeonju","name":"Osongje Eco Park","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
@@ -2787,27 +2773,15 @@
 {"action":"INSERT","placeholder_id":"NEW:OFF-9766","canonical_id":"OFF-9766","city":"jeonju","name":"Korea Traditional Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9767","canonical_id":"OFF-9767","city":"jeonju","name":"Sori Arts Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9768","canonical_id":"OFF-9768","city":"jeonju","name":"Jeollabukdo Childrens Creativity Experience Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9769","canonical_id":"OFF-9769","city":"jeonju","name":"Palbok Art Factory","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9772","canonical_id":"OFF-9772","city":"jeonju","name":"Deokjin Park","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9774","canonical_id":"OFF-9774","city":"jeonju","name":"전주천","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9775","canonical_id":"OFF-9775","city":"jeonju","name":"Jeonju Arboretum","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9780","canonical_id":"OFF-9780","city":"jeonju","name":"Jeonju Hanji Museum","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9781","canonical_id":"OFF-9781","city":"jeonju","name":"Jeonju Eco Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9782","canonical_id":"OFF-9782","city":"jeonju","name":"Jeonju Daesaseupcheong","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9783","canonical_id":"OFF-9783","city":"jeonju","name":"Gyodong Art Gallery","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9784","canonical_id":"OFF-9784","city":"jeonju","name":"Jeonju Dreamland","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9785","canonical_id":"OFF-9785","city":"jeonju","name":"Our Playground— Marudal","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9789","canonical_id":"OFF-9789","city":"jeonju","name":"Eojin Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9790","canonical_id":"OFF-9790","city":"jeonju","name":"Jeonju Crafts Exhibition Hall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9791","canonical_id":"OFF-9791","city":"jeonju","name":"Jeonju Hanbyeok Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9793","canonical_id":"OFF-9793","city":"jeonju","name":"Wanpanbon Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9794","canonical_id":"OFF-9794","city":"jeonju","name":"Fan Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9796","canonical_id":"OFF-9796","city":"jeonju","name":"Jeonju Traditional Liquor Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9797","canonical_id":"OFF-9797","city":"jeonju","name":"Choi Myeong-hui Literary House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9798","canonical_id":"OFF-9798","city":"jeonju","name":"Jeonju Hanok Village Seonbi Culture Cente","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9800","canonical_id":"OFF-9800","city":"jeonju","name":"Gangam Museum of Calligraphy","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9810","canonical_id":"OFF-9810","city":"jeonju","name":"Jeonju Hanok Village History Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
-{"action":"INSERT","placeholder_id":"NEW:OFF-9811","canonical_id":"OFF-9811","city":"jeonju","name":"Jeonju Traditional Culture Training Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000034","canonical_id":"seoul-KOP000034","city":"seoul","name":"Cheonggyecheon Stream","category":"nature","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000217","canonical_id":"seoul-KOP000217","city":"seoul","name":"Lotte Duty Free Shop","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000305","canonical_id":"seoul-KOP000305","city":"seoul","name":"Sejong Center for the Performing Arts","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -2955,6 +2929,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP032529","canonical_id":"seoul-KOP032529","city":"seoul","name":"Jeongdong 1928 Art Center","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP033516","canonical_id":"seoul-KOP033516","city":"seoul","name":"Neorang Narang Urirang Stamp Healing Tour","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP033825","canonical_id":"seoul-KOP033825","city":"seoul","name":"Seoul Sewerage Science Museum","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-KOP033829","canonical_id":"seoul-KOP033829","city":"seoul","name":"Hwagyesa Temple","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP034360","canonical_id":"seoul-KOP034360","city":"seoul","name":"1Million Dance Studio","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP034490","canonical_id":"seoul-KOP034490","city":"seoul","name":"Lumiere","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP034492","canonical_id":"seoul-KOP034492","city":"seoul","name":"Smashing Bowl (Cheongdam)","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -3246,6 +3221,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPo1wsp6","canonical_id":"seoul-KOPo1wsp6","city":"seoul","name":"DMAU Project \"Init\"","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPoig3k4","canonical_id":"seoul-KOPoig3k4","city":"seoul","name":"Architecture, Space Time Scenarios","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPojrz90","canonical_id":"seoul-KOPojrz90","city":"seoul","name":"Cheongwoon Literature Library","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-KOPokonim","canonical_id":"seoul-KOPokonim","city":"seoul","name":"Sleep No More Seoul","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPoo9a6e","canonical_id":"seoul-KOPoo9a6e","city":"seoul","name":"Cheonggyecheon Museum, Twenty","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPoovshm","canonical_id":"seoul-KOPoovshm","city":"seoul","name":"2025 SPO RIVERSIDE CONCERT","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOPotdpky","canonical_id":"seoul-KOPotdpky","city":"seoul","name":"Artist Research: 《Unfinished Flora―Soyo Lee》, 《Time Blooms―Anna Ridler》","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4200,6 +4176,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0814","canonical_id":"seoul-food-v1-0814","city":"seoul","name":"The Makan","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0815","canonical_id":"seoul-food-v1-0815","city":"seoul","name":"Namsan memories","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0816","canonical_id":"seoul-food-v1-0816","city":"seoul","name":"사마르칸트시티","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0817","canonical_id":"seoul-food-v1-0817","city":"seoul","name":"Sultan Kebab","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0818","canonical_id":"seoul-food-v1-0818","city":"seoul","name":"Art Sushi","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0819","canonical_id":"seoul-food-v1-0819","city":"seoul","name":"Nirvana","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0820","canonical_id":"seoul-food-v1-0820","city":"seoul","name":"The Rabbit","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4240,6 +4217,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0855","canonical_id":"seoul-food-v1-0855","city":"seoul","name":"Cafe Sinola","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0856","canonical_id":"seoul-food-v1-0856","city":"seoul","name":"Roi garden","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0857","canonical_id":"seoul-food-v1-0857","city":"seoul","name":"Hwandae Coffee Work","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0858","canonical_id":"seoul-food-v1-0858","city":"seoul","name":"LunaAsia","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0859","canonical_id":"seoul-food-v1-0859","city":"seoul","name":"Jeong-dong Chueotang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0860","canonical_id":"seoul-food-v1-0860","city":"seoul","name":"Another Side","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0861","canonical_id":"seoul-food-v1-0861","city":"seoul","name":"House of Shinsegae Dessert Salon","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4288,7 +4266,9 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0904","canonical_id":"seoul-food-v1-0904","city":"seoul","name":"MONKS BUTCHER","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0905","canonical_id":"seoul-food-v1-0905","city":"seoul","name":"Aino Garden Kitchen","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0906","canonical_id":"seoul-food-v1-0906","city":"seoul","name":"Manhole Coffee Western Bookstore","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0907","canonical_id":"seoul-food-v1-0907","city":"seoul","name":"Nammi Plant Lab","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0908","canonical_id":"seoul-food-v1-0908","city":"seoul","name":"Bermuda Samgakji","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0909","canonical_id":"seoul-food-v1-0909","city":"seoul","name":"SAMARKAND CITY","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0910","canonical_id":"seoul-food-v1-0910","city":"seoul","name":"BOMBAY GRILL","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0911","canonical_id":"seoul-food-v1-0911","city":"seoul","name":"La Yeon","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0912","canonical_id":"seoul-food-v1-0912","city":"seoul","name":"Jinmi Sikdang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4357,6 +4337,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0975","canonical_id":"seoul-food-v1-0975","city":"seoul","name":"ROOTED","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0976","canonical_id":"seoul-food-v1-0976","city":"seoul","name":"Before It Melts","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0977","canonical_id":"seoul-food-v1-0977","city":"seoul","name":"Lamb Camp","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0978","canonical_id":"seoul-food-v1-0978","city":"seoul","name":"Himalaya Jonggak","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0979","canonical_id":"seoul-food-v1-0979","city":"seoul","name":"Sobamae","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0980","canonical_id":"seoul-food-v1-0980","city":"seoul","name":"Hyeongje Yukhoe Main","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-0981","canonical_id":"seoul-food-v1-0981","city":"seoul","name":"Hippo Brunch House","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4388,6 +4369,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1007","canonical_id":"seoul-food-v1-1007","city":"seoul","name":"Palgyejip","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1008","canonical_id":"seoul-food-v1-1008","city":"seoul","name":"Hongs Jjukkumi Hongdae Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1009","canonical_id":"seoul-food-v1-1009","city":"seoul","name":"Gosame Hapjeong","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1010","canonical_id":"seoul-food-v1-1010","city":"seoul","name":"Persian Palace","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1011","canonical_id":"seoul-food-v1-1011","city":"seoul","name":"Root","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1012","canonical_id":"seoul-food-v1-1012","city":"seoul","name":"Geumsu Bokguk Jamsil Sofitel","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1013","canonical_id":"seoul-food-v1-1013","city":"seoul","name":"Mullae Pocha 1422","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4407,6 +4389,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1027","canonical_id":"seoul-food-v1-1027","city":"seoul","name":"SAMSAMSAM Lotteworld mall Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1028","canonical_id":"seoul-food-v1-1028","city":"seoul","name":"Vegan Insa","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1029","canonical_id":"seoul-food-v1-1029","city":"seoul","name":"Bricksand Shinsegae Duty Free Myeongdong Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1030","canonical_id":"seoul-food-v1-1030","city":"seoul","name":"SAMARKAND","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1031","canonical_id":"seoul-food-v1-1031","city":"seoul","name":"Home-Cooked Meal Gim Seonsaeng","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1032","canonical_id":"seoul-food-v1-1032","city":"seoul","name":"Huirak Galchi","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1033","canonical_id":"seoul-food-v1-1033","city":"seoul","name":"Dalmaji Gwangjang Barbecue","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4428,9 +4411,11 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1049","canonical_id":"seoul-food-v1-1049","city":"seoul","name":"Oeyang-Gan","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1050","canonical_id":"seoul-food-v1-1050","city":"seoul","name":"Makinochaya Mapo Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1051","canonical_id":"seoul-food-v1-1051","city":"seoul","name":"HANI KALGUKSU","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1052","canonical_id":"seoul-food-v1-1052","city":"seoul","name":"MAPO-OK","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1053","canonical_id":"seoul-food-v1-1053","city":"seoul","name":"Dekad","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1054","canonical_id":"seoul-food-v1-1054","city":"seoul","name":"Cinora Yeonhui Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1055","canonical_id":"seoul-food-v1-1055","city":"seoul","name":"Yukjeon Gukbap Daehak-ro","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1056","canonical_id":"seoul-food-v1-1056","city":"seoul","name":"Gurkha India Restaurant","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1057","canonical_id":"seoul-food-v1-1057","city":"seoul","name":"Somunnan Seongsu Gamjatang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1058","canonical_id":"seoul-food-v1-1058","city":"seoul","name":"Chammallo Jotsudak 273","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1059","canonical_id":"seoul-food-v1-1059","city":"seoul","name":"Taejo Daerim Gamjaguk","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4541,6 +4526,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1164","canonical_id":"seoul-food-v1-1164","city":"seoul","name":"Gonghang Kalguksu","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1165","canonical_id":"seoul-food-v1-1165","city":"seoul","name":"Mirim Bunsik","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1166","canonical_id":"seoul-food-v1-1166","city":"seoul","name":"Whitturu","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1167","canonical_id":"seoul-food-v1-1167","city":"seoul","name":"Tuna Jinuh","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1168","canonical_id":"seoul-food-v1-1168","city":"seoul","name":"Jincheongyujeom","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1169","canonical_id":"seoul-food-v1-1169","city":"seoul","name":"Haemok Nonhyeon","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1170","canonical_id":"seoul-food-v1-1170","city":"seoul","name":"CARAVEL East Asia Hannam","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4557,10 +4543,12 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1181","canonical_id":"seoul-food-v1-1181","city":"seoul","name":"Arigyegok Jonggak Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1182","canonical_id":"seoul-food-v1-1182","city":"seoul","name":"Everest Restaurant Yangjae","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1183","canonical_id":"seoul-food-v1-1183","city":"seoul","name":"CHILGAPSAN","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1184","canonical_id":"seoul-food-v1-1184","city":"seoul","name":"Hamcho Ganjang gejang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1185","canonical_id":"seoul-food-v1-1185","city":"seoul","name":"Korea House","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1186","canonical_id":"seoul-food-v1-1186","city":"seoul","name":"Neungdong Minari","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1187","canonical_id":"seoul-food-v1-1187","city":"seoul","name":"Yukjeupdang Gwanghwamun Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1188","canonical_id":"seoul-food-v1-1188","city":"seoul","name":"Figaro","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1189","canonical_id":"seoul-food-v1-1189","city":"seoul","name":"Sanchon","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1190","canonical_id":"seoul-food-v1-1190","city":"seoul","name":"Jazz Story","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1191","canonical_id":"seoul-food-v1-1191","city":"seoul","name":"Bobae Banjum Myeongdong Branch","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1192","canonical_id":"seoul-food-v1-1192","city":"seoul","name":"Dongbu Goryeo Bakery","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4570,6 +4558,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1196","canonical_id":"seoul-food-v1-1196","city":"seoul","name":"Shinleedoga","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1197","canonical_id":"seoul-food-v1-1197","city":"seoul","name":"Mannadang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1198","canonical_id":"seoul-food-v1-1198","city":"seoul","name":"Seokgyo Restaurant","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1199","canonical_id":"seoul-food-v1-1199","city":"seoul","name":"KERVAN Famille Station","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1200","canonical_id":"seoul-food-v1-1200","city":"seoul","name":"Cheongdam Musin","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1201","canonical_id":"seoul-food-v1-1201","city":"seoul","name":"Smore Market","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1202","canonical_id":"seoul-food-v1-1202","city":"seoul","name":"Donut Jungsu","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4596,6 +4585,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1223","canonical_id":"seoul-food-v1-1223","city":"seoul","name":"India Chef","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1224","canonical_id":"seoul-food-v1-1224","city":"seoul","name":"Upstanding Coffee","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1225","canonical_id":"seoul-food-v1-1225","city":"seoul","name":"Palpan-dong Little Gimbap & Toast","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1226","canonical_id":"seoul-food-v1-1226","city":"seoul","name":"Delhi India","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1227","canonical_id":"seoul-food-v1-1227","city":"seoul","name":"Nusantaraku","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1228","canonical_id":"seoul-food-v1-1228","city":"seoul","name":"King Kebab Itaewon","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1229","canonical_id":"seoul-food-v1-1229","city":"seoul","name":"Ihwa Ohana","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4619,6 +4609,7 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1247","canonical_id":"seoul-food-v1-1247","city":"seoul","name":"Tosokchon Samgyetang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1248","canonical_id":"seoul-food-v1-1248","city":"seoul","name":"Yeokjeon Hoegwan","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1249","canonical_id":"seoul-food-v1-1249","city":"seoul","name":"Jongno Samgyetang","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1250","canonical_id":"seoul-food-v1-1250","city":"seoul","name":"ALADDIN’S LAMB","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1251","canonical_id":"seoul-food-v1-1251","city":"seoul","name":"Surokgok Giroksil","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1252","canonical_id":"seoul-food-v1-1252","city":"seoul","name":"PLAYDOGS","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1253","canonical_id":"seoul-food-v1-1253","city":"seoul","name":"The Makan Yeouido","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4628,205 +4619,214 @@
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1257","canonical_id":"seoul-food-v1-1257","city":"seoul","name":"Gyeongseong Gogikun","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1258","canonical_id":"seoul-food-v1-1258","city":"seoul","name":"MOWa","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-food-v1-1259","canonical_id":"seoul-food-v1-1259","city":"seoul","name":"Eid","category":"restaurant","has_image":true,"sources_upsert":1,"images_upsert":1}
-{"action":"SKIP","canonical_id":"busan-A-00109","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00029"}
-{"action":"SKIP","canonical_id":"busan-VB-1031","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00113"}
-{"action":"SKIP","canonical_id":"busan-VB-1142","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00114"}
-{"action":"SKIP","canonical_id":"busan-VB-1179","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00115"}
-{"action":"SKIP","canonical_id":"busan-VB-1185","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00116"}
-{"action":"SKIP","canonical_id":"busan-VB-1422","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00121"}
-{"action":"SKIP","canonical_id":"busan-VB-1434","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00122"}
-{"action":"SKIP","canonical_id":"busan-VB-1440","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00123"}
-{"action":"SKIP","canonical_id":"busan-VB-1444","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00124"}
-{"action":"SKIP","canonical_id":"busan-VB-1449","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00125"}
-{"action":"SKIP","canonical_id":"busan-VB-1772","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00136"}
-{"action":"SKIP","canonical_id":"busan-VB-1857","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00141"}
-{"action":"SKIP","canonical_id":"busan-VB-1862","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00142"}
-{"action":"SKIP","canonical_id":"busan-VB-1866","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00143"}
-{"action":"SKIP","canonical_id":"busan-VB-1867","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00144"}
-{"action":"SKIP","canonical_id":"busan-VB-1868","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00145"}
-{"action":"SKIP","canonical_id":"busan-VB-1881","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00146"}
-{"action":"SKIP","canonical_id":"busan-VB-1890","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00147"}
-{"action":"SKIP","canonical_id":"busan-VB-1900","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00148"}
-{"action":"SKIP","canonical_id":"busan-VB-2013","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00149"}
-{"action":"SKIP","canonical_id":"busan-VB-2019","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00150"}
-{"action":"SKIP","canonical_id":"busan-VB-2024","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00151"}
-{"action":"SKIP","canonical_id":"busan-VB-2034","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00152"}
-{"action":"SKIP","canonical_id":"busan-VB-2065","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00153"}
-{"action":"SKIP","canonical_id":"busan-VB-2067","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00154"}
-{"action":"SKIP","canonical_id":"busan-VB-2077","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00155"}
-{"action":"SKIP","canonical_id":"busan-VB-2078","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00156"}
-{"action":"SKIP","canonical_id":"busan-VB-2079","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00157"}
-{"action":"SKIP","canonical_id":"busan-VB-2081","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00158"}
-{"action":"SKIP","canonical_id":"busan-VB-2082","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00159"}
-{"action":"SKIP","canonical_id":"busan-VB-2085","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00160"}
-{"action":"SKIP","canonical_id":"busan-VB-2086","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00161"}
-{"action":"SKIP","canonical_id":"busan-VB-2095","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00162"}
-{"action":"SKIP","canonical_id":"busan-VB-2102","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00163"}
-{"action":"SKIP","canonical_id":"busan-VB-2104","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00164"}
-{"action":"SKIP","canonical_id":"busan-VB-2105","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00165"}
-{"action":"SKIP","canonical_id":"busan-VB-2106","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00166"}
-{"action":"SKIP","canonical_id":"busan-VB-2119","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00167"}
-{"action":"SKIP","canonical_id":"busan-VB-2121","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00168"}
-{"action":"SKIP","canonical_id":"busan-VB-2133","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00169"}
-{"action":"SKIP","canonical_id":"busan-VB-2138","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00170"}
-{"action":"SKIP","canonical_id":"busan-VB-2139","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00171"}
-{"action":"SKIP","canonical_id":"busan-VB-2140","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00172"}
-{"action":"SKIP","canonical_id":"busan-VB-2145","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00174"}
-{"action":"SKIP","canonical_id":"busan-VB-2153","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00175"}
-{"action":"SKIP","canonical_id":"busan-VB-2155","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00176"}
-{"action":"SKIP","canonical_id":"busan-VB-2157","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00177"}
-{"action":"SKIP","canonical_id":"busan-VB-2166","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00178"}
-{"action":"SKIP","canonical_id":"busan-VB-2172","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00179"}
-{"action":"SKIP","canonical_id":"busan-VB-2173","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00180"}
-{"action":"SKIP","canonical_id":"busan-VB-2186","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00181"}
-{"action":"SKIP","canonical_id":"busan-VB-2187","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00182"}
-{"action":"SKIP","canonical_id":"busan-VB-2188","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00183"}
-{"action":"SKIP","canonical_id":"busan-VB-2189","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00184"}
-{"action":"SKIP","canonical_id":"busan-VB-2191","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00185"}
-{"action":"SKIP","canonical_id":"busan-VB-2200","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00186"}
-{"action":"SKIP","canonical_id":"busan-VB-2202","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00187"}
-{"action":"SKIP","canonical_id":"busan-VB-2204","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00188"}
-{"action":"SKIP","canonical_id":"busan-VB-2206","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00189"}
-{"action":"SKIP","canonical_id":"busan-VB-2210","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00190"}
-{"action":"SKIP","canonical_id":"busan-VB-2220","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00192"}
-{"action":"SKIP","canonical_id":"busan-VB-2229","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00193"}
-{"action":"SKIP","canonical_id":"busan-VB-2274","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00197"}
-{"action":"SKIP","canonical_id":"busan-VB-2275","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00198"}
-{"action":"SKIP","canonical_id":"busan-VB-2284","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00199"}
-{"action":"SKIP","canonical_id":"busan-VB-2288","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00200"}
-{"action":"SKIP","canonical_id":"busan-VB-2299","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00201"}
-{"action":"SKIP","canonical_id":"busan-VB-2314","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00202"}
-{"action":"SKIP","canonical_id":"busan-VB-2408","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00203"}
-{"action":"SKIP","canonical_id":"busan-VB-255","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00001"}
-{"action":"SKIP","canonical_id":"busan-VB-2551","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00205"}
-{"action":"SKIP","canonical_id":"busan-VB-256","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00002"}
-{"action":"SKIP","canonical_id":"busan-VB-257","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00003"}
-{"action":"SKIP","canonical_id":"busan-VB-258","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00004"}
-{"action":"SKIP","canonical_id":"busan-VB-2587","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00207"}
-{"action":"SKIP","canonical_id":"busan-VB-2588","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00208"}
-{"action":"SKIP","canonical_id":"busan-VB-259","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00005"}
-{"action":"SKIP","canonical_id":"busan-VB-2594","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00209"}
-{"action":"SKIP","canonical_id":"busan-VB-2598","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00210"}
-{"action":"SKIP","canonical_id":"busan-VB-260","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00006"}
-{"action":"SKIP","canonical_id":"busan-VB-261","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00007"}
-{"action":"SKIP","canonical_id":"busan-VB-2612","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00211"}
-{"action":"SKIP","canonical_id":"busan-VB-262","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00008"}
-{"action":"SKIP","canonical_id":"busan-VB-264","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00009"}
-{"action":"SKIP","canonical_id":"busan-VB-2678","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00212"}
-{"action":"SKIP","canonical_id":"busan-VB-268","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00013"}
-{"action":"SKIP","canonical_id":"busan-VB-272","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00016"}
-{"action":"SKIP","canonical_id":"busan-VB-273","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00017"}
-{"action":"SKIP","canonical_id":"busan-VB-274","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00018"}
-{"action":"SKIP","canonical_id":"busan-VB-275","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00019"}
-{"action":"SKIP","canonical_id":"busan-VB-276","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00020"}
-{"action":"SKIP","canonical_id":"busan-VB-277","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00021"}
-{"action":"SKIP","canonical_id":"busan-VB-278","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00022"}
-{"action":"SKIP","canonical_id":"busan-VB-279","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00023"}
-{"action":"SKIP","canonical_id":"busan-VB-280","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00024"}
-{"action":"SKIP","canonical_id":"busan-VB-281","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00025"}
-{"action":"SKIP","canonical_id":"busan-VB-285","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00026"}
-{"action":"SKIP","canonical_id":"busan-VB-286","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00027"}
-{"action":"SKIP","canonical_id":"busan-VB-287","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00028"}
-{"action":"SKIP","canonical_id":"busan-VB-288","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00029"}
-{"action":"SKIP","canonical_id":"busan-VB-289","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00030"}
-{"action":"SKIP","canonical_id":"busan-VB-290","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00031"}
-{"action":"SKIP","canonical_id":"busan-VB-291","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00032"}
-{"action":"SKIP","canonical_id":"busan-VB-295","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00033"}
-{"action":"SKIP","canonical_id":"busan-VB-296","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00034"}
-{"action":"SKIP","canonical_id":"busan-VB-297","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00035"}
-{"action":"SKIP","canonical_id":"busan-VB-298","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00036"}
-{"action":"SKIP","canonical_id":"busan-VB-299","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00037"}
-{"action":"SKIP","canonical_id":"busan-VB-301","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00038"}
-{"action":"SKIP","canonical_id":"busan-VB-302","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00039"}
-{"action":"SKIP","canonical_id":"busan-VB-313","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00042"}
-{"action":"SKIP","canonical_id":"busan-VB-314","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00043"}
-{"action":"SKIP","canonical_id":"busan-VB-315","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00044"}
-{"action":"SKIP","canonical_id":"busan-VB-325","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00045"}
-{"action":"SKIP","canonical_id":"busan-VB-326","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00046"}
-{"action":"SKIP","canonical_id":"busan-VB-333","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00047"}
-{"action":"SKIP","canonical_id":"busan-VB-334","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00048"}
-{"action":"SKIP","canonical_id":"busan-VB-335","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00049"}
-{"action":"SKIP","canonical_id":"busan-VB-340","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00050"}
-{"action":"SKIP","canonical_id":"busan-VB-343","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00051"}
-{"action":"SKIP","canonical_id":"busan-VB-344","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00052"}
-{"action":"SKIP","canonical_id":"busan-VB-347","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00054"}
-{"action":"SKIP","canonical_id":"busan-VB-348","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00055"}
-{"action":"SKIP","canonical_id":"busan-VB-354","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00056"}
-{"action":"SKIP","canonical_id":"busan-VB-358","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00057"}
-{"action":"SKIP","canonical_id":"busan-VB-359","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00058"}
-{"action":"SKIP","canonical_id":"busan-VB-361","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00059"}
-{"action":"SKIP","canonical_id":"busan-VB-362","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00060"}
-{"action":"SKIP","canonical_id":"busan-VB-364","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00061"}
-{"action":"SKIP","canonical_id":"busan-VB-365","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00062"}
-{"action":"SKIP","canonical_id":"busan-VB-366","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00063"}
-{"action":"SKIP","canonical_id":"busan-VB-368","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00065"}
-{"action":"SKIP","canonical_id":"busan-VB-369","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00066"}
-{"action":"SKIP","canonical_id":"busan-VB-371","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00068"}
-{"action":"SKIP","canonical_id":"busan-VB-372","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00069"}
-{"action":"SKIP","canonical_id":"busan-VB-373","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00070"}
-{"action":"SKIP","canonical_id":"busan-VB-377","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00071"}
-{"action":"SKIP","canonical_id":"busan-VB-396","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00072"}
-{"action":"SKIP","canonical_id":"busan-VB-397","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00073"}
-{"action":"SKIP","canonical_id":"busan-VB-402","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00074"}
-{"action":"SKIP","canonical_id":"busan-VB-409","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00075"}
-{"action":"SKIP","canonical_id":"busan-VB-415","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00076"}
-{"action":"SKIP","canonical_id":"busan-VB-418","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00077"}
-{"action":"SKIP","canonical_id":"busan-VB-419","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00078"}
-{"action":"SKIP","canonical_id":"busan-VB-420","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00079"}
-{"action":"SKIP","canonical_id":"busan-VB-421","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00080"}
-{"action":"SKIP","canonical_id":"busan-VB-425","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00081"}
-{"action":"SKIP","canonical_id":"busan-VB-426","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00082"}
-{"action":"SKIP","canonical_id":"busan-VB-430","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00083"}
-{"action":"SKIP","canonical_id":"busan-VB-432","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00084"}
-{"action":"SKIP","canonical_id":"busan-VB-433","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00085"}
-{"action":"SKIP","canonical_id":"busan-VB-439","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00086"}
-{"action":"SKIP","canonical_id":"busan-VB-444","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00087"}
-{"action":"SKIP","canonical_id":"busan-VB-445","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00088"}
-{"action":"SKIP","canonical_id":"busan-VB-450","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00089"}
-{"action":"SKIP","canonical_id":"busan-VB-456","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00090"}
-{"action":"SKIP","canonical_id":"busan-VB-457","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00091"}
-{"action":"SKIP","canonical_id":"busan-VB-458","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00092"}
-{"action":"SKIP","canonical_id":"busan-VB-459","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00093"}
-{"action":"SKIP","canonical_id":"busan-VB-463","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00094"}
-{"action":"SKIP","canonical_id":"busan-VB-483","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00095"}
-{"action":"SKIP","canonical_id":"busan-VB-501","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00096"}
-{"action":"SKIP","canonical_id":"busan-VB-508","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00097"}
-{"action":"SKIP","canonical_id":"busan-VB-511","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00098"}
-{"action":"SKIP","canonical_id":"busan-VB-527","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00099"}
-{"action":"SKIP","canonical_id":"busan-VB-548","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-K-00110"}
-{"action":"SKIP","canonical_id":"busan-VB-757","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00101"}
-{"action":"SKIP","canonical_id":"busan-VB-838","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00106"}
-{"action":"SKIP","canonical_id":"busan-VB-876","city":"busan","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"busan-A-00029"}
+{"action":"SKIP","canonical_id":"busan-VB-1031","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00113"}
+{"action":"SKIP","canonical_id":"busan-VB-1142","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00114"}
+{"action":"SKIP","canonical_id":"busan-VB-1179","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00115"}
+{"action":"SKIP","canonical_id":"busan-VB-1185","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00116"}
+{"action":"SKIP","canonical_id":"busan-VB-1422","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00121"}
+{"action":"SKIP","canonical_id":"busan-VB-1434","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00122"}
+{"action":"SKIP","canonical_id":"busan-VB-1440","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00123"}
+{"action":"SKIP","canonical_id":"busan-VB-1444","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00124"}
+{"action":"SKIP","canonical_id":"busan-VB-1449","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00125"}
+{"action":"SKIP","canonical_id":"busan-VB-1772","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00136"}
+{"action":"SKIP","canonical_id":"busan-VB-1857","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00141"}
+{"action":"SKIP","canonical_id":"busan-VB-1862","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00142"}
+{"action":"SKIP","canonical_id":"busan-VB-1866","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00143"}
+{"action":"SKIP","canonical_id":"busan-VB-1867","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00144"}
+{"action":"SKIP","canonical_id":"busan-VB-1868","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00145"}
+{"action":"SKIP","canonical_id":"busan-VB-1881","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00146"}
+{"action":"SKIP","canonical_id":"busan-VB-1890","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00147"}
+{"action":"SKIP","canonical_id":"busan-VB-1900","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00148"}
+{"action":"SKIP","canonical_id":"busan-VB-2013","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00149"}
+{"action":"SKIP","canonical_id":"busan-VB-2019","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00150"}
+{"action":"SKIP","canonical_id":"busan-VB-2024","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00151"}
+{"action":"SKIP","canonical_id":"busan-VB-2034","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00152"}
+{"action":"SKIP","canonical_id":"busan-VB-2065","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00153"}
+{"action":"SKIP","canonical_id":"busan-VB-2067","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00154"}
+{"action":"SKIP","canonical_id":"busan-VB-2077","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00155"}
+{"action":"SKIP","canonical_id":"busan-VB-2078","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00156"}
+{"action":"SKIP","canonical_id":"busan-VB-2079","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00157"}
+{"action":"SKIP","canonical_id":"busan-VB-2081","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00158"}
+{"action":"SKIP","canonical_id":"busan-VB-2082","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00159"}
+{"action":"SKIP","canonical_id":"busan-VB-2085","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00160"}
+{"action":"SKIP","canonical_id":"busan-VB-2086","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00161"}
+{"action":"SKIP","canonical_id":"busan-VB-2095","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00162"}
+{"action":"SKIP","canonical_id":"busan-VB-2102","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00163"}
+{"action":"SKIP","canonical_id":"busan-VB-2104","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00164"}
+{"action":"SKIP","canonical_id":"busan-VB-2105","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00165"}
+{"action":"SKIP","canonical_id":"busan-VB-2106","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00166"}
+{"action":"SKIP","canonical_id":"busan-VB-2119","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00167"}
+{"action":"SKIP","canonical_id":"busan-VB-2121","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00168"}
+{"action":"SKIP","canonical_id":"busan-VB-2133","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00169"}
+{"action":"SKIP","canonical_id":"busan-VB-2138","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00170"}
+{"action":"SKIP","canonical_id":"busan-VB-2139","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00171"}
+{"action":"SKIP","canonical_id":"busan-VB-2140","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00172"}
+{"action":"SKIP","canonical_id":"busan-VB-2145","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00174"}
+{"action":"SKIP","canonical_id":"busan-VB-2153","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00175"}
+{"action":"SKIP","canonical_id":"busan-VB-2155","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00176"}
+{"action":"SKIP","canonical_id":"busan-VB-2157","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00177"}
+{"action":"SKIP","canonical_id":"busan-VB-2166","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00178"}
+{"action":"SKIP","canonical_id":"busan-VB-2172","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00179"}
+{"action":"SKIP","canonical_id":"busan-VB-2173","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00180"}
+{"action":"SKIP","canonical_id":"busan-VB-2186","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00181"}
+{"action":"SKIP","canonical_id":"busan-VB-2187","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00182"}
+{"action":"SKIP","canonical_id":"busan-VB-2188","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00183"}
+{"action":"SKIP","canonical_id":"busan-VB-2189","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00184"}
+{"action":"SKIP","canonical_id":"busan-VB-2191","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00185"}
+{"action":"SKIP","canonical_id":"busan-VB-2200","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00186"}
+{"action":"SKIP","canonical_id":"busan-VB-2202","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00187"}
+{"action":"SKIP","canonical_id":"busan-VB-2204","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00188"}
+{"action":"SKIP","canonical_id":"busan-VB-2206","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00189"}
+{"action":"SKIP","canonical_id":"busan-VB-2210","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00190"}
+{"action":"SKIP","canonical_id":"busan-VB-2220","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00192"}
+{"action":"SKIP","canonical_id":"busan-VB-2229","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00193"}
+{"action":"SKIP","canonical_id":"busan-VB-2274","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00197"}
+{"action":"SKIP","canonical_id":"busan-VB-2275","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00198"}
+{"action":"SKIP","canonical_id":"busan-VB-2284","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00199"}
+{"action":"SKIP","canonical_id":"busan-VB-2288","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00200"}
+{"action":"SKIP","canonical_id":"busan-VB-2299","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00201"}
+{"action":"SKIP","canonical_id":"busan-VB-2314","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00202"}
+{"action":"SKIP","canonical_id":"busan-VB-2408","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00203"}
+{"action":"SKIP","canonical_id":"busan-VB-255","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00001"}
+{"action":"SKIP","canonical_id":"busan-VB-2551","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00205"}
+{"action":"SKIP","canonical_id":"busan-VB-256","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00002"}
+{"action":"SKIP","canonical_id":"busan-VB-257","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00003"}
+{"action":"SKIP","canonical_id":"busan-VB-258","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00004"}
+{"action":"SKIP","canonical_id":"busan-VB-2587","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00207"}
+{"action":"SKIP","canonical_id":"busan-VB-2588","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00208"}
+{"action":"SKIP","canonical_id":"busan-VB-259","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00005"}
+{"action":"SKIP","canonical_id":"busan-VB-2594","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00209"}
+{"action":"SKIP","canonical_id":"busan-VB-2598","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00210"}
+{"action":"SKIP","canonical_id":"busan-VB-260","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00006"}
+{"action":"SKIP","canonical_id":"busan-VB-261","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00007"}
+{"action":"SKIP","canonical_id":"busan-VB-2612","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00211"}
+{"action":"SKIP","canonical_id":"busan-VB-262","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00008"}
+{"action":"SKIP","canonical_id":"busan-VB-264","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00009"}
+{"action":"SKIP","canonical_id":"busan-VB-2678","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00212"}
+{"action":"SKIP","canonical_id":"busan-VB-268","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00013"}
+{"action":"SKIP","canonical_id":"busan-VB-272","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00016"}
+{"action":"SKIP","canonical_id":"busan-VB-273","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00017"}
+{"action":"SKIP","canonical_id":"busan-VB-274","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00018"}
+{"action":"SKIP","canonical_id":"busan-VB-275","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00019"}
+{"action":"SKIP","canonical_id":"busan-VB-276","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00020"}
+{"action":"SKIP","canonical_id":"busan-VB-277","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00021"}
+{"action":"SKIP","canonical_id":"busan-VB-278","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00022"}
+{"action":"SKIP","canonical_id":"busan-VB-279","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00023"}
+{"action":"SKIP","canonical_id":"busan-VB-280","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00024"}
+{"action":"SKIP","canonical_id":"busan-VB-281","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00025"}
+{"action":"SKIP","canonical_id":"busan-VB-285","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00026"}
+{"action":"SKIP","canonical_id":"busan-VB-286","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00027"}
+{"action":"SKIP","canonical_id":"busan-VB-287","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00028"}
+{"action":"SKIP","canonical_id":"busan-VB-288","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00029"}
+{"action":"SKIP","canonical_id":"busan-VB-289","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00030"}
+{"action":"SKIP","canonical_id":"busan-VB-290","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00031"}
+{"action":"SKIP","canonical_id":"busan-VB-291","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00032"}
+{"action":"SKIP","canonical_id":"busan-VB-295","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00033"}
+{"action":"SKIP","canonical_id":"busan-VB-296","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00034"}
+{"action":"SKIP","canonical_id":"busan-VB-297","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00035"}
+{"action":"SKIP","canonical_id":"busan-VB-298","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00036"}
+{"action":"SKIP","canonical_id":"busan-VB-299","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00037"}
+{"action":"SKIP","canonical_id":"busan-VB-301","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00038"}
+{"action":"SKIP","canonical_id":"busan-VB-302","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00039"}
+{"action":"SKIP","canonical_id":"busan-VB-313","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00042"}
+{"action":"SKIP","canonical_id":"busan-VB-314","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00043"}
+{"action":"SKIP","canonical_id":"busan-VB-315","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00044"}
+{"action":"SKIP","canonical_id":"busan-VB-325","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00045"}
+{"action":"SKIP","canonical_id":"busan-VB-326","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00046"}
+{"action":"SKIP","canonical_id":"busan-VB-333","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00047"}
+{"action":"SKIP","canonical_id":"busan-VB-334","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00048"}
+{"action":"SKIP","canonical_id":"busan-VB-335","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00049"}
+{"action":"SKIP","canonical_id":"busan-VB-340","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00050"}
+{"action":"SKIP","canonical_id":"busan-VB-343","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00051"}
+{"action":"SKIP","canonical_id":"busan-VB-344","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00052"}
+{"action":"SKIP","canonical_id":"busan-VB-347","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00054"}
+{"action":"SKIP","canonical_id":"busan-VB-348","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00055"}
+{"action":"SKIP","canonical_id":"busan-VB-354","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00056"}
+{"action":"SKIP","canonical_id":"busan-VB-358","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00057"}
+{"action":"SKIP","canonical_id":"busan-VB-359","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00058"}
+{"action":"SKIP","canonical_id":"busan-VB-361","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00059"}
+{"action":"SKIP","canonical_id":"busan-VB-362","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00060"}
+{"action":"SKIP","canonical_id":"busan-VB-364","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00061"}
+{"action":"SKIP","canonical_id":"busan-VB-365","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00062"}
+{"action":"SKIP","canonical_id":"busan-VB-366","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00063"}
+{"action":"SKIP","canonical_id":"busan-VB-368","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00065"}
+{"action":"SKIP","canonical_id":"busan-VB-369","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00066"}
+{"action":"SKIP","canonical_id":"busan-VB-371","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00068"}
+{"action":"SKIP","canonical_id":"busan-VB-372","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00069"}
+{"action":"SKIP","canonical_id":"busan-VB-373","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00070"}
+{"action":"SKIP","canonical_id":"busan-VB-377","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00071"}
+{"action":"SKIP","canonical_id":"busan-VB-396","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00072"}
+{"action":"SKIP","canonical_id":"busan-VB-397","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00073"}
+{"action":"SKIP","canonical_id":"busan-VB-402","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00074"}
+{"action":"SKIP","canonical_id":"busan-VB-409","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00075"}
+{"action":"SKIP","canonical_id":"busan-VB-415","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00076"}
+{"action":"SKIP","canonical_id":"busan-VB-418","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00077"}
+{"action":"SKIP","canonical_id":"busan-VB-419","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00078"}
+{"action":"SKIP","canonical_id":"busan-VB-420","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00079"}
+{"action":"SKIP","canonical_id":"busan-VB-421","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00080"}
+{"action":"SKIP","canonical_id":"busan-VB-425","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00081"}
+{"action":"SKIP","canonical_id":"busan-VB-426","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00082"}
+{"action":"SKIP","canonical_id":"busan-VB-430","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00083"}
+{"action":"SKIP","canonical_id":"busan-VB-432","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00084"}
+{"action":"SKIP","canonical_id":"busan-VB-433","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00085"}
+{"action":"SKIP","canonical_id":"busan-VB-439","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00086"}
+{"action":"SKIP","canonical_id":"busan-VB-444","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00087"}
+{"action":"SKIP","canonical_id":"busan-VB-445","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00088"}
+{"action":"SKIP","canonical_id":"busan-VB-450","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00089"}
+{"action":"SKIP","canonical_id":"busan-VB-456","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00090"}
+{"action":"SKIP","canonical_id":"busan-VB-457","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00091"}
+{"action":"SKIP","canonical_id":"busan-VB-458","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00092"}
+{"action":"SKIP","canonical_id":"busan-VB-459","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00093"}
+{"action":"SKIP","canonical_id":"busan-VB-463","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00094"}
+{"action":"SKIP","canonical_id":"busan-VB-483","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00095"}
+{"action":"SKIP","canonical_id":"busan-VB-501","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00096"}
+{"action":"SKIP","canonical_id":"busan-VB-508","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00097"}
+{"action":"SKIP","canonical_id":"busan-VB-511","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00098"}
+{"action":"SKIP","canonical_id":"busan-VB-527","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00099"}
+{"action":"SKIP","canonical_id":"busan-VB-757","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00101"}
+{"action":"SKIP","canonical_id":"busan-VB-804","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00102"}
+{"action":"SKIP","canonical_id":"busan-VB-813","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00103"}
+{"action":"SKIP","canonical_id":"busan-VB-838","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00106"}
+{"action":"SKIP","canonical_id":"busan-VB-859","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00108"}
+{"action":"SKIP","canonical_id":"busan-VB-876","city":"busan","reason":"SKIP_TWIN:SAME_SOURCE_ENTITY","twin_of":"busan-A-00109"}
 {"action":"SKIP","canonical_id":"gyeongju-GJ01-0092","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
 {"action":"SKIP","canonical_id":"gyeongju-KTO12-590997","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
 {"action":"SKIP","canonical_id":"gyeongju-KTO12-987844","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
-{"action":"SKIP","canonical_id":"jeju-CNTS_300000000014268","city":"jeju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"jeju-CNTS_200000000010293"}
-{"action":"SKIP","canonical_id":"KTO-127611","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9738"}
-{"action":"SKIP","canonical_id":"KTO-130445","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-10076"}
-{"action":"SKIP","canonical_id":"KTO-147684","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9751"}
-{"action":"SKIP","canonical_id":"KTO-1586964","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9781"}
-{"action":"SKIP","canonical_id":"KTO-1594231","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-16089"}
-{"action":"SKIP","canonical_id":"KTO-2605804","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9769"}
-{"action":"SKIP","canonical_id":"KTO-2606578","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9794"}
-{"action":"SKIP","canonical_id":"KTO-2721624","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9749"}
-{"action":"SKIP","canonical_id":"KTO-3065503","city":"jeonju","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"OFF-9782"}
-{"action":"SKIP","canonical_id":"seoul-KOP033829","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-KOP002021"}
-{"action":"SKIP","canonical_id":"seoul-KOPokonim","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-KOPtpyykt"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-0817","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0527"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-0858","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0673"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-0907","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0680"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-0909","city":"seoul","reason":"SKIP_TRUE_AMBIGUOUS:TWIN_UNRESOLVED","twin_of":"seoul-food-v1-0816"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-0978","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0683"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1010","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0503"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1030","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0323"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1052","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0301"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1056","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0668"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1167","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0451"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1184","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0666"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1189","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0576"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1199","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0661"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1226","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0681"}
-{"action":"SKIP","canonical_id":"seoul-food-v1-1250","city":"seoul","reason":"SKIP_TWIN:SAME_ENTITY_TWIN","twin_of":"seoul-food-v1-0098"}
+{"action":"SKIP","canonical_id":"KTO-2790515","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:UNRESOLVED_AFTER_ARTIFACT_INSPECTION","twin_of":null}
+{"action":"SKIP","canonical_id":"OFF-10076","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-130445"}
+{"action":"SKIP","canonical_id":"OFF-11923","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-317526"}
+{"action":"SKIP","canonical_id":"OFF-11926","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065596"}
+{"action":"SKIP","canonical_id":"OFF-11927","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
+{"action":"SKIP","canonical_id":"OFF-14617","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594796"}
+{"action":"SKIP","canonical_id":"OFF-16025","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3350911"}
+{"action":"SKIP","canonical_id":"OFF-16089","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
+{"action":"SKIP","canonical_id":"OFF-16220","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-130357"}
+{"action":"SKIP","canonical_id":"OFF-16673","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606585"}
+{"action":"SKIP","canonical_id":"OFF-16675","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606585"}
+{"action":"SKIP","canonical_id":"OFF-16676","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:UNRESOLVED_AFTER_ARTIFACT_INSPECTION","twin_of":"KTO-126626"}
+{"action":"SKIP","canonical_id":"OFF-16677","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2750859"}
+{"action":"SKIP","canonical_id":"OFF-16678","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
+{"action":"SKIP","canonical_id":"OFF-16680","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1626068"}
+{"action":"SKIP","canonical_id":"OFF-17128","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
+{"action":"SKIP","canonical_id":"OFF-9736","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594374"}
+{"action":"SKIP","canonical_id":"OFF-9738","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-127611"}
+{"action":"SKIP","canonical_id":"OFF-9741","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2946402"}
+{"action":"SKIP","canonical_id":"OFF-9742","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-126621"}
+{"action":"SKIP","canonical_id":"OFF-9749","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2721624"}
+{"action":"SKIP","canonical_id":"OFF-9751","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
+{"action":"SKIP","canonical_id":"OFF-9755","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1626011"}
+{"action":"SKIP","canonical_id":"OFF-9769","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2605804"}
+{"action":"SKIP","canonical_id":"OFF-9781","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1586964"}
+{"action":"SKIP","canonical_id":"OFF-9782","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
+{"action":"SKIP","canonical_id":"OFF-9783","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
+{"action":"SKIP","canonical_id":"OFF-9785","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
+{"action":"SKIP","canonical_id":"OFF-9794","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
+{"action":"SKIP","canonical_id":"OFF-9796","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
+{"action":"SKIP","canonical_id":"OFF-9797","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
+{"action":"SKIP","canonical_id":"OFF-9798","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594374"}
+{"action":"SKIP","canonical_id":"OFF-9800","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594796"}
+{"action":"SKIP","canonical_id":"OFF-9810","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
+{"action":"SKIP","canonical_id":"OFF-9811","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":3,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":4,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":49,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
@@ -4875,7 +4875,6 @@
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":157,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":158,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":159,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
-{"action":"VISIBILITY_UPDATE","main_city_spot_id":160,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":161,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":162,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":163,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
@@ -4981,7 +4980,6 @@
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":284,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":285,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":286,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
-{"action":"VISIBILITY_UPDATE","main_city_spot_id":287,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":289,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":290,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":291,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
@@ -5054,6 +5052,7 @@
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":402,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":404,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":405,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
+{"action":"VISIBILITY_UPDATE","main_city_spot_id":407,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":411,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":414,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":421,"city":"busan","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
@@ -5063,13 +5062,13 @@
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":726,"city":"gyeongju","main_class":"EXCLUDED_FROM_SERVICE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"EXCLUDED_FROM_SERVICE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"NO_WRITE","main_city_spot_id":5,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
 {"action":"NO_WRITE","main_city_spot_id":6,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
-{"action":"NO_WRITE","main_city_spot_id":7,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
+{"action":"NO_WRITE","main_city_spot_id":7,"city":"busan","reason":"OWNER_OVERRIDE_KEEP_PUBLISHED — Owner 확정 유지: id 보존 · published 유지 · 플래너 후보 포함"}
 {"action":"NO_WRITE","main_city_spot_id":23,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
-{"action":"NO_WRITE","main_city_spot_id":28,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
-{"action":"NO_WRITE","main_city_spot_id":29,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
+{"action":"NO_WRITE","main_city_spot_id":28,"city":"busan","reason":"OWNER_OVERRIDE_KEEP_PUBLISHED — Owner 확정 유지: id 보존 · published 유지 · 플래너 후보 포함"}
+{"action":"NO_WRITE","main_city_spot_id":29,"city":"busan","reason":"OWNER_OVERRIDE_KEEP_PUBLISHED — Owner 확정 유지: id 보존 · published 유지 · 플래너 후보 포함"}
 {"action":"NO_WRITE","main_city_spot_id":32,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
 {"action":"NO_WRITE","main_city_spot_id":39,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
-{"action":"NO_WRITE","main_city_spot_id":42,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
+{"action":"NO_WRITE","main_city_spot_id":42,"city":"busan","reason":"OWNER_OVERRIDE_KEEP_PUBLISHED — Owner 확정 유지: id 보존 · published 유지 · 플래너 후보 포함"}
 {"action":"NO_WRITE","main_city_spot_id":50,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
 {"action":"NO_WRITE","main_city_spot_id":55,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}
 {"action":"NO_WRITE","main_city_spot_id":57,"city":"busan","reason":"LEGACY_ONLY_VALID — untouched, not deleted, stays published (migration 056 backfill)"}

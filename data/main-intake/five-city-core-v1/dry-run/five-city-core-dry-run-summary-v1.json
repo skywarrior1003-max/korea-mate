@@ -1,43 +1,159 @@
 {
- "task": "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
+ "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
  "mode": "dry-run",
- "input_manifest_sha256": "eae3bfc8dff3e6d52ee661e35e4406285f32bee4b8bc928f6c0008708629abb5",
- "run_id": "6218ce73e836f370",
+ "input_manifest_sha256": "fad19e68bb3546d31adb45bdc2cec657e39ceb295ce65bf61af1a6bca5a37d77",
+ "run_id": "fcc0894262096c22",
  "counts": {
   "active_input": 4826,
-  "match_replace": 461,
-  "new": 4169,
-  "confirmed_twin_skipped": 195,
-  "true_ambiguous_skipped": 1,
+  "match_replace": 462,
+  "new": 4159,
+  "confirmed_twin_skipped": 170,
+  "review_required_skipped": 35,
   "excluded_skipped": 3,
-  "unique_service_places": 4631,
-  "existing_id_preserved": 461,
+  "active_distinct": 4656,
+  "writeable_active": 4621,
+  "existing_id_preserved": 462,
   "lossy_category": 0,
+  "heuristic_twin_auto_merge": 0,
+  "evidenceless_skip": 0,
   "delete": 0
  },
  "arithmetic_ok": true,
  "expected_universe": {
   "active_total": 4826,
-  "unique_places": 4631,
-  "writes": 4630,
-  "skipped": 199
+  "active_distinct": 4656,
+  "writes": 4621,
+  "skipped": 208
  },
- "gate_a": {
+ "artifact_trust": {
   "SOURCE_ACTIVE_RECORD_COUNT": 4826,
-  "CONFIRMED_TWIN_RECORD_COUNT": 195,
-  "TRUE_AMBIGUOUS_COUNT": 1,
-  "UNIQUE_SERVICE_PLACE_COUNT": 4631,
-  "SKIP_TWIN": 195,
-  "SKIP_TRUE_AMBIGUOUS": 1
+  "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
+  "REVIEW_REQUIRED_COUNT": 35,
+  "ACTIVE_DISTINCT_COUNT": 4656,
+  "WRITEABLE_ACTIVE_COUNT": 4621,
+  "HEURISTIC_TWIN_AUTO_MERGE_COUNT": 0,
+  "ARTIFACT_EVIDENCELESS_SKIP_COUNT": 0,
+  "decision_basis": {
+   "MAIN_EXPLICIT_DECISION_TABLE": 64,
+   "ARTIFACT_SERVICE_STATUS": 4159,
+   "ARTIFACT_SOURCE_LINEAGE": 568,
+   "UNRESOLVED_AFTER_ARTIFACT_INSPECTION": 2,
+   "ARTIFACT_IDENTITY_RESOLUTION": 33
+  },
+  "provisional_until_review_gate": true
+ },
+ "constraint_blockers": {
+  "current_schema": "uq_city_spots_city_name (013) — migration 057 적용 전까지 아래 충돌은 INSERT/UPDATE blocker",
+  "city_name_collision_count": 12,
+  "city_name_collisions": [
+   {
+    "city": "busan",
+    "name": "Tonshou",
+    "members": [
+     "main#208",
+     "main#287(busan-G-00004)"
+    ]
+   },
+   {
+    "city": "jeonju",
+    "name": "진미반점",
+    "members": [
+     "KTO-2870672",
+     "KTO-3444028"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Delhi India",
+    "members": [
+     "seoul-food-v1-0681",
+     "seoul-food-v1-1226"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Eid",
+    "members": [
+     "seoul-food-v1-0601",
+     "seoul-food-v1-1259"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Hwagyesa Temple",
+    "members": [
+     "seoul-KOP002021",
+     "seoul-KOP033829"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Korea House",
+    "members": [
+     "seoul-food-v1-0032",
+     "seoul-food-v1-1185"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Nammi Plant Lab",
+    "members": [
+     "seoul-food-v1-0680",
+     "seoul-food-v1-0907"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Persian Palace",
+    "members": [
+     "seoul-food-v1-0503",
+     "seoul-food-v1-1010"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Play with K",
+    "members": [
+     "seoul-KOPmcgru1",
+     "seoul-KOPv7nwyv"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sanchon",
+    "members": [
+     "seoul-food-v1-0576",
+     "seoul-food-v1-1189"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sleep No More Seoul",
+    "members": [
+     "seoul-KOPokonim",
+     "seoul-KOPtpyykt"
+    ]
+   },
+   {
+    "city": "seoul",
+    "name": "Sultan Kebab",
+    "members": [
+     "seoul-food-v1-0527",
+     "seoul-food-v1-0817"
+    ]
+   }
+  ],
+  "display_name_artificial_rename_count": 0
  },
  "gate_b_visibility": {
-  "publish_updates": 461,
-  "publish_inserts": 4169,
-  "hide_legacy": 234,
-  "preserved_visible_legacy": 19,
+  "publish_updates": 462,
+  "publish_inserts": 4159,
+  "hide_legacy": 233,
+  "preserved_visible_legacy": 15,
+  "owner_override_published": 4,
   "untouched_other": 0,
-  "projected_visible_rows": 4649,
-  "projected_hidden_rows": 234,
+  "projected_visible_rows": 4640,
+  "projected_hidden_rows": 233,
   "gate_column": "is_published",
   "migration": "056_city_spots_is_published.sql (created, NOT applied)"
  },
@@ -47,11 +163,11 @@
  "per_city": {
   "busan": {
    "before": 412,
-   "updates": 162,
-   "inserts": 627,
-   "projected_after": 1039,
-   "visible_after": 808,
-   "hidden_after": 231
+   "updates": 163,
+   "inserts": 625,
+   "projected_after": 1037,
+   "visible_after": 807,
+   "hidden_after": 230
   },
   "gyeongju": {
    "before": 302,
@@ -64,40 +180,40 @@
   "jeju": {
    "before": 0,
    "updates": 0,
-   "inserts": 1495,
-   "projected_after": 1495,
-   "visible_after": 1495,
+   "inserts": 1496,
+   "projected_after": 1496,
+   "visible_after": 1496,
    "hidden_after": 0
   },
   "jeonju": {
    "before": 0,
    "updates": 0,
-   "inserts": 227,
-   "projected_after": 227,
-   "visible_after": 227,
+   "inserts": 201,
+   "projected_after": 201,
+   "visible_after": 201,
    "hidden_after": 0
   },
   "seoul": {
    "before": 0,
    "updates": 0,
-   "inserts": 1820,
-   "projected_after": 1820,
-   "visible_after": 1820,
+   "inserts": 1837,
+   "projected_after": 1837,
+   "visible_after": 1837,
    "hidden_after": 0
   }
  },
- "projected_total_city_spots": 4883,
+ "projected_total_city_spots": 4873,
  "null_policy_counts": {
-  "REPLACE_WITH_VALUE": 4284,
+  "REPLACE_WITH_VALUE": 4296,
   "INTENTIONALLY_CLEAR": 8,
-  "NO_SOURCE_VALUE": 4006,
+  "NO_SOURCE_VALUE": 4012,
   "PRESERVE_RUNTIME_FIELD": 0,
   "MANUAL_REVIEW": 0,
-  "VISIBILITY_GATE": 4630
+  "VISIBILITY_GATE": 4621
  },
- "sources_upserts": 5595,
- "images_upserts": 4369,
- "change_manifest_sha256": "03a3f119026d1142f9fe20f65801fd47640cf5fb57e32854497adbca9153acfa",
+ "sources_upserts": 5552,
+ "images_upserts": 4360,
+ "change_manifest_sha256": "584183132c06234b595726cbd9422eba735ee403cc4aed97f36c304c9b5a3613",
  "errors": 0,
  "delete_actions": 0,
  "db_write_executed": false

@@ -219,28 +219,5 @@ export async function fetchCitySpotsByCategory(
 // importer(service_role)가 담당한다. anon write 경로를 다시 만들지 않는다.
 
 // ── 장소명 정규화 매칭 ────────────────────────────────────────────────────────
-function normName(s: string): string {
-  return s.toLowerCase().replace(/[^a-z0-9가-힣\s]/g, "").replace(/\s+/g, " ").trim();
-}
-
-export function matchCitySpot(placeName: string, spots: CitySpot[]): CitySpot | null {
-  if (!placeName || spots.length === 0) return null;
-  const needle = normName(placeName);
-
-  // 1. Exact normalized match
-  let hit = spots.find(s => normName(s.name) === needle);
-  if (hit) return hit;
-
-  // 2. One contains the other
-  hit = spots.find(s => {
-    const hay = normName(s.name);
-    return needle.includes(hay) || hay.includes(needle);
-  });
-  if (hit) return hit;
-
-  // 3. Any keyword from spot name (≥4 chars) found in needle
-  hit = spots.find(s =>
-    normName(s.name).split(" ").filter(w => w.length >= 4).some(w => needle.includes(w))
-  );
-  return hit ?? null;
-}
+// 구현은 city-spots-match.ts (순수 함수 · supabase 의존 없음) 로 옮겼다 — 기존 import 경로는 그대로 유지한다.
+export { matchCitySpot } from "./city-spots-match";

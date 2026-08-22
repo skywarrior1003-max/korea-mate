@@ -1,11 +1,15 @@
 // five-city core importer — 순수 계획 계산. DB 를 모른다. (TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1)
 //
 // 입력  intake package(active/sources/images) + crosswalk + Main 스냅샷(비사용자 컬럼)
-// 출력  ImportPlan — UPDATE(기존 id 보존) · INSERT(NEW) · SKIP(CONFIRMED_TWIN/TRUE_AMBIGUOUS/EXCLUDED)
+// 출력  ImportPlan — UPDATE(기존 id 보존) · INSERT(NEW) · SKIP(CONFIRMED_TWIN/REVIEW_REQUIRED/EXCLUDED)
 //        · VISIBILITY_UPDATE(승인된 legacy → is_published=false) · NO_WRITE(그 외 legacy)
 //
 // Gate A/B/C (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1)
-//   · CONFIRMED_TWIN 은 SKIP_TWIN, TRUE_AMBIGUOUS 는 SKIP_TRUE_AMBIGUOUS — 둘 다 삭제·병합이 아니다
+//   · CONFIRMED_TWIN 은 SKIP_TWIN — 단 crosswalk decision_basis 가 ARTIFACT_SOURCE_LINEAGE 일 때만 받는다(근거 없는 skip 은 오류).
+//     REVIEW_REQUIRED(artifact identity gate 잔여)는 SKIP_REVIEW_REQUIRED — 삭제·병합이 아니라 보류
+//   · ARTIFACT TRUST RULE (TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1): 이 모듈은 identity 를
+//     판단하지 않는다. crosswalk 가 준 decision 을 그대로 번역하고, 근거(decision_basis) 가 없는 skip 만 거부한다
+//   · (city,name) 충돌은 오류가 아니라 constraint_blockers 로 보고한다 — 표시명을 바꾸지 않는다(migration 057 로 해소)
 //   · 모든 UPDATE/INSERT 는 is_published=true (서비스 승인). EXCLUDED_FROM_SERVICE_REVIEW·DUPLICATE_REVIEW 로 분류된
 //     legacy 행만 is_published=false 로 숨긴다(보존). LEGACY_ONLY_VALID 는 건드리지 않는다(migration backfill 로 true 유지)
 //   · semantic category 가 (category, subcategory) 에서 복원되지 않는 행은 오류로 센다
@@ -42,10 +46,15 @@ export interface CrosswalkRow {
   canonical_id: string;
   service_status: string;
   main_city_spot_id: number | null;
-  decision: "MATCH_REPLACE" | "NEW" | "CONFIRMED_TWIN" | "TRUE_AMBIGUOUS" | "EXCLUDED";
+  decision: "MATCH_REPLACE" | "NEW" | "CONFIRMED_TWIN" | "REVIEW_REQUIRED" | "EXCLUDED";
+  decision_basis?: string;
   tier: string;
   twin_of?: string | null;
 }
+
+/** SKIP_TWIN 이 허용되는 유일한 근거 — artifact 가 스스로 기록한 source lineage */
+export const TWIN_SKIP_ALLOWED_BASIS = ["ARTIFACT_SOURCE_LINEAGE", "ARTIFACT_IDENTITY_RESOLUTION"] as const;
+export const FORBIDDEN_BASIS = ["NAME_HEURISTIC", "ADDRESS_HEURISTIC", "COORDINATE_HEURISTIC"] as const;
 
 export interface IntakeRow {
   canonical_id: string;
@@ -77,6 +86,8 @@ export interface IntakeRow {
 export interface MainClassificationRow { main_city_spot_id: number; city: string; class: string; }
 /** 숨기는 분류 — 이 둘만. LEGACY_ONLY_VALID·PRESERVE_UNTOUCHED 는 노출 유지(오너 결정 전까지) */
 export const HIDE_CLASSES = ["EXCLUDED_FROM_SERVICE_REVIEW", "DUPLICATE_REVIEW"] as const;
+/** Owner 가 유지 확정한 legacy — published 유지 · 플래너 후보 포함 · id 보존 */
+export const OWNER_OVERRIDE_CLASS = "OWNER_OVERRIDE_KEEP_PUBLISHED";
 
 export interface SourceRow { canonical_id: string; source_type: string; source_key: string; candidate_id: string | null; source_url: string | null; source_tier: string | null; is_primary: boolean; as_of: string | null; }
 export interface ImageRow { canonical_id: string; image_url: string; rights_status: string; attribution_required: boolean; rights_note: string | null; display_eligible: boolean; is_primary: boolean; sort_order: number; as_of: string | null; }
@@ -123,20 +134,29 @@ export interface ImportPlan {
     active_input: number;
     match_replace: number;
     new: number;
+    /** artifact 근거(ARTIFACT_SOURCE_LINEAGE)로만 skip 된 같은 source entity */
     confirmed_twin_skipped: number;
-    true_ambiguous_skipped: number;
+    /** artifact identity gate 잔여 — 보류 */
+    review_required_skipped: number;
     excluded_skipped: number;
-    /** = match_replace + new + true_ambiguous_skipped */
-    unique_service_places: number;
+    /** = active_input − confirmed_twin_skipped (review_required 포함) */
+    active_distinct: number;
+    /** = match_replace + new */
+    writeable_active: number;
     existing_id_preserved: number;
     lossy_category: number;
+    heuristic_twin_auto_merge: 0;
+    evidenceless_skip: number;
     delete: 0;
   };
+  /** 현재 schema(uq_city_spots_city_name) 기준 INSERT/UPDATE 가 막히는 (city,name) 충돌 — migration 057 전까지 blocker */
+  constraint_blockers: { city_name_collisions: Array<{ city: string; name: string; members: string[] }> };
   visibility: {
     publish_updates: number;          // MATCH_REPLACE → is_published=true
     publish_inserts: number;          // NEW → is_published=true
     hide_legacy: number;              // EXCLUDED_FROM_SERVICE_REVIEW + DUPLICATE_REVIEW → false
     preserved_visible_legacy: number; // LEGACY_ONLY_VALID — 노출 유지(오너 결정 대기)
+    owner_override_published: number; // OWNER_OVERRIDE_KEEP_PUBLISHED — Owner 확정 유지
     untouched_other: number;
   };
   per_city: Record<string, { before: number; updates: number; inserts: number; projected_after: number; visible_after: number; hidden_after: number }>;
@@ -177,6 +197,7 @@ export function planImport(input: {
   const visibilityUpdates: VisibilityAction[] = [];
   const classById = new Map((input.mainClassification ?? []).map(r => [r.main_city_spot_id, r.class]));
   let lossyCategory = 0;
+  let evidencelessSkip = 0;
   const targeted = new Set<number>();
 
   for (const c of sortBy(input.crosswalk, x => `${x.city}|${x.canonical_id}`)) {
@@ -185,12 +206,20 @@ export function planImport(input: {
       continue;
     }
     const row = intakeById.get(c.canonical_id);
+    if (c.decision_basis && (FORBIDDEN_BASIS as readonly string[]).includes(c.decision_basis)) {
+      errors.push(`forbidden heuristic decision basis ${c.decision_basis} for ${c.canonical_id}`); continue;
+    }
     if (c.decision === "CONFIRMED_TWIN") {
+      if (!c.decision_basis || !(TWIN_SKIP_ALLOWED_BASIS as readonly string[]).includes(c.decision_basis) || !c.twin_of) {
+        evidencelessSkip += 1;
+        errors.push(`evidenceless twin skip for ${c.canonical_id} (basis=${c.decision_basis ?? "none"})`);
+        continue;
+      }
       skips.push({ action: "SKIP", canonical_id: c.canonical_id, city: c.city, reason: `SKIP_TWIN:${c.tier}`, twin_of: c.twin_of ?? null });
       continue;
     }
-    if (c.decision === "TRUE_AMBIGUOUS") {
-      skips.push({ action: "SKIP", canonical_id: c.canonical_id, city: c.city, reason: `SKIP_TRUE_AMBIGUOUS:${c.tier}`, twin_of: c.twin_of ?? null });
+    if (c.decision === "REVIEW_REQUIRED") {
+      skips.push({ action: "SKIP", canonical_id: c.canonical_id, city: c.city, reason: `SKIP_REVIEW_REQUIRED:${c.tier}`, twin_of: c.twin_of ?? null });
       continue;
     }
     if (!row) { errors.push(`intake row missing for ${c.canonical_id}`); continue; }
@@ -243,6 +272,7 @@ export function planImport(input: {
     }
   }
   let preservedVisibleLegacy = 0;
+  let ownerOverridePublished = 0;
   let untouchedOther = 0;
   for (const m of sortBy(input.main, r => String(r.main_city_spot_id).padStart(8, "0"))) {
     if (targeted.has(m.main_city_spot_id)) continue;
@@ -251,8 +281,12 @@ export function planImport(input: {
       visibilityUpdates.push({ action: "VISIBILITY_UPDATE", main_city_spot_id: m.main_city_spot_id, city: m.city, main_class: cls, writes: { is_published: false },
         reason: `${cls} — preserved, hidden from discovery (not deleted; direct references still resolve)` });
     } else {
-      if (cls === "LEGACY_ONLY_VALID") preservedVisibleLegacy += 1; else untouchedOther += 1;
-      noWrite.push({ action: "NO_WRITE", main_city_spot_id: m.main_city_spot_id, city: m.city, reason: `${cls} — untouched, not deleted, stays published (migration 056 backfill)` });
+      if (cls === "LEGACY_ONLY_VALID") preservedVisibleLegacy += 1;
+      else if (cls === OWNER_OVERRIDE_CLASS) ownerOverridePublished += 1;
+      else untouchedOther += 1;
+      noWrite.push({ action: "NO_WRITE", main_city_spot_id: m.main_city_spot_id, city: m.city,
+        reason: cls === OWNER_OVERRIDE_CLASS ? `${cls} — Owner 확정 유지: id 보존 · published 유지 · 플래너 후보 포함`
+          : `${cls} — untouched, not deleted, stays published (migration 056 backfill)` });
     }
   }
 
@@ -266,7 +300,14 @@ export function planImport(input: {
     per_city[city] = { before, updates: u, inserts: i, projected_after: before + i, visible_after: before + i - hidden, hidden_after: hidden };
   }
   const twinSkipped = skips.filter(s => s.reason.startsWith("SKIP_TWIN")).length;
-  const trueAmbiguous = skips.filter(s => s.reason.startsWith("SKIP_TRUE_AMBIGUOUS")).length;
+  const reviewRequired = skips.filter(s => s.reason.startsWith("SKIP_REVIEW_REQUIRED")).length;
+  // (city,name) 충돌 — 표시명은 바꾸지 않는다. 현재 schema 에서는 INSERT/UPDATE 가 막히므로 blocker 로 보고한다.
+  const finalNames = new Map<string, string[]>();
+  const updatedIds = new Set(updates.map(u => u.main_city_spot_id));
+  for (const m of input.main) if (!updatedIds.has(m.main_city_spot_id)) { const k = `${m.city}\u0000${m.canonical_title}`; finalNames.set(k, [...(finalNames.get(k) ?? []), `main#${m.main_city_spot_id}`]); }
+  for (const u of updates) { const k = `${u.city}\u0000${u.new_summary.name ?? ""}`; finalNames.set(k, [...(finalNames.get(k) ?? []), `main#${u.main_city_spot_id}(${u.canonical_id})`]); }
+  for (const i of inserts) { const k = `${i.city}\u0000${String(i.row.name)}`; finalNames.set(k, [...(finalNames.get(k) ?? []), i.canonical_id]); }
+  const collisions = [...finalNames.entries()].filter(([, v]) => v.length > 1).map(([k, v]) => { const [city, name] = k.split("\u0000"); return { city: city!, name: name!, members: v.sort() }; }).sort((a, b) => (a.city + a.name < b.city + b.name ? -1 : 1));
   return {
     updates, inserts, skips, no_write: noWrite, visibility_updates: visibilityUpdates,
     counts: {
@@ -274,16 +315,20 @@ export function planImport(input: {
       match_replace: updates.length,
       new: inserts.length,
       confirmed_twin_skipped: twinSkipped,
-      true_ambiguous_skipped: trueAmbiguous,
+      review_required_skipped: reviewRequired,
       excluded_skipped: skips.filter(s => s.reason.startsWith("service_status")).length,
-      unique_service_places: updates.length + inserts.length + trueAmbiguous,
+      active_distinct: active.length - twinSkipped,
+      writeable_active: updates.length + inserts.length,
       existing_id_preserved: targeted.size,
       lossy_category: lossyCategory,
+      heuristic_twin_auto_merge: 0,
+      evidenceless_skip: evidencelessSkip,
       delete: 0,
     },
+    constraint_blockers: { city_name_collisions: collisions },
     visibility: {
       publish_updates: updates.length, publish_inserts: inserts.length, hide_legacy: visibilityUpdates.length,
-      preserved_visible_legacy: preservedVisibleLegacy, untouched_other: untouchedOther,
+      preserved_visible_legacy: preservedVisibleLegacy, owner_override_published: ownerOverridePublished, untouched_other: untouchedOther,
     },
     per_city, null_policy_counts: policyCounts, errors,
   };
