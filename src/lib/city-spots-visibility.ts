@@ -15,10 +15,13 @@
 //   DISCOVERY_VISIBILITY_GATE_ENABLED 가 false 인 동안은 어떤 쿼리에도 is_published 조건이 붙지
 //   않는다. 컬럼이 아직 없는 Production 에 이 코드가 먼저 배포돼도 Explore 가 깨지지 않는다.
 //   migration 056 이 Production 에 적용된 뒤, 릴리스 커밋에서만 true 로 바꾼다(그 커밋이 곧 게이트 ON).
+//   → 2026-08-22 TASK-FIVE-CITY-CORE-VISIBILITY-GATE-RELEASE-V1: migration 056·057 Owner 적용·검증 완료
+//     (714행 전부 is_published=true) 후 ON. 이 시점에는 discovery 결과가 바뀌지 않는다(true 714 = 전체).
+//     컬럼이 없는 환경에서 ON 이면 조회가 명시적으로 실패한다(조용한 fallback 없음) — 의도된 동작.
 //   env 로 켜지 않는 이유: Cloudflare Functions(ctx.env)와 Next 빌드(process.env)가 다른 env 를
 //   보므로 두 표면이 서로 다른 상태가 될 수 있다. 코드 상수 하나가 두 표면을 동시에 바꾼다.
 
-export const DISCOVERY_VISIBILITY_GATE_ENABLED = false;
+export const DISCOVERY_VISIBILITY_GATE_ENABLED = true;
 
 export const PUBLISHED_COLUMN = "is_published" as const;
 

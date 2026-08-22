@@ -35,10 +35,16 @@ test("V1: discovery + 게이트 ON 에서만 is_published=true 가 붙는다", (
   assert.ok(discoveryGateActive("discovery", true) && !discoveryGateActive("reference", true) && !discoveryGateActive("discovery", false));
 });
 
-test("V2: 이 브랜치의 기본값은 게이트 OFF — migration 056 적용 전 배포돼도 조회가 바뀌지 않는다", () => {
-  assert.equal(DISCOVERY_VISIBILITY_GATE_ENABLED, false);
-  assert.deepEqual(applyVisibility(new FakeQuery(), "discovery").calls, []);
-  assert.equal(visibilityRestFilter("discovery"), "");
+test("V2: 게이트 ON(릴리스) — discovery 에만 is_published=true 가 붙고 reference 는 그대로 · OFF 계약은 명시 인자로 유지", () => {
+  // TASK-FIVE-CITY-CORE-VISIBILITY-GATE-RELEASE-V1: migration 056·057 적용·검증 후 ON. 714행 전부 true 라 결과는 불변.
+  assert.equal(DISCOVERY_VISIBILITY_GATE_ENABLED, true);
+  assert.deepEqual(applyVisibility(new FakeQuery(), "discovery").calls, [[PUBLISHED_COLUMN, true]]);
+  assert.equal(visibilityRestFilter("discovery"), "&is_published=eq.true");
+  assert.deepEqual(applyVisibility(new FakeQuery(), "reference").calls, []);
+  assert.equal(visibilityRestFilter("reference"), "");
+  // OFF 상태 계약(게이트가 꺼지면 어떤 조회도 바뀌지 않음)은 명시 인자로 계속 보장한다
+  assert.deepEqual(applyVisibility(new FakeQuery(), "discovery", false).calls, []);
+  assert.equal(visibilityRestFilter("discovery", false), "");
   // 행 단위 판단: 컬럼 없음/NULL 은 보이는 쪽, 명시적 false 만 숨김(게이트 ON 일 때)
   assert.equal(isDiscoverable({}, true), true);
   assert.equal(isDiscoverable({ is_published: null }, true), true);
