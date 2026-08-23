@@ -25,6 +25,7 @@ import { buildItineraryGenerationUrl, itineraryDayCount, tripDraftGenerationCont
 import { isValidCoordinate } from "@/lib/geo";
 import { addPlaceToThisTrip, isInThisTrip, removePlaceFromThisTrip } from "@/lib/place-actions/place-actions-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
+import { exploreHrefFor } from "@/lib/explore-href";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
@@ -656,7 +657,7 @@ function PicksContent() {
               <p className="text-3xl mb-3" aria-hidden>🗺️</p>
               <p className="font-bold text-ink mb-1">{t("selectedEmpty")}</p>
               <p className="text-sm text-sub mb-5">{t("selectedEmptyHint")}</p>
-              <Link href="/explore/busan/" className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
+              <Link href={exploreHrefFor(tripCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
                 {t("explore")}
               </Link>
             </Card>
@@ -748,7 +749,7 @@ function PicksContent() {
                 })}
               </ul>
 
-              <Link href="/explore/busan/" className="gkm-focus mt-4 flex items-center justify-center min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold">
+              <Link href={exploreHrefFor(tripCity)} className="gkm-focus mt-4 flex items-center justify-center min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold">
                 + {t("findMore")}
               </Link>
 
@@ -852,7 +853,7 @@ function PicksContent() {
               <p className="text-3xl mb-3" aria-hidden>🔖</p>
               <p className="font-bold text-ink mb-1">{t("savedEmpty")}</p>
               <p className="text-sm text-sub mb-5">{t("savedEmptyHint")}</p>
-              <Link href="/explore/busan/" className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
+              <Link href={exploreHrefFor(tripCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
                 {t("explore")}
               </Link>
             </Card>

@@ -11,7 +11,7 @@
 import { isValidCoordinate } from "../geo.ts";
 import type { TripStayDetail } from "../trip-draft/trip-draft-core.ts";
 import { findStayArea, stayAreaOptions } from "./stay-core.ts";
-import { CITY_ARRIVAL_OPTIONS } from "../../data/city-presets.ts";
+import { cityPresetOptions } from "../../data/city-presets.ts";
 
 /**
  * 사용자가 숙박에 대해 지금 무엇을 정했는가 — 화면이 고르는 것.
@@ -156,7 +156,7 @@ export function stayMapCenter(
   // 마지막은 그 도시의 기존 지점 하나다. 새 좌표표를 만들지 않고 화면이 이미
   // 쓰는 프리셋을 그대로 쓴다 — 숙박 지역이 있으면 그중 첫 번째가 도심 쪽이고,
   // 없으면 도착 지점이다. 어차피 사용자가 곧 지도를 움직인다.
-  const fallback = stayAreaOptions(city)[0] ?? CITY_ARRIVAL_OPTIONS[city]?.[0];
+  const fallback = stayAreaOptions(city)[0] ?? cityPresetOptions(city)[0];
   if (fallback && isValidCoordinate(fallback.lat, fallback.lng)) {
     return { lat: fallback.lat, lng: fallback.lng, source: "city" };
   }

@@ -1648,8 +1648,8 @@ function ItineraryResult() {
               if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
               setUnplacedPicks(unplaced);
               const notes: string[] = [];
-              if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
-              if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
+              if (deferred)     notes.push("noteDeferred");   // itin.noteDeferred — 렌더 시 t() 로 푼다
+              if (centroidUsed) notes.push("noteNearby");     // itin.noteNearby
               if (notes.length > 0) setTripNotes(notes);
               if (days.length > 0 && conflictDayNumbers.length === days.length) {
                 setError({ key: "errGenerate" });
@@ -1698,8 +1698,8 @@ function ItineraryResult() {
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
           if (skipped.length > 0) setSkippedCartNames(skipped);
           const notes: string[] = [];
-          if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
-          if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
+          if (deferred)     notes.push("noteDeferred");   // itin.noteDeferred — 렌더 시 t() 로 푼다
+          if (centroidUsed) notes.push("noteNearby");     // itin.noteNearby
           if (notes.length > 0) setTripNotes(notes);
           if (days.length > 0 && conflictDayNumbers.length === days.length) {
             setError({ key: "errGenerate" });
@@ -2382,7 +2382,7 @@ function ItineraryResult() {
         <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200">
           <span className="text-lg">🔗</span>
           <p className="text-sm font-bold text-blue-700 flex-1">
-            You&apos;re viewing a shared itinerary. Changes you make will sync back to this link.
+            {t("sharedNotice")}
           </p>
         </div>
       )}
@@ -2392,7 +2392,7 @@ function ItineraryResult() {
         <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-amber-50 border border-amber-200">
           <span className="text-lg">✨</span>
           <p className="text-sm font-bold text-amber-700 flex-1">
-            AI is busy right now, so we prepared a safe gokoreamate recommended plan for you.
+            {t("fallbackBanner")}
           </p>
         </div>
       )}
@@ -2447,7 +2447,7 @@ function ItineraryResult() {
       {fixedOutOfWindow.length > 0 && (
         <div className="mb-6 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
           <p className="text-sm font-bold text-orange-700 mb-1">
-            Some fixed times fall outside that day&apos;s schedule window.
+            {t("fixedOutTitle")}
           </p>
           <ul className="mt-1.5 space-y-0.5">
             {fixedOutOfWindow.map(name => (
@@ -2455,7 +2455,7 @@ function ItineraryResult() {
             ))}
           </ul>
           <p className="mt-2 text-xs text-orange-500">
-            Open Picks and adjust the date or time.
+            {t("fixedOutHint")}
           </p>
         </div>
       )}
@@ -2465,7 +2465,7 @@ function ItineraryResult() {
         <div className="mb-4 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-1">
           {tripNotes.map(note => (
             <p key={note} className="text-sm text-blue-700 font-medium flex items-start gap-2">
-              <span className="shrink-0">💡</span>{note}
+              <span className="shrink-0">💡</span>{t(note)}
             </p>
           ))}
         </div>

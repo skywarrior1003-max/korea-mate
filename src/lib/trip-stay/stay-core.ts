@@ -15,7 +15,7 @@
 //   엔진에는 그런 개념이 없다. 없다고 21:00 같은 시각을 지어내면 사용자가 정한
 //   적 없는 통금이 생긴다. 그건 별도 계약이 필요한 일이고 여기서 하지 않는다.
 
-import { CITY_ARRIVAL_OPTIONS, type CityPresetOption } from "../../data/city-presets.ts";
+import { cityPresetOptions, type CityPresetOption } from "../../data/city-presets.ts";
 
 /** 숙박 지역으로 내놓을 프리셋 종류. 공항·역·터미널·항만은 자는 곳이 아니다. */
 export const STAY_AREA_TYPES = ["downtown", "tourist_area"] as const;
@@ -27,7 +27,8 @@ export const STAY_AREA_TYPES = ["downtown", "tourist_area"] as const;
  * 들어와도 프리셋에 downtown/tourist_area 가 있으면 그대로 동작한다.
  */
 export function stayAreaOptions(city: string): CityPresetOption[] {
-  const all = CITY_ARRIVAL_OPTIONS[city] ?? [];
+  // 도시 키는 대소문자를 가리지 않는다 — route/cart 는 소문자, 프리셋 키는 표시명이다.
+  const all = cityPresetOptions(city);
   return all.filter(o => (STAY_AREA_TYPES as readonly string[]).includes(o.type));
 }
 

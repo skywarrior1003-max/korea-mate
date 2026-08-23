@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import DatePicker from "./DatePicker";
 import StayFieldsSection from "./StayFields";
-import { CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
+import { cityPresetOptions } from "@/data/city-presets";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
 import {
   EMPTY_STAY_FIELDS, stayFieldsFrom, stayModeFrom,
@@ -81,7 +81,7 @@ export default function TripSetupPanel({ draft, onChange }: TripSetupPanelProps)
   const [openStay,   setOpenStay]   = useState(false);
 
   const city    = draft.city;
-  const options = CITY_ARRIVAL_OPTIONS[city] ?? [];
+  const options = cityPresetOptions(city); // 소문자 도시(draft/route)에서도 프리셋을 찾는다
   const label   = (v?: string) => options.find(o => o.value === v)?.label ?? v ?? "";
 
   const stay       = draft.stay ?? null;

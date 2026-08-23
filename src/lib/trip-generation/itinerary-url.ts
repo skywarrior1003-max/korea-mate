@@ -16,7 +16,7 @@
 //   좌표도 프리셋에서 되찾는다. 사용자가 고른 것은 지역 이름이고, 그 이름으로
 //   같은 표를 다시 보면 좌표가 나온다.
 
-import { CITY_ARRIVAL_OPTIONS } from "../../data/city-presets.ts";
+import { cityPresetOptions } from "../../data/city-presets.ts";
 import type { TripDraft } from "../trip-draft/trip-draft-core.ts";
 import type { TripPaceChoice } from "../trip-pace/pace-core.ts";
 
@@ -89,7 +89,8 @@ export function canBuildItineraryUrl(ctx: Partial<ItineraryGenerationContext> | 
 
 function preset(city: string, value: string | undefined) {
   if (!value) return null;
-  return (CITY_ARRIVAL_OPTIONS[city] ?? []).find(o => o.value === value) ?? null;
+  // 도시 키 대소문자 무시 — draft/route 의 소문자 도시에서도 도착·출발 프리셋을 되찾는다.
+  return cityPresetOptions(city).find(o => o.value === value) ?? null;
 }
 
 /**

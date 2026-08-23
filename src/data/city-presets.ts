@@ -114,3 +114,19 @@ export const CITY_DAY1_MAX_DISTANCE_KM: Record<string, number> = {
 export const CITY_AIRPORT_ARRIVAL_BANNERS: Record<string, { minArrivalHour: number }> = {
   Busan: { minArrivalHour: 17 },
 };
+
+/**
+ * 도시 키 정합 (TASK-MY-TRIP-CONNECT-FIX-V1).
+ *
+ * 프리셋 키는 표시명("Gyeongju")이고, 라우트·cart·draft 일부 경로는 소문자("gyeongju")다.
+ * 소문자 도시로 조회하면 빈 목록이 돌아와 숙박 지역 옵션이 사라졌다. 데이터는 그대로 두고
+ * 조회만 대소문자·공백을 무시해 맞춘다. 모르는 도시는 빈 목록 — 지어내지 않는다.
+ */
+export function cityPresetOptions(city: string | null | undefined): CityPresetOption[] {
+  if (!city) return [];
+  const direct = CITY_ARRIVAL_OPTIONS[city];
+  if (direct) return direct;
+  const want = city.trim().toLowerCase();
+  const key = Object.keys(CITY_ARRIVAL_OPTIONS).find(k => k.toLowerCase() === want);
+  return key ? CITY_ARRIVAL_OPTIONS[key]! : [];
+}

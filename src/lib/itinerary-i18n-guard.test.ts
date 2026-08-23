@@ -45,6 +45,8 @@ const ADDED = [
   "editCanvasHint", "editCanvasFooter",
   "errCorrupted", "errEmpty", "errNoDates", "errGenerate", "errNetwork",
   "errLoadFailed", "errGenerateFailed", "errLoadSavedFailed",
+  // TASK-MY-TRIP-CONNECT-FIX-V1 — 남아 있던 영어 하드코딩 안내를 키로 옮겼다
+  "noteDeferred", "noteNearby", "fixedOutTitle", "fixedOutHint", "fallbackBanner", "sharedNotice",
 ];
 
 /**
