@@ -464,7 +464,16 @@
     "durationMinutes": "{m} 分钟",
     "moreActions": "更多",
     "closeMenu": "关闭",
-    "placeDetail": "地点详情"
+    "placeDetail": "地点详情",
+    "editDone": "完成",
+    "editHint": "选择 Day 后可以调整顺序、开始时间、移到其他日期、删除或添加地点。更改会自动保存。",
+    "editAddPlace": "添加地点",
+    "editSearchSpots": "搜索地点",
+    "editMoveToDay": "移到其他日期",
+    "editMoveTo": "Day {n}",
+    "editTime": "时间",
+    "editEmptyDay": "这一天还没有地点。",
+    "editOrderNote": "保存后，每一天会按时间顺序排列。"
   },
   "common": {
     "language": "语言",

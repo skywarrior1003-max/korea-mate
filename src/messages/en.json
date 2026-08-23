@@ -464,7 +464,16 @@
     "durationMinutes": "{m} min",
     "moreActions": "More actions",
     "closeMenu": "Close",
-    "placeDetail": "Place details"
+    "placeDetail": "Place details",
+    "editDone": "Done",
+    "editHint": "Pick a day, then reorder, change the start time, move to another day, remove or add places. Changes save automatically.",
+    "editAddPlace": "Add place",
+    "editSearchSpots": "Search places",
+    "editMoveToDay": "Move to another day",
+    "editMoveTo": "Day {n}",
+    "editTime": "Time",
+    "editEmptyDay": "No places on this day yet.",
+    "editOrderNote": "After saving, each day is listed in time order."
   },
   "common": {
     "language": "Language",

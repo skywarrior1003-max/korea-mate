@@ -132,7 +132,7 @@ interface Place {
    * 보관함·내 장소 추가의 기본값 시각은 이 값이 없어 시간대 라벨로만 보인다 — 시각을 지어내지 않는다.
    * optional 이라 이 필드가 없던 기존 저장 일정도 그대로 열린다.
    */
-  timeSource?: "scheduler";
+  timeSource?: "scheduler" | "user";
   /** 사용자가 날짜·시각을 정한 항목. 엔진의 is_fixed 를 그대로 옮긴다. */
   isFixed?: true;
 }
@@ -1242,6 +1242,9 @@ function ItineraryResult() {
   const [mapOpen, setMapOpen] = useState(true);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
+  /** 편집 캔버스: "다른 날로" 칩이 펼쳐진 항목 · 장소 추가 패널 */
+  const [moveOpenIdx,   setMoveOpenIdx]   = useState<number | null>(null);
+  const [addOpen,       setAddOpen]       = useState(false);
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
   // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
   const [plannerDay,    setPlannerDay]    = useState(1);
@@ -2146,6 +2149,35 @@ function ItineraryResult() {
     }));
   }
 
+  // ── EDIT-COMPLETION-V1: 다른 Day 로 이동 · 시작시간 수정 ───────────────────
+  // 둘 다 사용자 직접 편집이다. 스케줄러를 다시 돌리지 않고 days 만 고친다 — 기존 autosave
+  // effect([days, itinId])가 그대로 저장한다. 항목 객체는 옮기기만 하고 시각·고정 표시는 건드리지 않는다.
+  function moveToDay(dayIdx: number, placeIdx: number, targetDayIdx: number) {
+    if (dayIdx === targetDayIdx) return;
+    setDays(prev => {
+      if (!prev[dayIdx] || !prev[targetDayIdx]) return prev;
+      const moving = prev[dayIdx].places[placeIdx];
+      if (!moving) return prev;
+      return prev.map((day, di) => {
+        if (di === dayIdx)       return { ...day, places: day.places.filter((_, pi) => pi !== placeIdx) };
+        if (di === targetDayIdx) return { ...day, places: [...day.places, moving] };
+        return day;
+      });
+    });
+  }
+
+  // 시작시간은 사용자가 정한 값이므로 화면에 실제 시각으로 표시한다(timeSource "user").
+  // 슬롯도 그 시각으로 다시 정한다. 고정(isFixed) 표시는 유지 — 사용자가 정한 시간이라는 사실은 같다.
+  function setPlaceTime(dayIdx: number, placeIdx: number, hhmm: string) {
+    if (!/^\d{2}:\d{2}$/.test(hhmm)) return;
+    setDays(prev => prev.map((day, di) => {
+      if (di !== dayIdx) return day;
+      return { ...day, places: day.places.map((p, pi) => pi === placeIdx
+        ? { ...p, time: hhmm, slot: assignSlot(hhmm), timeSource: "user" as const }
+        : p) };
+    }));
+  }
+
   // ── cart 변경 감지 → Unscheduled 갱신 ─────────────────
   useEffect(() => {
     const refreshCart = () => { try { setCartItems(getCityCart(paramCity)); } catch { /* ignore */ } };
@@ -2732,177 +2764,219 @@ function ItineraryResult() {
       )}
 
 
-      {/* ── Compact / 인라인 편집 캔버스 ── */}
+      {/* ── 편집 캔버스 (EDIT-COMPLETION-V1) — Planning 과 같은 Day 내비·카드 언어로.
+          기존 기능(순서·삭제·추가·자동 저장) 그대로 + 다른 Day 이동·시작시간 수정. 일정이 주인공이고 장소 추가는 보조 행동이다. */}
       {viewMode === "compact" ? (
         <div className="mb-16">
-          {/* 안내 배너 */}
-          <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1a1f36] text-white">
-            <span className="text-base shrink-0">✏️</span>
-            <p className="text-xs font-bold flex-1">
-              {t("editCanvasHint")}
-            </p>
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-sm font-black text-ink">{t("editing")}</p>
+              <p className="mt-0.5 text-xs text-sub">{tPlanner("editHint")}</p>
+            </div>
             <button
-              onClick={() => setViewMode("full")}
-              className="shrink-0 text-xs font-black text-white/70 hover:text-white px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              type="button"
+              onClick={() => { setViewMode("full"); setMoveOpenIdx(null); setAddOpen(false); }}
+              className="gkm-focus shrink-0 min-h-11 px-4 rounded-full text-sm font-black text-white"
+              style={{ backgroundColor: "var(--gkm-ink)" }}
             >
-              {t("viewFull")}
+              {tPlanner("editDone")}
             </button>
           </div>
 
-          {/* 주황 Spot 탐색 버튼 — /all-spots 검색 페이지로 이동 */}
-          {(!shareId || isOwner) && (
-            <Link
-              href="/all-spots"
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white mb-4 transition-opacity hover:opacity-90 active:scale-95"
-              style={{ backgroundColor: "var(--gkm-accent-coral)" }}
-            >
-              🔍 Search Spots
-            </Link>
+          {days.length > 0 && (
+            <PlannerDayNav
+              days={days.map(d => ({ dayNumber: d.dayNumber, dateLabel: formatDayChipDate(d.date, locale), placeCount: d.places.length }))}
+              currentDay={clampDay(days.length, editDay + 1)}
+              onSelectDay={(n) => { setEditDay(clampDay(days.length, n) - 1); setMoveOpenIdx(null); }}
+              labels={{
+                dayOfTotal:    tPlanner("dayOfTotal", { n: editDay + 1, total: days.length }),
+                dayTabList:    tPlanner("dayTabList"),
+                openSelector:  tPlanner("openSelector", { n: editDay + 1, total: days.length }),
+                selectorTitle: tPlanner("selectorTitle"),
+                close:         tPlanner("close"),
+                weather:       tPlanner("weather"),
+                weatherAria:   tPlanner("weatherAria"),
+                placesLabel:   (n: number) => tPlanner("places", { n }),
+                dayAria:       (n: number, date: string) => tPlanner("dayAria", { n, date }),
+              }}
+            />
           )}
 
-          {/* Day 탭 */}
-          <div className="flex gap-1.5 overflow-x-auto mb-4 pb-1">
-            {days.map((day, i) => (
-              <button
-                key={i}
-                onClick={() => setEditDay(i)}
-                className={`shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                  editDay === i
-                    ? "bg-[#1a1f36] text-white shadow-md"
-                    : "bg-white text-sub border border-line hover:border-accent-coral"
-                }`}
-              >
-                <span>Day {day.dayNumber}</span>
-                {day.date && (
-                  <span className={`text-[10px] font-normal mt-0.5 ${editDay === i ? "text-white/60" : "text-gray-400"}`}>
-                    {day.date}
-                  </span>
-                )}
-                <span
-                  className="mt-1 px-1.5 py-0.5 rounded-full text-[10px] font-black"
-                  style={editDay === i
-                    ? { backgroundColor: "var(--gkm-accent-coral)", color: "#fff" }
-                    : { backgroundColor: "#f3f4f6", color: "#374151" }}
-                >
-                  {day.places.length}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* 현재 Day 편집 리스트 — 시간순 플랫 리스트 (슬롯 그루핑 제거로 누락 방지) */}
           {days[editDay] && (
-            <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
-              <div className="px-5 py-3 flex items-center justify-between" style={{ backgroundColor: "#1a1f36" }}>
-                <span className="text-sm font-black text-white">
-                  Day {days[editDay].dayNumber} — {days[editDay].date}
-                </span>
-                <span className="text-xs text-white/50">{days[editDay].places.length} places</span>
+            <div className="mt-4">
+              <div className="flex items-end justify-between gap-3 mb-3">
+                <h2 className="text-[22px] leading-tight font-black text-ink flex items-baseline gap-2 flex-wrap">
+                  <span>Day {days[editDay].dayNumber}</span>
+                  <span className="text-sm font-semibold text-sub">{days[editDay].date}</span>
+                  <span className="text-xs font-semibold text-faint">{t("placesCount", { n: days[editDay].places.length })}</span>
+                </h2>
+                {(!shareId || isOwner) && (
+                  <button
+                    type="button"
+                    onClick={() => setAddOpen(o => !o)}
+                    aria-expanded={addOpen}
+                    className="gkm-focus shrink-0 inline-flex items-center gap-1 min-h-11 px-3 rounded-full text-sm font-bold text-action border border-line bg-white hover:bg-surface-dim transition-colors"
+                  >
+                    <span aria-hidden className="text-lg leading-none">+</span>{tPlanner("editAddPlace")}
+                  </button>
+                )}
               </div>
 
-              {/* 시간순 정렬 플랫 리스트 */}
-              {days[editDay].places.map((p, pi) => (
-                <div
-                  key={pi}
-                  className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0 hover:bg-surface-dim/60 group transition-colors"
-                >
-                  {/* 방문 시각 대신 순서 번호. ↑↓ 로 바꾸는 것이 바로 이 순서다.
-                      시각은 출처를 구분할 계약이 없어 표시하지 않는다(상세 모달과 같은 이유). */}
-                  <span className="text-xs font-bold text-sub w-6 shrink-0 tabular-nums text-right">{pi + 1}</span>
-                  <span
-                    className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
-                    style={{ backgroundColor: getCategoryColor(p.category) }}
-                  >
-                    {p.category.slice(0, 5)}
-                  </span>
-                  <span className="flex-1 text-sm font-bold text-ink truncate">{p.name}</span>
-                  {(!shareId || isOwner) && (
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <button
-                        onClick={() => movePlace(editDay, pi, "up")}
-                        disabled={pi === 0}
-                        className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title={t("moveUp")}
-                      >↑</button>
-                      <button
-                        onClick={() => movePlace(editDay, pi, "down")}
-                        disabled={pi === days[editDay].places.length - 1}
-                        className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title={t("moveDown")}
-                      >↓</button>
-                      <button
-                        onClick={() => deletePlace(editDay, pi)}
-                        className="w-7 h-7 rounded-full bg-red-500 text-white hover:bg-red-600 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title={t("removePlace")}
-                      >×</button>
+              {/* 편집 리스트 — 시간순 플랫 리스트(슬롯 그루핑 없음). 카드는 Planning 과 같은 모양이고 아래 한 줄이 편집 도구다. */}
+              <div className="space-y-2.5">
+                {days[editDay].places.map((p, pi) => {
+                  const imageSrc = p.cartSnapshot?.image ?? p.image;
+                  const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                  const clock = shouldShowClock(p) ? formatClock(p.time, locale) : null;
+                  const stay = formatDuration(parseDurationMinutes(p.duration), durationLabels);
+                  const canEdit = (!shareId || isOwner);
+                  const otherDays = days.filter((_, di) => di !== editDay);
+                  return (
+                    <div key={pi} className="rounded-2xl border border-line bg-white">
+                      <div className="flex items-center gap-3 p-3">
+                        <span className="text-xs font-bold text-faint w-5 shrink-0 tabular-nums text-right">{pi + 1}</span>
+                        {thumb ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={thumb} alt="" className="w-12 h-12 rounded-xl object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
+                        ) : (
+                          <span className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(p.category) }}>
+                            <TimelineIcon category={p.category} size={18} />
+                          </span>
+                        )}
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-bold text-ink leading-tight truncate">{p.name?.trim() || (p.isAccommodation ? tStay("placeFallback") : "")}</span>
+                          <span className="block mt-0.5 text-xs text-sub truncate">
+                            {clock ? `${clock} · ` : ""}{humanizeCategory(p.category)}{stay ? ` · ${stay}` : ""}
+                          </span>
+                          {p.isFixed && (
+                            <span className="mt-1 inline-block text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-surface-dim text-sub">{tPlanner("fixedTime")}</span>
+                          )}
+                        </span>
+                      </div>
+                      {canEdit && (
+                        <div className="flex items-center gap-1.5 px-3 pb-3 flex-wrap">
+                          <button
+                            type="button"
+                            onClick={() => movePlace(editDay, pi, "up")}
+                            disabled={pi === 0}
+                            aria-label={t("moveUp")}
+                            className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
+                          >↑</button>
+                          <button
+                            type="button"
+                            onClick={() => movePlace(editDay, pi, "down")}
+                            disabled={pi === days[editDay].places.length - 1}
+                            aria-label={t("moveDown")}
+                            className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
+                          >↓</button>
+                          {/* 시작시간 — 사용자가 정한 값만 시각으로 표시된다(timeSource "user"). 가짜 시간을 만들지 않는다. */}
+                          <label className="inline-flex items-center gap-1.5 min-h-11 px-2.5 rounded-full border border-line bg-white text-xs font-bold text-ink">
+                            <span>{tPlanner("editTime")}</span>
+                            <input
+                              type="time"
+                              value={/^\d{2}:\d{2}$/.test(p.time ?? "") ? p.time : ""}
+                              onChange={(e) => setPlaceTime(editDay, pi, e.target.value)}
+                              aria-label={`${tPlanner("editTime")}: ${p.name}`}
+                              className="gkm-focus bg-transparent text-xs font-bold text-ink w-[84px]"
+                            />
+                          </label>
+                          {otherDays.length > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => setMoveOpenIdx(moveOpenIdx === pi ? null : pi)}
+                              aria-expanded={moveOpenIdx === pi}
+                              aria-label={`${tPlanner("editMoveToDay")}: ${p.name}`}
+                              className="gkm-focus inline-flex items-center min-h-11 px-3 rounded-full border border-line bg-white text-xs font-bold text-action"
+                            >{tPlanner("editMoveToDay")} ▾</button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => { deletePlace(editDay, pi); setMoveOpenIdx(null); }}
+                            aria-label={`${t("removePlace")}: ${p.name}`}
+                            className="gkm-focus ml-auto inline-flex items-center min-h-11 px-3 rounded-full border border-line bg-white text-xs font-bold text-sub hover:text-accent-coral"
+                          >{t("removePlace")}</button>
+                        </div>
+                      )}
+                      {canEdit && moveOpenIdx === pi && otherDays.length > 0 && (
+                        <div className="flex items-center gap-1.5 px-3 pb-3 flex-wrap" role="group" aria-label={tPlanner("editMoveToDay")}>
+                          {otherDays.map(od => (
+                            <button
+                              key={od.dayNumber}
+                              type="button"
+                              onClick={() => { moveToDay(editDay, pi, od.dayNumber - 1); setMoveOpenIdx(null); }}
+                              className="gkm-focus min-h-11 px-3.5 rounded-full text-xs font-black text-white"
+                              style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                            >{tPlanner("editMoveTo", { n: od.dayNumber })}</button>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
-
-              {days[editDay].places.length === 0 && (
-                <div className="py-10 text-center text-sm text-sub/40 italic">
-                  No places for this day
-                </div>
-              )}
+                  );
+                })}
+                {days[editDay].places.length === 0 && (
+                  <p className="py-8 text-center text-sm text-sub">{tPlanner("editEmptyDay")}</p>
+                )}
+              </div>
+              <p className="mt-3 text-[11px] text-faint">{tPlanner("editOrderNote")}</p>
             </div>
           )}
 
-          {/* 보관함 (Unscheduled) — 명시적으로 저장한 스폿 목록 */}
-          {(() => {
-            const unscheduled = cartItems;
-            if (unscheduled.length === 0 || (shareId && !isOwner)) return null;
-            return (
-              <div className="mt-5">
-                <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="text-xs font-black text-sub">{t("unscheduledTitle")}</span>
-                  <span className="text-[10px] font-bold bg-surface-dim/60 text-sub px-2 py-0.5 rounded-full">
-                    {unscheduled.length}
-                  </span>
-                  <span className="text-[10px] text-sub/50 ml-auto">{t("unscheduledHint")}</span>
-                </div>
-                <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
-                  {unscheduled.map((item) => (
-                    <div
-                      /* 같은 `local-<n>` 을 가진 다른 소스의 장소가 함께 있을 수 있다.
-                         id 를 key 로 쓰면 React 가 두 행을 같은 것으로 보고 재사용한다. */
-                      key={getItemSourceKey(item)}
-                      className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0 hover:bg-surface-dim/60 transition-colors"
-                    >
-                      <span
-                        className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
-                        style={{ backgroundColor: getCategoryColor(item.type) }}
-                      >
-                        {item.type.slice(0, 5)}
-                      </span>
-                      <span className="flex-1 text-sm font-bold text-ink truncate">
-                        {item.shortName || item.name}
-                      </span>
-                      <span className="text-[10px] text-sub/50 shrink-0 hidden sm:inline">
-                        {item.recommendedDurationMinutes}m
-                      </span>
-                      <button
-                        onClick={() => addCartItemToDay(item)}
-                        className="shrink-0 w-7 h-7 rounded-full text-white text-sm font-black flex items-center justify-center hover:opacity-80 cursor-pointer transition-opacity"
-                        style={{ backgroundColor: "var(--gkm-accent-coral)" }}
-                        title={`Add to Day ${editDay + 1}`}
-                      >+</button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
+          {/* ── 장소 추가 패널 (보조 행동) — 검색 · 내가 고른 곳(미배정) · 내 장소. 기존 기능 그대로. ── */}
+          {addOpen && (!shareId || isOwner) && (
+            <div className="mt-5 rounded-2xl border border-line bg-surface-dim/40 p-3 space-y-4">
+              <Link
+                href="/all-spots"
+                className="gkm-focus w-full inline-flex items-center justify-center gap-2 min-h-11 rounded-full text-sm font-bold text-action border border-line bg-white hover:bg-surface-dim transition-colors"
+              >
+                {tPlanner("editSearchSpots")} →
+              </Link>
 
-          {/* My Places (user_spots) — PHASE 1 */}
-          {(!shareId || isOwner) && !isPastTrip && (
-            <UserSpotsPanel
-              city={city}
-              selectedDayIndex={editDay}
-              selectedDayLabel={`Day ${days[editDay]?.dayNumber ?? editDay + 1}`}
-              existingPlaces={days[editDay]?.places ?? []}
-              onAddToDay={addUserSpotToDay}
-            />
+              {/* 보관함 (Unscheduled) — 명시적으로 저장한 스폿 목록 */}
+              {(() => {
+                const unscheduled = cartItems;
+                if (unscheduled.length === 0 || (shareId && !isOwner)) return null;
+                return (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2 px-1">
+                      <span className="text-xs font-black text-sub">{t("unscheduledTitle")}</span>
+                      <span className="text-[10px] font-bold bg-surface-dim/60 text-sub px-2 py-0.5 rounded-full">{unscheduled.length}</span>
+                      <span className="text-[10px] text-sub/50 ml-auto">{t("unscheduledHint")}</span>
+                    </div>
+                    <div className="bg-white rounded-2xl border border-line overflow-hidden">
+                      {unscheduled.map((item) => (
+                        <div
+                          /* 같은 `local-<n>` 을 가진 다른 소스의 장소가 함께 있을 수 있다.
+                             id 를 key 로 쓰면 React 가 두 행을 같은 것으로 보고 재사용한다. */
+                          key={getItemSourceKey(item)}
+                          className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0"
+                        >
+                          <span className="flex-1 text-sm font-bold text-ink truncate">{item.shortName || item.name}</span>
+                          <span className="text-[10px] text-sub/50 shrink-0">{item.recommendedDurationMinutes}m</span>
+                          <button
+                            type="button"
+                            onClick={() => addCartItemToDay(item)}
+                            aria-label={t("addToThisDay", { n: editDay + 1 })}
+                            className="gkm-focus shrink-0 w-11 h-11 rounded-full text-white text-base font-black"
+                            style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                          >+</button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* My Places (user_spots) — PHASE 1 */}
+              {(!shareId || isOwner) && !isPastTrip && (
+                <UserSpotsPanel
+                  city={city}
+                  selectedDayIndex={editDay}
+                  selectedDayLabel={`Day ${days[editDay]?.dayNumber ?? editDay + 1}`}
+                  existingPlaces={days[editDay]?.places ?? []}
+                  onAddToDay={addUserSpotToDay}
+                />
+              )}
+            </div>
           )}
 
           <p className="text-center text-xs text-sub/50 mt-4">

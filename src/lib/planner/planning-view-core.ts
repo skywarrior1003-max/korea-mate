@@ -31,9 +31,10 @@ export function timeToMinutes(t: string | null | undefined): number | null {
   return h * 60 + mi;
 }
 
-/** 스케줄러가 배정한 시각만 화면에 낸다. 기본값·사용자 입력 추정 시각은 내지 않는다. */
+/** 실제로 정해진 시각만 화면에 낸다 — 스케줄러가 배정했거나(`"scheduler"`) 사용자가 직접 고친(`"user"`) 시각. 기본값으로 채워진 시각은 내지 않는다. */
+export const REAL_TIME_SOURCES: readonly string[] = ["scheduler", "user"];
 export function shouldShowClock(p: TimedLike): boolean {
-  return p.timeSource === "scheduler" && timeToMinutes(p.time) !== null;
+  return REAL_TIME_SOURCES.includes(p.timeSource ?? "") && timeToMinutes(p.time) !== null;
 }
 
 /** "14:00" → locale 시각 문자열("오후 2:00" · "2:00 PM"). 날짜는 표시에 쓰이지 않는 고정값이다. */

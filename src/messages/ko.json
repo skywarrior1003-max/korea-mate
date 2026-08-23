@@ -464,7 +464,16 @@
     "durationMinutes": "{m}분",
     "moreActions": "더보기",
     "closeMenu": "닫기",
-    "placeDetail": "장소 상세"
+    "placeDetail": "장소 상세",
+    "editDone": "완료",
+    "editHint": "Day를 고른 뒤 순서·시작시간·다른 날 이동·삭제·추가를 할 수 있어요. 변경 사항은 자동 저장됩니다.",
+    "editAddPlace": "장소 추가",
+    "editSearchSpots": "장소 검색",
+    "editMoveToDay": "다른 날로",
+    "editMoveTo": "Day {n}",
+    "editTime": "시간",
+    "editEmptyDay": "이 날에는 아직 장소가 없어요.",
+    "editOrderNote": "저장 후에는 각 날이 시간순으로 정렬돼요."
   },
   "common": {
     "language": "언어",

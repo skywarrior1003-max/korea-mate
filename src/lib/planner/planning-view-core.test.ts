@@ -12,6 +12,7 @@ const L = { hours: (h: number) => `${h}h`, hoursMinutes: (h: number, m: number) 
 test("★시각은 스케줄러가 준 것만 보여 준다 — 기본값·추정 시각은 내지 않는다", () => {
   assert.equal(shouldShowClock({ time: "09:00", timeSource: "scheduler" }), true);
   assert.equal(shouldShowClock({ time: "19:30" }), false, "보관함 기본값");
+  assert.equal(shouldShowClock({ time: "19:30", timeSource: "user" }), true, "사용자가 직접 고친 시각은 실제 시각이다");
   assert.equal(shouldShowClock({ time: "19:30", timeSource: "default" }), false);
   assert.equal(shouldShowClock({ time: "", timeSource: "scheduler" }), false);
   assert.equal(shouldShowClock({ time: "25:00", timeSource: "scheduler" }), false);
@@ -59,4 +60,15 @@ test("★page.tsx 가 스케줄러 시각에만 timeSource 를 붙이고, 숙소
   const acc = page.slice(page.indexOf("if (isAccommodationCheckin(item))"), page.indexOf("return {\n          name:"));
   assert.doesNotMatch(acc, /timeSource|isFixed/, "숙소 항목은 시각 계약을 바꾸지 않는다");
   assert.match(page, /shouldShowClock\(place\)/, "화면은 shouldShowClock 으로만 시각을 낸다");
+});
+
+test("★편집: 다른 Day 이동·시작시간 수정은 기존 days 상태를 고쳐 autosave 로 흐른다 (EDIT-COMPLETION-V1)", () => {
+  const page = readFileSync(new URL("../../app/itinerary/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /function moveToDay\(dayIdx: number, placeIdx: number, targetDayIdx: number\)/);
+  assert.match(page, /function setPlaceTime\(dayIdx: number, placeIdx: number, hhmm: string\)/);
+  assert.match(page, /timeSource: "user" as const/, "사용자 시각은 user 출처로 표시된다");
+  assert.doesNotMatch(page.slice(page.indexOf("function setPlaceTime")).slice(0, 900), /isFixed: (false|undefined)|delete [a-z]+\.isFixed/, "시간 수정이 고정 표시를 지우지 않는다");
+  assert.match(page, /function movePlace\(dayIdx: number, placeIdx: number, dir: "up" \| "down"\)/, "순서 변경 보존");
+  assert.match(page, /function deletePlace\(dayIdx: number, placeIdx: number\)/, "삭제 보존");
+  assert.ok(!page.includes("🔍 Search Spots"), "주황 Search Spots CTA 가 남아 있다");
 });

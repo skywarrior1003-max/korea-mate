@@ -464,7 +464,16 @@
     "durationMinutes": "{m}分",
     "moreActions": "その他",
     "closeMenu": "閉じる",
-    "placeDetail": "場所の詳細"
+    "placeDetail": "場所の詳細",
+    "editDone": "完了",
+    "editHint": "Day を選んで、順序・開始時刻・別の日へ移動・削除・追加ができます。変更は自動保存されます。",
+    "editAddPlace": "場所を追加",
+    "editSearchSpots": "場所を検索",
+    "editMoveToDay": "別の日へ",
+    "editMoveTo": "Day {n}",
+    "editTime": "時刻",
+    "editEmptyDay": "この日にはまだ場所がありません。",
+    "editOrderNote": "保存後は各日が時刻順に並びます。"
   },
   "common": {
     "language": "言語",

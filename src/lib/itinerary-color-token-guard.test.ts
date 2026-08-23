@@ -46,7 +46,7 @@ const MIGRATED: Record<string, { cls: string; cssVar: string; value: string }> =
  */
 const ALLOW: Record<string, { n: number; kind: string; why: string }> = {
   "#7C3AED": { n: 4, kind: "map/data + external", why: "museum 카테고리 색 · 보라 그라디언트. Viator 카드는 S2-B2 에서 제거됐다" },
-  "#1A1F36": { n: 4, kind: "map/data + ui",       why: "카테고리 기본색 · 어두운 패널. --gkm-ink(#191C21)와 값이 다르다" },
+  "#1A1F36": { n: 1, kind: "map/data",            why: "카테고리 기본색. 편집 캔버스의 어두운 패널 3곳은 EDIT-COMPLETION-V1 에서 Planning 토큰 UI 로 바뀌어 raw hex 가 사라졌다" },
   "#FF4A2D": { n: 2, kind: "concat/gradient",     why: "그라디언트 문자열 2. 제휴 카드 색은 S2-B2 에서 카드와 함께 제거됐다" },
   "#D93317": { n: 3, kind: "gradient pair",       why: "코랄 그라디언트의 짝. accent-coral-hover 토큰이 없다" },
   "#16A34A": { n: 1, kind: "map/data",            why: "nature 카테고리 색. compact 토글 버튼은 PLANNING-FINAL-V1 에서 메뉴로 접혀 raw hex 가 사라졌다. --gkm-status-ok(#1D9A6C)와 값이 다르다" },
@@ -54,14 +54,11 @@ const ALLOW: Record<string, { n: number; kind: string; why: string }> = {
   "#D97706": { n: 1, kind: "map/data + external", why: "cafe 카테고리 색. Michelin 카드는 S2-B2 에서 제거됐다" },
   "#1A1A2E": { n: 1, kind: "ui",                  why: "어두운 히어로 패널. 순간 기록 버튼은 PLANNING-FINAL-V1 에서 메뉴로 접혀 raw hex 가 사라졌다. 대응 토큰 없음" },
   "#FFFFFF": { n: 1, kind: "plain",               why: "평범한 흰색. 이 파일은 다른 곳에서 text-white/bg-white 를 쓴다" },
-  "#FFF":    { n: 1, kind: "plain",               why: "위와 같음(3자리 표기)" },
   "#FFF1EC": { n: 1, kind: "near-token",          why: "--gkm-accent-coral-tint 는 #FFF0EC 로 G 채널이 1 다르다. 바꾸면 색이 변한다" },
   "#B33A22": { n: 1, kind: "ui",                  why: "코랄 계열 짙은 글자색. 대응 토큰 없음" },
   "#FEF9C3": { n: 1, kind: "ui status",           why: "노랑 경고 배경. --gkm-status-warn-tint(#FDF3E0)와 값이 다르다" },
   "#FDE047": { n: 1, kind: "ui status",           why: "노랑 경고 테두리. 대응 토큰 없음" },
   "#854D0E": { n: 1, kind: "ui status",           why: "노랑 경고 글자. --gkm-status-warn(#B97A12)과 값이 다르다" },
-  "#F3F4F6": { n: 1, kind: "ui",                  why: "비활성 토글 배경. --gkm-surface-dim(#F6F7F8)과 값이 다르다" },
-  "#374151": { n: 1, kind: "ui",                  why: "비활성 토글 글자. --gkm-text-sub(#565D66)와 값이 다르다" },
   "#DC2626": { n: 1, kind: "map/data",            why: "market 카테고리 색. --gkm-status-error(#D23B2E)와 값이 다르다" },
   "#DB2777": { n: 1, kind: "map/data",            why: "shopping 카테고리 색" },
   "#9333EA": { n: 1, kind: "map/data",            why: "k-pop 카테고리 색" },
@@ -179,7 +176,7 @@ test("★지도 카테고리 색 함수가 그대로 값을 돌려준다", () =>
   for (const hex of ["#d97706", "#dc2626", "#7c3aed", "#16a34a", "#9333ea", "#db2777", "#1a1f36"]) {
     assert.ok(PAGE.toLowerCase().includes(hex), "카테고리 색 누락: " + hex);
   }
-  assert.equal((PAGE.match(/getCategoryColor\(/g) ?? []).length, 5);
+  assert.equal((PAGE.match(/getCategoryColor\(/g) ?? []).length, 4);   // 편집 캔버스 배지 2곳 → 썸네일 fallback 1곳 (EDIT-COMPLETION-V1)
 });
 
 // ── 10·11. migration 무변경 ──────────────────────────────────────────────────
