@@ -1,0 +1,80 @@
+{
+ "run_id": "aada6b5e6873c12f",
+ "attempt": "20260823T035242Z",
+ "production_source_commit": "69cc51a",
+ "input_manifest_sha256": "01c549eb6a44e1f01bb82605cb9fd08ffdb4d53e1a1f8d2677172cdebc852502",
+ "change_manifest_sha256": "78a09b3030547deb4d1de2f2b1fa4b46a55d32f611114857cadb8bae3b64fc8c",
+ "stage_plan_sha256": "5876d1edf6d64ee5f146910da28cd8799ec343deb3e2ba179a8968474d2bed5c",
+ "db_pre_count": 714,
+ "db_post_count": 5005,
+ "pre_stage_snapshot": {
+  "rows": 368,
+  "sha256": "46aaf2f35d716bd2e76d9111d2f5a964c4fada09949479b1d73b659646728e2c",
+  "fresh": true,
+  "path": "C:\\Users\\skywa\\KoreaMate\\korea-mate\\data\\main-intake\\five-city-core-v3\\production-runs\\aada6b5e6873c12f\\pre-stage-match-snapshot-v1.20260823T035242Z.jsonl",
+  "restore_source": false
+ },
+ "chunk_receipts_path": "C:\\Users\\skywa\\KoreaMate\\korea-mate\\data\\main-intake\\five-city-core-v3\\production-runs\\aada6b5e6873c12f\\stage-chunk-receipts-v1.20260823T035242Z.jsonl",
+ "match_planned": 368,
+ "match_completed": 368,
+ "restore_pre_r2": {
+  "planned": 94,
+  "restored": 94,
+  "already_restored": 0,
+  "drift": 0,
+  "identity_mismatch": 0,
+  "snapshot_missing": 0,
+  "failed": 0,
+  "plan_path": "C:\\Users\\skywa\\KoreaMate\\korea-mate\\data\\main-intake\\five-city-core-v3\\five-city-r2-restore-plan-v1.jsonl",
+  "source": "R2_IMMUTABLE_BEFORE_PHASE_A_SNAPSHOT"
+ },
+ "new_planned": 4291,
+ "new_inserted": 4291,
+ "new_reused_existing": 0,
+ "new_staged_total": 4291,
+ "same_source_skipped": 170,
+ "sources": {
+  "planned": 5505,
+  "reused_exact": 197,
+  "updated_to_final": 0,
+  "inserted": 5308,
+  "unchanged": 197,
+  "legacy_demoted": 0,
+  "failed": 0
+ },
+ "images": {
+  "planned": 4397,
+  "reused_exact": 0,
+  "updated_to_final": 0,
+  "inserted": 4332,
+  "unchanged": 65,
+  "legacy_suppressed": 8,
+  "failed": 0
+ },
+ "mapping_rows": 4291,
+ "new_unpublished_check": {
+  "checked": 4291,
+  "published_true": 0,
+  "missing": 0
+ },
+ "user_table_counts": {
+  "pre": {
+   "itineraries": 68,
+   "trip_moments": 0,
+   "user_spots": 4,
+   "place_reports": 9
+  },
+  "post": {
+   "itineraries": 68,
+   "trip_moments": 0,
+   "user_spots": 4,
+   "place_reports": 9
+  },
+  "diff": []
+ },
+ "delete_count": 0,
+ "error_count": 0,
+ "id_mapping_sha256": "5684a1007788804638c44be1173570aefa335acad85ae4ba651788a4ed3bdb25",
+ "chunk_receipts_sha256": "94216f38704f00ad565389d92c6c88844772c9cb283444b2e609846d946ad0a5",
+ "legacy_newly_hidden": 0
+}
