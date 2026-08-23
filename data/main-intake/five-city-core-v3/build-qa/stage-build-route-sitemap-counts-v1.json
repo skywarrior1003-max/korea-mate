@@ -1,0 +1,38 @@
+{
+ "routes": {
+  "db_ids": 5005,
+  "generated_place_dirs": 5005,
+  "missing_for_db_ids": 0,
+  "extra_dirs_not_in_db": 0,
+  "final_active_missing": 0,
+  "published_missing": 0,
+  "hidden_generated": 4291,
+  "duplicate_ids": 0,
+  "non_numeric_dirs": []
+ },
+ "sitemap": {
+  "total_urls": 738,
+  "duplicate_urls": 0,
+  "place_urls": 714,
+  "place_published": 714,
+  "hidden_leak": 0,
+  "published_missing": 0,
+  "unknown_ids": 0,
+  "non_place_urls": 24,
+  "trailing_slash_all": true,
+  "qa_final_active_route_ready": 4659,
+  "projected_sitemap_place_after_publish": 4678
+ },
+ "build_static_pages": 5064,
+ "out": {
+  "files": 45497,
+  "bytes": 425467194
+ },
+ "per_city_active_db_rows": {
+  "busan": 788,
+  "gyeongju": 302,
+  "jeju": 1496,
+  "jeonju": 236,
+  "seoul": 1837
+ }
+}

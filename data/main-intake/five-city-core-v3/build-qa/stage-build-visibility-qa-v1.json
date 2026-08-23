@@ -1,0 +1,322 @@
+{
+ "build_noindex": {
+  "hidden_pages_with_noindex": 4291,
+  "hidden_pages_without_noindex": 0,
+  "published_pages_with_noindex": 0,
+  "anon_build_read_scope": "reference (all rows incl. is_published=false) via generateStaticParams",
+  "sitemap_scope": "discovery (is_published=true only)"
+ },
+ "sitemap": {
+  "place_urls": 714,
+  "hidden_leak": 0,
+  "published_missing": 0,
+  "duplicate_urls": 0
+ },
+ "runtime_discovery": {
+  "captured_at": "2026-08-23T04:39:33.006Z",
+  "results": [
+   {
+    "path": "/explore/busan/",
+    "rest_calls": 1,
+    "city_spots_calls": 1,
+    "city_spots_rows_total": 412,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [
+     {
+      "status": 200,
+      "table": "city_spots",
+      "has_published_filter": true,
+      "keyset": true,
+      "limit": "1000",
+      "rows": 412,
+      "hidden_rows": 0,
+      "published_rows": 412,
+      "is_published_values": {
+       "undefined": 412
+      },
+      "query": "city_spots?select=id,city,name,name_l10n,category,subcategory,district,address,description,desc_l10n,why_it_matters,why_l10n,image_url,map_url,naver_map_url,official_url,lat,lng,duration_minutes,best_time_slot,opening_ho"
+     }
+    ],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 Busan 탐험하기 도시 둘러보기 423개 장소 · 카드를 클릭하면 상세 정보를 볼 수 있어요 홈 목록 지도 전체 명소 관광명소 음식 & 음료 자연 & 트레일 내 주변 상세 보기 관광명소 Haeundae-gu Free 120분 Ha"
+   },
+   {
+    "path": "/explore/gyeongju/",
+    "rest_calls": 1,
+    "city_spots_calls": 1,
+    "city_spots_rows_total": 302,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [
+     {
+      "status": 200,
+      "table": "city_spots",
+      "has_published_filter": true,
+      "keyset": true,
+      "limit": "1000",
+      "rows": 302,
+      "hidden_rows": 0,
+      "published_rows": 302,
+      "is_published_values": {
+       "undefined": 302
+      },
+      "query": "city_spots?select=id,city,name,name_l10n,category,subcategory,district,address,description,desc_l10n,why_it_matters,why_l10n,image_url,map_url,naver_map_url,official_url,lat,lng,duration_minutes,best_time_slot,opening_ho"
+     }
+    ],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 Gyeongju 탐험하기 도시 둘러보기 301개 장소 · 카드를 클릭하면 상세 정보를 볼 수 있어요 홈 목록 지도 전체 명소 관광명소 음식 & 음료 자연 & 트레일 내 주변 상세 보기 관광명소 경주시내권 경주 계림 혼자 OK 카드 "
+   },
+   {
+    "path": "/explore/seoul/",
+    "rest_calls": 1,
+    "city_spots_calls": 1,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [
+     {
+      "status": 200,
+      "table": "city_spots",
+      "has_published_filter": true,
+      "keyset": true,
+      "limit": "1000",
+      "rows": 0,
+      "hidden_rows": 0,
+      "published_rows": 0,
+      "is_published_values": {},
+      "query": "city_spots?select=id,city,name,name_l10n,category,subcategory,district,address,description,desc_l10n,why_it_matters,why_l10n,image_url,map_url,naver_map_url,official_url,lat,lng,duration_minutes,best_time_slot,opening_ho"
+     }
+    ],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 Seoul 탐험하기 도시 둘러보기 0개 장소 · 카드를 클릭하면 상세 정보를 볼 수 있어요 홈 목록 지도 전체 명소 관광명소 음식 & 음료 자연 & 트레일 내 주변 준비 중 Seoul의 최고 명소를 엄선 중입니다. 곧 업데이트 됩니"
+   },
+   {
+    "path": "/explore/jeju/",
+    "rest_calls": 1,
+    "city_spots_calls": 1,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [
+     {
+      "status": 200,
+      "table": "city_spots",
+      "has_published_filter": true,
+      "keyset": true,
+      "limit": "1000",
+      "rows": 0,
+      "hidden_rows": 0,
+      "published_rows": 0,
+      "is_published_values": {},
+      "query": "city_spots?select=id,city,name,name_l10n,category,subcategory,district,address,description,desc_l10n,why_it_matters,why_l10n,image_url,map_url,naver_map_url,official_url,lat,lng,duration_minutes,best_time_slot,opening_ho"
+     }
+    ],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 Jeju 탐험하기 도시 둘러보기 0개 장소 · 카드를 클릭하면 상세 정보를 볼 수 있어요 홈 목록 지도 전체 명소 관광명소 음식 & 음료 자연 & 트레일 내 주변 준비 중 Jeju의 최고 명소를 엄선 중입니다. 곧 업데이트 됩니다!"
+   },
+   {
+    "path": "/explore/jeonju/",
+    "rest_calls": 1,
+    "city_spots_calls": 1,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [
+     {
+      "status": 200,
+      "table": "city_spots",
+      "has_published_filter": true,
+      "keyset": true,
+      "limit": "1000",
+      "rows": 0,
+      "hidden_rows": 0,
+      "published_rows": 0,
+      "is_published_values": {},
+      "query": "city_spots?select=id,city,name,name_l10n,category,subcategory,district,address,description,desc_l10n,why_it_matters,why_l10n,image_url,map_url,naver_map_url,official_url,lat,lng,duration_minutes,best_time_slot,opening_ho"
+     }
+    ],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 Jeonju 탐험하기 도시 둘러보기 0개 장소 · 카드를 클릭하면 상세 정보를 볼 수 있어요 홈 목록 지도 전체 명소 관광명소 음식 & 음료 자연 & 트레일 내 주변 준비 중 Jeonju의 최고 명소를 엄선 중입니다. 곧 업데이트 "
+   },
+   {
+    "path": "/",
+    "rest_calls": 0,
+    "city_spots_calls": 0,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [],
+    "pageErrors": [],
+    "bodyHead": "✕ Notice from gokoreamate To ARMY and travelers visiting Busan, We created gokoreamate because we wanted to help you enjoy Busan with better food, travel, and m"
+   },
+   {
+    "path": "/all-spots/",
+    "rest_calls": 0,
+    "city_spots_calls": 0,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate / 전체 장소 English 한국어 日本語 中文 🧳 내 여행 🔍 전체 🎤K-POP / BTS 🍽️맛집 🗺️명소 · 자연 🏛️역사 · 문화 🔖저장한 장소 지역 전체 해운대 · 기장 수영 · 광안리 서면 · 부산진 남포 · 중구 · 서구 동래 · 금정 북구"
+   },
+   {
+    "path": "/trending/",
+    "rest_calls": 0,
+    "city_spots_calls": 0,
+    "city_spots_rows_total": 0,
+    "hidden_rows_total": 0,
+    "all_city_spots_calls_filtered": true,
+    "calls": [],
+    "pageErrors": [],
+    "bodyHead": "gokoreamate English 한국어 日本語 中文 ✨ 인기 공개 여행 AI 가 짠 실제 일정 — 여행자들이 도움이 됐다고 표시한 것 모든 도시 🌆 서울 🏙️ 부산 🌿 제주도 🏛️ 경주 모든 스타일 혼자 커플 가족 친구 🗺️ 선택한 조건에 맞는 공개 일정이 없습니다. 🔥 "
+   }
+  ]
+ },
+ "hide_projection": {
+  "classification_hide_ids": 327,
+  "retire_ids": 94,
+  "retire_subset_of_hide": true,
+  "hide_all_currently_published": 327,
+  "hide_overlap_with_final_active": 0,
+  "published_minus_match_minus_hide": 19,
+  "projected_visible_after_publish": 4678,
+  "projected_hidden_after_publish": 327
+ },
+ "published_not_matched_not_hidden_rows": [
+  {
+   "id": 5,
+   "city": "busan",
+   "name": "Hwangnyeongsan Night View Trail",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 6,
+   "city": "busan",
+   "name": "Jangsan Mountain Trail",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 7,
+   "city": "busan",
+   "name": "Igidae Coastal Walk",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 23,
+   "city": "busan",
+   "name": "BIFF Square",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 28,
+   "city": "busan",
+   "name": "Oryukdo Skywalk",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 29,
+   "city": "busan",
+   "name": "Igidae Coastal Trail",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 32,
+   "city": "busan",
+   "name": "Geumjeongsanseong Fortress",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 39,
+   "city": "busan",
+   "name": "Cheongsapo Daritdol Observatory",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 42,
+   "city": "busan",
+   "name": "The Bay 101",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 50,
+   "city": "busan",
+   "name": "Busan Harbor Bridge Viewpoint",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 55,
+   "city": "busan",
+   "name": "Seomyeon Shopping District",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 57,
+   "city": "busan",
+   "name": "Oncheoncheon Stream Park",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 61,
+   "city": "busan",
+   "name": "Mandeok Pass Deck",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 64,
+   "city": "busan",
+   "name": "Nakdong River Estuary Eco Center",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 68,
+   "city": "busan",
+   "name": "Ananti Cove Gijang",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 81,
+   "city": "busan",
+   "name": "Busan Station",
+   "category": "attraction",
+   "source_type": "manual"
+  },
+  {
+   "id": 82,
+   "city": "busan",
+   "name": "168 Stairs and Monorail Area",
+   "category": "nature",
+   "source_type": "manual"
+  },
+  {
+   "id": 93,
+   "city": "busan",
+   "name": "Magnate Cafe BTS Jimin Family Area",
+   "category": "restaurant",
+   "source_type": "manual"
+  },
+  {
+   "id": 94,
+   "city": "busan",
+   "name": "Busan Asiad Main Stadium",
+   "category": "attraction",
+   "source_type": "manual"
+  }
+ ]
+}

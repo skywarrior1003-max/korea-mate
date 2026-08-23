@@ -1,0 +1,20 @@
+{
+ "location": ".next/cache/fetch-cache (local Next Data Cache, untracked)",
+ "entries_total": 5009,
+ "entries_by_mtime_utc_date": {
+  "2026-08-12": 716,
+  "2026-08-22": 2,
+  "2026-08-23": 4291
+ },
+ "sample_entry_id_607": {
+  "kind": "FETCH",
+  "revalidate_seconds": 31536000,
+  "url": "rest/v1/city_spots?id=eq.607&limit=1",
+  "cached_name": "화수브루어리 (legacy gyeongju-city content)",
+  "cached_is_published": null,
+  "entry_mtime_utc": "2026-08-12"
+ },
+ "effect_on_first_build": "generateMetadata/page fetchSpot() for the 714 legacy ids (incl. the 368 MATCH + 94 RESTORE rows) was served from 2026-08-12 cache entries → first local build rendered pre-R3 content for those pages (e.g. /place/607 title '화수브루어리', /place/577 '스틸룸', /place/640 '요석궁1779'); NEW 4,291 ids had no cache entry → fetched fresh.",
+ "action_taken": "cache dir moved to scratchpad (evidence), clean rebuild executed; clean build titles: 577 'STILLROOM', 607 'Whasoo Brewery', 640 'Yosukgung'",
+ "cloudflare_relevance": "Cloudflare Pages clones fresh per build; build_config has no build_caching flag (GET); the R3-era preview builds failed before page generation (missing Supabase env in preview) so no Cloudflare build of the post-R3 DB state exists yet. Hardening (fetch cache:'no-store' / revalidate) is a code change → separate Owner-approved task."
+}

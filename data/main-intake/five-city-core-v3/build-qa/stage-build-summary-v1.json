@@ -1,0 +1,1879 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-STAGE-BUILD-V1",
+ "generated_at_utc": "2026-08-23T04:34:11Z",
+ "execution_source_commit": "01c1ba4",
+ "qa_branch": "qa/five-city-core-stage-build-v1",
+ "origin_master": "69cc51a",
+ "final_version": "five-city-core-v3",
+ "run_id": "aada6b5e6873c12f",
+ "production_stage_r3": {
+  "complete": true,
+  "ops_commit": "caa821d"
+ },
+ "production_state_before": {
+  "physical": 5005,
+  "true": 714,
+  "false": 4291,
+  "null": 0,
+  "sources": 5610,
+  "images": 4501,
+  "per_city": {
+   "busan": {
+    "total": 1037,
+    "true": 412,
+    "false": 625
+   },
+   "gyeongju": {
+    "total": 399,
+    "true": 302,
+    "false": 97
+   },
+   "jeju": {
+    "total": 1496,
+    "true": 0,
+    "false": 1496
+   },
+   "jeonju": {
+    "total": 236,
+    "true": 0,
+    "false": 236
+   },
+   "seoul": {
+    "total": 1837,
+    "true": 0,
+    "false": 1837
+   }
+  },
+  "user_counts": "68/0/4/9 (itineraries/trip_moments/user_spots/place_reports)"
+ },
+ "build": {
+  "command": "npm run build:static (node scripts/build-static.mjs → STATIC_EXPORT=true next build; Next.js 16.2.6 Turbopack)",
+  "first_build_stale_cache": {
+   "exit": 0,
+   "workers": 31,
+   "static_pages": 5064,
+   "generate_seconds": 24.9,
+   "environment_fallback_count": 31,
+   "lockfile_root_warning": true,
+   "compile_line": "20.8",
+   "typescript_line": "11.7",
+   "start_utc": "2026-08-23T04:03:55Z",
+   "end_utc": "2026-08-23T04:05:53Z",
+   "other_warn_error_lines": [],
+   "duration_seconds": 118
+  },
+  "clean_build": {
+   "exit": 0,
+   "workers": 31,
+   "static_pages": 5064,
+   "generate_seconds": 26.3,
+   "environment_fallback_count": 31,
+   "lockfile_root_warning": true,
+   "compile_line": "4.9",
+   "typescript_line": "12.4",
+   "start_utc": "2026-08-23T04:32:20Z",
+   "end_utc": "2026-08-23T04:34:11Z",
+   "other_warn_error_lines": [],
+   "duration_seconds": 111
+  },
+  "out": {
+   "files": 45497,
+   "bytes": 425467194
+  },
+  "baseline_warnings": {
+   "ENVIRONMENT_FALLBACK_expected": 31,
+   "lockfile_root_warning": true,
+   "previous_release_build_static_pages": 773
+  }
+ },
+ "stale_fetch_cache_finding": {
+  "location": ".next/cache/fetch-cache (local Next Data Cache, untracked)",
+  "entries_total": 5009,
+  "entries_by_mtime_utc_date": {
+   "2026-08-12": 716,
+   "2026-08-22": 2,
+   "2026-08-23": 4291
+  },
+  "sample_entry_id_607": {
+   "kind": "FETCH",
+   "revalidate_seconds": 31536000,
+   "url": "rest/v1/city_spots?id=eq.607&limit=1",
+   "cached_name": "화수브루어리 (legacy gyeongju-city content)",
+   "cached_is_published": null,
+   "entry_mtime_utc": "2026-08-12"
+  },
+  "effect_on_first_build": "generateMetadata/page fetchSpot() for the 714 legacy ids (incl. the 368 MATCH + 94 RESTORE rows) was served from 2026-08-12 cache entries → first local build rendered pre-R3 content for those pages (e.g. /place/607 title '화수브루어리', /place/577 '스틸룸', /place/640 '요석궁1779'); NEW 4,291 ids had no cache entry → fetched fresh.",
+  "action_taken": "cache dir moved to scratchpad (evidence), clean rebuild executed; clean build titles: 577 'STILLROOM', 607 'Whasoo Brewery', 640 'Yosukgung'",
+  "cloudflare_relevance": "Cloudflare Pages clones fresh per build; build_config has no build_caching flag (GET); the R3-era preview builds failed before page generation (missing Supabase env in preview) so no Cloudflare build of the post-R3 DB state exists yet. Hardening (fetch cache:'no-store' / revalidate) is a code change → separate Owner-approved task."
+ },
+ "data_universe": {
+  "PHYSICAL_DB": 5005,
+  "FINAL_ACTIVE_SOURCE": 4829,
+  "FINAL_ACTIVE_DISTINCT_DB_ROWS": 4659,
+  "CURRENT_PUBLISHED": 714,
+  "STAGED_HIDDEN_NEW": 4291,
+  "FUTURE_HIDE": 327,
+  "GYEONGJU_FINAL_FOOD": 105,
+  "identity": {
+   "MATCH": 368,
+   "NEW": 4291,
+   "SKIP_TWIN": 170,
+   "REVIEW": 0,
+   "unresolved": 0,
+   "wrong_city": 0
+  },
+  "per_city_active_source": {
+   "busan": 958,
+   "gyeongju": 302,
+   "jeju": 1496,
+   "jeonju": 236,
+   "seoul": 1837
+  },
+  "per_city_active_db_rows": {
+   "busan": 788,
+   "gyeongju": 302,
+   "jeju": 1496,
+   "jeonju": 236,
+   "seoul": 1837
+  }
+ },
+ "hide_and_publish_projection": {
+  "classification_hide_ids": 327,
+  "retire_ids": 94,
+  "retire_subset_of_hide": true,
+  "hide_all_currently_published": 327,
+  "hide_overlap_with_final_active": 0,
+  "published_minus_match_minus_hide": 19,
+  "published_minus_match_minus_hide_rows": [
+   {
+    "id": 5,
+    "city": "busan",
+    "name": "Hwangnyeongsan Night View Trail",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 6,
+    "city": "busan",
+    "name": "Jangsan Mountain Trail",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 7,
+    "city": "busan",
+    "name": "Igidae Coastal Walk",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 23,
+    "city": "busan",
+    "name": "BIFF Square",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 28,
+    "city": "busan",
+    "name": "Oryukdo Skywalk",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 29,
+    "city": "busan",
+    "name": "Igidae Coastal Trail",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 32,
+    "city": "busan",
+    "name": "Geumjeongsanseong Fortress",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 39,
+    "city": "busan",
+    "name": "Cheongsapo Daritdol Observatory",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 42,
+    "city": "busan",
+    "name": "The Bay 101",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 50,
+    "city": "busan",
+    "name": "Busan Harbor Bridge Viewpoint",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 55,
+    "city": "busan",
+    "name": "Seomyeon Shopping District",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 57,
+    "city": "busan",
+    "name": "Oncheoncheon Stream Park",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 61,
+    "city": "busan",
+    "name": "Mandeok Pass Deck",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 64,
+    "city": "busan",
+    "name": "Nakdong River Estuary Eco Center",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 68,
+    "city": "busan",
+    "name": "Ananti Cove Gijang",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 81,
+    "city": "busan",
+    "name": "Busan Station",
+    "category": "attraction",
+    "source_type": "manual"
+   },
+   {
+    "id": 82,
+    "city": "busan",
+    "name": "168 Stairs and Monorail Area",
+    "category": "nature",
+    "source_type": "manual"
+   },
+   {
+    "id": 93,
+    "city": "busan",
+    "name": "Magnate Cafe BTS Jimin Family Area",
+    "category": "restaurant",
+    "source_type": "manual"
+   },
+   {
+    "id": 94,
+    "city": "busan",
+    "name": "Busan Asiad Main Stadium",
+    "category": "attraction",
+    "source_type": "manual"
+   }
+  ],
+  "projected_visible_after_publish": 4678,
+  "projected_hidden_after_publish": 327
+ },
+ "routes": {
+  "db_ids": 5005,
+  "generated_place_dirs": 5005,
+  "missing_for_db_ids": 0,
+  "extra_dirs_not_in_db": 0,
+  "final_active_missing": 0,
+  "published_missing": 0,
+  "hidden_generated": 4291,
+  "duplicate_ids": 0,
+  "non_numeric_dirs": []
+ },
+ "sitemap": {
+  "total_urls": 738,
+  "duplicate_urls": 0,
+  "place_urls": 714,
+  "place_published": 714,
+  "hidden_leak": 0,
+  "published_missing": 0,
+  "unknown_ids": 0,
+  "non_place_urls": 24,
+  "trailing_slash_all": true,
+  "qa_final_active_route_ready": 4659,
+  "projected_sitemap_place_after_publish": 4678
+ },
+ "visibility_build": {
+  "hidden_pages_with_noindex": 4291,
+  "hidden_pages_without_noindex": 0,
+  "published_pages_with_noindex": 0,
+  "anon_build_read_scope": "reference (all rows incl. is_published=false) via generateStaticParams",
+  "sitemap_scope": "discovery (is_published=true only)"
+ },
+ "visibility_runtime": [
+  {
+   "path": "/explore/busan/",
+   "city_spots_calls": 1,
+   "city_spots_rows_total": 412,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/explore/gyeongju/",
+   "city_spots_calls": 1,
+   "city_spots_rows_total": 302,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/explore/seoul/",
+   "city_spots_calls": 1,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/explore/jeju/",
+   "city_spots_calls": 1,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/explore/jeonju/",
+   "city_spots_calls": 1,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/",
+   "city_spots_calls": 0,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/all-spots/",
+   "city_spots_calls": 0,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  },
+  {
+   "path": "/trending/",
+   "city_spots_calls": 0,
+   "city_spots_rows_total": 0,
+   "hidden_rows_total": 0,
+   "all_city_spots_calls_filtered": true,
+   "pageErrors": []
+  }
+ ],
+ "coords": {
+  "rows": 5005,
+  "valid": 5003,
+  "type_or_null": 2,
+  "out_of_range": 0,
+  "final_active_null_or_type": 1,
+  "final_active_out_of_range": 0,
+  "string_typed": 0,
+  "bad_ids_sample": [
+   505,
+   910
+  ]
+ },
+ "locale": {
+  "final_active_rows": 4659,
+  "name_l10n": {
+   "ko": 4659,
+   "en": 2535,
+   "ja": 2034,
+   "zh": 2028
+  },
+  "desc_l10n": {
+   "ko": 4231,
+   "en": 2483,
+   "ja": 2168,
+   "zh": 2161
+  },
+  "per_city": {
+   "busan": {
+    "rows": 788,
+    "name_4": 221,
+    "desc_4": 355,
+    "name_en": 546,
+    "desc_en": 500,
+    "desc_any": 732
+   },
+   "gyeongju": {
+    "rows": 302,
+    "name_4": 105,
+    "desc_4": 105,
+    "name_en": 105,
+    "desc_en": 105,
+    "desc_any": 237
+   },
+   "jeonju": {
+    "rows": 236,
+    "name_4": 68,
+    "desc_4": 0,
+    "name_en": 89,
+    "desc_en": 85,
+    "desc_any": 86
+   },
+   "jeju": {
+    "rows": 1496,
+    "name_4": 0,
+    "desc_4": 0,
+    "name_en": 0,
+    "desc_en": 0,
+    "desc_any": 1486
+   },
+   "seoul": {
+    "rows": 1837,
+    "name_4": 1617,
+    "desc_4": 1615,
+    "name_en": 1795,
+    "desc_en": 1793,
+    "desc_any": 1837
+   }
+  },
+  "rows_with_no_locale_name": 0,
+  "rows_with_no_description_any": 281
+ },
+ "place_detail": {
+  "final_active_rows": 4659,
+  "name_empty": 0,
+  "category_empty": 0,
+  "address_present": 4632,
+  "image_url_present": 3700,
+  "image_url_https": 3618,
+  "image_url_http": 82,
+  "has_primary_source": 4659,
+  "has_eligible_primary_image": 3700,
+  "official_url_present": 891,
+  "map_url_present": 64,
+  "naver_map_url_present": 64
+ },
+ "images": {
+  "plan_rows": 4567,
+  "plan_resolved": 4397,
+  "plan_missing": 170,
+  "plan_flag_mismatch": 0,
+  "physical": 4501,
+  "primary_conflicts": 0,
+  "eligible_total": 3794,
+  "eligible_with_empty_url": 0,
+  "rights_violation": 0,
+  "final_active_rows_with_eligible_primary": 3700,
+  "final_active_rows_with_image_url_cache": 3700,
+  "final_active_image_url_http_scheme": 82
+ },
+ "gyeongju_food": {
+  "total": 105,
+  "source_bridge": 105,
+  "vg_keys_unique": 105,
+  "published_true": 8,
+  "published_false": 97,
+  "name_4": 105,
+  "desc_4": 105,
+  "official_image_url": 105,
+  "official_image_relation": 105,
+  "lat": 105,
+  "lng": 105,
+  "range_gyeongju": 105,
+  "nav_ready_pkg": 105,
+  "coord_quality": {
+   "ENTITY_EXACT": 94,
+   "ADDRESS_NUMBER_LEVEL": 11
+  },
+  "coord_equals_final_package_1e-9": 105,
+  "coord_artifact": [
+   [
+    "gyeongju-vg-food-105-coordinates-final-v2",
+    105
+   ]
+  ],
+  "image_artifact": [
+   [
+    "gyeongju-vg-food-105-official-images-v1",
+    105
+   ]
+  ],
+  "old_gj08_image_fallback": 0,
+  "legacy_non_vg_images_eligible_on_105": 0,
+  "match_ids_preserved": [
+   577,
+   607,
+   619,
+   633,
+   634,
+   640,
+   644,
+   653
+  ],
+  "pages_generated": 105,
+  "new_pages_noindex": 97,
+  "ai_translation_flag_true": 0,
+  "retired_94_published_true": 94,
+  "retired_94_in_final_active": 0,
+  "pkg_rows": 105,
+  "pkg_resolved": 105
+ },
+ "seoul": {
+  "active": 1837,
+  "db_rows": 1837,
+  "db_desc_len_max": 5141,
+  "pkg_desc_len_max": 5141,
+  "desc_l10n_equal": 1837,
+  "description_equal": 1837,
+  "name_equal": 1837,
+  "regression": 0,
+  "leak_db": 1,
+  "leak_pkg": 1,
+  "db_desc_gt4000": 1,
+  "pkg_desc_gt4000": 1,
+  "angle_title_db": 102
+ },
+ "freeze": {
+  "busan": {
+   "rows": 788,
+   "rows_with_diff": 64,
+   "field_diffs": {
+    "district": 64,
+    "why_it_matters": 50
+   },
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": [
+    1,
+    2,
+    16,
+    17,
+    18,
+    19,
+    21,
+    22
+   ]
+  },
+  "jeju": {
+   "rows": 1496,
+   "rows_with_diff": 0,
+   "field_diffs": {},
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": []
+  },
+  "jeonju": {
+   "rows": 236,
+   "rows_with_diff": 0,
+   "field_diffs": {
+    "coord_null_both": 1
+   },
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": []
+  },
+  "gyeongju_attraction": {
+   "rows": 197,
+   "rows_with_diff": 0,
+   "field_diffs": {},
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": []
+  },
+  "gyeongju_food": {
+   "rows": 105,
+   "rows_with_diff": 0,
+   "field_diffs": {},
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": []
+  },
+  "seoul": {
+   "rows": 1837,
+   "rows_with_diff": 0,
+   "field_diffs": {},
+   "coord_diff_gt_1e-9": 0,
+   "sample_diff_ids": []
+  }
+ },
+ "html_entities": {
+  "db_rows_with_html_entities": {
+   "gyeongju": 38,
+   "seoul": 5
+  },
+  "db_rows_detail": {
+   "gyeongju": [
+    {
+     "id": 559,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 561,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 564,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 566,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 568,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 570,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 571,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 573,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 574,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 575,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 576,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 580,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 581,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 584,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 589,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 590,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 591,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 595,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 596,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 597,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 598,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 599,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 600,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 601,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 602,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 603,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 604,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 605,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 611,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 615,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 618,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 622,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 625,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 645,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 649,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 652,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 657,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    },
+    {
+     "id": 659,
+     "is_published": true,
+     "fields": [
+      "description"
+     ]
+    }
+   ],
+   "seoul": [
+    {
+     "id": 3484,
+     "is_published": false,
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "id": 3545,
+     "is_published": false,
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "id": 3658,
+     "is_published": false,
+     "fields": [
+      "name",
+      "name_l10n.en"
+     ]
+    },
+    {
+     "id": 3674,
+     "is_published": false,
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "id": 3687,
+     "is_published": false,
+     "fields": [
+      "name_l10n.ko"
+     ]
+    }
+   ]
+  },
+  "package_rows_with_html_entities": {
+   "seoul": 5
+  },
+  "package_rows_detail": {
+   "seoul": [
+    {
+     "canonical_id": "seoul-KOPdb8gvb",
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "canonical_id": "seoul-KOPni951h",
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "canonical_id": "seoul-KOPr2k2ja",
+     "fields": [
+      "name",
+      "name_l10n.en"
+     ]
+    },
+    {
+     "canonical_id": "seoul-KOPsrn1p5",
+     "fields": [
+      "name_l10n.ko"
+     ]
+    },
+    {
+     "canonical_id": "seoul-KOPubcv55",
+     "fields": [
+      "name_l10n.ko"
+     ]
+    }
+   ]
+  },
+  "note": "Gyeongju rows are legacy GJ08 'description' text on retired/hide-candidate rows (restored pre-R2 content, Owner hide pending). Seoul rows come from the Final artifact verbatim (Final authoritative — Main does not rewrite)."
+ },
+ "samples": [
+  {
+   "label": "busan_published_match",
+   "id": 47,
+   "city": "busan",
+   "category": "attraction",
+   "is_published": true,
+   "title": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+   "noindex": false,
+   "og_image": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222164810529_ttiel",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Huinnyeoul Culture Village at the end of the steep cliff"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.07885,
+    "longitude": 129.04402
+   },
+   "db_lat": 35.07885,
+   "db_lng": 129.04402,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitbusan.net",
+   "coord_quality": null,
+   "html_bytes": 53885,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_match_577",
+   "id": 577,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": true,
+   "title": "STILLROOM — gyeongju | gokoreamate",
+   "noindex": false,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68ca4e4bbd36b.jpeg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "STILLROOM"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8421610889308,
+    "longitude": 129.210396671791
+   },
+   "db_lat": 35.8421610889308,
+   "db_lng": 129.210396671791,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 42678,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_hwasu_607",
+   "id": 607,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": true,
+   "title": "Whasoo Brewery — gyeongju | gokoreamate",
+   "noindex": false,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202510/68dcbbaa4646a.jpeg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Whasoo Brewery"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8395567879344,
+    "longitude": 129.290910376306
+   },
+   "db_lat": 35.8395567879344,
+   "db_lng": 129.290910376306,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 41614,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_yosukgung_640",
+   "id": 640,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": true,
+   "title": "Yosukgung — gyeongju | gokoreamate",
+   "noindex": false,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68da21a8b8479.jpg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Yosukgung"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8303124684204,
+    "longitude": 129.216746501799
+   },
+   "db_lat": 35.8303124684204,
+   "db_lng": 129.216746501799,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 43035,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_new_1",
+   "id": 1527,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68c80ab755870.jpg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Yetgoeul Tosok Sundubu"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.841466455005,
+    "longitude": 129.25052102975
+   },
+   "db_lat": 35.841466455005,
+   "db_lng": 129.25052102975,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 41777,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_new_2",
+   "id": 1528,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Dalgaebi — gyeongju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68c8e327a5be8.jpeg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Dalgaebi"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8413716429772,
+    "longitude": 129.250195219807
+   },
+   "db_lat": 35.8413716429772,
+   "db_lng": 129.250195219807,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 42684,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_new_3",
+   "id": 1529,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Toham Minsok Sikdang — gyeongju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68c8eccf85006.jpg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Toham Minsok Sikdang"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.842930792594,
+    "longitude": 129.252954325479
+   },
+   "db_lat": 35.842930792594,
+   "db_lng": 129.252954325479,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ADDRESS_NUMBER_LEVEL",
+   "html_bytes": 42563,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_address_level",
+   "id": 1529,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Toham Minsok Sikdang — gyeongju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68c8eccf85006.jpg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Toham Minsok Sikdang"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.842930792594,
+    "longitude": 129.252954325479
+   },
+   "db_lat": 35.842930792594,
+   "db_lng": 129.252954325479,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ADDRESS_NUMBER_LEVEL",
+   "html_bytes": 42563,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_food_entity_exact_new",
+   "id": 1527,
+   "city": "gyeongju",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://www.visitgyeongju.or.kr/upfiles/2508111010100001/202509/68c80ab755870.jpg",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Yetgoeul Tosok Sundubu"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.841466455005,
+    "longitude": 129.25052102975
+   },
+   "db_lat": 35.841466455005,
+   "db_lng": 129.25052102975,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "www.visitgyeongju.or.kr",
+   "coord_quality": "ENTITY_EXACT",
+   "html_bytes": 41777,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "seoul_new",
+   "id": 3127,
+   "city": "seoul",
+   "category": "attraction",
+   "is_published": false,
+   "title": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+   "noindex": true,
+   "og_image": "https://api.visitseoul.net/comm/getImage?srvcId=POST&amp;parentSn=380&amp;fileTy=POSTTHUMB&amp;fileNo=1&amp;thumbTy=M&amp;postTy=P",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Myeongdong Real Gun Shooting Range"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 37.5620158427556,
+    "longitude": 126.986499496717
+   },
+   "db_lat": 37.5620158427556,
+   "db_lng": 126.986499496717,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "api.visitseoul.net",
+   "coord_quality": null,
+   "html_bytes": 41738,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "jeju_new",
+   "id": 1659,
+   "city": "jeju",
+   "category": "attraction",
+   "is_published": false,
+   "title": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://api.cdn.visitjeju.net/photomng/imgpath/202011/03/40a75124-90a5-4d33-9617-8542d8119276.webp",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "아라고나이트 고온천(디아넥스호텔)"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 33.303474,
+    "longitude": 126.39206
+   },
+   "db_lat": 33.303474,
+   "db_lng": 126.39206,
+   "name_locales": [
+    "ko"
+   ],
+   "desc_locales": [
+    "ko"
+   ],
+   "image_url_host": "api.cdn.visitjeju.net",
+   "coord_quality": null,
+   "html_bytes": 39610,
+   "desc_en_prefix_in_html": null
+  },
+  {
+   "label": "jeonju_new",
+   "id": 727,
+   "city": "jeonju",
+   "category": "attraction",
+   "is_published": false,
+   "title": "Jeonju Museum of History — jeonju | gokoreamate",
+   "noindex": true,
+   "og_image": "https://gokoreamate.com/opengraph-image",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Jeonju Museum of History"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8011445985935,
+    "longitude": 127.09332863568
+   },
+   "db_lat": 35.8011445985935,
+   "db_lng": 127.09332863568,
+   "name_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "desc_locales": [
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "",
+   "coord_quality": null,
+   "html_bytes": 40787,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "busan_new",
+   "id": 927,
+   "city": "busan",
+   "category": "restaurant",
+   "is_published": false,
+   "title": "Digeut — busan | gokoreamate",
+   "noindex": true,
+   "og_image": "https://gokoreamate.com/og/busan/opengraph-image",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "Digeut"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.2332982,
+    "longitude": 129.0863391
+   },
+   "db_lat": 35.2332982,
+   "db_lng": 129.0863391,
+   "name_locales": [
+    "ko",
+    "en"
+   ],
+   "desc_locales": [
+    "ko",
+    "en",
+    "ja",
+    "zh"
+   ],
+   "image_url_host": "",
+   "coord_quality": null,
+   "html_bytes": 39699,
+   "desc_en_prefix_in_html": true
+  },
+  {
+   "label": "gyeongju_attraction_published",
+   "id": 425,
+   "city": "gyeongju",
+   "category": "attraction",
+   "is_published": true,
+   "title": "경주 계림 — gyeongju | gokoreamate",
+   "noindex": false,
+   "og_image": "https://gokoreamate.com/og/gyeongju/opengraph-image",
+   "jsonld_count": 3,
+   "jsonld_names": [
+    "gokoreamate",
+    "경주 계림"
+   ],
+   "jsonld_geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.8247945942455,
+    "longitude": 129.213541653671
+   },
+   "db_lat": 35.8247945942455,
+   "db_lng": 129.213541653671,
+   "name_locales": [
+    "ko"
+   ],
+   "desc_locales": [
+    "ko"
+   ],
+   "image_url_host": "",
+   "coord_quality": null,
+   "html_bytes": 37630,
+   "desc_en_prefix_in_html": null
+  }
+ ],
+ "render": {
+  "base": "http://127.0.0.1:8787",
+  "viewport": "390x844",
+  "routes": [
+   {
+    "label": "home",
+    "path": "/",
+    "status": 200,
+    "title": "gokoreamate — AI Korea Trip Planner · Capture & Share Your Story",
+    "h1": "부산: 황금빛 시간",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 41,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "busan",
+    "path": "/busan/",
+    "status": 200,
+    "title": "Busan Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+    "h1": "Busan",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "gyeongju",
+    "path": "/gyeongju/",
+    "status": 200,
+    "title": "Gyeongju Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+    "h1": "Gyeongju",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "seoul",
+    "path": "/seoul/",
+    "status": 200,
+    "title": "Seoul Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+    "h1": "Seoul",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "jeju",
+    "path": "/jeju/",
+    "status": 200,
+    "title": "Jeju Island Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+    "h1": "Jeju Island",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "jeonju",
+    "path": "/jeonju/",
+    "status": 200,
+    "title": "Jeonju Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+    "h1": "Jeonju",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "explore-busan",
+    "path": "/explore/busan/",
+    "status": 200,
+    "title": "",
+    "h1": "This page couldn’t load",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [
+     "Cannot read properties of null (reading 'capitalize')"
+    ],
+    "notFoundText": false
+   },
+   {
+    "label": "explore-gyeongju",
+    "path": "/explore/gyeongju/",
+    "status": 200,
+    "title": "Explore Gyeongju — gokoreamate",
+    "h1": "Gyeongju 탐험하기",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 301,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "explore-seoul",
+    "path": "/explore/seoul/",
+    "status": 200,
+    "title": "Explore Seoul — gokoreamate",
+    "h1": "Seoul 탐험하기",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "explore-jeju",
+    "path": "/explore/jeju/",
+    "status": 200,
+    "title": "Explore Jeju — gokoreamate",
+    "h1": "Jeju 탐험하기",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "explore-jeonju",
+    "path": "/explore/jeonju/",
+    "status": 200,
+    "title": "Explore Jeonju — gokoreamate",
+    "h1": "Jeonju 탐험하기",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "all-spots",
+    "path": "/all-spots/",
+    "status": 200,
+    "title": "All Busan Spots — gokoreamate",
+    "h1": "전체 장소",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 24,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "trending",
+    "path": "/trending/",
+    "status": 200,
+    "title": "Trending Korea Trips — gokoreamate",
+    "h1": "지금 뜨는 곳",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 91,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "picks",
+    "path": "/picks/",
+    "status": 200,
+    "title": "Picks | gokoreamate",
+    "h1": "내가 고른 곳",
+    "robots": "noindex",
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "my-trips",
+    "path": "/my-trips/",
+    "status": 200,
+    "title": "gokoreamate — AI Korea Trip Planner · Capture & Share Your Story",
+    "h1": "내 여행",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "trips-404",
+    "path": "/trips/",
+    "status": 404,
+    "title": "Error response",
+    "h1": "Error response",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": true
+   },
+   {
+    "label": "trips-404-noslash",
+    "path": "/trips",
+    "status": 404,
+    "title": "Error response",
+    "h1": "Error response",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": true
+   },
+   {
+    "label": "place-47-busan-pub",
+    "path": "/place/47/",
+    "status": 200,
+    "title": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+    "h1": "흰여울문화마을",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-577-gj-food-match",
+    "path": "/place/577/",
+    "status": 200,
+    "title": "STILLROOM — gyeongju | gokoreamate",
+    "h1": "스틸룸(Stillroom)",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-607-hwasu",
+    "path": "/place/607/",
+    "status": 200,
+    "title": "Whasoo Brewery — gyeongju | gokoreamate",
+    "h1": "화수브루어리",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-640-yosukgung",
+    "path": "/place/640/",
+    "status": 200,
+    "title": "Yosukgung — gyeongju | gokoreamate",
+    "h1": "요석궁식당",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-1527-gj-food-new",
+    "path": "/place/1527/",
+    "status": 200,
+    "title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+    "h1": "옛고을 토속 순두부",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-1528-gj-food-new",
+    "path": "/place/1528/",
+    "status": 200,
+    "title": "Dalgaebi — gyeongju | gokoreamate",
+    "h1": "달개비",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-3127-seoul-new",
+    "path": "/place/3127/",
+    "status": 200,
+    "title": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+    "h1": "명동실탄사격장",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-1659-jeju-new",
+    "path": "/place/1659/",
+    "status": 200,
+    "title": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+    "h1": "아라고나이트 고온천(디아넥스호텔)",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 1,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-727-jeonju-new",
+    "path": "/place/727/",
+    "status": 200,
+    "title": "Jeonju Museum of History — jeonju | gokoreamate",
+    "h1": "전주역사박물관",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-927-busan-new",
+    "path": "/place/927/",
+    "status": 200,
+    "title": "Digeut — busan | gokoreamate",
+    "h1": "디귿",
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": false
+   },
+   {
+    "label": "place-nonexistent-999999",
+    "path": "/place/999999/",
+    "status": 404,
+    "title": "Error response",
+    "h1": "Error response",
+    "robots": null,
+    "overflowX": false,
+    "imgCount": 0,
+    "brokenImgs": 0,
+    "pageErrors": [],
+    "notFoundText": true
+   }
+  ]
+ },
+ "tests": {
+  "tests": 2407,
+  "pass": 2399,
+  "fail": 8,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "failing_names": [
+   "★#FF4A2D 를 action primary 로 착각하지 않는다 — action 은 파랑이다",
+   "★migration 번호는 041 이 마지막이다",
+   "★migration 을 건드리지 않았다 — 041 이 마지막",
+   "★migration 을 건드리지 않았다 — 041 이 마지막이고 042 는 없다",
+   "★migration 이 추가되지 않았다 — 041 이 마지막이고 042 는 없다",
+   "★화면 컴포넌트의 JSX 텍스트에 금지 브랜드 표기가 없다"
+  ],
+  "tsc_exit": 0,
+  "eslint_exit": 1,
+  "eslint_total_errors": 1978,
+  "eslint_total_warnings": 5653
+ },
+ "not_executed": {
+  "production_write": 0,
+  "publish": false,
+  "legacy_hide": false,
+  "migration": false,
+  "master": false,
+  "deploy": false,
+  "ai_calls": 0
+ }
+}

@@ -1,0 +1,311 @@
+
+> korea-mate@0.1.0 build:static
+> node scripts/build-static.mjs
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\skywa\KoreaMate\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\skywa\KoreaMate\korea-mate\package-lock.json
+
+▲ Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.9s
+  Running TypeScript ...
+  Finished TypeScript in 12.4s ...
+  Collecting page data using 31 workers ...
+  Generating static pages using 31 workers (0/5064) ...
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+Error: ENVIRONMENT_FALLBACK
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:7347)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:8899)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\111m_0b7~31~._.js:3:9027)
+    at <unknown> (C:\Users\skywa\KoreaMate\korea-mate\.next\server\chunks\ssr\korea-mate_0hjjgyt._.js:1:6113) {
+  code: 'ENVIRONMENT_FALLBACK'
+}
+  Generating static pages using 31 workers (1266/5064) 
+  Generating static pages using 31 workers (2532/5064) 
+  Generating static pages using 31 workers (3798/5064) 
+✓ Generating static pages using 31 workers (5064/5064) in 26.3s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /all-spots
+├ ƒ /api/admin/contact-inquiries
+├ ƒ /api/admin/delete-spot
+├ ƒ /api/admin/migrate
+├ ƒ /api/admin/upsert-spots
+├ ƒ /api/contact
+├ ƒ /api/events
+├ ƒ /api/generate-itinerary
+├ ƒ /api/near-me
+├ ƒ /api/scheduler
+├ ƒ /api/scheduler/personalize
+├ ○ /api/spot-images
+├ ○ /api/story-routes
+├ ƒ /api/trip/plan
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/2026-06-15-best-time-to-visit-korea
+│ ├ /blog/2026-06-14-korea-transportation-guide
+│ ├ /blog/2026-06-13-jeju-3-day-itinerary
+│ └ [+5 more paths]
+├ ○ /busan
+├ ○ /explore-busan
+├ ● /explore/[city]
+│ ├ /explore/busan
+│ ├ /explore/seoul
+│ ├ /explore/jeju
+│ └ [+2 more paths]
+├ ○ /gyeongju
+├ ○ /itinerary
+├ ○ /jeju
+├ ○ /jeonju
+├ ○ /korea-mate-admin
+├ ○ /korea-mate-admin/inquiries
+├ ○ /korea-mate-admin/inquiries/detail
+├ ○ /korea-mate-admin/place-reports
+├ ○ /korea-mate-admin/user-spots
+├ ○ /more
+├ ○ /my-trips
+├ ○ /og/busan/opengraph-image
+├ ○ /og/gyeongju/opengraph-image
+├ ○ /og/jeju/opengraph-image
+├ ○ /og/seoul/opengraph-image
+├ ○ /opengraph-image
+├ ○ /picks
+├ ● /place/[id]
+│ ├ /place/1
+│ ├ /place/2
+│ ├ /place/3
+│ └ [+5002 more paths]
+├ ○ /restaurants
+├ ○ /robots.txt
+├ ○ /seoul
+├ ○ /shared
+├ ○ /sitemap.xml
+├ ○ /survival-guide
+└ ○ /trending
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+[build-static] OG .png aliases created: root + 4 cities (busan, gyeongju, jeju, seoul)
+BUILD_EXIT=0
