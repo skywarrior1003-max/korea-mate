@@ -1,0 +1,41 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-TARGETED-CORRECTIONS-AND-PUBLISH-PRECHECK-V1",
+ "attempt": "20260823T061600Z",
+ "owner_approved": true,
+ "secondary_artifacts_unchanged": true,
+ "A": {
+  "city_spot_id": 910,
+  "canonical": "jeonju:OFF-16133",
+  "name": "자매갈비전골",
+  "kto_contentid": "2870801",
+  "lat": 35.8198804174,
+  "lng": 127.153461153,
+  "provenance": "KTO_SUPPLEMENT",
+  "fields_written": [
+   "lat",
+   "lng"
+  ],
+  "is_published_changed": false,
+  "post": {
+   "id": 910,
+   "lat": 35.8198804174,
+   "lng": 127.153461153,
+   "is_published": false,
+   "name": "자매갈비전골",
+   "external_id": "jeonju:OFF-16133"
+  }
+ },
+ "B": {
+  "rule": "scheme http→https only (asset/path/query/rights/provenance/spot unchanged)",
+  "url_set_source": "http-image-readiness-audit-v1.json HTTPS_EQUIVALENT_OK 82",
+  "city_spots_rows": 82,
+  "city_spot_images_rows": 82,
+  "remaining_http_city_spots": 0,
+  "remaining_http_eligible_images": 0,
+  "non_eligible_http_image_rows_untouched": true
+ },
+ "counts": {
+  "writes_total": 165,
+  "delete": 0
+ }
+}

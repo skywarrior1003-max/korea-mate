@@ -1,0 +1,114 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-TARGETED-CORRECTIONS-AND-PUBLISH-PRECHECK-V1",
+ "generated_at_utc": "2026-08-23T06:18:52.411271+00:00",
+ "db_write_executed": false,
+ "current": {
+  "physical": 5005,
+  "true": 714,
+  "false": 4291,
+  "null": 0
+ },
+ "sets": {
+  "SHOW": 4291,
+  "HIDE": 327,
+  "KEEP_VISIBLE_LEGACY": 19,
+  "MATCH": 368
+ },
+ "checks": {
+  "show_count": 4291,
+  "show_all_exist": true,
+  "show_all_currently_false": true,
+  "show_all_canonical": true,
+  "show_equals_all_hidden_rows": true,
+  "hide_count": 327,
+  "hide_all_exist": true,
+  "hide_all_currently_true": true,
+  "hide_overlap_with_show": 0,
+  "hide_overlap_with_match": 0,
+  "keep_count": 19,
+  "keep_classes": {
+   "LEGACY_ONLY_VALID": 15,
+   "OWNER_OVERRIDE_KEEP_PUBLISHED": 4
+  },
+  "match_count": 368,
+  "match_all_currently_true": true,
+  "show_city_vs_mapping_city_mismatch": 0,
+  "missing_ids": 0,
+  "final_active_distinct_rows": 4659,
+  "null_coord_in_show": [],
+  "http_image_in_show_or_match": 0
+ },
+ "expected_post_publish": {
+  "physical": 5005,
+  "true": 4678,
+  "false": 327,
+  "null": 0,
+  "sitemap_place": 4678
+ },
+ "expected_per_city_true_after": {
+  "busan": 807,
+  "gyeongju": 302,
+  "jeju": 1496,
+  "jeonju": 236,
+  "seoul": 1837
+ },
+ "sql_crosscheck": {
+  "sql_new_equals_show": true,
+  "sql_hide_equals_hide": true,
+  "sql_keep_equals_keep": true,
+  "sql_sha256": "f3303fc8832ec7049e8e14875f371c44e60a769c7cffc3bfe9c4fd5fe7898e9d",
+  "sql_has_delete": true,
+  "sql_single_transaction": true,
+  "sql_has_delete_note": "only temp-table placeholder cleanup (delete from publish_hide_ids/publish_keep_ids where id = -1); no DELETE on city_spots or any persistent table"
+ },
+ "rollback_snapshot": {
+  "path": "data/main-intake/five-city-core-v3/publish-precheck/pre-publish-visibility-snapshot-v1.20260823T061852Z.jsonl",
+  "rows": 5005,
+  "sha256": "c6cff41a0529487e3e07bd6b35c9e62366f44e1a579b6356b7cca434e7150d27"
+ },
+ "verification_plan": {
+  "pre_publish": [
+   "Production READ-ONLY: 5005/714/4291/0, user 68/0/4/9, snapshot sha matches",
+   "cutover SQL sha256 == f3303fc8832ec7049e8e14875f371c44e60a769c7cffc3bfe9c4fd5fe7898e9d",
+   "code ≥ 2474e86 (place fetch no-store + force-static) on master before REBUILD"
+  ],
+  "publish": [
+   "Owner runs publish-cutover-aada6b5e6873c12f.sql in Supabase SQL Editor as ONE transaction (DO-block self-checks: new=4291 hide=327 keep=19)"
+  ],
+  "post_publish_verify": [
+   "count: total 5005 / true 4678 / false 327 / null 0",
+   "per-city true: {\"busan\": 807, \"gyeongju\": 302, \"jeju\": 1496, \"jeonju\": 236, \"seoul\": 1837}",
+   "show set all true (4291), hide set all false (327), keep 19 true, match 368 true",
+   "user tables 68/0/4/9 unchanged; user_spots/trip_moments references unaffected (hidden rows stay reference-readable)",
+   "DELETE 0"
+  ],
+  "rebuild": [
+   "master release commit → Cloudflare production build (fresh clone) → /place 5005 pages, sitemap /place 4678, hidden 327 noindex, sentinels 577/607/640/910 fresh",
+   "smoke: /, 5 city, 5 explore (Seoul/Jeju/Jeonju now populated), /place samples per city, /trips 404"
+  ],
+  "rollback": [
+   "visibility snapshot pre-publish-visibility-snapshot-v1.20260823T061852Z.jsonl (sha256 c6cff41a0529487e3e07bd6b35c9e62366f44e1a579b6356b7cca434e7150d27) + publish-rollback-aada6b5e6873c12f.sql (generated) restore exact pre-publish is_published per id"
+  ]
+ },
+ "user_reference_safety": {
+  "user_spots_ref_hide": 0,
+  "trip_moments_ref_hide": 0,
+  "user_spots_with_ref": 1,
+  "trip_moments_total": 0,
+  "note": "hidden rows remain reference-readable (/place pages generated, reference scope)"
+ },
+ "clean_build_after_corrections": {
+  "exit": 0,
+  "duration_seconds": 78,
+  "static_pages": 5064,
+  "sentinels_482_stale": 0,
+  "route_missing": 0,
+  "sitemap_hidden_leak": 0,
+  "place_910_jsonld_geo": {
+   "latitude": 35.8198804174,
+   "longitude": 127.153461153
+  },
+  "normalized_image_sample": "/place/660 renders https://tong.visitkorea.or.kr/cms/resource/41/3028641_image2_1.jpg, http:// occurrences 0",
+  "tests": "2412/2404/8 baseline/new 0"
+ }
+}
