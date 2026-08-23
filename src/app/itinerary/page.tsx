@@ -1219,6 +1219,12 @@ function ItineraryResult() {
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
+  // ── 재오픈 city ownership (TASK-MY-TRIP-REOPEN-CITY-OWNERSHIP-FIX-V1) ──
+  // 저장된 여행을 id 로 다시 열면 URL 에 city 가 없다. 그때 도시 의존 기능(미배정
+  // cart 등)의 기준은 저장된 itinerary 의 city — 로드 시 setCity(record.city) 로
+  // 들어온 값 — 이고, "Seoul" fallback 이 그것을 이기면 안 된다. id 가 없는
+  // 새 일정 생성 경로는 지금까지처럼 URL/draft/기본값(paramCity)을 쓴다.
+  const tripCity = shareId ? city : paramCity;
   const [startDate,   setStartDate]   = useState(paramStartDate);
   const [endDate,     setEndDate]     = useState(paramEndDate);
   const [travelers,   setTravelers]   = useState(paramTravelers);
@@ -1250,9 +1256,11 @@ function ItineraryResult() {
   const [plannerDay,    setPlannerDay]    = useState(1);
   const [visited,       setVisited]       = useState<Set<string>>(new Set()); // S2: 로컬 방문 체크 (DB 무변경)
   // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
+  // 초기값은 첫 렌더의 tripCity(=paramCity와 동일)로 읽고, 재오픈 로드가 city 를
+  // 확정하면 아래 cart 갱신 effect 가 tripCity 기준으로 다시 읽는다.
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
-    try { return getCityCart(paramCity); } catch { return []; }
+    try { return getCityCart(tripCity); } catch { return []; }
   });
   // ── 로딩 페이즈 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────────
   const [loadPhase, setLoadPhase] = useState(0);
@@ -2178,11 +2186,13 @@ function ItineraryResult() {
   }
 
   // ── cart 변경 감지 → Unscheduled 갱신 ─────────────────
+  // tripCity 가 확정되는 순간(재오픈 로드로 저장된 city 가 들어온 때)에도 다시 읽는다.
   useEffect(() => {
-    const refreshCart = () => { try { setCartItems(getCityCart(paramCity)); } catch { /* ignore */ } };
+    const refreshCart = () => { try { setCartItems(getCityCart(tripCity)); } catch { /* ignore */ } };
+    refreshCart();
     window.addEventListener(CART_EVENT, refreshCart);
     return () => window.removeEventListener(CART_EVENT, refreshCart);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tripCity]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── 보관함 아이템 → 현재 editDay에 추가 ─────────────────
   function addCartItemToDay(item: CartItem) {
