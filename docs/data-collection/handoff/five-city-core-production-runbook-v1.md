@@ -38,6 +38,8 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 | PUBLISH | `publish-sql.ts`: temporary target tables(VALUES) + DO 검증 + 단일 트랜잭션. `WHERE id IN (…)` 문자열·city 전체·id 범위 금지 | synthetic 50k SQL PASS(S3), 거부 규칙(S4) |
 | DB index | 현재: PK id · `(city,is_published)`(056) · `(city,name)` 비유니크(057) · source identity UNIQUE. bbox 는 lat/lng 범위 스캔(city 필터 없음) — 5도시 4,908 에서는 문제 없음. **POST_LAUNCH_SCALE_INDEX_BACKLOG**: 수만 행·권역 확장 시 `(lat,lng)` 또는 `(city,lat,lng)` 복합 인덱스 검토(PostGIS 도입 아님) | 지금 신규 인덱스 추가 없음 |
 
+> 2026-08-23 release 이후 `/place` delivery 확장 원칙·실측 한계(10,462 files / ≈9,774 places)·재개 trigger 의 SSOT: `docs/architecture/post-launch-place-delivery-scaling-v1.md` (POST-LAUNCH 트랙, 오픈 전 재설계 금지).
+
 ## 4. STAGE BUILD 측정 계약 (실측 전 숫자 만들지 않음)
 기록: DB rows · static param count · build duration · output size · deployment duration · `/place` route count · sitemap URL count · warning/failure. 이 baseline 이 10k+ 전략(§3 static 옵션)의 근거가 된다. 현재 이 문서의 ACTUAL_BUILD_DB_ROWS = 714(Production 미통합).
 
