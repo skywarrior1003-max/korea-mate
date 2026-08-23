@@ -96,7 +96,7 @@ test("★재오픈 city ownership: 저장된 itinerary 의 city 가 도시 의�
   assert.match(page, /const tripCity = shareId \? city : paramCity;/, "id 재오픈이면 저장된 city, 아니면 기존 URL/기본값");
   assert.match(page, /setCity\(record\.city\)/, "로드 시 저장된 city 를 상태로 들여온다");
   assert.equal((page.match(/getCityCart\(tripCity\)/g) ?? []).length, 2, "미배정 cart 는 초기값·갱신 모두 tripCity 기준");
-  assert.match(page, /\}, \[tripCity\]\); \/\/ eslint-disable-line react-hooks\/exhaustive-deps/, "저장된 city 확정 시 cart 를 다시 읽는다");
+  assert.match(page, /\}, \[tripCity\]\);/, "저장된 city 확정 시 cart 를 다시 읽는다");
   // 남은 paramCity 기준 cart 조회는 생성 세션 전용 두 곳뿐이다 — 취향 태그 초기값, 첫 저장 시 cart 정리.
   assert.equal((page.match(/getCityCart\(paramCity\)/g) ?? []).length, 2, "재오픈 화면 경로에 Seoul fallback cart 조회가 남지 않는다");
 });

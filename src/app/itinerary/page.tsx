@@ -2192,7 +2192,7 @@ function ItineraryResult() {
     refreshCart();
     window.addEventListener(CART_EVENT, refreshCart);
     return () => window.removeEventListener(CART_EVENT, refreshCart);
-  }, [tripCity]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tripCity]);
 
   // ── 보관함 아이템 → 현재 editDay에 추가 ─────────────────
   function addCartItemToDay(item: CartItem) {
