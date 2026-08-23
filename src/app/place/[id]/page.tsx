@@ -21,6 +21,10 @@ import {
 } from "@/lib/place-detail/place-detail-core";
 
 export const dynamicParams = false; // 정적 export — 빌드된 id 외에는 404
+// TASK-FIVE-CITY-CORE-PUBLISH-READINESS-HARDENING-V1: place-source 의 fetch 가 `cache: "no-store"`(Data Cache 재사용 금지)
+// 가 됐다. Next 는 정적 생성 중 no-store fetch 를 만나면 라우트를 dynamic 으로 bail 시켜 `output: "export"` 빌드를
+// 깨뜨리는데, `force-static` 이면 bail 하지 않고 그대로 정적 생성한다(sitemap.ts 와 같은 선언). 렌더 결과는 변하지 않는다.
+export const dynamic = "force-static";
 
 interface Props {
   params: Promise<{ id: string }>;

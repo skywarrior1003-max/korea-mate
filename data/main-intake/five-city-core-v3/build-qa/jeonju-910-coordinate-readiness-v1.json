@@ -1,0 +1,174 @@
+{
+ "db": {
+  "id": 910,
+  "city": "jeonju",
+  "name": "자매갈비전골",
+  "name_l10n": {
+   "ko": "자매갈비전골"
+  },
+  "category": "restaurant",
+  "address": "전북특별자치도 전주시 완산구 기린대로 121",
+  "district": null,
+  "lat": null,
+  "lng": null,
+  "source_type": "canonical",
+  "external_id": "jeonju:OFF-16133",
+  "is_published": false,
+  "official_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000038&menuCd=DOM_000000104003007000&dataSid=16133",
+  "map_url": null,
+  "naver_map_url": null,
+  "image_url": null
+ },
+ "db_sources": [
+  {
+   "id": 868,
+   "city_spot_id": 910,
+   "source_type": "kto",
+   "source_key": "2870801",
+   "source_url": null,
+   "is_primary": false
+  },
+  {
+   "id": 869,
+   "city_spot_id": 910,
+   "source_type": "visitjeonju",
+   "source_key": "16133",
+   "source_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000038&menuCd=DOM_000000104003007000&dataSid=16133",
+   "is_primary": true
+  }
+ ],
+ "db_images": [
+  {
+   "id": 487,
+   "city_spot_id": 910,
+   "image_url": "http://tong.visitkorea.or.kr/cms/resource/87/2870787_image2_1.jpg",
+   "rights_status": "KTO_TYPE_UNKNOWN",
+   "attribution_required": true,
+   "display_eligible": false,
+   "is_primary": true,
+   "sort_order": 0,
+   "source_id": 869
+  }
+ ],
+ "r3_mapping": {
+  "run_id": "aada6b5e6873c12f",
+  "canonical_id": "OFF-16133",
+  "city": "jeonju",
+  "source_type": "canonical",
+  "external_id": "jeonju:OFF-16133",
+  "actual_city_spot_id": 910,
+  "operation": "INSERT",
+  "reused_existing": false,
+  "is_published": false,
+  "manifest_hash": "01c549eb6a44e1f01bb82605cb9fd08ffdb4d53e1a1f8d2677172cdebc852502",
+  "staged_at": "2026-08-23T03:53:03.734Z"
+ },
+ "crosswalk": {
+  "canonical_id": "OFF-16133",
+  "city": "jeonju",
+  "confidence": "HIGH",
+  "decision": "NEW",
+  "decision_basis": "ARTIFACT_SERVICE_STATUS",
+  "evidence": "artifact ACTIVE · Main city_spots city=0 · 쌍둥이 탐지 없음(관계 필드 없음)",
+  "legacy_status": null,
+  "main_city_spot_id": null,
+  "match_method": "artifact_active_no_main_rows",
+  "notes": "",
+  "reference_sensitive": false,
+  "service_status": "ACTIVE",
+  "tier": "NEW",
+  "twin_of": null
+ },
+ "package_v3": {
+  "canonical_id": "OFF-16133",
+  "city": "jeonju",
+  "name": "자매갈비전골",
+  "category": "restaurant",
+  "address": "전북특별자치도 전주시 완산구 기린대로 121",
+  "lat": null,
+  "lng": null,
+  "official_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000038&menuCd=DOM_000000104003007000&dataSid=16133",
+  "owned_fields": [
+   "address",
+   "category",
+   "desc_l10n",
+   "description",
+   "image_url",
+   "lat",
+   "lng",
+   "name",
+   "name_l10n",
+   "official_url",
+   "subcategory"
+  ],
+  "deferred_fields": [],
+  "provenance": {
+   "artifact": "jeonju-final-service-catalog-v1",
+   "as_of": "2026-08-18",
+   "match_type": "CONFIRMED_MERGE",
+   "source": "OFFICIAL"
+  },
+  "service_status": "ACTIVE",
+  "tier": "NEW",
+  "source_category": "FOOD"
+ },
+ "final_catalog_row_pinned_436fe37": {
+  "candidate_id": "OFF-16133",
+  "source": "OFFICIAL",
+  "sid": "16133",
+  "kto_cid": "2870801",
+  "match_type": "CONFIRMED_MERGE",
+  "final_status": "ACTIVE_SERVICE",
+  "has_coord": false,
+  "coord_source": "KTO_SUPPLEMENT",
+  "lat": "",
+  "lng": "",
+  "kto_lat": "35.8198804174",
+  "kto_lng": "127.1534611530",
+  "kto_addr": "전북특별자치도 전주시 완산구 기린대로 121",
+  "official_address": "전북특별자치도 전주시 완산구 노송광장로 10",
+  "official_has_coord": false,
+  "kto_image": "http://tong.visitkorea.or.kr/cms/resource/87/2870787_image2_1.jpg"
+ },
+ "final_catalog_statistics": {
+  "active_service_rows": 236,
+  "has_coord_true": 235,
+  "has_coord_false": 1,
+  "coord_source": {
+   "KTO": 133,
+   "OFFICIAL": 101,
+   "vworld_jibun_geocoding": 1,
+   "KTO_SUPPLEMENT": 1
+  },
+  "rows_with_lat_empty_but_kto_lat_present": [
+   "OFF-16133"
+  ],
+  "package_v3_jeonju_rows_with_null_coords": [
+   "OFF-16133"
+  ]
+ },
+ "intake_mapping": "scripts/main-intake/build-five-city-core-intake-v1.py jeonju block: lat=c.get('lat'), lng=c.get('lng'), address=c.get('kto_addr') — canonical Final fields only; no kto_lat fallback (Main heuristic reinterpretation forbidden)",
+ "root_cause": {
+  "case": "C",
+  "main_intake_bug": false,
+  "final_source_canonical_coordinate_present": false,
+  "same_official_public_source_exact_coordinate_present": true,
+  "explanation": "Final catalog declares coord_source=KTO_SUPPLEMENT and carries the merged KTO 2870801 coordinate (kto_lat/kto_lng) but left its canonical lat/lng empty for this one row of 236 (the other 133 KTO-sourced rows have lat/lng populated). Main read the canonical fields faithfully → NULL written as FINAL_ABSENT. Not a Main intake/writer defect; a Final-artifact inconsistency with an exact coordinate already present in the same artifact."
+ },
+ "product_impact": {
+  "place_detail": "renders (name/category/address/official_url); navigation links (Google/Naver) omitted because hasCoord=false (place-detail-core)",
+  "explore_map": "no marker (lat undefined → NaverMap marker skipped)",
+  "near_me": "excluded (.not('lat','is',null) bbox query)",
+  "scheduler_planner": "excluded from auto candidates (.not('lat','is',null)); not schedulable by coordinate",
+  "living_map_future": "excluded until coordinate exists",
+  "crash_risk": "none observed (build/render OK)",
+  "classification": "NON_BLOCKING_WITH_EXPLICIT_EXCEPTION — 1 hidden NEW restaurant; publish without coordinate would ship a non-navigable place unless Owner approves a targeted correction or an explicit exception"
+ },
+ "recommended_action": {
+  "exact": "Owner-approved targeted correction of #910 only: set lat=35.8198804174, lng=127.1534611530 (KTO contentid 2870801, the CONFIRMED_MERGE record the Final itself designates as coord_source=KTO_SUPPLEMENT), recording provenance coordinate_source=KTO_SUPPLEMENT; preferably by Secondary fixing the Final row (lat/lng) and Main applying a single-row UPDATE receipt, or by Owner SQL Editor single-row UPDATE. Alternative: explicit exception (publish without coordinate) or keep #910 hidden at PUBLISH.",
+  "note": "Official board address (노송광장로 10) differs from KTO address (기린대로 121, currently stored) — Owner/Secondary should confirm the current location before applying the coordinate.",
+  "data_modification_needed": true,
+  "owner_approval_needed": true,
+  "executed_in_this_task": false
+ }
+}

@@ -1,0 +1,498 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-PUBLISH-READINESS-HARDENING-V1",
+ "generated_at_utc": "2026-08-23T05:40:14Z",
+ "start_commit": "01c1ba4",
+ "branch": "feature/five-city-core-publish-readiness-hardening-v1",
+ "origin_master": "69cc51a",
+ "final_version": "five-city-core-v3",
+ "run_id": "aada6b5e6873c12f",
+ "production_state": {
+  "before": {
+   "physical": 5005,
+   "true": 714,
+   "false": 4291,
+   "null": 0,
+   "sources": 5610,
+   "images": 4501,
+   "user_counts": "68/0/4/9"
+  }
+ },
+ "stale_cache_root_cause": {
+  "files": [
+   "src/lib/place-detail/place-source.ts (fetchSpot, fetchPublicSpotIds)"
+  ],
+  "previous_policy": "fetch() without cache option → Next 16 static generation 'auto cache' → Data Cache entry revalidate=31536000 (1 year) in .next/cache/fetch-cache, reused across builds when the directory persists",
+  "evidence": "STAGE BUILD: 716 entries dated 2026-08-12 served fetchSpot() for legacy ids → /place/577 '스틸룸', /place/607 '화수브루어리', /place/640 '요석궁1779' while DB had STILLROOM/Whasoo Brewery/Yosukgung",
+  "next_internals": "next/dist/server/lib/patch-fetch.js: cacheReason 'auto cache' → finalRevalidate=INFINITE_CACHE → CACHE_ONE_YEAR; cache:'no-store' → finalRevalidate 0 → no Data Cache read/write; markCurrentScopeAsDynamic returns early when store.forceStatic"
+ },
+ "cache_hardening": {
+  "change": "PLACE_FETCH_CACHE_POLICY='no-store' applied to both fetches in place-source.ts; export const dynamic='force-static' on /place/[id]/page.tsx so no-store does not bail static export (sitemap.ts already force-static); value imports switched to relative .ts paths for node --test resolvability (no behaviour change)",
+  "policy_after": "no Data Cache read/write for place hydration; every build/route generation reads Production REST live",
+  "scope": "place-source.ts (fetchSpot, fetchPublicSpotIds) + place page segment config only; Explore/planner/near-me (supabase-js client/runtime) untouched",
+  "visibility_preserved": true
+ },
+ "cache_tests": {
+  "file": "src/lib/place-detail/place-source.test.ts",
+  "tests": [
+   "CACHE-1 no-store on both fetches, no long-lived option",
+   "CACHE-2 current response wins (no memoised representation)",
+   "CACHE-3 discovery is_published=eq.true / reference unfiltered",
+   "CACHE-4 static export contract (force-static + dynamicParams=false, sitemap force-static, no force-cache/revalidate in source)",
+   "CACHE-5 keyset pagination contract"
+  ],
+  "result": "5/5 PASS"
+ },
+ "build_A_stale_injected": {
+  "label": "stale-injected",
+  "build_exit": 0,
+  "static_pages": 5064,
+  "generate_seconds": 22.7,
+  "workers": 31,
+  "environment_fallback_count": 31,
+  "dynamic_server_error": 0,
+  "other_warn_error_lines": [],
+  "sentinels_577_607_640": {
+   "577": {
+    "artifact_title": "STILLROOM — gyeongju | gokoreamate",
+    "db_name": "STILLROOM",
+    "stale": false
+   },
+   "607": {
+    "artifact_title": "Whasoo Brewery — gyeongju | gokoreamate",
+    "db_name": "Whasoo Brewery",
+    "stale": false
+   },
+   "640": {
+    "artifact_title": "Yosukgung — gyeongju | gokoreamate",
+    "db_name": "Yosukgung",
+    "stale": false
+   }
+  },
+  "sentinel_set": {
+   "size": 482,
+   "checked": 482,
+   "composition": {
+    "match": 368,
+    "restore": 94,
+    "new_sample": 20
+   }
+  },
+  "stale_render_count": 0,
+  "stale_rows": [],
+  "routes": {
+   "db_ids": 5005,
+   "generated": 5005,
+   "missing": 0,
+   "extra": 0,
+   "duplicate": 0
+  },
+  "sitemap": {
+   "total_urls": 738,
+   "place_urls": 714,
+   "published": 714,
+   "hidden_leak": 0,
+   "published_missing": 0,
+   "duplicate_urls": 0
+  },
+  "noindex": {
+   "hidden_sample": 477,
+   "hidden_sample_noindex": 477,
+   "published_total": 714,
+   "published_noindex": 0
+  },
+  "fetch_cache_entries_after_build": 5009,
+  "sitemap_sha256": "691472dc79746953054c307d8745b5cf92f3b0e5849b1dd2878e1339da744bda",
+  "start_utc": "2026-08-23T05:28:21Z",
+  "end_utc": "2026-08-23T05:29:37Z",
+  "duration_seconds": 76
+ },
+ "build_B_clean": {
+  "label": "clean",
+  "build_exit": 0,
+  "static_pages": 5064,
+  "generate_seconds": 21.5,
+  "workers": 31,
+  "environment_fallback_count": 31,
+  "dynamic_server_error": 0,
+  "other_warn_error_lines": [],
+  "sentinels_577_607_640": {
+   "577": {
+    "artifact_title": "STILLROOM — gyeongju | gokoreamate",
+    "db_name": "STILLROOM",
+    "stale": false
+   },
+   "607": {
+    "artifact_title": "Whasoo Brewery — gyeongju | gokoreamate",
+    "db_name": "Whasoo Brewery",
+    "stale": false
+   },
+   "640": {
+    "artifact_title": "Yosukgung — gyeongju | gokoreamate",
+    "db_name": "Yosukgung",
+    "stale": false
+   }
+  },
+  "sentinel_set": {
+   "size": 482,
+   "checked": 482,
+   "composition": {
+    "match": 368,
+    "restore": 94,
+    "new_sample": 20
+   }
+  },
+  "stale_render_count": 0,
+  "stale_rows": [],
+  "routes": {
+   "db_ids": 5005,
+   "generated": 5005,
+   "missing": 0,
+   "extra": 0,
+   "duplicate": 0
+  },
+  "sitemap": {
+   "total_urls": 738,
+   "place_urls": 714,
+   "published": 714,
+   "hidden_leak": 0,
+   "published_missing": 0,
+   "duplicate_urls": 0
+  },
+  "noindex": {
+   "hidden_sample": 477,
+   "hidden_sample_noindex": 477,
+   "published_total": 714,
+   "published_noindex": 0
+  },
+  "fetch_cache_entries_after_build": 1,
+  "sitemap_sha256": "d62bf355db5d3fa113ab752d4cc015017a6145d3f572848b0428eb995c6a9f2a",
+  "start_utc": "2026-08-23T05:39:01Z",
+  "end_utc": "2026-08-23T05:40:14Z",
+  "duration_seconds": 73
+ },
+ "tests": {
+  "tests": 2412,
+  "pass": 2404,
+  "fail": 8,
+  "failing_names": [
+   "★#FF4A2D 를 action primary 로 착각하지 않는다 — action 은 파랑이다",
+   "★migration 번호는 041 이 마지막이다",
+   "★migration 을 건드리지 않았다 — 041 이 마지막",
+   "★migration 을 건드리지 않았다 — 041 이 마지막이고 042 는 없다",
+   "★migration 이 추가되지 않았다 — 041 이 마지막이고 042 는 없다",
+   "★화면 컴포넌트의 JSX 텍스트에 금지 브랜드 표기가 없다"
+  ]
+ },
+ "render": {
+  "base": "http://127.0.0.1:8787",
+  "viewport": "390x844",
+  "routes": [
+   {
+    "label": "home",
+    "path": "/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "busan",
+    "path": "/busan/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "gyeongju",
+    "path": "/gyeongju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "seoul",
+    "path": "/seoul/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "jeju",
+    "path": "/jeju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "jeonju",
+    "path": "/jeonju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "explore-busan",
+    "path": "/explore/busan/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": [
+     "Cannot read properties of null (reading 'capitalize')"
+    ]
+   },
+   {
+    "label": "explore-gyeongju",
+    "path": "/explore/gyeongju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "explore-seoul",
+    "path": "/explore/seoul/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "explore-jeju",
+    "path": "/explore/jeju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "explore-jeonju",
+    "path": "/explore/jeonju/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "all-spots",
+    "path": "/all-spots/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "trending",
+    "path": "/trending/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "picks",
+    "path": "/picks/",
+    "status": 200,
+    "robots": "noindex",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "my-trips",
+    "path": "/my-trips/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "trips-404",
+    "path": "/trips/",
+    "status": 404,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "trips-404-noslash",
+    "path": "/trips",
+    "status": 404,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-47-busan-pub",
+    "path": "/place/47/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-577-gj-food-match",
+    "path": "/place/577/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-607-hwasu",
+    "path": "/place/607/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-640-yosukgung",
+    "path": "/place/640/",
+    "status": 200,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-1527-gj-food-new",
+    "path": "/place/1527/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-1528-gj-food-new",
+    "path": "/place/1528/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-3127-seoul-new",
+    "path": "/place/3127/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-1659-jeju-new",
+    "path": "/place/1659/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-727-jeonju-new",
+    "path": "/place/727/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-927-busan-new",
+    "path": "/place/927/",
+    "status": 200,
+    "robots": "noindex, follow",
+    "overflowX": false,
+    "pageErrors": []
+   },
+   {
+    "label": "place-nonexistent-999999",
+    "path": "/place/999999/",
+    "status": 404,
+    "robots": null,
+    "overflowX": false,
+    "pageErrors": []
+   }
+  ]
+ },
+ "jeonju_910": {
+  "root_cause": {
+   "case": "C",
+   "main_intake_bug": false,
+   "final_source_canonical_coordinate_present": false,
+   "same_official_public_source_exact_coordinate_present": true,
+   "explanation": "Final catalog declares coord_source=KTO_SUPPLEMENT and carries the merged KTO 2870801 coordinate (kto_lat/kto_lng) but left its canonical lat/lng empty for this one row of 236 (the other 133 KTO-sourced rows have lat/lng populated). Main read the canonical fields faithfully → NULL written as FINAL_ABSENT. Not a Main intake/writer defect; a Final-artifact inconsistency with an exact coordinate already present in the same artifact."
+  },
+  "product_impact": {
+   "place_detail": "renders (name/category/address/official_url); navigation links (Google/Naver) omitted because hasCoord=false (place-detail-core)",
+   "explore_map": "no marker (lat undefined → NaverMap marker skipped)",
+   "near_me": "excluded (.not('lat','is',null) bbox query)",
+   "scheduler_planner": "excluded from auto candidates (.not('lat','is',null)); not schedulable by coordinate",
+   "living_map_future": "excluded until coordinate exists",
+   "crash_risk": "none observed (build/render OK)",
+   "classification": "NON_BLOCKING_WITH_EXPLICIT_EXCEPTION — 1 hidden NEW restaurant; publish without coordinate would ship a non-navigable place unless Owner approves a targeted correction or an explicit exception"
+  },
+  "recommended_action": {
+   "exact": "Owner-approved targeted correction of #910 only: set lat=35.8198804174, lng=127.1534611530 (KTO contentid 2870801, the CONFIRMED_MERGE record the Final itself designates as coord_source=KTO_SUPPLEMENT), recording provenance coordinate_source=KTO_SUPPLEMENT; preferably by Secondary fixing the Final row (lat/lng) and Main applying a single-row UPDATE receipt, or by Owner SQL Editor single-row UPDATE. Alternative: explicit exception (publish without coordinate) or keep #910 hidden at PUBLISH.",
+   "note": "Official board address (노송광장로 10) differs from KTO address (기린대로 121, currently stored) — Owner/Secondary should confirm the current location before applying the coordinate.",
+   "data_modification_needed": true,
+   "owner_approval_needed": true,
+   "executed_in_this_task": false
+  }
+ },
+ "http_images": {
+  "total": 82,
+  "per_city": {
+   "gyeongju": 65,
+   "busan": 7,
+   "jeju": 10
+  },
+  "classification_counts": {
+   "HTTPS_EQUIVALENT_OK": 82
+  },
+  "redirect_observed_count": 0,
+  "published_now": 65,
+  "hidden_now": 17,
+  "release_impact": {
+   "mixed_content": "http:// <img> on an https page is 'optionally blockable' mixed content: Chrome/Edge (≥86) and Safari auto-upgrade to https (works since https equivalent is OK); Firefox upgrades only with HTTPS-Only/upgrade-mixed-content; otherwise blocked → image missing, no page failure. 65 of the 82 rows are already published today (Gyeongju legacy KTO images) so the risk is pre-existing, not introduced by PUBLISH.",
+   "broken_render_risk": "low (image may be blocked in some browsers; layout has image fallback)",
+   "recommended_action": "scheme normalization http→https for these 82 URLs at the Final image plan / city_spots.image_url + city_spot_images (same asset, same rights/provenance, no re-collection) as an Owner-approved targeted correction before or at PUBLISH; not executed here.",
+   "data_modification_needed": true,
+   "owner_approval_needed": true,
+   "executed_in_this_task": false
+  }
+ },
+ "preview_build_env": {
+  "cloudflare_env_var_names": {
+   "preview": [],
+   "production": [
+    "ADMIN_KEY",
+    "ADMIN_NOTIFICATION_EMAIL",
+    "CONTACT_FROM_EMAIL",
+    "GEMINI_API_KEY",
+    "NEXT_PUBLIC_GA4_ID",
+    "NEXT_PUBLIC_NAVER_MAP_CLIENT_ID",
+    "NEXT_PUBLIC_SITE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "RESEND_API_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY"
+   ]
+  },
+  "deployments_observed": "last 75 deployments (since 2026-08-19): preview 67 → success 0 / build failure 66; production 8 → success",
+  "failure_mechanism": "preview has no NEXT_PUBLIC_SUPABASE_* → fetchPublicSpotIds()=[] → Next 16 output:export rejects empty generateStaticParams for /place/[id]",
+  "classification": "EXPECTED_CONFIGURATION",
+  "rationale": "runbook release path is master → Cloudflare production build only; preview never succeeded in the observed window and is not a gate; preview access to Production DB is not configured by design. A preview verification surface would need an Owner decision on preview env (not changed here)."
+ },
+ "not_executed": {
+  "production_write": 0,
+  "jeonju_910_correction": false,
+  "http_image_rewrite": false,
+  "publish": false,
+  "legacy_hide": false,
+  "migration": false,
+  "master": false,
+  "deploy": false,
+  "ai_calls": 0
+ }
+}

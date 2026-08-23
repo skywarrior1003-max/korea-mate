@@ -1,0 +1,2083 @@
+{
+ "captured_at": "2026-08-23T05:21:22.970Z",
+ "scope": "final-active rows whose city_spots.image_url starts with http:// (build-time image cache field)",
+ "total": 82,
+ "distinct_urls": 82,
+ "per_city": {
+  "gyeongju": 65,
+  "busan": 7,
+  "jeju": 10
+ },
+ "hosts": {
+  "tong.visitkorea.or.kr": 82
+ },
+ "classification_counts": {
+  "HTTPS_EQUIVALENT_OK": 82
+ },
+ "redirect_observed_count": 0,
+ "city_spot_images_rows_http_final_active": 506,
+ "city_spot_images_http_display_eligible": 82,
+ "published_now": 65,
+ "hidden_now": 17,
+ "method": "HEAD (GET fallback) on https:// equivalent with redirect follow; HEAD on original http:// with redirect=manual. http:// HEAD returned 405 (no redirect) for all; https:// returned 200 image/* for all.",
+ "release_impact": {
+  "mixed_content": "http:// <img> on an https page is 'optionally blockable' mixed content: Chrome/Edge (≥86) and Safari auto-upgrade to https (works since https equivalent is OK); Firefox upgrades only with HTTPS-Only/upgrade-mixed-content; otherwise blocked → image missing, no page failure. 65 of the 82 rows are already published today (Gyeongju legacy KTO images) so the risk is pre-existing, not introduced by PUBLISH.",
+  "broken_render_risk": "low (image may be blocked in some browsers; layout has image fallback)",
+  "recommended_action": "scheme normalization http→https for these 82 URLs at the Final image plan / city_spots.image_url + city_spot_images (same asset, same rights/provenance, no re-collection) as an Owner-approved targeted correction before or at PUBLISH; not executed here.",
+  "data_modification_needed": true,
+  "owner_approval_needed": true,
+  "executed_in_this_task": false
+ },
+ "results": [
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/41/3028641_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/41/3028641_image2_1.jpg",
+   "refs": [
+    {
+     "id": 660,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 578694
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/93/3412493_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/93/3412493_image2_1.jpg",
+   "refs": [
+    {
+     "id": 661,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 182338
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/36/3575836_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/36/3575836_image2_1.jpg",
+   "refs": [
+    {
+     "id": 662,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 212236
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/93/3442393_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/93/3442393_image2_1.JPG",
+   "refs": [
+    {
+     "id": 663,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 198930
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/58/3412358_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/58/3412358_image2_1.jpg",
+   "refs": [
+    {
+     "id": 664,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 172822
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/96/3575896_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/96/3575896_image2_1.jpg",
+   "refs": [
+    {
+     "id": 665,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 206832
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/12/3028712_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/12/3028712_image2_1.jpg",
+   "refs": [
+    {
+     "id": 666,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 521210
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/26/3542426_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/26/3542426_image2_1.jpg",
+   "refs": [
+    {
+     "id": 667,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 258443
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/57/3412457_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/57/3412457_image2_1.jpg",
+   "refs": [
+    {
+     "id": 668,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 199681
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/78/3537978_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/78/3537978_image2_1.jpg",
+   "refs": [
+    {
+     "id": 669,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 103925
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/22/3575922_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/22/3575922_image2_1.jpg",
+   "refs": [
+    {
+     "id": 670,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 146319
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/71/3028671_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/71/3028671_image2_1.jpg",
+   "refs": [
+    {
+     "id": 671,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 714827
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/62/3405862_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/62/3405862_image2_1.jpg",
+   "refs": [
+    {
+     "id": 672,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 174577
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/33/3037333_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/33/3037333_image2_1.jpg",
+   "refs": [
+    {
+     "id": 673,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 453584
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/77/3574177_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/77/3574177_image2_1.jpg",
+   "refs": [
+    {
+     "id": 674,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 186564
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/47/3575847_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/47/3575847_image2_1.jpg",
+   "refs": [
+    {
+     "id": 675,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 125322
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/74/3405874_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/74/3405874_image2_1.jpg",
+   "refs": [
+    {
+     "id": 676,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 147427
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/00/3592400_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/00/3592400_image2_1.jpg",
+   "refs": [
+    {
+     "id": 677,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 153364
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/68/3575768_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/68/3575768_image2_1.jpg",
+   "refs": [
+    {
+     "id": 678,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 184705
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/88/3575888_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/88/3575888_image2_1.jpg",
+   "refs": [
+    {
+     "id": 679,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 99889
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/41/3412541_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/41/3412541_image2_1.jpg",
+   "refs": [
+    {
+     "id": 680,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 195860
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/10/3575810_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/10/3575810_image2_1.jpg",
+   "refs": [
+    {
+     "id": 681,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 181986
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/97/3575897_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/97/3575897_image2_1.jpg",
+   "refs": [
+    {
+     "id": 682,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 210773
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/70/3575870_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/70/3575870_image2_1.jpg",
+   "refs": [
+    {
+     "id": 683,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 201719
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/00/3575800_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/00/3575800_image2_1.jpg",
+   "refs": [
+    {
+     "id": 684,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 174575
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/40/3405940_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/40/3405940_image2_1.jpg",
+   "refs": [
+    {
+     "id": 685,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 149165
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/26/3412526_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/26/3412526_image2_1.jpg",
+   "refs": [
+    {
+     "id": 686,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 128292
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/05/3412405_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/05/3412405_image2_1.jpg",
+   "refs": [
+    {
+     "id": 687,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 180868
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/41/3405041_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/41/3405041_image2_1.jpg",
+   "refs": [
+    {
+     "id": 688,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 153155
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/92/3412392_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/92/3412392_image2_1.jpg",
+   "refs": [
+    {
+     "id": 689,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 148289
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/21/3412321_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/21/3412321_image2_1.jpg",
+   "refs": [
+    {
+     "id": 690,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 190450
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/99/3037399_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/99/3037399_image2_1.jpg",
+   "refs": [
+    {
+     "id": 691,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 514968
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/86/3479386_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/86/3479386_image2_1.jpg",
+   "refs": [
+    {
+     "id": 692,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 138761
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/71/3326671_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/71/3326671_image2_1.jpg",
+   "refs": [
+    {
+     "id": 693,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 329566
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/01/3531001_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/01/3531001_image2_1.jpg",
+   "refs": [
+    {
+     "id": 694,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 223360
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/00/3412500_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/00/3412500_image2_1.jpg",
+   "refs": [
+    {
+     "id": 695,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 150948
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/12/3549712_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/12/3549712_image2_1.jpg",
+   "refs": [
+    {
+     "id": 696,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 96654
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/23/3570523_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/23/3570523_image2_1.jpg",
+   "refs": [
+    {
+     "id": 697,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 203453
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/08/3412508_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/08/3412508_image2_1.jpg",
+   "refs": [
+    {
+     "id": 698,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 127129
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/06/3575906_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/06/3575906_image2_1.jpg",
+   "refs": [
+    {
+     "id": 699,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 200826
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/27/3412427_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/27/3412427_image2_1.jpg",
+   "refs": [
+    {
+     "id": 700,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 223801
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/40/3542540_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/40/3542540_image2_1.jpg",
+   "refs": [
+    {
+     "id": 701,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 220402
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/15/3405815_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/15/3405815_image2_1.jpg",
+   "refs": [
+    {
+     "id": 702,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 220610
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/08/3575908_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/08/3575908_image2_1.jpg",
+   "refs": [
+    {
+     "id": 703,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 169545
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/19/3575819_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/19/3575819_image2_1.jpg",
+   "refs": [
+    {
+     "id": 704,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 120360
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/19/3405919_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/19/3405919_image2_1.jpg",
+   "refs": [
+    {
+     "id": 705,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 176497
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/18/3034118_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/18/3034118_image2_1.jpg",
+   "refs": [
+    {
+     "id": 706,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 478803
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/68/2614468_image2_1.bmp",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/68/2614468_image2_1.bmp",
+   "refs": [
+    {
+     "id": 707,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/bmp",
+    "location": null,
+    "bytes": 1016454
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/85/2614485_image2_1.bmp",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/85/2614485_image2_1.bmp",
+   "refs": [
+    {
+     "id": 708,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/bmp",
+    "location": null,
+    "bytes": 1018554
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/99/3542499_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/99/3542499_image2_1.jpg",
+   "refs": [
+    {
+     "id": 709,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 267832
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/56/2756956_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/56/2756956_image2_1.jpg",
+   "refs": [
+    {
+     "id": 710,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 306407
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/72/2771272_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/72/2771272_image2_1.jpg",
+   "refs": [
+    {
+     "id": 711,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 374416
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/72/3538772_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/72/3538772_image2_1.jpg",
+   "refs": [
+    {
+     "id": 712,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 122572
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/50/3531050_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/50/3531050_image2_1.jpg",
+   "refs": [
+    {
+     "id": 713,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 201348
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/83/3412483_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/83/3412483_image2_1.jpg",
+   "refs": [
+    {
+     "id": 714,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 96178
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/64/2992064_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/64/2992064_image2_1.jpg",
+   "refs": [
+    {
+     "id": 715,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 609525
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/51/3538051_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/51/3538051_image2_1.jpg",
+   "refs": [
+    {
+     "id": 716,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 83997
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/28/3575928_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/28/3575928_image2_1.jpg",
+   "refs": [
+    {
+     "id": 717,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 168458
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/21/3582421_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/21/3582421_image2_1.jpg",
+   "refs": [
+    {
+     "id": 718,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 96358
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/74/3575874_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/74/3575874_image2_1.jpg",
+   "refs": [
+    {
+     "id": 719,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 220703
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/69/3412469_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/69/3412469_image2_1.jpg",
+   "refs": [
+    {
+     "id": 720,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 155103
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/27/3427327_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/27/3427327_image2_1.JPG",
+   "refs": [
+    {
+     "id": 721,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 113461
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/86/3453186_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/86/3453186_image2_1.JPG",
+   "refs": [
+    {
+     "id": 722,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 164171
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/96/3453896_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/96/3453896_image2_1.JPG",
+   "refs": [
+    {
+     "id": 723,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 193185
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/72/3554372_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/72/3554372_image2_1.jpg",
+   "refs": [
+    {
+     "id": 725,
+     "city": "gyeongju",
+     "is_published": true
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 124574
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/00/2838800_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/00/2838800_image2_1.jpg",
+   "refs": [
+    {
+     "id": 1128,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 334546
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/98/2904898_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/98/2904898_image2_1.jpg",
+   "refs": [
+    {
+     "id": 1130,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 288944
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/45/2797545_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/45/2797545_image2_1.JPG",
+   "refs": [
+    {
+     "id": 1131,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 668041
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/60/2867160_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/60/2867160_image2_1.JPG",
+   "refs": [
+    {
+     "id": 1137,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 680726
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/97/2838897_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/97/2838897_image2_1.jpg",
+   "refs": [
+    {
+     "id": 1143,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 382510
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/23/3444423_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/23/3444423_image2_1.JPG",
+   "refs": [
+    {
+     "id": 1146,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 128533
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/07/2867607_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/07/2867607_image2_1.JPG",
+   "refs": [
+    {
+     "id": 1151,
+     "city": "busan",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 634914
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/96/3576396_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/96/3576396_image2_1.JPG",
+   "refs": [
+    {
+     "id": 2917,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 102447
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/22/3529822_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/22/3529822_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2918,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 78335
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/39/3524439_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/39/3524439_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2919,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 62894
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/84/3540884_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/84/3540884_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2920,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 111644
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/69/3562069_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/69/3562069_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2921,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 42391
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/29/3560629_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/29/3560629_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2922,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 71515
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/68/3520768_image2_1.JPG",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/68/3520768_image2_1.JPG",
+   "refs": [
+    {
+     "id": 2923,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 83049
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/81/3546881_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/81/3546881_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2924,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 70740
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/00/3554700_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/00/3554700_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2925,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 60466
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  },
+  {
+   "url": "http://tong.visitkorea.or.kr/cms/resource/80/3358380_image2_1.jpg",
+   "https_url": "https://tong.visitkorea.or.kr/cms/resource/80/3358380_image2_1.jpg",
+   "refs": [
+    {
+     "id": 2926,
+     "city": "jeju",
+     "is_published": false
+    }
+   ],
+   "classification": "HTTPS_EQUIVALENT_OK",
+   "https_probe": {
+    "status": 200,
+    "contentType": "image/jpg",
+    "location": null,
+    "bytes": 88806
+   },
+   "http_probe": {
+    "status": 405,
+    "contentType": "text/html",
+    "location": null,
+    "bytes": null
+   },
+   "http_redirects_to_https": false
+  }
+ ]
+}

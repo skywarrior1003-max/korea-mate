@@ -22,9 +22,24 @@
 //   env 부재·네트워크 실패 시 빈 배열을 반환해 기존 빌드를 깨뜨리지 않는다.
 //   그 경우 /place 페이지도 sitemap 항목도 함께 0건이 되므로 불일치는 생기지 않는다.
 
+//
+// Freshness (TASK-FIVE-CITY-CORE-PUBLISH-READINESS-HARDENING-V1)
+//   Next 는 정적 생성 중 옵션 없는 fetch() 를 "auto cache"(revalidate = 1년) 로 Data Cache(`.next/cache/fetch-cache`)
+//   에 저장하고, 같은 URL 이면 **다음 빌드에서도** 그 응답을 재사용한다. STAGE BUILD 에서 2026-08-12 에 캐시된
+//   `fetchSpot()` 응답이 R3 이후 빌드에 그대로 쓰여 legacy 714 페이지가 pre-R3 내용으로 렌더된 것이 실측됐다.
+//   Production DB 가 release source of truth 이므로 이 모듈의 두 조회는 `cache: "no-store"` 로 Data Cache 를
+//   읽지도 쓰지도 않는다(PLACE_FETCH_CACHE_POLICY). 정적 export 와의 호환은 /place/[id] 의
+//   `dynamic = "force-static"` 이 담당한다(no-store 가 정적 생성을 dynamic 으로 bail 시키지 않음 — sitemap 은 이미 force-static).
+//   visibility scope·keyset·실패 정책은 바꾸지 않는다.
+
 import type { CitySpotRow } from "@/lib/city-spots";
-import { visibilityRestFilter, type VisibilityScope } from "@/lib/city-spots-visibility";
-import { collectAllKeyset, keysetRestSuffix } from "@/lib/city-spots-paging";
+// 값 import 는 상대 경로 — node --test(strip-types) 가 `@/` alias 를 해석하지 못해 place-source.test.ts 가 이 모듈을 직접
+// 실행할 수 있도록 한다(다른 테스트 대상 lib 모듈과 같은 관례). 해석 결과는 동일 파일이며 동작 변화 없음.
+import { visibilityRestFilter, type VisibilityScope } from "../city-spots-visibility.ts";
+import { collectAllKeyset, keysetRestSuffix } from "../city-spots-paging.ts";
+
+/** 빌드/런타임 place 조회의 fetch cache 정책 — Data Cache 재사용 금지(장기 stale 방지). 테스트가 이 값을 검증한다. */
+export const PLACE_FETCH_CACHE_POLICY = "no-store" as const;
 
 function supabaseEnv(): { url: string; key: string } | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -45,6 +60,7 @@ export async function fetchPublicSpotIds(scope: VisibilityScope = "reference"): 
     const rows = await collectAllKeyset<{ id: number }>(async (afterId, pageSize) => {
       const res = await fetch(`${env.url}/rest/v1/city_spots?select=id${visibilityRestFilter(scope)}${keysetRestSuffix(afterId, pageSize)}`, {
         headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
+        cache: PLACE_FETCH_CACHE_POLICY,
       });
       if (!res.ok) throw new Error(`city_spots id page failed: HTTP ${res.status}`);
       return (await res.json()) as { id: number }[];
@@ -63,6 +79,7 @@ export async function fetchSpot(id: string): Promise<CitySpotRow | null> {
   try {
     const res = await fetch(`${env.url}/rest/v1/city_spots?id=eq.${id}&limit=1`, {
       headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
+      cache: PLACE_FETCH_CACHE_POLICY,
     });
     if (!res.ok) return null;
     const rows = (await res.json()) as CitySpotRow[];
