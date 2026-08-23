@@ -1,0 +1,86 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-FINAL-PRODUCTION-RELEASE-V1",
+ "recorded_at_utc": "2026-08-23T07:59:12.019179+00:00",
+ "release": {
+  "approved_source": "5411a93",
+  "pages_limit_fix": "34e6097 (scripts/build-static.mjs: prune /place segment-prefetch files + 20k guard; 45,492→10,462 files)",
+  "failed_deployment": "23dc4178 (5411a93, Cloudflare Pages 20,000-file limit)",
+  "pre_publish_deployment": {
+   "id": "1288cb49-ca83-47ee-bb81-5951bdb787ef",
+   "commit": "34e6097",
+   "env": "production",
+   "stage": "deploy:success",
+   "aliases": [
+    "https://gokoreamate.com",
+    "https://www.gokoreamate.com"
+   ]
+  }
+ },
+ "pre_publish_production_qa": {
+  "db": {
+   "physical": 5005,
+   "true": 714,
+   "false": 4291,
+   "null": 0
+  },
+  "sentinels": {
+   "577": "STILLROOM — gyeongju | gokoreamate",
+   "607": "Whasoo Brewery — gyeongju | gokoreamate",
+   "640": "Yosukgung — gyeongju | gokoreamate",
+   "910": "자매갈비전골 — jeonju | gokoreamate"
+  },
+  "hidden_direct_route_noindex": {
+   "910": true,
+   "1527": true,
+   "3127": true,
+   "1659": true,
+   "727": true,
+   "927": true,
+   "5005": true
+  },
+  "sitemap": {
+   "total": 738,
+   "place": 714,
+   "hidden_leak": 0,
+   "published_missing": 0,
+   "dup": 0
+  },
+  "trips_404": true
+ },
+ "owner_sql": {
+  "file": "publish-cutover-aada6b5e6873c12f.sql",
+  "sha256": "f3303fc8832ec7049e8e14875f371c44e60a769c7cffc3bfe9c4fd5fe7898e9d",
+  "executed_by": "Owner (Supabase SQL Editor)",
+  "claude_executed": false,
+  "second_attempt": "blocked by pre-check 'published true 4678 <> 714' → write 0"
+ },
+ "post_publish_db_verification": {
+  "physical": 5005,
+  "true": 4678,
+  "false": 327,
+  "null": 0,
+  "per_city_true": {
+   "busan": 807,
+   "gyeongju": 302,
+   "seoul": 1837,
+   "jeju": 1496,
+   "jeonju": 236
+  },
+  "show_true": 4291,
+  "show_exist": 4291,
+  "hide_false": 327,
+  "hide_exist": 327,
+  "keep_true": 19,
+  "canonical_true_outside_show": 0,
+  "overlap": 0,
+  "vg_food_published": 105,
+  "p910_published_with_coords": true,
+  "sources": 5610,
+  "images": 4501,
+  "max_id": 5017,
+  "hard_delete": 0,
+  "user_counts": "68/0/4/9",
+  "user_data_write": 0
+ },
+ "publish_applied": true
+}
