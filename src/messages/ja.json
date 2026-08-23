@@ -453,7 +453,18 @@
     "slot_afternoon": "午後",
     "slot_evening": "夜",
     "coverAlt": "{city} 旅行のカバー画像",
-    "editTitle": "旅行タイトルを編集"
+    "editTitle": "旅行タイトルを編集",
+    "dayAdd": "追加",
+    "mapShow": "地図",
+    "mapHide": "地図を閉じる",
+    "fixedTime": "指定した時間",
+    "transit": "移動 {n}分",
+    "durationHours": "{h}時間",
+    "durationHoursMinutes": "{h}時間{m}分",
+    "durationMinutes": "{m}分",
+    "moreActions": "その他",
+    "closeMenu": "閉じる",
+    "placeDetail": "場所の詳細"
   },
   "common": {
     "language": "言語",

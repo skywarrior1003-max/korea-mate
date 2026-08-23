@@ -453,7 +453,18 @@
     "slot_afternoon": "오후",
     "slot_evening": "저녁",
     "coverAlt": "{city} 여행 대표 이미지",
-    "editTitle": "여행 제목 수정"
+    "editTitle": "여행 제목 수정",
+    "dayAdd": "추가",
+    "mapShow": "지도",
+    "mapHide": "지도 닫기",
+    "fixedTime": "지정한 시간",
+    "transit": "이동 {n}분",
+    "durationHours": "{h}시간",
+    "durationHoursMinutes": "{h}시간 {m}분",
+    "durationMinutes": "{m}분",
+    "moreActions": "더보기",
+    "closeMenu": "닫기",
+    "placeDetail": "장소 상세"
   },
   "common": {
     "language": "언어",

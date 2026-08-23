@@ -453,7 +453,18 @@
     "slot_afternoon": "下午",
     "slot_evening": "晚上",
     "coverAlt": "{city} 行程封面图片",
-    "editTitle": "编辑行程标题"
+    "editTitle": "编辑行程标题",
+    "dayAdd": "添加",
+    "mapShow": "地图",
+    "mapHide": "收起地图",
+    "fixedTime": "指定时间",
+    "transit": "移动 {n} 分钟",
+    "durationHours": "{h} 小时",
+    "durationHoursMinutes": "{h} 小时 {m} 分钟",
+    "durationMinutes": "{m} 分钟",
+    "moreActions": "更多",
+    "closeMenu": "关闭",
+    "placeDetail": "地点详情"
   },
   "common": {
     "language": "语言",

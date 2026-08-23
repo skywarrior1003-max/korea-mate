@@ -76,6 +76,9 @@ import { fetchPersonalizationProfile } from "@/lib/planner/personalize-client";
 import TimelineIcon from "@/components/planner/TimelineIcon";
 import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildTimeline } from "@/lib/planner/timeline-core";
+import PlannerDayHeader from "@/components/planner/PlannerDayHeader";
+import PlannerActionMenu from "@/components/planner/PlannerActionMenu";
+import { shouldShowClock, formatClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory } from "@/lib/planner/planning-view-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
@@ -124,6 +127,14 @@ interface Place {
    * 사실 자체는 감출 것이 아니다 — 감추는 것은 몇 시에 들어갔는가다.
    */
   isAccommodation?: true;
+  /**
+   * 이 항목의 시각이 어디서 왔는가. 스케줄러가 배정한 시각(`"scheduler"`)만 화면에 시각으로 보여 준다.
+   * 보관함·내 장소 추가의 기본값 시각은 이 값이 없어 시간대 라벨로만 보인다 — 시각을 지어내지 않는다.
+   * optional 이라 이 필드가 없던 기존 저장 일정도 그대로 열린다.
+   */
+  timeSource?: "scheduler";
+  /** 사용자가 날짜·시각을 정한 항목. 엔진의 is_fixed 를 그대로 옮긴다. */
+  isFixed?: true;
 }
 
 interface Day {
@@ -858,6 +869,9 @@ async function generateWithNewApi(
           tips:              display.tips,
           googleMapsUrl:     display.google_maps_url,
           slot:              assignSlot(item.start_time),
+          // 화면은 이 출처 표시가 있는 시각만 보여 준다 (planning-view-core.shouldShowClock)
+          timeSource:        "scheduler" as const,
+          ...(item.is_fixed ? { isFixed: true as const } : {}),
           // affiliateUrl 을 cartHint 로부터 복원하지 않는다 (§14-1-A)
           affiliateProvider: cartHint?.affiliate_provider,
           bookingUrl:        cartHint?.booking_url,
@@ -921,14 +935,23 @@ interface ModalProps {
   city: string;
   citySpots: CitySpot[];
   onClose: () => void;
+  /** TASK-MY-TRIP-PLANNING-FINAL-V1 — 카드에서 옮겨 온 보조 액션. 없으면 그리지 않는다(공유 뷰 등) */
+  detailHref?: string | null;
+  visited?: boolean;
+  onToggleVisited?: (() => void) | null;
+  onAddMoment?: (() => void) | null;
+  visitedLabel?: string;
+  addMomentLabel?: string;
+  detailLabel?: string;
 }
 
-function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
+function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onToggleVisited, onAddMoment, visitedLabel, addMomentLabel, detailLabel }: ModalProps) {
   const t          = useTranslations("itin");
   const matched    = matchCitySpot(place.name, citySpots);
   const snap       = place.cartSnapshot;
   const naverUrl   = snap?.naverMapUrl ?? naverPlaceSearchUrl(place.name, city);
   const googleUrl  = place.googleMapsUrl || googlePlaceSearchUrl(place.name, city);
+  const naverIsGoogle = naverUrl.includes("google.com");
   const imageUrl   = resolveSpotImageSrc(snap?.image);
   const badgeColor = getCategoryColor(place.category);
   const tags       = snap?.tags ?? [];
@@ -1015,6 +1038,37 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
               ))}
             </div>
           )}
+          {/* 카드에서 옮겨 온 보조 액션 — 방문 체크(이 기기) · 순간 남기기 · Place Detail */}
+          {(onToggleVisited || onAddMoment || detailHref) && (
+            <div className="flex flex-wrap gap-2">
+              {onToggleVisited && (
+                <button
+                  type="button"
+                  onClick={onToggleVisited}
+                  aria-pressed={!!visited}
+                  className={`gkm-focus text-sm font-bold px-4 min-h-11 rounded-xl border transition-colors ${
+                    visited ? "bg-emerald-50 text-emerald-700 border-emerald-300" : "bg-white text-sub border-line hover:border-sub/40"
+                  }`}
+                >
+                  {visited ? "✓ " : "○ "}{visitedLabel}
+                </button>
+              )}
+              {onAddMoment && (
+                <button
+                  type="button"
+                  onClick={onAddMoment}
+                  className="gkm-focus text-sm font-bold px-4 min-h-11 rounded-xl border border-line bg-white text-ink hover:border-sub/40 transition-colors"
+                >
+                  + {addMomentLabel}
+                </button>
+              )}
+              {detailHref && (
+                <Link href={detailHref} className="gkm-focus text-sm font-bold px-4 min-h-11 inline-flex items-center rounded-xl border border-line bg-white text-ink hover:border-sub/40 transition-colors">
+                  {detailLabel} →
+                </Link>
+              )}
+            </div>
+          )}
           <div className="bg-green-50 border border-green-200 rounded-xl p-4">
             <p className="text-xs font-bold text-green-700 mb-1">{t("naverKoreanHint")}</p>
           </div>
@@ -1025,7 +1079,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
             </a>
             <a href={naverUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 transition-colors">
-              💚 Naver Maps
+              {naverIsGoogle ? t("moreSearch") : "💚 Naver Maps"}
             </a>
           </div>
 
@@ -1182,6 +1236,10 @@ function ItineraryResult() {
   const [error,         setError]         = useState<ItineraryError>(null);
   const [isFallback,    setIsFallback]    = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  /** 상세를 연 항목이 속한 Day — 방문 체크·순간 남기기가 Day 단위 열쇠를 쓴다 */
+  const [selectedPlaceDay, setSelectedPlaceDay] = useState<number | null>(null);
+  /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
+  const [mapOpen, setMapOpen] = useState(true);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
@@ -1201,6 +1259,12 @@ function ItineraryResult() {
   const tStay = useTranslations("stay");
   const tMemo = useTranslations("memo");
   const tPlanner = useTranslations("planner");
+  // 체류시간 표기 — 값은 스케줄러의 stay_minutes 그대로, 표기만 locale 로
+  const durationLabels = {
+    hours:        (h: number) => tPlanner("durationHours", { h }),
+    hoursMinutes: (h: number, m: number) => tPlanner("durationHoursMinutes", { h, m }),
+    minutes:      (m: number) => tPlanner("durationMinutes", { m }),
+  };
   // My Place 표시 이름 fallback 에 쓴다 (picks 네임스페이스 공용).
   const tPicks = useTranslations("picks");
   // 공유 카드 CTA 는 Publish 성공 화면과 같은 말을 써야 한다 — 같은 곳으로 간다.
@@ -2501,141 +2565,67 @@ function ItineraryResult() {
         }
       />
 
-      {/* ── 헤더 카드 ── */}
-      <div className="bg-white rounded-3xl p-8 border border-line shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-black bg-surface-dim text-sub px-3 py-1 rounded-md uppercase tracking-wider">
-              {travelStyle ? `${travelStyle} Trip` : t("tripTitleFallback")}
+      {/* ── 보조 액션 바 (TASK-MY-TRIP-PLANNING-FINAL-V1) ──
+          시안(my_trip_planning_final)은 일정이 주인공이다. 예전 헤더 카드의 버튼 무더기(공개/비공개·
+          순간 기록·공유 카드·홈·편집·보기 전환)는 기능을 하나도 빼지 않고 "더보기" 메뉴로 접는다.
+          동기화 상태와 공개 일정의 링크 복사만 바로 보이게 둔다. */}
+      <div className="flex items-center justify-between gap-3 mb-5">
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
+          {syncStatus === "saving" && (
+            <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">
+              ⟳ Syncing…
             </span>
-            {plannerMeta && (
-              <span className="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-md flex items-center gap-1">
-                🔗 Synced with My Planner · {plannerMeta.numDays}d
-              </span>
-            )}
-            {/* 동기화 상태 표시기 */}
-            {syncStatus === "saving" && (
-              <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">
-                ⟳ Syncing…
-              </span>
-            )}
-            {syncStatus === "saved" && (
-              <span className={`text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full transition-opacity duration-500 ${syncFading ? "opacity-0" : "opacity-100"}`}>
-                ☁️ Saved to cloud
-              </span>
-            )}
-            {syncStatus === "error" && (
-              <span className="text-xs font-bold text-red-500 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
-                ⚠️ Sync failed
-              </span>
-            )}
-          </div>
-          {/* Bug ③: 커스텀 제목 편집 */}
-          {prefTags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-2 mb-1">
-              {prefTags.map(tag => (
-                <span
-                  key={tag}
-                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-surface-dim text-sub capitalize"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           )}
-          {/* 제목·기간·제목 수정은 위 대표 이미지 헤더로 옮겼다.
-              두 곳에 같은 제목이 있으면 어느 쪽이 편집 대상인지 알 수 없다. */}
-        </div>
-
-        <div className="flex flex-col gap-2 w-full sm:w-auto">
-          {/* 공유 링크 복사 — 공개 일정에만 둔다. 링크를 받은 사람은
-              `/shared/{id}` 로 들어가고 거기서 is_public 이 강제되므로,
-              비공개 일정의 링크는 상대에게 "Itinerary not found" 만 보여준다.
-              열리지 않는 링크를 복사하게 두지 않는다. 공개로 바꾸는 방법은
-              바로 아래 Public/Private 토글이다. /my-trips 와 같은 규칙이다. */}
+          {syncStatus === "saved" && (
+            <span className={`text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full transition-opacity duration-500 ${syncFading ? "opacity-0" : "opacity-100"}`}>
+              ☁️ Saved to cloud
+            </span>
+          )}
+          {syncStatus === "error" && (
+            <span className="text-xs font-bold text-red-500 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+              ⚠️ Sync failed
+            </span>
+          )}
+          {/* 공유 링크 복사 — 공개 일정에만. 비공개 일정의 링크는 받는 쪽에서 열리지 않으므로 만들지 않는다 (/my-trips 와 같은 규칙) */}
           {isPublic && (
-          <button
-            onClick={handleCopyShareLink}
-            disabled={!itinId}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all disabled:opacity-40 active:scale-95"
-            style={{ backgroundColor: "var(--gkm-accent-coral)" }}
-          >
-            {copied ? t("copied") : t("copyShareLink")}
-          </button>
-          )}
-
-          {/* 공개/비공개 토글 */}
-          {(!shareId || isOwner) && itinId && (
             <button
-              onClick={handleTogglePublic}
-              className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 ${
-                isPublic
-                  ? "bg-emerald-600 text-white"
-                  : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
-              }`}
+              type="button"
+              onClick={handleCopyShareLink}
+              disabled={!itinId}
+              className="gkm-focus text-xs font-black px-3 min-h-9 rounded-full text-white disabled:opacity-40 active:scale-95 transition-transform"
+              style={{ backgroundColor: "var(--gkm-accent-coral)" }}
             >
-              {isPublic ? t("visibilityPublic") : t("visibilityPrivate")}
+              {copied ? t("copied") : t("copyShareLink")}
             </button>
           )}
-
-          {/* TASK-022: 기억 기록 버튼 */}
-          <button
-            onClick={() => setCaptureOpen(true)}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-            style={{ backgroundColor: "#1a1a2e" }}
-          >
-            📸 {tMemo("captureTitle")} {moments.length > 0 && <span className="bg-accent-coral text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
-          </button>
-
-          {/* 공유 카드 — 공개 Story 의 시각적 표현이다.
-              비공개 여행에는 공개 Story 가 없으므로 카드를 만들지 않고 공개
-              절차(Publish)로 보낸다. 소유자의 비공개 Memory 를 그대로 카드에
-              담던 예전 경로는 없앴다 — 공개하지 않기로 한 것이 나갔다. */}
-          {(!shareId || isOwner) && itinId && (
-            <button
-              onClick={() => { if (isPublic) void openStoryCard(); else setPublishPreviewOpen(true); }}
-              disabled={storyCardBusy}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2 disabled:opacity-50"
-              style={{ borderColor: "var(--gkm-accent-coral)", color: "var(--gkm-accent-coral)", backgroundColor: "transparent" }}
-            >
-              🎴 {tPublish("openStoryCard")}
-            </button>
-          )}
-
-          <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-surface-dim hover:bg-[#F3EEE3] text-ink border border-line rounded-xl transition-all shadow-sm">
-            ← {t("backHome")}
-          </Link>
-
-          {/* Compact 편집 캔버스 진입 — 비공유 or 본인 일정. 끝난 여행은 읽기 전용 */}
-          {(!shareId || isOwner) && !isPastTrip && (
-            <button
-              onClick={() => { setViewMode("compact"); setEditDay(0); }}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "var(--gkm-ink)" }}
-            >
-              {viewMode === "compact" ? t("editing") : t("editTrip")}
-            </button>
-          )}
-
-          {/* Compact / Full View 토글 — 끝난 여행은 읽기 전용이라 숨긴다 */}
-          {!isPastTrip && (
-          <div className="flex gap-1.5 p-1 border border-line rounded-xl bg-surface-dim">
-            {(["full", "compact"] as const).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setViewMode(mode)}
-                className={`flex-1 px-4 py-2 rounded-lg text-xs font-black transition-all ${
-                  viewMode === mode
-                    ? "bg-ink text-surface-dim shadow-sm"
-                    : "text-sub hover:text-ink"
-                }`}
-              >
-                {mode === "compact" ? t("viewCompact") : t("viewFull")}
-              </button>
-            ))}
-          </div>
-          )}
+          <span className="text-[11px] font-black bg-surface-dim text-sub px-2 py-0.5 rounded-md uppercase tracking-wider">
+            {travelStyle ? `${travelStyle} Trip` : t("tripTitleFallback")}
+          </span>
+          {prefTags.length > 0 && prefTags.slice(0, 3).map(tag => (
+            <span key={tag} className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub capitalize">{tag}</span>
+          ))}
         </div>
+        <PlannerActionMenu
+          label={tPlanner("moreActions")}
+          closeLabel={tPlanner("closeMenu")}
+          items={[
+            ...((!shareId || isOwner) && itinId
+              ? [{ key: "visibility", label: isPublic ? t("visibilityPublic") : t("visibilityPrivate"), onClick: handleTogglePublic }]
+              : []),
+            { key: "capture", label: moments.length > 0 ? `${tMemo("captureTitle")} (${moments.length})` : tMemo("captureTitle"), onClick: () => setCaptureOpen(true) },
+            ...((!shareId || isOwner) && itinId
+              ? [{ key: "storyCard", label: `🎴 ${tPublish("openStoryCard")}`, accent: true, disabled: storyCardBusy,
+                   onClick: () => { if (isPublic) void openStoryCard(); else setPublishPreviewOpen(true); } }]
+              : []),
+            ...((!shareId || isOwner) && !isPastTrip
+              ? [{ key: "edit", label: viewMode === "compact" ? t("editing") : t("editTrip"), onClick: () => { setViewMode("compact"); setEditDay(0); } }]
+              : []),
+            ...(!isPastTrip
+              ? [{ key: "view", label: viewMode === "compact" ? t("viewFull") : t("viewCompact"), onClick: () => setViewMode(viewMode === "compact" ? "full" : "compact") }]
+              : []),
+            { key: "home", label: t("backHome"), href: "/" },
+          ]}
+        />
       </div>
 
       {/* ── 일정 | Story — 같은 여행의 두 view (TASK-STORY-LIVE-BASELINE-V1) ── */}
@@ -2697,9 +2687,6 @@ function ItineraryResult() {
       {/* 일정 본문은 Story 를 볼 때도 언마운트하지 않고 감춘다 — 지도·Day 선택·
           편집 상태가 그대로 남아 돌아오면 보던 자리부터 이어진다. */}
       <div className={tripView === "itinerary" ? undefined : "hidden"} aria-hidden={tripView !== "itinerary"}>
-      <p className="text-center text-sm text-sub font-bold mb-4 bg-surface-dim/40 rounded-xl py-2.5">
-        {t("hintTapCard")}
-      </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
       {/* Post-Plan Commerce (§14-1-B) — 일정 확정 후 문맥 상품. 정상화 전까지 비활성 */}
@@ -2960,7 +2947,7 @@ function ItineraryResult() {
           {/* S2: 선택 Day 지도 — 번호 마커·순서선·Add to this day.
               Day 칩은 끈다 — 위 PlannerDayNav 가 선택을 맡는다. 두 벌이 같이 보이면
               어느 쪽이 진짜 선택인지 알 수 없고 스크린리더도 Day 탭을 두 번 읽는다. */}
-          {days.length > 0 && (
+          {days.length > 0 && mapOpen && (
             <ItineraryDayMap
               days={days}
               city={city}
@@ -2987,22 +2974,24 @@ function ItineraryResult() {
             }));
 
             return (
-              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-accent-coral/30">
-                <div className="absolute -left-[11px] top-1.5 bg-surface-dim border-4 border-accent-coral w-5 h-5 rounded-full z-10" />
-                <h2 className="text-2xl sm:text-3xl font-black text-ink mb-5 flex items-center gap-3 flex-wrap">
-                  <span>Day {day.dayNumber}</span>
-                  <span className="text-lg font-bold text-sub bg-surface-dim/40 px-3 py-0.5 rounded-full">{day.date}</span>
-                  <span className="text-sm font-semibold text-sub">{t("placesCount", { n: day.places.length })}</span>
-                  {/* S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만) */}
-                  {(() => {
+              <div key={day.dayNumber} className="relative">
+                {/* Day 헤더 — 시안의 "Day N · 날짜 · + Add · Map". 날씨 칩은 PlannerDayNav 에 있다. */}
+                <PlannerDayHeader
+                  dayNumber={day.dayNumber}
+                  dateLabel={day.date}
+                  countLabel={t("placesCount", { n: day.places.length })}
+                  progressLabel={(() => {
+                    // S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만)
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
-                    return done > 0 ? (
-                      <span className="text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-0.5 rounded-full">
-                        ✓ {t("progress", { done, total: day.places.length })}
-                      </span>
-                    ) : null;
+                    return done > 0 ? `✓ ${t("progress", { done, total: day.places.length })}` : null;
                   })()}
-                </h2>
+                  onAdd={(!shareId || isOwner) && !isPastTrip ? () => { setViewMode("compact"); setEditDay(day.dayNumber - 1); } : null}
+                  addLabel={tPlanner("dayAdd")}
+                  mapOpen={mapOpen}
+                  onToggleMap={() => setMapOpen(o => !o)}
+                  mapShowLabel={tPlanner("mapShow")}
+                  mapHideLabel={tPlanner("mapHide")}
+                />
 
                 {conflictDays.has(day.dayNumber) && (
                   <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-amber-50 border border-amber-200">
@@ -3033,165 +3022,93 @@ function ItineraryResult() {
                       slotAssigned.map(x => ({ item: x.place, index: x.idx, slot: x.slot })),
                       TIME_SLOTS.map(ts => ts.key),   // 정렬 순서 정의는 기존 것 하나만 쓴다
                     );
-                    return rows.map((row) => {
+                    return rows.map((row, rowIdx) => {
                             const place = row.item;
                             const idx   = row.index;
-                              const naverUrl = naverPlaceSearchUrl(place.name, city);
-                              const googleUrl =
-                                place.googleMapsUrl ||
-                                googlePlaceSearchUrl(place.name, city);
-                              const naverIsGoogle = naverUrl.includes("google.com");
+                            const prev  = rowIdx > 0 ? rows[rowIdx - 1]!.item : null;
+                            // 시각은 스케줄러가 배정한 것만. 아니면 시간대 라벨(첫 항목)만 남긴다.
+                            const clock   = shouldShowClock(place) ? formatClock(place.time, locale) : null;
+                            const stay    = formatDuration(parseDurationMinutes(place.duration), durationLabels);
+                            const transit = prev ? transitMinutes(prev, place) : null;
+                            const imageSrc = place.cartSnapshot?.image ?? place.image;
+                            const thumb   = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                            const isVisited = visited.has(visitedPlaceKey(day.dayNumber, place));
+                            const openDetail = () => { setSelectedPlace(place); setSelectedPlaceDay(day.dayNumber); };
 
                               return (
-                                <div
-                                  key={idx}
-                                  className="flex items-stretch hover:bg-surface-dim/40 transition-colors group relative"
-                                >
-                                  {/* 타임라인 레일 — 위 선 · 아이콘 · 아래 선.
-                                      flex 로 행 높이를 그대로 따라가므로 카드가 길어지거나
-                                      슬롯 라벨이 붙어도 선이 끊기지 않는다. 슬롯이 바뀌는
-                                      자리에서도 위 선을 그대로 이어 하루가 한 줄로 보인다.
-                                      의미는 옆의 category 배지가 글자로 전하므로 숨긴다. */}
+                                <div key={idx} className="relative">
+                                  {/* 이동 정보 — 두 스케줄러 시각 사이의 빈 시간만 읽는다(planning-view-core). 추정 0 */}
+                                  {transit !== null && (
+                                    <p className="pl-[96px] pr-4 pt-1 text-[11px] font-semibold text-faint">{tPlanner("transit", { n: transit })}</p>
+                                  )}
+                                  <div className="flex items-stretch">
+                                  {/* 시각 열 — 시안의 "9:00 AM". 시각이 없으면 시간대 라벨(그 시간대 첫 항목만) */}
+                                  <div className="w-[64px] shrink-0 pt-[22px] pr-1 text-right">
+                                    {clock && (
+                                      <span className="text-xs font-bold text-sub tabular-nums">{clock}</span>
+                                    )}
+                                    {!clock && row.showSlotLabel && (
+                                      <span className="text-[10px] font-black uppercase tracking-[0.12em] text-faint">{tPlanner(`slot_${row.slot}`)}</span>
+                                    )}
+                                  </div>
+                                  {/* 타임라인 레일 — 위 선 · 아이콘 · 아래 선. 슬롯 경계에서도 선이 이어진다. */}
                                   <div
                                     aria-hidden
-                                    className="w-[68px] shrink-0 flex flex-col items-center pointer-events-none"
+                                    className="w-[32px] shrink-0 flex flex-col items-center pointer-events-none"
                                   >
                                     <span
                                       className={`w-0 flex-none ${row.railAbove ? "border-l-2 border-dotted border-line" : ""}`}
-                                      style={{ height: row.showSlotLabel ? 46 : 22 }}
+                                      style={{ height: 18 }}
                                     />
                                     <span
-                                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                      className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                                       style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}
                                     >
-                                      <TimelineIcon category={place.category} size={16} />
+                                      <TimelineIcon category={place.category} size={14} />
                                     </span>
                                     <span
                                       className={`w-0 flex-1 ${row.railBelow ? "border-l-2 border-dotted border-line" : ""}`}
                                     />
                                   </div>
 
-                                  <div className="flex-1 min-w-0">
-                                  {/* 시간대 흐름 라벨 — 그 시간대의 첫 장소에만. 정확한 도착
-                                      시각이 아니므로 작은 보조 텍스트로만 둔다. */}
-                                  {row.showSlotLabel && (
-                                    <p className="pt-4 pb-0.5 pr-5 text-[11px] font-black uppercase tracking-[0.14em] text-faint">
-                                      {tPlanner(`slot_${row.slot}`)}
-                                    </p>
-                                  )}
-                                  {/* 장소 정보 + 지도 버튼 행 */}
-                                  <div className="flex flex-col sm:flex-row justify-between gap-4 py-5 pr-5">
-                                    <div
-                                      className="space-y-2 flex-1 cursor-pointer min-w-0"
-                                      onClick={() => setSelectedPlace(place)}
+                                  <div className="flex-1 min-w-0 py-2.5 pr-4">
+                                    {/* 카드 = 하나의 버튼. 지도·방문 체크·순간 남기기·상세 링크는 상세(PlaceModal)로 모였다 —
+                                        기능은 그대로, 카드에는 대표 이미지·장소명·카테고리·체류시간만 남긴다. */}
+                                    <button
+                                      type="button"
+                                      onClick={openDetail}
+                                      className="gkm-focus w-full text-left rounded-2xl border border-line bg-white hover:bg-surface-dim/40 transition-colors flex items-center gap-3 p-3"
                                     >
-                                      <div className="flex flex-wrap items-center gap-2">
-                                        <span
-                                          className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
-                                          style={{ backgroundColor: getCategoryColor(place.category) }}
-                                        >{place.category}</span>
-                                        {/* 정확한 방문 시각은 표시하지 않는다 — 시간대 흐름 라벨이
-                                            그 자리를 대신한다. place.time 자체는 슬롯 판정에 계속 쓴다.
-
-                                            숙소 체크인만 예외다. 몇 시부터 들어갈 수 있는지가 그
-                                            자체로 쓸모 있는 정보이기 때문이다. 그 시각은 저장된
-                                            일정이 아니라 이 기기에서 온다 — 공유 링크에는 없다. */}
-                                        {place.isAccommodation && checkinTime && (
-                                          <span className="text-xs font-bold text-sub">
-                                            {t("checkinAt", { time: checkinTime })}
+                                      {thumb ? (
+                                        /* eslint-disable-next-line @next/next/no-img-element */
+                                        <img src={thumb} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
+                                      ) : (
+                                        <span className="w-14 h-14 rounded-xl shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(place.category) }}>
+                                          <TimelineIcon category={place.category} size={20} />
+                                        </span>
+                                      )}
+                                      <span className="min-w-0 flex-1">
+                                        <span className="block text-base font-bold text-ink leading-tight truncate">
+                                          {place.name?.trim() || (place.isAccommodation ? tStay("placeFallback") : "")}
+                                        </span>
+                                        <span className="block mt-1 text-xs text-sub truncate">
+                                          {humanizeCategory(place.category)}
+                                          {stay ? ` · ${stay}` : ""}
+                                          {/* 숙소 체크인 시각은 저장 일정이 아니라 이 기기에서 온다 — 공유 링크에는 없다 */}
+                                          {place.isAccommodation && checkinTime && ` · ${t("checkinAt", { time: checkinTime })}`}
+                                        </span>
+                                        {(place.isFixed || isVisited) && (
+                                          <span className="mt-1.5 flex items-center gap-1.5 flex-wrap">
+                                            {place.isFixed && (
+                                              <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-surface-dim text-sub">{tPlanner("fixedTime")}</span>
+                                            )}
+                                            {isVisited && (
+                                              <span className="text-[10px] font-black text-emerald-600">✓ {t("visited")}</span>
+                                            )}
                                           </span>
                                         )}
-                                        <span className="text-xs font-bold text-sub">📍 {place.location}</span>
-                                        {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
-                                        <button
-                                          onClick={(e) => { e.stopPropagation(); toggleVisited(day.dayNumber, place); }}
-                                          aria-pressed={visited.has(visitedPlaceKey(day.dayNumber, place))}
-                                          className={`text-xs font-bold px-2.5 py-1 rounded-full border transition-colors cursor-pointer ${
-                                            visited.has(visitedPlaceKey(day.dayNumber, place))
-                                              ? "bg-emerald-50 text-emerald-700 border-emerald-300"
-                                              : "bg-white text-sub/60 border-line hover:border-sub/40"
-                                          }`}
-                                        >
-                                          {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ " : "○ "}{t("visited")}
-                                        </button>
-                                        {/* 이 장소에서 순간 남기기 — 장소명과 공식 장소 id 를 들고 Capture 를 연다.
-                                            그래야 Story 가 이 장소 항목을 정확히 개인화한다 (장소명 추측 결합 없음).
-                                            열쇠(stopKeyOf: 공식 장소·내 장소·행사 출처 키)가 있는 항목에만 둔다. 숙소처럼
-                                            출처 id 가 없는 항목은 결합할 수 없으므로 열지 않는다 — 열어 주면 같은 장소가
-                                            Story 에 기본 항목 + 자유 순간으로 두 번 보인다. 그런 기록은 자유 순간으로 남긴다. */}
-                                        {(!shareId || isOwner) && itinId && stopKeyOf(place) !== null && (
-                                          <button
-                                            type="button"
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              setCaptureDay(day.dayNumber);
-                                              setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place), stopKey: stopKeyOf(place) });
-                                              setCaptureOpen(true);
-                                            }}
-                                            aria-label={`${tMemo("addMemory")} · ${place.name}`}
-                                            className="text-xs font-bold px-2.5 py-1 rounded-full border border-line bg-white text-sub/70 hover:border-sub/40 transition-colors cursor-pointer"
-                                          >
-                                            + {tMemo("addMemory")}
-                                          </button>
-                                        )}
-                                      </div>
-                                      <div className="flex items-start gap-3">
-                                        {hasRealSpotImage(place.cartSnapshot?.image) && (
-                                          <img
-                                            src={resolveSpotImageSrc(place.cartSnapshot?.image)}
-                                            alt={place.name}
-                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-line"
-                                            onError={swapToPlaceholderOnError}
-                                          />
-                                        )}
-                                        <div className="min-w-0">
-                                          {/* 장소명만 Place Detail 로 보낸다. 카드 전체를 링크로
-                                              바꾸면 Visited·지도·상세 모달과 클릭이 겹친다.
-                                              stopPropagation 으로 카드의 모달 열기를 막는다. */}
-                                          <h3 className="text-lg sm:text-xl font-black text-ink group-hover:text-sub transition-colors">
-                                            {citySpotHref(place) ? (
-                                              <Link
-                                                href={citySpotHref(place)!}
-                                                onClick={(e) => e.stopPropagation()}
-                                                className="hover:text-accent-coral hover:underline underline-offset-4 decoration-2 transition-colors"
-                                              >
-                                                {place.name?.trim()
-                                                  || (place.isAccommodation ? tStay("placeFallback") : "")}
-                                              </Link>
-                                            ) : place.name}
-                                          </h3>
-                                          <div className="bg-surface-dim/60 border border-line/60 rounded-xl p-3 mt-1">
-                                            <p className="text-xs text-sub leading-relaxed line-clamp-2">
-                                              {firstPublicText(place.cartSnapshot?.whyItMatters, place.cartSnapshot?.description, place.tips)}
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <p className="text-xs text-accent-coral font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Click for full details + maps →
-                                      </p>
-                                    </div>
-                                    <div className="flex sm:flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
-                                      <a
-                                        href={googleUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-400 rounded-xl transition-all shadow-sm sm:w-32"
-                                      >🗺️ Google Maps</a>
-                                      <a
-                                        href={naverUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold rounded-xl transition-all shadow-sm sm:w-32 ${
-                                          naverIsGoogle
-                                            ? "bg-white hover:bg-blue-50 text-blue-600 border border-blue-100 hover:border-blue-300"
-                                            : "bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400"
-                                        }`}
-                                      >
-                                        {naverIsGoogle ? t("moreSearch") : "💚 Naver Maps"}
-                                      </a>
-                                    </div>
-                                  </div>
+                                      </span>
+                                    </button>
                                   {/* 수익화 제휴 버튼 스트립 — slotItems.map 내부, 즉
                                       **일정 항목 내부**이므로 Post-Plan 이 아니라
                                       Trip-Flow Commerce (§14-1-A) 로 분류한다. */}
@@ -3237,6 +3154,7 @@ function ItineraryResult() {
                                     </a>
                                   </div>
                                   )}
+                                  </div>
                                   </div>
                                 </div>
                               );
@@ -3352,7 +3270,31 @@ function ItineraryResult() {
       )}
 
       {selectedPlace && (
-        <PlaceModal place={selectedPlace} city={city} citySpots={citySpots} onClose={() => setSelectedPlace(null)} />
+        <PlaceModal
+          place={selectedPlace}
+          city={city}
+          citySpots={citySpots}
+          onClose={() => { setSelectedPlace(null); setSelectedPlaceDay(null); }}
+          detailHref={citySpotHref(selectedPlace)}
+          detailLabel={tPlanner("placeDetail")}
+          visited={selectedPlaceDay !== null && visited.has(visitedPlaceKey(selectedPlaceDay, selectedPlace))}
+          visitedLabel={t("visited")}
+          onToggleVisited={selectedPlaceDay !== null ? () => toggleVisited(selectedPlaceDay, selectedPlace) : null}
+          addMomentLabel={tMemo("addMemory")}
+          onAddMoment={(() => {
+            // 카드에 있던 진입점 그대로 — 열쇠(stopKeyOf)가 있는 항목에만, 숙소처럼 출처 id 가 없으면 열지 않는다.
+            const place = selectedPlace;
+            const day = selectedPlaceDay;
+            return ((!shareId || isOwner) && itinId && stopKeyOf(place) !== null && (day !== null
+              ? () => {
+                  setCaptureDay(day);
+                  setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place), stopKey: stopKeyOf(place) });
+                  setSelectedPlace(null); setSelectedPlaceDay(null);
+                  setCaptureOpen(true);
+                }
+              : null)) || null;
+          })()}
+        />
       )}
 
       {/* Trip Cover — Timeline 에서 고른 사진의 공개 동의 (기존 다이얼로그 재사용) */}

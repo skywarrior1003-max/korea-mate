@@ -126,7 +126,7 @@ const ITIN = code(readFileSync("src/app/itinerary/page.tsx", "utf8"));
 
 test("R1 소유자 화면의 공유 카드 CTA 가 locale 을 쓴다", () => {
   assert.ok(!ITIN.includes("Create Story Card"), "영어가 박혀 있다");
-  assert.match(ITIN, /🎴 \{tPublish\("openStoryCard"\)\}/);
+  assert.match(ITIN, /🎴 (\{tPublish\("openStoryCard"\)\}|\$\{tPublish\("openStoryCard"\)\})/);   // 버튼 또는 메뉴 항목(PLANNING-FINAL-V1)
 });
 
 test("R2 소유자 화면과 공유 화면이 같은 키를 쓴다 — 같은 곳으로 가는 버튼이다", () => {

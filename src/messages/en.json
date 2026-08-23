@@ -453,7 +453,18 @@
     "slot_afternoon": "Afternoon",
     "slot_evening": "Evening",
     "coverAlt": "{city} trip cover image",
-    "editTitle": "Edit trip title"
+    "editTitle": "Edit trip title",
+    "dayAdd": "Add",
+    "mapShow": "Map",
+    "mapHide": "Hide map",
+    "fixedTime": "Your set time",
+    "transit": "{n} min travel",
+    "durationHours": "{h} hr",
+    "durationHoursMinutes": "{h} hr {m} min",
+    "durationMinutes": "{m} min",
+    "moreActions": "More actions",
+    "closeMenu": "Close",
+    "placeDetail": "Place details"
   },
   "common": {
     "language": "Language",
