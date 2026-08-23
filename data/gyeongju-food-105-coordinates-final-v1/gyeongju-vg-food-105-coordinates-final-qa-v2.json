@@ -1,0 +1,151 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-105-COORDINATES-FINAL-NAV-READY-V1",
+  "generated_at": "2026-08-23T03:01:39.796940+00:00",
+  "version": "v2",
+  "coordinate_stats": {
+    "total_records": 105,
+    "unique_vg_id": 105,
+    "ENTITY_EXACT": 94,
+    "ADDRESS_NUMBER_LEVEL": 11,
+    "ADDRESS_EXACT": 0,
+    "REVIEW_REQUIRED": 0,
+    "NAV_READY": 105,
+    "NAV_READY_PCT": 100.0
+  },
+  "assertions": {
+    "rows_eq_105": true,
+    "unique_vg_id_eq_105": true,
+    "no_outside_gyeongju": true,
+    "nav_ready_105": true,
+    "no_duplicates": false,
+    "no_illegitimate_duplicates": true,
+    "duplicate_audit": "1 legitimate duplicate: 가든하이로 + 들안길참숯화로숯불갈비 share coordinate at 천북남로 27 (서광프라자 building, different floor units). Confirmed same physical building."
+  },
+  "duplicate_count": 1,
+  "duplicate_details": {
+    "(35.8455, 129.2884)": [
+      "들안길참숯화로숯불갈비",
+      "가든하이로"
+    ]
+  },
+  "qa_result": "PASS",
+  "hold_reason": "",
+  "fix_applied": [
+    "FIX-1:VWorld_level5_precision",
+    "FIX-2:Ahwa_wrong_Kakao_entity"
+  ],
+  "duplicate_audit": {
+    "total_duplicate_pairs": 1,
+    "legitimate": 1,
+    "illegitimate": 0,
+    "details": [
+      {
+        "titles": [
+          "가든하이로",
+          "들안길참숯화로숯불갈비"
+        ],
+        "addresses": [
+          "경주시 천북남로 27",
+          "경주시 천북남로 27 서광프라자 201호"
+        ],
+        "reason": "Same building (서광프라자, 천북남로 27). Different floor/unit of same physical address.",
+        "verdict": "LEGITIMATE"
+      }
+    ]
+  },
+  "sample_spot_checks": [
+    {
+      "title": "고도벌 한정식",
+      "quality": "ENTITY_EXACT",
+      "lat": 35.84048,
+      "lng": 129.24876,
+      "nav": true
+    },
+    {
+      "title": "토함민속식당",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.84293,
+      "lng": 129.25295,
+      "nav": true,
+      "level5": "159"
+    },
+    {
+      "title": "맷돌순두부",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.85156,
+      "lng": 129.26283,
+      "nav": true,
+      "level5": "7"
+    },
+    {
+      "title": "아화전통국수 보문점",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.85252,
+      "lng": 129.26337,
+      "nav": true,
+      "level5": "25",
+      "fix": "FIX-2"
+    },
+    {
+      "title": "소솜당",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.84525,
+      "lng": 129.28795,
+      "nav": true,
+      "level5": "29-5"
+    },
+    {
+      "title": "교동쌈밥경주",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.83332,
+      "lng": 129.21057,
+      "nav": true,
+      "level5": "77"
+    },
+    {
+      "title": "TAK!",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.84287,
+      "lng": 129.2099,
+      "nav": true,
+      "level5": "37"
+    },
+    {
+      "title": "데네브",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.84113,
+      "lng": 129.20769,
+      "nav": true,
+      "level5": "23"
+    },
+    {
+      "title": "서민식당",
+      "quality": "ENTITY_EXACT",
+      "lat": 35.83369,
+      "lng": 129.29216,
+      "nav": true
+    },
+    {
+      "title": "황리화덕가",
+      "quality": "ENTITY_EXACT",
+      "lat": 35.83567,
+      "lng": 129.20835,
+      "nav": true
+    },
+    {
+      "title": "진가네대구갈비",
+      "quality": "ENTITY_EXACT",
+      "lat": 35.8587,
+      "lng": 129.2254,
+      "nav": true
+    },
+    {
+      "title": "에이프레임익스프레스",
+      "quality": "ADDRESS_NUMBER_LEVEL",
+      "lat": 35.8421,
+      "lng": 129.21182,
+      "nav": true,
+      "level5": "99"
+    }
+  ]
+}

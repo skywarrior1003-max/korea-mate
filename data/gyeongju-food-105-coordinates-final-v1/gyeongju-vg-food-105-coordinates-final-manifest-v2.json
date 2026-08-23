@@ -1,0 +1,24 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-105-COORDINATES-FINAL-NAV-READY-V1",
+  "branch": "data/gyeongju-food-105-coordinates-final-v1",
+  "generated_at": "2026-08-23T03:01:39.797960+00:00",
+  "base_branch": "data/gyeongju-food-105-media-nav-completion-v1",
+  "base_commit": "323142e",
+  "total_records": 105,
+  "ENTITY_EXACT": 94,
+  "ADDRESS_NUMBER_LEVEL": 11,
+  "ADDRESS_EXACT": 0,
+  "REVIEW_REQUIRED": 0,
+  "NAV_READY": 105,
+  "identity": {
+    "food_universe_changed": 0,
+    "multilingual_changed": 0,
+    "attraction_changed": 0
+  },
+  "qa_result": "PASS",
+  "fix_applied": [
+    "FIX-1:VWorld_level5_precision",
+    "FIX-2:Ahwa_wrong_Kakao_entity"
+  ],
+  "vworld_precision_note": "level5 != '' => ADDRESS_NUMBER_LEVEL (address-number-interpolated, nav_ready). level4LC != '' => BUILDING_LEVEL. detail != '' => BUILDING_LEVEL."
+}
