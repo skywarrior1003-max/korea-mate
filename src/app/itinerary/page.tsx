@@ -78,7 +78,7 @@ import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildTimeline } from "@/lib/planner/timeline-core";
 import PlannerDayHeader from "@/components/planner/PlannerDayHeader";
 import PlannerActionMenu from "@/components/planner/PlannerActionMenu";
-import { shouldShowClock, formatClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory } from "@/lib/planner/planning-view-core";
+import { shouldShowClock, formatClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory, orderDayPlaces } from "@/lib/planner/planning-view-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
@@ -840,10 +840,10 @@ async function generateWithNewApi(
         //   저장되고 공유 링크로 나간다. 어디서 자는지에 더해 몇 시에 거기
         //   있는지까지는 다른 이야기다. 시각은 내 기기에만 둔다.
         if (isAccommodationCheckin(item)) {
-          // 순서를 지키려면 시각이 있어야 한다 — `sanitizeDays` 가 이 값으로
-          // 정렬하고 Day 1 필터를 건다. 그래서 **바로 앞 항목의 시각** 을 그대로
-          // 쓴다. 이미 저장돼 공개되는 값이라 새로 알려 주는 것이 없고, 정렬은
-          // 안정 정렬이라 그 항목 바로 뒤에 남는다.
+          // `sanitizeDays` 의 Day 1/막날 필터가 시각을 보므로 **바로 앞 항목의
+          // 시각** 을 그대로 쓴다. 이미 저장돼 공개되는 값이라 새로 알려 주는
+          // 것이 없다. 시각 출처 표시가 없어 순서 계약(orderDayPlaces)의 정렬
+          // 대상이 아니고, 스케줄러가 놓은 자리(앞 항목 바로 뒤)를 그대로 지킨다.
           const prevTime = arr[itemIdx - 1]?.start_time ?? item.start_time;
           return {
             name:          exactStay?.name?.trim() || "",
@@ -1478,7 +1478,9 @@ function ItineraryResult() {
   };
 
   // ── sanitizeDays: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
-  // 1) 모든 day.places를 HH:MM 시간 오름차순 정렬 (stable: origIdx 서브키)
+  // 1) 실제 시각(timeSource scheduler/user)이 있는 항목만 시간 오름차순으로 재배치
+  //    (orderDayPlaces) — 시각 없는 항목은 사용자가 둔 자리를 그대로 지킨다
+  //    (ORDER-TIME-CONTRACT-FIX-V1: 수동 ↑↓ 순서가 저장·재오픈 후에도 유지된다)
   // 2) 공항 저녁 도착 Day 1: arrivalHour 이전 & 금지 장소 물리 제거
   // 3) 저녁/야간 도착 Day 1: arrivalHour 이전 슬롯 물리 제거 (Morning/Lunch 차단)
 
@@ -1492,14 +1494,9 @@ function ItineraryResult() {
 
   const sanitizeDays = (rawDays: Day[]): Day[] =>
     rawDays.map((day, dayIdx) => {
-      // ① 시간 오름차순 정렬 — origIdx를 서브 정렬 키로 사용하여 동일 시간대 순서 보장
-      const sorted = day.places
-        .map((p, origIdx) => ({ p, origIdx }))
-        .sort((a, b) => {
-          const diff = timeToMins(a.p.time) - timeToMins(b.p.time);
-          return diff !== 0 ? diff : a.origIdx - b.origIdx; // 동일 시간 → 원래 입력 순서 유지
-        })
-        .map(({ p }) => p);
+      // ① 순서 계약 — 시각 있는 항목은 시간순(동일 시간은 원래 순서 유지),
+      //    시각 없는 항목은 자기 자리 유지 (planning-view-core.orderDayPlaces)
+      const sorted = orderDayPlaces(day.places);
 
       // ② Day 1 필터링: 도착 시간(arrivalHour) 이전 슬롯 제거
       //   - 공항 저녁: arrivalHour 이전 AND 금지 장소 모두 제거
@@ -2160,7 +2157,8 @@ function ItineraryResult() {
       if (!moving) return prev;
       return prev.map((day, di) => {
         if (di === dayIdx)       return { ...day, places: day.places.filter((_, pi) => pi !== placeIdx) };
-        if (di === targetDayIdx) return { ...day, places: [...day.places, moving] };
+        // 옮긴 항목도 순서 계약을 따른다 — 시각이 있으면 그 시각 자리로, 없으면 맨 뒤에.
+        if (di === targetDayIdx) return { ...day, places: orderDayPlaces([...day.places, moving]) };
         return day;
       });
     });
@@ -2168,13 +2166,14 @@ function ItineraryResult() {
 
   // 시작시간은 사용자가 정한 값이므로 화면에 실제 시각으로 표시한다(timeSource "user").
   // 슬롯도 그 시각으로 다시 정한다. 고정(isFixed) 표시는 유지 — 사용자가 정한 시간이라는 사실은 같다.
+  // 시각이 곧 순서다 — 바꾼 즉시 그 날 안에서 시간 자리로 옮긴다(orderDayPlaces).
   function setPlaceTime(dayIdx: number, placeIdx: number, hhmm: string) {
     if (!/^\d{2}:\d{2}$/.test(hhmm)) return;
     setDays(prev => prev.map((day, di) => {
       if (di !== dayIdx) return day;
-      return { ...day, places: day.places.map((p, pi) => pi === placeIdx
+      return { ...day, places: orderDayPlaces(day.places.map((p, pi) => pi === placeIdx
         ? { ...p, time: hhmm, slot: assignSlot(hhmm), timeSource: "user" as const }
-        : p) };
+        : p)) };
     }));
   }
 
@@ -2855,20 +2854,28 @@ function ItineraryResult() {
                       </div>
                       {canEdit && (
                         <div className="flex items-center gap-1.5 px-3 pb-3 flex-wrap">
-                          <button
-                            type="button"
-                            onClick={() => movePlace(editDay, pi, "up")}
-                            disabled={pi === 0}
-                            aria-label={t("moveUp")}
-                            className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
-                          >↑</button>
-                          <button
-                            type="button"
-                            onClick={() => movePlace(editDay, pi, "down")}
-                            disabled={pi === days[editDay].places.length - 1}
-                            aria-label={t("moveDown")}
-                            className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
-                          >↓</button>
+                          {/* 순서 계약: 시각 있는 항목은 시간이 자리를 정하므로 ↑↓ 를 주지 않는다 —
+                              "순서만 바뀐 채 저장된다" 는 잘못된 기대를 만들지 않는다. 시간 입력이 곧 순서 조정이다. */}
+                          {!clock ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => movePlace(editDay, pi, "up")}
+                                disabled={pi === 0}
+                                aria-label={t("moveUp")}
+                                className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
+                              >↑</button>
+                              <button
+                                type="button"
+                                onClick={() => movePlace(editDay, pi, "down")}
+                                disabled={pi === days[editDay].places.length - 1}
+                                aria-label={t("moveDown")}
+                                className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink text-sm font-black disabled:opacity-30"
+                              >↓</button>
+                            </>
+                          ) : (
+                            <span className="inline-flex items-center min-h-11 pr-1 text-[11px] font-bold text-faint">{tPlanner("editTimedOrderHint")}</span>
+                          )}
                           {/* 시작시간 — 사용자가 정한 값만 시각으로 표시된다(timeSource "user"). 가짜 시간을 만들지 않는다. */}
                           <label className="inline-flex items-center gap-1.5 min-h-11 px-2.5 rounded-full border border-line bg-white text-xs font-bold text-ink">
                             <span>{tPlanner("editTime")}</span>

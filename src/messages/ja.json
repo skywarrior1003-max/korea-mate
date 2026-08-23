@@ -472,8 +472,9 @@
     "editMoveToDay": "別の日へ",
     "editMoveTo": "Day {n}",
     "editTime": "時刻",
+    "editTimedOrderHint": "時刻が順序を決めます",
     "editEmptyDay": "この日にはまだ場所がありません。",
-    "editOrderNote": "保存後は各日が時刻順に並びます。"
+    "editOrderNote": "開始時刻のある場所は時刻順に並びます — 位置を変えるには時刻を変更してください。時刻のない場所は ↑↓ で決めた順序のまま保存されます。"
   },
   "common": {
     "language": "言語",

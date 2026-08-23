@@ -5,7 +5,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseDurationMinutes, timeToMinutes, shouldShowClock, formatClock, formatDuration, transitMinutes, humanizeCategory, MAX_TRANSIT_MINUTES } from "./planning-view-core.ts";
+import { parseDurationMinutes, timeToMinutes, shouldShowClock, formatClock, formatDuration, transitMinutes, humanizeCategory, MAX_TRANSIT_MINUTES, orderDayPlaces } from "./planning-view-core.ts";
 
 const L = { hours: (h: number) => `${h}h`, hoursMinutes: (h: number, m: number) => `${h}h${m}m`, minutes: (m: number) => `${m}m` };
 
@@ -60,6 +60,35 @@ test("★page.tsx 가 스케줄러 시각에만 timeSource 를 붙이고, 숙소
   const acc = page.slice(page.indexOf("if (isAccommodationCheckin(item))"), page.indexOf("return {\n          name:"));
   assert.doesNotMatch(acc, /timeSource|isFixed/, "숙소 항목은 시각 계약을 바꾸지 않는다");
   assert.match(page, /shouldShowClock\(place\)/, "화면은 shouldShowClock 으로만 시각을 낸다");
+});
+
+test("★순서 계약: 시각 있는 항목은 시간이, 없는 항목은 사용자가 둔 자리가 순서다 (ORDER-TIME-CONTRACT-FIX-V1)", () => {
+  const T = (name: string, time: string, src = "scheduler") => ({ name, time, timeSource: src });
+  const U = (name: string, time = "19:30") => ({ name, time });   // 기본값 시간 — 시각 출처 없음
+  const names = (xs: { name: string }[]) => xs.map(x => x.name);
+
+  // 시각 있는 항목끼리는 시간 오름차순 — 같은 시각은 원래 순서 유지(stable)
+  assert.deepEqual(names(orderDayPlaces([T("B", "11:00"), T("A", "09:00", "user"), T("B2", "11:00")])), ["A", "B", "B2"]);
+  // 시각 없는 항목은 자기 자리를 지킨다 — 기본값 19:30 이 morning 항목보다 뒤로 끌려가지 않는다
+  assert.deepEqual(names(orderDayPlaces([U("u1"), T("B", "11:00"), T("A", "09:00"), U("u2")])), ["u1", "A", "B", "u2"]);
+  // 전부 시각 없음 → 수동 순서 그대로
+  assert.deepEqual(names(orderDayPlaces([U("c"), U("a"), U("b")])), ["c", "a", "b"]);
+  // 멱등
+  const once = orderDayPlaces([U("u"), T("B", "11:00"), T("A", "09:00")]);
+  assert.deepEqual(orderDayPlaces(once), once);
+  assert.deepEqual(names(once), ["u", "A", "B"]);
+});
+
+test("★page.tsx 가 순서 계약을 실제로 쓴다 — 정렬 게이트·시간 수정·Day 이동·↑↓ 노출 (ORDER-TIME-CONTRACT-FIX-V1)", () => {
+  const page = readFileSync(new URL("../../app/itinerary/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /const sorted = orderDayPlaces\(day\.places\)/, "sanitizeDays 가 orderDayPlaces 를 쓴다");
+  assert.match(page, /orderDayPlaces\(day\.places\.map\(/, "setPlaceTime 이 시간 수정 즉시 순서 계약을 적용한다");
+  assert.match(page, /orderDayPlaces\(\[\.\.\.day\.places, moving\]\)/, "moveToDay 도 순서 계약을 지킨다");
+  assert.match(page, /\{!clock \? \(/, "시각 있는 항목에는 ↑↓ 를 주지 않는다");
+  assert.match(page, /editTimedOrderHint/, "시각 항목에는 시간으로 순서를 조정한다는 안내를 준다");
+  const ko = readFileSync(new URL("../../messages/ko.json", import.meta.url), "utf8");
+  assert.ok(!ko.includes("저장 후에는 각 날이 시간순으로 정렬돼요"), "편집 손실을 정당화하던 옛 안내 문구가 남아 있다");
+  assert.match(ko, /editTimedOrderHint/, "안내 키가 번역 파일에 있다");
 });
 
 test("★편집: 다른 Day 이동·시작시간 수정은 기존 days 상태를 고쳐 autosave 로 흐른다 (EDIT-COMPLETION-V1)", () => {

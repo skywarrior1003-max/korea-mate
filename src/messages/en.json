@@ -472,8 +472,9 @@
     "editMoveToDay": "Move to another day",
     "editMoveTo": "Day {n}",
     "editTime": "Time",
+    "editTimedOrderHint": "Time sets the order",
     "editEmptyDay": "No places on this day yet.",
-    "editOrderNote": "After saving, each day is listed in time order."
+    "editOrderNote": "Places with a start time are ordered by time — change the time to move one. Places without a time keep the order you set with ↑↓."
   },
   "common": {
     "language": "Language",

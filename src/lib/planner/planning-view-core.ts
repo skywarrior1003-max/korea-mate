@@ -80,6 +80,25 @@ export function transitMinutes(prev: TimedLike, next: TimedLike): number | null 
   return gap;
 }
 
+/**
+ * 하루 안 순서 계약 (TASK-MY-TRIP-EDIT-ORDER-TIME-CONTRACT-FIX-V1).
+ *
+ * 실제 시각이 있는 항목(shouldShowClock: scheduler/user 시각)은 **시각**이 순서를 정한다.
+ * 시각이 없는 항목(보관함·내 장소 추가처럼 기본값만 채워진 것)은 **사용자가 둔 자리**가
+ * 순서다 — 배열 위치를 그대로 지키고, 시각 있는 항목들만 나머지 자리에 시간 오름차순으로
+ * 재배치한다. 같은 시각은 원래 순서를 유지한다(stable). 결과는 멱등이다.
+ */
+export function orderDayPlaces<T extends TimedLike>(places: readonly T[]): T[] {
+  const timed: { p: T; i: number }[] = [];
+  places.forEach((p, i) => { if (shouldShowClock(p)) timed.push({ p, i }); });
+  if (timed.length < 2) return [...places];
+  const sorted = [...timed].sort((a, b) =>
+    (timeToMinutes(a.p.time)! - timeToMinutes(b.p.time)!) || (a.i - b.i));
+  const out = [...places];
+  timed.forEach(({ i }, k) => { out[i] = sorted[k]!.p; });
+  return out;
+}
+
 /** 카테고리 문자열을 화면용으로 — "HISTORICAL_SITE" 같은 내부 표기를 사람이 읽게 */
 export function humanizeCategory(category: string | null | undefined): string {
   if (!category) return "";

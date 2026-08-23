@@ -472,8 +472,9 @@
     "editMoveToDay": "移到其他日期",
     "editMoveTo": "Day {n}",
     "editTime": "时间",
+    "editTimedOrderHint": "时间决定顺序",
     "editEmptyDay": "这一天还没有地点。",
-    "editOrderNote": "保存后，每一天会按时间顺序排列。"
+    "editOrderNote": "有开始时间的地点按时间排序 — 想调整位置请修改时间。没有时间的地点会保留你用 ↑↓ 排定的顺序。"
   },
   "common": {
     "language": "语言",

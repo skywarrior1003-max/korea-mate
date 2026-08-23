@@ -472,8 +472,9 @@
     "editMoveToDay": "다른 날로",
     "editMoveTo": "Day {n}",
     "editTime": "시간",
+    "editTimedOrderHint": "시간이 자리를 정해요",
     "editEmptyDay": "이 날에는 아직 장소가 없어요.",
-    "editOrderNote": "저장 후에는 각 날이 시간순으로 정렬돼요."
+    "editOrderNote": "시작시간이 있는 장소는 시간 순서로 놓여요 — 자리를 바꾸려면 시간을 바꿔 주세요. 시간이 없는 장소는 ↑↓로 정한 순서가 그대로 저장돼요."
   },
   "common": {
     "language": "언어",
