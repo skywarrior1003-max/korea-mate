@@ -57,6 +57,8 @@ def main() -> None:
     mc1 = jsonl(os.path.join(V1, "five-city-core-main-classification-v1.jsonl")); mc2 = jsonl(os.path.join(V2, "five-city-core-main-classification-v1.jsonl"))
     snap = {r["city_spot_id"]: r for r in r2_snapshot()}
     vg, _ = load_input("gyeongju_food_vg")
+    coords = {c["vg_id"]: c for c in load_input("gyeongju_food_vg_coords")[0]}
+    images = {i["vg_id"]: i for i in load_input("gyeongju_food_vg_images")[0]}
     old_match = {d["main_city_spot_id"]: d for d in xw1 if d["service_status"] == "ACTIVE" and d["decision"] == "MATCH_REPLACE"}
     if len(old_match) != 462 or set(old_match) != set(snap):
         raise SystemExit("R2 MATCH set != snapshot ids")
@@ -93,12 +95,15 @@ def main() -> None:
     for r in sorted(vg, key=lambda x: x["replacement_candidate_id"]):
         cid = r["replacement_candidate_id"]; d = xw2_by_cid[cid]
         action = {"MATCH_REPLACE": "PRESERVE_ID_AND_REPLACE", "NEW": "NEW_INSERT", "REVIEW_REQUIRED": "REVIEW_REQUIRED"}[d["decision"]]
-        coord = r.get("lat") is not None and r.get("lng") is not None
+        co = coords.get(r["vg_id"]); im = images.get(r["vg_id"])
+        coord = bool(co and co.get("nav_ready") and co.get("lat") is not None and co.get("lng") is not None)
         mapping.append({"vg_id": r["vg_id"], "canonical_id": cid, "title_ko": r["title_ko"], "title_en": r["title_en"], "area": r["area"], "action": action,
                         "existing_numeric_id": d["main_city_spot_id"], "old_gj08_identity": r.get("existing_canonical_id"), "decision_basis": d["decision_basis"],
                         "official_locale_ready": {"ko": bool(r.get("title_ko") and r.get("desc_ko")), "en": bool(r.get("title_en") and r.get("desc_en")), "ja": bool(r.get("title_ja") and r.get("desc_ja")), "zh": bool(r.get("title_zh") and r.get("desc_zh"))},
-                        "coordinate_ready": coord, "coordinate_source": "package(lat/lng)" if coord else None, "nav_ready": coord, "geocoding_required": not coord,
-                        "source_bridge": {"source_type": VISITGYEONGJU_SOURCE_TYPE, "source_key": r["vg_id"], "ready": True}, "image_ready": False, "image_note": "package 에 공식 이미지 없음 — fallback/recrawl 0",
+                        "coordinate_ready": coord, "coordinate_source": co.get("coordinate_source") if co else None, "coordinate_quality": co.get("coordinate_quality") if co else None,
+                        "coordinate_artifact": "gyeongju-vg-food-105-coordinates-final-v2@f428ef9", "nav_ready": coord, "geocoding_required": not coord,
+                        "source_bridge": {"source_type": VISITGYEONGJU_SOURCE_TYPE, "source_key": r["vg_id"], "ready": True},
+                        "image_ready": bool(im and im.get("representative_image_status") == "READY"), "image_artifact": "gyeongju-vg-food-105-official-images-v1@323142e", "image_provenance": im.get("provenance") if im else None,
                         "review_reason": HWASU_BREWERY["evidence"] if r.get("match_to_existing") == "REVIEW_EXISTING" else None})
     a_counts = Counter(m["action"] for m in mapping)
 

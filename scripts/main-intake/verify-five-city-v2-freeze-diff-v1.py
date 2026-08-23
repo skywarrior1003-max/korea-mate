@@ -16,8 +16,11 @@ from collections import Counter
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import PACKAGE_DIR, REPO  # noqa: E402
 
-V1 = os.path.join(REPO, "data", "main-intake", "five-city-core-v1"); V2 = os.path.join(REPO, "data", "main-intake", PACKAGE_DIR)
+BASE = sys.argv[sys.argv.index("--base") + 1] if "--base" in sys.argv else "five-city-core-v1"
+V1 = os.path.join(REPO, "data", "main-intake", BASE); V2 = os.path.join(REPO, "data", "main-intake", PACKAGE_DIR)
 SEOUL_DESC_FIELDS = {"description", "desc_l10n"}
+# v2 → v3: VisitGyeongju Food rows may change only by the two approved sidecars (final coordinates · official image) + their provenance
+VG_SIDECAR_FIELDS = {"lat", "lng", "image_url", "image_url_policy", "provenance"}
 
 
 def jsonl(p: str) -> list[dict]:
@@ -46,6 +49,7 @@ def main() -> int:
         diff = sorted(k for k in set(r1) | set(r2) if r1.get(k) != r2.get(k))
         if not diff: stats[f"identical_{r1['city']}"] += 1; continue
         if r1["city"] == "seoul" and set(diff) <= SEOUL_DESC_FIELDS: stats["seoul_description_changed"] += 1; continue
+        if is_vg(cid) and BASE != "five-city-core-v1" and set(diff) <= VG_SIDECAR_FIELDS: stats["vg_sidecar_changed"] += 1; continue
         unapproved.append(f"{cid}: {diff}")
     # crosswalk decisions for common rows unchanged (identity/main id frozen)
     for cid in sorted(set(x1) & set(x2)):
@@ -55,14 +59,15 @@ def main() -> int:
             unapproved.append(f"crosswalk {cid}: {d1['decision']}/{d1['main_city_spot_id']} → {d2['decision']}/{d2['main_city_spot_id']}")
     # sources / images: rows for frozen canonicals identical as sets
     key_s = lambda s: (s["canonical_id"], s["source_type"], s["source_key"], s["is_primary"], s.get("source_url"), s.get("source_tier"), s.get("candidate_id"))
-    f1 = {key_s(s) for s in s1 if not is_gj08(s["canonical_id"])}; f2 = {key_s(s) for s in s2 if not is_vg(s["canonical_id"])}
+    vg_excl = (lambda c: is_vg(c)) if BASE == "five-city-core-v1" else (lambda c: False)   # v2 base: VG source rows must be identical too
+    f1 = {key_s(s) for s in s1 if not is_gj08(s["canonical_id"])}; f2 = {key_s(s) for s in s2 if not vg_excl(s["canonical_id"])}
     if f1 != f2: unapproved.append(f"frozen source rows differ: -{len(f1 - f2)} +{len(f2 - f1)}")
     key_i = lambda i: (i["canonical_id"], i["image_url"], i["rights_status"], i["display_eligible"], i["is_primary"], i["sort_order"])
-    g1 = {key_i(i) for i in i1 if not is_gj08(i["canonical_id"])}; g2 = {key_i(i) for i in i2 if not is_vg(i["canonical_id"])}
+    g1 = {key_i(i) for i in i1 if not is_gj08(i["canonical_id"])}; g2 = {key_i(i) for i in i2 if not is_vg(i["canonical_id"])}   # VG images are the approved addition
     if g1 != g2: unapproved.append(f"frozen image rows differ: -{len(g1 - g2)} +{len(g2 - g1)}")
     stats["gj08_sources_removed"] = sum(1 for s in s1 if is_gj08(s["canonical_id"])); stats["vg_sources_added"] = sum(1 for s in s2 if is_vg(s["canonical_id"]))
     stats["gj08_images_removed"] = sum(1 for i in i1 if is_gj08(i["canonical_id"])); stats["vg_images_added"] = sum(1 for i in i2 if is_vg(i["canonical_id"]))
-    out = {"stats": dict(stats), "unapproved_diff_count": len(unapproved), "unapproved": unapproved[:20]}
+    out = {"base": BASE, "target": PACKAGE_DIR, "stats": dict(stats), "unapproved_diff_count": len(unapproved), "unapproved": unapproved[:20]}
     print(json.dumps(out, ensure_ascii=False))
     return 1 if unapproved else 0
 

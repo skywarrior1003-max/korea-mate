@@ -29,7 +29,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_TOTAL, PACKAGE_DIR, PINNED_INPUTS, REPO, VISITGYEONGJU_SOURCE_TYPE, file_sha256, load_input, seoul_description, strip_html, to_float, verify_pins,
+    EXPECTED_TOTAL, PACKAGE_DIR, PINNED_INPUTS, REPO, VG_IMAGE_RIGHTS_STATUS, VISITGYEONGJU_SOURCE_TYPE, file_sha256, load_input, seoul_description, strip_html, to_float, verify_pins,
     write_json, write_jsonl,
 )
 
@@ -339,6 +339,19 @@ def main() -> None:
         loc = LOCALE_MAP.get(r.get("locale") or "")
         if loc:
             vg_ml[r["vg_id"]][loc] = r
+    # sidecars (FINAL-PLAN-REGENERATION-V1): final coordinates f428ef9 · official images 323142e — join key vg_id only(이름/주소/좌표 join 0)
+    vg_coord = {}
+    for c2 in data["gyeongju_food_vg_coords"]:
+        if c2["vg_id"] in vg_coord:
+            raise SystemExit(f"duplicate coordinate sidecar vg_id {c2['vg_id']}")
+        vg_coord[c2["vg_id"]] = c2
+    vg_image = {}
+    for im in data["gyeongju_food_vg_images"]:
+        if im["vg_id"] in vg_image:
+            raise SystemExit(f"duplicate image sidecar vg_id {im['vg_id']}")
+        vg_image[im["vg_id"]] = im
+    if len(vg_coord) != 105 or len(vg_image) != 105:
+        raise SystemExit(f"sidecar counts coords={len(vg_coord)} images={len(vg_image)} != 105")
     for r in sorted(data["gyeongju_food_vg"], key=lambda x: x["replacement_candidate_id"]):
         cid = r["replacement_candidate_id"]
         if cid not in active_ids:
@@ -346,17 +359,33 @@ def main() -> None:
         m = vg_ml.get(r["vg_id"], {})
         if set(m) != {"ko", "en", "ja", "zh"}:
             raise SystemExit(f"{cid}: multilingual handoff locales {sorted(m)} != ko/en/ja/zh")
+        co = vg_coord.get(r["vg_id"]); im = vg_image.get(r["vg_id"])
+        if co is None or im is None:
+            raise SystemExit(f"{cid}: sidecar join missing (coord={co is not None}, image={im is not None})")
+        if co.get("replacement_candidate_id") != cid or im.get("replacement_candidate_id") != cid:
+            raise SystemExit(f"{cid}: sidecar candidate id mismatch")
+        if not co.get("nav_ready") or co.get("coordinate_quality") not in ("ENTITY_EXACT", "ADDRESS_NUMBER_LEVEL"):
+            raise SystemExit(f"{cid}: coordinate not NAV_READY ({co.get('coordinate_quality')})")
+        lat, lng = to_float(co.get("lat")), to_float(co.get("lng"))
+        if lat is None or lng is None or not (35.5 < lat < 36.2 and 128.9 < lng < 129.7):
+            raise SystemExit(f"{cid}: coordinate missing/outside Gyeongju")
+        if im.get("representative_image_status") != "READY" or not im.get("primary_image_url") or im.get("provider") != "VisitGyeongju":
+            raise SystemExit(f"{cid}: official image not READY")
         titles = {loc: (m[loc].get("title") or r.get(f"title_{loc}")) for loc in ("ko", "en", "ja", "zh")}
         descs = {loc: (m[loc].get("description") or r.get(f"desc_{loc}") or None) for loc in ("ko", "en", "ja", "zh")}
         row = base_row(cid, "gyeongju", "restaurant", None, name_en=titles["en"], name_ko=titles["ko"], names={"en": titles["en"], "ja": titles["ja"], "zh": titles["zh"]},
-                       descs=descs, address=r.get("address_ko"), district=r.get("area"), lat=to_float(r.get("lat")), lng=to_float(r.get("lng")),
+                       descs=descs, address=r.get("address_ko"), district=r.get("area"), lat=lat, lng=lng,
                        official_url=r.get("source_url_en") or r.get("source_url_ko"), hours_raw=r.get("hours_en"), tags=None,
                        owned=("district", "official_url", "opening_hours"),
                        provenance={"artifact": "gyeongju-vg-food-105-service-v2", "vg_id": r["vg_id"], "match_to_existing": r.get("match_to_existing"),
                                    "existing_canonical_id": r.get("existing_canonical_id"), "rights_status": m["ko"].get("rights_status"),
-                                   "coordinate_source": "package(lat/lng present)" if r.get("lat") is not None else "MISSING(geocoding required — no centroid/guess)"})
+                                   "coordinate_artifact": "gyeongju-vg-food-105-coordinates-final-v2", "coordinate_source": co.get("coordinate_source"),
+                                   "coordinate_quality": co.get("coordinate_quality"), "coordinate_provenance": co.get("provenance"), "nav_ready": bool(co.get("nav_ready")),
+                                   "image_artifact": "gyeongju-vg-food-105-official-images-v1", "image_provenance": im.get("provenance")})
         active.append(row)
         add_source(cid, VISITGYEONGJU_SOURCE_TYPE, r["vg_id"], url=r.get("source_url_ko"), tier="OFFICIAL_TOURISM_BODY", primary=True, as_of="2026-08-22")
+        add_image(cid, im["primary_image_url"], VG_IMAGE_RIGHTS_STATUS, eligible=True, attribution=True, primary=True, as_of=im.get("as_of"),
+                  note=f"VisitGyeongju official page image · {im.get('provenance')} · source_page={im.get('source_page_url')}")
         defer(cid, "phone", r.get("phone"), "gyeongju-vg-food-105-service-v2", "city_spots 에 phone 컬럼 없음", "content_meta.phone")
         defer(cid, "address_l10n", {k: r.get(f"address_{k}") for k in ("en", "ja", "zh") if r.get(f"address_{k}")}, "gyeongju-vg-food-105-service-v2", "city_spots 에 address l10n 컬럼 없음", "content_meta.address_l10n")
         defer(cid, "source_url_l10n", {k: r.get(f"source_url_{k}") for k in ("ko", "ja", "zh") if r.get(f"source_url_{k}")}, "gyeongju-vg-food-105-service-v2", "locale 별 공식 페이지 URL", "content_meta.source_url_l10n")
@@ -495,7 +524,7 @@ def main() -> None:
     per_city = Counter(r["city"] for r in active)
     manifest = {
         "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-V1 → FINAL-ARTIFACT-ALIGNMENT-V1",
-        "package": PACKAGE_DIR, "schema_version": "intake-v1.5(gyeongju-food-105 reintegration + seoul final-freeze)",
+        "package": PACKAGE_DIR, "schema_version": "intake-v1.6(final: gyeongju food 105 + final coordinates f428ef9 + official images 323142e + seoul final-freeze)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},

@@ -87,10 +87,21 @@ PINNED_INPUTS: dict[str, dict[str, Any]] = {
         "city": "gyeongju", "branch": "data/gyeongju-food-105-multilingual-full-content-v1", "sha": "a90fbed",
         "path": "data/gyeongju-food-105-multilingual-full-content-v1/gyeongju-vg-food-105-multilingual-handoff-v2.jsonl", "kind": "jsonl",
     },
+    # R3-FINAL-PLAN-REGENERATION-V1 sidecars (join key = vg_id only). 이 branch 의 coordinates-v1 은 runtime SSOT 가 아니다(사용 금지).
+    "gyeongju_food_vg_images": {
+        "city": "gyeongju", "branch": "data/gyeongju-food-105-media-nav-completion-v1", "sha": "323142e",
+        "path": "data/gyeongju-food-105-media-nav-completion-v1/gyeongju-vg-food-105-official-images-v1.jsonl", "kind": "jsonl",
+    },
+    # final NAV-ready coordinates (ENTITY_EXACT 94 + ADDRESS_NUMBER_LEVEL 11 = 105). Main geocoding 0.
+    "gyeongju_food_vg_coords": {
+        "city": "gyeongju", "branch": "data/gyeongju-food-105-coordinates-final-v1", "sha": "f428ef9",
+        "path": "data/gyeongju-food-105-coordinates-final-v1/gyeongju-vg-food-105-coordinates-final-v2.jsonl", "kind": "jsonl",
+    },
 }
 
-# generated package dir — v2 = Gyeongju Food 105 + Seoul final-freeze. v1(4,826 plan) 은 R2 evidence 로 보존(덮어쓰기 금지).
-PACKAGE_DIR = "five-city-core-v2"
+# generated package dir — v3 = v2 + Gyeongju Food final coordinates(f428ef9) + official images(323142e). v1(R2 evidence)·v2(interim) 보존(덮어쓰기 금지).
+PACKAGE_DIR = "five-city-core-v3"
+VG_IMAGE_RIGHTS_STATUS = "OFFICIAL_TOURISM_BODY_NO_EXPLICIT_PROHIBITION"   # package rights_status 그대로(DB CHECK 의 UNKNOWN 계열 아님)
 # 도시별 ACTIVE 기대값(service universe). gyeongju = Attraction 197 (canonical GJ01/KTO1) · gyeongju_food_vg = VisitGyeongju Food 105.
 EXPECTED_ACTIVE = {"busan_food": 194, "busan_nonfood": 764, "gyeongju": 197, "gyeongju_food_vg": 105, "seoul": 1837, "jeju": 1496, "jeonju": 236}
 EXPECTED_TOTAL = 4829
