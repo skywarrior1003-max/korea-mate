@@ -1,0 +1,217 @@
+{
+ "1": {
+  "status": 200,
+  "title": "Haeundae Beach: The Busan representative — busan | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.158474,\"longitude\":129.15987}",
+  "len": 50258,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Haeundae Beach: The Busan representative — busan | gokoreamate",
+  "hidden": false
+ },
+ "47": {
+  "status": 200,
+  "title": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.07885,\"longitude\":129.04402}",
+  "len": 49884,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+  "hidden": false
+ },
+ "577": {
+  "status": 200,
+  "title": "STILLROOM — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8421610889308,\"longitude\":129.210396671791}",
+  "len": 41988,
+  "cfcache": "DYNAMIC",
+  "expected_title": "STILLROOM — gyeongju | gokoreamate",
+  "hidden": false
+ },
+ "607": {
+  "status": 200,
+  "title": "Whasoo Brewery — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8395567879344,\"longitude\":129.290910376306}",
+  "len": 41336,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Whasoo Brewery — gyeongju | gokoreamate",
+  "hidden": false
+ },
+ "640": {
+  "status": 200,
+  "title": "Yosukgung — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8303124684204,\"longitude\":129.216746501799}",
+  "len": 42239,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Yosukgung — gyeongju | gokoreamate",
+  "hidden": false
+ },
+ "727": {
+  "status": 200,
+  "title": "Jeonju Museum of History — jeonju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8011445985935,\"longitude\":127.09332863568}",
+  "len": 40486,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Jeonju Museum of History — jeonju | gokoreamate",
+  "hidden": true
+ },
+ "910": {
+  "status": 200,
+  "title": "자매갈비전골 — jeonju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8198804174,\"longitude\":127.153461153}",
+  "len": 38426,
+  "cfcache": "DYNAMIC",
+  "expected_title": "자매갈비전골 — jeonju | gokoreamate",
+  "hidden": true
+ },
+ "927": {
+  "status": 200,
+  "title": "Digeut — busan | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.2332982,\"longitude\":129.0863391}",
+  "len": 39377,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Digeut — busan | gokoreamate",
+  "hidden": true
+ },
+ "1527": {
+  "status": 200,
+  "title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.841466455005,\"longitude\":129.25052102975}",
+  "len": 41311,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+  "hidden": true
+ },
+ "1528": {
+  "status": 200,
+  "title": "Dalgaebi — gyeongju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8413716429772,\"longitude\":129.250195219807}",
+  "len": 42106,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Dalgaebi — gyeongju | gokoreamate",
+  "hidden": true
+ },
+ "1659": {
+  "status": 200,
+  "title": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":33.303474,\"longitude\":126.39206}",
+  "len": 38752,
+  "cfcache": "DYNAMIC",
+  "expected_title": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+  "hidden": true
+ },
+ "3000": {
+  "status": 200,
+  "title": "협재해녀의집 — jeju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":33.39883,\"longitude\":126.24401}",
+  "len": 37481,
+  "cfcache": "DYNAMIC",
+  "expected_title": "협재해녀의집 — jeju | gokoreamate",
+  "hidden": true
+ },
+ "3127": {
+  "status": 200,
+  "title": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.5620158427556,\"longitude\":126.986499496717}",
+  "len": 41290,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+  "hidden": true
+ },
+ "4500": {
+  "status": 200,
+  "title": "[Baeknyeon-gage] Gguigguijjuggumi — seoul | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.56767757,\"longitude\":126.81412422}",
+  "len": 41919,
+  "cfcache": "DYNAMIC",
+  "expected_title": "[Baeknyeon-gage] Gguigguijjuggumi — seoul | gokoreamate",
+  "hidden": true
+ },
+ "5000": {
+  "status": 200,
+  "title": "Coffee Hanyakbang — seoul | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.56656988,\"longitude\":126.9886082}",
+  "len": 41400,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Coffee Hanyakbang — seoul | gokoreamate",
+  "hidden": true
+ },
+ "5005": {
+  "status": 200,
+  "title": "Jongno Samgyetang — seoul | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.56907377,\"longitude\":126.9841233}",
+  "len": 40190,
+  "cfcache": "DYNAMIC",
+  "expected_title": "Jongno Samgyetang — seoul | gokoreamate",
+  "hidden": true
+ },
+ "trips": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "len": 18322,
+  "cfcache": "DYNAMIC"
+ },
+ "trips_slash": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "len": 18322,
+  "cfcache": "DYNAMIC"
+ },
+ "my_trips": {
+  "status": 200,
+  "title": "gokoreamate — AI Korea Trip Planner · Capture &amp; Share Your Story",
+  "noindex": true,
+  "geo": null,
+  "len": 20000,
+  "cfcache": "DYNAMIC"
+ },
+ "home": {
+  "status": 200,
+  "title": "gokoreamate — AI Korea Trip Planner · Capture &amp; Share Your Story",
+  "noindex": false,
+  "geo": null,
+  "len": 79368,
+  "cfcache": "DYNAMIC"
+ },
+ "explore_seoul": {
+  "status": 200,
+  "title": "Explore Seoul — gokoreamate",
+  "noindex": false,
+  "geo": null,
+  "len": 22126,
+  "cfcache": "DYNAMIC"
+ },
+ "nonexistent": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "len": 18322,
+  "cfcache": "DYNAMIC"
+ },
+ "sitemap": {
+  "total": 738,
+  "place": 714,
+  "hidden_leak": 0,
+  "published_missing": 0,
+  "dup": 0
+ }
+}

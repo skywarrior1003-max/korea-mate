@@ -1,0 +1,279 @@
+{
+ "3": {
+  "status": 200,
+  "title": "Jagalchi Fish Market — busan | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.0971,\"longitude\":129.0302}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Jagalchi Fish Market — busan | gokoreamate",
+  "class": "HIDE"
+ },
+ "47": {
+  "status": 200,
+  "title": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.07885,\"longitude\":129.04402}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Huinnyeoul Culture Village at the end of the steep cliff — busan | gokoreamate",
+  "class": "MATCH/legacy"
+ },
+ "505": {
+  "status": 200,
+  "title": "경주생활체육공원 — gyeongju | gokoreamate",
+  "noindex": true,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0,
+  "expected": "경주생활체육공원 — gyeongju | gokoreamate",
+  "class": "HIDE"
+ },
+ "558": {
+  "status": 200,
+  "title": "위드구스토 — gyeongju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8380923116909,\"longitude\":129.209398481917}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "위드구스토 — gyeongju | gokoreamate",
+  "class": "HIDE"
+ },
+ "577": {
+  "status": 200,
+  "title": "STILLROOM — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8421610889308,\"longitude\":129.210396671791}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "STILLROOM — gyeongju | gokoreamate",
+  "class": "MATCH/legacy"
+ },
+ "607": {
+  "status": 200,
+  "title": "Whasoo Brewery — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8395567879344,\"longitude\":129.290910376306}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Whasoo Brewery — gyeongju | gokoreamate",
+  "class": "MATCH/legacy"
+ },
+ "640": {
+  "status": 200,
+  "title": "Yosukgung — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8303124684204,\"longitude\":129.216746501799}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Yosukgung — gyeongju | gokoreamate",
+  "class": "MATCH/legacy"
+ },
+ "660": {
+  "status": 200,
+  "title": "경주 김유신묘 — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8453311317,\"longitude\":129.1923886866}",
+  "img660": true,
+  "httpimg": 0,
+  "expected": "경주 김유신묘 — gyeongju | gokoreamate",
+  "class": "MATCH/legacy"
+ },
+ "724": {
+  "status": 200,
+  "title": "경주월드 캘리포니아비치 — gyeongju | gokoreamate",
+  "noindex": true,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.836386616,\"longitude\":129.2821727414}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "경주월드 캘리포니아비치 — gyeongju | gokoreamate",
+  "class": "HIDE"
+ },
+ "727": {
+  "status": 200,
+  "title": "Jeonju Museum of History — jeonju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8011445985935,\"longitude\":127.09332863568}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Jeonju Museum of History — jeonju | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "910": {
+  "status": 200,
+  "title": "자매갈비전골 — jeonju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8198804174,\"longitude\":127.153461153}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "자매갈비전골 — jeonju | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "927": {
+  "status": 200,
+  "title": "Digeut — busan | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.2332982,\"longitude\":129.0863391}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Digeut — busan | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "1527": {
+  "status": 200,
+  "title": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.841466455005,\"longitude\":129.25052102975}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Yetgoeul Tosok Sundubu — gyeongju | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "1528": {
+  "status": 200,
+  "title": "Dalgaebi — gyeongju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":35.8413716429772,\"longitude\":129.250195219807}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Dalgaebi — gyeongju | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "1659": {
+  "status": 200,
+  "title": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":33.303474,\"longitude\":126.39206}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "아라고나이트 고온천(디아넥스호텔) — jeju | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "3127": {
+  "status": 200,
+  "title": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.5620158427556,\"longitude\":126.986499496717}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Myeongdong Real Gun Shooting Range — seoul | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "5005": {
+  "status": 200,
+  "title": "Jongno Samgyetang — seoul | gokoreamate",
+  "noindex": false,
+  "geo": "\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":37.56907377,\"longitude\":126.9841233}",
+  "img660": false,
+  "httpimg": 0,
+  "expected": "Jongno Samgyetang — seoul | gokoreamate",
+  "class": "SHOW(new)"
+ },
+ "/": {
+  "status": 200,
+  "title": "gokoreamate — AI Korea Trip Planner · Capture &amp; Share Your Story",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/busan/": {
+  "status": 200,
+  "title": "Busan Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/gyeongju/": {
+  "status": 200,
+  "title": "Gyeongju Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/seoul/": {
+  "status": 200,
+  "title": "Seoul Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/jeju/": {
+  "status": 200,
+  "title": "Jeju Island Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/jeonju/": {
+  "status": 200,
+  "title": "Jeonju Travel Guide 2026 — AI Korea Itinerary Planner | gokoreamate.com",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/explore/busan/": {
+  "status": 200,
+  "title": "Explore Busan — gokoreamate",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/explore/seoul/": {
+  "status": 200,
+  "title": "Explore Seoul — gokoreamate",
+  "noindex": false,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/my-trips/": {
+  "status": 200,
+  "title": "gokoreamate — AI Korea Trip Planner · Capture &amp; Share Your Story",
+  "noindex": true,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/trips": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/trips/": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "/place/999999/": {
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "noindex": true,
+  "geo": null,
+  "img660": false,
+  "httpimg": 0
+ },
+ "sitemap": {
+  "total": 4702,
+  "place": 4678,
+  "dup": 0,
+  "hidden_leak": 0,
+  "expected_true": 4678,
+  "published_missing": 0,
+  "unexpected": 0,
+  "show_included": 4291,
+  "keep_included": 19
+ }
+}

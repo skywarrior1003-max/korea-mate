@@ -1,0 +1,206 @@
+{
+ "task": "TASK-FIVE-CITY-CORE-FINAL-PRODUCTION-RELEASE-V1",
+ "recorded_at_utc": "2026-08-23T08:07:21.425889+00:00",
+ "final_version": "five-city-core-v3",
+ "run_id": "aada6b5e6873c12f",
+ "git": {
+  "approved_release_source": "5411a93",
+  "master_before": "69cc51a",
+  "master_final": "63b0986",
+  "commits_added_on_master": [
+   "5411a93 (approved release)",
+   "34e6097 fix: prune /place segment-prefetch files (Cloudflare Pages 20k-file limit)",
+   "63b0986 ops: record five-city production publish"
+  ],
+  "cache_hardening_ancestor": "2474e86"
+ },
+ "cloudflare": {
+  "project": "korea-mate",
+  "failed": {
+   "id": "23dc4178-d39d-430e-b226-9a110679c81f",
+   "commit": "5411a93",
+   "reason": "Pages only supports up to 20,000 files (45,492 files)"
+  },
+  "pre_publish": {
+   "id": "1288cb49-ca83-47ee-bb81-5951bdb787ef",
+   "commit": "34e6097",
+   "stage": "deploy:success"
+  },
+  "post_publish": {
+   "id": "c096f273-fa84-4c79-a053-359fa7f33ed3",
+   "commit": "63b0986",
+   "stage": "deploy:success",
+   "aliases": [
+    "https://gokoreamate.com",
+    "https://www.gokoreamate.com"
+   ]
+  }
+ },
+ "db": {
+  "before": {
+   "physical": 5005,
+   "true": 714,
+   "false": 4291,
+   "null": 0
+  },
+  "after": {
+   "physical": 5005,
+   "true": 4678,
+   "false": 327,
+   "null": 0,
+   "per_city_true": {
+    "busan": 807,
+    "gyeongju": 302,
+    "seoul": 1837,
+    "jeju": 1496,
+    "jeonju": 236
+   },
+   "sources": 5610,
+   "images": 4501
+  },
+  "sets": {
+   "SHOW": 4291,
+   "HIDE": 327,
+   "KEEP": 19,
+   "overlap": 0,
+   "missing": 0
+  },
+  "user_counts_before": "68/0/4/9",
+  "user_counts_after": "68/0/4/9",
+  "user_data_write": 0,
+  "hard_delete": 0
+ },
+ "public_qa": {
+  "pre_publish": {
+   "sitemap": {
+    "total": 738,
+    "place": 714,
+    "hidden_leak": 0,
+    "published_missing": 0,
+    "dup": 0
+   },
+   "hidden_noindex_samples": {
+    "910": true,
+    "1527": true,
+    "3127": true,
+    "1659": true,
+    "727": true,
+    "927": true,
+    "5005": true
+   }
+  },
+  "final": {
+   "sitemap": {
+    "total": 4702,
+    "place": 4678,
+    "dup": 0,
+    "hidden_leak": 0,
+    "expected_true": 4678,
+    "published_missing": 0,
+    "unexpected": 0,
+    "show_included": 4291,
+    "keep_included": 19
+   },
+   "published_samples_noindex_false": {
+    "577": false,
+    "607": false,
+    "640": false,
+    "910": false,
+    "1527": false,
+    "1528": false,
+    "3127": false,
+    "1659": false,
+    "727": false,
+    "927": false,
+    "5005": false,
+    "660": false
+   },
+   "hidden_legacy_noindex_true": {
+    "3": true,
+    "505": true,
+    "558": true,
+    "724": true
+   },
+   "sentinels": {
+    "577": "STILLROOM — gyeongju | gokoreamate",
+    "607": "Whasoo Brewery — gyeongju | gokoreamate",
+    "640": "Yosukgung — gyeongju | gokoreamate",
+    "910": "자매갈비전골 — jeonju | gokoreamate"
+   },
+   "routes": {
+    "/": 200,
+    "/busan/": 200,
+    "/gyeongju/": 200,
+    "/seoul/": 200,
+    "/jeju/": 200,
+    "/jeonju/": 200,
+    "/explore/busan/": 200,
+    "/explore/seoul/": 200,
+    "/my-trips/": 200,
+    "/trips": 404,
+    "/trips/": 404,
+    "/place/999999/": 404
+   },
+   "explore_runtime_rows": {
+    "busan": 807,
+    "gyeongju": 302,
+    "seoul": 1837,
+    "jeju": 1496,
+    "jeonju": 236,
+    "filtered_is_published_true": true
+   }
+  }
+ },
+ "gyeongju_food": {
+  "visitgyeongju": 105,
+  "published": 105,
+  "coords": 105,
+  "official_image": 105,
+  "l10n_4locale": 105,
+  "match8_preserved": 8,
+  "vg_images_eligible_primary": 105,
+  "old_gj08_published": 0,
+  "generated_translation": 0
+ },
+ "corrections": {
+  "p910": {
+   "lat": 35.8198804174,
+   "lng": 127.153461153,
+   "published": true,
+   "geo_in_page": true
+  },
+  "kto_https": {
+   "targeted": 82,
+   "remaining_http_spots": 0,
+   "remaining_http_eligible_images": 0,
+   "sample_660_https_render": true
+  }
+ },
+ "integrity": {
+  "dup_identity": 0,
+  "source_conflict": 0,
+  "image_conflict": 0,
+  "routes_physical": 5005,
+  "sitemap_place": 4678,
+  "postgrest_1000_cap_truncation": false
+ },
+ "cache_freshness": {
+  "577": "STILLROOM",
+  "607": "Whasoo Brewery",
+  "640": "Yosukgung",
+  "stale_strings": 0,
+  "FETCH_CACHE_LONG_LIVED_PLACE_STALENESS_REMOVED": true
+ },
+ "not_executed": {
+  "claude_sql": false,
+  "rollback": false,
+  "delete": 0,
+  "migration": 0,
+  "ai_calls": 0,
+  "recollection": 0,
+  "translation": 0,
+  "force_push": 0,
+  "direct_deploy": 0
+ },
+ "FIVE_CITY_PRODUCTION_RELEASE_COMPLETE": true
+}
