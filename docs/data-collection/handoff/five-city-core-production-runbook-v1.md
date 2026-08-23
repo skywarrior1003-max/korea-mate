@@ -85,6 +85,7 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 - 입력: `<pkg>/five-city-r2-restore-plan-v1.jsonl`(94행, before 값 내장, source sha 고정). R2 적용값 기대치 = `--r2-plan-package`(기본 v1) plan writes. 이번 attempt 의 fresh snapshot 은 restore source 가 아니다.
 - 순서: Phase A(MATCH 368 = A1 360 keep + A2 8 VisitGyeongju 교체) → **A3 restore 94** → B NEW → C/D/E. A2/A3 target overlap 0 검사. allowlist = plan restore_fields ∩ SOURCE_FIELDS(실측 12: address·category·desc_l10n·description·district·image_url·lat·lng·name·name_l10n·official_url·subcategory). id/source_type/external_id/is_published/runtime 필드 payload 금지.
 - 행 분류: 현재 값 == R2 적용값 → NEEDS_RESTORE(PATCH) · == snapshot before → ALREADY_RESTORED(no-op) · 그 외 → DRIFT_DETECTED(쓰기 0) · id/bridge(`gyeongju-city:<old canonical>`) 불일치 → IDENTITY_MISMATCH · R2 기대치 없음 → SNAPSHOT_MISSING. drift/mismatch/missing/failed 가 1이라도 있으면 Phase B 진입 금지.
+- lat/lng 비교는 `COORD_SERIALIZATION_EPSILON=1e-10`(PostgreSQL double → PostgREST 15유효자리 직렬화 round-trip 만 흡수; Production 실측 최대 Δ 4.8e-13; entity matching tolerance 아님). 그 외 숫자/문자열/객체/null 은 exact. 의미 있는 좌표 변화(≥1e-7)는 DRIFT.
 - per-row PATCH(return=representation 검증, is_published 불변) · receipt 즉시 append(phase RESTORE_PRE_R2, row id, payload sha, state) · 실패 시 failure receipt + StageRestError(id/HTTP/code) · 재실행 시 이미 복구된 행은 ALREADY_RESTORED.
 
 ### 6-2. 구현

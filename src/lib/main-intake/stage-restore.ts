@@ -40,6 +40,21 @@ export function canon(v: unknown): string {
 }
 export const sameValue = (a: unknown, b: unknown): boolean => canon(a) === canon(b);
 
+// ── coordinate serialization tolerance (R3-RESTORE-NUMERIC-TOLERANCE-FIX-V1) ──────────────────────────────────────────
+// 목적: PostgreSQL double precision → PostgREST JSON 직렬화(15 유효자리) round-trip 만 흡수한다.
+//   예) R2 가 쓴 35.80870976566988 이 35.8087097656699 로 읽힘(Δ≈2e-14). Production 94행 실측 최대 Δ = 4.8e-13.
+// 이것은 entity matching / nearby-place tolerance 가 아니다. 1e-10 deg ≈ 0.01 mm — 의미 있는 위치 변화(≥1e-7 deg ≈ 1 cm)는 여전히 DRIFT.
+// 적용 범위는 lat/lng 두 필드뿐. 그 외 숫자(id·count·rating 등)·문자열·객체·null 은 기존 exact/canonical 비교.
+export const COORD_SERIALIZATION_EPSILON = 1e-10;
+export const COORD_FIELDS: ReadonlySet<string> = new Set(["lat", "lng"]);
+export function sameRestoreFieldValue(field: string, a: unknown, b: unknown): boolean {
+  if (COORD_FIELDS.has(field) && typeof a === "number" && typeof b === "number") {
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return false;   // NaN/±Infinity 는 같다고 보지 않는다
+    return Math.abs(a - b) <= COORD_SERIALIZATION_EPSILON;
+  }
+  return sameValue(a, b);
+}
+
 /** plan 자체의 내부 무결성 — rows 94 · distinct id · allowlist · forbidden 0 · before_values ↔ restore_fields · snapshot 출처 고정 */
 export function validateRestorePlan(rows: readonly RestorePlanRow[], opts: { expectedRows?: number } = {}): { rows: number; distinct_ids: number; fields: string[]; errors: string[] } {
   const errors: string[] = [];
@@ -96,8 +111,8 @@ export function classifyRestoreState(plan: RestorePlanRow, current: CurrentRow |
   const toPatch: string[] = []; const drift: string[] = [];
   for (const f of plan.restore_fields) {
     const cur = current[f]; const before = plan.before_values[f];
-    if (sameValue(cur, before)) continue;
-    if (f in expectedR2 && sameValue(cur, expectedR2[f])) { toPatch.push(f); continue; }
+    if (sameRestoreFieldValue(f, cur, before)) continue;                                   // snapshot before 상태(lat/lng 는 직렬화 오차만 허용)
+    if (f in expectedR2 && sameRestoreFieldValue(f, cur, expectedR2[f])) { toPatch.push(f); continue; }   // R2 적용 상태 ± serialization epsilon
     drift.push(f);
   }
   if (drift.length) return { state: "DRIFT_DETECTED", fields_to_patch: [], detail: `third state in ${drift.join(",")}` };
@@ -153,7 +168,7 @@ export async function stageRestoreChunk(fetchLike: FetchLike, t: RestTarget, row
       const rep = JSON.parse(await r.text()) as CurrentRow[];
       const after = rep[0];
       if (rep.length !== 1 || !after || after.id !== p.main_city_spot_id) throw new StageIdentityError(`restore #${p.main_city_spot_id}: representation mismatch`);
-      const wrong = cls.fields_to_patch.filter(f => !sameValue(after[f], plan.before_values[f]));
+      const wrong = cls.fields_to_patch.filter(f => !sameRestoreFieldValue(f, after[f], plan.before_values[f]));   // representation 은 15유효자리로 돌아온다
       if (wrong.length || after.is_published !== current.get(p.main_city_spot_id)!.is_published) throw new StageIdentityError(`restore #${p.main_city_spot_id}: post-write verification failed (${wrong.join(",") || "is_published changed"})`);
       receipt.patched_fields = cls.fields_to_patch.length; receipt.updated = 1; receipt.http_status = r.status; res.restored += 1;
     } else if (cls.state === "ALREADY_RESTORED") { receipt.unchanged = 1; res.already_restored += 1; }

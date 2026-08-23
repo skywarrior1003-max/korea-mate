@@ -10,6 +10,7 @@ import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { validateRestorePlan, crossCheckWithSnapshot, buildRestorePayloads, classifyRestoreState, stageRestoreChunk, restoreAllowsNextPhase, RESTORE_FORBIDDEN_FIELDS, R2_OPS_COMMIT, R2_HISTORICAL_SNAPSHOT_SHA256, R2_HISTORICAL_SNAPSHOT_FILE, type RestorePlanRow, type CurrentRow, type RestoreRowReceipt } from "./stage-restore.ts";
+import { sameRestoreFieldValue, COORD_SERIALIZATION_EPSILON, COORD_FIELDS, sameValue } from "./stage-restore.ts";
 import { stageInsertChunkSafe, StageRestError, type FetchLike } from "./stage-rest-writer.ts";
 import { writeImmutableFile, R2_BEFORE_PHASE_A_SNAPSHOT } from "./stage-safety.ts";
 import { planImport, type CrosswalkRow, type IntakeRow, type MainSnapshotRow, type SourceRow, type ImageRow, type InsertAction } from "./importer-core.ts";
@@ -102,7 +103,7 @@ test("REST-14/16: writer — 94 rows at R2 state → restored 94 (PATCH only all
   assert.deepEqual([r1.planned, r1.restored, r1.already_restored, r1.drift, r1.identity_mismatch, r1.snapshot_missing, r1.failed], [94, 94, 0, 0, 0, 0, 0]);
   assert.ok(restoreAllowsNextPhase(r1)); assert.equal(db.patches().length, 94); assert.equal(db.posts(), 0);
   for (const p of db.patches()) { for (const k of Object.keys(p.body!)) assert.ok(!RESTORE_FORBIDDEN_FIELDS.has(k), `forbidden ${k}`); assert.ok(!("is_published" in p.body!)); }
-  for (const p of plan) { const row = db.table.get(p.main_city_spot_id)!; assert.equal(row.is_published, true); for (const f of p.restore_fields) assert.deepEqual(row[f], p.before_values[f]); assert.equal(row.source_type, "gyeongju-city"); }
+  for (const p of plan) { const row = db.table.get(p.main_city_spot_id)!; assert.equal(row.is_published, true); for (const f of p.restore_fields) assert.ok(sameRestoreFieldValue(f, row[f], p.before_values[f]), `${p.main_city_spot_id}.${f}`); assert.equal(row.source_type, "gyeongju-city"); }   // lat/lng: R2 value ≈ before (serialization-equivalent) stays as-is
   assert.equal(receipts.length, 94); assert.ok(receipts.every(x => x.state === "NEEDS_RESTORE" && x.updated === 1 && /^[0-9a-f]{64}$/.test(x.payload_sha256)));
   const r2run = await stageRestoreChunk(db.fetchLike, T, plan, { expectedR2ByRow: r2 });
   assert.deepEqual([r2run.restored, r2run.already_restored, r2run.failed], [0, 94, 0]); assert.equal(db.patches().length, 94, "second run PATCH 0"); assert.equal(db.table.size, 94);
@@ -174,4 +175,60 @@ test("SIM: synthetic A1→A2→A3→B — A3 94 restored then B inserts; with an
   await assert.rejects(run(bad)); assert.equal(bad.posts(), 0, "B requests = 0 after A3 failure");
   const drift = fakeDb(rowsFor(plan, r2, id => (id === plan[7]!.main_city_spot_id ? "THIRD" : "R2")), bridgeFor(plan));
   await assert.rejects(run(drift), /blocked/); assert.equal(drift.posts(), 0);
+});
+
+// ── R3-RESTORE-NUMERIC-TOLERANCE-FIX-V1: lat/lng serialization tolerance (REST-NUM-1..8 + SIM A/B) ──────────────────
+
+// real Production false positives (#629 불난숯불갈비, #630 호성식육식당): R2 write value vs PostgREST 15-significant-digit read
+const P629 = { lat: [35.80870976566988, 35.8087097656699], lng: [129.50019882758608, 129.500198827586] } as const;
+const P630 = { lat: [35.80495516124354, 35.8049551612435], lng: [129.5021965778247, 129.502196577825] } as const;
+
+test("REST-NUM-1/2/6: PostgREST lat/lng precision round-trip → same (real #629/#630 fixtures) · epsilon 1e-10 · scope lat/lng only", () => {
+  assert.equal(COORD_SERIALIZATION_EPSILON, 1e-10); assert.deepEqual([...COORD_FIELDS].sort(), ["lat", "lng"]);
+  for (const [f, [exp, cur]] of [...Object.entries(P629), ...Object.entries(P630)] as Array<[string, readonly [number, number]]>) {
+    assert.ok(sameRestoreFieldValue(f, cur, exp), `${f} ${cur} ~ ${exp}`); assert.ok(!sameValue(cur, exp), "exact compare still differs (that was the false positive)");
+  }
+  assert.ok(sameRestoreFieldValue("lat", 35.8087097656699, 35.8087097656699 + 4.9e-13), "max observed Production delta 4.8e-13 is inside epsilon");
+});
+
+test("REST-NUM-3: meaningful coordinate delta (1e-7, 1e-6) → not same → DRIFT", () => {
+  assert.ok(!sameRestoreFieldValue("lat", 35.80870986566988, 35.80870976566988), "1e-7 deg is drift");
+  assert.ok(!sameRestoreFieldValue("lng", 129.50019982758608, 129.50019882758608), "1e-6 deg is drift");
+  assert.ok(!sameRestoreFieldValue("lat", 35.82, 35.81));
+});
+
+test("REST-NUM-4/5: non-coordinate numeric tiny delta stays exact · null/type mismatches stay strict · NaN/Infinity never same", () => {
+  assert.ok(!sameRestoreFieldValue("rating", 4.5, 4.5 + 1e-13)); assert.ok(!sameRestoreFieldValue("review_count", 607, 607.00000000001)); assert.ok(sameRestoreFieldValue("review_count", 607, 607));
+  assert.ok(!sameRestoreFieldValue("lat", null, 0)); assert.ok(!sameRestoreFieldValue("lat", "35.8", 35.8)); assert.ok(!sameRestoreFieldValue("lng", null, 129.2)); assert.ok(sameRestoreFieldValue("lat", null, null));
+  assert.ok(!sameRestoreFieldValue("lat", NaN, NaN)); assert.ok(!sameRestoreFieldValue("lat", Infinity, Infinity)); assert.ok(!sameRestoreFieldValue("lng", -Infinity, 129));
+  assert.ok(sameRestoreFieldValue("name_l10n", { ko: "a", en: "b" }, { en: "b", ko: "a" }) && !sameRestoreFieldValue("name", "a", "a "));
+});
+
+test("REST-NUM-7: epsilon boundary deterministic — Δ = ε same · Δ just above ε not same · symmetric", () => {
+  const a = 35.8; assert.ok(sameRestoreFieldValue("lat", a, a + 5e-11)); assert.ok(sameRestoreFieldValue("lat", a + 5e-11, a));   // Δ = ε/2 (exact-ε is not representable in binary floating point)
+  assert.ok(!sameRestoreFieldValue("lat", a, a + 2e-10)); assert.ok(!sameRestoreFieldValue("lat", a + 2e-10, a));
+  for (let i = 0; i < 3; i++) assert.equal(sameRestoreFieldValue("lng", 129.5, 129.5 + 5e-11), true);
+});
+
+test("REST-NUM-6/8 (classifier+writer): #629/#630 shape → NEEDS_RESTORE (lat/lng patched back to snapshot) · second run idempotent · real drift row blocks", { skip: !ready }, async () => {
+  const plan = loadPlan(); const r2 = r2Expectations();
+  const p629 = plan.find(p => p.main_city_spot_id === 629)!; const p630 = plan.find(p => p.main_city_spot_id === 630)!;
+  const rows = rowsFor([p629, p630], r2, () => "R2").map(r => ({ ...r, lat: r.id === 629 ? P629.lat[1] : P630.lat[1], lng: r.id === 629 ? P629.lng[1] : P630.lng[1] }));   // PostgREST-rounded R2 values
+  assert.equal(classifyRestoreState(p629, rows[0]!, 629, r2.get(629)!).state, "NEEDS_RESTORE"); assert.ok(classifyRestoreState(p629, rows[0]!, 629, r2.get(629)!).fields_to_patch.includes("lat"));
+  const db = fakeDb(rows, bridgeFor([p629, p630]));
+  const r = await stageRestoreChunk(db.fetchLike, T, [p629, p630], { expectedR2ByRow: r2 });
+  assert.deepEqual([r.restored, r.drift, r.failed], [2, 0, 0]); assert.equal(db.table.get(629)!.lat, p629.before_values.lat); assert.equal(db.table.get(630)!.lng, p630.before_values.lng);
+  const again = await stageRestoreChunk(db.fetchLike, T, [p629, p630], { expectedR2ByRow: r2 }); assert.deepEqual([again.restored, again.already_restored], [0, 2]);
+  // SIM B: one row with a meaningful lat change (1e-6) → DRIFT, no PATCH for it, Phase B blocked
+  const driftRows = rowsFor([p629, p630], r2, () => "R2").map(r => (r.id === 630 ? { ...r, lat: (r.lat as number) + 1e-6 } : r));
+  const db2 = fakeDb(driftRows, bridgeFor([p629, p630])); const r2r = await stageRestoreChunk(db2.fetchLike, T, [p629, p630], { expectedR2ByRow: r2 });
+  assert.deepEqual([r2r.restored, r2r.drift], [1, 1]); assert.ok(!restoreAllowsNextPhase(r2r)); assert.ok(!db2.patches().some(p => p.url.includes("id=eq.630"))); assert.equal(db2.posts(), 0);
+});
+
+test("SIM-A: 94 rows at R2 state with PostgREST-rounded coordinates (15 significant digits) → NEEDS_RESTORE 94 · DRIFT 0 · PATCH eligible 94", { skip: !ready }, async () => {
+  const plan = loadPlan(); const r2 = r2Expectations();
+  const round15 = (x: unknown) => (typeof x === "number" ? Number(x.toPrecision(15)) : x);
+  const rows = rowsFor(plan, r2, () => "R2").map(r => ({ ...r, lat: round15(r.lat), lng: round15(r.lng) }));
+  const db = fakeDb(rows, bridgeFor(plan)); const r = await stageRestoreChunk(db.fetchLike, T, plan, { expectedR2ByRow: r2 });
+  assert.deepEqual([r.planned, r.restored, r.drift, r.identity_mismatch, r.failed], [94, 94, 0, 0, 0]); assert.ok(restoreAllowsNextPhase(r)); assert.equal(db.patches().length, 94);
 });
