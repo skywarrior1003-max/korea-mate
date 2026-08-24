@@ -10,7 +10,7 @@ import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
 import { seoulClock } from "@/lib/trips/seoul-clock";
 import { tripBucket } from "@/lib/trips/trips-lifecycle";
-import { todayPosition, findTodayDayIndex } from "@/lib/planner/execution-core";
+import { todayPosition, findTodayDayIndex, freshClockFor } from "@/lib/planner/execution-core";
 import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
@@ -1367,9 +1367,20 @@ function ItineraryResult() {
   // ── 오늘 여행 (TASK-MY-TRIP-EXECUTION-MODE-V1) ─────────────────────────────
   // 같은 `/itinerary` 의 `일정` 안 사용 상태다 — 새 route·새 탭이 아니다.
   // 진입점은 여행 기간(trips-lifecycle "traveling")이고 오늘 날짜의 Day 가 있을 때만
-  // 보인다. 전환은 사용자의 클릭뿐이다: 날짜가 되었다고 화면을 강제로 바꾸지 않고,
-  // 보고 있는 동안 시간이 흘러도 다시 판정하지 않는다(진입 시점의 KST 를 찍어 둔다).
+  // 보인다. 전환은 사용자의 클릭뿐이다 — 날짜·시간이 되었다고 화면을 강제로 바꾸지 않는다.
+  // 보고 있는 동안의 NOW/NEXT 는 아래 execClock 이 신선하게 유지한다(화면 전환 없음).
   const [execEntry, setExecEntry] = useState<{ dayIdx: number; todayISO: string; nowHHMM: string } | null>(null);
+  // 오늘 여행 안의 흐르는 시계 — 진입 시·탭이 다시 보일 때·1분마다 KST 를 다시 읽는다.
+  // execEntry(어느 Day 를 보는지)는 건드리지 않으므로 자동 화면 전환은 없다.
+  const [execClock, setExecClock] = useState<{ todayISO: string; nowHHMM: string } | null>(null);
+  useEffect(() => {
+    if (!execEntry) return;
+    const refresh = () => { const c = seoulClock(); setExecClock({ todayISO: c.todayISO, nowHHMM: c.nowHHMM }); };
+    const onVisible = () => { if (document.visibilityState === "visible") refresh(); };
+    const timer = window.setInterval(refresh, 60_000);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", onVisible); };
+  }, [execEntry]);
   const tripPhase   = itinId ? tripBucket({ startDate, endDate }, todayISO) : null;
   const todayDayIdx = tripPhase === "traveling" ? findTodayDayIndex(days, todayISO) : null;
   function openTodayTrip() {
@@ -1378,6 +1389,7 @@ function ItineraryResult() {
     if (dayIdx === null) return;
     setPlannerDay(days[dayIdx]!.dayNumber);
     setMapDay(dayIdx);
+    setExecClock({ todayISO: clock.todayISO, nowHHMM: clock.nowHHMM });   // 진입 즉시 최신
     setExecEntry({ dayIdx, todayISO: clock.todayISO, nowHHMM: clock.nowHHMM });
   }
   useEffect(() => {
@@ -3024,7 +3036,9 @@ function ItineraryResult() {
               나머지 일정은 위계를 낮춘다. 데이터는 전체 일정과 같은 days 하나다. ── */
         (() => {
           const day = days[execEntry.dayIdx]!;
-          const pos = todayPosition(day.places, execEntry.nowHHMM);
+          // 시각만 흐른다 — 같은 날일 때만 새 시각, 자정이 지나면 마지막 같은-날 시각 유지.
+          const nowHHMM = freshClockFor(execEntry.todayISO, execClock, execEntry.nowHHMM);
+          const pos = todayPosition(day.places, nowHHMM);
           const openDetailOf = (p: Place) => () => { setSelectedPlace(p); setSelectedPlaceDay(day.dayNumber); };
           return (
             <div className="mb-16">

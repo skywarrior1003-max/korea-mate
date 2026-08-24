@@ -5,7 +5,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { todayPosition, findTodayDayIndex } from "./execution-core.ts";
+import { todayPosition, findTodayDayIndex, freshClockFor } from "./execution-core.ts";
 
 const T = (time: string, duration: string | null = "60m", src: string = "scheduler") =>
   ({ time, duration, timeSource: src });
@@ -41,6 +41,24 @@ test("★오늘 Day 찾기 — 한국 달력 날짜가 일치하는 Day 만", ()
   assert.equal(findTodayDayIndex([], "2026-08-24"), null);
 });
 
+test("★흐르는 시계 — 같은 날이면 새 시각, 자정이 지나면 마지막 같은-날 시각 유지 (TIME-FRESHNESS-FIX-V1)", () => {
+  assert.equal(freshClockFor("2026-08-24", { todayISO: "2026-08-24", nowHHMM: "13:05" }, "12:00"), "13:05");
+  assert.equal(freshClockFor("2026-08-24", { todayISO: "2026-08-25", nowHHMM: "00:01" }, "23:58"), "23:58", "날짜가 바뀌면 가짜 '첫 일정 전'을 만들지 않는다");
+  assert.equal(freshClockFor("2026-08-24", null, "10:00"), "10:00");
+});
+
+test("★page.tsx 시간 신선도 — 1분 간격+visibility 갱신, 벗어나면 정리, 자동 전환 없음 (TIME-FRESHNESS-FIX-V1)", () => {
+  const page = readFileSync(new URL("../../app/itinerary/page.tsx", import.meta.url), "utf8");
+  const eff = page.slice(page.indexOf("const [execClock, setExecClock]"), page.indexOf("}, [execEntry]);"));
+  assert.match(eff, /if \(!execEntry\) return;/, "오늘 여행일 때만 시계가 돈다");
+  assert.match(eff, /window\.setInterval\(refresh, 60_000\)/, "약 1분 간격 갱신");
+  assert.match(eff, /document\.addEventListener\("visibilitychange", onVisible\)/, "탭이 다시 보이면 즉시 갱신");
+  assert.match(eff, /window\.clearInterval\(timer\); document\.removeEventListener\("visibilitychange", onVisible\)/, "벗어나면 timer·listener 정리");
+  assert.ok(!/setExecEntry/.test(eff), "시계 갱신이 화면을 전환하지 않는다");
+  assert.match(page, /const nowHHMM = freshClockFor\(execEntry\.todayISO, execClock, execEntry\.nowHHMM\)/, "판정은 흐르는 시계로");
+  assert.match(page, /todayPosition\(day\.places, nowHHMM\)/);
+});
+
 test("★page.tsx 통합 — 진입은 사용자 클릭뿐, 자동 전환 없음, 새 route/탭 없음 (EXECUTION-MODE-V1)", () => {
   const page = readFileSync(new URL("../../app/itinerary/page.tsx", import.meta.url), "utf8");
   assert.match(page, /const \[execEntry, setExecEntry\] = useState/, "오늘 여행 상태");
@@ -48,7 +66,7 @@ test("★page.tsx 통합 — 진입은 사용자 클릭뿐, 자동 전환 없음
   assert.match(page, /function openTodayTrip\(\)/, "사용자 클릭 핸들러로만 진입");
   assert.ok(!/useEffect\([^}]*setExecEntry/.test(page.slice(page.indexOf("function ItineraryResult"))), "effect 가 오늘 여행을 자동 전환하지 않는다");
   assert.match(page, /tripBucket\(\{ startDate, endDate \}, todayISO\)/, "진입 노출은 trips-lifecycle 재사용");
-  assert.match(page, /todayPosition\(day\.places, execEntry\.nowHHMM\)/, "NOW/NEXT 는 진입 시점 시각으로 판정");
+  assert.match(page, /todayPosition\(day\.places, nowHHMM\)/, "NOW/NEXT 는 오늘 여행의 흐르는 시계로 판정");
   assert.ok(!/["'`]\/execution/.test(page), "새 route 를 만들지 않는다");
   assert.match(page, /findTodayDayIndex\(days, clock\.todayISO\)/, "오늘 Day 는 KST 달력으로 찾는다");
 });

@@ -32,6 +32,20 @@ export function findTodayDayIndex(
   return i >= 0 ? i : null;
 }
 
+/**
+ * 오늘 여행을 보는 동안 흐르는 시계 (TASK-MY-TRIP-EXECUTION-TIME-FRESHNESS-FIX-V1).
+ * 같은 날(진입한 Day 의 오늘)일 때만 새 시각을 쓴다. 자정이 지나 날짜가 바뀌면
+ * 마지막 같은-날 시각(fallback)을 유지한다 — 보고 있는 화면을 다른 날로 재판정해
+ * 가짜 "첫 일정 전"을 만들거나 화면을 전환하지 않기 위해서다.
+ */
+export function freshClockFor(
+  entryTodayISO: string,
+  current: { todayISO: string; nowHHMM: string } | null,
+  fallbackHHMM: string,
+): string {
+  return current && current.todayISO === entryTodayISO ? current.nowHHMM : fallbackHHMM;
+}
+
 export function todayPosition(places: readonly TimedLike[], nowHHMM: string): TodayPosition {
   const now = timeToMinutes(nowHHMM);
   const timed = places
