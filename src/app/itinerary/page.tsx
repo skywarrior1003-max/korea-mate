@@ -9,6 +9,8 @@ import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
 import { seoulClock } from "@/lib/trips/seoul-clock";
+import { tripBucket } from "@/lib/trips/trips-lifecycle";
+import { todayPosition, findTodayDayIndex } from "@/lib/planner/execution-core";
 import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
@@ -1361,6 +1363,23 @@ function ItineraryResult() {
   // 식으로 두 화면이 엇갈린다. (TASK-MY-TRIPS-FINAL-UI-V1-R1)
   const todayISO   = seoulClock().todayISO;
   const isPastTrip = Boolean(itinId) && isPastTripByDate(endDate, todayISO);
+
+  // ── 오늘 여행 (TASK-MY-TRIP-EXECUTION-MODE-V1) ─────────────────────────────
+  // 같은 `/itinerary` 의 `일정` 안 사용 상태다 — 새 route·새 탭이 아니다.
+  // 진입점은 여행 기간(trips-lifecycle "traveling")이고 오늘 날짜의 Day 가 있을 때만
+  // 보인다. 전환은 사용자의 클릭뿐이다: 날짜가 되었다고 화면을 강제로 바꾸지 않고,
+  // 보고 있는 동안 시간이 흘러도 다시 판정하지 않는다(진입 시점의 KST 를 찍어 둔다).
+  const [execEntry, setExecEntry] = useState<{ dayIdx: number; todayISO: string; nowHHMM: string } | null>(null);
+  const tripPhase   = itinId ? tripBucket({ startDate, endDate }, todayISO) : null;
+  const todayDayIdx = tripPhase === "traveling" ? findTodayDayIndex(days, todayISO) : null;
+  function openTodayTrip() {
+    const clock = seoulClock();
+    const dayIdx = findTodayDayIndex(days, clock.todayISO);
+    if (dayIdx === null) return;
+    setPlannerDay(days[dayIdx]!.dayNumber);
+    setMapDay(dayIdx);
+    setExecEntry({ dayIdx, todayISO: clock.todayISO, nowHHMM: clock.nowHHMM });
+  }
   useEffect(() => {
     if (tripViewDefaulted || !itinId || !endDate) return;
     setTripViewDefaulted(true);
@@ -3000,9 +3019,147 @@ function ItineraryResult() {
             {t("editCanvasFooter")}
           </p>
         </div>
+      ) : execEntry && days[execEntry.dayIdx] ? (
+        /* ── 오늘 여행 (Execution 상태) — my_trip_execution_final. NOW 가 주인공이고
+              나머지 일정은 위계를 낮춘다. 데이터는 전체 일정과 같은 days 하나다. ── */
+        (() => {
+          const day = days[execEntry.dayIdx]!;
+          const pos = todayPosition(day.places, execEntry.nowHHMM);
+          const openDetailOf = (p: Place) => () => { setSelectedPlace(p); setSelectedPlaceDay(day.dayNumber); };
+          return (
+            <div className="mb-16">
+              <div className="flex items-center justify-between gap-3 mb-1">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-black uppercase tracking-[0.14em] text-faint">Day {day.dayNumber} · {formatDayChipDate(day.date, locale)}</p>
+                  <h2 className="text-xl font-black text-ink leading-tight">{tPlanner("execToday")}</h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setExecEntry(null)}
+                  className="gkm-focus shrink-0 inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-action"
+                >{tPlanner("execViewFull")}</button>
+              </div>
+              {/* 진입 시점 시각으로만 판정한 상태 안내 — 거짓 NOW 를 만들지 않는다 */}
+              {pos.phase === "before" && <p className="mt-3 text-sm font-semibold text-sub">{tPlanner("execBeforeFirst")}</p>}
+              {pos.phase === "after"  && <p className="mt-3 text-sm font-semibold text-sub">{tPlanner("execAllDone")}</p>}
+              {pos.phase === "none"   && <p className="mt-3 text-sm font-semibold text-sub">{tPlanner("execNoTimed")}</p>}
+              <div className="mt-4 space-y-3">
+                {day.places.map((p, i) => {
+                  const clock = shouldShowClock(p) ? formatClock(p.time, locale) : null;
+                  const imageSrc = p.cartSnapshot?.image ?? p.image;
+                  const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                  const displayName = p.name?.trim() || (p.isAccommodation ? tStay("placeFallback") : "");
+                  if (i === pos.nowIdx) {
+                    // PlaceModal 과 같은 규칙: 네이버 키워드가 없으면 Google 검색으로 돌아간다 —
+                    // 그때는 💚 표기를 붙이지 않고, 별도 Google 링크도 중복이라 내지 않는다.
+                    const naverUrl      = naverPlaceSearchUrl(p.name, city);
+                    const naverIsGoogle = naverUrl.includes("google.com");
+                    const googleUrl     = p.googleMapsUrl || googlePlaceSearchUrl(p.name, city);
+                    const canMoment = (!shareId || isOwner) && itinId && stopKeyOf(p) !== null;
+                    return (
+                      <div key={i} className="rounded-2xl border-2 bg-white p-4" style={{ borderColor: "var(--gkm-action-primary)" }}>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-xs font-black tracking-wide" style={{ color: "var(--gkm-action-primary)" }}>
+                            ● {tPlanner("execNow")}{clock ? ` · ${clock}` : ""}
+                          </p>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub">{humanizeCategory(p.category)}</span>
+                        </div>
+                        <button type="button" onClick={openDetailOf(p)} className="gkm-focus block w-full text-left mt-1.5">
+                          <span className="block text-2xl font-black text-ink leading-tight">{displayName}</span>
+                        </button>
+                        {thumb && (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={thumb} alt="" className="mt-3 w-full h-44 rounded-xl object-cover border border-line" onError={swapToPlaceholderOnError} />
+                        )}
+                        <div className="mt-3 flex items-center gap-2">
+                          {/* Directions — 기존 Naver 우선 + Google 접근(PlaceModal 과 같은 helpers 재사용) */}
+                          <a
+                            href={naverUrl} target="_blank" rel="noopener noreferrer"
+                            className="gkm-focus flex-1 inline-flex items-center justify-center min-h-11 rounded-full text-sm font-black text-white"
+                            style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                          >{naverIsGoogle ? tPlanner("execDirections") : `💚 ${tPlanner("execDirections")}`}</a>
+                          {canMoment && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setCaptureDay(day.dayNumber);
+                                setCaptureStop({ placeName: p.name, citySpotId: stopCitySpotId(p), stopKey: stopKeyOf(p) });
+                                setCaptureOpen(true);
+                              }}
+                              className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-ink"
+                            >📷 {tMemo("addMemory")}</button>
+                          )}
+                        </div>
+                        {!naverIsGoogle && (
+                          <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="gkm-focus mt-2.5 inline-block text-[11px] font-bold text-sub underline">Google Maps</a>
+                        )}
+                      </div>
+                    );
+                  }
+                  if (i === pos.nextIdx) {
+                    const nowPlace = pos.nowIdx !== null ? day.places[pos.nowIdx] : null;
+                    const transit = nowPlace ? transitMinutes(nowPlace, p) : null;
+                    return (
+                      <div key={i} className="rounded-2xl border border-line bg-surface-dim/40 p-4">
+                        <p className="text-[11px] font-black tracking-wide text-sub">{tPlanner("execNext")}{clock ? ` · ${clock}` : ""}</p>
+                        <button type="button" onClick={openDetailOf(p)} className="gkm-focus block w-full text-left">
+                          <span className="block mt-0.5 text-lg font-black text-ink leading-tight">{displayName}</span>
+                        </button>
+                        <p className="mt-0.5 text-xs text-sub">
+                          {humanizeCategory(p.category)}
+                          {/* 이동 정보는 두 실제 시각 사이의 빈 시간만 읽는다 — 새로 추정하지 않는다 */}
+                          {transit !== null ? ` · ${tPlanner("transit", { n: transit })}` : ""}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return (
+                    <button key={i} type="button" onClick={openDetailOf(p)} className="gkm-focus w-full text-left flex items-center gap-3 px-1 py-1.5 opacity-60">
+                      <span className="w-14 text-[11px] font-bold text-sub tabular-nums shrink-0">{clock ?? ""}</span>
+                      {thumb ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img src={thumb} alt="" className="w-9 h-9 rounded-lg object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
+                      ) : (
+                        <span className="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(p.category) }}>
+                          <TimelineIcon category={p.category} size={14} />
+                        </span>
+                      )}
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-bold text-ink truncate">{displayName}</span>
+                        <span className="block text-[11px] text-sub truncate">{humanizeCategory(p.category)}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {/* Map View — 기존 Day 지도 재사용: 전체 일정의 오늘 Day 지도로 이동한다 */}
+              <button
+                type="button"
+                onClick={() => { setExecEntry(null); setMapOpen(true); }}
+                className="gkm-focus fixed bottom-24 right-4 z-40 inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white shadow-modal"
+                style={{ backgroundColor: "var(--gkm-ink)" }}
+              >🗺 {tPlanner("mapShow")}</button>
+            </div>
+          );
+        })()
       ) : (
         /* ── Full View ── */
         <div className="space-y-12 mb-16">
+          {/* 오늘 여행 진입점 — 여행 기간이고 오늘 Day 가 있을 때만. 누르기 전에는 아무것도 바뀌지 않는다. */}
+          {tripPhase === "traveling" && todayDayIdx !== null && (
+            <button
+              type="button"
+              onClick={openTodayTrip}
+              className="gkm-focus w-full flex items-center justify-between rounded-2xl px-4 py-3.5 text-white shadow-sm"
+              style={{ backgroundColor: "var(--gkm-action-primary)" }}
+            >
+              <span className="text-left min-w-0">
+                <span className="block text-[10px] font-black uppercase tracking-[0.14em] opacity-80">Day {days[todayDayIdx]?.dayNumber} · {formatDayChipDate(days[todayDayIdx]?.date ?? "", locale)}</span>
+                <span className="block text-sm font-black">{tPlanner("execToday")}</span>
+              </span>
+              <span className="text-lg font-black shrink-0" aria-hidden>→</span>
+            </button>
+          )}
           {/* STAGE A: 하루씩 본다. 14일 일정에서 전체를 세로로 쌓으면 아무것도 못 찾는다.
               선택 Day 는 지도와도 같이 움직인다 — 두 곳이 서로 다른 날을 가리키면 안 된다. */}
           {days.length > 0 && (() => {

@@ -474,7 +474,15 @@
     "editTime": "时间",
     "editTimedOrderHint": "时间决定顺序",
     "editEmptyDay": "这一天还没有地点。",
-    "editOrderNote": "有开始时间的地点按时间排序 — 想调整位置请修改时间。没有时间的地点会保留你用 ↑↓ 排定的顺序。"
+    "editOrderNote": "有开始时间的地点按时间排序 — 想调整位置请修改时间。没有时间的地点会保留你用 ↑↓ 排定的顺序。",
+    "execToday": "今日行程",
+    "execViewFull": "查看完整行程",
+    "execNow": "NOW",
+    "execNext": "NEXT",
+    "execDirections": "路线",
+    "execBeforeFirst": "还没到第一个行程 — 今天的第一站就在下面。",
+    "execAllDone": "今天的行程时间都已结束，辛苦了！",
+    "execNoTimed": "今天没有定时行程 — 看看下面的列表吧。"
   },
   "common": {
     "language": "语言",

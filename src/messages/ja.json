@@ -474,7 +474,15 @@
     "editTime": "時刻",
     "editTimedOrderHint": "時刻が順序を決めます",
     "editEmptyDay": "この日にはまだ場所がありません。",
-    "editOrderNote": "開始時刻のある場所は時刻順に並びます — 位置を変えるには時刻を変更してください。時刻のない場所は ↑↓ で決めた順序のまま保存されます。"
+    "editOrderNote": "開始時刻のある場所は時刻順に並びます — 位置を変えるには時刻を変更してください。時刻のない場所は ↑↓ で決めた順序のまま保存されます。",
+    "execToday": "今日の旅",
+    "execViewFull": "全体の日程を見る",
+    "execNow": "NOW",
+    "execNext": "NEXT",
+    "execDirections": "経路案内",
+    "execBeforeFirst": "まだ最初の予定の前です。今日の最初の場所は下にあります。",
+    "execAllDone": "今日の予定時刻はすべて過ぎました。おつかれさまでした！",
+    "execNoTimed": "今日は時刻の決まった予定がありません。下のリストからどうぞ。"
   },
   "common": {
     "language": "言語",

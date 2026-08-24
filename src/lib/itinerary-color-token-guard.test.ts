@@ -176,7 +176,7 @@ test("★지도 카테고리 색 함수가 그대로 값을 돌려준다", () =>
   for (const hex of ["#d97706", "#dc2626", "#7c3aed", "#16a34a", "#9333ea", "#db2777", "#1a1f36"]) {
     assert.ok(PAGE.toLowerCase().includes(hex), "카테고리 색 누락: " + hex);
   }
-  assert.equal((PAGE.match(/getCategoryColor\(/g) ?? []).length, 4);   // 편집 캔버스 배지 2곳 → 썸네일 fallback 1곳 (EDIT-COMPLETION-V1)
+  assert.equal((PAGE.match(/getCategoryColor\(/g) ?? []).length, 5);   // +오늘 여행 저위계 행 썸네일 fallback (EXECUTION-MODE-V1)
 });
 
 // ── 10·11. migration 무변경 ──────────────────────────────────────────────────

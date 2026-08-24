@@ -474,7 +474,15 @@
     "editTime": "시간",
     "editTimedOrderHint": "시간이 자리를 정해요",
     "editEmptyDay": "이 날에는 아직 장소가 없어요.",
-    "editOrderNote": "시작시간이 있는 장소는 시간 순서로 놓여요 — 자리를 바꾸려면 시간을 바꿔 주세요. 시간이 없는 장소는 ↑↓로 정한 순서가 그대로 저장돼요."
+    "editOrderNote": "시작시간이 있는 장소는 시간 순서로 놓여요 — 자리를 바꾸려면 시간을 바꿔 주세요. 시간이 없는 장소는 ↑↓로 정한 순서가 그대로 저장돼요.",
+    "execToday": "오늘 여행",
+    "execViewFull": "전체 일정 보기",
+    "execNow": "NOW",
+    "execNext": "NEXT",
+    "execDirections": "길찾기",
+    "execBeforeFirst": "아직 첫 일정 전이에요. 오늘의 첫 장소가 아래에 있어요.",
+    "execAllDone": "오늘 일정의 예정 시간이 모두 지났어요. 수고했어요!",
+    "execNoTimed": "오늘은 시간이 정해진 일정이 없어요. 아래 목록에서 자유롭게 둘러보세요."
   },
   "common": {
     "language": "언어",

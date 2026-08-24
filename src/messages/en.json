@@ -474,7 +474,15 @@
     "editTime": "Time",
     "editTimedOrderHint": "Time sets the order",
     "editEmptyDay": "No places on this day yet.",
-    "editOrderNote": "Places with a start time are ordered by time — change the time to move one. Places without a time keep the order you set with ↑↓."
+    "editOrderNote": "Places with a start time are ordered by time — change the time to move one. Places without a time keep the order you set with ↑↓.",
+    "execToday": "Today's Trip",
+    "execViewFull": "View full itinerary",
+    "execNow": "NOW",
+    "execNext": "NEXT",
+    "execDirections": "Directions",
+    "execBeforeFirst": "Your first stop hasn't started yet — today's first place is below.",
+    "execAllDone": "All of today's scheduled times have passed. Nice work!",
+    "execNoTimed": "No timed stops today — browse today's list below."
   },
   "common": {
     "language": "Language",
