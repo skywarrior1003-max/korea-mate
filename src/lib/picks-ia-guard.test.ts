@@ -150,7 +150,9 @@ test("★세 자산의 저장소가 분리돼 있다 — 합치지 않는다", (
   assert.match(PICKS, /getFavorites|FAVORITES_EVENT/);       // Saved
   assert.match(PICKS, /apiGetUserSpots/);                    // My Places
   // 서로 다른 state 세 개로 유지되는지
-  for (const s of [/setSelected\(getCityCart\(tripCity\)\)/, /setSaved\(/, /setMine\(/]) {
+  // (PICKS-TO-TRIP-JOURNEY-RESTORE-V1: 여행이 없을 때도 목록이 죽지 않게
+  //  tripCity 대신 viewCity(tripCity ?? pendingCity)를 본다 — 저장소는 그대로다)
+  for (const s of [/setSelected\(getCityCart\(viewCity\)\)/, /setSaved\(/, /setMine\(/]) {
     assert.match(PICKS, s, String(s));
   }
 });
@@ -178,7 +180,9 @@ test("★My Places 는 user_spots 서버 API 만 쓴다 — 새 DB 구조를 만
 test("★Saved·My Places 에서 Selected 로 담는 기존 경로가 살아 있다", () => {
   assert.match(PICKS, /addToSelected\(e, "saved"\)/);
   assert.match(PICKS, /addToSelected\(ev, "mine"\)/);
-  assert.match(PICKS, /addPlaceToThisTrip\(item, tripCity\)/);
+  // 여행(도시)이 아직 없으면 장소 자신의 도시로 담는다 — 담기는 절대 조용히 죽지 않는다.
+  assert.match(PICKS, /addPlaceToThisTrip\(item, city\)/);
+  assert.match(PICKS, /const city = tripCity \?\? item\.city \?\? viewCity;/);
 });
 
 // ── 주 CTA 는 Selected 하나뿐 ────────────────────────────────────────────────

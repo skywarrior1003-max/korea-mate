@@ -244,7 +244,7 @@ test("PicksClient: 죽은 PlannerSnapshot 대신 TripDraft 를 읽는다", () =>
 test("PicksClient: tripDays 가 기존 고정 일정 입력에 그대로 전달된다", () => {
   assert.match(picksSrc, /<FixedScheduleFields/);
   assert.match(picksSrc, /tripDays=\{tripDays\}/);
-  assert.match(picksSrc, /onChange=\{\(next: CartFixed \| null\) => setCartFixed\(key, next, tripCity \?\? undefined\)\}/);
+  assert.match(picksSrc, /onChange=\{\(next: CartFixed \| null\) => setCartFixed\(key, next, viewCity \?\? undefined\)\}/);
 });
 
 test("TripDraft 는 쓰는 곳이 있는 값만 가진다", () => {

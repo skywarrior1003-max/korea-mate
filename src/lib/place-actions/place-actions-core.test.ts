@@ -286,8 +286,8 @@ test("25·26·27: 저장 조합을 화면마다 복붙하지 않는다", () => {
 });
 
 test("28·29: This Trip 선택·제외가 공통 action 을 쓴다", () => {
-  assert.match(SURFACES.Picks, /addPlaceToThisTrip\(item, tripCity\)/);
-  assert.match(SURFACES.Picks, /removePlaceFromThisTrip\(item, tripCity\)/);
+  assert.match(SURFACES.Picks, /addPlaceToThisTrip\(item, city\)/);   // 여행이 없으면 장소 자신의 도시 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1)
+  assert.match(SURFACES.Picks, /removePlaceFromThisTrip\(item, viewCity\)/);
 });
 
 test("navigator.share 구현을 화면마다 새로 쓰지 않는다", () => {

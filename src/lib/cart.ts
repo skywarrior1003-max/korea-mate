@@ -190,6 +190,21 @@ export function getCityCart(tripCity: string | null | undefined): CartItem[] {
 }
 
 /**
+ * 마지막으로 담은 항목의 도시 — 여행(TripDraft)이 아직 없을 때 This Trip 화면이
+ * 이어받는 기본값이다 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1). 목록 데이터는 주지
+ * 않는다: 화면의 목록 읽기는 여전히 `getCityCart` 하나뿐이라 도시 스코프 계약이
+ * 그대로 지켜진다.
+ */
+export function lastAddedTripCity(): string | null {
+  const items = getCart();
+  for (let i = items.length - 1; i >= 0; i--) {
+    const c = normalizeTripCity(items[i]!.tripCity);
+    if (c) return c;
+  }
+  return null;
+}
+
+/**
  * 어느 여행 것인지 아직 모르는 예전 선택.
  *
  * 지우지 않는다. 화면이 따로 보여 주고 사용자가 어느 여행 것인지 정해 준다.

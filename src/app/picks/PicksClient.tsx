@@ -17,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
-import { getCityCart, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
+import { getCityCart, lastAddedTripCity, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates, writeTripDraft, type TripDraft }
   from "@/lib/trip-draft/trip-draft-core";
 import TripSetupPanel, { type TripSetupPatch } from "@/components/TripSetupPanel";
@@ -99,9 +99,57 @@ function PlaceCardMedia({ image, type }: { image: string | null; type: string })
         ? /* eslint-disable-next-line @next/next/no-img-element */
           <img src={image} alt="" className="w-full h-full object-cover" loading="lazy" />
         : <div className="w-full h-full flex items-center justify-center text-4xl" aria-hidden>
-            {CATEGORY_EMOJI[type] ?? "📍"}
+            {CATEGORY_EMOJI[type] ?? "🗺️"}
           </div>}
     </div>
+  );
+}
+
+// ── 여행 starter — Trip Setup 이 아직 없을 때 This Trip 탭에서 바로 시작한다 ──
+// 저장은 기존 TripDraft 하나뿐이다(writeTripDraft). 새 저장소를 만들지 않는다.
+const STARTER_CITIES = ["Busan", "Seoul", "Jeju", "Gyeongju", "Jeonju"];
+function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endLabel, startLabelBtn, onStart }: {
+  defaultCity: string | null;
+  title: string; hint: string; cityLabel: string; startLabel: string; endLabel: string; startLabelBtn: string;
+  onStart: (city: string, startDate: string, endDate: string) => void;
+}) {
+  const known = STARTER_CITIES.find(c => c.toLowerCase() === (defaultCity ?? "").toLowerCase());
+  const [city, setCity]   = useState(known ?? "Busan");
+  const [start, setStart] = useState("");
+  const [end, setEnd]     = useState("");
+  const canStart = Boolean(city && start && end && start <= end);
+  return (
+    <Card className="mt-6 p-5">
+      <p className="text-sm font-black text-ink">{title}</p>
+      <p className="text-xs text-sub mt-1">{hint}</p>
+      <div className="mt-3 flex flex-col gap-2.5">
+        <label className="flex flex-col gap-1 text-xs font-bold text-sub">{cityLabel}
+          <select
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink"
+          >
+            {STARTER_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <div className="flex gap-2">
+          <label className="flex-1 flex flex-col gap-1 text-xs font-bold text-sub">{startLabel}
+            <input type="date" value={start} onChange={e => setStart(e.target.value)}
+              className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink" />
+          </label>
+          <label className="flex-1 flex flex-col gap-1 text-xs font-bold text-sub">{endLabel}
+            <input type="date" value={end} min={start || undefined} onChange={e => setEnd(e.target.value)}
+              className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink" />
+          </label>
+        </div>
+        <button
+          type="button"
+          onClick={() => canStart && onStart(city, start, end)}
+          disabled={!canStart}
+          className="gkm-focus min-h-11 rounded-control bg-action text-white text-sm font-bold disabled:opacity-40"
+        >{startLabelBtn}</button>
+      </div>
+    </Card>
   );
 }
 
@@ -122,6 +170,19 @@ function PicksContent() {
   // This Trip 은 지금 준비 중인 도시 여행의 목록이다. 부산 여행을 만들다 서울로
   // 옮기면 부산에서 고른 장소는 지워지지 않고 부산 목록에 그대로 남는다.
   const [tripCity, setTripCity] = useState<string | null>(null);
+  // 여행(도시·날짜)이 아직 없어도 담기는 죽지 않는다 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1).
+  // 담은 장소는 그 장소 자신의 도시 cart 에 실제로 저장되고, 화면은 마지막으로 담은
+  // 도시(pendingCity)를 이어받아 보여 준다. 날짜는 This Trip 의 starter 에서 정하는
+  // 순간 TripDraft 가 되고 그때부터 tripCity 가 기준이 된다.
+  const [pendingCity, setPendingCity] = useState<string | null>(null);
+  const viewCity = tripCity ?? pendingCity;
+  /** 방금 담은 장소 이름 — Saved/My Places 탭에서도 담김이 보이도록 잠깐 띄운다. */
+  const [addedToast, setAddedToast] = useState<string | null>(null);
+  useEffect(() => {
+    if (!addedToast) return;
+    const t = setTimeout(() => setAddedToast(null), 2600);
+    return () => clearTimeout(t);
+  }, [addedToast]);
   const [selected, setSelected] = useState<CartItem[]>([]);
   /** 어느 여행 것인지 아직 모르는 예전 선택. 지우지 않고 사용자에게 물어본다. */
   const [unresolved, setUnresolved] = useState<CartItem[]>([]);
@@ -179,16 +240,20 @@ function PicksContent() {
     setDraft(d);
     setTripDays(tripDraftDates(d));
     setTripCity(d?.city ?? null);
+    if (!d) {
+      // 여행이 없어도, 지난번에 담아 둔 도시가 있으면 그 목록을 이어서 보여 준다.
+      setPendingCity(lastAddedTripCity());
+    }
   }, []);
   useEffect(() => {
     const sync = () => {
-      setSelected(getCityCart(tripCity));
+      setSelected(getCityCart(viewCity));
       setUnresolved(getUnresolvedCart());
     };
     sync();
     window.addEventListener(CART_EVENT, sync);
     return () => window.removeEventListener(CART_EVENT, sync);
-  }, [tripCity]);
+  }, [viewCity]);
 
   // ── Saved (favorites) ───────────────────────────────────────────────────────
   const [saved, setSaved] = useState<EventItem[]>([]);
@@ -476,12 +541,17 @@ function PicksContent() {
 
   // ── 공통 동작 ───────────────────────────────────────────────────────────────
   function addToSelected(item: EventItem, from: "saved" | "mine") {
-    // 어느 여행에 담는 것인지 모르면 담지 않는다. 아무 도시나 정해 주지 않는다.
-    if (!addPlaceToThisTrip(item, tripCity)) { setBuildNotice(true); return; }
+    // 여행(도시)이 아직 없으면 **이 장소 자신의 도시** 여행으로 담는다 — 아무
+    // 도시나 지어내는 것이 아니다. 날짜는 This Trip 의 starter 에서 이어서 정한다.
+    // 도시를 전혀 알 수 없는 장소만 담지 않고 무엇이 필요한지 알린다.
+    const city = tripCity ?? item.city ?? viewCity;
+    if (!addPlaceToThisTrip(item, city)) { setBuildNotice(true); setTab("selected"); return; }
+    if (!tripCity && city) setPendingCity(city);
+    setAddedToast(item.shortName || item.name);
     trackEvent("place_add_to_itinerary", {
       city: item.city || "", category: item.type || "",
       source_type: from === "saved" ? "saved" : "user_spot",
-      cta_position: `picks-${from}`, picked_count: getCityCart(tripCity).length,
+      cta_position: `picks-${from}`, picked_count: getCityCart(city).length,
     });
   }
 
@@ -647,10 +717,25 @@ function PicksContent() {
               <TripSetupPanel draft={draft} onChange={patchDraft} />
             </div>
           )}
+          {/* 여행이 아직 없으면 여기서 바로 시작한다 — 안내만 하고 길을 끊지 않는다.
+              도시·날짜가 정해지는 순간 TripDraft 가 되고 아래 TripSetupPanel 로 이어진다. */}
           {tab === "selected" && !draft && (
-            <Card className="mt-6 p-5 text-center">
-              <p className="text-sm text-sub">{t("buildNeedTrip")}</p>
-            </Card>
+            <TripStarterCard
+              defaultCity={viewCity}
+              title={t("starterTitle")}
+              hint={t("buildNeedTrip")}
+              cityLabel={t("starterCity")}
+              startLabel={tSetup("startDate")}
+              endLabel={tSetup("endDate")}
+              startLabelBtn={t("startTrip")}
+              onStart={(city, startDate, endDate) => {
+                const next = writeTripDraft({ city, startDate, endDate, travelers: "1" });
+                if (next) {
+                  setDraft(next); setTripDays(tripDraftDates(next)); setTripCity(next.city);
+                  setBuildNotice(false);
+                }
+              }}
+            />
           )}
           {tab === "selected" && (selected.length === 0 ? (
             <Card className="p-8 text-center">
@@ -706,7 +791,7 @@ function PicksContent() {
                               <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{item.type}</p>
                             )}
                             <p className="text-xs text-faint mt-1 truncate">
-                              📍 {[item.district, item.city].filter(Boolean).join(", ") || "—"}
+                              {[item.district, item.city].filter(Boolean).join(", ") || "—"}
                             </p>
                             {placeId && (
                               <Link href={`/place/${placeId}/`} className="gkm-focus inline-flex items-center min-h-11 -mb-2 text-xs font-bold text-sub hover:text-ink">
@@ -723,7 +808,7 @@ function PicksContent() {
                             className={coach === "time" && isFirstCard ? COACH_PULSE : undefined}
                             onClick={() => setOpenTimeKey(openTimeKey === key ? null : key)}
                           >🕘</Button>
-                          <Button variant="icon" aria-label={`${t("removeFromTrip")}: ${item.name}`} onClick={() => removePlaceFromThisTrip(item, tripCity)}>✕</Button>
+                          <Button variant="icon" aria-label={`${t("removeFromTrip")}: ${item.name}`} onClick={() => removePlaceFromThisTrip(item, viewCity)}>✕</Button>
                         </div>
                         <div className="px-4 pb-4">
                           {coach === "time" && isFirstCard && (
@@ -740,7 +825,7 @@ function PicksContent() {
                             open={openTimeKey === key}
                             onOpen={() => setOpenTimeKey(key)}
                             onClose={() => setOpenTimeKey(null)}
-                            onChange={(next: CartFixed | null) => setCartFixed(key, next, tripCity ?? undefined)}
+                            onChange={(next: CartFixed | null) => setCartFixed(key, next, viewCity ?? undefined)}
                           />
                         </div>
                       </Card>
@@ -768,10 +853,10 @@ function PicksContent() {
                       <span className="flex-1 min-w-0 truncate text-sm text-ink">
                         {item.shortName || item.name}
                       </span>
-                      {tripCity && (
+                      {viewCity && (
                         <Button
                           variant="text"
-                          onClick={() => attachCartItemToCity(key, tripCity)}
+                          onClick={() => attachCartItemToCity(key, viewCity)}
                         >
                           {t("legacyUse")}
                         </Button>
@@ -909,7 +994,7 @@ function PicksContent() {
                           <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{e.type}</p>
                         )}
                         <p className="text-xs text-faint mt-1 truncate">
-                          📍 {[e.district, e.city].filter(Boolean).join(", ") || "—"}
+                          {[e.district, e.city].filter(Boolean).join(", ") || "—"}
                         </p>
                         {/* 아래 두 동작은 글자만 있어 16px 높이였다. min-h-11 로 누를 수
                             있는 높이를 확보하고, 버튼이 스스로 갖게 된 위아래 여백만큼
@@ -928,15 +1013,21 @@ function PicksContent() {
                           {/* 공식 장소일 때만 둔다. 서버가 city_spots 에서 사실을
                               읽어 만들기 때문에, 그 원본이 없는 항목은 만들 방법이
                               없다. 없는 자리에 눌리지 않는 버튼을 두지 않는다. */}
-                          {placeId && (
+                          {placeId && (keptKeys.has(key) ? (
+                            /* 이미 내 장소에 있음 — action 이 아니라 상태다. 버튼으로 두면
+                               또 눌러 보게 되므로 체크 표시가 있는 글자로만 보여 준다. */
+                            <span className="inline-flex items-center min-h-11 gap-1 text-xs font-bold text-faint">
+                              ✓ {tP("keptAsMyPlace")}
+                            </span>
+                          ) : (
                             <button
                               onClick={() => void keepSavedAsMyPlace(key)}
                               disabled={savedManaging || keeping === key}
                               className="gkm-focus inline-flex items-center min-h-11 gap-1 text-xs font-bold text-sub hover:text-ink disabled:text-faint disabled:cursor-default"
                             >
-                              {keptKeys.has(key) ? tP("keptAsMyPlace") : tP("keepAsMyPlace")}
+                              {tP("keepAsMyPlace")}
                             </button>
-                          )}
+                          ))}
                           <span className="flex-1" />
                           {placeId && (
                             <Link href={`/place/${placeId}/`} className="gkm-focus inline-flex items-center min-h-11 text-xs font-bold text-sub hover:text-ink">
@@ -1081,6 +1172,17 @@ function PicksContent() {
         >
           +
         </button>
+      )}
+
+      {/* 담김 확인 — Saved/My Places 탭에서 눌러도 어디로 갔는지 보이게 잠깐 뜬다 */}
+      {addedToast && (
+        <div
+          role="status"
+          className="fixed left-1/2 -translate-x-1/2 z-[60] max-w-[92vw] px-4 py-2.5 rounded-xl text-sm font-bold text-white shadow-modal truncate bottom-[calc(4.5rem+env(safe-area-inset-bottom))] md:bottom-6"
+          style={{ backgroundColor: "var(--gkm-ink)" }}
+        >
+          {t("addedToTrip", { name: addedToast })}
+        </div>
       )}
     </div>
   );

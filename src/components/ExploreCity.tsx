@@ -745,6 +745,9 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("blog")}</Link>
             <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
+            {/* desktop 에서 Saved/My Places/This Trip 으로 가는 유일한 상시 진입점 —
+                모바일 BottomNav 의 픽 탭과 같은 곳이다 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1) */}
+            <Link href="/picks"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("picks")}</Link>
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("myTrips")}</Link>
             {/* 플래너는 Home 안의 섹션이라 /#planner 로 들어간다. 여기서는
                 보고 있던 도시까지 함께 넘긴다 — 서울을 보다가 눌렀는데 플래너가

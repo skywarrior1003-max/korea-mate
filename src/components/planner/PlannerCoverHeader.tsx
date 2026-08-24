@@ -26,13 +26,16 @@ interface Props {
   /** 제목 편집 중이면 입력 필드를 대신 그린다 */
   editing?: boolean;
   editSlot?: React.ReactNode;
+  /** 소유자에게만 준다 — 없으면 날짜 줄은 그냥 글자다 */
+  onEditDates?: (() => void) | null;
+  editDatesLabel?: string;
 }
 
 const BRAND_GRADIENT =
   "linear-gradient(140deg, #131b2e 0%, #1d2b52 46%, var(--gkm-action-primary) 100%)";
 
 export default function PlannerCoverHeader({
-  cover, title, dateLine, imageAlt, canEditTitle, editLabel, onEditTitle, editing, editSlot,
+  cover, title, dateLine, imageAlt, canEditTitle, editLabel, onEditTitle, editing, editSlot, onEditDates, editDatesLabel,
 }: Props) {
   const [failed, setFailed] = useState(false);
   const source = resolvePlannerCover({ ...cover, imageFailed: failed }, cityVisual);
@@ -92,7 +95,25 @@ export default function PlannerCoverHeader({
             )}
           </div>
         )}
-        <p className="mt-2 text-[13px] sm:text-sm font-bold text-white/80">{dateLine}</p>
+        {/* 여행 날짜 — 소유자는 여기서 바로 기간을 바꾼다 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1).
+            제목 ✎ 는 제목 편집 그대로다. */}
+        {onEditDates ? (
+          <button
+            type="button"
+            onClick={onEditDates}
+            aria-label={editDatesLabel}
+            className="gkm-focus mt-2 inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-bold text-white/80 underline decoration-white/40 underline-offset-4 hover:text-white"
+          >
+            {dateLine}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden
+                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3z" />
+              <path d="M13.5 6.5l4 4" />
+            </svg>
+          </button>
+        ) : (
+          <p className="mt-2 text-[13px] sm:text-sm font-bold text-white/80">{dateLine}</p>
+        )}
       </div>
     </section>
   );

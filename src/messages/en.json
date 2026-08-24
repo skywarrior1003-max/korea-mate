@@ -3,6 +3,7 @@
     "blog": "Blog",
     "foodGuide": "Food Guide",
     "survivalGuide": "Survival Guide",
+    "picks": "Picks",
     "myTrips": "My Trips",
     "planMyTrip": "Plan My Trip",
     "plan": "Plan",
@@ -482,7 +483,13 @@
     "execDirections": "Directions",
     "execBeforeFirst": "Your first stop hasn't started yet — today's first place is below.",
     "execAllDone": "All of today's scheduled times have passed. Nice work!",
-    "execNoTimed": "No timed stops today — browse today's list below."
+    "execNoTimed": "No timed stops today — browse today's list below.",
+    "editDates": "Change trip dates",
+    "editDatesStart": "Start",
+    "editDatesEnd": "End",
+    "editDatesApply": "Apply",
+    "editDatesShrinkConfirm": "Shortening removes {n} places on the last {days} day(s). Continue?",
+    "editDatesShrinkGo": "Remove & change"
   },
   "common": {
     "language": "Language",
@@ -868,7 +875,11 @@
     "locSeedGps": "Starting from your current location.",
     "locSeedCity": "Starting from the city centre.",
     "locSeedNone": "We couldn't find a starting point. Move the map to set it yourself.",
-    "locSeedShortLink": "Short links can't be read. Set the spot on the map instead."
+    "locSeedShortLink": "Short links can't be read. Set the spot on the map instead.",
+    "starterTitle": "Start this trip",
+    "starterCity": "City",
+    "startTrip": "Start with these",
+    "addedToTrip": "{name} — added to This Trip"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

@@ -3,6 +3,7 @@
     "blog": "博客",
     "foodGuide": "美食指南",
     "survivalGuide": "旅行指南",
+    "picks": "精选",
     "myTrips": "我的行程",
     "planMyTrip": "规划行程",
     "plan": "规划",
@@ -482,7 +483,13 @@
     "execDirections": "路线",
     "execBeforeFirst": "还没到第一个行程 — 今天的第一站就在下面。",
     "execAllDone": "今天的行程时间都已结束，辛苦了！",
-    "execNoTimed": "今天没有定时行程 — 看看下面的列表吧。"
+    "execNoTimed": "今天没有定时行程 — 看看下面的列表吧。",
+    "editDates": "修改旅行日期",
+    "editDatesStart": "开始日",
+    "editDatesEnd": "结束日",
+    "editDatesApply": "应用",
+    "editDatesShrinkConfirm": "缩短行程将删除最后{days}天中的{n}个地点。要继续吗？",
+    "editDatesShrinkGo": "删除并修改"
   },
   "common": {
     "language": "语言",
@@ -868,7 +875,11 @@
     "locSeedGps": "从当前位置开始。",
     "locSeedCity": "从城市中心开始。",
     "locSeedNone": "没有找到起始位置。请移动地图自行指定。",
-    "locSeedShortLink": "短链接无法读取。请直接在地图上指定。"
+    "locSeedShortLink": "短链接无法读取。请直接在地图上指定。",
+    "starterTitle": "开始这次旅行",
+    "starterCity": "城市",
+    "startTrip": "以此条件开始",
+    "addedToTrip": "{name} — 已加入本次行程"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

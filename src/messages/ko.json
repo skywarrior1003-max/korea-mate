@@ -3,6 +3,7 @@
     "blog": "블로그",
     "foodGuide": "맛집 가이드",
     "survivalGuide": "여행 생존 가이드",
+    "picks": "픽",
     "myTrips": "내 여행",
     "planMyTrip": "여행 계획하기",
     "plan": "계획",
@@ -482,7 +483,13 @@
     "execDirections": "길찾기",
     "execBeforeFirst": "아직 첫 일정 전이에요. 오늘의 첫 장소가 아래에 있어요.",
     "execAllDone": "오늘 일정의 예정 시간이 모두 지났어요. 수고했어요!",
-    "execNoTimed": "오늘은 시간이 정해진 일정이 없어요. 아래 목록에서 자유롭게 둘러보세요."
+    "execNoTimed": "오늘은 시간이 정해진 일정이 없어요. 아래 목록에서 자유롭게 둘러보세요.",
+    "editDates": "여행 날짜 바꾸기",
+    "editDatesStart": "시작일",
+    "editDatesEnd": "종료일",
+    "editDatesApply": "적용",
+    "editDatesShrinkConfirm": "기간을 줄이면 마지막 {days}일에 있던 장소 {n}곳이 삭제돼요. 계속할까요?",
+    "editDatesShrinkGo": "삭제하고 변경"
   },
   "common": {
     "language": "언어",
@@ -868,7 +875,11 @@
     "locSeedGps": "현재 위치에서 시작합니다.",
     "locSeedCity": "도시 중심에서 시작합니다.",
     "locSeedNone": "시작 위치를 찾지 못했어요. 지도를 움직여 직접 맞춰 주세요.",
-    "locSeedShortLink": "짧은 링크는 위치를 읽을 수 없어요. 지도에서 직접 맞춰 주세요."
+    "locSeedShortLink": "짧은 링크는 위치를 읽을 수 없어요. 지도에서 직접 맞춰 주세요.",
+    "starterTitle": "이번 여행 시작하기",
+    "starterCity": "도시",
+    "startTrip": "이 조건으로 시작",
+    "addedToTrip": "{name} — 이번 여행에 담았어요"
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

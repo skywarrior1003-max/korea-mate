@@ -11,6 +11,7 @@ import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/sha
 import { seoulClock } from "@/lib/trips/seoul-clock";
 import { tripBucket } from "@/lib/trips/trips-lifecycle";
 import { todayPosition, findTodayDayIndex, freshClockFor } from "@/lib/planner/execution-core";
+import { remapTripDays } from "@/lib/planner/trip-dates-core";
 import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
@@ -1316,6 +1317,31 @@ function ItineraryResult() {
   const [tripTitle,    setTripTitle]    = useState("");
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleInput,   setTitleInput]   = useState("");
+  // ── 여행 날짜 수정 (hero 날짜 줄) — 장소 구성은 그대로, 달력만 다시 맞춘다 ──
+  // 기간이 줄어 장소가 잘려 나갈 때는 remapTripDays 가 세어 준 수를 보여 주고
+  // 사용자가 확인한 뒤에만 적용한다. 조용한 삭제는 없다.
+  const [editingDates,      setEditingDates]      = useState(false);
+  const [dateStartInput,    setDateStartInput]    = useState("");
+  const [dateEndInput,      setDateEndInput]      = useState("");
+  const [dateShrinkPending, setDateShrinkPending] = useState<{ removedDays: number; removedPlaces: number } | null>(null);
+  function openDateEdit() {
+    setDateStartInput(startDate); setDateEndInput(endDate);
+    setDateShrinkPending(null); setEditingDates(true);
+  }
+  function applyTripDates(confirmRemoval: boolean) {
+    const res = remapTripDays(days, dateStartInput, dateEndInput);
+    if (!res) return;
+    if (res.removedPlaces > 0 && !confirmRemoval) {
+      setDateShrinkPending({ removedDays: res.removedDays, removedPlaces: res.removedPlaces });
+      return;
+    }
+    setDays(res.days);                    // 기존 autosave 가 start/end 와 함께 저장한다
+    setStartDate(dateStartInput);
+    setEndDate(dateEndInput);
+    setPlannerDay(p => Math.min(p, res.days.length));
+    setMapDay(m => Math.min(m, res.days.length - 1));
+    setEditingDates(false); setDateShrinkPending(null);
+  }
 
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
   const [isOwner,  setIsOwner]  = useState(!shareId);
@@ -2616,6 +2642,8 @@ function ItineraryResult() {
         imageAlt={tPlanner("coverAlt", { city })}
         canEditTitle={(!shareId || isOwner) && !!itinId}
         editLabel={tPlanner("editTitle")}
+        onEditDates={(!shareId || isOwner) && itinId ? openDateEdit : null}
+        editDatesLabel={tPlanner("editDates")}
         onEditTitle={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
         editing={editingTitle}
         editSlot={
@@ -2636,6 +2664,55 @@ function ItineraryResult() {
           />
         }
       />
+
+      {/* ── 여행 날짜 편집 패널 — 같은 일수는 날짜만 재매핑, 늘리면 빈 Day 추가,
+            줄이면 잘릴 장소 수를 보여 주고 확인 후에만 적용한다. ── */}
+      {editingDates && (
+        <div className="mt-3 rounded-2xl border border-line bg-white p-4">
+          <p className="text-sm font-black text-ink">{tPlanner("editDates")}</p>
+          <div className="mt-2.5 flex gap-2">
+            <label className="flex-1 flex flex-col gap-1 text-[11px] font-bold text-sub">{tPlanner("editDatesStart")}
+              <input
+                type="date" value={dateStartInput}
+                onChange={(e) => { setDateStartInput(e.target.value); setDateShrinkPending(null); }}
+                className="gkm-focus min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-bold text-ink"
+              />
+            </label>
+            <label className="flex-1 flex flex-col gap-1 text-[11px] font-bold text-sub">{tPlanner("editDatesEnd")}
+              <input
+                type="date" value={dateEndInput} min={dateStartInput || undefined}
+                onChange={(e) => { setDateEndInput(e.target.value); setDateShrinkPending(null); }}
+                className="gkm-focus min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-bold text-ink"
+              />
+            </label>
+          </div>
+          {dateShrinkPending ? (
+            <div className="mt-3">
+              <p className="text-xs font-bold text-error" role="alert">
+                {tPlanner("editDatesShrinkConfirm", { days: dateShrinkPending.removedDays, n: dateShrinkPending.removedPlaces })}
+              </p>
+              <div className="mt-2 flex gap-2">
+                <button type="button" onClick={() => applyTripDates(true)}
+                  className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-black text-error"
+                >{tPlanner("editDatesShrinkGo")}</button>
+                <button type="button" onClick={() => setDateShrinkPending(null)}
+                  className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-sub"
+                >{tPlanner("close")}</button>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-3 flex gap-2">
+              <button type="button" onClick={() => applyTripDates(false)}
+                className="gkm-focus inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white"
+                style={{ backgroundColor: "var(--gkm-action-primary)" }}
+              >{tPlanner("editDatesApply")}</button>
+              <button type="button" onClick={() => setEditingDates(false)}
+                className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-sub"
+              >{tPlanner("close")}</button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ── 보조 액션 바 (TASK-MY-TRIP-PLANNING-FINAL-V1) ──
           시안(my_trip_planning_final)은 일정이 주인공이다. 예전 헤더 카드의 버튼 무더기(공개/비공개·
@@ -3676,6 +3753,7 @@ export default function ItineraryPage() {
   const t = useTranslations("itin");
   // 저작권 문구는 footer 네임스페이스에 이미 4개 언어로 있다.
   const tFooter = useTranslations("footer");
+  const tNav = useTranslations("nav");
   return (
     <div className="min-h-screen flex flex-col bg-surface-dim text-ink font-sans antialiased">
       <header className="border-b border-line bg-surface-dim/90 backdrop-blur-md sticky top-0 z-40">
@@ -3683,6 +3761,11 @@ export default function ItineraryPage() {
           <Link href="/" className="text-2xl font-normal tracking-tight text-ink flex items-center gap-1.5">
             <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
+          {/* desktop 은 BottomNav 가 없다 — 픽·내 여행으로 돌아갈 길을 헤더에 둔다 */}
+          <nav aria-label="Primary desktop" className="hidden md:flex items-center gap-6">
+            <Link href="/picks/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">{tNav("picks")}</Link>
+            <Link href="/my-trips/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">{tNav("myTrips")}</Link>
+          </nav>
         </div>
       </header>
 

@@ -323,10 +323,10 @@ const picksSrc = read("src", "app", "picks", "PicksClient.tsx");
 const pageSrc  = read("src", "app", "itinerary", "page.tsx");
 
 test("31: This Trip 화면이 현재 도시만 보여 주고 예전 선택은 따로 보여 준다", () => {
-  assert.match(picksSrc, /setSelected\(getCityCart\(tripCity\)\)/);
+  assert.match(picksSrc, /setSelected\(getCityCart\(viewCity\)\)/);   // viewCity = tripCity ?? pendingCity
   assert.match(picksSrc, /setUnresolved\(getUnresolvedCart\(\)\)/);
   assert.match(picksSrc, /\{t\("legacyTitle"\)\}/);
-  assert.match(picksSrc, /attachCartItemToCity\(key, tripCity\)/);
+  assert.match(picksSrc, /attachCartItemToCity\(key, viewCity\)/);
 });
 
 test("18·20: Saved·My Places 의 선택 여부가 현재 도시 기준이다", () => {

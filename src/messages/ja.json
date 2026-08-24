@@ -3,6 +3,7 @@
     "blog": "ブログ",
     "foodGuide": "グルメガイド",
     "survivalGuide": "旅行サバイバルガイド",
+    "picks": "ピック",
     "myTrips": "マイトリップ",
     "planMyTrip": "旅行を計画する",
     "plan": "計画",
@@ -482,7 +483,13 @@
     "execDirections": "経路案内",
     "execBeforeFirst": "まだ最初の予定の前です。今日の最初の場所は下にあります。",
     "execAllDone": "今日の予定時刻はすべて過ぎました。おつかれさまでした！",
-    "execNoTimed": "今日は時刻の決まった予定がありません。下のリストからどうぞ。"
+    "execNoTimed": "今日は時刻の決まった予定がありません。下のリストからどうぞ。",
+    "editDates": "旅行日程を変更",
+    "editDatesStart": "開始日",
+    "editDatesEnd": "終了日",
+    "editDatesApply": "適用",
+    "editDatesShrinkConfirm": "期間を短くすると最後の{days}日にある{n}か所が削除されます。続けますか？",
+    "editDatesShrinkGo": "削除して変更"
   },
   "common": {
     "language": "言語",
@@ -868,7 +875,11 @@
     "locSeedGps": "現在地から始めます。",
     "locSeedCity": "都市の中心から始めます。",
     "locSeedNone": "開始地点が見つかりませんでした。地図を動かして指定してください。",
-    "locSeedShortLink": "短縮リンクは読み取れません。地図で直接指定してください。"
+    "locSeedShortLink": "短縮リンクは読み取れません。地図で直接指定してください。",
+    "starterTitle": "今回の旅を始める",
+    "starterCity": "都市",
+    "startTrip": "この条件で始める",
+    "addedToTrip": "{name} — 今回の旅に追加しました"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

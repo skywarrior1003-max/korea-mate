@@ -257,7 +257,7 @@ test("★travelStyle 은 draft 가 아니라 아는 화면이 넘긴다", () => 
 
 test("★This Trip 은 이번 도시 것만 넘긴다", () => {
   // 장소는 주소에 싣지 않는다 — cart 에서 읽고, 그 cart 는 도시별이다.
-  assert.match(PICKS, /getCityCart\(tripCity\)/, "This Trip 이 도시별 목록을 쓰지 않는다");
+  assert.match(PICKS, /getCityCart\(viewCity\)/, "This Trip 이 도시별 목록을 쓰지 않는다");
   assert.doesNotMatch(URLS, /cart|sourceKey|lat:\s*item/, "생성 주소에 장소가 실린다");
   const url = buildItineraryGenerationUrl(tripDraftGenerationContext(draftOf()))!;
   assert.ok(!/user_spot|city_spot|local_info/.test(url), "주소에 장소 식별자가 실렸다");

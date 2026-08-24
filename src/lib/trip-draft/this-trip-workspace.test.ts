@@ -198,7 +198,8 @@ test("★★여행 조건이 생성 주소로 전달된다", () => {
 });
 
 test("★★Saved 와 This Trip 은 여전히 다른 상태다", () => {
-  assert.match(PICKS, /getCityCart\(tripCity\)/, "This Trip 이 도시별 목록이 아니다");
+  // PICKS-TO-TRIP-JOURNEY-RESTORE-V1: 여행이 없을 때도 목록이 살도록 viewCity(tripCity ?? pendingCity)를 본다 — 여전히 도시별이다.
+  assert.match(PICKS, /getCityCart\(viewCity\)/, "This Trip 이 도시별 목록이 아니다");
   assert.match(PICKS, /getFavorites\(\)/, "Saved 가 사라졌다");
   assert.doesNotMatch(PICKS, /setSaved\(getCityCart|setSelected\(getSavedSpotsData/,
     "★Saved 와 This Trip 을 한 상태로 합쳤다");
