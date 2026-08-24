@@ -508,6 +508,9 @@ export default function UserSpotsPanel({
           const isConfirmDelete = confirmDeleteId === spot.id;
           const isDeleting      = deletingId      === spot.id;
           const isAdding        = addingId        === spot.id;
+          // 이미 이 Day 에 담긴 내 장소 — 눌러 본 뒤 에러가 아니라 미리 알려 준다.
+          // 자산을 숨기거나 합치지는 않는다: 일정의 공식 장소와 내 장소는 별개다.
+          const alreadyInDay    = existingPlaces.some(pp => pp.source === "user_spot" && pp.place_id === spot.id);
           const isSubmitting    = submittingId    === spot.id;
           const addErr          = addErrors[spot.id];
           const submitErr       = submitErrors[spot.id];
@@ -642,11 +645,13 @@ export default function UserSpotsPanel({
                       />
                       <button
                         onClick={() => handleAddToDay(spot)}
-                        disabled={isAdding}
+                        disabled={isAdding || alreadyInDay}
                         className="flex-1 py-1.5 rounded-lg text-xs font-black text-white transition-all active:scale-95 disabled:opacity-60 cursor-pointer truncate"
-                        style={{ backgroundColor: "#FF4A2D" }}
+                        style={{ backgroundColor: alreadyInDay ? "#B9BEC7" : "#FF4A2D" }}
                       >
-                        {isAdding
+                        {alreadyInDay
+                          ? t("alreadyInDay")
+                          : isAdding
                           ? t("addedToDay")
                           : t("addToDay", { day: selectedDayLabel })}
                       </button>

@@ -493,7 +493,8 @@
     "editDatesShrinkGo": "削除して変更",
     "mapFullscreen": "地図を全画面で",
     "addModeHint": "このDayにまだ無い場所だけを表示します。保存した場所やMy Placesから追加してください。",
-    "execTodayHint": "今の予定と次の場所を確認できます。"
+    "execTodayHint": "今の予定と次の場所を確認できます。",
+    "editFinish": "編集を終える"
   },
   "common": {
     "language": "言語",

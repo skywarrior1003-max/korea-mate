@@ -2778,7 +2778,13 @@ function ItineraryResult() {
               : []),
             // "간단히"(view 토글)는 일정 편집과 같은 캔버스를 여는 중복 액션이라 제거했다 (#7).
             ...((!shareId || isOwner) && !isPastTrip
-              ? [{ key: "edit", label: viewMode === "compact" ? t("editing") : t("editTrip"), onClick: () => { setEditMode("edit"); setViewMode("compact"); setEditDay(0); } }]
+              ? [{ key: "edit",
+                   // 편집 중에는 이 항목이 나가는 문이다 — "편집 중" 표시가 아니라 "편집 마치기".
+                   label: viewMode === "compact" ? tPlanner("editFinish") : t("editTrip"),
+                   onClick: () => {
+                     if (viewMode === "compact") { setViewMode("full"); setMoveOpenIdx(null); setAddOpen(false); setEditMode("edit"); }
+                     else { setEditMode("edit"); setViewMode("compact"); setEditDay(0); }
+                   } }]
               : []),
             { key: "home", label: t("backHome"), href: "/" },
           ]}

@@ -493,7 +493,8 @@
     "editDatesShrinkGo": "삭제하고 변경",
     "mapFullscreen": "지도 전체화면",
     "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳이나 내 장소에서 골라 추가하세요.",
-    "execTodayHint": "지금 일정과 다음 장소를 확인하세요."
+    "execTodayHint": "지금 일정과 다음 장소를 확인하세요.",
+    "editFinish": "편집 마치기"
   },
   "common": {
     "language": "언어",

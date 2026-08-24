@@ -493,7 +493,8 @@
     "editDatesShrinkGo": "Remove & change",
     "mapFullscreen": "Fullscreen map",
     "addModeHint": "Only places not yet on this day are shown. Add from your picks or My Places.",
-    "execTodayHint": "See what's now and what's next."
+    "execTodayHint": "See what's now and what's next.",
+    "editFinish": "Finish editing"
   },
   "common": {
     "language": "Language",

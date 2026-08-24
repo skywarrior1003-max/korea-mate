@@ -493,7 +493,8 @@
     "editDatesShrinkGo": "删除并修改",
     "mapFullscreen": "全屏地图",
     "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中添加。",
-    "execTodayHint": "查看当前行程和下一站。"
+    "execTodayHint": "查看当前行程和下一站。",
+    "editFinish": "完成编辑"
   },
   "common": {
     "language": "语言",
