@@ -322,7 +322,7 @@
     "savedState": "Saved",
     "hours": "Hours",
     "address": "Address",
-    "entryFee": "Entry fee",
+    "entryFee": "Fee",
     "duration": "Suggested visit",
     "officialLink": "View official details on {source}",
     "startPlanning": "Start planning",
@@ -437,7 +437,8 @@
     "fixedOutTitle": "Some fixed times fall outside that day's schedule window.",
     "fixedOutHint": "Open Picks and adjust the date or time.",
     "fallbackBanner": "Personalized ranking is unavailable right now, so we prepared a standard gokoreamate recommended plan for you.",
-    "sharedNotice": "You're viewing a shared itinerary. Changes you make will sync back to this link."
+    "sharedNotice": "You're viewing a shared itinerary. Changes you make will sync back to this link.",
+    "mapOrderHint": "The dotted line links your visit order — for real directions, open a place in Naver or Google Maps."
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -489,7 +490,10 @@
     "editDatesEnd": "End",
     "editDatesApply": "Apply",
     "editDatesShrinkConfirm": "Shortening removes {n} places on the last {days} day(s). Continue?",
-    "editDatesShrinkGo": "Remove & change"
+    "editDatesShrinkGo": "Remove & change",
+    "mapFullscreen": "Fullscreen map",
+    "addModeHint": "Only places not yet on this day are shown. Add from your picks or My Places.",
+    "execTodayHint": "See what's now and what's next."
   },
   "common": {
     "language": "Language",

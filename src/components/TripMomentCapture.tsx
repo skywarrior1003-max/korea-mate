@@ -287,7 +287,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
           {/* GPS 상태 */}
           <div className="flex items-center gap-2.5">
             <span className="text-base">
-              {gpsStatus === "ok" ? "📍" : gpsStatus === "loading" ? "🔄" : "❌"}
+              {gpsStatus === "ok" ? "✓" : gpsStatus === "loading" ? "…" : "✕"}
             </span>
             <div>
               <p className="text-xs font-bold text-white/80">

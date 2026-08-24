@@ -961,7 +961,10 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
   // 스냅샷 원문을 직접 읽는 자리다. tips 는 생성 시 이미 걸러졌지만 cartSnapshot
   // 은 Explore 시점 값 그대로이고, 서버가 만든 일정의 tips 는 우리 코드를 거치지
   // 않았을 수 있다. 세 후보를 모두 같은 판정에 통과시킨다.
-  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips);
+  // 설명이 비어 보이던 원인: cart 스냅샷에 문구가 없으면 그대로 빈칸이었다.
+  // 같은 장소의 canonical(city_spots) description 이 있으면 그것으로 채운다 —
+  // 새로 만들거나 병합하는 것이 아니라 SSOT 원문을 그대로 보여 줄 뿐이다.
+  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips, matched?.description);
 
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
@@ -1020,7 +1023,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
 
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>📍 {place.location}</p>
+            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>{place.location}</p>
             <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{place.name}</h2>
           </div>
           <div className="bg-surface-dim border border-line rounded-2xl p-5">
@@ -1248,7 +1251,10 @@ function ItineraryResult() {
   /** 상세를 연 항목이 속한 Day — 방문 체크·순간 남기기가 Day 단위 열쇠를 쓴다 */
   const [selectedPlaceDay, setSelectedPlaceDay] = useState<number | null>(null);
   /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
-  const [mapOpen, setMapOpen] = useState(true);
+  // 지도는 늘 보인다 — "지도 닫기" 대신 전체화면(overlay)만 있다 (OWNER-UX-CORRECTION-V1 #5)
+  const [mapFull, setMapFull] = useState(false);
+  // 편집 캔버스의 목적: "edit"=배치된 일정 수정, "add"=이 Day 에 장소 추가만 (#6 역할 분리)
+  const [editMode, setEditMode] = useState<"edit" | "add">("edit");
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
   /** 편집 캔버스: "다른 날로" 칩이 펼쳐진 항목 · 장소 추가 패널 */
@@ -2253,6 +2259,10 @@ function ItineraryResult() {
 
   // ── 보관함 아이템 → 현재 editDay에 추가 ─────────────────
   function addCartItemToDay(item: CartItem) {
+    // 같은 canonical 장소를 의도 없이 한 Day 에 반복 배치하지 않는다 (#14).
+    // 목록에서 이미 걸러지지만, 여기서도 한 번 더 지킨다.
+    const dupKey = getItemSourceKey(item);
+    if ((days[editDay]?.places ?? []).some(pl => pl.sourceKey === dupKey)) return;
     const defaultTime = "19:30";
     const newPlace: Place = {
       name:          item.shortName || item.name,
@@ -2763,14 +2773,12 @@ function ItineraryResult() {
               : []),
             { key: "capture", label: moments.length > 0 ? `${tMemo("captureTitle")} (${moments.length})` : tMemo("captureTitle"), onClick: () => setCaptureOpen(true) },
             ...((!shareId || isOwner) && itinId
-              ? [{ key: "storyCard", label: `🎴 ${tPublish("openStoryCard")}`, accent: true, disabled: storyCardBusy,
+              ? [{ key: "storyCard", label: tPublish("openStoryCard"), accent: true, disabled: storyCardBusy,
                    onClick: () => { if (isPublic) void openStoryCard(); else setPublishPreviewOpen(true); } }]
               : []),
+            // "간단히"(view 토글)는 일정 편집과 같은 캔버스를 여는 중복 액션이라 제거했다 (#7).
             ...((!shareId || isOwner) && !isPastTrip
-              ? [{ key: "edit", label: viewMode === "compact" ? t("editing") : t("editTrip"), onClick: () => { setViewMode("compact"); setEditDay(0); } }]
-              : []),
-            ...(!isPastTrip
-              ? [{ key: "view", label: viewMode === "compact" ? t("viewFull") : t("viewCompact"), onClick: () => setViewMode(viewMode === "compact" ? "full" : "compact") }]
+              ? [{ key: "edit", label: viewMode === "compact" ? t("editing") : t("editTrip"), onClick: () => { setEditMode("edit"); setViewMode("compact"); setEditDay(0); } }]
               : []),
             { key: "home", label: t("backHome"), href: "/" },
           ]}
@@ -2887,12 +2895,12 @@ function ItineraryResult() {
         <div className="mb-16">
           <div className="mb-4 flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-sm font-black text-ink">{t("editing")}</p>
-              <p className="mt-0.5 text-xs text-sub">{tPlanner("editHint")}</p>
+              <p className="text-sm font-black text-ink">{editMode === "add" ? tPlanner("editAddPlace") : t("editing")}</p>
+              <p className="mt-0.5 text-xs text-sub">{editMode === "add" ? tPlanner("addModeHint") : tPlanner("editHint")}</p>
             </div>
             <button
               type="button"
-              onClick={() => { setViewMode("full"); setMoveOpenIdx(null); setAddOpen(false); }}
+              onClick={() => { setViewMode("full"); setMoveOpenIdx(null); setAddOpen(false); setEditMode("edit"); }}
               className="gkm-focus shrink-0 min-h-11 px-4 rounded-full text-sm font-black text-white"
               style={{ backgroundColor: "var(--gkm-ink)" }}
             >
@@ -2927,7 +2935,7 @@ function ItineraryResult() {
                   <span className="text-sm font-semibold text-sub">{days[editDay].date}</span>
                   <span className="text-xs font-semibold text-faint">{t("placesCount", { n: days[editDay].places.length })}</span>
                 </h2>
-                {(!shareId || isOwner) && (
+                {(!shareId || isOwner) && editMode === "edit" && (
                   <button
                     type="button"
                     onClick={() => setAddOpen(o => !o)}
@@ -2939,7 +2947,9 @@ function ItineraryResult() {
                 )}
               </div>
 
-              {/* 편집 리스트 — 시간순 플랫 리스트(슬롯 그루핑 없음). 카드는 Planning 과 같은 모양이고 아래 한 줄이 편집 도구다. */}
+              {/* 편집 리스트 — 시간순 플랫 리스트(슬롯 그루핑 없음). 카드는 Planning 과 같은 모양이고 아래 한 줄이 편집 도구다.
+                  장소 추가 모드에서는 배치된 일정을 "추가 대상"처럼 다시 보여 주지 않는다 (#6). */}
+              {editMode === "edit" && (
               <div className="space-y-2.5">
                 {days[editDay].places.map((p, pi) => {
                   const imageSrc = p.cartSnapshot?.image ?? p.image;
@@ -3042,7 +3052,10 @@ function ItineraryResult() {
                   <p className="py-8 text-center text-sm text-sub">{tPlanner("editEmptyDay")}</p>
                 )}
               </div>
-              <p className="mt-3 text-[11px] text-faint">{tPlanner("editOrderNote")}</p>
+              )}
+              {editMode === "edit" && (
+                <p className="mt-3 text-[11px] text-faint">{tPlanner("editOrderNote")}</p>
+              )}
             </div>
           )}
 
@@ -3056,9 +3069,11 @@ function ItineraryResult() {
                 {tPlanner("editSearchSpots")} →
               </Link>
 
-              {/* 보관함 (Unscheduled) — 명시적으로 저장한 스폿 목록 */}
+              {/* 보관함 (Unscheduled) — 명시적으로 저장한 스폿 목록.
+                  이 Day 에 이미 배치된 장소는 후보에서 뺀다 — 의도 없는 같은 장소 반복 배치를 만들지 않는다 (#14). */}
               {(() => {
-                const unscheduled = cartItems;
+                const placedKeys = new Set((days[editDay]?.places ?? []).map(pl => pl.sourceKey).filter(Boolean));
+                const unscheduled = cartItems.filter(item => !placedKeys.has(getItemSourceKey(item)));
                 if (unscheduled.length === 0 || (shareId && !isOwner)) return null;
                 return (
                   <div>
@@ -3226,7 +3241,7 @@ function ItineraryResult() {
               {/* Map View — 기존 Day 지도 재사용: 전체 일정의 오늘 Day 지도로 이동한다 */}
               <button
                 type="button"
-                onClick={() => { setExecEntry(null); setMapOpen(true); }}
+                onClick={() => setMapFull(true)}
                 className="gkm-focus fixed bottom-24 right-4 z-40 inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white shadow-modal"
                 style={{ backgroundColor: "var(--gkm-ink)" }}
               >🗺 {tPlanner("mapShow")}</button>
@@ -3247,6 +3262,7 @@ function ItineraryResult() {
               <span className="text-left min-w-0">
                 <span className="block text-[10px] font-black uppercase tracking-[0.14em] opacity-80">Day {days[todayDayIdx]?.dayNumber} · {formatDayChipDate(days[todayDayIdx]?.date ?? "", locale)}</span>
                 <span className="block text-sm font-black">{tPlanner("execToday")}</span>
+                <span className="block mt-0.5 text-[11px] font-semibold opacity-85">{tPlanner("execTodayHint")}</span>
               </span>
               <span className="text-lg font-black shrink-0" aria-hidden>→</span>
             </button>
@@ -3286,7 +3302,7 @@ function ItineraryResult() {
           {/* S2: 선택 Day 지도 — 번호 마커·순서선·Add to this day.
               Day 칩은 끈다 — 위 PlannerDayNav 가 선택을 맡는다. 두 벌이 같이 보이면
               어느 쪽이 진짜 선택인지 알 수 없고 스크린리더도 Day 탭을 두 번 읽는다. */}
-          {days.length > 0 && mapOpen && (
+          {days.length > 0 && (
             <ItineraryDayMap
               days={days}
               city={city}
@@ -3324,12 +3340,10 @@ function ItineraryResult() {
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
                     return done > 0 ? `✓ ${t("progress", { done, total: day.places.length })}` : null;
                   })()}
-                  onAdd={(!shareId || isOwner) && !isPastTrip ? () => { setViewMode("compact"); setEditDay(day.dayNumber - 1); } : null}
+                  onAdd={(!shareId || isOwner) && !isPastTrip ? () => { setEditMode("add"); setAddOpen(true); setViewMode("compact"); setEditDay(day.dayNumber - 1); } : null}
                   addLabel={tPlanner("dayAdd")}
-                  mapOpen={mapOpen}
-                  onToggleMap={() => setMapOpen(o => !o)}
-                  mapShowLabel={tPlanner("mapShow")}
-                  mapHideLabel={tPlanner("mapHide")}
+                  onMapFullscreen={() => setMapFull(true)}
+                  mapFullscreenLabel={tPlanner("mapFullscreen")}
                 />
 
                 {conflictDays.has(day.dayNumber) && (
@@ -3663,6 +3677,32 @@ function ItineraryResult() {
           onClick={() => setCoverNotice(null)}
         >
           {tMemo(coverNotice)}
+        </div>
+      )}
+
+      {/* ── 지도 전체화면 (OWNER-UX-CORRECTION-V1 #5) — 같은 Day 지도 컴포넌트를 크게 연다.
+            번호는 선택 Day 의 타임라인 순번 그대로다. 새 지도 시스템이 아니다. ── */}
+      {mapFull && days.length > 0 && (
+        <div className="fixed inset-0 z-[70] bg-surface flex flex-col">
+          <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-line shrink-0">
+            <p className="text-sm font-black text-ink truncate">{tPlanner("mapFullscreen")} · Day {Math.min(mapDay, days.length - 1) + 1}</p>
+            <button
+              type="button"
+              onClick={() => setMapFull(false)}
+              aria-label={tPlanner("close")}
+              className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink font-black"
+            >✕</button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-3 pt-3">
+            <ItineraryDayMap
+              days={days}
+              city={city}
+              selectedDay={Math.min(mapDay, days.length - 1)}
+              onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
+              onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
+              mapHeight="62vh"
+            />
+          </div>
         </div>
       )}
 

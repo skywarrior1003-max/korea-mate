@@ -85,7 +85,12 @@ export default function TripSetupPanel({ draft, onChange }: TripSetupPanelProps)
   const label   = (v?: string) => options.find(o => o.value === v)?.label ?? v ?? "";
 
   const stay       = draft.stay ?? null;
-  const stayMode   = stayModeFrom(draft.stayArea, stay);
+  // 모드는 저장된 값에서 파생되지만, 사용자가 방금 누른 모드는 값이 채워지기
+  // 전에도 열려 있어야 한다. 파생만 쓰면 "지역/숙소" 버튼을 눌러도 stayArea·stay
+  // 가 아직 비어 있어 모드가 none 으로 되돌아가 입력 UI 가 영영 열리지 않았다
+  // (OWNER-UX-CORRECTION-V1 #1 root cause).
+  const [stayModeOverride, setStayModeOverride] = useState<StayMode | null>(null);
+  const stayMode   = stayModeOverride ?? stayModeFrom(draft.stayArea, stay);
   const stayFields = stay ? stayFieldsFrom(stay) : EMPTY_STAY_FIELDS;
 
   const none = t("notSet");
@@ -217,6 +222,7 @@ export default function TripSetupPanel({ draft, onChange }: TripSetupPanelProps)
           fields={stayFields}
           stay={stay}
           onModeChange={(m: StayMode) => {
+            setStayModeOverride(m);
             if (m === "none")      onChange({ stayArea: "", stay: null });
             else if (m === "area") onChange({ stay: null });
             else                   onChange({ stay: stay ?? { name: "" } });

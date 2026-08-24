@@ -322,7 +322,7 @@
     "savedState": "已保存",
     "hours": "营业时间",
     "address": "地址",
-    "entryFee": "门票",
+    "entryFee": "费用",
     "duration": "建议游览时间",
     "officialLink": "在{source}查看官方信息",
     "startPlanning": "创建行程",
@@ -437,7 +437,8 @@
     "fixedOutTitle": "有些指定时间超出了当天的行程时间段，未能安排。",
     "fixedOutHint": "请在“精选”中调整日期或时间。",
     "fallbackBanner": "目前无法使用个性化排序，已为你准备 gokoreamate 标准推荐行程。",
-    "sharedNotice": "你正在查看共享行程。在这里所做的更改会同步到此链接。"
+    "sharedNotice": "你正在查看共享行程。在这里所做的更改会同步到此链接。",
+    "mapOrderHint": "虚线表示游览顺序。实际导航请打开地点并使用 Naver 或 Google 地图。"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",
@@ -489,7 +490,10 @@
     "editDatesEnd": "结束日",
     "editDatesApply": "应用",
     "editDatesShrinkConfirm": "缩短行程将删除最后{days}天中的{n}个地点。要继续吗？",
-    "editDatesShrinkGo": "删除并修改"
+    "editDatesShrinkGo": "删除并修改",
+    "mapFullscreen": "全屏地图",
+    "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中添加。",
+    "execTodayHint": "查看当前行程和下一站。"
   },
   "common": {
     "language": "语言",

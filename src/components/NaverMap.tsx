@@ -81,6 +81,8 @@ export interface DayPlace {
   name: string;
   lat:  number;
   lng:  number;
+  /** 타임라인에서의 순번(1-base) — 좌표 없는 항목이 있어도 번호가 당겨지지 않는다 */
+  order?: number;
 }
 
 interface Props {
@@ -492,7 +494,7 @@ export default function NaverMap({
         zIndex: 200,
         icon: {
           content: `<div style="display:flex;align-items:center;gap:5px">
-            <div style="width:26px;height:26px;border-radius:50%;background:#FF4A2D;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${i + 1}</div>
+            <div style="width:26px;height:26px;border-radius:50%;background:#FF4A2D;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${p.order ?? i + 1}</div>
             <div style="background:rgba(255,255,255,0.95);color:#191C21;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.2)">${p.name.length > 12 ? p.name.slice(0, 11) + "…" : p.name}</div>
           </div>`,
           anchor: new map.Point(13, 13),

@@ -322,7 +322,7 @@
     "savedState": "저장됨",
     "hours": "영업시간",
     "address": "주소",
-    "entryFee": "입장료",
+    "entryFee": "요금",
     "duration": "권장 방문 시간",
     "officialLink": "{source}에서 공식 정보 보기",
     "startPlanning": "일정 만들기",
@@ -437,7 +437,8 @@
     "fixedOutTitle": "정한 시간이 그날 일정 시간대를 벗어나 넣지 못한 장소가 있어요.",
     "fixedOutHint": "픽에서 날짜나 시간을 조정해 주세요.",
     "fallbackBanner": "지금은 맞춤 정렬을 쓸 수 없어 gokoreamate 기본 추천 일정으로 준비했어요.",
-    "sharedNotice": "공유받은 일정을 보고 있어요. 여기서 바꾼 내용은 이 링크에 그대로 반영됩니다."
+    "sharedNotice": "공유받은 일정을 보고 있어요. 여기서 바꾼 내용은 이 링크에 그대로 반영됩니다.",
+    "mapOrderHint": "지도 위 점선은 방문 순서 연결이에요. 실제 길찾기는 장소를 눌러 Naver·Google 지도로 이동하세요."
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -489,7 +490,10 @@
     "editDatesEnd": "종료일",
     "editDatesApply": "적용",
     "editDatesShrinkConfirm": "기간을 줄이면 마지막 {days}일에 있던 장소 {n}곳이 삭제돼요. 계속할까요?",
-    "editDatesShrinkGo": "삭제하고 변경"
+    "editDatesShrinkGo": "삭제하고 변경",
+    "mapFullscreen": "지도 전체화면",
+    "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳이나 내 장소에서 골라 추가하세요.",
+    "execTodayHint": "지금 일정과 다음 장소를 확인하세요."
   },
   "common": {
     "language": "언어",

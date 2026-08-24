@@ -33,6 +33,8 @@ interface Props {
    * 기본값 true — 이 컴포넌트를 단독으로 쓰던 곳은 그대로 동작한다.
    */
   showDayTabs?: boolean;
+  /** 지도 높이 — 전체화면 overlay 는 화면 높이를 넘긴다. 기본 340. */
+  mapHeight?: number | string;
 }
 
 const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
@@ -42,7 +44,7 @@ const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
   gyeongju: { lat: 35.8562, lng: 129.2247 },
 };
 
-export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true }: Props) {
+export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true, mapHeight = 340 }: Props) {
   const t = useTranslations("itin");
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
   const [preview, setPreview] = useState<CitySpot | null>(null);
@@ -68,25 +70,31 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
     const byId = new Map(citySpots.map(s => [String(s.id), s]));
     const byName = new Map(citySpots.map(s => [s.name.toLowerCase(), s]));
     const out: DayPlace[] = [];
-    for (const p of day?.places ?? []) {
+    (day?.places ?? []).forEach((p, idx) => {
       let lat = p.lat, lng = p.lng;
       if (lat == null || lng == null) {
         const spot = (p.place_id ? byId.get(p.place_id) : undefined) ?? byName.get(p.name.toLowerCase());
         if (spot?.lat != null && spot?.lng != null) { lat = spot.lat; lng = spot.lng; }
       }
-      if (lat != null && lng != null) out.push({ name: p.name, lat, lng });
-    }
+      // order = 아래 타임라인의 순번(좌표 없는 항목 포함). 지도 번호와 타임라인이
+      // 1:1 이어야 한다 — 좌표 없는 항목을 건너뛰며 번호를 당기지 않는다.
+      if (lat != null && lng != null) out.push({ name: p.name, lat, lng, order: idx + 1 });
+    });
     return out;
   }, [day, citySpots]);
 
-  // 이미 일정에 있는 장소는 base 핀에서 제외 (중복 마커 방지)
+  // 이미 이 Day 일정에 있는 장소는 base 핀에서 제외 (중복 마커 방지).
+  // 이름만으로는 부족하다 — 일정 항목 이름("Haeundae Beach: The Busan representative")과
+  // canonical 이름("Haeundae Beach")이 달라 같은 자리에 번호 마커와 라벨 핀이
+  // 겹쳐 "같은 장소가 반복" 되어 보였다. place_id 로도 제외한다.
   const baseSpots: MapSpot[] = useMemo(() => {
     const inDay = new Set(dayPlaces.map(p => p.name.toLowerCase()));
+    const inDayIds = new Set((day?.places ?? []).map(p => p.place_id).filter(Boolean).map(String));
     return citySpots
       .filter((s): s is CitySpot & { lat: number; lng: number } => s.lat != null && s.lng != null)
-      .filter(s => !inDay.has(s.name.toLowerCase()))
+      .filter(s => !inDay.has(s.name.toLowerCase()) && !inDayIds.has(String(s.id)))
       .map(s => ({ id: s.id, name: s.name, lat: s.lat, lng: s.lng, category: s.category, address: s.address }));
-  }, [citySpots, dayPlaces]);
+  }, [citySpots, dayPlaces, day]);
 
   function handleBaseClick(m: MapSpot) {
     const spot = citySpots.find(s => s.id === m.id);
@@ -133,7 +141,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
           spots={baseSpots}
           dayPlaces={dayPlaces}
           defaultCenter={CITY_CENTERS[city.toLowerCase()] ?? CITY_CENTERS.busan}
-          height={340}
+          height={mapHeight}
           className="relative w-full h-full"
           onSpotClick={handleBaseClick}
           hideInfoWindow
@@ -175,6 +183,10 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
       {/* 좌표 없는 장소 안내 — 사실만 표기 */}
       {totalCount > geoCount && (
         <p className="mt-2 text-xs text-faint">{t("noCoords", { n: totalCount - geoCount })}</p>
+      )}
+      {/* 선은 경로가 아니다 — 방문 순서 연결일 뿐. 실제 길찾기는 외부 지도(Naver/Google)로. */}
+      {geoCount >= 2 && (
+        <p className="mt-1.5 text-[11px] text-faint">{t("mapOrderHint")}</p>
       )}
     </section>
   );
