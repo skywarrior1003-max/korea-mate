@@ -79,3 +79,45 @@ export function buildTimeline<T>(
 export function visibleSlots<T>(rows: readonly TimelineRow<T>[]): SlotKey[] {
   return rows.filter(r => r.showSlotLabel).map(r => r.slot);
 }
+
+// ── B안 (TASK-MY-TRIP-TIMELINE-B-AND-DEDUP-V1-R1) ─────────────────────────────
+// 화면은 하루를 3구간(오전·오후·저녁)으로만 나눈다. 내부 4슬롯은 그대로 두고
+// 표시 구간으로만 접는다 — 점심은 오후다.
+export const DISPLAY_SECTIONS = ["morning", "afternoon", "evening"] as const;
+export type DisplaySection = (typeof DISPLAY_SECTIONS)[number];
+
+export function displaySectionOf(slot: string): DisplaySection {
+  const k = toSlotKey(slot);
+  return k === "morning" ? "morning" : k === "evening" ? "evening" : "afternoon";
+}
+
+export interface OrderedRow<T> {
+  item: T;
+  /** 원래 배열 위치 = 화면 순번-1. 순번은 지도·편집 리스트와 같은 하나의 체계다. */
+  index: number;
+  section: DisplaySection;
+  /** 구간 헤더를 이 행 위에 그린다 — 구간이 처음 나타날 때만 */
+  showSectionLabel: boolean;
+  railAbove: boolean;
+  railBelow: boolean;
+}
+
+/**
+ * 배열 순서를 그대로 편다(순서 계약이 이미 정한 순서다). 구간 헤더는 단조롭게만
+ * 나온다 — 나중 항목의 구간이 앞선 구간보다 이르면(untimed 기본값 등) 새 헤더를
+ * 만들지 않고 현재 구간 아래에 둔다. 순번을 재배열하지 않는다.
+ */
+export function buildOrderedTimeline<T>(items: readonly TimelineInput<T>[]): OrderedRow<T>[] {
+  const rank = (s: DisplaySection) => DISPLAY_SECTIONS.indexOf(s);
+  const rows: OrderedRow<T>[] = [];
+  let current: DisplaySection | null = null;
+  for (const it of items) {
+    const sec = displaySectionOf(it.slot);
+    const advance = current === null || rank(sec) > rank(current);
+    if (advance) current = sec;
+    rows.push({ item: it.item, index: it.index, section: current!, showSectionLabel: advance, railAbove: false, railBelow: false });
+  }
+  const last = rows.length - 1;
+  for (let i = 0; i <= last; i++) { rows[i]!.railAbove = i > 0; rows[i]!.railBelow = i < last; }
+  return rows;
+}

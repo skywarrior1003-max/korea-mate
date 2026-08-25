@@ -34,7 +34,8 @@ test("V2: 끝난 여행은 Story 가 기본이고 ?view=story 로 바로 열 수
 
 test("V3: 끝난 여행의 일정은 읽기 전용 — 편집·추가·완주 토스트가 숨는다", () => {
   // PLANNING-FINAL-V1: 편집 진입은 "더보기" 메뉴 항목이 됐다 — 조건은 그대로 (!shareId || isOwner) && !isPastTrip
-  assert.match(page, /\(!shareId \|\| isOwner\) && !isPastTrip\s*\?\s*\[\{ key: "edit"[\s\S]{0,120}setViewMode\("compact"\)/);
+  // TIMELINE-B-R1 이후 메뉴 항목은 편집 중이면 "편집 마치기"(종료)까지 겸해 조금 길어졌다 — 조건은 그대로다.
+  assert.match(page, /\(!shareId \|\| isOwner\) && !isPastTrip\s*\?\s*\[\{ key: "edit"[\s\S]{0,600}setViewMode\("compact"\)/);
   assert.match(page, /\(!shareId \|\| isOwner\) && !isPastTrip && \(\s*<UserSpotsPanel/);
   assert.match(page, /onAddToDay=\{\(!shareId \|\| isOwner\) && !isPastTrip \? addCitySpotToDay : undefined\}/);
   assert.match(page, /dayDone !== null && \(!shareId \|\| isOwner\) && !isPastTrip && \(/);

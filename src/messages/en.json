@@ -460,7 +460,7 @@
     "mapShow": "Map",
     "mapHide": "Hide map",
     "fixedTime": "Your set time",
-    "transit": "{n} min travel",
+    "transit": "{n} min until next stop",
     "durationHours": "{h} hr",
     "durationHoursMinutes": "{h} hr {m} min",
     "durationMinutes": "{m} min",
@@ -479,8 +479,8 @@
     "editOrderNote": "Places with a start time are ordered by time — change the time to move one. Places without a time keep the order you set with ↑↓.",
     "execToday": "Today's Trip",
     "execViewFull": "View full itinerary",
-    "execNow": "NOW",
-    "execNext": "NEXT",
+    "execNow": "Now",
+    "execNext": "Next",
     "execDirections": "Directions",
     "execBeforeFirst": "Your first stop hasn't started yet — today's first place is below.",
     "execAllDone": "All of today's scheduled times have passed. Nice work!",
@@ -494,7 +494,8 @@
     "mapFullscreen": "Fullscreen map",
     "addModeHint": "Only places not yet on this day are shown. Add from your picks or My Places.",
     "execTodayHint": "See what's now and what's next.",
-    "editFinish": "Finish editing"
+    "editFinish": "Finish editing",
+    "mapHidden": "Not shown on map"
   },
   "common": {
     "language": "Language",
@@ -884,7 +885,8 @@
     "starterTitle": "Start this trip",
     "starterCity": "City",
     "startTrip": "Start with these",
-    "addedToTrip": "{name} — added to This Trip"
+    "addedToTrip": "{name} — added to This Trip",
+    "needsLocation": "Location needed"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

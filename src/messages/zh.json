@@ -460,7 +460,7 @@
     "mapShow": "地图",
     "mapHide": "收起地图",
     "fixedTime": "指定时间",
-    "transit": "移动 {n} 分钟",
+    "transit": "距下一站{n}分钟",
     "durationHours": "{h} 小时",
     "durationHoursMinutes": "{h} 小时 {m} 分钟",
     "durationMinutes": "{m} 分钟",
@@ -479,8 +479,8 @@
     "editOrderNote": "有开始时间的地点按时间排序 — 想调整位置请修改时间。没有时间的地点会保留你用 ↑↓ 排定的顺序。",
     "execToday": "今日行程",
     "execViewFull": "查看完整行程",
-    "execNow": "NOW",
-    "execNext": "NEXT",
+    "execNow": "现在",
+    "execNext": "下一站",
     "execDirections": "路线",
     "execBeforeFirst": "还没到第一个行程 — 今天的第一站就在下面。",
     "execAllDone": "今天的行程时间都已结束，辛苦了！",
@@ -494,7 +494,8 @@
     "mapFullscreen": "全屏地图",
     "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中添加。",
     "execTodayHint": "查看当前行程和下一站。",
-    "editFinish": "完成编辑"
+    "editFinish": "完成编辑",
+    "mapHidden": "未在地图上显示"
   },
   "common": {
     "language": "语言",
@@ -884,7 +885,8 @@
     "starterTitle": "开始这次旅行",
     "starterCity": "城市",
     "startTrip": "以此条件开始",
-    "addedToTrip": "{name} — 已加入本次行程"
+    "addedToTrip": "{name} — 已加入本次行程",
+    "needsLocation": "需要确认位置"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

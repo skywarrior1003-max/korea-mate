@@ -16,7 +16,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
-import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
+import { getItemSourceKey, parseCitySpotId, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import { getCityCart, lastAddedTripCity, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates, writeTripDraft, type TripDraft }
   from "@/lib/trip-draft/trip-draft-core";
@@ -315,6 +315,13 @@ function PicksContent() {
     apiGetUserSpots()
       .then(rows => {
         setMine(rows); setMineError(false);
+        // 원본 연결(related_city_spot_id)이 있는 내 장소는 "이미 남겼어요" 로 판단한다 —
+        // 세션 기억이 아니라 서버 값 기준. 연결이 없는 legacy 행은 추정하지 않는다.
+        setKeptKeys(prev => {
+          const next = new Set(prev);
+          rows.forEach(r => { if (r.related_city_spot_id != null) next.add(citySpotSourceKey(r.related_city_spot_id)); });
+          return next;
+        });
         if (!syncCartFor) return;
         const fresh = rows.find(r => r.id === syncCartFor);
         if (!fresh) return;

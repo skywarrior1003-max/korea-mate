@@ -44,7 +44,8 @@ test("★장소 상세 모달의 시각 칩이 없다", () => {
 });
 
 test("★편집 캔버스는 시각 대신 순서 번호를 쓴다", () => {
-  assert.match(PLANNER, /\{pi \+ 1\}<\/span>/);
+  // TIMELINE-B-R1: 순번은 방문 순번(visitOrdinals) — 숙소 체크인은 번호 없음, 타임라인·지도와 같은 체계
+  assert.match(PLANNER, /\{editOrdinals\[pi\] \?\? ""\}<\/span>/);
 });
 
 // ── 데이터는 그대로 둔다 ─────────────────────────────────────────────────────
@@ -63,14 +64,14 @@ test("★저장 구조를 바꾸지 않았다 — provenance 필드를 새로 �
 });
 
 // ── 흐름 라벨은 유지 ─────────────────────────────────────────────────────────
-test("★Morning/Lunch/Afternoon/Evening 흐름 라벨은 그대로다", () => {
-  assert.match(PLANNER, /row\.showSlotLabel && \(/);
-  assert.match(PLANNER, /tPlanner\(`slot_\$\{row\.slot\}`\)/);
+test("★흐름 라벨은 그대로다 — TIMELINE-B-R1: 화면은 3구간(오전·오후·저녁) 헤더, 내부 4슬롯 정의는 유지", () => {
+  assert.match(PLANNER, /row\.showSectionLabel && \(/);
+  assert.match(PLANNER, /tPlanner\(`slot_\$\{row\.section\}`\)/);
   assert.match(PLANNER, /const TIME_SLOTS = \[/);
 });
 
 test("★시각을 뗀 자리에 흐름 라벨을 중복해서 넣지 않았다", () => {
-  const labels = PLANNER.match(/tPlanner\(`slot_\$\{row\.slot\}`\)/g) ?? [];
+  const labels = PLANNER.match(/tPlanner\(`slot_\$\{row\.section\}`\)/g) ?? [];
   assert.equal(labels.length, 1, "슬롯 라벨 출력 지점은 한 곳뿐이어야 한다");
 });
 

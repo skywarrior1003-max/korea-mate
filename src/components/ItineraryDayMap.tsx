@@ -6,11 +6,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import NaverMap, { type MapSpot, type DayPlace } from "@/components/NaverMap";
 import { fetchCitySpotsByIds } from "@/lib/city-spots";
 import { uniqueNumericIds } from "@/lib/city-spots-paging";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
+import { localizedPlaceName } from "@/lib/planner/planning-view-core";
 import type { CitySpot } from "@/data/cities/types";
 
 export interface DayForMap {
@@ -46,6 +47,7 @@ const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
 
 export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true, mapHeight = 340 }: Props) {
   const t = useTranslations("itin");
+  const locale = useLocale();
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
   const [preview, setPreview] = useState<CitySpot | null>(null);
   const [addedFlash, setAddedFlash] = useState<string | null>(null);
@@ -76,12 +78,15 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
         const spot = (p.place_id ? byId.get(p.place_id) : undefined) ?? byName.get(p.name.toLowerCase());
         if (spot?.lat != null && spot?.lng != null) { lat = spot.lat; lng = spot.lng; }
       }
-      // order = 아래 타임라인의 순번(좌표 없는 항목 포함). 지도 번호와 타임라인이
-      // 1:1 이어야 한다 — 좌표 없는 항목을 건너뛰며 번호를 당기지 않는다.
-      if (lat != null && lng != null) out.push({ name: p.name, lat, lng, order: idx + 1 });
+      // 번호는 지도에 실제로 찍히는 stop 끼리 1..M 연속(NaverMap 이 i+1 로 매긴다).
+      // 정상 신규 일정은 모든 stop 에 좌표가 있어 타임라인 1..N 과 1:1 이고, legacy
+      // 좌표 없는 stop 이 있으면 아래 noCoords 안내로 "지도에 표시되지 않는 N곳"을 밝힌다.
+      const spot = (p.place_id ? byId.get(p.place_id) : undefined) ?? byName.get(p.name.toLowerCase());
+      if (lat != null && lng != null) out.push({ name: localizedPlaceName(p.name, spot?.nameL10n, locale), lat, lng });
+      void idx;
     });
     return out;
-  }, [day, citySpots]);
+  }, [day, citySpots, locale]);
 
   // 이미 이 Day 일정에 있는 장소는 base 핀에서 제외 (중복 마커 방지).
   // 이름만으로는 부족하다 — 일정 항목 이름("Haeundae Beach: The Busan representative")과

@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
+import { isValidCoordinate } from "@/lib/geo";
 import { userSpotCategoryLabelKey } from "@/components/UserSpotForm";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
 import { runCreateFlow } from "@/lib/user-spots/create-flow";
@@ -439,7 +440,7 @@ export default function UserSpotsPanel({
     <div className="mt-5">
       {/* Section header */}
       <div className="flex items-center gap-2 mb-2 px-1">
-        <span className="text-xs font-black text-[#565D66]">📍 {t("tabMine")}</span>
+        <span className="text-xs font-black text-[#565D66]">{t("tabMine")}</span>
         {!loading && spots.length > 0 && (
           <span className="text-[10px] font-bold bg-[#F6F7F8]/60 text-[#565D66] px-2 py-0.5 rounded-full">
             {spots.length}
@@ -510,7 +511,16 @@ export default function UserSpotsPanel({
           const isAdding        = addingId        === spot.id;
           // 이미 이 Day 에 담긴 내 장소 — 눌러 본 뒤 에러가 아니라 미리 알려 준다.
           // 자산을 숨기거나 합치지는 않는다: 일정의 공식 장소와 내 장소는 별개다.
-          const alreadyInDay    = existingPlaces.some(pp => pp.source === "user_spot" && pp.place_id === spot.id);
+          // 같은 원본(canonical)의 내 장소 복사본이 이 Day 에 이미 있으면(공식 장소로든 다른 복사본으로든)
+          // 같은 Day 중복 배치로 본다. 원본 연결(related_city_spot_id)이 없는 legacy 행은 추정하지 않는다.
+          const canon = spot.related_city_spot_id ?? null;
+          const relatedOf = new Map(spots.map(sp => [sp.id, sp.related_city_spot_id ?? null]));
+          const alreadyInDay    = existingPlaces.some(pp =>
+            (pp.source === "user_spot" && pp.place_id === spot.id) ||
+            (canon !== null && pp.source !== "user_spot" && pp.place_id != null && String(pp.place_id) === String(canon)) ||
+            (canon !== null && pp.source === "user_spot" && pp.place_id != null && relatedOf.get(String(pp.place_id)) === canon));
+          // 좌표 없는 내 장소는 일정에 못 들어간다 — 위치를 확인한 뒤에만. 좌표를 지어내지 않는다.
+          const hasCoord        = isValidCoordinate(spot.lat, spot.lng);
           const isSubmitting    = submittingId    === spot.id;
           const addErr          = addErrors[spot.id];
           const submitErr       = submitErrors[spot.id];
@@ -599,17 +609,17 @@ export default function UserSpotsPanel({
                     <div className="flex items-center gap-2 flex-wrap">
                       {subStatus === "pending" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 border border-yellow-200">
-                          🟡 {t("statusPending")}
+                          {t("statusPending")}
                         </span>
                       )}
                       {subStatus === "approved" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-200">
-                          ✅ {t("statusApproved")}
+                          {t("statusApproved")}
                         </span>
                       )}
                       {subStatus === "rejected" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-red-100 text-red-600 border border-red-200">
-                          ❌ {t("statusRejected")}
+                          {t("statusRejected")}
                         </span>
                       )}
                       {(subStatus === "none" || subStatus === "rejected") && (
@@ -621,7 +631,7 @@ export default function UserSpotsPanel({
                           {/* 사용자가 만들 수 있는 상태는 pending 까지다. 공개 여부는
                               관리자가 정한다 — "public" 이라고 쓰면 누르는 순간
                               공개되는 것처럼 읽힌다. */}
-                          {isSubmitting ? "…" : `📤 ${t("submitForReview")}`}
+                          {isSubmitting ? "…" : t("submitForReview")}
                         </button>
                       )}
                       {submitErr && (
@@ -645,12 +655,14 @@ export default function UserSpotsPanel({
                       />
                       <button
                         onClick={() => handleAddToDay(spot)}
-                        disabled={isAdding || alreadyInDay}
+                        disabled={isAdding || alreadyInDay || !hasCoord}
                         className="flex-1 py-1.5 rounded-lg text-xs font-black text-white transition-all active:scale-95 disabled:opacity-60 cursor-pointer truncate"
-                        style={{ backgroundColor: alreadyInDay ? "#B9BEC7" : "#FF4A2D" }}
+                        style={{ backgroundColor: alreadyInDay || !hasCoord ? "#B9BEC7" : "#FF4A2D" }}
                       >
                         {alreadyInDay
                           ? t("alreadyInDay")
+                          : !hasCoord
+                          ? t("needsLocation")
                           : isAdding
                           ? t("addedToDay")
                           : t("addToDay", { day: selectedDayLabel })}

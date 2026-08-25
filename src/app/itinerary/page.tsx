@@ -78,10 +78,10 @@ import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
 import { fetchPersonalizationProfile } from "@/lib/planner/personalize-client";
 import TimelineIcon from "@/components/planner/TimelineIcon";
 import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
-import { buildTimeline } from "@/lib/planner/timeline-core";
+import { buildOrderedTimeline } from "@/lib/planner/timeline-core";
 import PlannerDayHeader from "@/components/planner/PlannerDayHeader";
 import PlannerActionMenu from "@/components/planner/PlannerActionMenu";
-import { shouldShowClock, formatClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory, orderDayPlaces } from "@/lib/planner/planning-view-core";
+import { shouldShowClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory, orderDayPlaces, exactTimeLabel, localizedPlaceName, visitOrdinals } from "@/lib/planner/planning-view-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
@@ -164,6 +164,8 @@ function citySpotHref(place: Place): string | null {
 }
 
 // ── 시간 슬롯 정의 ───────────────────────────────────────────
+// 슬롯 정의(SSOT) — assignSlot·가드가 참조한다. 화면은 TIMELINE-B-R1 부터 3구간(오전·오후·저녁)으로 접어 보여 준다.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TIME_SLOTS = [
   { key: "morning",   label: "Morning",   emoji: "☀️", range: "9AM–12PM" },
   { key: "lunch",     label: "Lunch",     emoji: "🍽️", range: "12–2PM"   },
@@ -950,6 +952,7 @@ interface ModalProps {
 
 function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onToggleVisited, onAddMoment, visitedLabel, addMomentLabel, detailLabel }: ModalProps) {
   const t          = useTranslations("itin");
+  const modalLocale = useLocale();
   const matched    = matchCitySpot(place.name, citySpots);
   const snap       = place.cartSnapshot;
   const naverUrl   = snap?.naverMapUrl ?? naverPlaceSearchUrl(place.name, city);
@@ -964,7 +967,10 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
   // 설명이 비어 보이던 원인: cart 스냅샷에 문구가 없으면 그대로 빈칸이었다.
   // 같은 장소의 canonical(city_spots) description 이 있으면 그것으로 채운다 —
   // 새로 만들거나 병합하는 것이 아니라 SSOT 원문을 그대로 보여 줄 뿐이다.
-  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips, matched?.description);
+  // canonical 설명 fallback 도 **정확히 같은 장소**일 때만(place_id → 이름 완전일치). 퍼지 매칭은 쓰지 않는다.
+  const exactSpot  = citySpots.find(sp => place.place_id != null && String(sp.id) === String(place.place_id))
+                  ?? citySpots.find(sp => sp.name.trim().toLowerCase() === place.name.trim().toLowerCase());
+  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips, exactSpot?.description);
 
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
@@ -1024,7 +1030,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>{place.location}</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{place.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{localizedPlaceName(place.name, exactSpot?.nameL10n, modalLocale)}</h2>
           </div>
           <div className="bg-surface-dim border border-line rounded-2xl p-5">
             <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">{t("tipsForForeigners")}</p>
@@ -1504,6 +1510,13 @@ function ItineraryResult() {
   const [storyCardBusy, setStoryCardBusy] = useState(false);
   // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
+  // KO 한글명은 **정확히 같은 장소**일 때만 — place_id 일치, 아니면 이름 완전일치. 퍼지 매칭은
+  // 다른 장소의 이름을 붙일 수 있어(예: "Songjeong Beach"→"해운대") 표시에 쓰지 않는다.
+  const l10nOf = (pl: { place_id?: string | number | null; name?: string | null }) => {
+    const byId = pl.place_id != null ? citySpots.find(sp => String(sp.id) === String(pl.place_id)) : undefined;
+    const exact = byId ?? citySpots.find(sp => sp.name.trim().toLowerCase() === (pl.name ?? "").trim().toLowerCase());
+    return exact?.nameL10n;
+  };
 
   // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
   const [prefTags] = useState<string[]>(() => {
@@ -2958,16 +2971,21 @@ function ItineraryResult() {
               {editMode === "edit" && (
               <div className="space-y-2.5">
                 {days[editDay].places.map((p, pi) => {
+                  const editOrdinals = visitOrdinals(days[editDay].places);
                   const imageSrc = p.cartSnapshot?.image ?? p.image;
                   const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
-                  const clock = shouldShowClock(p) ? formatClock(p.time, locale) : null;
+                  // B안: 지정한 시간(fixed/user)만 시각으로 보여 준다. 스케줄러 추정 시각은 입력칸에만 있다.
+                  // 순서 계약(↑↓ 노출)은 표시가 아니라 실제 시각 유무(timed)로 판단한다 — 그대로다.
+                  const timed = shouldShowClock(p);
+                  const clock = exactTimeLabel(p);
                   const stay = formatDuration(parseDurationMinutes(p.duration), durationLabels);
+                  const editName = localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale);
                   const canEdit = (!shareId || isOwner);
                   const otherDays = days.filter((_, di) => di !== editDay);
                   return (
                     <div key={pi} className="rounded-2xl border border-line bg-white">
                       <div className="flex items-center gap-3 p-3">
-                        <span className="text-xs font-bold text-faint w-5 shrink-0 tabular-nums text-right">{pi + 1}</span>
+                        <span className="text-xs font-bold text-faint w-5 shrink-0 tabular-nums text-right">{editOrdinals[pi] ?? ""}</span>
                         {thumb ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img src={thumb} alt="" className="w-12 h-12 rounded-xl object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
@@ -2977,7 +2995,7 @@ function ItineraryResult() {
                           </span>
                         )}
                         <span className="min-w-0 flex-1">
-                          <span className="block text-sm font-bold text-ink leading-tight truncate">{p.name?.trim() || (p.isAccommodation ? tStay("placeFallback") : "")}</span>
+                          <span className="block text-sm font-bold text-ink leading-tight truncate">{editName || (p.isAccommodation ? tStay("placeFallback") : "")}</span>
                           <span className="block mt-0.5 text-xs text-sub truncate">
                             {clock ? `${clock} · ` : ""}{humanizeCategory(p.category)}{stay ? ` · ${stay}` : ""}
                           </span>
@@ -2990,7 +3008,7 @@ function ItineraryResult() {
                         <div className="flex items-center gap-1.5 px-3 pb-3 flex-wrap">
                           {/* 순서 계약: 시각 있는 항목은 시간이 자리를 정하므로 ↑↓ 를 주지 않는다 —
                               "순서만 바뀐 채 저장된다" 는 잘못된 기대를 만들지 않는다. 시간 입력이 곧 순서 조정이다. */}
-                          {!clock ? (
+                          {!timed ? (
                             <>
                               <button
                                 type="button"
@@ -3097,12 +3115,18 @@ function ItineraryResult() {
                           className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0"
                         >
                           <span className="flex-1 text-sm font-bold text-ink truncate">{item.shortName || item.name}</span>
-                          <span className="text-[10px] text-sub/50 shrink-0">{item.recommendedDurationMinutes}m</span>
+                          {/* 좌표 없는 장소는 일정에 못 들어간다 — 위치를 확인한 뒤에만. 좌표를 지어내지 않는다. */}
+                          {isValidCoordinate(item.lat, item.lng) ? (
+                            <span className="text-[10px] text-sub/50 shrink-0">{item.recommendedDurationMinutes}m</span>
+                          ) : (
+                            <span className="text-[10px] font-bold text-sub shrink-0">{tPicks("needsLocation")}</span>
+                          )}
                           <button
                             type="button"
                             onClick={() => addCartItemToDay(item)}
+                            disabled={!isValidCoordinate(item.lat, item.lng)}
                             aria-label={t("addToThisDay", { n: editDay + 1 })}
-                            className="gkm-focus shrink-0 w-11 h-11 rounded-full text-white text-base font-black"
+                            className="gkm-focus shrink-0 w-11 h-11 rounded-full text-white text-base font-black disabled:opacity-40"
                             style={{ backgroundColor: "var(--gkm-action-primary)" }}
                           >+</button>
                         </div>
@@ -3137,6 +3161,7 @@ function ItineraryResult() {
           // 시각만 흐른다 — 같은 날일 때만 새 시각, 자정이 지나면 마지막 같은-날 시각 유지.
           const nowHHMM = freshClockFor(execEntry.todayISO, execClock, execEntry.nowHHMM);
           const pos = todayPosition(day.places, nowHHMM);
+          const execOrdinals = visitOrdinals(day.places);
           const openDetailOf = (p: Place) => () => { setSelectedPlace(p); setSelectedPlaceDay(day.dayNumber); };
           return (
             <div className="mb-16">
@@ -3157,10 +3182,11 @@ function ItineraryResult() {
               {pos.phase === "none"   && <p className="mt-3 text-sm font-semibold text-sub">{tPlanner("execNoTimed")}</p>}
               <div className="mt-4 space-y-3">
                 {day.places.map((p, i) => {
-                  const clock = shouldShowClock(p) ? formatClock(p.time, locale) : null;
+                  // B안: 스케줄러 추정 시각은 판정에만 쓴다. 화면에는 지정한 시간만.
+                  const clock = exactTimeLabel(p);
                   const imageSrc = p.cartSnapshot?.image ?? p.image;
                   const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
-                  const displayName = p.name?.trim() || (p.isAccommodation ? tStay("placeFallback") : "");
+                  const displayName = localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale) || (p.isAccommodation ? tStay("placeFallback") : "");
                   if (i === pos.nowIdx) {
                     // PlaceModal 과 같은 규칙: 네이버 키워드가 없으면 Google 검색으로 돌아간다 —
                     // 그때는 💚 표기를 붙이지 않고, 별도 Google 링크도 중복이라 내지 않는다.
@@ -3172,7 +3198,7 @@ function ItineraryResult() {
                       <div key={i} className="rounded-2xl border-2 bg-white p-4" style={{ borderColor: "var(--gkm-action-primary)" }}>
                         <div className="flex items-center justify-between gap-2">
                           <p className="text-xs font-black tracking-wide" style={{ color: "var(--gkm-action-primary)" }}>
-                            ● {tPlanner("execNow")}{clock ? ` · ${clock}` : ""}
+                            ● {tPlanner("execNow")}{execOrdinals[i] !== null ? ` · ${execOrdinals[i]}` : ""}{clock ? ` · ${clock}` : ""}
                           </p>
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub">{humanizeCategory(p.category)}</span>
                         </div>
@@ -3213,7 +3239,7 @@ function ItineraryResult() {
                     const transit = nowPlace ? transitMinutes(nowPlace, p) : null;
                     return (
                       <div key={i} className="rounded-2xl border border-line bg-surface-dim/40 p-4">
-                        <p className="text-[11px] font-black tracking-wide text-sub">{tPlanner("execNext")}{clock ? ` · ${clock}` : ""}</p>
+                        <p className="text-[11px] font-black tracking-wide text-sub">{tPlanner("execNext")}{execOrdinals[i] !== null ? ` · ${execOrdinals[i]}` : ""}{clock ? ` · ${clock}` : ""}</p>
                         <button type="button" onClick={openDetailOf(p)} className="gkm-focus block w-full text-left">
                           <span className="block mt-0.5 text-lg font-black text-ink leading-tight">{displayName}</span>
                         </button>
@@ -3227,7 +3253,8 @@ function ItineraryResult() {
                   }
                   return (
                     <button key={i} type="button" onClick={openDetailOf(p)} className="gkm-focus w-full text-left flex items-center gap-3 px-1 py-1.5 opacity-60">
-                      <span className="w-14 text-[11px] font-bold text-sub tabular-nums shrink-0">{clock ?? ""}</span>
+                      <span className="w-8 text-[11px] font-black text-sub tabular-nums shrink-0 text-right pr-1">{execOrdinals[i] ?? ""}</span>
+                      {clock && <span className="text-[11px] font-bold text-sub tabular-nums shrink-0">{clock}</span>}
                       {thumb ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={thumb} alt="" className="w-9 h-9 rounded-lg object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
@@ -3377,16 +3404,21 @@ function ItineraryResult() {
                     assignSlot)은 그대로 두고 화면만 평평하게 만든다. */}
                 <div className="rounded-2xl border border-line overflow-hidden bg-white" id={`day-${day.dayNumber}`}>
                   {(() => {
-                    const rows = buildTimeline(
+                    // B안: 배열 순서(순서 계약) 그대로 편다. 구간(오전·오후·저녁)은 헤더로만, 순번은 1..N 연속 —
+                    // 편집 리스트·지도와 같은 하나의 번호 체계다. TIME_SLOTS/assignSlot 은 그대로 둔다.
+                    const rows = buildOrderedTimeline(
                       slotAssigned.map(x => ({ item: x.place, index: x.idx, slot: x.slot })),
-                      TIME_SLOTS.map(ts => ts.key),   // 정렬 순서 정의는 기존 것 하나만 쓴다
                     );
+                    // 방문 순번 — 숙소 체크인은 번호를 받지 않는다(지도에도 없다) → 타임라인·지도 1:1
+                    const ordinals = visitOrdinals(visiblePlaces);
                     return rows.map((row, rowIdx) => {
                             const place = row.item;
                             const idx   = row.index;
                             const prev  = rowIdx > 0 ? rows[rowIdx - 1]!.item : null;
-                            // 시각은 스케줄러가 배정한 것만. 아니면 시간대 라벨(첫 항목)만 남긴다.
-                            const clock   = shouldShowClock(place) ? formatClock(place.time, locale) : null;
+                            // B안: 지정한 시간(fixed/user)만 시각으로. 스케줄러 추정 시각은 화면에 내지 않는다.
+                            const exact   = exactTimeLabel(place);
+                            const rowName = localizedPlaceName(place.name?.trim() || "", l10nOf(place), locale);
+                            const mapHidden = !isValidCoordinate(place.lat, place.lng);
                             const stay    = formatDuration(parseDurationMinutes(place.duration), durationLabels);
                             const transit = prev ? transitMinutes(prev, place) : null;
                             const imageSrc = place.cartSnapshot?.image ?? place.image;
@@ -3400,14 +3432,15 @@ function ItineraryResult() {
                                   {transit !== null && (
                                     <p className="pl-[96px] pr-4 pt-1 text-[11px] font-semibold text-faint">{tPlanner("transit", { n: transit })}</p>
                                   )}
+                                  {/* 구간 헤더 — 오전·오후·저녁. 구간이 처음 나타날 때만 */}
+                                  {row.showSectionLabel && (
+                                    <p className="px-4 pt-3 pb-0.5 text-[10px] font-black uppercase tracking-[0.12em] text-faint">{tPlanner(`slot_${row.section}`)}</p>
+                                  )}
                                   <div className="flex items-stretch">
-                                  {/* 시각 열 — 시안의 "9:00 AM". 시각이 없으면 시간대 라벨(그 시간대 첫 항목만) */}
-                                  <div className="w-[64px] shrink-0 pt-[22px] pr-1 text-right">
-                                    {clock && (
-                                      <span className="text-xs font-bold text-sub tabular-nums">{clock}</span>
-                                    )}
-                                    {!clock && row.showSlotLabel && (
-                                      <span className="text-[10px] font-black uppercase tracking-[0.12em] text-faint">{tPlanner(`slot_${row.slot}`)}</span>
+                                  {/* 순번 열 — 1..N 연속. 지도 번호·편집 리스트와 같은 번호다 */}
+                                  <div className="w-[64px] shrink-0 pt-[20px] pr-2 text-right">
+                                    {ordinals[idx] !== null && (
+                                      <span className="text-sm font-black text-ink tabular-nums">{ordinals[idx]}</span>
                                     )}
                                   </div>
                                   {/* 타임라인 레일 — 위 선 · 아이콘 · 아래 선. 슬롯 경계에서도 선이 이어진다. */}
@@ -3448,19 +3481,19 @@ function ItineraryResult() {
                                       )}
                                       <span className="min-w-0 flex-1">
                                         <span className="block text-base font-bold text-ink leading-tight truncate">
-                                          {place.name?.trim() || (place.isAccommodation ? tStay("placeFallback") : "")}
+                                          {rowName || (place.isAccommodation ? tStay("placeFallback") : "")}
                                         </span>
                                         <span className="block mt-1 text-xs text-sub truncate">
+                                          {/* 지정한 시간만 시각으로 — 배지 대신 시각 자체가 지정 일정임을 말한다 */}
+                                          {exact ? `${exact} · ` : ""}
                                           {humanizeCategory(place.category)}
                                           {stay ? ` · ${stay}` : ""}
+                                          {mapHidden && ` · ${tPlanner("mapHidden")}`}
                                           {/* 숙소 체크인 시각은 저장 일정이 아니라 이 기기에서 온다 — 공유 링크에는 없다 */}
                                           {place.isAccommodation && checkinTime && ` · ${t("checkinAt", { time: checkinTime })}`}
                                         </span>
-                                        {(place.isFixed || isVisited) && (
+                                        {isVisited && (
                                           <span className="mt-1.5 flex items-center gap-1.5 flex-wrap">
-                                            {place.isFixed && (
-                                              <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-surface-dim text-sub">{tPlanner("fixedTime")}</span>
-                                            )}
                                             {isVisited && (
                                               <span className="text-[10px] font-black text-emerald-600">✓ {t("visited")}</span>
                                             )}

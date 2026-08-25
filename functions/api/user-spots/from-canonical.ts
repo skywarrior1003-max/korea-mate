@@ -105,12 +105,32 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     }, 400);
   }
 
+  // ── 4-b. 같은 기기 · 같은 원본은 하나만 (TASK-MY-TRIP-TIMELINE-B-AND-DEDUP-V1-R1) ──
+  // 원본 연결은 related_city_spot_id 하나뿐이다. 이미 있으면 새로 만들지 않고 그것을
+  // 돌려준다 — 새로고침 뒤 다시 눌러도 복사본이 늘지 않는다. 연결이 없는 legacy 행은
+  // 여기서 추정 매칭하지 않는다. check→insert 사이 경쟁은 059 partial UNIQUE 가 막고,
+  // 그 경우(23505) 아래에서 기존 행을 다시 읽어 돌려준다.
+  const EXISTING_SELECT = "id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_public, related_city_spot_id, display_title, display_memo, photo_storage_path";
+  const findExisting = async () => {
+    const { data } = await admin
+      .from("user_spots")
+      .select(EXISTING_SELECT)
+      .eq("device_id", deviceId)
+      .eq("related_city_spot_id", citySpotId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    return data as (Record<string, unknown> & { photo_storage_path?: string | null }) | null;
+  };
+  const existing = await findExisting();
+  if (existing) {
+    const { photo_storage_path: path, ...rest } = existing;
+    return json({ ...rest, has_photo: Boolean(path) }, 200);
+  }
+
   // ── 5. INSERT ───────────────────────────────────────────────────────────────
   // 게시 상태(city_spot_id)·검토 상태·note 는 건드리지 않는다. 개인 기록을
   // 하나 만드는 일이지 공개 절차를 시작하는 일이 아니다.
-  //
-  // 같은 장소를 여러 번 남길 수 있다. 같은 광안리라도 다른 날·다른 사진이면
-  // 다른 기억이다. 중복을 DB 로 막지 않는다.
   const row: Record<string, unknown> = {
     device_id:    deviceId,
     photo_public: false,
@@ -123,6 +143,14 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_public, related_city_spot_id, display_title, display_memo")
     .single();
 
+  if (insertErr?.code === "23505") {
+    // 동시에 두 번 눌린 경우 — UNIQUE 가 막았으니 먼저 생긴 행을 돌려준다.
+    const raced = await findExisting();
+    if (raced) {
+      const { photo_storage_path: path, ...rest } = raced;
+      return json({ ...rest, has_photo: Boolean(path) }, 200);
+    }
+  }
   if (insertErr || !inserted) {
     console.error("[user-spots/from-canonical] insert failed:", insertErr?.code ?? "no row");
     return json({ error: "Failed to save place" }, 500);

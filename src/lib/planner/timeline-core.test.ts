@@ -105,3 +105,17 @@ test("★모든 입력 장소가 정확히 한 번씩 나온다", () => {
   assert.equal(r.length, 12);
   assert.deepEqual([...r.map(x => x.index)].sort((a, b) => a - b), items.map(x => x.index));
 });
+
+test("★B안: 배열 순서 그대로, 구간 헤더는 오전·오후·저녁 3개만 단조롭게 (TIMELINE-B-R1)", async () => {
+  const { buildOrderedTimeline, displaySectionOf } = await import("./timeline-core.ts");
+  assert.equal(displaySectionOf("lunch"), "afternoon", "점심은 오후에 흡수");
+  assert.equal(displaySectionOf("morning"), "morning");
+  assert.equal(displaySectionOf("evening"), "evening");
+  const r = buildOrderedTimeline([mk("morning", "A", 0), mk("lunch", "B", 1), mk("afternoon", "C", 2), mk("evening", "U", 3), mk("afternoon", "D", 4)]);
+  assert.deepEqual(r.map(x => x.item), ["A", "B", "C", "U", "D"], "순서를 재배열하지 않는다");
+  assert.deepEqual(r.map(x => x.index), [0, 1, 2, 3, 4], "순번 = 배열 위치");
+  assert.deepEqual(r.map(x => x.section), ["morning", "afternoon", "afternoon", "evening", "evening"], "이른 구간이 뒤에 오면 현재 구간에 둔다");
+  assert.deepEqual(r.map(x => x.showSectionLabel), [true, true, false, true, false]);
+  assert.equal(r[0]!.railAbove, false); assert.equal(r[4]!.railBelow, false); assert.equal(r[2]!.railAbove && r[2]!.railBelow, true);
+  assert.deepEqual(buildOrderedTimeline([]), []);
+});

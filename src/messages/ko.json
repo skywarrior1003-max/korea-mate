@@ -460,7 +460,7 @@
     "mapShow": "지도",
     "mapHide": "지도 닫기",
     "fixedTime": "지정한 시간",
-    "transit": "이동 {n}분",
+    "transit": "다음 일정까지 {n}분",
     "durationHours": "{h}시간",
     "durationHoursMinutes": "{h}시간 {m}분",
     "durationMinutes": "{m}분",
@@ -479,8 +479,8 @@
     "editOrderNote": "시작시간이 있는 장소는 시간 순서로 놓여요 — 자리를 바꾸려면 시간을 바꿔 주세요. 시간이 없는 장소는 ↑↓로 정한 순서가 그대로 저장돼요.",
     "execToday": "오늘 여행",
     "execViewFull": "전체 일정 보기",
-    "execNow": "NOW",
-    "execNext": "NEXT",
+    "execNow": "지금",
+    "execNext": "다음",
     "execDirections": "길찾기",
     "execBeforeFirst": "아직 첫 일정 전이에요. 오늘의 첫 장소가 아래에 있어요.",
     "execAllDone": "오늘 일정의 예정 시간이 모두 지났어요. 수고했어요!",
@@ -494,7 +494,8 @@
     "mapFullscreen": "지도 전체화면",
     "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳이나 내 장소에서 골라 추가하세요.",
     "execTodayHint": "지금 일정과 다음 장소를 확인하세요.",
-    "editFinish": "편집 마치기"
+    "editFinish": "편집 마치기",
+    "mapHidden": "지도에 표시되지 않음"
   },
   "common": {
     "language": "언어",
@@ -884,7 +885,8 @@
     "starterTitle": "이번 여행 시작하기",
     "starterCity": "도시",
     "startTrip": "이 조건으로 시작",
-    "addedToTrip": "{name} — 이번 여행에 담았어요"
+    "addedToTrip": "{name} — 이번 여행에 담았어요",
+    "needsLocation": "위치 확인 필요"
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

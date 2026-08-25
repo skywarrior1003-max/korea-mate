@@ -130,18 +130,20 @@ test("★시간대별 불투명 카드를 걷어냈다 — 하루가 한 덩어�
   assert.doesNotMatch(PAGE, /\{ts\.range\}/,  "슬롯 시간대 범위 헤더");
   // 정렬·분류 로직은 그대로 남아 있어야 한다
   assert.match(PAGE, /const TIME_SLOTS = \[/);
-  assert.match(PAGE, /TIME_SLOTS\.map\(ts => ts\.key\)/, "정렬 순서는 기존 정의를 그대로 쓴다");
+  // TIMELINE-B-R1: 표시는 배열 순서(순서 계약)를 그대로 편다 — 슬롯 정의·assignSlot 은 그대로 남는다.
+  assert.match(PAGE, /const rows = buildOrderedTimeline\(/, "배열 순서 타임라인");
   assert.match(PAGE, /function assignSlot\(/);
 });
 
 test("★시간대 라벨은 그 시간대 첫 장소에만 붙는다", () => {
-  assert.match(PAGE, /row\.showSlotLabel && \(/);
-  assert.match(PAGE, /tPlanner\(`slot_\$\{row\.slot\}`\)/);
+  // TIMELINE-B-R1: 시간대 라벨은 행이 아니라 3구간 헤더(오전·오후·저녁)로만 — 기존 slot_* 키를 그대로 쓴다.
+  assert.match(PAGE, /row\.showSectionLabel && \(/);
+  assert.match(PAGE, /tPlanner\(`slot_\$\{row\.section\}`\)/);
 });
 
 test("★타임라인은 정확한 방문 시각을 표시하지 않는다", () => {
   // 타임라인 행에서만 뗀다. 장소 상세 모달의 시각 칩은 이번 범위가 아니라 그대로 둔다.
-  const rowStart = PAGE.indexOf("const rows = buildTimeline(");
+  const rowStart = PAGE.indexOf("const rows = buildOrderedTimeline(");
   assert.ok(rowStart > 0, "타임라인 블록을 찾지 못했다");
   const timelineBlock = PAGE.slice(rowStart, PAGE.indexOf("</PlannerDayNav", rowStart) + 1 || undefined);
   assert.doesNotMatch(timelineBlock, /🕒 \{place\.time\}/, "타임라인에 시각 칩이 남아 있다");

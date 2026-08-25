@@ -144,7 +144,7 @@ test("★Day 탐색·지도·타임라인 구조가 그대로다", () => {
   assert.match(BODY, /<PlannerDayNav/);
   assert.match(BODY, /<ItineraryDayMap/);
   assert.match(BODY, /showDayTabs=\{false\}/);
-  assert.match(BODY, /buildTimeline\(/);
+  assert.match(BODY, /buildOrderedTimeline\(/);   // TIMELINE-B-R1: 배열 순서 타임라인
   assert.match(BODY, /<PlannerCoverHeader/);
 });
 

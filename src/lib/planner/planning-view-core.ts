@@ -105,3 +105,51 @@ export function humanizeCategory(category: string | null | undefined): string {
   return category.replace(/[_-]+/g, " ").trim().replace(/\s+/g, " ")
     .split(" ").map(w => (w.length > 1 && w === w.toUpperCase() ? w.charAt(0) + w.slice(1).toLowerCase() : w)).join(" ");
 }
+
+// ── B안 표시 규칙 (TASK-MY-TRIP-TIMELINE-B-AND-DEDUP-V1-R1) ───────────────────
+// 화면에 정확 시각을 내는 것은 **지정한 시간뿐**이다: fixed 이거나 사용자가 직접
+// 고친 시각(timeSource "user"). 스케줄러 추정 시각은 저장·판정에는 남지만 화면에는
+// 내지 않는다 — 지킬 수 없는 정밀도를 보여 주지 않기 위해서다.
+export interface ExactTimeLike extends TimedLike { isFixed?: boolean | null; }
+
+export function showsExactTime(p: ExactTimeLike): boolean {
+  return (Boolean(p.isFixed) || p.timeSource === "user") && timeToMinutes(p.time) !== null;
+}
+
+/**
+ * 지정 시각 표기. fixed 는 체류시간을 알면 `20:00–21:00`, 모르면 `20:00`.
+ * 사용자가 고친 시각은 시작만 안다 — `20:00`. 숫자는 locale 공통이라 그대로 쓴다.
+ */
+export function exactTimeLabel(p: ExactTimeLike): string | null {
+  if (!showsExactTime(p)) return null;
+  const start = timeToMinutes(p.time)!;
+  const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+  const stay = p.isFixed ? parseDurationMinutes(p.duration) : null;
+  return stay !== null && stay > 0 ? `${hhmm(start)}–${hhmm(start + stay)}` : hhmm(start);
+}
+
+/**
+ * KO 화면의 장소명 — 데이터에 한국어 제목이 **실제로 있을 때만** 우선한다.
+ * 없으면 원문 그대로. 번역을 만들지 않는다.
+ */
+export function localizedPlaceName(
+  name: string,
+  l10n: { ko?: string | null } | null | undefined,
+  locale: string,
+): string {
+  if (locale.toLowerCase().startsWith("ko")) {
+    const ko = l10n?.ko?.trim();
+    if (ko) return ko;
+  }
+  return name;
+}
+
+/**
+ * 방문 순번 — 숙소(체크인) 항목은 방문지가 아니라 "머무는 곳" 이라 번호를 받지 않는다(null).
+ * 그래서 정상 신규 일정에서는 타임라인·편집 리스트·지도(숙소는 좌표를 저장하지 않아
+ * 지도에 없다)의 번호가 같은 1..N 이다.
+ */
+export function visitOrdinals(places: ReadonlyArray<{ isAccommodation?: boolean | null }>): (number | null)[] {
+  let n = 0;
+  return places.map(p => (p.isAccommodation ? null : ++n));
+}

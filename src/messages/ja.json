@@ -460,7 +460,7 @@
     "mapShow": "地図",
     "mapHide": "地図を閉じる",
     "fixedTime": "指定した時間",
-    "transit": "移動 {n}分",
+    "transit": "次の予定まで{n}分",
     "durationHours": "{h}時間",
     "durationHoursMinutes": "{h}時間{m}分",
     "durationMinutes": "{m}分",
@@ -479,8 +479,8 @@
     "editOrderNote": "開始時刻のある場所は時刻順に並びます — 位置を変えるには時刻を変更してください。時刻のない場所は ↑↓ で決めた順序のまま保存されます。",
     "execToday": "今日の旅",
     "execViewFull": "全体の日程を見る",
-    "execNow": "NOW",
-    "execNext": "NEXT",
+    "execNow": "今",
+    "execNext": "次",
     "execDirections": "経路案内",
     "execBeforeFirst": "まだ最初の予定の前です。今日の最初の場所は下にあります。",
     "execAllDone": "今日の予定時刻はすべて過ぎました。おつかれさまでした！",
@@ -494,7 +494,8 @@
     "mapFullscreen": "地図を全画面で",
     "addModeHint": "このDayにまだ無い場所だけを表示します。保存した場所やMy Placesから追加してください。",
     "execTodayHint": "今の予定と次の場所を確認できます。",
-    "editFinish": "編集を終える"
+    "editFinish": "編集を終える",
+    "mapHidden": "地図に表示されません"
   },
   "common": {
     "language": "言語",
@@ -884,7 +885,8 @@
     "starterTitle": "今回の旅を始める",
     "starterCity": "都市",
     "startTrip": "この条件で始める",
-    "addedToTrip": "{name} — 今回の旅に追加しました"
+    "addedToTrip": "{name} — 今回の旅に追加しました",
+    "needsLocation": "位置の確認が必要"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",
