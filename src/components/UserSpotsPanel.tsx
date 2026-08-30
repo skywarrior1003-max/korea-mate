@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
 import { isValidCoordinate } from "@/lib/geo";
+import { userSpotSourceKey } from "@/lib/place-identity";
 import { userSpotCategoryLabelKey } from "@/components/UserSpotForm";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
 import { runCreateFlow } from "@/lib/user-spots/create-flow";
@@ -59,9 +60,11 @@ type CategoryValue = UserSpotCategory;
 // ── Minimal place reference (structural subset of itinerary/page.tsx Place) ──
 
 interface PlaceRef {
-  source?:   string;
-  place_id?: string;
-  time?:     string;
+  source?:    string;
+  place_id?:  string;
+  time?:      string;
+  /** 보관함(This Trip) 경로로 스케줄된 내 장소는 place_id 대신 sourceKey(`user_spot:<uuid>`)로 남는다 */
+  sourceKey?: string | null;
 }
 
 // ── Props ─────────────────────────────────────────────────────────────────────
@@ -450,7 +453,7 @@ export default function UserSpotsPanel({
           <button
             onClick={openCreate}
             className="ml-auto text-[10px] font-black px-2.5 py-1 rounded-full text-white transition-opacity hover:opacity-80 cursor-pointer"
-            style={{ backgroundColor: "#FF4A2D" }}
+            style={{ backgroundColor: "transparent", color: "var(--gkm-action-primary)", border: "1px solid var(--gkm-line, #E5E7EA)" }}
             title={t("addPlaceTitle")}
           >
             + {t("addPlace")}
@@ -517,6 +520,7 @@ export default function UserSpotsPanel({
           const relatedOf = new Map(spots.map(sp => [sp.id, sp.related_city_spot_id ?? null]));
           const alreadyInDay    = existingPlaces.some(pp =>
             (pp.source === "user_spot" && pp.place_id === spot.id) ||
+            pp.sourceKey === userSpotSourceKey(spot.id) ||
             (canon !== null && pp.source !== "user_spot" && pp.place_id != null && String(pp.place_id) === String(canon)) ||
             (canon !== null && pp.source === "user_spot" && pp.place_id != null && relatedOf.get(String(pp.place_id)) === canon));
           // 좌표 없는 내 장소는 일정에 못 들어간다 — 위치를 확인한 뒤에만. 좌표를 지어내지 않는다.
@@ -657,7 +661,7 @@ export default function UserSpotsPanel({
                         onClick={() => handleAddToDay(spot)}
                         disabled={isAdding || alreadyInDay || !hasCoord}
                         className="flex-1 py-1.5 rounded-lg text-xs font-black text-white transition-all active:scale-95 disabled:opacity-60 cursor-pointer truncate"
-                        style={{ backgroundColor: alreadyInDay || !hasCoord ? "#B9BEC7" : "#FF4A2D" }}
+                        style={{ backgroundColor: alreadyInDay || !hasCoord ? "#B9BEC7" : "var(--gkm-action-primary)" }}
                       >
                         {alreadyInDay
                           ? t("alreadyInDay")

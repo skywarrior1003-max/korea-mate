@@ -25,6 +25,7 @@ import { buildItineraryGenerationUrl, itineraryDayCount, tripDraftGenerationCont
 import { isValidCoordinate } from "@/lib/geo";
 import { addPlaceToThisTrip, isInThisTrip, removePlaceFromThisTrip } from "@/lib/place-actions/place-actions-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
+import TimelineIcon from "@/components/planner/TimelineIcon";
 import { exploreHrefFor } from "@/lib/explore-href";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
@@ -55,9 +56,6 @@ function tabFromParam(v: string | null): Tab {
   return (TABS as string[]).includes(v ?? "") ? (v as Tab) : "selected";
 }
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  attraction: "🏛️", restaurant: "🍽️", nature: "🌿", event: "🎉", accommodation: "🏨",
-};
 
 /**
  * user_spots 행을 Cart 항목으로.
@@ -98,8 +96,9 @@ function PlaceCardMedia({ image, type }: { image: string | null; type: string })
       {image
         ? /* eslint-disable-next-line @next/next/no-img-element */
           <img src={image} alt="" className="w-full h-full object-cover" loading="lazy" />
-        : <div className="w-full h-full flex items-center justify-center text-4xl" aria-hidden>
-            {CATEGORY_EMOJI[type] ?? "🗺️"}
+        : <div className="w-full h-full flex items-center justify-center text-faint" aria-hidden>
+            {/* 이미지가 없으면 emoji 대신 일정과 같은 카테고리 아이콘(TimelineIcon) */}
+            <TimelineIcon category={type} size={36} />
           </div>}
     </div>
   );
@@ -896,7 +895,7 @@ function PicksContent() {
                   onClick={handleBuild}
                   className={`gkm-focus w-full flex items-center justify-center gap-2 min-h-12 rounded-control bg-action text-white font-bold shadow-cta hover:bg-action-hover${coach === "plan" ? ` ${COACH_PULSE}` : ""}`}
                 >
-                  ✨ {t("build")}
+                  {t("build")}
                 </button>
                 {/* 도시·날짜가 없을 때만. 버튼을 막지 않고 무엇이 필요한지만 말한다. */}
                 {buildNotice && (

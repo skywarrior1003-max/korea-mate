@@ -32,5 +32,7 @@ test("★Picks: '내 장소에 남겼어요' 는 서버의 원본 연결로 판�
   assert.match(PANEL, /const canon = spot\.related_city_spot_id \?\? null;/);
   assert.match(PANEL, /const hasCoord\s+= isValidCoordinate\(spot\.lat, spot\.lng\);/, "좌표 없는 내 장소는 담기 불가");
   assert.match(PANEL, /t\("needsLocation"\)/);
+  // 보관함 경로로 스케줄된 내 장소는 place_id 가 아니라 sourceKey(user_spot:<uuid>) 로 남는다 — 그것도 "이미 있음"
+  assert.match(PANEL, /pp\.sourceKey === userSpotSourceKey\(spot\.id\)/, "보관함 경로 내 장소 중복 판정");
   for (const bad of ["🟡", "✅ {t(\"statusApproved\")}", "❌", "📤", "📍"]) assert.ok(!PANEL.includes(bad), `뱃지 emoji 잔존: ${bad}`);
 });

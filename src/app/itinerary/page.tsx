@@ -1032,10 +1032,13 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
             <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>{place.location}</p>
             <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{localizedPlaceName(place.name, exactSpot?.nameL10n, modalLocale)}</h2>
           </div>
-          <div className="bg-surface-dim border border-line rounded-2xl p-5">
-            <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">{t("tipsForForeigners")}</p>
-            <p className="text-base text-sub leading-relaxed font-medium">{desc}</p>
-          </div>
+          {/* 설명이 없는 장소(내 장소 등)는 빈 팁 상자를 내지 않는다 — firstPublicText 계약대로 빈 값이면 블록 생략 */}
+          {desc && (
+            <div className="bg-surface-dim border border-line rounded-2xl p-5">
+              <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">{t("tipsForForeigners")}</p>
+              <p className="text-base text-sub leading-relaxed font-medium">{desc}</p>
+            </div>
+          )}
           {(snap?.soloFriendly != null || snap?.cashOnly || snap?.foreignCardAccepted != null) && (
             <div className="flex flex-wrap gap-2">
               {snap?.soloFriendly     && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{t("soloOk")}</span>}
@@ -1087,11 +1090,11 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
           <div className="grid grid-cols-2 gap-3">
             <a href={googleUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors">
-              🗺️ Google Maps
+              Google Maps
             </a>
             <a href={naverUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 transition-colors">
-              {naverIsGoogle ? t("moreSearch") : "💚 Naver Maps"}
+              {naverIsGoogle ? t("moreSearch") : "Naver Maps"}
             </a>
           </div>
 
@@ -1518,17 +1521,7 @@ function ItineraryResult() {
     return exact?.nameL10n;
   };
 
-  // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
-  const [prefTags] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const cart = getCityCart(paramCity);
-      const tagSet = new Set<string>();
-      cart.forEach(item => (item.tags ?? []).forEach((t: string) => tagSet.add(t)));
-      const tags = Array.from(tagSet).slice(0, 6);
-      return tags.length > 0 ? tags : ([paramTravelStyle].filter(Boolean) as string[]);
-    } catch { return []; }
-  });
+  // 취향 태그 칩은 승인 시안(my_trip_planning_final)에 없어 제거했다 (INTEGRATED-PRODUCT-QA-V1).
 
   // ── 도착 시간 파싱 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
   const arrivalHour = parseInt(paramArrivalTime?.split(":")?.[0] ?? "14", 10);
@@ -2548,7 +2541,7 @@ function ItineraryResult() {
           </Link>
           {shareId && (
             <Link href="/my-trips" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-red-50 text-red-600 border-2 border-red-200 rounded-xl hover:bg-red-100 transition-colors">
-              🗑️ My Trips (delete this trip)
+              My Trips (delete this trip)
             </Link>
           )}
         </div>
@@ -2650,7 +2643,7 @@ function ItineraryResult() {
         <div className="mb-4 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-1">
           {tripNotes.map(note => (
             <p key={note} className="text-sm text-blue-700 font-medium flex items-start gap-2">
-              <span className="shrink-0">💡</span>{t(note)}
+              {t(note)}
             </p>
           ))}
         </div>
@@ -2750,7 +2743,7 @@ function ItineraryResult() {
           )}
           {syncStatus === "saved" && (
             <span className={`text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full transition-opacity duration-500 ${syncFading ? "opacity-0" : "opacity-100"}`}>
-              ☁️ Saved to cloud
+              Saved to cloud
             </span>
           )}
           {syncStatus === "error" && (
@@ -2773,9 +2766,7 @@ function ItineraryResult() {
           <span className="text-[11px] font-black bg-surface-dim text-sub px-2 py-0.5 rounded-md uppercase tracking-wider">
             {travelStyle ? `${travelStyle} Trip` : t("tripTitleFallback")}
           </span>
-          {prefTags.length > 0 && prefTags.slice(0, 3).map(tag => (
-            <span key={tag} className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub capitalize">{tag}</span>
-          ))}
+
         </div>
         <PlannerActionMenu
           label={tPlanner("moreActions")}
@@ -3215,7 +3206,7 @@ function ItineraryResult() {
                             href={naverUrl} target="_blank" rel="noopener noreferrer"
                             className="gkm-focus flex-1 inline-flex items-center justify-center min-h-11 rounded-full text-sm font-black text-white"
                             style={{ backgroundColor: "var(--gkm-action-primary)" }}
-                          >{naverIsGoogle ? tPlanner("execDirections") : `💚 ${tPlanner("execDirections")}`}</a>
+                          >{naverIsGoogle ? tPlanner("execDirections") : `Naver · ${tPlanner("execDirections")}`}</a>
                           {canMoment && (
                             <button
                               type="button"
@@ -3225,7 +3216,7 @@ function ItineraryResult() {
                                 setCaptureOpen(true);
                               }}
                               className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-ink"
-                            >📷 {tMemo("addMemory")}</button>
+                            >{tMemo("addMemory")}</button>
                           )}
                         </div>
                         {!naverIsGoogle && (
@@ -3277,7 +3268,11 @@ function ItineraryResult() {
                 onClick={() => setMapFull(true)}
                 className="gkm-focus fixed bottom-24 right-4 z-40 inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white shadow-modal"
                 style={{ backgroundColor: "var(--gkm-ink)" }}
-              >🗺 {tPlanner("mapShow")}</button>
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="mr-1.5">
+                  <path d="M3 6.5l6-2.5 6 2.5 6-2.5v14l-6 2.5-6-2.5-6 2.5z" /><path d="M9 4v14M15 6.5v14" />
+                </svg>
+                {tPlanner("mapShow")}</button>
             </div>
           );
         })()
@@ -3598,7 +3593,7 @@ function ItineraryResult() {
       <div id="memories" className="mb-12 scroll-mt-24">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-black text-ink">📸 {tMemo("memoriesTitle")}</h2>
+            <h2 className="text-2xl font-black text-ink">{tMemo("memoriesTitle")}</h2>
             <p className="text-sm text-sub mt-0.5">{tMemo("memoriesSubtitle")}</p>
           </div>
           <button
