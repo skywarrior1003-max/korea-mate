@@ -29,8 +29,9 @@ import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPub
 import { getDeviceId } from "@/lib/deviceId";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
-import { getCityCart, removeFromCart, clearCityCart, addToCart, setCartFixed, CART_EVENT, type CartItem } from "@/lib/cart";
+import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { placeToUnplacedCartEvent, isUnplaceable } from "@/lib/planner/unplace-core";
+import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
@@ -1281,6 +1282,8 @@ function ItineraryResult() {
     if (typeof window === "undefined") return [];
     try { return getCityCart(tripCity); } catch { return []; }
   });
+  // ── 이 여행의 미배정 (기간 축소로 Day 에서 빠진 장소) — 여행 id 에 묶인 저장소, 도시 보관함과 섞이지 않는다 ──
+  const [unplacedItems, setUnplacedItems] = useState<CartItem[]>([]);
   // ── 로딩 페이즈 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────────
   const [loadPhase, setLoadPhase] = useState(0);
 
@@ -1353,14 +1356,17 @@ function ItineraryResult() {
     // 보관함은 이 기기(localStorage) 에 있어 저장·재오픈 뒤에도 남는다.
     const cartCity = tripCity ?? city;
     let moved = 0;
-    for (const day of res.removedDayList) {
-      for (const p of day.places) {
-        if (!isUnplaceable(p)) continue;
-        const { event, fixed } = placeToUnplacedCartEvent(p, day.date, cartCity);
-        addToCart(event, cartCity);
-        if (fixed) setCartFixed(getItemSourceKey(event), fixed, cartCity);
-        moved++;
+    if (itinId) {
+      const items: CartItem[] = [];
+      for (const day of res.removedDayList) {
+        for (const p of day.places) {
+          if (!isUnplaceable(p)) continue;
+          const { event, fixed } = placeToUnplacedCartEvent(p, day.date, cartCity);
+          items.push({ ...event, addedAt: Date.now(), sortOrder: items.length, tripCity: cartCity, ...(fixed ? { fixed } : {}) });
+        }
       }
+      moved = addUnplaced(itinId, items, getItemSourceKey);
+      setUnplacedItems(readUnplaced(itinId));
     }
     setDays(res.days);                    // 기존 autosave 가 start/end 와 함께 저장한다
     setStartDate(dateStartInput);
@@ -2266,6 +2272,14 @@ function ItineraryResult() {
     }));
   }
 
+  // ── 이 여행의 미배정 읽기 — 여행 id 가 정해질 때(재오픈·첫 저장) + 저장소 변경 시 ──
+  useEffect(() => {
+    const refresh = () => { try { setUnplacedItems(readUnplaced(itinId)); } catch { /* ignore */ } };
+    refresh();
+    window.addEventListener(UNPLACED_EVENT, refresh);
+    return () => window.removeEventListener(UNPLACED_EVENT, refresh);
+  }, [itinId]);
+
   // ── cart 변경 감지 → Unscheduled 갱신 ─────────────────
   // tripCity 가 확정되는 순간(재오픈 로드로 저장된 city 가 들어온 때)에도 다시 읽는다.
   useEffect(() => {
@@ -2305,7 +2319,13 @@ function ItineraryResult() {
     setDays(prev => prev.map((day, di) =>
       di === editDay ? { ...day, places: orderDayPlaces([...day.places, newPlace]) } : day
     ));
-    removeFromCart(getItemSourceKey(item)); // 배치 후 Unscheduled에서 즉시 제거
+    const key = getItemSourceKey(item);
+    if (itinId && unplacedItems.some(u => getItemSourceKey(u) === key)) {
+      removeUnplaced(itinId, key, getItemSourceKey);          // 이 여행의 미배정에서만 뺀다
+      setUnplacedItems(readUnplaced(itinId));
+    } else {
+      removeFromCart(key); // 배치 후 Unscheduled에서 즉시 제거
+    }
   }
 
   // ── user_spot → 현재 editDay에 추가 (PHASE 1) ────────────────
@@ -3096,7 +3116,13 @@ function ItineraryResult() {
                   이 Day 에 이미 배치된 장소는 후보에서 뺀다 — 의도 없는 같은 장소 반복 배치를 만들지 않는다 (#14). */}
               {(() => {
                 const placedKeys = new Set((days[editDay]?.places ?? []).map(pl => pl.sourceKey).filter(Boolean));
-                const unscheduled = cartItems.filter(item => !placedKeys.has(getItemSourceKey(item)));
+                // 도시 보관함(This Trip) + 이 여행의 미배정(기간 축소) — 같은 sourceKey 는 한 번만
+                const seenKeys = new Set<string>();
+                const unscheduled = [...cartItems, ...unplacedItems].filter(item => {
+                  const k = getItemSourceKey(item);
+                  if (placedKeys.has(k) || seenKeys.has(k)) return false;
+                  seenKeys.add(k); return true;
+                });
                 if (unscheduled.length === 0 || (shareId && !isOwner)) return null;
                 return (
                   <div>
@@ -3833,7 +3859,7 @@ export default function ItineraryPage() {
   const tFooter = useTranslations("footer");
   const tNav = useTranslations("nav");
   return (
-    <div className="min-h-screen flex flex-col bg-surface-dim text-ink font-sans antialiased">
+    <div className="gkm-trip-body min-h-screen flex flex-col bg-surface-dim text-ink antialiased">
       <header className="border-b border-line bg-surface-dim/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <Link href="/" className="text-2xl font-normal tracking-tight text-ink flex items-center gap-1.5">

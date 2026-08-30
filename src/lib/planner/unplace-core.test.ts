@@ -45,7 +45,8 @@ test("★숙소 체크인 항목은 보관함으로 보내지 않는다", () => 
 
 test("★page.tsx — 기간 축소는 확인 없이 적용되고 잘린 장소는 삭제 대신 미배정으로 간다 (source guard)", () => {
   const page = read("../../app/itinerary/page.tsx");
-  assert.match(page, /placeToUnplacedCartEvent\(/, "잘린 장소는 보관함 항목으로 변환된다");
+  assert.match(page, /placeToUnplacedCartEvent\(/, "잘린 장소는 보관함 항목 모양으로 변환된다");
+  assert.match(page, /addUnplaced\(itinId, items, getItemSourceKey\)/, "여행 id 저장소에 묶인다 — 도시 보관함에 섞지 않는다");
   assert.match(page, /editDatesShrinkMoved/, "옮겼다는 안내를 준다");
   assert.ok(!page.includes("editDatesShrinkConfirm") && !page.includes("editDatesShrinkGo"), "옛 '삭제하고 변경' 흐름이 남아 있다");
   assert.ok(!/confirmRemoval/.test(page), "확인-후-삭제 계약이 남아 있다");

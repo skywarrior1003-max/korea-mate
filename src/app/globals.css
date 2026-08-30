@@ -162,6 +162,11 @@ body {
 .gkm-trip-headline {
   font-family: var(--font-story-serif), var(--gkm-font-serif);
 }
+/* My Trip 본문 — SSOT body(Inter). /itinerary 루트에만 붙여 다른 페이지 전역 서체는 그대로 둔다.
+   Inter 는 latin subset 이라 한글·일문·중문은 --gkm-font-sans 의 시스템 산세리프로 떨어진다. */
+.gkm-trip-body {
+  font-family: var(--font-story-sans), var(--gkm-font-sans);
+}
 
 /* 고정 하단 내비가 콘텐츠를 가리지 않게 하는 공통 여백 */
 .gkm-nav-safe {
