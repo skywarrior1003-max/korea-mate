@@ -1,3 +1,4 @@
+import type { LocalizedText } from "@/data/cities/types";
 import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
 import { getItemSourceKey, IDENTITY_STORAGE_KEYS } from "@/lib/place-identity";
 import {
@@ -58,6 +59,9 @@ export interface EventItem {
   transitFromAnchor: TransitInfo | null;
   name: string;
   shortName: string;
+  /** 표시용 l10n 원문(있을 때만) — identity 는 여전히 sourceKey/id. Explore·장소 상세에서 담을 때 채운다. */
+  nameL10n?: LocalizedText | null;
+  descriptionL10n?: LocalizedText | null;
   tags: string[];
   city: string;
   district: string;

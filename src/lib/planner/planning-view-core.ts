@@ -5,6 +5,8 @@
 // 표시하고, 보관함 추가·내 장소 추가처럼 기본값이 채워진 시각은 시간대 라벨로만 보여 준다.
 // 이동정보도 새로 추정하지 않는다 — 두 항목의 스케줄러 시각 사이의 빈 시간을 읽어 낼 뿐이다.
 
+import { displayPlaceName, type L10nLike } from "../place-display-name.ts";
+
 export interface TimedLike {
   time?: string | null;
   duration?: string | null;
@@ -134,14 +136,11 @@ export function exactTimeLabel(p: ExactTimeLike): string | null {
  */
 export function localizedPlaceName(
   name: string,
-  l10n: { ko?: string | null } | null | undefined,
+  l10n: L10nLike | null | undefined,
   locale: string,
 ): string {
-  if (locale.toLowerCase().startsWith("ko")) {
-    const ko = l10n?.ko?.trim();
-    if (ko) return ko;
-  }
-  return name;
+  // 공통 resolver(place-display-name): 실제 l10n 값이 있을 때만 그 언어, 없으면 원문 — 그리고 수집 주석 제거.
+  return displayPlaceName(name, l10n, locale);
 }
 
 /**

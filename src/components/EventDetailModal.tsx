@@ -85,9 +85,12 @@ function saveReview(id: string, text: string): void {
 interface Props {
   event: EventItem;
   onClose: () => void;
+  /** 표시용 이름/설명(locale resolver 결과). 없으면 event 원문. 저장·identity 는 event 를 그대로 쓴다. */
+  displayName?: string;
+  displayDescription?: string;
 }
 
-export default function EventDetailModal({ event, onClose }: Props) {
+export default function EventDetailModal({ event, onClose, displayName, displayDescription }: Props) {
   // 문자열로 고정한다 — effect 의존성이 event 객체가 아니라 안정적인 키가 된다.
   const sourceKey    = getItemSourceKey(event);
   const tModal       = useTranslations("modal");
@@ -250,7 +253,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
                 {event.type}
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow">{event.name}</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow">{displayName ?? event.name}</h2>
             <p className="text-sm text-white/80 mt-1">
               📍 {event.city}{event.district ? `, ${event.district}` : ""}
             </p>
@@ -341,7 +344,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* 상세 설명 */}
           <div>
             <h3 className="text-sm font-bold text-gray-900 mb-1.5">{tModal("aboutStop")}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{event.description}</p>
+            <p className="text-sm text-gray-600 leading-relaxed">{displayDescription ?? event.description}</p>
           </div>
 
           {/* 실용 정보 그리드 */}

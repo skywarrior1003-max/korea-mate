@@ -1,5 +1,6 @@
 "use client";
 
+import type { LocalizedText } from "@/data/cities/types";
 import { useSearchParams, useRouter } from "next/navigation";
 // TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
 import StoryJournal from "@/components/story/StoryJournal";
@@ -31,6 +32,8 @@ import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
 import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { placeToUnplacedCartEvent, isUnplaceable } from "@/lib/planner/unplace-core";
+import { pickL10n } from "@/lib/place-display-name";
+import WeatherLinkChip from "@/components/planner/WeatherLinkChip";
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
@@ -972,7 +975,10 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
   // canonical 설명 fallback 도 **정확히 같은 장소**일 때만(place_id → 이름 완전일치). 퍼지 매칭은 쓰지 않는다.
   const exactSpot  = citySpots.find(sp => place.place_id != null && String(sp.id) === String(place.place_id))
                   ?? citySpots.find(sp => sp.name.trim().toLowerCase() === place.name.trim().toLowerCase());
-  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips, exactSpot?.description);
+  // locale 설명이 **실제로 있으면** 그것부터(why → desc). 없을 때만 원문 순서. 번역을 만들지 않는다.
+  const desc       = firstPublicText(
+    pickL10n(exactSpot?.whyItMattersL10n, modalLocale), pickL10n(exactSpot?.descriptionL10n, modalLocale), pickL10n(snap?.descriptionL10n, modalLocale),
+    snap?.whyItMatters, snap?.description, place.tips, exactSpot?.description);
 
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
@@ -998,7 +1004,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm"
+      className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm"
       onClick={handleBackdrop}
     >
       <div
@@ -1032,7 +1038,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>{place.location}</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{localizedPlaceName(place.name, exactSpot?.nameL10n, modalLocale)}</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{localizedPlaceName(place.name, exactSpot?.nameL10n ?? snap?.nameL10n, modalLocale)}</h2>
           </div>
           {/* 설명이 없는 장소(내 장소 등)는 빈 팁 상자를 내지 않는다 — firstPublicText 계약대로 빈 값이면 블록 생략 */}
           {desc && (
@@ -1261,6 +1267,12 @@ function ItineraryResult() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   /** 상세를 연 항목이 속한 Day — 방문 체크·순간 남기기가 Day 단위 열쇠를 쓴다 */
   const [selectedPlaceDay, setSelectedPlaceDay] = useState<number | null>(null);
+  // 지도 번호 마커 클릭 → 그 stop 의 PlaceModal. 번호=배열 순서(idx) 라 identity 가 어긋나지 않는다.
+  const openStopFromMap = (dayIdx: number, placeIdx: number) => {
+    const d = days[dayIdx]; const p = d?.places[placeIdx];
+    if (!d || !p) return;
+    setSelectedPlace(p); setSelectedPlaceDay(d.dayNumber);
+  };
   /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
   // 지도는 늘 보인다 — "지도 닫기" 대신 전체화면(overlay)만 있다 (OWNER-UX-CORRECTION-V1 #5)
   const [mapFull, setMapFull] = useState(false);
@@ -1533,10 +1545,11 @@ function ItineraryResult() {
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
   // KO 한글명은 **정확히 같은 장소**일 때만 — place_id 일치, 아니면 이름 완전일치. 퍼지 매칭은
   // 다른 장소의 이름을 붙일 수 있어(예: "Songjeong Beach"→"해운대") 표시에 쓰지 않는다.
-  const l10nOf = (pl: { place_id?: string | number | null; name?: string | null }) => {
+  const l10nOf = (pl: { place_id?: string | number | null; name?: string | null; cartSnapshot?: { nameL10n?: LocalizedText | null } | null }) => {
     const byId = pl.place_id != null ? citySpots.find(sp => String(sp.id) === String(pl.place_id)) : undefined;
     const exact = byId ?? citySpots.find(sp => sp.name.trim().toLowerCase() === (pl.name ?? "").trim().toLowerCase());
-    return exact?.nameL10n;
+    // 보관함 경로 항목은 담을 때 가져온 l10n 원문을 갖는다 — 같은 장소의 값이라 fallback 으로 쓴다(퍼지 매칭 아님).
+    return exact?.nameL10n ?? pl.cartSnapshot?.nameL10n ?? undefined;
   };
 
   // 취향 태그 칩은 승인 시안(my_trip_planning_final)에 없어 제거했다 (INTEGRATED-PRODUCT-QA-V1).
@@ -3195,11 +3208,15 @@ function ItineraryResult() {
                   <p className="text-[10px] font-black uppercase tracking-[0.14em] text-faint">Day {day.dayNumber} · {formatDayChipDate(day.date, locale)}</p>
                   <h2 className="gkm-trip-headline text-xl font-bold text-ink leading-tight">{tPlanner("execToday")}</h2>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setExecEntry(null)}
-                  className="gkm-focus shrink-0 inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-action"
-                >{tPlanner("execViewFull")}</button>
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* 날씨: 이 저장소에는 실제 예보 source(KMA 연동·API key)가 없다 — Planning 과 같은 기상청 링크 칩만. 가짜 기온 금지 */}
+                  <WeatherLinkChip label={tPlanner("weather")} ariaLabel={tPlanner("weatherAria")} />
+                  <button
+                    type="button"
+                    onClick={() => setExecEntry(null)}
+                    className="gkm-focus shrink-0 inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-action"
+                  >{tPlanner("execViewFull")}</button>
+                </div>
               </div>
               {/* 진입 시점 시각으로만 판정한 상태 안내 — 거짓 NOW 를 만들지 않는다 */}
               {pos.phase === "before" && <p className="mt-3 text-sm font-semibold text-sub">{tPlanner("execBeforeFirst")}</p>}
@@ -3369,6 +3386,7 @@ function ItineraryResult() {
               selectedDay={Math.min(mapDay, days.length - 1)}
               onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
               onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
+              onStopClick={openStopFromMap}
               showDayTabs={false}
             />
           )}
@@ -3764,6 +3782,7 @@ function ItineraryResult() {
               selectedDay={Math.min(mapDay, days.length - 1)}
               onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
               onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
+              onStopClick={openStopFromMap}
               mapHeight="62vh"
             />
           </div>

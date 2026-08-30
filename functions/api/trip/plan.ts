@@ -27,6 +27,7 @@ import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
 import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../../../src/lib/near-me/types";
 import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "../../../src/config/commerce-surfaces";
 import { validateProfile } from "../../../src/lib/scheduler/ai/personalization-profile";
 import { applyVisibility } from "../../../src/lib/city-spots-visibility";
 import { collectAllKeyset } from "../../../src/lib/city-spots-paging";
@@ -113,6 +114,9 @@ function normalizePlaceIdForDedupe(placeId: unknown): string | null {
 // In Cloudflare Workers, process.env is empty at module init → placeholder URL →
 // all queries fail → mock fallback. ctx.env has the real values at request time.
 
+// 단계별 소요시간(ms) — 한 요청당 한 줄만 남긴다. 값은 운영 로그용이며 응답에는 싣지 않는다.
+let _tm_candidates: { ms: number; pages: number; rows: number } | null = null;
+
 async function runNearMeDirect(
   input: {
     coordinate:        Coord;
@@ -154,7 +158,8 @@ async function runNearMeDirect(
       let data: unknown[] | null = null;
       let error: { message: string } | null = null;
       try {
-        data = await collectAllKeyset<{ id: number }>(async (afterId, pageSize) => {
+        const _tq = Date.now(); let _pages = 0;
+        data = await collectAllKeyset<{ id: number }>(async (afterId, pageSize) => { _pages++;
           const res = await applyVisibility(
             client
               .from("city_spots")
@@ -171,6 +176,7 @@ async function runNearMeDirect(
           if (res.error) throw new Error(res.error.message);
           return (res.data ?? []) as { id: number }[];
         });
+        _tm_candidates = { ms: Date.now() - _tq, pages: _pages, rows: Array.isArray(data) ? data.length : -1 };
       } catch (e) {
         error = { message: e instanceof Error ? e.message : String(e) };
       }
@@ -422,7 +428,13 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   let affiliate_context: any = (typeof body.affiliate_context === "object" && body.affiliate_context !== null)
     ? body.affiliate_context
     : undefined;
-  const affiliateRows = await queryAffiliateLinks(city);
+  const _tm0 = Date.now(); const _tm: Record<string, number> = {};
+  // 실측(2026-08-30, 10일 부산): 이 한 줄이 하루당 ≈14.1s 였다 — affiliate-loader 가 모듈 초기화 시
+  // process.env 로 만든 placeholder Supabase client 로 2회(도시·전국) 조회를 시도해 매번 타임아웃됐고,
+  // 그 결과는 어차피 빈 배열이었다(affiliate_links 테이블도 아직 없다). Trip-Flow commerce 가 꺼져 있는 동안은
+  // 부르지 않는다 — 결과 동일(빈 map), 하루당 ≈14s → 0. 켜는 날에는 ctx.env 기반 client 로 바꿔야 한다.
+  const affiliateRows = TRIP_FLOW_COMMERCE_ENABLED ? await queryAffiliateLinks(city) : [];
+  _tm.affiliate = Date.now() - _tm0;
   if (affiliateRows.length > 0 && !affiliate_context) {
     affiliate_context = {
       affiliate_link_ids: affiliateRows.map((r: any) => r.affiliate_link_id),
@@ -445,6 +457,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   const effective_liked_place_ids: string[] | undefined =
     mergedPreferenceIds.length > 0 ? mergedPreferenceIds : undefined;
 
+  const _tm1 = Date.now();
   const { results: nearMeResults, nearMeCount } = await runNearMeDirect({
     coordinate,
     timestamp,
@@ -457,6 +470,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     trip_pace: tripPace as TripPaceChoice | undefined,
   }, ctx.env);
 
+  _tm.nearMe = Date.now() - _tm1;
   // 7. Adapt Near Me results to scheduler candidates
   const baseCandidates = adaptToSchedulerCandidates(nearMeResults as any);
 
@@ -510,6 +524,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   const allPreferred  = cartPreferred.length > 0 ? cartPreferred : undefined;
 
   // 9. Run scheduler — with_ai ALWAYS false, no Gemini calls
+  const _tm2 = Date.now();
   const schedulerResult = runScheduler({
     trip_date,
     start_time,
@@ -532,6 +547,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
       : null,
   });
 
+  _tm.scheduler = Date.now() - _tm2;
   if (!schedulerResult.success) {
     return jsonResp(
       { error: "Scheduler hard constraint violation", conflict: schedulerResult.error },
@@ -544,7 +560,9 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     .map((item: any) => item.place_id ?? item.event_id)
     .filter((id: any): id is string => Boolean(id));
 
-  const place_map     = await buildPlaceMap(placeIds, ctx.env);
+  const _tm3 = Date.now();
+  const place_map     = await buildPlaceMap(placeIds, ctx.env); _tm.placeMap = Date.now() - _tm3; _tm.total = Date.now() - _tm0;
+  console.log(`[plan-timing] ${JSON.stringify({ ..._tm, fetch: _tm_candidates, candidates: nearMeCount, placed: placeIds.length })}`);
   const affiliate_map = buildAffiliateMap(affiliateRows, locale);
 
   const cart_hint_map: Record<string, CartHintEntry> = {};

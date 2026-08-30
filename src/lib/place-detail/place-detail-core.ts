@@ -11,6 +11,7 @@
 //   - 일정 입력 객체에 상업 문맥을 넣지 않는다 (Product Constitution §14).
 //   - 운영 테이블에 있다는 이유만으로 공식 기관 정보라고 표시하지 않는다 (§8).
 
+import { stripIngestAnnotation } from "../place-display-name.ts";
 import type { CitySpotRow } from "@/lib/city-spots";
 import type { EventItem } from "@/lib/cart";
 import { citySpotSourceKey } from "../place-identity.ts";
@@ -113,7 +114,7 @@ export interface LocalizedPlaceText {
 /** 장소의 표시 텍스트 3종을 locale 기준으로 해석한다 */
 export function resolvePlaceText(spot: PlaceView, locale: string): LocalizedPlaceText {
   return {
-    name:         pickLocalized(spot.name_l10n, locale, spot.name),
+    name:         (() => { const n = pickLocalized(spot.name_l10n, locale, spot.name); return n ? stripIngestAnnotation(n) : n; })(),
     description:  pickLocalized(spot.desc_l10n, locale, spot.description),
     whyItMatters: pickLocalized(spot.why_l10n,  locale, spot.why_it_matters),
   };
@@ -363,6 +364,7 @@ export function toItineraryEvent(spot: PlaceView, text?: LocalizedPlaceText): Ev
     transitFromAnchor:           null,
     name,
     shortName:                   name,
+    nameL10n:                    spot.name_l10n ?? null,
     tags:                        spot.tags ?? [],
     city:                        spot.city,
     district:                    spot.district ?? "",

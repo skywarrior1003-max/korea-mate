@@ -83,6 +83,8 @@ export interface DayPlace {
   lng:  number;
   /** 타임라인에서의 순번(1-base) — 좌표 없는 항목이 있어도 번호가 당겨지지 않는다 */
   order?: number;
+  /** 그 Day places 배열 인덱스 — 마커 클릭을 정확한 stop 으로 되돌리는 identity */
+  idx?: number;
 }
 
 interface Props {
@@ -98,6 +100,8 @@ interface Props {
   dayPlaces?:    DayPlace[];
   /** true면 마커 클릭 시 Naver InfoWindow를 열지 않음 — 자체 프리뷰 UI를 쓰는 화면용(일정 지도). */
   hideInfoWindow?: boolean;
+  /** trip 레이어 번호 마커 클릭 — 그 stop(DayPlace) 을 돌려준다 */
+  onDayPlaceClick?: (place: DayPlace) => void;
   /** 강조할 마커의 선택 키(sourceKey ?? id). 지정하면 그 마커만 크게 그린다. */
   selectedKey?: string | null;
   /**
@@ -185,6 +189,7 @@ export default function NaverMap({
   relayoutKey,
   onSpotClick,
   dayPlaces,
+  onDayPlaceClick,
   hideInfoWindow,
   selectedKey,
   clusterZoomLabels,
@@ -455,6 +460,10 @@ export default function NaverMap({
 
   // ── S2 trip 레이어: 번호 마커(코랄) + 점선 순서선 — 도로 경로가 아닌 방문 순서 표현 ──
   // base 마커와 독립 관리(additive). 항상 최상위(zIndex 200), 클러스터 없음.
+  // 클릭 콜백은 ref 로 — 콜백이 바뀔 때마다 마커를 다시 그리지 않는다
+  const onDayPlaceClickRef = useRef(onDayPlaceClick);
+  useEffect(() => { onDayPlaceClickRef.current = onDayPlaceClick; }, [onDayPlaceClick]);
+
   useEffect(() => {
     if (!mapRef.current || !window.naver?.maps) return;
     // 이전 trip 레이어 정리 — SDK 가 반쯤만 살아 있어도 여기서 터지지 않는다
@@ -500,6 +509,9 @@ export default function NaverMap({
           anchor: new map.Point(13, 13),
         },
       });
+      if (onDayPlaceClickRef.current) {
+        map.Event.addListener(marker, "click", () => { onDayPlaceClickRef.current?.(p); });
+      }
       dayMarkersRef.current.push(marker);
     });
 

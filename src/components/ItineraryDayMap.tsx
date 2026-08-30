@@ -36,6 +36,8 @@ interface Props {
   showDayTabs?: boolean;
   /** 지도 높이 — 전체화면 overlay 는 화면 높이를 넘긴다. 기본 340. */
   mapHeight?: number | string;
+  /** 번호 마커 클릭 — (선택 Day 인덱스, 그 Day places 배열 인덱스). 부모가 PlaceModal 을 연다. */
+  onStopClick?: (dayIdx: number, placeIdx: number) => void;
 }
 
 const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
@@ -45,7 +47,7 @@ const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
   gyeongju: { lat: 35.8562, lng: 129.2247 },
 };
 
-export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true, mapHeight = 340 }: Props) {
+export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true, mapHeight = 340, onStopClick }: Props) {
   const t = useTranslations("itin");
   const locale = useLocale();
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
@@ -82,8 +84,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
       // 정상 신규 일정은 모든 stop 에 좌표가 있어 타임라인 1..N 과 1:1 이고, legacy
       // 좌표 없는 stop 이 있으면 아래 noCoords 안내로 "지도에 표시되지 않는 N곳"을 밝힌다.
       const spot = (p.place_id ? byId.get(p.place_id) : undefined) ?? byName.get(p.name.toLowerCase());
-      if (lat != null && lng != null) out.push({ name: localizedPlaceName(p.name, spot?.nameL10n, locale), lat, lng });
-      void idx;
+      if (lat != null && lng != null) out.push({ name: localizedPlaceName(p.name, spot?.nameL10n, locale), lat, lng, idx });
     });
     return out;
   }, [day, citySpots, locale]);
@@ -98,8 +99,8 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
     return citySpots
       .filter((s): s is CitySpot & { lat: number; lng: number } => s.lat != null && s.lng != null)
       .filter(s => !inDay.has(s.name.toLowerCase()) && !inDayIds.has(String(s.id)))
-      .map(s => ({ id: s.id, name: s.name, lat: s.lat, lng: s.lng, category: s.category, address: s.address }));
-  }, [citySpots, dayPlaces, day]);
+      .map(s => ({ id: s.id, name: localizedPlaceName(s.name, s.nameL10n, locale), lat: s.lat, lng: s.lng, category: s.category, address: s.address }));
+  }, [citySpots, dayPlaces, day, locale]);
 
   function handleBaseClick(m: MapSpot) {
     const spot = citySpots.find(s => s.id === m.id);
@@ -149,6 +150,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
           height={mapHeight}
           className="relative w-full h-full"
           onSpotClick={handleBaseClick}
+          onDayPlaceClick={onStopClick ? (p) => { if (p.idx != null) onStopClick(selectedDay, p.idx); } : undefined}
           hideInfoWindow
         />
 
@@ -158,7 +160,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
         {preview && (
           <div className="fixed md:absolute bottom-[calc(3.5rem+env(safe-area-inset-bottom))] md:bottom-0 left-0 right-0 z-50 md:z-auto bg-surface/95 backdrop-blur-sm border-t border-line px-4 py-3 flex items-center gap-3">
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-bold text-ink truncate">{preview.name}</p>
+              <p className="text-sm font-bold text-ink truncate">{localizedPlaceName(preview.name, preview.nameL10n, locale)}</p>
               <p className="text-xs text-faint truncate">{[preview.district, preview.category].filter(Boolean).join(" · ")}</p>
             </div>
             {onAddToDay && (

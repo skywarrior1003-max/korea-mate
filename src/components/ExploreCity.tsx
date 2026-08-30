@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { displayPlaceName, displayPlaceText } from "@/lib/place-display-name";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -44,6 +45,8 @@ function toEventItem(spot: CitySpot): EventItem {
     transitFromAnchor: null,
     name: spot.name,
     shortName: spot.name,
+    nameL10n: spot.nameL10n ?? null,
+    descriptionL10n: spot.descriptionL10n ?? null,
     tags: spot.tags ?? [],
     city: spot.city,
     district: spot.district ?? "",
@@ -100,6 +103,7 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
 // ── Inner content (useSearchParams needs Suspense) ───────────────────────────
 
 function ExploreCityContent({ city }: { city: CityConfig }) {
+  const locale = useLocale();
   const tE = useTranslations("explore");
   const tN = useTranslations("nav");
 
@@ -352,8 +356,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     () => filteredSpots
       .filter((s): s is CitySpot & { lat: number; lng: number } => s.lat != null && s.lng != null)
       // 선택 강조는 sourceKey 로 맞춘다 — 같은 숫자 id 를 쓰는 다른 소스와 섞이지 않게.
-      .map(s => ({ ...s, sourceKey: selectionKey(s) })) as unknown as MapSpot[],
-    [filteredSpots]
+      // 지도 라벨도 카드와 같은 이름(locale l10n·수집 주석 제거). identity 는 id/sourceKey 라 이름을 바꿔도 선택 판정은 그대로다.
+      .map(s => ({ ...s, name: displayPlaceName(s.name, s.nameL10n, locale), sourceKey: selectionKey(s) })) as unknown as MapSpot[],
+    [filteredSpots, locale]
   );
 
   // 발견 화면의 행동은 저장 하나다. 일정 편입은 Picks > Saved 에서 한다.
@@ -537,7 +542,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       {filteredSpots.map(item => (
         <SpotCard
           key={item.sourceKey ?? item.id}
-          spot={item}
+          spot={{ ...item, name: displayPlaceName(item.name, item.nameL10n, locale), description: displayPlaceText(item.description, item.descriptionL10n, locale) ?? item.description }}
           distKm={distances.get(item.id)}
           isSaved={savedKeys.has(getItemSourceKey(toEventItem(item)))}
           onSave={() => handleSaveSpot(item)}
@@ -714,7 +719,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       )}
 
       {selectedEvent && (
-        <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)}
+          displayName={displayPlaceName(selectedEvent.name, selectedEvent.nameL10n, locale)}
+          displayDescription={displayPlaceText(selectedEvent.description, selectedEvent.descriptionL10n, locale) ?? undefined} />
       )}
 
       {/* 담기 결과를 스크린리더에 알린다. 버튼 라벨만 바뀌면 시각적으로만

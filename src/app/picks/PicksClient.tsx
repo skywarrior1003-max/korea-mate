@@ -29,6 +29,7 @@ import TimelineIcon from "@/components/planner/TimelineIcon";
 import { exploreHrefFor } from "@/lib/explore-href";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
+import { displayPlaceName } from "@/lib/place-display-name";
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
@@ -793,7 +794,7 @@ function PicksContent() {
                         <PlaceCardMedia image={item.image} type={item.type} />
                         <div className="flex items-start gap-3 p-4">
                           <div className="min-w-0 flex-1">
-                            <p className="font-bold text-ink text-base leading-snug">{item.shortName || item.name}</p>
+                            <p className="font-bold text-ink text-base leading-snug">{displayPlaceName(item.shortName || item.name, item.nameL10n, locale)}</p>
                             {item.type && (
                               <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{item.type}</p>
                             )}
@@ -858,7 +859,7 @@ function PicksContent() {
                   return (
                     <li key={key} className="flex items-center gap-2">
                       <span className="flex-1 min-w-0 truncate text-sm text-ink">
-                        {item.shortName || item.name}
+                        {displayPlaceName(item.shortName || item.name, item.nameL10n, locale)}
                       </span>
                       {viewCity && (
                         <Button
