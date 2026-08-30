@@ -29,7 +29,8 @@ import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPub
 import { getDeviceId } from "@/lib/deviceId";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
-import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
+import { getCityCart, removeFromCart, clearCityCart, addToCart, setCartFixed, CART_EVENT, type CartItem } from "@/lib/cart";
+import { placeToUnplacedCartEvent, isUnplaceable } from "@/lib/planner/unplace-core";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
@@ -81,7 +82,7 @@ import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildOrderedTimeline } from "@/lib/planner/timeline-core";
 import PlannerDayHeader from "@/components/planner/PlannerDayHeader";
 import PlannerActionMenu from "@/components/planner/PlannerActionMenu";
-import { shouldShowClock, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory, orderDayPlaces, exactTimeLabel, localizedPlaceName, visitOrdinals } from "@/lib/planner/planning-view-core";
+import { shouldShowClock, showsExactTime, formatDuration, parseDurationMinutes, transitMinutes, humanizeCategory, orderDayPlaces, exactTimeLabel, localizedPlaceName, visitOrdinals } from "@/lib/planner/planning-view-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
@@ -1338,24 +1339,35 @@ function ItineraryResult() {
   const [editingDates,      setEditingDates]      = useState(false);
   const [dateStartInput,    setDateStartInput]    = useState("");
   const [dateEndInput,      setDateEndInput]      = useState("");
-  const [dateShrinkPending, setDateShrinkPending] = useState<{ removedDays: number; removedPlaces: number } | null>(null);
+  // 기간을 줄여 미배정으로 옮긴 장소 수 — 안내 한 줄에만 쓴다(삭제 확인 없음)
+  const [dateShrinkNotice, setDateShrinkNotice] = useState<number | null>(null);
   function openDateEdit() {
     setDateStartInput(startDate); setDateEndInput(endDate);
-    setDateShrinkPending(null); setEditingDates(true);
+    setDateShrinkNotice(null); setEditingDates(true);
   }
-  function applyTripDates(confirmRemoval: boolean) {
+  function applyTripDates() {
     const res = remapTripDays(days, dateStartInput, dateEndInput);
     if (!res) return;
-    if (res.removedPlaces > 0 && !confirmRemoval) {
-      setDateShrinkPending({ removedDays: res.removedDays, removedPlaces: res.removedPlaces });
-      return;
+    // 잘린 Day 의 장소는 지우지 않는다 — This Trip 미배정으로 돌려보낸다(Owner 확정: 데이터 손실 0).
+    // fixed 는 CartFixed 로, 사용자가 정한 시각·체류는 unplacedMeta 로 남아 다시 다른 Day 에 배치할 수 있다.
+    // 보관함은 이 기기(localStorage) 에 있어 저장·재오픈 뒤에도 남는다.
+    const cartCity = tripCity ?? city;
+    let moved = 0;
+    for (const day of res.removedDayList) {
+      for (const p of day.places) {
+        if (!isUnplaceable(p)) continue;
+        const { event, fixed } = placeToUnplacedCartEvent(p, day.date, cartCity);
+        addToCart(event, cartCity);
+        if (fixed) setCartFixed(getItemSourceKey(event), fixed, cartCity);
+        moved++;
+      }
     }
     setDays(res.days);                    // 기존 autosave 가 start/end 와 함께 저장한다
     setStartDate(dateStartInput);
     setEndDate(dateEndInput);
     setPlannerDay(p => Math.min(p, res.days.length));
     setMapDay(m => Math.min(m, res.days.length - 1));
-    setEditingDates(false); setDateShrinkPending(null);
+    setEditingDates(false); setDateShrinkNotice(moved > 0 ? moved : null);
   }
 
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
@@ -2270,22 +2282,28 @@ function ItineraryResult() {
     const dupKey = getItemSourceKey(item);
     if ((days[editDay]?.places ?? []).some(pl => pl.sourceKey === dupKey)) return;
     const defaultTime = "19:30";
+    // 기간 축소로 미배정에 돌아온 항목은 fixed(CartFixed) 와 사용자가 정한 시각(unplacedMeta) 을 되살린다.
+    // 스케줄러 추정 시각은 되살리지 않는다 — 그 Day 의 새 자리에서 다시 정해질 값이다.
+    const meta = item.unplacedMeta ?? null;
+    const restoredTime = item.fixed?.startTime ?? (meta?.timeSource === "user" && meta.time ? meta.time : null);
+    const placeTime = restoredTime ?? defaultTime;
     const newPlace: Place = {
       name:          item.shortName || item.name,
       category:      item.type || "attraction",
       location:      item.district || city,
-      time:          defaultTime,
-      duration:      item.recommendedDurationMinutes ? `${item.recommendedDurationMinutes}m` : "60m",
+      time:          placeTime,
+      duration:      item.fixed ? `${item.fixed.durationMinutes}m` : (meta?.duration ?? (item.recommendedDurationMinutes ? `${item.recommendedDurationMinutes}m` : "60m")),
+      ...(item.fixed ? { isFixed: true as const } : restoredTime ? { timeSource: "user" as const } : {}),
       // 이 경로만 description 이 먼저다. 보관함 카드가 원래 보여주던 문구이므로
       // 순서를 바꾸지 않는다 — 바꾸면 안전한 문구까지 전부 교체된다(실측 86/86).
       sourceKey:     getItemSourceKey(item),
       tips:          firstPublicText(item.description, item.whyItMatters),
       googleMapsUrl: item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.shortName || item.name} ${city} Korea`)}`,
-      slot:          assignSlot(defaultTime),
+      slot:          assignSlot(placeTime),
       cartSnapshot:  item,
     };
     setDays(prev => prev.map((day, di) =>
-      di === editDay ? { ...day, places: [...day.places, newPlace] } : day
+      di === editDay ? { ...day, places: orderDayPlaces([...day.places, newPlace]) } : day
     ));
     removeFromCart(getItemSourceKey(item)); // 배치 후 Unscheduled에서 즉시 제거
   }
@@ -2682,7 +2700,7 @@ function ItineraryResult() {
       />
 
       {/* ── 여행 날짜 편집 패널 — 같은 일수는 날짜만 재매핑, 늘리면 빈 Day 추가,
-            줄이면 잘릴 장소 수를 보여 주고 확인 후에만 적용한다. ── */}
+            줄이면 잘린 Day 의 장소를 삭제하지 않고 This Trip 미배정으로 옮긴다. ── */}
       {editingDates && (
         <div className="mt-3 rounded-2xl border border-line bg-white p-4">
           <p className="text-sm font-black text-ink">{tPlanner("editDates")}</p>
@@ -2690,44 +2708,34 @@ function ItineraryResult() {
             <label className="flex-1 flex flex-col gap-1 text-[11px] font-bold text-sub">{tPlanner("editDatesStart")}
               <input
                 type="date" value={dateStartInput}
-                onChange={(e) => { setDateStartInput(e.target.value); setDateShrinkPending(null); }}
+                onChange={(e) => setDateStartInput(e.target.value)}
                 className="gkm-focus min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-bold text-ink"
               />
             </label>
             <label className="flex-1 flex flex-col gap-1 text-[11px] font-bold text-sub">{tPlanner("editDatesEnd")}
               <input
                 type="date" value={dateEndInput} min={dateStartInput || undefined}
-                onChange={(e) => { setDateEndInput(e.target.value); setDateShrinkPending(null); }}
+                onChange={(e) => setDateEndInput(e.target.value)}
                 className="gkm-focus min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-bold text-ink"
               />
             </label>
           </div>
-          {dateShrinkPending ? (
-            <div className="mt-3">
-              <p className="text-xs font-bold text-error" role="alert">
-                {tPlanner("editDatesShrinkConfirm", { days: dateShrinkPending.removedDays, n: dateShrinkPending.removedPlaces })}
-              </p>
-              <div className="mt-2 flex gap-2">
-                <button type="button" onClick={() => applyTripDates(true)}
-                  className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-black text-error"
-                >{tPlanner("editDatesShrinkGo")}</button>
-                <button type="button" onClick={() => setDateShrinkPending(null)}
-                  className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-sub"
-                >{tPlanner("close")}</button>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-3 flex gap-2">
-              <button type="button" onClick={() => applyTripDates(false)}
-                className="gkm-focus inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white"
-                style={{ backgroundColor: "var(--gkm-action-primary)" }}
-              >{tPlanner("editDatesApply")}</button>
-              <button type="button" onClick={() => setEditingDates(false)}
-                className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-sub"
-              >{tPlanner("close")}</button>
-            </div>
-          )}
+          <div className="mt-3 flex gap-2">
+            <button type="button" onClick={applyTripDates}
+              className="gkm-focus inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white"
+              style={{ backgroundColor: "var(--gkm-action-primary)" }}
+            >{tPlanner("editDatesApply")}</button>
+            <button type="button" onClick={() => setEditingDates(false)}
+              className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-sub"
+            >{tPlanner("close")}</button>
+          </div>
         </div>
+      )}
+      {/* 기간을 줄여 미배정으로 옮긴 장소 안내 — 삭제가 아니라 이동이라는 사실만 짧게 */}
+      {dateShrinkNotice !== null && (
+        <p role="status" className="mt-3 rounded-2xl border border-line bg-surface-dim px-4 py-3 text-xs font-bold text-ink">
+          {tPlanner("editDatesShrinkMoved", { n: dateShrinkNotice })}
+        </p>
       )}
 
       {/* ── 보조 액션 바 (TASK-MY-TRIP-PLANNING-FINAL-V1) ──
@@ -2982,13 +2990,13 @@ function ItineraryResult() {
                           <img src={thumb} alt="" className="w-12 h-12 rounded-xl object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
                         ) : (
                           <span className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(p.category) }}>
-                            <TimelineIcon category={p.category} size={18} />
+                            <TimelineIcon category={p.category} size={18} label={humanizeCategory(p.category)} />
                           </span>
                         )}
                         <span className="min-w-0 flex-1">
                           <span className="block text-sm font-bold text-ink leading-tight truncate">{editName || (p.isAccommodation ? tStay("placeFallback") : "")}</span>
                           <span className="block mt-0.5 text-xs text-sub truncate">
-                            {clock ? `${clock} · ` : ""}{humanizeCategory(p.category)}{stay ? ` · ${stay}` : ""}
+                            {[clock, stay].filter(Boolean).join(" · ")}
                           </span>
                           {p.isFixed && (
                             <span className="mt-1 inline-block text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-surface-dim text-sub">{tPlanner("fixedTime")}</span>
@@ -3019,12 +3027,12 @@ function ItineraryResult() {
                           ) : (
                             <span className="inline-flex items-center min-h-11 pr-1 text-[11px] font-bold text-faint">{tPlanner("editTimedOrderHint")}</span>
                           )}
-                          {/* 시작시간 — 사용자가 정한 값만 시각으로 표시된다(timeSource "user"). 가짜 시간을 만들지 않는다. */}
+                          {/* 시작시간 — 지정한 시각(fixed/user)만 입력칸에 보인다. 스케줄러 추정 시각은 저장·판정에만 남고 화면엔 비어 있다. 가짜 시간을 만들지 않는다. */}
                           <label className="inline-flex items-center gap-1.5 min-h-11 px-2.5 rounded-full border border-line bg-white text-xs font-bold text-ink">
                             <span>{tPlanner("editTime")}</span>
                             <input
                               type="time"
-                              value={/^\d{2}:\d{2}$/.test(p.time ?? "") ? p.time : ""}
+                              value={showsExactTime(p) ? p.time : ""}
                               onChange={(e) => setPlaceTime(editDay, pi, e.target.value)}
                               aria-label={`${tPlanner("editTime")}: ${p.name}`}
                               className="gkm-focus bg-transparent text-xs font-bold text-ink w-[84px]"
@@ -3159,7 +3167,7 @@ function ItineraryResult() {
               <div className="flex items-center justify-between gap-3 mb-1">
                 <div className="min-w-0">
                   <p className="text-[10px] font-black uppercase tracking-[0.14em] text-faint">Day {day.dayNumber} · {formatDayChipDate(day.date, locale)}</p>
-                  <h2 className="text-xl font-black text-ink leading-tight">{tPlanner("execToday")}</h2>
+                  <h2 className="gkm-trip-headline text-xl font-bold text-ink leading-tight">{tPlanner("execToday")}</h2>
                 </div>
                 <button
                   type="button"
@@ -3191,10 +3199,9 @@ function ItineraryResult() {
                           <p className="text-xs font-black tracking-wide" style={{ color: "var(--gkm-action-primary)" }}>
                             ● {tPlanner("execNow")}{execOrdinals[i] !== null ? ` · ${execOrdinals[i]}` : ""}{clock ? ` · ${clock}` : ""}
                           </p>
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub">{humanizeCategory(p.category)}</span>
                         </div>
                         <button type="button" onClick={openDetailOf(p)} className="gkm-focus block w-full text-left mt-1.5">
-                          <span className="block text-2xl font-black text-ink leading-tight">{displayName}</span>
+                          <span className="gkm-trip-headline block text-2xl font-bold text-ink leading-tight">{displayName}</span>
                         </button>
                         {thumb && (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -3232,13 +3239,12 @@ function ItineraryResult() {
                       <div key={i} className="rounded-2xl border border-line bg-surface-dim/40 p-4">
                         <p className="text-[11px] font-black tracking-wide text-sub">{tPlanner("execNext")}{execOrdinals[i] !== null ? ` · ${execOrdinals[i]}` : ""}{clock ? ` · ${clock}` : ""}</p>
                         <button type="button" onClick={openDetailOf(p)} className="gkm-focus block w-full text-left">
-                          <span className="block mt-0.5 text-lg font-black text-ink leading-tight">{displayName}</span>
+                          <span className="gkm-trip-headline block mt-0.5 text-lg font-bold text-ink leading-tight">{displayName}</span>
                         </button>
-                        <p className="mt-0.5 text-xs text-sub">
-                          {humanizeCategory(p.category)}
-                          {/* 이동 정보는 두 실제 시각 사이의 빈 시간만 읽는다 — 새로 추정하지 않는다 */}
-                          {transit !== null ? ` · ${tPlanner("transit", { n: transit })}` : ""}
-                        </p>
+                        {/* 이동 정보는 두 실제 시각 사이의 빈 시간만 읽는다 — 새로 추정하지 않는다 */}
+                        {transit !== null && (
+                          <p className="mt-0.5 text-xs text-sub">{tPlanner("transit", { n: transit })}</p>
+                        )}
                       </div>
                     );
                   }
@@ -3251,12 +3257,12 @@ function ItineraryResult() {
                         <img src={thumb} alt="" className="w-9 h-9 rounded-lg object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
                       ) : (
                         <span className="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(p.category) }}>
-                          <TimelineIcon category={p.category} size={14} />
+                          <TimelineIcon category={p.category} size={14} label={humanizeCategory(p.category)} />
                         </span>
                       )}
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm font-bold text-ink truncate">{displayName}</span>
-                        <span className="block text-[11px] text-sub truncate">{humanizeCategory(p.category)}</span>
+                        <span className="block text-[11px] text-sub truncate">{formatDuration(parseDurationMinutes(p.duration), durationLabels) ?? ""}</span>
                       </span>
                     </button>
                   );
@@ -3471,7 +3477,7 @@ function ItineraryResult() {
                                         <img src={thumb} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0 border border-line" onError={swapToPlaceholderOnError} />
                                       ) : (
                                         <span className="w-14 h-14 rounded-xl shrink-0 flex items-center justify-center bg-surface-dim" style={{ color: getCategoryColor(place.category) }}>
-                                          <TimelineIcon category={place.category} size={20} />
+                                          <TimelineIcon category={place.category} size={20} label={humanizeCategory(place.category)} />
                                         </span>
                                       )}
                                       <span className="min-w-0 flex-1">
@@ -3480,9 +3486,7 @@ function ItineraryResult() {
                                         </span>
                                         <span className="block mt-1 text-xs text-sub truncate">
                                           {/* 지정한 시간만 시각으로 — 배지 대신 시각 자체가 지정 일정임을 말한다 */}
-                                          {exact ? `${exact} · ` : ""}
-                                          {humanizeCategory(place.category)}
-                                          {stay ? ` · ${stay}` : ""}
+                                          {[exact, stay].filter(Boolean).join(" · ")}
                                           {mapHidden && ` · ${tPlanner("mapHidden")}`}
                                           {/* 숙소 체크인 시각은 저장 일정이 아니라 이 기기에서 온다 — 공유 링크에는 없다 */}
                                           {place.isAccommodation && checkinTime && ` · ${t("checkinAt", { time: checkinTime })}`}

@@ -1,4 +1,5 @@
 "use client";
+import GlyphIcon from "@/components/ui/GlyphIcon";
 
 // gokoreamate — Trip Moment Capture Modal
 // TASK-022: photo + GPS + memo + category 캡처
@@ -191,7 +192,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
         <button onClick={onClose} className="text-white/60 hover:text-white text-sm font-bold px-3 py-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
           {t("cancel")}
         </button>
-        <h2 className="text-base font-black">📸 {t("captureTitle")}</h2>
+        <h2 className="text-base font-black inline-flex items-center gap-1.5"><GlyphIcon kind="camera" size={16} />{t("captureTitle")}</h2>
         <button
           onClick={handleSave}
           disabled={saving}

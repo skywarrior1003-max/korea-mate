@@ -25,7 +25,7 @@ export default function PlannerDayHeader({ dayNumber, dateLabel, countLabel, pro
   return (
     <div className="flex items-end justify-between gap-3 mb-4">
       <div className="min-w-0">
-        <h2 className="text-[26px] leading-tight font-black text-ink flex items-baseline gap-2 flex-wrap">
+        <h2 className="gkm-trip-headline text-[26px] leading-tight font-bold text-ink flex items-baseline gap-2 flex-wrap">
           <span>Day {dayNumber}</span>
           <span className="text-sm font-semibold text-sub">{dateLabel}</span>
         </h2>

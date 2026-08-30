@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
 import { isValidCoordinate } from "@/lib/geo";
 import { userSpotSourceKey } from "@/lib/place-identity";
+import GlyphIcon from "@/components/ui/GlyphIcon";
 import { userSpotCategoryLabelKey } from "@/components/UserSpotForm";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
 import { runCreateFlow } from "@/lib/user-spots/create-flow";
@@ -576,12 +577,12 @@ export default function UserSpotsPanel({
                         onClick={() => openEdit(spot)}
                         className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-[#FF4A2D] hover:text-white transition-colors cursor-pointer"
                         title={t("edit")}
-                      >✏️</button>
+                      ><GlyphIcon kind="pencil" size={12} /></button>
                       <button
                         onClick={() => setConfirmDeleteId(spot.id)}
                         className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors cursor-pointer"
                         title={t("delete")}
-                      >🗑️</button>
+                      ><GlyphIcon kind="trash" size={12} /></button>
                     </div>
                   </div>
 

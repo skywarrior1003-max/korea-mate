@@ -39,6 +39,7 @@ import {
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
+import GlyphIcon from "@/components/ui/GlyphIcon";
 import { runCreateFlow } from "@/lib/user-spots/create-flow";
 import { canEdit } from "@/lib/user-spots/anchor-core";
 import { trackEvent } from "@/lib/analytics";
@@ -745,7 +746,7 @@ function PicksContent() {
           )}
           {tab === "selected" && (selected.length === 0 ? (
             <Card className="p-8 text-center">
-              <p className="text-3xl mb-3" aria-hidden>🗺️</p>
+              <GlyphIcon kind="map" size={34} className="mx-auto mb-3 text-faint" />
               <p className="font-bold text-ink mb-1">{t("selectedEmpty")}</p>
               <p className="text-sm text-sub mb-5">{t("selectedEmptyHint")}</p>
               <Link href={exploreHrefFor(tripCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
@@ -813,7 +814,7 @@ function PicksContent() {
                             aria-expanded={openTimeKey === key}
                             className={coach === "time" && isFirstCard ? COACH_PULSE : undefined}
                             onClick={() => setOpenTimeKey(openTimeKey === key ? null : key)}
-                          >🕘</Button>
+                          ><GlyphIcon kind="clock" size={18} /></Button>
                           <Button variant="icon" aria-label={`${t("removeFromTrip")}: ${item.name}`} onClick={() => removePlaceFromThisTrip(item, viewCity)}>✕</Button>
                         </div>
                         <div className="px-4 pb-4">
@@ -1131,7 +1132,7 @@ function PicksContent() {
                                   </p>
                                   {s.note && <p className="text-sm text-sub mt-2 leading-relaxed">{s.note}</p>}
                                 </div>
-                                <Badge kind="editorial" className="shrink-0">🔒 {t("privateLabel")}</Badge>
+                                <Badge kind="editorial" className="shrink-0 inline-flex items-center gap-1"><GlyphIcon kind="lock" size={11} />{t("privateLabel")}</Badge>
                               </div>
                               <div className="flex items-center gap-1 mt-3">
                                 <button
@@ -1142,7 +1143,7 @@ function PicksContent() {
                                   {already ? `✓ ${t("inSelected")}` : `+ ${t("addToSelected")}`}
                                 </button>
                                 <span className="flex-1" />
-                                <Button variant="icon" aria-label={`${t("edit")}: ${display}`} onClick={() => openEdit(s)}>✏️</Button>
+                                <Button variant="icon" aria-label={`${t("edit")}: ${display}`} onClick={() => openEdit(s)}><GlyphIcon kind="pencil" size={18} /></Button>
                                 {confirmId === s.id ? (
                                   <button
                                     onClick={() => void handleDelete(s.id)}
@@ -1152,7 +1153,7 @@ function PicksContent() {
                                     {deletingId === s.id ? t("deleting") : t("confirmDelete")}
                                   </button>
                                 ) : (
-                                  <Button variant="icon" aria-label={`${t("delete")}: ${display}`} onClick={() => setConfirmId(s.id)}>🗑️</Button>
+                                  <Button variant="icon" aria-label={`${t("delete")}: ${display}`} onClick={() => setConfirmId(s.id)}><GlyphIcon kind="trash" size={18} /></Button>
                                 )}
                               </div>
                             </>

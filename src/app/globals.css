@@ -156,6 +156,13 @@ body {
   font-family: var(--gkm-font-serif);
 }
 
+/* My Trip 헤드라인 — 디자인 SSOT(DESIGN.md typography: Noto Serif headline / Inter body) 의
+   headline 역할만. 본문 서체는 전역 결정이라 여기서 바꾸지 않는다. Noto Serif 는 latin subset 이라
+   한글·일문·중문은 --gkm-font-serif 의 시스템 세리프로 떨어진다(Story 와 같은 방식). */
+.gkm-trip-headline {
+  font-family: var(--font-story-serif), var(--gkm-font-serif);
+}
+
 /* 고정 하단 내비가 콘텐츠를 가리지 않게 하는 공통 여백 */
 .gkm-nav-safe {
   padding-bottom: var(--gkm-content-bottom);

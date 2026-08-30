@@ -27,12 +27,14 @@ test("★기간 증가 — 기존 Day 유지 + 빈 Day 추가", () => {
   assert.equal(r.removedPlaces, 0);
 });
 
-test("★기간 감소 — 여기서 지우지 않고 잘릴 수만 센다 (확인은 화면의 몫)", () => {
+test("★기간 감소 — 여기서 지우지 않고 잘린 Day 를 그대로 돌려준다 (미배정 이동은 화면의 몫)", () => {
   const days = [D(1, "2026-10-10", 1), D(2, "2026-10-11", 2), D(3, "2026-10-12", 3)];
   const r = remapTripDays(days, "2026-08-24", "2026-08-24")!;
   assert.equal(r.days.length, 1);
   assert.equal(r.removedDays, 2);
   assert.equal(r.removedPlaces, 5);
+  assert.deepEqual(r.removedDayList.map(d => d.date), ["2026-10-11", "2026-10-12"], "잘린 Day 의 원래 날짜가 남는다(fixed 보존용)");
+  assert.equal(r.removedDayList.reduce((n, d) => n + d.places.length, 0), 5, "장소가 하나도 사라지지 않는다");
 });
 
 test("★잘못된 입력은 null — 날짜를 지어내지 않는다", () => {
@@ -42,12 +44,12 @@ test("★잘못된 입력은 null — 날짜를 지어내지 않는다", () => {
   assert.equal(shiftDateISO("2026-08-30", 2), "2026-09-01", "월 경계");
 });
 
-test("★page.tsx — hero 날짜는 소유자만 편집, 기간 감소는 확인 후에만 적용 (source guard)", () => {
+test("★page.tsx — hero 날짜는 소유자만 편집, 기간 감소는 삭제 없이 미배정 이동 (source guard)", () => {
   const page = readFileSync(new URL("../../app/itinerary/page.tsx", import.meta.url), "utf8");
   assert.match(page, /onEditDates=\{\(!shareId \|\| isOwner\) && itinId \? openDateEdit : null\}/, "소유자만 날짜 편집");
   assert.match(page, /const res = remapTripDays\(days, dateStartInput, dateEndInput\)/, "재매핑은 순수 함수로");
-  assert.match(page, /if \(res\.removedPlaces > 0 && !confirmRemoval\)/, "손실은 확인 없이는 적용하지 않는다");
-  assert.match(page, /editDatesShrinkConfirm/, "잘릴 수를 사용자에게 보여 준다");
+  assert.match(page, /for \(const day of res\.removedDayList\)/, "잘린 Day 의 장소는 미배정으로 옮긴다");
+  assert.match(page, /editDatesShrinkMoved/, "옮긴 수를 사용자에게 알린다");
   const picks = readFileSync(new URL("../../app/picks/PicksClient.tsx", import.meta.url), "utf8");
   assert.match(picks, /const city = tripCity \?\? item\.city \?\? viewCity;/, "여행이 없으면 장소 자신의 도시로 담는다");
   assert.match(picks, /TripStarterCard/, "This Trip 에서 여행을 바로 시작할 수 있다");

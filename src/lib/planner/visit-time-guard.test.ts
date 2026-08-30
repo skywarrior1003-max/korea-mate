@@ -51,7 +51,9 @@ test("★편집 캔버스는 시각 대신 순서 번호를 쓴다", () => {
 // ── 데이터는 그대로 둔다 ─────────────────────────────────────────────────────
 test("★저장된 time 값을 지우거나 바꾸지 않는다 — 정렬·슬롯 판정에 계속 쓴다", () => {
   assert.match(PLANNER, /time:\s*item\.start_time/,  "스케줄러 값 저장 유지");
-  assert.match(PLANNER, /time:\s*defaultTime/,       "보관함 경로 유지");
+  // 보관함 경로: placeTime = 미배정에서 돌아온 fixed/user 시각 ?? defaultTime — 기본값 채움은 그대로다
+  assert.match(PLANNER, /const placeTime = restoredTime \?\? defaultTime;/, "보관함 경로 기본값 유지");
+  assert.match(PLANNER, /time:\s*placeTime/,         "보관함 경로 유지");
   assert.match(PLANNER, /time:\s*selectedTime/,      "내 장소 경로 유지");
   assert.match(PLANNER, /function assignSlot\(/);
   assert.match(PLANNER, /assignSlot\(p\.time\)/,     "슬롯 판정에 계속 쓴다");

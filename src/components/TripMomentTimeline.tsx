@@ -1,4 +1,5 @@
 "use client";
+import GlyphIcon from "@/components/ui/GlyphIcon";
 
 // gokoreamate — Trip Moment Timeline
 // TASK-022: 기록된 순간들의 아름다운 타임라인 뷰
@@ -169,7 +170,7 @@ export default function TripMomentTimeline({
         className="rounded-3xl border-2 border-dashed border-[#E5E7EA] p-10 text-center flex flex-col items-center gap-4 cursor-pointer hover:border-[#FF4A2D] transition-colors"
         onClick={() => onAddMemory()}
       >
-        <div className="w-16 h-16 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-3xl">📸</div>
+        <div className="w-16 h-16 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-[#565D66]"><GlyphIcon kind="camera" size={28} /></div>
         <div>
           <p className="text-base font-black text-[#191C21]">{t("emptyTitle")}</p>
           <p className="text-sm text-[#565D66] mt-1">{t("emptyLine1")}<br/>{t("emptyLine2")}</p>
@@ -388,14 +389,14 @@ export default function TripMomentTimeline({
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-xs text-[#565D66]/60">
-                  <span>🕐 {dateStr}</span>
+                  <span className="inline-flex items-center gap-1"><GlyphIcon kind="clock" size={12} />{dateStr}</span>
                   {/* 사람이 적은 장소 이름이 있으면 그것을 보여 준다. 없을 때만
                       좌표 힌트로 떨어진다 — 좌표는 이름이 아니다. */}
                   {m.place_name
                     ? <span>{m.place_name}</span>
-                    : m.lat !== null && <span>📍 {m.location_label}</span>}
+                    : m.lat !== null && <span className="inline-flex items-center gap-1"><GlyphIcon kind="pin" size={12} />{m.location_label}</span>}
                   {m.synced && (
-                    <span className="text-emerald-500">☁️</span>
+                    <span className="text-emerald-500 inline-flex"><GlyphIcon kind="cloud" size={12} /></span>
                   )}
                 </div>
                 <div className="flex items-center gap-1 flex-wrap justify-end">

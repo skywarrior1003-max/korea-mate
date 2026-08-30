@@ -4,9 +4,9 @@
 //   같은 일수  Day 1..N 의 date 를 새 시작일부터 하루씩 재매핑 — fixed/user 시각과
 //              각 Day 안 순서(순서 계약)가 그대로 남는다.
 //   기간 증가  기존 Day 전부 유지 + 빈 Day 를 뒤에 추가한다.
-//   기간 감소  잘려 나가는 Day 와 장소 수를 세어 돌려줄 뿐, 여기서 지우지 않는다.
-//              화면이 그 수를 사용자에게 보여 주고 확인받은 뒤에만 적용한다 —
-//              조용한 데이터 손실을 만들지 않는다.
+//   기간 감소  잘려 나가는 Day 를 `removedDayList` 로 그대로 돌려준다 — 여기서 지우지 않는다.
+//              화면은 그 Day 의 장소를 This Trip 미배정으로 옮긴다(unplace-core) —
+//              사용자 장소 데이터 손실 0 (Owner 확정, FINAL-PRODUCT-CORRECTION-V1).
 
 export interface DayLike {
   date: string;
@@ -39,8 +39,10 @@ export interface RemappedTrip<T extends DayLike> {
   days: T[];
   /** 기간 감소로 잘려 나갈 Day 수 — 0 이면 손실 없음 */
   removedDays: number;
-  /** 그 Day 들에 들어 있던 장소 수 — 확인 문구에 쓴다 */
+  /** 그 Day 들에 들어 있던 장소 수 — "미배정으로 옮겼어요" 안내 문구에 쓴다 */
   removedPlaces: number;
+  /** 잘려 나간 Day 자체(날짜·장소 포함) — 화면이 장소를 미배정으로 옮길 때 쓴다 */
+  removedDayList: T[];
 }
 
 export function remapTripDays<T extends DayLike>(
@@ -63,5 +65,6 @@ export function remapTripDays<T extends DayLike>(
     days: kept,
     removedDays: removed.length,
     removedPlaces: removed.reduce((n, d) => n + (d.places?.length ?? 0), 0),
+    removedDayList: removed,
   };
 }

@@ -122,6 +122,12 @@ export interface CartItem extends EventItem {
    * 읽어 주고, 그것으로도 알 수 없으면 사용자에게 물어본다.
    */
   tripCity?: string;
+  /**
+   * 여행 기간을 줄여 Day 에서 **미배정으로 돌아온** 항목의 시간 메타.
+   * 삭제하지 않고 옮겼다는 사실과, 사용자가 정한 시각(timeSource "user")·체류시간을
+   * 다시 배치할 때 되살리기 위해서만 둔다. 없으면 평범한 보관함 항목이다.
+   */
+  unplacedMeta?: { time: string | null; timeSource: "scheduler" | "user" | null; duration: string | null; fromDate: string } | null;
 }
 
 // ── 내부 헬퍼 ──────────────────────────────────

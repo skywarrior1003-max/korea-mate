@@ -76,7 +76,7 @@ export default function PlannerCoverHeader({
         ) : (
           // 긴 제목이 2줄 이상이어도 연필이 밀리지 않게 제목만 줄어들게 둔다
           <div className="flex items-start gap-2 min-w-0">
-            <h1 className="min-w-0 text-[26px] sm:text-4xl font-black text-white leading-tight break-words">
+            <h1 className="gkm-trip-headline min-w-0 text-[26px] sm:text-4xl font-bold text-white leading-tight break-words">
               {title}
             </h1>
             {canEditTitle && (
