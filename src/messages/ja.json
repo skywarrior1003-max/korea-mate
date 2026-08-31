@@ -438,7 +438,10 @@
     "fixedOutHint": "ピックで日付や時間を調整してください。",
     "fallbackBanner": "いまはパーソナライズ並べ替えが使えないため、gokoreamate の標準おすすめ旅程を用意しました。",
     "sharedNotice": "共有された旅程を見ています。ここでの変更はこのリンクにそのまま反映されます。",
-    "mapOrderHint": "点線は訪問順のつながりです。実際の経路案内は場所を開いてNaver・Googleマップでご確認ください。"
+    "mapOrderHint": "点線は訪問順のつながりです。実際の経路案内は場所を開いてNaver・Googleマップでご確認ください。",
+    "syncSaving": "保存中…",
+    "syncSaved": "保存済み",
+    "syncFailed": "保存に失敗"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

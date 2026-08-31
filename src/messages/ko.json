@@ -438,7 +438,10 @@
     "fixedOutHint": "픽에서 날짜나 시간을 조정해 주세요.",
     "fallbackBanner": "지금은 맞춤 정렬을 쓸 수 없어 gokoreamate 기본 추천 일정으로 준비했어요.",
     "sharedNotice": "공유받은 일정을 보고 있어요. 여기서 바꾼 내용은 이 링크에 그대로 반영됩니다.",
-    "mapOrderHint": "지도 위 점선은 방문 순서 연결이에요. 실제 길찾기는 장소를 눌러 Naver·Google 지도로 이동하세요."
+    "mapOrderHint": "지도 위 점선은 방문 순서 연결이에요. 실제 길찾기는 장소를 눌러 Naver·Google 지도로 이동하세요.",
+    "syncSaving": "저장 중…",
+    "syncSaved": "저장됨",
+    "syncFailed": "저장 실패"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

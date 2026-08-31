@@ -438,7 +438,10 @@
     "fixedOutHint": "Open Picks and adjust the date or time.",
     "fallbackBanner": "Personalized ranking is unavailable right now, so we prepared a standard gokoreamate recommended plan for you.",
     "sharedNotice": "You're viewing a shared itinerary. Changes you make will sync back to this link.",
-    "mapOrderHint": "The dotted line links your visit order — for real directions, open a place in Naver or Google Maps."
+    "mapOrderHint": "The dotted line links your visit order — for real directions, open a place in Naver or Google Maps.",
+    "syncSaving": "Saving…",
+    "syncSaved": "Saved",
+    "syncFailed": "Save failed"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

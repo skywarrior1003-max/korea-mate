@@ -438,7 +438,10 @@
     "fixedOutHint": "请在“精选”中调整日期或时间。",
     "fallbackBanner": "目前无法使用个性化排序，已为你准备 gokoreamate 标准推荐行程。",
     "sharedNotice": "你正在查看共享行程。在这里所做的更改会同步到此链接。",
-    "mapOrderHint": "虚线表示游览顺序。实际导航请打开地点并使用 Naver 或 Google 地图。"
+    "mapOrderHint": "虚线表示游览顺序。实际导航请打开地点并使用 Naver 或 Google 地图。",
+    "syncSaving": "保存中…",
+    "syncSaved": "已保存",
+    "syncFailed": "保存失败"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",

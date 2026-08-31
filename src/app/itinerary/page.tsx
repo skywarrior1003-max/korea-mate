@@ -1277,6 +1277,20 @@ function ItineraryResult() {
   /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
   // 지도는 늘 보인다 — "지도 닫기" 대신 전체화면(overlay)만 있다 (OWNER-UX-CORRECTION-V1 #5)
   const [mapFull, setMapFull] = useState(false);
+  // 전체화면 지도는 모달처럼 history 항목을 하나 갖는다 — 휴대폰 뒤로가기가 일정 화면을 떠나지 않고 지도만 닫는다
+  // (red-team 2026-08-31: 뒤로가기 → /picks 로 이탈 재현). ✕ 는 그 항목을 되감아 같은 경로로 닫는다.
+  const mapFullPushedRef = useRef(false);
+  useEffect(() => {
+    if (!mapFull) return;
+    try { window.history.pushState({ koreamate_fullmap: true }, ""); mapFullPushedRef.current = true; } catch { mapFullPushedRef.current = false; }
+    const handlePop = () => { mapFullPushedRef.current = false; setMapFull(false); };
+    window.addEventListener("popstate", handlePop);
+    return () => { window.removeEventListener("popstate", handlePop); };
+  }, [mapFull]);
+  const closeMapFull = useCallback(() => {
+    if (mapFullPushedRef.current) { mapFullPushedRef.current = false; window.history.back(); return; }
+    setMapFull(false);
+  }, []);
   // 편집 캔버스의 목적: "edit"=배치된 일정 수정, "add"=이 Day 에 장소 추가만 (#6 역할 분리)
   const [editMode, setEditMode] = useState<"edit" | "add">("edit");
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
@@ -1452,6 +1466,22 @@ function ItineraryResult() {
     const timer = window.setInterval(refresh, 60_000);
     document.addEventListener("visibilitychange", onVisible);
     return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", onVisible); };
+  }, [execEntry]);
+  // red-team 2026-08-31: 오늘 여행에 들어오면 NOW 카드가 첫 화면에 보여야 한다(시안: NOW 가 주인공). 지난 stop 이 많은 저녁에는
+  // 카드가 화면 아래로 밀려 "지금 뭘 보고 있는지" 를 놓친다 → 진입 시 한 번만 NOW 카드로 스크롤한다.
+  const execScrolledRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!execEntry) { execScrolledRef.current = null; return; }
+    const key = `${execEntry.dayIdx}:${execEntry.todayISO}`;
+    if (execScrolledRef.current === key) return;
+    execScrolledRef.current = key;
+    const id = window.setTimeout(() => {
+      const el = document.getElementById("gkm-exec-now");
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight * 0.55) el.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, 150);
+    return () => window.clearTimeout(id);
   }, [execEntry]);
   const tripPhase   = itinId ? tripBucket({ startDate, endDate }, todayISO) : null;
   const todayDayIdx = tripPhase === "traveling" ? findTodayDayIndex(days, todayISO) : null;
@@ -2780,17 +2810,17 @@ function ItineraryResult() {
         <div className="flex items-center gap-2 flex-wrap min-w-0">
           {syncStatus === "saving" && (
             <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">
-              ⟳ Syncing…
+              ⟳ {t("syncSaving")}
             </span>
           )}
           {syncStatus === "saved" && (
             <span className={`text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full transition-opacity duration-500 ${syncFading ? "opacity-0" : "opacity-100"}`}>
-              Saved to cloud
+              {t("syncSaved")}
             </span>
           )}
           {syncStatus === "error" && (
             <span className="text-xs font-bold text-red-500 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
-              ⚠️ Sync failed
+              ⚠️ {t("syncFailed")}
             </span>
           )}
           {/* 공유 링크 복사 — 공개 일정에만. 비공개 일정의 링크는 받는 쪽에서 열리지 않으므로 만들지 않는다 (/my-trips 와 같은 규칙) */}
@@ -3238,7 +3268,7 @@ function ItineraryResult() {
                     const googleUrl     = p.googleMapsUrl || googlePlaceSearchUrl(p.name, city);
                     const canMoment = (!shareId || isOwner) && itinId && stopKeyOf(p) !== null;
                     return (
-                      <div key={i} className="rounded-2xl border-2 bg-white p-4" style={{ borderColor: "var(--gkm-action-primary)" }}>
+                      <div key={i} id="gkm-exec-now" className="rounded-2xl border-2 bg-white p-4 scroll-mt-20" style={{ borderColor: "var(--gkm-action-primary)" }}>
                         <div className="flex items-center justify-between gap-2">
                           <p className="text-xs font-black tracking-wide" style={{ color: "var(--gkm-action-primary)" }}>
                             ● {tPlanner("execNow")}{execOrdinals[i] !== null ? ` · ${execOrdinals[i]}` : ""}{clock ? ` · ${clock}` : ""}
@@ -3771,7 +3801,7 @@ function ItineraryResult() {
             <p className="text-sm font-black text-ink truncate">{tPlanner("mapFullscreen")} · Day {Math.min(mapDay, days.length - 1) + 1}</p>
             <button
               type="button"
-              onClick={() => setMapFull(false)}
+              onClick={closeMapFull}
               aria-label={tPlanner("close")}
               className="gkm-focus w-11 h-11 rounded-full border border-line bg-white text-ink font-black"
             >✕</button>

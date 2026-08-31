@@ -883,7 +883,7 @@ function PicksContent() {
             </section>
           )}
               <div className="sticky bottom-20 md:bottom-6 mt-6">
-                {coach === "plan" && (
+                {coach === "plan" && selected.length > 0 && (
                   <Coachmark
                     title={t("coachPlanTitle")}
                     body={t("coachPlanBody")}
