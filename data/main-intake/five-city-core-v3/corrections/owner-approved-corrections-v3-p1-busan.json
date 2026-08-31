@@ -1,0 +1,1633 @@
+{
+ "task": "TASK-SCHEDULER-V2-P1-NEIGHBORHOOD-ROUTE-QUALITY-V1",
+ "prepared_at": "2026-08-30",
+ "owner_approved": false,
+ "production_write": "NOT_EXECUTED — Owner checkpoint",
+ "naver_local_search": {
+  "attempted": true,
+  "status": 401,
+  "error": "NID AUTH Result Invalid (1000) / errorCode 024 — NAVER_API_HUB credentials are not valid for the Local Search API; not bypassed per Owner decision 2"
+ },
+ "method": "Each row's stored road address geocoded with OSM Nominatim (address-level). EXACT_VERIFIED only where the house number matched a building/POI at that address. STREET_ONLY = street centroid (±100–300 m) — NOT a correction candidate. NOT_FOUND/AMBIGUOUS = HOLD. Business identity via Naver/Kakao remains unverified.",
+ "counts": {
+  "NOT_FOUND": 11,
+  "STREET_ONLY": 33,
+  "EXACT_VERIFIED": 5,
+  "CONFIRMED_CURRENT_CORRECT": 6
+ },
+ "correction_candidates": [
+  {
+   "city_spot_id": 1127,
+   "name": "Briand French Pastry",
+   "ko": "프랑스 과자점 브리앙",
+   "address": "부산 동래구 온천장로119번길 26, 1층",
+   "before": {
+    "lat": 35.2031,
+    "lng": 129.0911
+   },
+   "after": {
+    "lat": 35.2217587,
+    "lng": 129.0835634
+   },
+   "distance_m": 2185,
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "same building as 봉식당 (stored address identical, 1층) — address-level exact, business identity inferred"
+  },
+  {
+   "city_spot_id": 136,
+   "name": "Bong Restaurant",
+   "ko": "봉식당",
+   "address": "부산 동래구 온천장로119번길 26",
+   "before": {
+    "lat": 35.2036,
+    "lng": 129.074
+   },
+   "after": {
+    "lat": 35.2217587,
+    "lng": 129.0835634
+   },
+   "distance_m": 2198,
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "OSM POI '봉식당' at the stored address (business identity + address)"
+  },
+  {
+   "city_spot_id": 340,
+   "name": "Harema",
+   "ko": "하레마",
+   "address": "부산 해운대구 마린시티2로 33, 지하 1층",
+   "before": {
+    "lat": 35.1686,
+    "lng": 129.1698
+   },
+   "after": {
+    "lat": 35.1569143,
+    "lng": 129.1460571
+   },
+   "distance_m": 2519,
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact"
+  },
+  {
+   "city_spot_id": 386,
+   "name": "Small Space",
+   "ko": "소공간",
+   "address": "부산 해운대구 해운대해변로298번길 47, 4층",
+   "before": {
+    "lat": 35.1539,
+    "lng": 129.1739
+   },
+   "after": {
+    "lat": 35.1616748,
+    "lng": 129.1673516
+   },
+   "distance_m": 1050,
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact"
+  },
+  {
+   "city_spot_id": 1167,
+   "name": "Chao Ran",
+   "ko": "차오란",
+   "address": "부산 해운대구 달맞이길 30, 5층",
+   "before": {
+    "lat": 35.1544,
+    "lng": 129.1538
+   },
+   "after": {
+    "lat": 35.1598007,
+    "lng": 129.169609
+   },
+   "distance_m": 1558,
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact"
+  }
+ ],
+ "hold_street_only": [
+  {
+   "city_spot_id": 357,
+   "ko": "모모스커피 본점",
+   "distance_m": 3114,
+   "street_candidate": {
+    "lat": 35.2206252,
+    "lng": 129.0870322
+   }
+  },
+  {
+   "city_spot_id": 318,
+   "ko": "미미루",
+   "distance_m": 3568,
+   "street_candidate": {
+    "lat": 35.2201262,
+    "lng": 129.0841507
+   }
+  },
+  {
+   "city_spot_id": 298,
+   "ko": "원조꼬리곰집",
+   "distance_m": 3018,
+   "street_candidate": {
+    "lat": 35.2201262,
+    "lng": 129.0841507
+   }
+  },
+  {
+   "city_spot_id": 106,
+   "ko": "국제밀면 본점",
+   "distance_m": 3005,
+   "street_candidate": {
+    "lat": 35.1972883,
+    "lng": 129.0783596
+   }
+  },
+  {
+   "city_spot_id": 379,
+   "ko": "고등어다찌 연산본점",
+   "distance_m": 2064,
+   "street_candidate": {
+    "lat": 35.186794,
+    "lng": 129.0859143
+   }
+  },
+  {
+   "city_spot_id": 152,
+   "ko": "디저트시네마",
+   "distance_m": 1734,
+   "street_candidate": {
+    "lat": 35.1835838,
+    "lng": 129.0871615
+   }
+  },
+  {
+   "city_spot_id": 395,
+   "ko": "못난이식당 해운대점",
+   "distance_m": 866,
+   "street_candidate": {
+    "lat": 35.1544489,
+    "lng": 129.1433887
+   }
+  },
+  {
+   "city_spot_id": 334,
+   "ko": "르도헤",
+   "distance_m": 2528,
+   "street_candidate": {
+    "lat": 35.156649,
+    "lng": 129.1465509
+   }
+  },
+  {
+   "city_spot_id": 272,
+   "ko": "오스테리아 어부",
+   "distance_m": 1131,
+   "street_candidate": {
+    "lat": 35.1603388,
+    "lng": 129.1573682
+   }
+  },
+  {
+   "city_spot_id": 400,
+   "ko": "쿠지라멘",
+   "distance_m": 1864,
+   "street_candidate": {
+    "lat": 35.1660394,
+    "lng": 129.1604305
+   }
+  },
+  {
+   "city_spot_id": 1133,
+   "ko": "금수복국 해운대본점",
+   "distance_m": 1219,
+   "street_candidate": {
+    "lat": 35.162162,
+    "lng": 129.1642443
+   }
+  },
+  {
+   "city_spot_id": 397,
+   "ko": "선창횟집",
+   "distance_m": 1961,
+   "street_candidate": {
+    "lat": 35.1578569,
+    "lng": 129.1723282
+   }
+  },
+  {
+   "city_spot_id": 1135,
+   "ko": "달타이",
+   "distance_m": 972,
+   "street_candidate": {
+    "lat": 35.1584618,
+    "lng": 129.1747664
+   }
+  },
+  {
+   "city_spot_id": 1136,
+   "ko": "우봉 샤브 청사포점",
+   "distance_m": 2209,
+   "street_candidate": {
+    "lat": 35.1624392,
+    "lng": 129.1897128
+   }
+  },
+  {
+   "city_spot_id": 1138,
+   "ko": "랩24 바이 쿠무다",
+   "distance_m": 3630,
+   "street_candidate": {
+    "lat": 35.1777498,
+    "lng": 129.1969861
+   }
+  },
+  {
+   "city_spot_id": 1139,
+   "ko": "무진장횟집 기장점",
+   "distance_m": 2477,
+   "street_candidate": {
+    "lat": 35.2159865,
+    "lng": 129.2250656
+   }
+  },
+  {
+   "city_spot_id": 1140,
+   "ko": "대성갈치찌개구이",
+   "distance_m": 3677,
+   "street_candidate": {
+    "lat": 35.223215,
+    "lng": 129.231041
+   }
+  },
+  {
+   "city_spot_id": 393,
+   "ko": "바오하우스",
+   "distance_m": 2565,
+   "street_candidate": {
+    "lat": 35.153999,
+    "lng": 129.0634207
+   }
+  },
+  {
+   "city_spot_id": 369,
+   "ko": "코르 파스타 바",
+   "distance_m": 2189,
+   "street_candidate": {
+    "lat": 35.1527149,
+    "lng": 129.067289
+   }
+  },
+  {
+   "city_spot_id": 396,
+   "ko": "손내향미",
+   "distance_m": 2288,
+   "street_candidate": {
+    "lat": 35.1530873,
+    "lng": 129.0703169
+   }
+  },
+  {
+   "city_spot_id": 1141,
+   "ko": "원조할매낙지",
+   "distance_m": 2268,
+   "street_candidate": {
+    "lat": 35.1431201,
+    "lng": 129.0600424
+   }
+  },
+  {
+   "city_spot_id": 148,
+   "ko": "범일빈대떡",
+   "distance_m": 1965,
+   "street_candidate": {
+    "lat": 35.1270518,
+    "lng": 129.0472231
+   }
+  },
+  {
+   "city_spot_id": 380,
+   "ko": "재기돼지국밥",
+   "distance_m": 2729,
+   "street_candidate": {
+    "lat": 35.0898602,
+    "lng": 129.0390491
+   }
+  },
+  {
+   "city_spot_id": 417,
+   "ko": "우리포차 본점",
+   "distance_m": 2703,
+   "street_candidate": {
+    "lat": 35.1608147,
+    "lng": 129.1104193
+   }
+  },
+  {
+   "city_spot_id": 378,
+   "ko": "아웃트로 바이 비토",
+   "distance_m": 2315,
+   "street_candidate": {
+    "lat": 35.1580409,
+    "lng": 129.1270324
+   }
+  },
+  {
+   "city_spot_id": 420,
+   "ko": "조이풀조이풀",
+   "distance_m": 2531,
+   "street_candidate": {
+    "lat": 35.1575643,
+    "lng": 129.1270093
+   }
+  },
+  {
+   "city_spot_id": 1147,
+   "ko": "부산약콩밀면 이기대본점",
+   "distance_m": 2491,
+   "street_candidate": {
+    "lat": 35.1219202,
+    "lng": 129.1130803
+   }
+  },
+  {
+   "city_spot_id": 360,
+   "ko": "토북베이커리",
+   "distance_m": 12255,
+   "street_candidate": {
+    "lat": 35.1205266,
+    "lng": 128.892834
+   }
+  },
+  {
+   "city_spot_id": 142,
+   "ko": "방코",
+   "distance_m": 13008,
+   "street_candidate": {
+    "lat": 35.1154044,
+    "lng": 128.921968
+   }
+  },
+  {
+   "city_spot_id": 100,
+   "ko": "만호갈미샤브샤브",
+   "distance_m": 13778,
+   "street_candidate": {
+    "lat": 35.0889027,
+    "lng": 128.8755569
+   }
+  },
+  {
+   "city_spot_id": 370,
+   "ko": "곰보식당",
+   "distance_m": 1862,
+   "street_candidate": {
+    "lat": 35.1743678,
+    "lng": 128.9766619
+   }
+  },
+  {
+   "city_spot_id": 299,
+   "ko": "하동재첩국",
+   "distance_m": 3671,
+   "street_candidate": {
+    "lat": 35.1934225,
+    "lng": 128.9849851
+   }
+  },
+  {
+   "city_spot_id": 401,
+   "ko": "1969부원동칼국수 남포본점",
+   "distance_m": 2119,
+   "street_candidate": {
+    "lat": 35.0981228,
+    "lng": 129.0333855
+   }
+  }
+ ],
+ "hold_not_found": [
+  {
+   "city_spot_id": 287,
+   "ko": "톤쇼우",
+   "address": "부산 금정구 금강로 247-10"
+  },
+  {
+   "city_spot_id": 1129,
+   "ko": "스시시안",
+   "address": "부산 해운대구 센텀1로 9 E동상가, 2층"
+  },
+  {
+   "city_spot_id": 144,
+   "ko": "탐복 본점",
+   "address": "부산 기장군 일광읍 문오성길 31"
+  },
+  {
+   "city_spot_id": 241,
+   "ko": "칠암사계",
+   "address": "부산 기장군 일광읍 칠암1길 7-10"
+  },
+  {
+   "city_spot_id": 139,
+   "ko": "백산키친",
+   "address": "부산 동구 조방로 14, 2층"
+  },
+  {
+   "city_spot_id": 249,
+   "ko": "제주복국",
+   "address": "부산 영도구 절영로 481"
+  },
+  {
+   "city_spot_id": 364,
+   "ko": "태화반점",
+   "address": "부산 남구 분포로 115"
+  },
+  {
+   "city_spot_id": 313,
+   "ko": "합천국밥집",
+   "address": "부산 남구 용호로 235"
+  },
+  {
+   "city_spot_id": 123,
+   "ko": "대티물꽁",
+   "address": "부산 사하구 낙동대로135번안길 15"
+  },
+  {
+   "city_spot_id": 166,
+   "ko": "편의방",
+   "address": "부산 중구 해관로 64-1, 1층"
+  },
+  {
+   "city_spot_id": 125,
+   "ko": "할매복국",
+   "address": "부산 중구 대영로 225-1"
+  }
+ ],
+ "confirmed_current_correct": [
+  {
+   "city_spot_id": 1128,
+   "ko": "소문난주문진막국수",
+   "distance_m": 56
+  },
+  {
+   "city_spot_id": 418,
+   "ko": "으뜸이로리바타",
+   "distance_m": 123
+  },
+  {
+   "city_spot_id": 202,
+   "ko": "고민끝에여기",
+   "distance_m": 8
+  },
+  {
+   "city_spot_id": 408,
+   "ko": "델리봉",
+   "distance_m": 71
+  },
+  {
+   "city_spot_id": 1150,
+   "ko": "할매재첩국",
+   "distance_m": 127
+  },
+  {
+   "city_spot_id": 403,
+   "ko": "동삼정",
+   "distance_m": 29
+  }
+ ],
+ "igidae_hold": {
+  "city_spot_id": 7,
+  "verdict": "AMBIGUOUS",
+  "note": "4.7 km trail; no official point coordinate — unchanged"
+ },
+ "D_entry_fee": [
+  {
+   "city_spot_id": 2,
+   "name": "Gamcheon Culture Village",
+   "field": "entry_fee",
+   "before": "₩2,000",
+   "after": "Free",
+   "provenance": "Visit Busan uc_seq=365 이용요금 '무료(주차요금 별도)'; ₩2,000 = 스탬프(골목투어) 지도 가격"
+  }
+ ],
+ "qa_isolated_dataset_policy": "QA benchmark input only: EXACT_VERIFIED + STREET_ONLY use the address candidate; NOT_FOUND/AMBIGUOUS excluded from candidates; never written to Production",
+ "rows": [
+  {
+   "city_spot_id": 287,
+   "canonical_id": "busan-G-00004",
+   "name": "Tonshou",
+   "ko": "톤쇼우",
+   "address": "부산 금정구 금강로 247-10",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2304469,
+    "lng": 129.0842701
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 357,
+   "canonical_id": "busan-G-00007",
+   "name": "Momos Coffee",
+   "ko": "모모스커피 본점",
+   "address": "부산 금정구 오시게로 20",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2486,
+    "lng": 129.0854
+   },
+   "candidate": {
+    "lat": 35.2206252,
+    "lng": 129.0870322
+   },
+   "distance_m": 3114,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1127,
+   "canonical_id": "busan-G-00009",
+   "name": "Briand French Pastry",
+   "ko": "프랑스 과자점 브리앙",
+   "address": "부산 동래구 온천장로119번길 26, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2031,
+    "lng": 129.0911
+   },
+   "candidate": {
+    "lat": 35.2217587,
+    "lng": 129.0835634
+   },
+   "distance_m": 2185,
+   "verdict": "EXACT_VERIFIED",
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "same building as 봉식당 (stored address identical, 1층) — address-level exact, business identity inferred",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 136,
+   "canonical_id": "busan-G-00010",
+   "name": "Bong Restaurant",
+   "ko": "봉식당",
+   "address": "부산 동래구 온천장로119번길 26",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2036,
+    "lng": 129.074
+   },
+   "candidate": {
+    "lat": 35.2217587,
+    "lng": 129.0835634
+   },
+   "distance_m": 2198,
+   "verdict": "EXACT_VERIFIED",
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "OSM POI '봉식당' at the stored address (business identity + address)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 318,
+   "canonical_id": "busan-G-00011",
+   "name": "Mimiru",
+   "ko": "미미루",
+   "address": "부산 동래구 온천장로 91-1",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1881,
+    "lng": 129.0817
+   },
+   "candidate": {
+    "lat": 35.2201262,
+    "lng": 129.0841507
+   },
+   "distance_m": 3568,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 298,
+   "canonical_id": "busan-G-00013",
+   "name": "Wonjoggoricheumjip",
+   "ko": "원조꼬리곰집",
+   "address": "부산 동래구 온천장로 52",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.193,
+    "lng": 129.0852
+   },
+   "candidate": {
+    "lat": 35.2201262,
+    "lng": 129.0841507
+   },
+   "distance_m": 3018,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1128,
+   "canonical_id": "busan-G-00020",
+   "name": "Somuran Jumunjin Makguksu",
+   "ko": "소문난주문진막국수",
+   "address": "부산 동래구 사직로58번길 8",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1959875,
+    "lng": 129.0596333
+   },
+   "candidate": {
+    "lat": 35.1963803,
+    "lng": 129.0592539
+   },
+   "distance_m": 56,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 106,
+   "canonical_id": "busan-G-00021",
+   "name": "Gukje Milmyeon",
+   "ko": "국제밀면 본점",
+   "address": "부산 연제구 중앙대로1235번길 23-6",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1708,
+    "lng": 129.0718
+   },
+   "candidate": {
+    "lat": 35.1972883,
+    "lng": 129.0783596
+   },
+   "distance_m": 3005,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 379,
+   "canonical_id": "busan-G-00024",
+   "name": "Mackerel Dachi Yeonsan",
+   "ko": "고등어다찌 연산본점",
+   "address": "부산 연제구 고분로31번길 42",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1683,
+    "lng": 129.084
+   },
+   "candidate": {
+    "lat": 35.186794,
+    "lng": 129.0859143
+   },
+   "distance_m": 2064,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 152,
+   "canonical_id": "busan-G-00025",
+   "name": "Dessert Cinema",
+   "ko": "디저트시네마",
+   "address": "부산 연제구 쌍미천로 32-1",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1904,
+    "lng": 129.07
+   },
+   "candidate": {
+    "lat": 35.1835838,
+    "lng": 129.0871615
+   },
+   "distance_m": 1734,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1129,
+   "canonical_id": "busan-G-00027",
+   "name": "Sushi Sian",
+   "ko": "스시시안",
+   "address": "부산 해운대구 센텀1로 9 E동상가, 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1678379,
+    "lng": 129.1309612
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 395,
+   "canonical_id": "busan-G-00029",
+   "name": "Motnani Restaurant (Haeundae)",
+   "ko": "못난이식당 해운대점",
+   "address": "부산 해운대구 마린시티1로 91, 101동 201호",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1517,
+    "lng": 129.1523
+   },
+   "candidate": {
+    "lat": 35.1544489,
+    "lng": 129.1433887
+   },
+   "distance_m": 866,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 340,
+   "canonical_id": "busan-G-00030",
+   "name": "Harema",
+   "ko": "하레마",
+   "address": "부산 해운대구 마린시티2로 33, 지하 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1686,
+    "lng": 129.1698
+   },
+   "candidate": {
+    "lat": 35.1569143,
+    "lng": 129.1460571
+   },
+   "distance_m": 2519,
+   "verdict": "EXACT_VERIFIED",
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 334,
+   "canonical_id": "busan-G-00031",
+   "name": "Le Dore",
+   "ko": "르도헤",
+   "address": "부산 해운대구 마린시티3로 37, 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.166,
+    "lng": 129.1719
+   },
+   "candidate": {
+    "lat": 35.156649,
+    "lng": 129.1465509
+   },
+   "distance_m": 2528,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 272,
+   "canonical_id": "busan-G-00037",
+   "name": "Osteria Eoboo",
+   "ko": "오스테리아 어부",
+   "address": "부산 해운대구 해운대로570번길 23, 3층",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.151,
+    "lng": 129.1623
+   },
+   "candidate": {
+    "lat": 35.1603388,
+    "lng": 129.1573682
+   },
+   "distance_m": 1131,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 400,
+   "canonical_id": "busan-G-00042",
+   "name": "Kujira Men",
+   "ko": "쿠지라멘",
+   "address": "부산 해운대구 우동2로 17",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1528,
+    "lng": 129.173
+   },
+   "candidate": {
+    "lat": 35.1660394,
+    "lng": 129.1604305
+   },
+   "distance_m": 1864,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 418,
+   "canonical_id": "busan-G-00047",
+   "name": "Euddeum Irori-Bata",
+   "ko": "으뜸이로리바타",
+   "address": "부산 해운대구 구남로 21, 상가동 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1628575,
+    "lng": 129.1602053
+   },
+   "candidate": {
+    "lat": 35.1617849,
+    "lng": 129.160533
+   },
+   "distance_m": 123,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1133,
+   "canonical_id": "busan-G-00050",
+   "name": "Gumsu Bokkuk (Haeundae)",
+   "ko": "금수복국 해운대본점",
+   "address": "부산 해운대구 중동1로43번길 23",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1513,
+    "lng": 129.1624
+   },
+   "candidate": {
+    "lat": 35.162162,
+    "lng": 129.1642443
+   },
+   "distance_m": 1219,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 386,
+   "canonical_id": "busan-G-00053",
+   "name": "Small Space",
+   "ko": "소공간",
+   "address": "부산 해운대구 해운대해변로298번길 47, 4층",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1539,
+    "lng": 129.1739
+   },
+   "candidate": {
+    "lat": 35.1616748,
+    "lng": 129.1673516
+   },
+   "distance_m": 1050,
+   "verdict": "EXACT_VERIFIED",
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1167,
+   "canonical_id": "busan-G-00055",
+   "name": "Chao Ran",
+   "ko": "차오란",
+   "address": "부산 해운대구 달맞이길 30, 5층",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1544,
+    "lng": 129.1538
+   },
+   "candidate": {
+    "lat": 35.1598007,
+    "lng": 129.169609
+   },
+   "distance_m": 1558,
+   "verdict": "EXACT_VERIFIED",
+   "evidence_level": "ADDRESS_BUILDING_MATCH_OSM",
+   "note": "house-number building match on the stored road address — address-level exact",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 397,
+   "canonical_id": "busan-G-00058",
+   "name": "Sunchang Hoetjip",
+   "ko": "선창횟집",
+   "address": "부산 해운대구 달맞이길62번길 67",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1511,
+    "lng": 129.1524
+   },
+   "candidate": {
+    "lat": 35.1578569,
+    "lng": 129.1723282
+   },
+   "distance_m": 1961,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1135,
+   "canonical_id": "busan-G-00061",
+   "name": "Daltai",
+   "ko": "달타이",
+   "address": "부산 해운대구 달맞이길 193",
+   "intake_coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+   "db": {
+    "lat": 35.1571,
+    "lng": 129.1642
+   },
+   "candidate": {
+    "lat": 35.1584618,
+    "lng": 129.1747664
+   },
+   "distance_m": 972,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1136,
+   "canonical_id": "busan-G-00067",
+   "name": "Ubong Shabu Chungsa",
+   "ko": "우봉 샤브 청사포점",
+   "address": "부산 해운대구 청사포로 127",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1746,
+    "lng": 129.1705
+   },
+   "candidate": {
+    "lat": 35.1624392,
+    "lng": 129.1897128
+   },
+   "distance_m": 2209,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1138,
+   "canonical_id": "busan-G-00071",
+   "name": "Lab 24 by Kumuda",
+   "ko": "랩24 바이 쿠무다",
+   "address": "부산 해운대구 송정광어골로 41, 4층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.151,
+    "lng": 129.1741
+   },
+   "candidate": {
+    "lat": 35.1777498,
+    "lng": 129.1969861
+   },
+   "distance_m": 3630,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1139,
+   "canonical_id": "busan-G-00074",
+   "name": "Mujinjang Hoetjip (Gijang)",
+   "ko": "무진장횟집 기장점",
+   "address": "부산 기장군 기장읍 연화1길 137",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.236,
+    "lng": 129.2131
+   },
+   "candidate": {
+    "lat": 35.2159865,
+    "lng": 129.2250656
+   },
+   "distance_m": 2477,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1140,
+   "canonical_id": "busan-G-00075",
+   "name": "Daeseong Galchi Jjigae",
+   "ko": "대성갈치찌개구이",
+   "address": "부산 기장군 기장읍 대변2길 9",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2559,
+    "lng": 129.2249
+   },
+   "candidate": {
+    "lat": 35.223215,
+    "lng": 129.231041
+   },
+   "distance_m": 3677,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": "OSM matched a different amenity (9번횟집) on the same street — identity not confirmed",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 144,
+   "canonical_id": "busan-G-00078",
+   "name": "Tambok",
+   "ko": "탐복 본점",
+   "address": "부산 기장군 일광읍 문오성길 31",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2503,
+    "lng": 129.219
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 241,
+   "canonical_id": "busan-G-00079",
+   "name": "Chiram Sagye",
+   "ko": "칠암사계",
+   "address": "부산 기장군 일광읍 칠암1길 7-10",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2325,
+    "lng": 129.2225
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 393,
+   "canonical_id": "busan-G-00091",
+   "name": "Bao House",
+   "ko": "바오하우스",
+   "address": "부산 부산진구 서전로38번길 62-9",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1714,
+    "lng": 129.0449
+   },
+   "candidate": {
+    "lat": 35.153999,
+    "lng": 129.0634207
+   },
+   "distance_m": 2565,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 369,
+   "canonical_id": "busan-G-00092",
+   "name": "Cor Pasta Bar",
+   "ko": "코르 파스타 바",
+   "address": "부산 부산진구 동성로25번길 13, 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.151,
+    "lng": 129.0433
+   },
+   "candidate": {
+    "lat": 35.1527149,
+    "lng": 129.067289
+   },
+   "distance_m": 2189,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 396,
+   "canonical_id": "busan-G-00093",
+   "name": "Sonnae Hyangmi",
+   "ko": "손내향미",
+   "address": "부산 부산진구 동성로30번길 4",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1723,
+    "lng": 129.0613
+   },
+   "candidate": {
+    "lat": 35.1530873,
+    "lng": 129.0703169
+   },
+   "distance_m": 2288,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1141,
+   "canonical_id": "busan-G-00095",
+   "name": "Original Grandma Nakji",
+   "ko": "원조할매낙지",
+   "address": "부산 부산진구 골드테마길 10",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1563,
+    "lng": 129.041
+   },
+   "candidate": {
+    "lat": 35.1431201,
+    "lng": 129.0600424
+   },
+   "distance_m": 2268,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 148,
+   "canonical_id": "busan-G-00097",
+   "name": "Beomil Bindaetteok",
+   "ko": "범일빈대떡",
+   "address": "부산 동구 중앙대로 519",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1105,
+    "lng": 129.0548
+   },
+   "candidate": {
+    "lat": 35.1270518,
+    "lng": 129.0472231
+   },
+   "distance_m": 1965,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 139,
+   "canonical_id": "busan-G-00098",
+   "name": "Baeksan Kitchen",
+   "ko": "백산키친",
+   "address": "부산 동구 조방로 14, 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1248,
+    "lng": 129.0434
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 380,
+   "canonical_id": "busan-G-00111",
+   "name": "Jaegi Pork Soup",
+   "ko": "재기돼지국밥",
+   "address": "부산 영도구 절영로49번길 25",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.0923,
+    "lng": 129.0689
+   },
+   "candidate": {
+    "lat": 35.0898602,
+    "lng": 129.0390491
+   },
+   "distance_m": 2729,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 202,
+   "canonical_id": "busan-G-00116",
+   "name": "Gomin Kkute Yeogi",
+   "ko": "고민끝에여기",
+   "address": "부산 영도구 중리북로29번길 12",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.0717901,
+    "lng": 129.0671374
+   },
+   "candidate": {
+    "lat": 35.0717145,
+    "lng": 129.0671365
+   },
+   "distance_m": 8,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 249,
+   "canonical_id": "busan-G-00117",
+   "name": "Jeju Bokkuk",
+   "ko": "제주복국",
+   "address": "부산 영도구 절영로 481",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1022,
+    "lng": 129.059
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 417,
+   "canonical_id": "busan-G-00121",
+   "name": "Uri Pocha",
+   "ko": "우리포차 본점",
+   "address": "부산 수영구 광일로29번길 9, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1377,
+    "lng": 129.1012
+   },
+   "candidate": {
+    "lat": 35.1608147,
+    "lng": 129.1104193
+   },
+   "distance_m": 2703,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 378,
+   "canonical_id": "busan-G-00125",
+   "name": "Outro by Beato",
+   "ko": "아웃트로 바이 비토",
+   "address": "부산 수영구 민락본동로19번길 18, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.157,
+    "lng": 129.1016
+   },
+   "candidate": {
+    "lat": 35.1580409,
+    "lng": 129.1270324
+   },
+   "distance_m": 2315,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 420,
+   "canonical_id": "busan-G-00126",
+   "name": "Joyful Joyful",
+   "ko": "조이풀조이풀",
+   "address": "부산 수영구 민락본동로11번길 21, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.136,
+    "lng": 129.1181
+   },
+   "candidate": {
+    "lat": 35.1575643,
+    "lng": 129.1270093
+   },
+   "distance_m": 2531,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 408,
+   "canonical_id": "busan-G-00132",
+   "name": "Delibong",
+   "ko": "델리봉",
+   "address": "부산 수영구 민락로27번길 4, 3층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1575824,
+    "lng": 129.1215357
+   },
+   "candidate": {
+    "lat": 35.1569904,
+    "lng": 129.121232
+   },
+   "distance_m": 71,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 364,
+   "canonical_id": "busan-G-00154",
+   "name": "Taehwa Chinese",
+   "ko": "태화반점",
+   "address": "부산 남구 분포로 115",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1403,
+    "lng": 129.0825
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1147,
+   "canonical_id": "busan-G-00155",
+   "name": "Busan Yakong Milmyeon (Igidae)",
+   "ko": "부산약콩밀면 이기대본점",
+   "address": "부산 남구 동명로145번길 80, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1253,
+    "lng": 129.086
+   },
+   "candidate": {
+    "lat": 35.1219202,
+    "lng": 129.1130803
+   },
+   "distance_m": 2491,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 313,
+   "canonical_id": "busan-G-00156",
+   "name": "Hapcheon Gukbap House",
+   "ko": "합천국밥집",
+   "address": "부산 남구 용호로 235",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1475,
+    "lng": 129.1031
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 360,
+   "canonical_id": "busan-G-00161",
+   "name": "Tobuk Bakery",
+   "ko": "토북베이커리",
+   "address": "부산 강서구 낙동남로 526-1",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.229,
+    "lng": 128.869
+   },
+   "candidate": {
+    "lat": 35.1205266,
+    "lng": 128.892834
+   },
+   "distance_m": 12255,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 142,
+   "canonical_id": "busan-G-00162",
+   "name": "Banco",
+   "ko": "방코",
+   "address": "부산 강서구 새진목길 51",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2212,
+    "lng": 128.8609
+   },
+   "candidate": {
+    "lat": 35.1154044,
+    "lng": 128.921968
+   },
+   "distance_m": 13008,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 100,
+   "canonical_id": "busan-G-00163",
+   "name": "Manho Galmi Shabu",
+   "ko": "만호갈미샤브샤브",
+   "address": "부산 강서구 르노삼성대로 602, 2층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.2128,
+    "lng": 128.8779
+   },
+   "candidate": {
+    "lat": 35.0889027,
+    "lng": 128.8755569
+   },
+   "distance_m": 13778,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 370,
+   "canonical_id": "busan-G-00166",
+   "name": "Gombo Restaurant",
+   "ko": "곰보식당",
+   "address": "부산 사상구 낙동대로 1564",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1589,
+    "lng": 128.9845
+   },
+   "candidate": {
+    "lat": 35.1743678,
+    "lng": 128.9766619
+   },
+   "distance_m": 1862,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 299,
+   "canonical_id": "busan-G-00167",
+   "name": "Hadong Jaecheop",
+   "ko": "하동재첩국",
+   "address": "부산 사상구 낙동대로1518번길 33",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1636,
+    "lng": 129.0023
+   },
+   "candidate": {
+    "lat": 35.1934225,
+    "lng": 128.9849851
+   },
+   "distance_m": 3671,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 1150,
+   "canonical_id": "busan-G-00168",
+   "name": "Grandma Jaecheop",
+   "ko": "할매재첩국",
+   "address": "부산 사상구 낙동대로1530번길 20-15",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1932711,
+    "lng": 128.9861994
+   },
+   "candidate": {
+    "lat": 35.1941977,
+    "lng": 128.9853898
+   },
+   "distance_m": 127,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 123,
+   "canonical_id": "busan-G-00172",
+   "name": "Daeti Mulkong",
+   "ko": "대티물꽁",
+   "address": "부산 사하구 낙동대로135번안길 15",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1019,
+    "lng": 128.9728
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 403,
+   "canonical_id": "busan-G-00182",
+   "name": "Dongsamjeong",
+   "ko": "동삼정",
+   "address": "부산 중구 흑교로46번길 3-1",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1036533,
+    "lng": 129.025437
+   },
+   "candidate": {
+    "lat": 35.1035748,
+    "lng": 129.0257437
+   },
+   "distance_m": 29,
+   "verdict": "CONFIRMED_CURRENT_CORRECT",
+   "evidence_level": "ADDRESS_CONSISTENT_WITHIN_300M",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 401,
+   "canonical_id": "busan-G-00190",
+   "name": "1969 Buwondong Kalguksu (Nampo)",
+   "ko": "1969부원동칼국수 남포본점",
+   "address": "부산 중구 구덕로22번길 3, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1142,
+    "lng": 129.0459
+   },
+   "candidate": {
+    "lat": 35.0981228,
+    "lng": 129.0333855
+   },
+   "distance_m": 2119,
+   "verdict": "STREET_ONLY",
+   "evidence_level": "STREET_CENTROID_OSM",
+   "note": null,
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 166,
+   "canonical_id": "busan-G-00192",
+   "name": "Pyeonuibang",
+   "ko": "편의방",
+   "address": "부산 중구 해관로 64-1, 1층",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1046177,
+    "lng": 129.0357095
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  },
+  {
+   "city_spot_id": 125,
+   "canonical_id": "busan-G-00194",
+   "name": "Grandmother Bokkuk",
+   "ko": "할매복국",
+   "address": "부산 중구 대영로 225-1",
+   "intake_coord_status": "ADDRESS_COORD_CONFLICT",
+   "db": {
+    "lat": 35.1123066,
+    "lng": 129.035411
+   },
+   "candidate": null,
+   "distance_m": null,
+   "verdict": "NOT_FOUND",
+   "evidence_level": null,
+   "note": "address not geocodable (OSM); Naver Local Search unavailable (401)",
+   "source": "OSM Nominatim address geocode 2026-08-30"
+  }
+ ]
+}

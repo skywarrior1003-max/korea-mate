@@ -1,7 +1,7 @@
 {
   "$schema_note": "GoKoreaMate Scheduler V2 decision ledger. status ∈ OWNER_DECISION | PLANNED | PROPOSAL | EXTERNAL_INSPIRATION | UNKNOWN_OR_REVERIFY. implementation_state ∈ CURRENT_IMPLEMENTATION | PARTIAL | PLANNED | NONE. Companion of gokoreamate-scheduler-v2-direction-ssot.md (same D-ids).",
-  "last_updated": "2026-08-30",
-  "base_commit": "02d202a + P0 route-quality commit (see git log)",
+  "last_updated": "2026-08-31",
+  "base_commit": "aa86758 (P0) + P1 neighborhood/route-quality commit (see git log)",
   "branch": "feature/my-trip-planning-final-v1",
   "entries": [
     {
@@ -81,7 +81,7 @@
       "decision": "Coordinate confidence (source/confidence/verified_at/address match/schedule_eligible) gates auto-scheduling: HIGH auto, MEDIUM limited, LOW excluded. Bad future data must fail the gate.",
       "implementation_state": "PARTIAL",
       "priority": "P1",
-      "evidence_note": "P0 minimum gate (2026-08-30): isSchedulableCoordinate (finite, non-zero, Korea bounds 33.0–38.7/124.5–132.0) applied to scheduler candidates (plan.ts) and This Trip hints (server + page; filtered items surface via skippedCartNames, never silently dropped). No confidence fields yet; in-bounds errors (sea rows) still need data correction — 9 Busan rows CONFIRMED_WRONG with corrections prepared (owner-approved-corrections-v2-p0-busan.json), id 7 Igidae AMBIGUOUS/HOLD.",
+      "evidence_note": "P0 minimum gate (2026-08-30): isSchedulableCoordinate (finite, non-zero, Korea bounds 33.0–38.7/124.5–132.0) applied to scheduler candidates (plan.ts) and This Trip hints (server + page; filtered items surface via skippedCartNames, never silently dropped). No confidence fields yet; in-bounds errors (sea rows) still need data correction — 9 Busan rows CONFIRMED_WRONG with corrections prepared (owner-approved-corrections-v2-p0-busan.json), id 7 Igidae AMBIGUOUS/HOLD. P1 (2026-08-31, D-30): 55 Busan targets re-verified from stored addresses (Naver Local Search 401 -> OSM address-level): 5 EXACT_VERIFIED correction candidates (136, 1127, 340, 386, 1167), 6 CONFIRMED_CURRENT_CORRECT, 33 STREET_ONLY HOLD, 11 NOT_FOUND HOLD (owner-approved-corrections-v3-p1-busan.json). Still no confidence fields.",
       "do_not_assume": "That code may overwrite authoritative coordinates; that any confidence field exists in city_spots."
     },
     {
@@ -111,8 +111,8 @@
       "decision": "Hierarchical neighborhood → Day → in-Day order to reduce backtracking. Busan neighborhood examples are illustrative, not a permanent hard-coded list.",
       "implementation_state": "PARTIAL",
       "priority": "P1",
-      "evidence_note": "Distance zones 3 km/7 km around day start (zone-classifier.ts, ZoneTracker); no named neighborhoods.",
-      "do_not_assume": "That 'zone' in v1 code means neighborhood."
+      "evidence_note": "P1 (2026-08-31): coordinate-derived leader clusters (route-quality.ts buildClusters, 1 km radius, adjacent <= 2 km; city-agnostic, guard test forbids city names in code). Cluster-focused Day supply (candidate-supply.ts focusSupply, limit 60) + in-Day same/adjacent affinity, re-entry and day-focus penalties (engine.ts CLUSTER_WEIGHTS_DEFAULT/STRICT). Distance zones 3 km/7 km remain underneath. Named neighborhoods not modeled by design.",
+      "do_not_assume": "That 'zone' in v1 code means neighborhood; that clusters are a fixed per-city list."
     },
     {
       "id": "D-12",
@@ -131,8 +131,8 @@
       "decision": "Audit each generated Day (distances, total movement, jumps, re-entry, backtracking, stay relation, fixed-caused round trips, coordinate confidence) before returning.",
       "implementation_state": "PARTIAL",
       "priority": "P1",
-      "evidence_note": "P0 (2026-08-30): stronger consecutive-distance penalty (0/30/70/110/150) + egress-to-next-pin penalty (half weight) in greedy scoring, and P3.5 flexible-segment reorder between pins (segment-reorder.ts; fixed/picks/meals pinned; HC-6/HC-8 re-checked). Audit tooling exists only as QA scratch (route-audit.mjs), not a product-side post-generation audit. 10-day Busan (Haeundae stay) before to after: total travel 884 to 817 min, 61.6 to 49.9 km, backtracks 8 to 5; meal-pinned >=20% residual only Day 6 (21.2%). Area re-entries (Haeundae <-> Cheongsapo/Centum) remain on Days 6-10 without fixed justification.",
-      "do_not_assume": "That the 10-day itinerary route quality has been verified."
+      "evidence_note": "P0 (2026-08-30): stronger consecutive-distance penalty (0/30/70/110/150) + egress-to-next-pin penalty (half weight) in greedy scoring, and P3.5 flexible-segment reorder between pins (segment-reorder.ts; fixed/picks/meals pinned; HC-6/HC-8 re-checked). Audit tooling exists only as QA scratch (route-audit.mjs), not a product-side post-generation audit. 10-day Busan (Haeundae stay) before to after: total travel 884 to 817 min, 61.6 to 49.9 km, backtracks 8 to 5; meal-pinned >=20% residual only Day 6 (21.2%). Area re-entries (Haeundae <-> Cheongsapo/Centum) remain on Days 6-10 without fixed justification. P1 (2026-08-31): product-side P3.6 auditDayRoute (reversal cos < -0.5 with legs >= 800 m; cluster re-entry; JUSTIFIED when a pinned stop is involved) + route quality gate with at most one STRICT repair pass (runScheduler). 10-day Busan, isolated corrected dataset, same P1 detector both sides: unjustified 19 to 8, re-entries 10 to 4, 51,194 to 44,438 m, 812 to 763 min, REVIEW days 5 to 4; >=20% better-order days 0 to 0; fixed violations 0.",
+      "do_not_assume": "That the 10-day itinerary route quality is PASS (unjustified re-entries remain on Days 6/7/9/10)."
     },
     {
       "id": "D-14",
@@ -159,10 +159,10 @@
       "topic": "Schedule Confidence Gate",
       "status": "OWNER_DECISION",
       "decision": "Internal trip quality score (coordinate, temporal, route, backtracking, fixed feasibility, freshness); below threshold → recompute/substitute/unplaced/ask. 'Generated' ≠ 'showable'.",
-      "implementation_state": "PLANNED",
+      "implementation_state": "PARTIAL",
       "priority": "P1",
-      "evidence_note": "None.",
-      "do_not_assume": "That any confidence value is produced."
+      "evidence_note": "P1 minimal (2026-08-31): computeScheduleConfidence per Day (coordinate, hard-constraint, route, backtracking -> 0-100, GOOD/REVIEW/FAIL + reasons) in ScheduledDay.quality; internal only, logged in [plan-timing], never rendered (guard test). Only action today is the single repair pass; substitute/unplaced/ask flows not implemented; temporal feasibility and freshness not scored.",
+      "do_not_assume": "That confidence is shown to users or that REVIEW triggers substitution/asking."
     },
     {
       "id": "D-17",
@@ -258,10 +258,10 @@
       "id": "D-26",
       "topic": "10-day Busan itinerary route quality",
       "status": "UNKNOWN_OR_REVERIFY",
-      "decision": "Audited 2026-08-30 (Owner conditions + Haeundae stay): route quality was a scheduler problem (fixed 0). Minimal fixes applied; residual zigzag remains — SCHEDULER_ROUTE_QUALITY_PASS=NO until V2 P1 neighborhood clustering / meal-aware candidate selection.",
+      "decision": "Audited 2026-08-30 (Owner conditions + Haeundae stay): route quality was a scheduler problem (fixed 0). P0 minimal fixes then P1 neighborhood clustering / meal-aware selection / route gate applied (2026-08-31); residual unjustified re-entries remain on Days 6/7/9/10 - SCHEDULER_ROUTE_QUALITY_PASS=NO.",
       "implementation_state": "PARTIAL",
       "priority": "P0",
-      "evidence_note": "scratchpad/route-quality-audit-before2-stay.json / after2-stay.json (Day 1-10 table). Root cause: near-me candidates supplied by score with concentric distance rings; restaurants pinned at meal windows are chosen far apart; penalties were smaller than score gaps.",
+      "evidence_note": "P0: scratchpad/route-quality-audit-before2-stay.json / after2-stay.json. P1 (isolated corrected dataset, P1 detector for BEFORE and AFTER): p1-route-quality-audit-before.json 51,194 m / 812 min / unjustified 19 / re-entry 10 / REVIEW 5 -> p1-route-quality-audit-after.json 44,438 m / 763 min / unjustified 8 / re-entry 4 / REVIEW 4; stops 78 -> 78; offline generation 52 ms. Remaining causes: sparse restaurant supply near some clusters at meal windows and long-day coverage across coastal clusters.",
       "do_not_assume": "That route quality is now PASS; that the audit is a product feature."
     },
     {
@@ -271,7 +271,7 @@
       "decision": "9 restaurant rows CONFIRMED_WRONG (each row's own address geocodes 0.6-3.9 km away on land; DB points in the sea). Corrections prepared as guarded SQL (OWNER-RUN-P0-busan-corrections.sql) + corrections JSON; Production write is an Owner action. Igidae id 7 AMBIGUOUS — HOLD.",
       "implementation_state": "PLANNED",
       "priority": "P0",
-      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim).",
+      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim). P1 v3 (2026-08-31, D-30): of the 9 sea rows only 386 and 1167 reached EXACT (building/POI); 272, 395, 397, 400, 1133, 1135, 1138 stay STREET_ONLY/NOT_FOUND HOLD. Guarded SQL for the 5 exact rows + Gamcheon entry_fee: OWNER-RUN-P1-busan-corrections-v2.sql (value-predicated; Production write pending Owner).",
       "do_not_assume": "That Production rows are corrected until the Owner runs the SQL."
     },
     {
@@ -293,6 +293,16 @@
       "priority": "P3",
       "evidence_note": "grep -i kma|기상청|forecast|weather across src/functions/scripts and git log --all; deleted-file history 0.",
       "do_not_assume": "That a real weather integration ever existed in this repo."
+    },
+    {
+      "id": "D-30",
+      "topic": "P1 coordinate re-verification method and scope",
+      "status": "OWNER_DECISION",
+      "decision": "(1) P0 SQL not pre-applied - order: exact verification -> correction artifact -> isolated QA dataset (no runtime override) -> benchmark -> Owner evidence -> Production correction. (2) Naver Local Search one-time QA allowed under secret-handling conditions; if invalid, no other API guessed. (3) Scope 9 sea rows + 48 ADDRESS_COORD_CONFLICT; classes EXACT_VERIFIED / CONFIRMED_CURRENT_CORRECT / CONFIRMED_WRONG / STREET_ONLY / AMBIGUOUS / NOT_FOUND; only CONFIRMED_WRONG + EXACT_VERIFIED are correction candidates; name-similarity auto-correction forbidden. (4) P1 backtracking detector defined first; BEFORE/AFTER measured with the same detector.",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
+      "priority": "P1",
+      "evidence_note": "Naver Local Search probe (1 item) returned HTTP 401 NID AUTH Result Invalid (1000) - stopped, not bypassed. Verification via OSM Nominatim address-level geocode of each row's own address (1 req/s). Artifact: data/main-intake/five-city-core-v3/corrections/owner-approved-corrections-v3-p1-busan.json (55 rows; 5 exact / 6 current-correct / 33 street-only / 11 not-found). NEEDS_VERIFICATION 73 and GUIDE_COORD_ONLY 66 remain backlog.",
+      "do_not_assume": "That the Naver credentials are valid; that STREET_ONLY rows are corrected; that Production was written."
     }
   ]
 }

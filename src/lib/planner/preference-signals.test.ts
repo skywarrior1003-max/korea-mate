@@ -123,7 +123,8 @@ test("★RC1·RC3 큰 이동이 필요하면 최대 취향도 이기지 못한�
 test("★RC2·RC5 zone 보너스가 bias 와 함께 적용되고 순서가 유지된다", () => {
   const engine = read("src", "lib", "scheduler", "engine.ts");
   // zoneBonus·거리 페널티·profileBias 가 같은 식에서 합산된다
-  assert.match(engine, /c\.score \+ zoneBonus - consecutiveDistancePenalty\(travelMin\)[\s\S]{0,120}profileBias/);
+  // P1: 권역 affinity(clusterAdj)·이탈 페널티가 같은 식에 추가됐다 — zoneBonus·거리 페널티·profileBias 합산은 그대로
+  assert.match(engine, /c\.score \+ zoneBonus \+ clusterAdj - consecutiveDistancePenalty\(travelMin\)[\s\S]{0,200}profileBias/);
 });
 
 test("★RC3·RC6 AI 보정은 hard constraint 를 통과한 뒤에만 얹힌다", () => {
@@ -207,7 +208,9 @@ test("★후보 다양화가 실제 두 경로에 모두 배선돼 있다", () =
   assert.match(read("src", "lib", "near-me", "near-me-engine.ts"), /diversifyByCategory\(scored, limit\)/);
   // 넘기는 배열의 변수명은 고정하지 않는다 — 제외를 먼저 적용하면서 이름이 usable 로 바뀌었다.
   // 이 guard 가 지키는 것은 "다양화가 input.limit 으로 실제 배선돼 있는가" 이고 그것은 그대로다.
-  assert.match(read("functions", "api", "trip", "plan.ts"), /diversifyByCategory\(\w+ as any, input\.limit\)/);
+  // P1: 공급 단계는 candidate-supply.ts 로 옮겨졌다(plan.ts 는 buildNearMeCandidates 를 부른다); 다양화는 여전히 input.limit 으로 배선
+  assert.match(read("src", "lib", "near-me", "candidate-supply.ts"), /diversifyByCategory\(usable as never, input\.limit\)/);
+  assert.match(read("functions", "api", "trip", "plan.ts"), /buildNearMeCandidates\(rawRows as any, \{/);
 });
 
 // ── Copy (§18) ───────────────────────────────────────────────────────────────

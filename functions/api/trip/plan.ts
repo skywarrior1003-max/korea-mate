@@ -18,13 +18,11 @@ import { createClient } from "@supabase/supabase-js";
 import { adaptToSchedulerCandidates } from "../../../src/lib/trip-plan/near-me-adapter";
 import { runScheduler } from "../../../src/lib/scheduler/engine";
 import { haversineDistance } from "../../../src/lib/scheduler/utils";
-import { boundingBoxDelta, assignZoneId, rowsToZonedPlaces, expandZones } from "../../../src/lib/near-me/zone-classifier";
+import { boundingBoxDelta, assignZoneId } from "../../../src/lib/near-me/zone-classifier";
+import { buildNearMeCandidates } from "../../../src/lib/near-me/candidate-supply";
 import { isSchedulableCoordinate } from "../../../src/lib/geo";
-import { computeTotalScore, buildLikedCategorySet } from "../../../src/lib/near-me/scorer";
 import type { TripPaceChoice } from "../../../src/lib/trip-pace/pace-core";
-import { diversifyByCategory } from "../../../src/lib/near-me/candidate-diversity";
 import { mergePreferenceIds } from "../../../src/lib/planner/saved-signals";
-import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
 import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../../../src/lib/near-me/types";
 import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
@@ -84,7 +82,9 @@ interface PlaceDisplay {
 const VALID_PACES   = ["relaxed", "normal", "packed"] as const;
 const HHMM_RE       = /^\d{2}:\d{2}$/;
 const DATE_RE       = /^\d{4}-\d{2}-\d{2}$/;
-const DEFAULT_LIMIT = 30;
+// P1(2026-08-30): 권역 집중 공급(candidate-supply.focusSupply)과 함께 60 으로 — 30 은 주 권역 안의 식당·볼거리를 다 담지 못해
+// 식사 창마다 먼 식당으로 되돌아갔다. 실측(부산 10일·해운대 숙소): 30→60 에서 총 이동 790→763분, unjustified backtrack 11→8, 재진입 7→4.
+const DEFAULT_LIMIT = 60;
 const MAX_RADIUS_KM = 7;
 
 const isHHMM    = (s: unknown): s is string => typeof s === "string" && HHMM_RE.test(s);
@@ -198,77 +198,20 @@ async function runNearMeDirect(
     }
   }
 
-  const excluded = new Set((input.exclude_place_ids ?? []).map(String));
-
-  // rowsToZonedPlaces uses haversineDistance internally (imported from utils.ts)
-  const zonedPlaces = rowsToZonedPlaces(rawRows as any, input.coordinate as any);
-
-  // "가까운 데 다섯 곳" 이 아니라 "오늘 고를 수 있는 후보가 이만큼" 을 기준으로 넓힌다.
-  // 어제 간 곳은 zone 안에 그대로 남아 있어서, 개수만 세면 공항·외곽처럼 가까운
-  // 장소가 몇 개뿐인 곳에서 3km·7km 후보가 스케줄러에 아예 도달하지 못했다.
-  let { candidates } = expandZones(zonedPlaces, {
-    targetSupply: input.limit,
-    isUsable:     (p) => !excluded.has(String(p.place_id)),
+  // 순수 후보 공급(zone → expand → score → exclude → diversify)은 candidate-supply.ts 로 옮겼다 — 오프라인 벤치마크가
+  // 격리 dataset 으로 같은 공급을 돌리기 위해서다. 동작은 그대로다.
+  const { results, nearMeCount } = buildNearMeCandidates(rawRows as any, {
+    coordinate:        input.coordinate,
+    timestamp:         input.timestamp,
+    categories:        allCategories as any,
+    liked_place_ids:   input.liked_place_ids,
+    itinerary_coords:  input.itinerary_coords,
+    event_coords:      input.event_coords,
+    limit:             input.limit,
+    exclude_place_ids: input.exclude_place_ids,
+    trip_pace:         input.trip_pace,
   });
-
-  // Mock fallback when no live candidates (mirrors near-me-engine.ts L32-52)
-  if (candidates.length === 0) {
-    const catSet = new Set<string>(allCategories as string[]);
-    candidates = (MOCK_NEAR_ME_PLACES as any[])
-      .filter((p: any) => {
-        const mapped = CATEGORY_MAP[p.category as string];
-        return mapped !== undefined && catSet.has(mapped as string);
-      })
-      .filter((p: any) => p.lat !== null && p.lng !== null)
-      .map((p: any) => ({
-        place_id:   p.place_id,
-        category:   (CATEGORY_MAP[p.category as string] ?? "attraction") as any,
-        coordinate: { lat: p.lat as number, lng: p.lng as number },
-        zone_id:    3 as const,
-        distance_m: 5_000,
-      }));
-  }
-
-  const likedCategories = buildLikedCategorySet(
-    input.liked_place_ids ?? [],
-    candidates as any,
-  );
-
-  const scored = candidates.map((c: any) => ({
-    place_id:   c.place_id,
-    category:   c.category,
-    coordinate: c.coordinate,
-    zone_id:    c.zone_id,
-    distance_m: c.distance_m,
-    score:      computeTotalScore(c as any, {
-      coordinate:       input.coordinate as any,
-      timestamp:        input.timestamp,
-      categories:       allCategories as any,
-      liked_place_ids:  input.liked_place_ids,
-      itinerary_coords: input.itinerary_coords as any,
-      event_coords:     input.event_coords as any,
-      // 여행 속도 — `active` 만 걷는 후보에 가산점을 만든다.
-      pace:             input.trip_pace,
-    }, likedCategories),
-  }));
-
-  // 이미 다녀온 곳을 **먼저** 뺀다.
-  //
-  // 전에는 자르고 나서 뺐다. 그러면 잘라낸 30 개가 전부 어제 간 곳일 때 오늘
-  // 후보가 0 이 된다 — 반경 안에 아직 안 가 본 곳이 수백 개 남아 있는데도.
-  // 3 일차·4 일차가 12 시간 창에 한 곳만 배치되던 이유가 이것이다.
-  //
-  // 자르는 것은 "고를 수 있는 후보" 에 적용해야 한다. 고를 수 없는 것을 세어
-  // 놓고 자리를 차지하게 두지 않는다.
-  const usable = excluded.size > 0
-    ? scored.filter((c: any) => !excluded.has(String(c.place_id)))
-    : scored;
-
-  // 후보 수가 많은 카테고리가 자동으로 이기지 않게 자른다 (candidate-diversity.ts).
-  // 실측: 부산 restaurant 327 vs attraction 48 → 기존 방식은 top30 의 80~93% 가 식당이었다.
-  const results = diversifyByCategory(usable as any, input.limit);
-
-  return { results, nearMeCount: results.length };
+  return { results, nearMeCount };
 }
 
 // ── Place display map ─────────────────────────────────────────────────────────
@@ -565,7 +508,8 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
 
   const _tm3 = Date.now();
   const place_map     = await buildPlaceMap(placeIds, ctx.env); _tm.placeMap = Date.now() - _tm3; _tm.total = Date.now() - _tm0;
-  console.log(`[plan-timing] ${JSON.stringify({ ..._tm, fetch: _tm_candidates, candidates: nearMeCount, placed: placeIds.length })}`);
+  const _q = (schedulerResult.data as any).quality;
+  console.log(`[plan-timing] ${JSON.stringify({ ..._tm, fetch: _tm_candidates, candidates: nearMeCount, placed: placeIds.length, quality: _q ? { status: _q.status, confidence: _q.scheduleConfidence, reentry: _q.clusterReentries, unjustified: _q.unjustifiedBacktracks, repaired: _q.repaired } : null })}`);
   const affiliate_map = buildAffiliateMap(affiliateRows, locale);
 
   const cart_hint_map: Record<string, CartHintEntry> = {};

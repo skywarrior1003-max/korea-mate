@@ -121,6 +121,29 @@ export interface ScheduledDay {
   ai_used: false;               // always false — Gemini Live forbidden
   scheduler_version: "rule-based-v1";
   generated_at: string;         // ISO 8601
+  /**
+   * P1 route-quality gate 결과 (내부 품질 장치 — 사용자 화면에 노출하지 않는다; QA/로그/테스트용).
+   * optional: 이 필드가 없던 저장 결과도 그대로 읽힌다.
+   */
+  quality?: DayQuality;
+}
+
+export interface DayQuality {
+  status: "GOOD" | "REVIEW" | "FAIL";
+  scheduleConfidence: number;
+  coordinateQuality: number;
+  hardConstraintFeasibility: number;
+  routeQuality: number;
+  backtrackingQuality: number;
+  totalMinutes: number;
+  totalMeters: number;
+  clusterReentries: number;
+  unjustifiedBacktracks: number;
+  justifiedBacktracks: number;
+  betterOrderRatio: number;
+  /** 첫 결과가 게이트에 걸려 강한 권역 가중치로 한 번 다시 짠 결과를 채택했는가 */
+  repaired: boolean;
+  reasons: string[];
 }
 
 // ─── Hard Constraint Violation ────────────────────────────────────────────────

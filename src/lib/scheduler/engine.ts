@@ -23,6 +23,8 @@ import {
 } from "./meal-opportunity.ts";
 import { injectAffiliates } from "./affiliate-injector.ts";
 import { reorderFlexibleSegments } from "./segment-reorder.ts";
+import { buildClusters, clustersAdjacent, auditDayRoute, computeScheduleConfidence, type AuditStop } from "./route-quality.ts";
+import type { DayQuality } from "./types.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
   hc1NoDuplicate,
@@ -130,8 +132,78 @@ function itemCoordinate(
 
 // ─── Main entry point ─────────────────────────────────────────────────────────
 
+// ── P1 권역(neighborhood) 가중치 ─────────────────────────────────────────────
+//
+// 좌표만으로 만든 권역(route-quality.buildClusters, 리더 반경 1 km) 을 greedy 점수에 얹는다.
+//   affinity : 직전 장소와 같은 권역 +same, 인접 권역(리더 3 km 안) +adjacent
+//   reentry  : 오늘 이미 떠난 권역으로 되돌아가는 후보 −reentry (A → B → A 를 미리 막는다)
+// This Trip 픽(999)·고정·anchor 는 점수와 무관하게 먼저 놓이므로 영향이 없다. 자동 식당도 후보라 같은 규칙을 받는다
+// (meal-aware: 식사 창 안에서 같은/인접 권역 식당이 멀리 있는 고점수 식당을 이긴다). 도시 이름은 어디에도 없다.
+export interface ClusterWeights { same: number; adjacent: number; reentry: number; focusSame: number; focusAdjacent: number; focusOther: number }
+export const CLUSTER_WEIGHTS_DEFAULT: ClusterWeights = { same: 25, adjacent: 10, reentry: 90,  focusSame: 20, focusAdjacent: 5, focusOther: 40 };
+export const CLUSTER_WEIGHTS_STRICT:  ClusterWeights = { same: 40, adjacent: 15, reentry: 150, focusSame: 30, focusAdjacent: 8, focusOther: 80 };
+
 export function runScheduler(input: SchedulerInput): SchedulerResult {
+  const first = scheduleOnce(input, CLUSTER_WEIGHTS_DEFAULT);
+  if (!first.success) return first;
+  // ── Route Quality Gate: 초기 결과 1회 감사 → 걸리면 강한 권역 가중치로 딱 한 번 다시 짠다(무한 재시도 없음) ──
+  const q1 = first.data.quality!;
+  if (q1.status !== "GOOD" && (q1.unjustifiedBacktracks > 0 || q1.clusterReentries > 0)) {
+    const second = scheduleOnce(input, CLUSTER_WEIGHTS_STRICT);
+    if (second.success) {
+      const q2 = second.data.quality!;
+      const placedCount = (r: SchedulerResult) => r.success ? r.data.items.filter(it => it.item_type !== "affiliate").length : 0;
+      // 장소 수를 잃지 않고(최대 1곳), 왕복/재진입이 줄고 총 이동이 늘지 않을 때만 채택 — 낮은 품질을 숨기지 않는다
+      const better = placedCount(second) >= placedCount(first) - 1
+        && (q2.unjustifiedBacktracks + q2.clusterReentries) < (q1.unjustifiedBacktracks + q1.clusterReentries)
+        && q2.totalMinutes <= q1.totalMinutes;
+      if (better) { second.data.quality = { ...q2, repaired: true }; return second; }
+    }
+  }
+  return first;
+}
+
+function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): SchedulerResult {
   const placed: ScheduledItem[] = [];
+  // 권역: 후보 + 고정/anchor 좌표 전부로 만든다 — 핀이 있는 권역도 "오늘 가는 곳" 이다
+  const clusterPoints = [
+    ...input.candidates.map(c => ({ key: c.place_id, coordinate: c.coordinate, score: c.score })),
+    ...(input.fixed_events ?? []).filter(e => e.coordinate && Number.isFinite(e.coordinate.lat) && Number.isFinite(e.coordinate.lng)).map(e => ({ key: `event:${e.event_id}`, coordinate: e.coordinate, score: 1000 })),
+  ];
+  const { clusters, clusterOf } = buildClusters(clusterPoints);
+  // 권역 → Day: 오늘의 주 권역 = 쓸 수 있는 후보 점수 합이 가장 큰 권역. 하루가 한 권역(과 그 인접)에 머물도록 편향한다.
+  // 핀(고정·픽)이 다른 권역에 있으면 거기로 가는 것은 허용된다 — 이 항은 자동 추천 후보에만 붙는다.
+  const clusterMass = new Map<number, number>();
+  for (const c of input.candidates) { if (c.score === 999) continue; const cid = clusterOf.get(c.place_id); if (cid === undefined) continue; clusterMass.set(cid, (clusterMass.get(cid) ?? 0) + Math.max(0, c.score)); }
+  let primaryCluster: number | undefined; let primaryMass = -1;
+  for (const [cid, mass] of clusterMass) if (mass > primaryMass) { primaryCluster = cid; primaryMass = mass; }
+  const clusterOfItem = (it: ScheduledItem | undefined): number | undefined => {
+    if (!it) return undefined;
+    if (it.item_type === "place" && it.place_id) return clusterOf.get(it.place_id);
+    if (it.item_type === "event" && it.event_id) return clusterOf.get(`event:${it.event_id}`);
+    return undefined;
+  };
+  const visitedClusters = new Set<number>();
+  const clusterBonus = (candidateCluster: number | undefined, predecessor: ScheduledItem | undefined, isSelected: boolean): number => {
+    if (candidateCluster === undefined || isSelected) return 0;
+    const prev = clusterOfItem(predecessor);
+    let bonus = 0;
+    if (prev !== undefined) {
+      if (prev === candidateCluster) bonus += weights.same;
+      else if (clustersAdjacent(clusters[prev]!, clusters[candidateCluster]!)) bonus += weights.adjacent;
+    }
+    // 이미 떠난 권역으로 되돌아가는 후보 — 직전 장소가 그 권역이 아닐 때만 "되돌아감" 이다
+    if (visitedClusters.has(candidateCluster) && prev !== candidateCluster) bonus -= weights.reentry;
+    if (primaryCluster !== undefined) {
+      if (candidateCluster === primaryCluster) bonus += weights.focusSame;
+      else if (clustersAdjacent(clusters[primaryCluster]!, clusters[candidateCluster]!)) bonus += weights.focusAdjacent;
+      else bonus -= weights.focusOther;
+    }
+    return bonus;
+  };
+  /** 같은 권역이거나 인접 권역인가 — 식사 locality 판정 */
+  const nearCluster = (a: number | undefined, b: number | undefined): boolean =>
+    a !== undefined && b !== undefined && (a === b || clustersAdjacent(clusters[a]!, clusters[b]!));
 
   // ── P1: Place Anchors ──────────────────────────────────────────────────────
 
@@ -178,6 +250,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
   const anchorPlaceIds = collectAnchorPlaceIds(input);
   const zoneTracker    = new ZoneTracker();
 
+  for (const it of placed) { const cid = clusterOfItem(it); if (cid !== undefined) visitedClusters.add(cid); }
   // Seed zone tracker with the first placed item's zone (if any)
   const firstWithZone = placed.find((it) => it.zone_id !== undefined);
   if (firstWithZone?.zone_id) zoneTracker.update(firstWithZone.zone_id);
@@ -228,6 +301,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
 
       for (const c of candidates) {
         const zoneBonus = c.zone_id !== undefined ? zoneTracker.calculateBonus(c.zone_id) : 0;
+        const clusterAdj = clusterBonus(clusterOf.get(c.place_id), predecessor, isUserSelected(c.place_id, c.score));
 
         const travelMin = estimateTravelMinutes(fromCoord, c.coordinate);
         const { stay_minutes: stayMin } = resolveStayMinutes(c, input);
@@ -289,7 +363,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
           ...c,
           // AI 프로필 보정은 여기서만 얹는다. 위의 HC 검사를 모두 통과한
           // 후보들 사이의 순서만 바뀌고, 프로필이 없으면 0 이라 기존과 같다.
-          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin) - egressDistancePenalty(egressMinForScore)
+          adjusted_score:       c.score + zoneBonus + clusterAdj - consecutiveDistancePenalty(travelMin) - egressDistancePenalty(egressMinForScore)
                                 + profileBias(input.personalization_profile, {
                                     place_id:     c.place_id,
                                     category:     c.category,
@@ -329,13 +403,16 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
           // 안쪽에 있는 식음 후보만 받는다. 거리 페널티(최대 -90)로 크게 밀린
           // 후보는 여기서 걸러지고 그 끼니는 비워 둔다.
           const mealFloor = scored[0].adjusted_score - PROFILE_MAX_BONUS;
-          const mealPicks = scored.filter(c =>
+          const mealWindowOk = (c: ScoredCandidate) => mealWindowAt(c.start_minutes_resolved ?? gap.start_minutes + c.travel_minutes, mealWindows)?.kind === openMeal.kind;
+          // P1 meal-aware (§7): 직전 장소와 같은/인접 권역에 route-valid 식당이 있으면 그 안에서 고른다 —
+          // 멀리 있는 고점수 식당이 하루 동선을 동서로 찢지 않게. 없을 때만 기존 점수 floor 규칙으로 돌아간다.
+          const prevCluster = clusterOfItem(predecessor);
+          const localMeals = scored.filter(c =>
+            isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) && mealWindowOk(c) &&
+            nearCluster(clusterOf.get(c.place_id), prevCluster));
+          const mealPicks = localMeals.length > 0 ? localMeals : scored.filter(c =>
             isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) &&
-            c.adjusted_score >= mealFloor &&
-            mealWindowAt(
-              c.start_minutes_resolved ?? gap.start_minutes + c.travel_minutes,
-              mealWindows,
-            )?.kind === openMeal.kind);
+            c.adjusted_score >= mealFloor && mealWindowOk(c));
           if (mealPicks.length > 0) pickPool = mealPicks;
         }
       }
@@ -375,6 +452,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
         if (meal) filledMeals.add(meal);
       }
       if (best.zone_id !== undefined) zoneTracker.update(best.zone_id);
+      { const cid = clusterOf.get(best.place_id); if (cid !== undefined) visitedClusters.add(cid); }
 
       // Remove placed candidate from the queue
       pq.rebuild(
@@ -432,6 +510,39 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
 
   const finalItems = buildTimeline(placed);
 
+  // ── P1 내부 품질 감사 (사용자 노출 없음) ──
+  const auditStops: AuditStop[] = finalItems
+    .filter(it => it.item_type !== "affiliate")
+    .map(it => {
+      const coord = itemCoordinate(it, input);
+      const cand = it.place_id ? input.candidates.find(c => c.place_id === it.place_id) : undefined;
+      return {
+        key: it.place_id ?? it.event_id ?? String(it.slot_order),
+        coordinate: coord ?? { lat: NaN, lng: NaN },
+        pinned: it.is_fixed || it.source === "anchor" || it.source === "fixed_event" || cand?.score === 999,
+        meal: Boolean(cand && isFoodCategory(cand.category) && !it.is_fixed),
+        clusterId: clusterOfItem(it),
+      };
+    });
+  const coordinateFailures = auditStops.filter(s => !Number.isFinite(s.coordinate.lat) || !Number.isFinite(s.coordinate.lng)).length;
+  const metrics = auditDayRoute(auditStops.filter(s => Number.isFinite(s.coordinate.lat)));
+  // 하드 제약 재검사: 시간축 순서로 이웃한 두 항목 사이에 이동시간이 들어가는가 (HC-3/HC-8 사후 검증)
+  let hardConstraintViolations = 0;
+  const seq = auditStops.map((s, k) => ({ s, it: finalItems.filter(it => it.item_type !== "affiliate")[k]! }));
+  for (let k = 1; k < seq.length; k++) {
+    const a = seq[k - 1]!, b = seq[k]!;
+    if (!Number.isFinite(a.s.coordinate.lat) || !Number.isFinite(b.s.coordinate.lat)) continue;
+    if (timeToMinutes(a.it.end_time) + estimateTravelMinutes(a.s.coordinate, b.s.coordinate) > timeToMinutes(b.it.start_time) + 1) hardConstraintViolations++;
+  }
+  const conf = computeScheduleConfidence({ metrics, coordinateFailures, hardConstraintViolations });
+  const quality: DayQuality = {
+    status: conf.status, scheduleConfidence: conf.scheduleConfidence, coordinateQuality: conf.coordinateQuality,
+    hardConstraintFeasibility: conf.hardConstraintFeasibility, routeQuality: conf.routeQuality, backtrackingQuality: conf.backtrackingQuality,
+    totalMinutes: metrics.totalMinutes, totalMeters: metrics.totalMeters, clusterReentries: metrics.clusterReentries,
+    unjustifiedBacktracks: metrics.unjustifiedBacktracks, justifiedBacktracks: metrics.justifiedBacktracks, betterOrderRatio: metrics.betterOrderRatio,
+    repaired: false, reasons: conf.reasons,
+  };
+
   return {
     success: true,
     data: {
@@ -440,6 +551,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
       ai_used:           false,
       scheduler_version: SCHEDULER_VERSION,
       generated_at:      new Date().toISOString(),
+      quality,
     },
   };
 }

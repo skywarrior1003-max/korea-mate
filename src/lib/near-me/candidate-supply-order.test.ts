@@ -22,6 +22,8 @@ import { diversifyByCategory } from "./candidate-diversity.ts";
 
 const PLAN_TS = path.join(process.cwd(), "functions", "api", "trip", "plan.ts");
 const planSrc = readFileSync(PLAN_TS, "utf8");
+// P1(2026-08-30): 순수 후보 공급(zone→expand→score→exclude→diversify)은 candidate-supply.ts 로 옮겨졌다 — 본문은 거기서 읽는다
+const supplySrc = readFileSync(path.join(process.cwd(), "src", "lib", "near-me", "candidate-supply.ts"), "utf8");
 
 let passed = 0;
 function test(name: string, fn: () => void): void {
@@ -117,11 +119,12 @@ test("제외가 없으면 결과가 기존과 완전히 같다", () => {
 
 /** runNearMeDirect 본문만 잘라낸다 — 핸들러 쪽 exclusion 과 섞이지 않게. */
 function nearMeDirectBody(): string {
-  const start = planSrc.indexOf("async function runNearMeDirect");
-  assert.ok(start > 0, "runNearMeDirect 를 찾지 못했다");
-  const end = planSrc.indexOf("// ── Place display map", start);
-  assert.ok(end > start, "runNearMeDirect 본문의 끝을 찾지 못했다");
-  return planSrc.slice(start, end);
+  const start = supplySrc.indexOf("export function buildNearMeCandidates");
+  assert.ok(start > 0, "buildNearMeCandidates 를 찾지 못했다");
+  const end = supplySrc.indexOf("function focusSupply", start);
+  assert.ok(end > start, "buildNearMeCandidates 본문의 끝을 찾지 못했다");
+  assert.match(planSrc, /buildNearMeCandidates\(rawRows as any, \{/, "plan.ts 가 공통 공급 함수를 쓰지 않는다");
+  return supplySrc.slice(start, end);
 }
 
 test("plan.ts: 후보를 자르기 전에 제외가 적용된다", () => {
@@ -160,10 +163,10 @@ test("plan.ts: 제외 identity 는 String(place_id) 그대로다", () => {
 
 test("반경·limit·zone 상수는 그대로다", () => {
   assert.match(planSrc, /const MAX_RADIUS_KM = 7;/);
-  assert.match(planSrc, /const DEFAULT_LIMIT = 30;/);
+  assert.match(planSrc, /const DEFAULT_LIMIT = 60;/); // P1: 권역 집중 공급과 함께 60
   // 인자는 늘어날 수 있다 — 이 guard 가 지키는 것은 zone 단계 확대가 여전히
   // 배선돼 있다는 것이지, 호출 형태가 아니다.
-  assert.match(planSrc, /expandZones\(zonedPlaces\b/);
+  assert.match(supplySrc, /expandZones\(zonedPlaces\b/);
 });
 
 console.log(`\ncandidate-supply-order: ${passed} passed`);

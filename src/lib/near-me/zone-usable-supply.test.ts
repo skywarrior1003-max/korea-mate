@@ -129,17 +129,19 @@ test("전부 이미 간 곳이면 최대 zone 까지 넓힌다", () => {
 // ── 배포 경로 배선 ────────────────────────────────────────────────────────────
 
 const planSrc = readFileSync(path.join(process.cwd(), "functions", "api", "trip", "plan.ts"), "utf8");
+// P1(2026-08-30): expandZones 호출은 candidate-supply.ts(공통 공급) 로 옮겨졌다
+const supplySrc = readFileSync(path.join(process.cwd(), "src", "lib", "near-me", "candidate-supply.ts"), "utf8");
 
 test("plan.ts: zone 확대가 요청 limit 과 제외 목록을 기준으로 판정한다", () => {
-  assert.match(planSrc, /expandZones\(zonedPlaces,\s*\{/, "plan.ts 가 아직 옵션 없이 부른다");
-  assert.match(planSrc, /targetSupply:\s*input\.limit/, "임의의 숫자를 새로 만들었거나 limit 을 쓰지 않는다");
-  assert.match(planSrc, /isUsable:\s*\(p\) => !excluded\.has\(String\(p\.place_id\)\)/,
+  assert.match(supplySrc, /expandZones\(zonedPlaces,\s*\{/, "candidate-supply 가 아직 옵션 없이 부른다");
+  assert.match(supplySrc, /targetSupply:\s*input\.limit/, "임의의 숫자를 새로 만들었거나 limit 을 쓰지 않는다");
+  assert.match(supplySrc, /isUsable:\s*\(p\) => !excluded\.has\(String\(p\.place_id\)\)/,
     "제외 목록이 zone 판정에 반영되지 않는다");
 });
 
 test("plan.ts: 반경·zone 상수는 그대로다", () => {
   assert.match(planSrc, /const MAX_RADIUS_KM = 7;/);
-  assert.match(planSrc, /const DEFAULT_LIMIT = 30;/);
+  assert.match(planSrc, /const DEFAULT_LIMIT = 60;/); // P1: 권역 집중 공급과 함께 60
 });
 
 test("zone-classifier: 반경 임계값 1km / 3km / 7km 그대로다", () => {

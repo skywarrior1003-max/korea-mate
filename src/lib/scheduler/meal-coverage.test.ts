@@ -179,7 +179,8 @@ test("★식사 보장을 점수 보너스로 해결하지 않았다", () => {
   assert.doesNotMatch(engine, /adjusted_score[^;]*\+\s*(100|200|500|999)/);
   assert.doesNotMatch(engine, /0\.(2\d|3\d|4\d)\b/);
   // 선택 단계에서 후보 집합을 좁히는 방식이어야 한다
-  assert.match(engine, /const mealPicks = scored\.filter/);
+  // P1: 같은/인접 권역 식당(localMeals)이 있으면 그 집합, 없으면 점수 floor 집합 — 여전히 "집합을 좁히는" 방식이다
+  assert.match(engine, /const mealPicks = localMeals\.length > 0 \? localMeals : scored\.filter/);
   assert.match(engine, /pickPool = mealPicks/);
   // Selected 가 이 규칙보다 위다
   assert.match(engine, /if \(!isUserSelected\(scored\[0\]\.place_id, scored\[0\]\.score\)\)/);
