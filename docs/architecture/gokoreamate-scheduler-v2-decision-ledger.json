@@ -343,6 +343,16 @@
       "priority": "P0",
       "evidence_note": "p1c-audit-prod-stay.json (Production + stay preset, corrected detector: 0 route defects, GOOD 6 / REVIEW 4 uncertainty-only, 200/200 shuffles), p1c-audit-prod-v4.json (v4 applied as test input: GOOD 8 / REVIEW 2), live-day-dump (REQ start coordinates per day; API 10/10 GOOD), sea7-vworld.json, prod-shots-closure/*, KO/EN/JA/ZH browser QA, 5-city sanity. Tests 2521 (baseline 8 failures unchanged), tsc 0, clean build.",
       "do_not_assume": "That the 7 sea rows are corrected in Production before the PROD-SQL task; that STREET_ONLY inland rows (26) or NOT_FOUND rows (11) are verified; that Owner visual acceptance has happened."
+    },
+    {
+      "id": "D-35",
+      "topic": "Final product QA / Owner review readiness (milestone checkpoint)",
+      "status": "UNKNOWN_OR_REVERIFY",
+      "decision": "MY_TRIP_OWNER_REVIEW_READY=YES on evidence (real Production data, canonical stay preset): known sea set 0, route defects 0, determinism 5/5 + 20/20, KO/EN/JA/ZH and 5-city browser QA pass, Gamcheon Free. Release HOLD stays until the Owner's visual acceptance. Open Owner data decision: duplicate published rows 1348/1438 and 1362/1335 (same business twice in a day).",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
+      "priority": "P0",
+      "evidence_note": "p1c-audit-prod-final.json, live-day-dump ×5 (seq hash identical), prod-shots-final/*, known12.json, sp/iq/oc2/locale/five-city outputs 2026-08-31. Note: the local wrangler preview ran out of heap after ~7 h of QA (restarted; not a product issue).",
+      "do_not_assume": "That Busan coordinates beyond the known set are verified; that /place static pages in Production reflect the fee before the next deploy; that duplicates were merged."
     }
   ]
 }
