@@ -12,7 +12,6 @@ import AdBanner from "@/components/AdBanner";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
-import NoticeModal from "@/components/NoticeModal";
 import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
@@ -1101,8 +1100,6 @@ export default function HomeClient() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased overflow-x-clip">
 
-      <NoticeModal />
-
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
@@ -1122,7 +1119,7 @@ export default function HomeClient() {
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
               style={{ backgroundColor: "#0041c8" }}
             >
-              Plan My Trip
+              {tn("planMyTrip")}
             </button>
           </nav>
           {/* 모바일 헤더 — 시안은 로고 + 아이콘 두 개로 아주 얇다.
