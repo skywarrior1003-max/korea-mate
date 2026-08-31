@@ -271,7 +271,7 @@
       "decision": "9 restaurant rows CONFIRMED_WRONG (each row's own address geocodes 0.6-3.9 km away on land; DB points in the sea). Corrections prepared as guarded SQL (OWNER-RUN-P0-busan-corrections.sql) + corrections JSON; Production write is an Owner action. Igidae id 7 AMBIGUOUS — HOLD.",
       "implementation_state": "PLANNED",
       "priority": "P0",
-      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim). P1 v3 (2026-08-31, D-30): of the 9 sea rows only 386 and 1167 reached EXACT (building/POI); 272, 395, 397, 400, 1133, 1135, 1138 stay STREET_ONLY/NOT_FOUND HOLD. Guarded SQL for the 5 exact rows + Gamcheon entry_fee: OWNER-RUN-P1-busan-corrections-v2.sql (value-predicated; Production write pending Owner).",
+      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim). P1 v3 (2026-08-31, D-30): of the 9 sea rows only 386 and 1167 reached EXACT (building/POI); 272, 395, 397, 400, 1133, 1135, 1138 stay STREET_ONLY/NOT_FOUND HOLD. Guarded SQL for the 5 exact rows + Gamcheon entry_fee: OWNER-RUN-P1-busan-corrections-v2.sql (value-predicated; Production write pending Owner). Production precheck 2026-08-31 (READ-ONLY): all 6 write targets (1127, 136, 340, 386, 1167 lat/lng; id 2 entry_fee '₩2,000') still match the artifact values (6/6 PRED_MATCH); lat/lng are double precision, entry_fee varchar. Owner SQL v3 = one DO block (precondition 6/6 -> 5 coordinate UPDATEs -> fee UPDATE -> postcondition 6/6, RAISE + rollback otherwise); columns written lat, lng, entry_fee, updated_at only. Not applied by Claude.",
       "do_not_assume": "That Production rows are corrected until the Owner runs the SQL."
     },
     {
@@ -313,6 +313,16 @@
       "priority": "P1",
       "evidence_note": "route-quality.ts (justify / simulate / local zigzag / computeScheduleConfidence), engine.ts (meal tiers, MEAL_DEFER_FILL_FIRST_MINUTES, tie-break, protectedSignature / repairAcceptable, mealLocalityOf), segment-reorder.ts (auto meals movable inside window, feasibility-aware bestOrder), tests p1-closure-guard.test.ts (10) + route-quality/segment-reorder/p1 guards. Benchmark harness p1c-bench.ts (engine root switchable: dc6923a archive vs live).",
       "do_not_assume": "That in-product code can prove NO_LOCAL_FEASIBLE_MEAL (only the QA harness sees the whole dataset); that REVIEW days imply a route defect (Days 2-3 are data uncertainty)."
+    },
+    {
+      "id": "D-32",
+      "topic": "Production 10-day re-verify on real rows (pre-write) and My Trip release blockers",
+      "status": "UNKNOWN_OR_REVERIFY",
+      "decision": "Real Production rows, same Owner conditions and closure detector: GOOD 5 / REVIEW 5 / FAIL 0; no scheduler regression (REVIEW = 3 coordinate-uncertainty days + 2 sub-800 m cluster-boundary re-entries classified OTHER/detector artifact). Known sea rows (1135, 1133, 272, 1138; 1167 pending SQL) were scheduled and would render in the sea -> KNOWN_SEA_MARKER_RELEASE_BLOCKER=YES until Owner corrects or unpublishes the 7 STREET_ONLY sea rows. Blockers: A scheduler CLEARED (route side) · B coordinate/data HOLD · C UI/semantic HOLD only for Gamcheon fee until SQL · D Production write HOLD (Owner) · E Owner visual acceptance HOLD.",
+      "implementation_state": "PARTIAL",
+      "priority": "P0",
+      "evidence_note": "scratchpad/p1c-audit-prod-prewrite.json (harness P1_DATASET=production), prod-shots-prewrite/*, prod-visual-qa-prewrite.json, prod-precheck.json, prod-sea.json. Live 10-day 4.7 s; 5-city single-variant sanity in the task report.",
+      "do_not_assume": "That the 5 EXACT rows or the Gamcheon fee are corrected in Production before the Owner runs v3; that STREET_ONLY rows are resolved; that the two sub-800 m re-entries are route defects."
     }
   ]
 }
