@@ -7,17 +7,18 @@
 //
 // 무엇을 하는가: **장소 집합은 그대로 두고, 핀 사이의 유연한 구간 순서만** 다시 정한다.
 //   핀(움직이지 않음): is_fixed · anchor · fixed_event · affiliate · 사용자가 고른 장소(score 999 / preferred_items) ·
-//                    자동 배치 식당(식사 창에 맞춰 놓인 것) · 좌표를 모르는 항목
-//   이동 가능:         source "greedy" 이고 위에 해당하지 않는 일반 추천 장소
+//                    좌표를 모르는 항목
+//   이동 가능:         source "greedy" 이고 위에 해당하지 않는 일반 추천 장소, 그리고 자동 배치 식당(AUTO_MEAL — closure V2 부터;
+//                    단 새 시각이 원래의 식사 창(kind) 안일 때만 채택, 아니면 구간을 원래 순서로 둔다)
 // 비용은 스케줄러가 쓰는 그 함수(estimateTravelMinutes) 의 합이고, 같은 분이면 haversine 미터로 가른다.
 // 구간이 7개 이하면 전수(≤5,040), 그보다 크면 2-opt. 새 순서는 시각을 앞에서부터 다시 계산하고
 // HC-6(하루 창)·HC-8(다음 핀까지 도달) 을 다시 검사한다 — 하나라도 어기면 **원래 순서를 그대로 둔다**.
-// 사용자가 고른 장소·고정 시각·식사 시각은 이 pass 가 절대 건드리지 않는다. 장소를 버리지도 않는다.
+// 사용자가 고른 장소·고정 시각은 이 pass 가 절대 건드리지 않는다. 자동 식당은 같은 식사 창 안에서만 움직인다. 장소를 버리지도 않는다.
 
 import type { ScheduledItem, SchedulerInput, Coordinate } from "./types.ts";
 import { timeToMinutes, minutesToTime, haversineDistance } from "./utils.ts";
 import { estimateTravelMinutes } from "./travel-time-estimator.ts";
-import { isFoodCategory } from "./meal-opportunity.ts";
+import { isFoodCategory, activeMealWindows, mealWindowAt, type MealWindow } from "./meal-opportunity.ts";
 
 export const REORDER_BRUTE_FORCE_MAX = 7;
 
@@ -35,8 +36,22 @@ function isMovable(item: ScheduledItem, input: SchedulerInput): boolean {
   if (!cand) return false;
   if (cand.score === 999) return false;                                             // This Trip 픽
   if (input.preferred_items?.some(p => p.place_id === item.place_id)) return false; // 시간대 선호가 있는 픽
-  if (isFoodCategory(cand.category)) return false;                                  // 식사 창에 맞춘 식당
+  // 자동 배치 식당(AUTO_MEAL)은 closure V2 부터 움직일 수 있다 — 단 **같은 식사 창 안에서만**(아래 rebuild 검사).
+  // 사용자가 고른 식당(999/preferred)은 위에서 이미 핀이다.
   return true;
+}
+
+/**
+ * 자동 식당은 원래 놓였던 식사 창(kind) 안에서만 새 시각을 가질 수 있다. 창 시작 전에 도착하면 greedy 의 식사 이연과 같은 규칙으로
+ * 창 시작까지 기다린다(사람은 10시에 점심을 먹지 않는다). 창이 끝난 뒤면 그 순서는 쓸 수 없다(null).
+ */
+function mealAdjustedStart(item: ScheduledItem, input: SchedulerInput, start: number, windows: readonly MealWindow[]): number | null {
+  const cand = input.candidates.find(c => c.place_id === item.place_id);
+  if (!cand || !isFoodCategory(cand.category)) return start;
+  const original = mealWindowAt(timeToMinutes(item.start_time), windows);
+  if (!original) return start;                                                      // 창 밖에 놓였던 식당(사용자 픽 등)은 제약 없음
+  const s = Math.max(start, original.start_minutes);
+  return s < original.end_minutes ? s : null;
 }
 
 /** 구간 비용 — 스케줄러 분 합 (동률은 미터로) */
@@ -58,11 +73,16 @@ function permutations<T>(arr: T[]): T[][] {
   return out;
 }
 
-function bestOrder(from: Coordinate, seg: Node[], to: Coordinate | null): Node[] {
+/**
+ * 최선 **feasible** 순서. closure V2: 자동 식당이 움직일 수 있게 되면서 "가장 짧은 순서" 가 식사 창을 어길 수 있다 —
+ * 그 하나 때문에 구간 전체를 포기하지 않도록, 비용이 더 좋은 순서마다 feasible(시각 재계산·HC-6·HC-8·식사 창) 을 확인하고
+ * 통과한 것 중 최선을 고른다.
+ */
+function bestOrder(from: Coordinate, seg: Node[], to: Coordinate | null, feasible: (order: Node[]) => boolean): Node[] {
   if (seg.length < 2) return seg;
   let best = seg, bc = segmentCost(from, seg, to);
   if (seg.length <= REORDER_BRUTE_FORCE_MAX) {
-    for (const p of permutations(seg)) { const c = segmentCost(from, p, to); if (better(c, bc)) { best = p; bc = c; } }
+    for (const p of permutations(seg)) { const c = segmentCost(from, p, to); if (better(c, bc) && feasible(p)) { best = p; bc = c; } }
     return best;
   }
   // 2-opt
@@ -72,7 +92,7 @@ function bestOrder(from: Coordinate, seg: Node[], to: Coordinate | null): Node[]
     for (let i = 0; i < best.length - 1; i++) for (let k = i + 1; k < best.length; k++) {
       const cand = [...best.slice(0, i), ...best.slice(i, k + 1).reverse(), ...best.slice(k + 1)];
       const c = segmentCost(from, cand, to);
-      if (better(c, bc)) { best = cand; bc = c; improved = true; }
+      if (better(c, bc) && feasible(cand)) { best = cand; bc = c; improved = true; }
     }
   }
   return best;
@@ -88,6 +108,7 @@ export function reorderFlexibleSegments(placed: ScheduledItem[], input: Schedule
   const byTime = [...placed].sort((a, b) => timeToMinutes(a.start_time) - timeToMinutes(b.start_time));
   const nodes: Node[] = byTime.map(item => { const coord = coordOf(item, input); return { item, coord: coord ?? { lat: NaN, lng: NaN }, movable: Boolean(coord) && isMovable(item, input) }; });
   const dayEnd = timeToMinutes(input.end_time);
+  const mealWindows = activeMealWindows(timeToMinutes(input.start_time), dayEnd);
   const out: ScheduledItem[] = [];
   let reordered = 0, minutesBefore = 0, minutesAfter = 0;
 
@@ -101,26 +122,30 @@ export function reorderFlexibleSegments(placed: ScheduledItem[], input: Schedule
     const from = prevPin?.coord && Number.isFinite(prevPin.coord.lat) ? prevPin.coord : input.base_coordinate;
     const to   = nextPin?.coord && Number.isFinite(nextPin.coord.lat) ? nextPin.coord : null;
     const before = segmentCost(from, seg, to);
-    const ordered = bestOrder(from, seg, to);
+    // 시각 재계산 + HC-6 / HC-8 / 식사 창 재검사. 원래 구간의 시작 시각보다 앞당기지 않는다(식사 이연 등 앞 핀 규칙 존중).
+    const segStartOriginal = timeToMinutes(seg[0]!.item.start_time) - seg[0]!.item.travel_minutes_from_prev;
+    const base = prevPin ? Math.max(timeToMinutes(prevPin.item.end_time), segStartOriginal) : segStartOriginal;
+    const rebuild = (order: Node[]): ScheduledItem[] | null => {
+      let t = base, prev = from; const rebuilt: ScheduledItem[] = [];
+      for (const n of order) {
+        const travel = estimateTravelMinutes(prev, n.coord);
+        const start = mealAdjustedStart(n.item, input, t + travel, mealWindows);   // 자동 식당은 같은 식사 창 안에서만(창 시작까지는 기다림)
+        if (start === null) return null;
+        const end = start + n.item.stay_minutes;
+        if (end > dayEnd) return null;                                              // HC-6
+        rebuilt.push({ ...n.item, start_time: minutesToTime(start), end_time: minutesToTime(end), travel_minutes_from_prev: travel });
+        t = end; prev = n.coord;
+      }
+      if (nextPin && to && t + estimateTravelMinutes(prev, to) > timeToMinutes(nextPin.item.start_time)) return null; // HC-8
+      return rebuilt;
+    };
+    const ordered = bestOrder(from, seg, to, order => rebuild(order) !== null);
     const after = segmentCost(from, ordered, to);
     minutesBefore += before.minutes; minutesAfter += before.minutes;
 
     if (ordered !== seg && better(after, before)) {
-      // 시각 재계산 + HC-6 / HC-8 재검사. 원래 구간의 시작 시각보다 앞당기지 않는다(식사 이연 등 앞 핀 규칙 존중).
-      const segStartOriginal = timeToMinutes(seg[0]!.item.start_time) - seg[0]!.item.travel_minutes_from_prev;
-      const base = prevPin ? Math.max(timeToMinutes(prevPin.item.end_time), segStartOriginal) : segStartOriginal;
-      let t = base, prev = from, ok = true; const rebuilt: ScheduledItem[] = [];
-      for (const n of ordered) {
-        const travel = estimateTravelMinutes(prev, n.coord);
-        const start = t + travel, end = start + n.item.stay_minutes;
-        if (end > dayEnd) { ok = false; break; }                                    // HC-6
-        rebuilt.push({ ...n.item, start_time: minutesToTime(start), end_time: minutesToTime(end), travel_minutes_from_prev: travel });
-        t = end; prev = n.coord;
-      }
-      if (ok && nextPin && to) {
-        if (t + estimateTravelMinutes(prev, to) > timeToMinutes(nextPin.item.start_time)) ok = false; // HC-8
-      }
-      if (ok) { out.push(...rebuilt); reordered++; minutesAfter += after.minutes - before.minutes; i = j; continue; }
+      const rebuilt = rebuild(ordered);
+      if (rebuilt) { out.push(...rebuilt); reordered++; minutesAfter += after.minutes - before.minutes; i = j; continue; }
     }
     out.push(...seg.map(n => n.item));
     i = j;

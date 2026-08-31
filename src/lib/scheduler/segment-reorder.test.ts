@@ -2,6 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { reorderFlexibleSegments } from "./segment-reorder.ts";
+import { MEAL_TIME_RANGES } from "./meal-opportunity.ts";
+import { timeToMinutes } from "./utils.ts";
 import type { ScheduledItem, SchedulerInput } from "./types.ts";
 
 const C = (place_id: string, lat: number, lng: number, extra: Partial<SchedulerInput["candidates"][number]> = {}) =>
@@ -24,13 +26,23 @@ test("★지그재그 구간은 같은 장소 집합으로 더 짧은 순서가 
   assert.ok(r.items[0]!.start_time >= "09:00", "하루 시작보다 앞당기지 않는다");
 });
 
-test("★고정·사용자 픽·식당·anchor 는 핀 — 자리가 움직이지 않는다", () => {
+test("★고정·사용자 픽·anchor 는 핀 — 자리가 움직이지 않는다; 자동 식당은 같은 식사 창 안에서만 움직인다 (closure V2)", () => {
   const input: SchedulerInput = { ...base, candidates: [...base.candidates, C("pick", CENTUM.lat, CENTUM.lng, { score: 999 }), C("lunch", DONGBAEK.lat, DONGBAEK.lng, { category: "food" })] };
   const placed = [I("c", "09:20", "10:20"), I("pick", "10:40", "11:40"), I("lunch", "12:00", "13:00"), I("s", "13:20", "14:20"), I("d", "14:40", "15:40", { is_fixed: true, source: "fixed_event" })];
   const r = reorderFlexibleSegments(placed, input);
   const at = (id: string) => r.items.find(i => i.place_id === id)!;
-  assert.equal(at("pick").start_time, "10:40"); assert.equal(at("lunch").start_time, "12:00"); assert.equal(at("d").start_time, "14:40");
+  assert.equal(at("pick").start_time, "10:40"); assert.equal(at("d").start_time, "14:40");
+  // 자동 식당(AUTO_MEAL)은 핀이 아니다 — 하지만 원래 놓였던 점심 창(11:30–14:00) 밖으로는 나가지 않는다
+  const [ls, le] = MEAL_TIME_RANGES.lunch; const lunchStart = timeToMinutes(at("lunch").start_time);
+  assert.ok(lunchStart >= ls && lunchStart < le, `점심은 점심 창 안: ${at("lunch").start_time}`);
   assert.equal(r.items.length, 5);
+});
+
+test("★사용자가 고른 식당(999)은 자동 식당이 아니다 — 핀 그대로", () => {
+  const input: SchedulerInput = { ...base, candidates: [...base.candidates, C("mylunch", DONGBAEK.lat, DONGBAEK.lng, { category: "food", score: 999 })] };
+  const placed = [I("c", "09:20", "10:20"), I("mylunch", "12:00", "13:00"), I("s", "13:20", "14:20"), I("d", "14:40", "15:40")];
+  const r = reorderFlexibleSegments(placed, input);
+  assert.equal(r.items.find(i => i.place_id === "mylunch")!.start_time, "12:00");
 });
 
 test("★재정렬이 다음 핀에 못 닿으면(HC-8) 원래 순서를 그대로 둔다", () => {

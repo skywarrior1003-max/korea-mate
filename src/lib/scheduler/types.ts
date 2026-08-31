@@ -141,9 +141,16 @@ export interface DayQuality {
   unjustifiedBacktracks: number;
   justifiedBacktracks: number;
   betterOrderRatio: number;
+  /** closure V2: 800 m 미만 권역 내 지그재그 창 수 · 권역 일관성 점수 · 보호 stop 수 */
+  localZigzags: number;
+  clusterCoherence: number;
+  protectedStops: number;
   /** 첫 결과가 게이트에 걸려 강한 권역 가중치로 한 번 다시 짠 결과를 채택했는가 */
   repaired: boolean;
   reasons: string[];
+  /** explainability reason codes (내부 전용, LLM 없음): UNJUSTIFIED_BACKTRACK · LOCAL_ZIGZAG · CLUSTER_REENTRY · MEAL_SUPPLY_GAP ·
+   *  NO_LOCAL_FEASIBLE_MEAL · AUTO_MEAL_BACKTRACK · REENTRY_REPAIRED · LOCAL_ZIGZAG_REPAIRED · BACKTRACK_REPAIRED … */
+  reasonCodes: string[];
 }
 
 // ─── Hard Constraint Violation ────────────────────────────────────────────────

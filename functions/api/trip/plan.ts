@@ -509,7 +509,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   const _tm3 = Date.now();
   const place_map     = await buildPlaceMap(placeIds, ctx.env); _tm.placeMap = Date.now() - _tm3; _tm.total = Date.now() - _tm0;
   const _q = (schedulerResult.data as any).quality;
-  console.log(`[plan-timing] ${JSON.stringify({ ..._tm, fetch: _tm_candidates, candidates: nearMeCount, placed: placeIds.length, quality: _q ? { status: _q.status, confidence: _q.scheduleConfidence, reentry: _q.clusterReentries, unjustified: _q.unjustifiedBacktracks, repaired: _q.repaired } : null })}`);
+  console.log(`[plan-timing] ${JSON.stringify({ ..._tm, fetch: _tm_candidates, candidates: nearMeCount, placed: placeIds.length, quality: _q ? { status: _q.status, confidence: _q.scheduleConfidence, reentry: _q.clusterReentries, unjustified: _q.unjustifiedBacktracks, zigzag: _q.localZigzags, repaired: _q.repaired, codes: _q.reasonCodes } : null })}`);
   const affiliate_map = buildAffiliateMap(affiliateRows, locale);
 
   const cart_hint_map: Record<string, CartHintEntry> = {};

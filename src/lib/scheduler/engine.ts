@@ -23,7 +23,7 @@ import {
 } from "./meal-opportunity.ts";
 import { injectAffiliates } from "./affiliate-injector.ts";
 import { reorderFlexibleSegments } from "./segment-reorder.ts";
-import { buildClusters, clustersAdjacent, auditDayRoute, computeScheduleConfidence, type AuditStop } from "./route-quality.ts";
+import { buildClusters, clustersAdjacent, auditDayRoute, computeScheduleConfidence, type AuditStop, type MealLocality, type PinKind } from "./route-quality.ts";
 import type { DayQuality } from "./types.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
@@ -41,6 +41,8 @@ import {
 interface ScoredCandidate extends NearMeCandidate {
   /** 실제 배치 시각(분). 식사 기회로 미뤄진 경우 gap 앞머리가 아니다. */
   start_minutes_resolved?: number;
+  /** 식사 창까지 미룬 분(자동 식당). closure V2 — 앞자리를 채울 다른 후보가 있으면 크게 미룬 식당은 이번 gap 에서 고르지 않는다 */
+  deferred_minutes?: number;
   adjusted_score: number;
   travel_minutes: number;
   stay_minutes_resolved: number;
@@ -142,25 +144,77 @@ function itemCoordinate(
 export interface ClusterWeights { same: number; adjacent: number; reentry: number; focusSame: number; focusAdjacent: number; focusOther: number }
 export const CLUSTER_WEIGHTS_DEFAULT: ClusterWeights = { same: 25, adjacent: 10, reentry: 90,  focusSame: 20, focusAdjacent: 5, focusOther: 40 };
 export const CLUSTER_WEIGHTS_STRICT:  ClusterWeights = { same: 40, adjacent: 15, reentry: 150, focusSame: 30, focusAdjacent: 8, focusOther: 80 };
+/** 자동 식당을 식사 창까지 미루는 대신 앞자리를 먼저 채우는 기준 — 한 stop(이동+최소 체류) 이 들어갈 만한 여유 */
+export const MEAL_DEFER_FILL_FIRST_MINUTES = 60;
 
 export function runScheduler(input: SchedulerInput): SchedulerResult {
   const first = scheduleOnce(input, CLUSTER_WEIGHTS_DEFAULT);
   if (!first.success) return first;
   // ── Route Quality Gate: 초기 결과 1회 감사 → 걸리면 강한 권역 가중치로 딱 한 번 다시 짠다(무한 재시도 없음) ──
   const q1 = first.data.quality!;
-  if (q1.status !== "GOOD" && (q1.unjustifiedBacktracks > 0 || q1.clusterReentries > 0)) {
+  if (q1.status !== "GOOD" && (q1.unjustifiedBacktracks > 0 || q1.clusterReentries > 0 || q1.localZigzags > 0)) {
     const second = scheduleOnce(input, CLUSTER_WEIGHTS_STRICT);
     if (second.success) {
-      const q2 = second.data.quality!;
-      const placedCount = (r: SchedulerResult) => r.success ? r.data.items.filter(it => it.item_type !== "affiliate").length : 0;
-      // 장소 수를 잃지 않고(최대 1곳), 왕복/재진입이 줄고 총 이동이 늘지 않을 때만 채택 — 낮은 품질을 숨기지 않는다
-      const better = placedCount(second) >= placedCount(first) - 1
-        && (q2.unjustifiedBacktracks + q2.clusterReentries) < (q1.unjustifiedBacktracks + q1.clusterReentries)
-        && q2.totalMinutes <= q1.totalMinutes;
-      if (better) { second.data.quality = { ...q2, repaired: true }; return second; }
+      const verdict = repairAcceptable(first, second, input);
+      if (verdict.accept) {
+        const q2 = second.data.quality!;
+        second.data.quality = { ...q2, repaired: true, reasonCodes: [...q2.reasonCodes, ...verdict.codes] };
+        return second;
+      }
+      // 채택 안 한 이유도 남긴다(내부 explainability) — 낮은 품질을 숨기지 않는다
+      first.data.quality = { ...q1, reasonCodes: [...q1.reasonCodes, `REPAIR_REJECTED:${verdict.reason.replace(/\s+/g, "_")}`] };
     }
   }
   return first;
+}
+
+/**
+ * 보호 stop 서명 — repair 전후로 100% 같아야 하는 것들: 고정(is_fixed) · anchor · fixed_event(도착/출발/숙소) ·
+ * This Trip 사용자 선택(999) · 시간대 선호가 있는 픽(preferred_items). key 와 시각을 함께 본다(다른 Day 로 옮기거나 시각을 바꾸면 다른 서명).
+ */
+export function protectedSignature(r: SchedulerResult, input: SchedulerInput): string[] {
+  if (!r.success) return [];
+  return r.data.items
+    .filter(it => it.item_type !== "affiliate")
+    .filter(it => {
+      if (it.is_fixed || it.source === "anchor" || it.source === "fixed_event") return true;
+      if (!it.place_id) return false;
+      const cand = input.candidates.find(c => c.place_id === it.place_id);
+      return cand?.score === 999 || Boolean(input.preferred_items?.some(p => p.place_id === it.place_id));
+    })
+    .map(it => `${it.place_id ?? it.event_id ?? it.slot_order}@${it.start_time}-${it.end_time}`)
+    .sort();
+}
+
+export type RepairCode = "REENTRY_REPAIRED" | "LOCAL_ZIGZAG_REPAIRED" | "BACKTRACK_REPAIRED";
+
+/**
+ * repair 채택 조건(closure V2 §12) — 전부 만족할 때만 두 번째 결과를 쓴다:
+ *   · 보호 stop 집합·시각 100% 동일(silent drop / 이동 / 다른 Day 이동 / 자동 후보와 교체 금지)
+ *   · 하드 제약 위반 0, 좌표 품질 악화 0
+ *   · unjustified backtrack · local zigzag · 권역 재진입이 하나도 늘지 않고, (unjustified + zigzag) 가 줄거나 0
+ *   · 총 이동(분)이 의미 있게 나빠지지 않음(≤ +5%)
+ *   · 자동 추천 장소는 최대 1곳까지만 substitute/unplaced 허용
+ * "총 거리만 좋아졌다" 는 이유로 사용자 선택 장소를 잃는 결과는 채택하지 않는다.
+ */
+export function repairAcceptable(first: SchedulerResult, second: SchedulerResult, input: SchedulerInput): { accept: boolean; codes: RepairCode[]; reason: string } {
+  if (!first.success || !second.success) return { accept: false, codes: [], reason: "not both successful" };
+  const q1 = first.data.quality!, q2 = second.data.quality!;
+  const p1 = protectedSignature(first, input), p2 = protectedSignature(second, input);
+  if (p1.length !== p2.length || p1.some((k, i) => k !== p2[i])) return { accept: false, codes: [], reason: "protected stops differ" };
+  if (q2.hardConstraintFeasibility < 100 || q2.coordinateQuality < q1.coordinateQuality) return { accept: false, codes: [], reason: "hard/coordinate worse" };
+  if (q2.unjustifiedBacktracks > q1.unjustifiedBacktracks || q2.localZigzags > q1.localZigzags || q2.clusterReentries > q1.clusterReentries) return { accept: false, codes: [], reason: "a route defect increased" };
+  const d1 = q1.unjustifiedBacktracks + q1.localZigzags, d2 = q2.unjustifiedBacktracks + q2.localZigzags;
+  if (!(d2 < d1 || d2 === 0)) return { accept: false, codes: [], reason: "defects not reduced" };
+  if (q2.totalMinutes > q1.totalMinutes * 1.05 + 1) return { accept: false, codes: [], reason: "route cost worse" };
+  const placedCount = (r: SchedulerResult) => r.success ? r.data.items.filter(it => it.item_type !== "affiliate").length : 0;
+  if (placedCount(second) < placedCount(first) - 1) return { accept: false, codes: [], reason: "too many stops lost" };
+  if (d2 === d1 && q2.clusterReentries === q1.clusterReentries && q2.totalMinutes >= q1.totalMinutes) return { accept: false, codes: [], reason: "no improvement" };
+  const codes: RepairCode[] = [];
+  if (q2.clusterReentries < q1.clusterReentries) codes.push("REENTRY_REPAIRED");
+  if (q2.localZigzags < q1.localZigzags) codes.push("LOCAL_ZIGZAG_REPAIRED");
+  if (q2.unjustifiedBacktracks < q1.unjustifiedBacktracks) codes.push("BACKTRACK_REPAIRED");
+  return { accept: true, codes, reason: "ok" };
 }
 
 function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): SchedulerResult {
@@ -204,6 +258,9 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
   /** 같은 권역이거나 인접 권역인가 — 식사 locality 판정 */
   const nearCluster = (a: number | undefined, b: number | undefined): boolean =>
     a !== undefined && b !== undefined && (a === b || clustersAdjacent(clusters[a]!, clusters[b]!));
+  /** 오늘 이미 떠난 권역으로 되돌아가는가(직전 권역 자체는 제외) */
+  const reentersCluster = (c: number | undefined, prev: number | undefined): boolean =>
+    c !== undefined && c !== prev && visitedClusters.has(c);
 
   // ── P1: Place Anchors ──────────────────────────────────────────────────────
 
@@ -259,6 +316,8 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
   // 비율이 아니라 기회다 — 고정 percentage 는 어디에도 없다.
   const mealWindows  = activeMealWindows(timeToMinutes(input.start_time), timeToMinutes(input.end_time));
   const filledMeals  = new Set<MealKind>();
+  /** 자동 식당의 공급 기준 locality(감사용) — 선택 시점에 기록한다 */
+  const mealLocalityOf = new Map<string, MealLocality>();
   /** 사용자가 직접 고른 장소인가 — Selected 에는 끼니 상한을 적용하지 않는다(§6) */
   const isUserSelected = (placeId: string, score: number): boolean =>
     score === 999 || Boolean(input.preferred_items?.some(p => p.place_id === placeId));
@@ -323,7 +382,7 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
         // 앞자리가 식사 시간이 아니면 **버리지 않고 미룬다** — 사람은 10시에 점심을
         // 먹지 않고 12시에 먹는다. 같은 gap 안에 아직 안 채운 식사 창이 있으면
         // 그 시작 시각으로 놓는다.
-        let placeStart = gap.start_minutes + travelMin;
+        let placeStart = gap.start_minutes + travelMin; let deferredMinutes = 0;
         if (isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score)) {
           if (!canPlaceAutoMeal(placeStart, mealWindows, filledMeals).allowed) {
             const later = mealWindows.find(w =>
@@ -331,6 +390,7 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
               w.start_minutes >= placeStart &&
               w.start_minutes + stayMin <= gap.end_minutes);
             if (!later) continue;
+            deferredMinutes = later.start_minutes - placeStart;   // closure V2: 아래 fill-first 규칙이 본다
             placeStart = later.start_minutes;
           }
         }
@@ -372,13 +432,21 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
           travel_minutes:       travelMin,
           stay_minutes_resolved: stayMin,
           start_minutes_resolved: placeStart,
+          deferred_minutes:     deferredMinutes,
         });
       }
 
       if (scored.length === 0) continue;
 
       // Pick the highest adjusted_score candidate
-      scored.sort((a, b) => b.adjusted_score - a.adjusted_score);
+      // 동점은 place_id 사전순 — 후보 입력 순서에 따라 결과가 달라지지 않는다(closure V2 §7 실측: 순서 셔플 20회 중 0–5회만 같은 일정)
+      scored.sort((a, b) => b.adjusted_score - a.adjusted_score || a.place_id.localeCompare(b.place_id));
+      // closure V2 (AUTO_MEAL_SELECTION 원인): 식사 창까지 한 stop 이상 비어 있고 그 앞자리를 채울 다른 후보가 있으면,
+      // 크게 미뤄진 식당은 이번 gap 에서 고르지 않는다. 앞자리를 먼저 채운 뒤 다음 gap 에서 **실제 직전 장소** 기준으로 식당을
+      // 고른다 — 아니면 점심 직후(숙소 권역)를 기준으로 저녁을 골라 오후 권역에서 되돌아오는 재진입이 생긴다(실측 2026-08-31 Day 6/10).
+      // 식당밖에 없으면(다른 후보 0) 그대로 둔다 — 식사 계약은 그대로다.
+      const isFarDeferred = (c: ScoredCandidate) => (c.deferred_minutes ?? 0) >= MEAL_DEFER_FILL_FIRST_MINUTES;
+      if (scored.some(c => !isFarDeferred(c))) for (let k = scored.length - 1; k >= 0; k--) if (isFarDeferred(scored[k]!)) scored.splice(k, 1);
 
       // ── Meal Coverage ────────────────────────────────────────────────────
       // 식사 기회가 남아 있는데 취향 보정이 강한 non-food 후보가 그 자리를 계속
@@ -407,12 +475,14 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
           // P1 meal-aware (§7): 직전 장소와 같은/인접 권역에 route-valid 식당이 있으면 그 안에서 고른다 —
           // 멀리 있는 고점수 식당이 하루 동선을 동서로 찢지 않게. 없을 때만 기존 점수 floor 규칙으로 돌아간다.
           const prevCluster = clusterOfItem(predecessor);
-          const localMeals = scored.filter(c =>
-            isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) && mealWindowOk(c) &&
-            nearCluster(clusterOf.get(c.place_id), prevCluster));
-          const mealPicks = localMeals.length > 0 ? localMeals : scored.filter(c =>
-            isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) &&
-            c.adjusted_score >= mealFloor && mealWindowOk(c));
+          const autoMealOk = (c: ScoredCandidate) => isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) && mealWindowOk(c);
+          // closure V2 (§10–11 AUTO_MEAL_SELECTION): 같은 권역 > 인접·미방문 권역 > 인접이지만 오늘 이미 떠난 권역(재진입).
+          // "인접" 이라는 이유로 오늘 떠난 숙소 권역으로 되돌아가 저녁을 먹는 것이 Day 6/7/9/10 재진입의 원인이었다
+          // (실측 2026-08-31: 4/4 모두 같은 권역 식당이 공급에 4–17곳 있었다). 도시 이름·장소 예외 없음.
+          const sameMeals     = scored.filter(c => autoMealOk(c) && clusterOf.get(c.place_id) === prevCluster);
+          const adjacentMeals = scored.filter(c => autoMealOk(c) && nearCluster(clusterOf.get(c.place_id), prevCluster) && !reentersCluster(clusterOf.get(c.place_id), prevCluster));
+          const localMeals    = sameMeals.length > 0 ? sameMeals : adjacentMeals.length > 0 ? adjacentMeals : scored.filter(c => autoMealOk(c) && nearCluster(clusterOf.get(c.place_id), prevCluster));
+          const mealPicks = localMeals.length > 0 ? localMeals : scored.filter(c => autoMealOk(c) && c.adjusted_score >= mealFloor);
           if (mealPicks.length > 0) pickPool = mealPicks;
         }
       }
@@ -450,6 +520,12 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
       if (isFoodCategory(best.category) && !isUserSelected(best.place_id, best.score)) {
         const meal = canPlaceAutoMeal(startMin, mealWindows, filledMeals).meal;
         if (meal) filledMeals.add(meal);
+        // 공급 기준 locality 기록(감사·reason code 용). dataset 기준(MEAL_SUPPLY_GAP vs NO_LOCAL_FEASIBLE_MEAL)은 QA harness 가 증명한다.
+        const pc = clusterOfItem(predecessor), bc = clusterOf.get(best.place_id);
+        const okLocal = (c: number | undefined) => nearCluster(c, pc) && !reentersCluster(c, pc);
+        mealLocalityOf.set(best.place_id, pc === undefined || okLocal(bc) ? "LOCAL_MEAL"
+          : scored.some(c => c.place_id !== best.place_id && isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) && okLocal(clusterOf.get(c.place_id))) ? "AUTO_MEAL_SELECTION"
+          : "NO_LOCAL_IN_SUPPLY");
       }
       if (best.zone_id !== undefined) zoneTracker.update(best.zone_id);
       { const cid = clusterOf.get(best.place_id); if (cid !== undefined) visitedClusters.add(cid); }
@@ -516,16 +592,23 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
     .map(it => {
       const coord = itemCoordinate(it, input);
       const cand = it.place_id ? input.candidates.find(c => c.place_id === it.place_id) : undefined;
+      const pinned = it.is_fixed || it.source === "anchor" || it.source === "fixed_event" || cand?.score === 999 || Boolean(it.place_id && input.preferred_items?.some(p => p.place_id === it.place_id));
+      const pinKind: PinKind | undefined = !pinned ? undefined : it.is_fixed ? "USER_FIXED" : (cand?.score === 999 || (it.place_id && input.preferred_items?.some(p => p.place_id === it.place_id))) ? "USER_SELECTED" : "ANCHOR";
+      const meal = Boolean(cand && isFoodCategory(cand.category) && !pinned);
+      const startMinutes = timeToMinutes(it.start_time);
+      const w = meal ? mealWindowAt(startMinutes, mealWindows) : null;
       return {
         key: it.place_id ?? it.event_id ?? String(it.slot_order),
         coordinate: coord ?? { lat: NaN, lng: NaN },
-        pinned: it.is_fixed || it.source === "anchor" || it.source === "fixed_event" || cand?.score === 999,
-        meal: Boolean(cand && isFoodCategory(cand.category) && !it.is_fixed),
+        pinned, pinKind, meal,
+        mealLocality: meal && it.place_id ? mealLocalityOf.get(it.place_id) : undefined,
+        mealWindow: w ? [w.start_minutes, w.end_minutes] as [number, number] : undefined,
+        startMinutes, stayMinutes: it.stay_minutes,
         clusterId: clusterOfItem(it),
       };
     });
   const coordinateFailures = auditStops.filter(s => !Number.isFinite(s.coordinate.lat) || !Number.isFinite(s.coordinate.lng)).length;
-  const metrics = auditDayRoute(auditStops.filter(s => Number.isFinite(s.coordinate.lat)));
+  const metrics = auditDayRoute(auditStops.filter(s => Number.isFinite(s.coordinate.lat)), clusters);
   // 하드 제약 재검사: 시간축 순서로 이웃한 두 항목 사이에 이동시간이 들어가는가 (HC-3/HC-8 사후 검증)
   let hardConstraintViolations = 0;
   const seq = auditStops.map((s, k) => ({ s, it: finalItems.filter(it => it.item_type !== "affiliate")[k]! }));
@@ -538,9 +621,11 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
   const quality: DayQuality = {
     status: conf.status, scheduleConfidence: conf.scheduleConfidence, coordinateQuality: conf.coordinateQuality,
     hardConstraintFeasibility: conf.hardConstraintFeasibility, routeQuality: conf.routeQuality, backtrackingQuality: conf.backtrackingQuality,
+    clusterCoherence: conf.clusterCoherence,
     totalMinutes: metrics.totalMinutes, totalMeters: metrics.totalMeters, clusterReentries: metrics.clusterReentries,
-    unjustifiedBacktracks: metrics.unjustifiedBacktracks, justifiedBacktracks: metrics.justifiedBacktracks, betterOrderRatio: metrics.betterOrderRatio,
-    repaired: false, reasons: conf.reasons,
+    unjustifiedBacktracks: metrics.unjustifiedBacktracks, justifiedBacktracks: metrics.justifiedBacktracks, localZigzags: metrics.localZigzags.length,
+    betterOrderRatio: metrics.betterOrderRatio, protectedStops: auditStops.filter(s => s.pinned).length,
+    repaired: false, reasons: conf.reasons, reasonCodes: [...conf.reasonCodes],
   };
 
   return {

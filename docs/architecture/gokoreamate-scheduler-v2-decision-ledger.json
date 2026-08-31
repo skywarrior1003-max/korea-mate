@@ -1,7 +1,7 @@
 {
   "$schema_note": "GoKoreaMate Scheduler V2 decision ledger. status ∈ OWNER_DECISION | PLANNED | PROPOSAL | EXTERNAL_INSPIRATION | UNKNOWN_OR_REVERIFY. implementation_state ∈ CURRENT_IMPLEMENTATION | PARTIAL | PLANNED | NONE. Companion of gokoreamate-scheduler-v2-direction-ssot.md (same D-ids).",
   "last_updated": "2026-08-31",
-  "base_commit": "aa86758 (P0) + P1 neighborhood/route-quality commit (see git log)",
+  "base_commit": "dc6923a (P1) + closure V2 commit (see git log)",
   "branch": "feature/my-trip-planning-final-v1",
   "entries": [
     {
@@ -109,9 +109,9 @@
       "topic": "Neighborhood Clustering",
       "status": "OWNER_DECISION",
       "decision": "Hierarchical neighborhood → Day → in-Day order to reduce backtracking. Busan neighborhood examples are illustrative, not a permanent hard-coded list.",
-      "implementation_state": "PARTIAL",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
       "priority": "P1",
-      "evidence_note": "P1 (2026-08-31): coordinate-derived leader clusters (route-quality.ts buildClusters, 1 km radius, adjacent <= 2 km; city-agnostic, guard test forbids city names in code). Cluster-focused Day supply (candidate-supply.ts focusSupply, limit 60) + in-Day same/adjacent affinity, re-entry and day-focus penalties (engine.ts CLUSTER_WEIGHTS_DEFAULT/STRICT). Distance zones 3 km/7 km remain underneath. Named neighborhoods not modeled by design.",
+      "evidence_note": "P1 (2026-08-31): coordinate-derived leader clusters (route-quality.ts buildClusters, 1 km radius, adjacent <= 2 km; city-agnostic, guard test forbids city names in code). Cluster-focused Day supply (candidate-supply.ts focusSupply, limit 60) + in-Day same/adjacent affinity, re-entry and day-focus penalties (engine.ts CLUSTER_WEIGHTS_DEFAULT/STRICT). Distance zones 3 km/7 km remain underneath. Named neighborhoods not modeled by design. Closure V2 (2026-08-31): 20 deterministic shuffles x 10 days = 200/200 identical cluster membership/count/focus; no chain bridging (members always within leader radius, diameter <= 2 km; adjacency pairwise, not transitive) -> algorithm kept, not replaced.",
       "do_not_assume": "That 'zone' in v1 code means neighborhood; that clusters are a fixed per-city list."
     },
     {
@@ -129,10 +129,10 @@
       "topic": "Route Quality / Backtracking Audit",
       "status": "OWNER_DECISION",
       "decision": "Audit each generated Day (distances, total movement, jumps, re-entry, backtracking, stay relation, fixed-caused round trips, coordinate confidence) before returning.",
-      "implementation_state": "PARTIAL",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
       "priority": "P1",
-      "evidence_note": "P0 (2026-08-30): stronger consecutive-distance penalty (0/30/70/110/150) + egress-to-next-pin penalty (half weight) in greedy scoring, and P3.5 flexible-segment reorder between pins (segment-reorder.ts; fixed/picks/meals pinned; HC-6/HC-8 re-checked). Audit tooling exists only as QA scratch (route-audit.mjs), not a product-side post-generation audit. 10-day Busan (Haeundae stay) before to after: total travel 884 to 817 min, 61.6 to 49.9 km, backtracks 8 to 5; meal-pinned >=20% residual only Day 6 (21.2%). Area re-entries (Haeundae <-> Cheongsapo/Centum) remain on Days 6-10 without fixed justification. P1 (2026-08-31): product-side P3.6 auditDayRoute (reversal cos < -0.5 with legs >= 800 m; cluster re-entry; JUSTIFIED when a pinned stop is involved) + route quality gate with at most one STRICT repair pass (runScheduler). 10-day Busan, isolated corrected dataset, same P1 detector both sides: unjustified 19 to 8, re-entries 10 to 4, 51,194 to 44,438 m, 812 to 763 min, REVIEW days 5 to 4; >=20% better-order days 0 to 0; fixed violations 0.",
-      "do_not_assume": "That the 10-day itinerary route quality is PASS (unjustified re-entries remain on Days 6/7/9/10)."
+      "evidence_note": "P0 (2026-08-30): stronger consecutive-distance penalty (0/30/70/110/150) + egress-to-next-pin penalty (half weight) in greedy scoring, and P3.5 flexible-segment reorder between pins (segment-reorder.ts; fixed/picks/meals pinned; HC-6/HC-8 re-checked). Audit tooling exists only as QA scratch (route-audit.mjs), not a product-side post-generation audit. 10-day Busan (Haeundae stay) before to after: total travel 884 to 817 min, 61.6 to 49.9 km, backtracks 8 to 5; meal-pinned >=20% residual only Day 6 (21.2%). Area re-entries (Haeundae <-> Cheongsapo/Centum) remain on Days 6-10 without fixed justification. P1 (2026-08-31): product-side P3.6 auditDayRoute (reversal cos < -0.5 with legs >= 800 m; cluster re-entry; JUSTIFIED when a pinned stop is involved) + route quality gate with at most one STRICT repair pass (runScheduler). 10-day Busan, isolated corrected dataset, same P1 detector both sides: unjustified 19 to 8, re-entries 10 to 4, 51,194 to 44,438 m, 812 to 763 min, REVIEW days 5 to 4; >=20% better-order days 0 to 0; fixed violations 0. Closure V2 (2026-08-31, D-31): auto meals never JUSTIFIED (AUTO_MEAL_BACKTRACK / MEAL_SUPPLY_GAP unjustified; NO_LOCAL_FEASIBLE_MEAL only with dataset proof); better-order baseline lets auto meals move inside their meal window; local zigzag windows (4-5 stops, >=30% and >=400 m saving); reason codes; protected-stop repair contract (repairAcceptable). Same isolated dataset + V2 detector: unjustified 8->0, re-entry 4->0, zigzag 0, 44,438->24,272 m, 763->639 min, GOOD 4->8, REVIEW 2 (coordinate uncertainty only).",
+      "do_not_assume": "That Production coordinates are corrected (the 2 REVIEW days are street-level rows); that REVIEW triggers substitution or user prompts."
     },
     {
       "id": "D-14",
@@ -161,7 +161,7 @@
       "decision": "Internal trip quality score (coordinate, temporal, route, backtracking, fixed feasibility, freshness); below threshold → recompute/substitute/unplaced/ask. 'Generated' ≠ 'showable'.",
       "implementation_state": "PARTIAL",
       "priority": "P1",
-      "evidence_note": "P1 minimal (2026-08-31): computeScheduleConfidence per Day (coordinate, hard-constraint, route, backtracking -> 0-100, GOOD/REVIEW/FAIL + reasons) in ScheduledDay.quality; internal only, logged in [plan-timing], never rendered (guard test). Only action today is the single repair pass; substitute/unplaced/ask flows not implemented; temporal feasibility and freshness not scored.",
+      "evidence_note": "P1 minimal (2026-08-31): computeScheduleConfidence per Day (coordinate, hard-constraint, route, backtracking -> 0-100, GOOD/REVIEW/FAIL + reasons) in ScheduledDay.quality; internal only, logged in [plan-timing], never rendered (guard test). Only action today is the single repair pass; substitute/unplaced/ask flows not implemented; temporal feasibility and freshness not scored. Closure V2: + clusterCoherence, unjustified >=1 / local zigzag >=1 / uncertain coordinate -> at least REVIEW; reasonCodes recorded; still internal only.",
       "do_not_assume": "That confidence is shown to users or that REVIEW triggers substitution/asking."
     },
     {
@@ -257,12 +257,12 @@
     {
       "id": "D-26",
       "topic": "10-day Busan itinerary route quality",
-      "status": "UNKNOWN_OR_REVERIFY",
-      "decision": "Audited 2026-08-30 (Owner conditions + Haeundae stay): route quality was a scheduler problem (fixed 0). P0 minimal fixes then P1 neighborhood clustering / meal-aware selection / route gate applied (2026-08-31); residual unjustified re-entries remain on Days 6/7/9/10 - SCHEDULER_ROUTE_QUALITY_PASS=NO.",
-      "implementation_state": "PARTIAL",
+      "status": "OWNER_DECISION",
+      "decision": "Audited 2026-08-30 (Owner conditions + Haeundae stay): route quality was a scheduler problem (fixed 0). P0 minimal fixes, P1 clustering, then closure V2 (2026-08-31) meal-selection / determinism / protected-contract / reorder fixes: unjustified 0, re-entry 0, local zigzag 0, 8/10 GOOD; remaining REVIEW = street-level coordinate uncertainty (data, Owner correction pending). SCHEDULER_ROUTE_QUALITY_PASS=YES with that stated exception; TEN_DAY_ALL_GOOD=NO.",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
       "priority": "P0",
-      "evidence_note": "P0: scratchpad/route-quality-audit-before2-stay.json / after2-stay.json. P1 (isolated corrected dataset, P1 detector for BEFORE and AFTER): p1-route-quality-audit-before.json 51,194 m / 812 min / unjustified 19 / re-entry 10 / REVIEW 5 -> p1-route-quality-audit-after.json 44,438 m / 763 min / unjustified 8 / re-entry 4 / REVIEW 4; stops 78 -> 78; offline generation 52 ms. Remaining causes: sparse restaurant supply near some clusters at meal windows and long-day coverage across coastal clusters.",
-      "do_not_assume": "That route quality is now PASS; that the audit is a product feature."
+      "evidence_note": "Closure artifacts: scratchpad/p1c-audit-before.json (engine dc6923a + V2 detector) vs p1c-audit-after.json (closure engine), p1c-route-quality-audit.md. BEFORE 44,438 m / 763 min / unjustified 8 / re-entry 4 / zigzag 0 / GOOD 4; AFTER 24,272 m / 639 min / 0 / 0 / 0 / GOOD 8, REVIEW Days 2-3 COORDINATE_UNCERTAINTY only; stops 78 -> 78; protected loss 0; fixed violations 0; shuffles 200/200; offline 54 ms. Root causes of the four REVIEW days were AUTO_MEAL_SELECTION (dinner re-entering the stay cluster although same-cluster restaurants were in supply) and, after that fix, within-window auto-meal ordering (Days 1/5/9) resolved by the feasibility-aware P3.5 reorder.",
+      "do_not_assume": "That the sea/street coordinates are fixed in Production; that live Production output equals the isolated-dataset benchmark."
     },
     {
       "id": "D-27",
@@ -303,6 +303,16 @@
       "priority": "P1",
       "evidence_note": "Naver Local Search probe (1 item) returned HTTP 401 NID AUTH Result Invalid (1000) - stopped, not bypassed. Verification via OSM Nominatim address-level geocode of each row's own address (1 req/s). Artifact: data/main-intake/five-city-core-v3/corrections/owner-approved-corrections-v3-p1-busan.json (55 rows; 5 exact / 6 current-correct / 33 street-only / 11 not-found). NEEDS_VERIFICATION 73 and GUIDE_COORD_ONLY 66 remain backlog.",
       "do_not_assume": "That the Naver credentials are valid; that STREET_ONLY rows are corrected; that Production was written."
+    },
+    {
+      "id": "D-31",
+      "topic": "P1 route-quality closure (V2 detector semantics, protected repair contract)",
+      "status": "OWNER_DECISION",
+      "decision": "(1) SSOT meal-pin wording corrected: JUSTIFIED comes only from pinned stops (fixed / This Trip / anchor); auto meals are never justified by being meals. (2) AUTO_MEAL is not a better-order pin; it may move inside its meal window (audit and P3.5 reorder). (3) NO_LOCAL_FEASIBLE_MEAL (dataset-level none) vs MEAL_SUPPLY_GAP (supply defect, UNJUSTIFIED) vs AUTO_MEAL_SELECTION (local alternative existed in supply) separated. (4) Clustering kept (order-independent proven); no union-find replacement. (5) Repair acceptance requires protected-stop signature equality, hard 0, no defect increase, cost <= +5%, <= 1 auto stop lost. (6) Closure PASS judged on evidence; coordinate-uncertainty REVIEW is the only allowed remaining exception.",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
+      "priority": "P1",
+      "evidence_note": "route-quality.ts (justify / simulate / local zigzag / computeScheduleConfidence), engine.ts (meal tiers, MEAL_DEFER_FILL_FIRST_MINUTES, tie-break, protectedSignature / repairAcceptable, mealLocalityOf), segment-reorder.ts (auto meals movable inside window, feasibility-aware bestOrder), tests p1-closure-guard.test.ts (10) + route-quality/segment-reorder/p1 guards. Benchmark harness p1c-bench.ts (engine root switchable: dc6923a archive vs live).",
+      "do_not_assume": "That in-product code can prove NO_LOCAL_FEASIBLE_MEAL (only the QA harness sees the whole dataset); that REVIEW days imply a route defect (Days 2-3 are data uncertainty)."
     }
   ]
 }

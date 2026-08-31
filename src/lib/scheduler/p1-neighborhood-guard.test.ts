@@ -67,7 +67,9 @@ test("★가중치 상수는 도시 이름 없이 좌표 규칙만 쓴다 (sourc
   assert.ok(CLUSTER_WEIGHTS_STRICT.reentry > CLUSTER_WEIGHTS_DEFAULT.reentry);
   assert.match(rq, /export const CLUSTER_RADIUS_M\s*=\s*1_000;/);
   assert.match(rq, /export const ADJACENT_RADIUS_M = 2 \* CLUSTER_RADIUS_M;/);
-  assert.match(eng, /const localMeals = scored\.filter\(/, "meal-aware 선택");
+  // closure V2: 같은 권역 > 인접·미방문 > 인접 재진입 순으로 자동 식당을 고른다
+  assert.match(eng, /const sameMeals\s+= scored\.filter\(c => autoMealOk\(c\) && clusterOf\.get\(c\.place_id\) === prevCluster\)/, "meal-aware 선택: 같은 권역 우선");
+  assert.match(eng, /const adjacentMeals = scored\.filter\(c => autoMealOk\(c\) && nearCluster\(.*\) && !reentersCluster\(/, "인접이라도 재진입 권역은 뒤로");
   assert.match(eng, /const second = scheduleOnce\(input, CLUSTER_WEIGHTS_STRICT\);/, "repair 는 정확히 1회");
   assert.ok(!/while \(.*quality/.test(eng), "품질 재시도 루프가 없다");
 });
