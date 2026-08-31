@@ -363,6 +363,16 @@
       "priority": "P0",
       "evidence_note": "data/main-intake/five-city-core-v3/corrections/owner-approved-corrections-v5-busan-duplicates.json; scratchpad/OWNER-RUN-P3-busan-duplicates-v5.sql; simulation p1c-audit-dup-sim.json (duplicate appearance 0, route defects 0, GOOD 8 / REVIEW 2 unchanged, stops 80 -> 79). References: FK 0, trip_moments/user_spots/reactions 0, itineraries mentioning 1362/1335: 1 each (id-hydration is reference-mode, unaffected).",
       "do_not_assume": "That other Busan duplicates were audited; that the correction is applied before the PROD-SQL task."
+    },
+    {
+      "id": "D-37",
+      "topic": "Owner handoff checkpoint (final Production visual QA)",
+      "status": "UNKNOWN_OR_REVERIFY",
+      "decision": "MY_TRIP_OWNER_REVIEW_READY=YES; OWNER_REVIEW_HANDOFF_READY=YES. Release HOLD until the Owner's visual approval; then a separate release cutover task. Known minor: one cost-optimal 1.2 km reversal on live Day 9 (travel-time table quantization) — P2 real travel-time direction.",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
+      "priority": "P0",
+      "evidence_note": "p1c-audit-prod-handoff.json, live-day-dump ×5 (hash identical), prod-shots-handoff/* (Day 4 = 1335 at The Bay 101; Day 9 = single 분홍이네), sp/iq/oc2/locale/five-city 2026-08-31 late run, Gamcheon Free.",
+      "do_not_assume": "That Production static /place pages are refreshed before the next deploy; that Busan-wide coordinates/duplicates were audited."
     }
   ]
 }
