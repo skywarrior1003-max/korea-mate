@@ -4,6 +4,7 @@
 > 작성일: 2026-06-17
 > Task: TASK-012 — 규칙 기반 Scheduler 후보군 설계 문서 추가
 > 위치: `docs/rule-based-scheduler-design.md`
+> 후속 방향 SSOT (2026-08-30): `docs/architecture/gokoreamate-scheduler-v2-direction-ssot.md` · 결정 원장 `gokoreamate-scheduler-v2-decision-ledger.json` — 방향(Owner 승인)과 구현 상태를 구분해 기록. 본 문서는 v1 엔진 설계.
 
 ---
 
