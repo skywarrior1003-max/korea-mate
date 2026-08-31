@@ -42,7 +42,7 @@ Role separation (D-02, `OWNER_DECISION`):
 
 ## 2. Scheduler V2 integrated structure (22 components)
 
-Format per row: purpose · input → output · status · priority (P0 now / P1 pre-launch / P2 right after launch / P3 next / P4 long-term, per §24).
+Format per row: purpose · input → output · status · priority (P0 now / P1 pre-launch / P2 right after launch / P3 next / P4 long-term, per §21).
 
 | # | Component | Purpose | Input → Output | Status | Priority |
 |---|---|---|---|---|---|
