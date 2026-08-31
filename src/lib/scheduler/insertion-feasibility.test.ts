@@ -98,8 +98,13 @@ test("B 다음 항목까지 갈 수 없으면 중간 자리에 넣지 않는다"
   const c1 = r.id("c1"), lunch = r.id("lunch");
   assert.ok(lunch, "식당은 배치되어야 한다");
   if (c1) {
-    assert.ok(toMin(c1.start_time) >= toMin(lunch!.end_time),
-      `c1 을 구멍(10:15–11:00)에 넣으면 안 된다 — 실제 ${c1.start_time}–${c1.end_time}`);
+    // P0 거리 페널티(2026-08-30) 뒤로는 옆 동네 c1 이 18km 식당보다 먼저 고른다 → c1 10:23–10:43, 식당은 그 뒤
+    // 이동 40분을 더한 11:23 이후에 놓인다. 계약은 그대로다: **이미 놓인 다음 항목에 닿을 수 없는 구멍에는 넣지 않는다.**
+    // 그래서 두 순서 중 하나만 허용한다 — c1 이 식당 뒤이거나, 식당이 c1 뒤에 이동시간(40분)만큼 떨어져 있거나.
+    const c1AfterLunch = toMin(c1.start_time) >= toMin(lunch!.end_time);
+    const lunchReachableAfterC1 = toMin(lunch!.start_time) >= toMin(c1.end_time) + 40;
+    assert.ok(c1AfterLunch || lunchReachableAfterC1,
+      `c1 을 닿을 수 없는 구멍에 넣으면 안 된다 — c1 ${c1.start_time}–${c1.end_time}, 식당 ${lunch!.start_time}`);
   }
   assertPhysicallyPossible(r.items, { lunch: 200, c1: 1 });
 });
@@ -153,9 +158,9 @@ test("D This Trip 이어도 불가능한 중간 자리에는 배치하지 않는
 
 test("E 일반 추천 후보에도 같은 계약이 적용된다", () => {
   const r = holeCase(1, 20);
-  const c1 = r.id("c1");
-  // c1 은 999 가 아닌 일반 후보다. 같은 판정을 받아야 한다.
-  if (c1) assert.ok(toMin(c1.start_time) >= toMin(r.id("lunch")!.end_time));
+  const c1 = r.id("c1"), lunch = r.id("lunch")!;
+  // c1 은 999 가 아닌 일반 후보다. 같은 판정을 받아야 한다 (B 와 같은 두 가지 허용 순서).
+  if (c1) assert.ok(toMin(c1.start_time) >= toMin(lunch.end_time) || toMin(lunch.start_time) >= toMin(c1.end_time) + 40);
   assertPhysicallyPossible(r.items, { lunch: 200, c1: 1 });
 });
 

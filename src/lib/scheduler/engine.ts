@@ -22,6 +22,7 @@ import {
   activeMealWindows, canPlaceAutoMeal, isFoodCategory, mealWindowAt, type MealKind,
 } from "./meal-opportunity.ts";
 import { injectAffiliates } from "./affiliate-injector.ts";
+import { reorderFlexibleSegments } from "./segment-reorder.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
   hc1NoDuplicate,
@@ -48,12 +49,24 @@ interface ScoredCandidate extends NearMeCandidate {
 // for HC-3/HC-4) as a distance proxy — avoids a second haversine call.
 // My Picks (score=999) remain above NearMe even at max penalty (999-90 = 909
 // vs NearMe max ≈ 205), so they are never deprioritised below NearMe items.
+//
+// P0 route quality (TASK-SCHEDULER-V2-P0-ROUTE-QUALITY-AND-RELEASE-BLOCKERS-V1, 실측 2026-08-30 부산 10일·해운대 숙소):
+// 예전 값(0/20/40/60/90)은 NearMe 점수 차(최대 ≈205)보다 작아 2–3 km 떨어진 고점수 후보가 옆 동네 후보를 계속 이겼고,
+// 하루가 해운대 → 청사포 → 해운대 → 센텀 처럼 권역을 되돌아왔다(6/10일, 대안 순서 대비 20–38% 낭비).
+// 값을 올리고(≤1km 30 · ≤3km 70 · ≤7km 110 · 그 밖 150) **다음 핀까지의 이탈 거리**도 절반 가중으로 본다(아래).
+// This Trip 픽(999)은 최대 페널티를 다 받아도(999−150−75=774) NearMe 최대(≈205)보다 위다 — 사용자 선택은 그대로 우선한다.
 function consecutiveDistancePenalty(travelMinutes: number): number {
   if (travelMinutes <=  8) return   0;  // ≤500m  — walkable, no penalty
-  if (travelMinutes <= 15) return  20;  //  ~1km  — short ride
-  if (travelMinutes <= 20) return  40;  //  ~3km  — medium ride
-  if (travelMinutes <= 30) return  60;  //  ~7km  — long ride
-  return 90;                            //   7km+ — far destination
+  if (travelMinutes <= 15) return  30;  //  ~1km  — short ride
+  if (travelMinutes <= 20) return  70;  //  ~3km  — medium ride
+  if (travelMinutes <= 30) return 110;  //  ~7km  — long ride
+  return 150;                           //   7km+ — far destination
+}
+
+/** 다음 배치 항목(핀)까지의 이탈 — 두 핀 사이에 끼울 후보는 가는 길에 있는 쪽이 낫다. 직전 거리 페널티의 절반 가중. */
+function egressDistancePenalty(travelMinutes: number | null): number {
+  if (travelMinutes === null) return 0;
+  return Math.round(consecutiveDistancePenalty(travelMinutes) / 2);
 }
 
 // ─── Gap 기준 항목 찾기 ───────────────────────────────────────────────────────
@@ -252,9 +265,11 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
         // 체류가 gap 을 꽉 채우면 다음 항목 시작 시각에 이동시간이 0 분이 된다.
         // This Trip 이든 일반 추천이든, 고정이든 아니든 똑같이 적용한다 —
         // 우선순위가 높다고 순간이동할 수 있는 것은 아니다.
+        let egressMinForScore: number | null = null;
         if (nextPlacedStart !== null && nextPlacedCoord) {
           const egressMin = estimateTravelMinutes(c.coordinate, nextPlacedCoord);
           if (hc8InsertionEgressFits(placeStart + stayMin, egressMin, nextPlacedStart) !== null) continue;
+          egressMinForScore = egressMin;
         }
 
         const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);
@@ -274,7 +289,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
           ...c,
           // AI 프로필 보정은 여기서만 얹는다. 위의 HC 검사를 모두 통과한
           // 후보들 사이의 순서만 바뀌고, 프로필이 없으면 0 이라 기존과 같다.
-          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin)
+          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin) - egressDistancePenalty(egressMinForScore)
                                 + profileBias(input.personalization_profile, {
                                     place_id:     c.place_id,
                                     category:     c.category,
@@ -400,6 +415,13 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
   // 로 고정하면 P2 가 hard constraint 로 다룬다.
   runUntilStable(() => greedyLoop(true));
   runUntilStable(() => greedyLoop());
+
+  // ── P3.5: 핀 사이 유연 구간 재정렬 (P0 route quality) ──────────────────────
+  //
+  // greedy 가 고른 장소 집합은 그대로 두고, 고정·픽·식당 사이의 일반 추천 순서만 스케줄러 비용
+  // (estimateTravelMinutes) 기준으로 다시 정한다. 어떤 HC 도 새로 어기지 않을 때만 적용한다.
+  const reordered = reorderFlexibleSegments(placed, input);
+  if (reordered.reorderedSegments > 0) { placed.length = 0; placed.push(...reordered.items); }
 
   // ── P4: Affiliate Injection ────────────────────────────────────────────────
 

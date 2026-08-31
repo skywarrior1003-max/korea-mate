@@ -71,7 +71,7 @@ import { reduciblePicks } from "@/lib/trip-plan/trip-feasibility";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
-import { haversineKm, isValidCoordinate } from "@/lib/geo";
+import { haversineKm, isValidCoordinate, isSchedulableCoordinate } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 import UserSpotsPanel from "@/components/UserSpotsPanel";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
@@ -423,7 +423,8 @@ async function generateWithNewApi(
   // truthy 검사가 아니라 좌표 유효성으로 판정한다 — `!item.lat` 는 위도 0 을
   // 좌표 없음으로 보고, NaN·문자열·범위 밖 값은 그대로 통과시킨다.
   const skippedCartNames = cart
-    .filter(item => !isValidCoordinate(item.lat, item.lng))
+    // P0 coordinate gate: 좌표 없음·범위 밖은 자동 배치에 넣지 않는다 — 대신 아래 안내로 밝힌다(조용히 버리지 않는다)
+    .filter(item => !isSchedulableCoordinate(item.lat, item.lng))
     .map(item => item.shortName || item.name);
 
   // 하루 시간 창 밖으로 지정된 고정 일정. 조용히 무시하지 않고 이름을 알린다.
@@ -431,7 +432,7 @@ async function generateWithNewApi(
 
   // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
   const cartHints = cart
-    .filter(item => isValidCoordinate(item.lat, item.lng))
+    .filter(item => isSchedulableCoordinate(item.lat, item.lng))
     .map(item => ({
       // city_spot 은 바레 숫자로 보낸다 — plan.ts 가 DB 후보와 대조해 중복을
       // 제거하고 place_map 이 표시정보를 채운다(기존 BUG-01 동작 보존).

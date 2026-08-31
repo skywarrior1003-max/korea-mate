@@ -305,7 +305,7 @@ test("17: 좌표 보존 계약이 그대로다", () => {
   assert.match(picksSrc, /const hasCoord = isValidCoordinate\(s\.lat, s\.lng\);/);
   const page = readFileSync(
     path.join(process.cwd(), "src", "app", "itinerary", "page.tsx"), "utf8");
-  assert.match(page, /\.filter\(item => isValidCoordinate\(item\.lat, item\.lng\)\)/);
+  assert.match(page, /\.filter\(item => isSchedulableCoordinate\(item\.lat, item\.lng\)\)/);
 });
 
 test("도시별 This Trip 을 만들지 않았다 — cart 자동 삭제 없음", () => {

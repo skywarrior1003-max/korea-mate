@@ -19,6 +19,7 @@ import { adaptToSchedulerCandidates } from "../../../src/lib/trip-plan/near-me-a
 import { runScheduler } from "../../../src/lib/scheduler/engine";
 import { haversineDistance } from "../../../src/lib/scheduler/utils";
 import { boundingBoxDelta, assignZoneId, rowsToZonedPlaces, expandZones } from "../../../src/lib/near-me/zone-classifier";
+import { isSchedulableCoordinate } from "../../../src/lib/geo";
 import { computeTotalScore, buildLikedCategorySet } from "../../../src/lib/near-me/scorer";
 import type { TripPaceChoice } from "../../../src/lib/trip-pace/pace-core";
 import { diversifyByCategory } from "../../../src/lib/near-me/candidate-diversity";
@@ -182,7 +183,8 @@ async function runNearMeDirect(
       }
 
       if (!error && Array.isArray(data)) {
-        rawRows = (data as any[]).map(row => ({
+        // P0 coordinate gate: 좌표가 "존재" 하는 것과 "쓸 수 있는" 것은 다르다 — 범위 밖·NaN·(0,0) 행은 후보에서 뺀다.
+        rawRows = (data as any[]).filter(row => isSchedulableCoordinate(row.lat, row.lng)).map(row => ({
           place_id: String(row.id),
           category: String(row.category),
           lat:      row.lat as number,
@@ -475,7 +477,8 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   const baseCandidates = adaptToSchedulerCandidates(nearMeResults as any);
 
   // 8. Cart candidates (score=999, always placed first)
-  const cartCandidates = cart_hints.map(hint => {
+  // This Trip hint 도 같은 게이트 — 클라이언트가 이미 걸러 안내하지만(skippedCartNames), 서버는 신뢰하지 않는다.
+  const cartCandidates = cart_hints.filter(h => isSchedulableCoordinate(h.lat, h.lng)).map(hint => {
     const hintCoord: Coord = { lat: hint.lat, lng: hint.lng };
     const distM  = haversineDistance(coordinate as any, hintCoord as any);
     const zoneId: ZoneId = (assignZoneId(distM) as ZoneId | null) ?? 3;

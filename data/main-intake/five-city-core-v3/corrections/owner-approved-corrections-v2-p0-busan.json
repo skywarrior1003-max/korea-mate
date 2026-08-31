@@ -1,0 +1,24 @@
+{
+  "task": "TASK-SCHEDULER-V2-P0-ROUTE-QUALITY-AND-RELEASE-BLOCKERS-V1",
+  "prepared_at": "2026-08-30",
+  "owner_approved": false,
+  "production_write": "NOT_EXECUTED — Owner checkpoint. Apply with the guarded SQL (each UPDATE is predicated on the current wrong value; affected-row counts must equal 9 and 1).",
+  "method_note": "Each row's own stored address was geocoded (OpenStreetMap Nominatim, 2026-08-30). DB coordinates for all 9 restaurants lie 0.6–3.3 km from their addresses, in the sea south of Haeundae/Dalmaji; the intake provenance had already flagged them (coord_status COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 'building' = matched house number; 'street' = street centroid of the addressed road (±100–300 m). Igidae (id 7) is AMBIGUOUS (trail 4.7 km, official pages give no point; not corrected).",
+  "C_coordinates": [
+    { "city_spot_id": 272,  "canonical": "busan-G-00037", "name": "Osteria Eoboo",                "address": "부산 해운대구 해운대로570번길 23, 3층",     "before": { "lat": 35.151,  "lng": 129.1623 }, "after": { "lat": 35.16034, "lng": 129.15737 }, "precision": "street",   "distance_m": 1128, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 386,  "canonical": "busan-G-00053", "name": "Small Space",                  "address": "부산 해운대구 해운대해변로298번길 47, 4층",  "before": { "lat": 35.1539, "lng": 129.1739 }, "after": { "lat": 35.16167, "lng": 129.16735 }, "precision": "building", "distance_m": 1050, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM (갤러리토라 47 해운대해변로298번길 building match)" },
+    { "city_spot_id": 395,  "canonical": "busan-G-00029", "name": "Motnani Restaurant (Haeundae)", "address": "부산 해운대구 마린시티1로 91, 101동 201호", "before": { "lat": 35.1517, "lng": 129.1523 }, "after": { "lat": 35.15604, "lng": 129.14764 }, "precision": "street",   "distance_m": 640,  "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 397,  "canonical": "busan-G-00058", "name": "Sunchang Hoetjip",             "address": "부산 해운대구 달맞이길62번길 67",          "before": { "lat": 35.1511, "lng": 129.1524 }, "after": { "lat": 35.15786, "lng": 129.17233 }, "precision": "street",   "distance_m": 1960, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 400,  "canonical": "busan-G-00042", "name": "Kujira Men",                   "address": "부산 해운대구 우동2로 17",                 "before": { "lat": 35.1528, "lng": 129.173  }, "after": { "lat": 35.16604, "lng": 129.16043 }, "precision": "street",   "distance_m": 1870, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 1133, "canonical": "busan-G-00050", "name": "Gumsu Bokkuk (Haeundae)",      "address": "부산 해운대구 중동1로43번길 23",           "before": { "lat": 35.1513, "lng": 129.1624 }, "after": { "lat": 35.16216, "lng": 129.16424 }, "precision": "street",   "distance_m": 1220, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 1135, "canonical": "busan-G-00061", "name": "Daltai",                       "address": "부산 해운대구 달맞이길 193",               "before": { "lat": 35.1571, "lng": 129.1642 }, "after": { "lat": 35.15846, "lng": 129.17477 }, "precision": "street",   "distance_m": 970,  "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 1138, "canonical": "busan-G-00071", "name": "Lab 24 by Kumuda",             "address": "부산 해운대구 송정광어골로 41, 4층",        "before": { "lat": 35.151,  "lng": 129.1741 }, "after": { "lat": 35.17978, "lng": 129.19834 }, "precision": "street",   "distance_m": 3900, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM" },
+    { "city_spot_id": 1167, "canonical": "busan-G-00055", "name": "Chao Ran",                     "address": "부산 해운대구 달맞이길 30, 5층",            "before": { "lat": 35.1544, "lng": 129.1538 }, "after": { "lat": 35.15980, "lng": 129.16961 }, "precision": "building", "distance_m": 1560, "verdict": "CONFIRMED_WRONG", "provenance": "ADDRESS_GEOCODE_OSM_NOMINATIM (시그니엘 부산, 30 달맞이길 building match)" }
+  ],
+  "C_hold": [
+    { "city_spot_id": 7, "name": "Igidae Coastal Walk", "before": { "lat": 35.1215, "lng": 129.1287 }, "verdict": "AMBIGUOUS", "note": "4.7 km trail (동생말~어울마당~농바위~오륙도); Visit Busan / VisitKorea pages give address '남구 용호동 일대' and no point coordinate. Not corrected. Companion id 29 Igidae Coastal Trail (35.1294,129.1197) is on land near 동생말." }
+  ],
+  "D_entry_fee": [
+    { "city_spot_id": 2, "name": "Gamcheon Culture Village", "field": "entry_fee", "before": "₩2,000", "after": "Free", "verdict": "CONFIRMED_WRONG", "provenance": "Visit Busan uc_seq=365 이용요금 '무료(주차요금 별도)'; ₩2,000 = 마을안내센터 스탬프(골목투어) 지도 가격 — 일반 입장료가 아님. 스탬프 지도 가격을 담을 field 없음 → 대표 entry_fee 에 두지 않는다." }
+  ]
+}

@@ -268,8 +268,8 @@ test("PicksClient: mapper 가 좌표를 유효할 때만 넘긴다", () => {
 
 test("itinerary: 좌표 판정이 truthy 가 아니라 유효성이다", () => {
   assert.doesNotMatch(pageSrc, /!item\.lat \|\| !item\.lng/, "truthy 판정이 남았다");
-  assert.match(pageSrc, /\.filter\(item => isValidCoordinate\(item\.lat, item\.lng\)\)/);
-  assert.match(pageSrc, /\.filter\(item => !isValidCoordinate\(item\.lat, item\.lng\)\)/);
+  assert.match(pageSrc, /\.filter\(item => isSchedulableCoordinate\(item\.lat, item\.lng\)\)/);
+  assert.match(pageSrc, /\.filter\(item => !isSchedulableCoordinate\(item\.lat, item\.lng\)\)/);
 });
 
 console.log(`\ncoordinate-preservation: ${passed} passed`);

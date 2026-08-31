@@ -17,6 +17,22 @@ export function isValidCoordinate(lat: unknown, lng: unknown): boolean {
   return true;
 }
 
+/**
+ * 자동 배치(스케줄러 후보·This Trip hint)에 넣어도 되는 좌표인가 — P0 최소 Coordinate Quality Gate
+ * (TASK-SCHEDULER-V2-P0-ROUTE-QUALITY-AND-RELEASE-BLOCKERS-V1).
+ *
+ * isValidCoordinate 에 더해 **한국 서비스 범위**(위도 33.0–38.7, 경도 124.5–132.0)를 본다. 서비스는 한국 5도시만
+ * 다루므로 범위 밖 좌표는 "명백히 잘못된 값"이다(스왑된 lat/lng, 0 채움, 다른 나라 지오코딩 결과).
+ * 바다 위 같은 "범위 안의 오류"는 여기서 못 잡는다 — 그것은 데이터 정정과 V2 coordinate_confidence 의 몫이다.
+ * 사용자가 고른 장소(This Trip)는 이 판정에 실패해도 조용히 버리지 않는다 — 호출부가 안내(skippedCartNames)로 밝힌다.
+ */
+export const KOREA_BOUNDS = { latMin: 33.0, latMax: 38.7, lngMin: 124.5, lngMax: 132.0 } as const;
+export function isSchedulableCoordinate(lat: unknown, lng: unknown): boolean {
+  if (!isValidCoordinate(lat, lng)) return false;
+  const la = lat as number, lo = lng as number;
+  return la >= KOREA_BOUNDS.latMin && la <= KOREA_BOUNDS.latMax && lo >= KOREA_BOUNDS.lngMin && lo <= KOREA_BOUNDS.lngMax;
+}
+
 export function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;

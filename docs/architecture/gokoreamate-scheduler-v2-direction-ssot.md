@@ -3,8 +3,8 @@
 - **Status: OWNER-APPROVED DIRECTION**
 - **Scope:** Scheduler / Map / Place Quality / Trip Intelligence
 - **This document is direction SSOT, not implementation-complete evidence.**
-- **Last updated:** 2026-08-30
-- **Git commit (base):** `02d202a` on `feature/my-trip-planning-final-v1` (origin/master `0a47358`)
+- **Last updated:** 2026-08-30 (P0 route-quality pass)
+- **Git commit (base):** `02d202a` → P0 changes on `feature/my-trip-planning-final-v1` (origin/master `0a47358`)
 - **Do not confuse Owner-approved direction with actual implementation state.** Every statement below carries one of the labels in §0. Where a label says `PLANNED`, nothing in the repo implements it yet. Where it says `CURRENT_IMPLEMENTATION`, a file/test is named as evidence.
 - Machine-readable companion: `docs/architecture/gokoreamate-scheduler-v2-decision-ledger.json` (same ids as the `D-xx` markers here).
 - Existing contracts this document does **not** override: `docs/rule-based-scheduler-design.md` (v1 engine), `docs/architecture/gokoreamate-data-contract-v1.md` (place data), `docs/product/gokoreamate-my-places-trip-ai-ssot-2026-08-13.md` (This Trip input contract, My Places AI, style library). Conflicts are resolved by the Owner, not by this document.
@@ -49,7 +49,7 @@ Format per row: purpose · input → output · status · priority (P0 now / P1 p
 | 1 | Intent Compiler | Turn free text into structured scheduler intent/constraints | text → pace, walking tolerance, priorities, daily stop target | `PLANNED` (D-06) | P2 |
 | 2 | Persistent Trip Context | Never re-ask what the user already gave; Confirmed Anchor / Flexible / Suggested | TripDraft, This Trip, fixed → typed context | `PARTIAL` — TripDraft (`src/lib/trip-draft`), This Trip cart, fixed (`CartFixed`) persist; the three-tier classification is not modeled (D-07) | P2 |
 | 3 | Canonical Place Identity | One place = one identity across surfaces | `city_spots.id` / `sourceKey` → identity | `CURRENT_IMPLEMENTATION` — `src/lib/place-identity.ts` (`citySpotSourceKey`, `userSpotSourceKey`), dedup guards | P0 |
-| 4 | Coordinate / Data Confidence Gate | Only trustworthy coordinates feed auto-scheduling | place row → HIGH/MEDIUM/LOW, `schedule_eligible` | `PLANNED` (D-08); today only null-check + bbox (`isValidCoordinate`, `plan.ts` bbox) | P1 |
+| 4 | Coordinate / Data Confidence Gate | Only trustworthy coordinates feed auto-scheduling | place row → HIGH/MEDIUM/LOW, `schedule_eligible` | `PARTIAL` (D-08) — P0 minimum gate `isSchedulableCoordinate` (finite · non-zero · Korea bounds) on scheduler candidates and This Trip hints (`src/lib/geo.ts`, `plan.ts`, page; filtered picks are announced, not dropped). No confidence fields; in-bounds errors need data correction | P1 |
 | 5 | Temporal Feasibility Gate | Opening hours, closures, entry cutoff, check-in/out, fixed times | place facts + times → feasible / impossible | `PARTIAL` — HC-1..HC-9 exist (`src/lib/scheduler/constraint-validator.ts`); **HC-2 opening hours is a stub that always passes** (opening_hours NULL in data) (D-09) | P2 |
 | 6 | Anchor-first Scheduling | Fixed / arrival / departure / stay / reservations before AI picks | anchors → placed first, flexible stops fill gaps | `CURRENT_IMPLEMENTATION` — `anchor-placer.ts`, `placeFixedEvents`, `planDayAnchors` (page), HC-5/HC-9; unplaceable → `unplacedPicks` / `fixedOutOfWindow` (D-10) | P0/P1 |
 | 7 | Neighborhood Clustering | Group by area first, then Day, then order | places → clusters → Day | `PARTIAL` — distance zones from the day start (Zone 1/2/3 = 3 km/7 km, `src/lib/near-me/zone-classifier.ts`, `ZoneTracker` same-zone bonus / reverse penalty). **Named neighborhoods (부산역·남포, 서면…) are not modeled** (D-11) | P1 |
@@ -58,7 +58,7 @@ Format per row: purpose · input → output · status · priority (P0 now / P1 p
 | 10 | Multimodal Travel Cost | Walk / transit / taxi cost model | pair → minutes/cost per mode | `PLANNED` (D-12); today a distance-threshold table (`travel-time-estimator.ts`, `TRAVEL_TIME_TABLE`) | P3 |
 | 11 | Naver Real-world Validation | Validate good candidates with real travel time | route → validated minutes | `PLANNED` (D-12); no Naver Directions call exists | P2 |
 | 12 | Experience Scoring | Beyond shortest path: pace, fatigue, meal timing, scenic, indoor/outdoor, local character | Day → experience score | `PARTIAL` — meal windows (`meal-opportunity.ts`), pace stay tables, profile bias; no fatigue/scenic/indoor-outdoor model (D-14) | P3 |
-| 13 | Route Quality / Backtracking Audit | Check a generated Day before returning it | Day → distances, total movement, re-entry, backtracking, cause (fixed vs scheduler) | `PLANNED` (D-13); today only scoring-time penalties, no post-generation audit | P1 |
+| 13 | Route Quality / Backtracking Audit | Check a generated Day before returning it | Day → distances, total movement, re-entry, backtracking, cause (fixed vs scheduler) | `PARTIAL` (D-13) — P0: stronger distance + egress penalties, P3.5 flexible-segment reorder (`segment-reorder.ts`); audit exists only as QA tooling, not a product post-generation gate | P1 |
 | 14 | Constraint Negotiator | Impossible request → explicit alternatives, user chooses | conflict → 1–2 options | `PARTIAL` — 409 conflict + `HC-*` codes and unplaced notices exist; no alternative generation (D-15) | P2 |
 | 15 | Schedule Confidence Gate | "Generated" ≠ "good enough to show" | Day/trip → internal score → recompute / substitute / unplaced / ask | `PLANNED` (D-16) | P1 (minimal) |
 | 16 | Multiple Internal Candidates | Compare A move-min / B balanced / C variety internally | inputs → several schedules → pick | `PLANNED` (D-17) | P2 |
@@ -79,7 +79,7 @@ Already-given inputs (arrival, departure, stay, travelers, pace, reservations, s
 
 ## 5. Coordinate Quality Gate — `OWNER_DECISION` direction (D-08), `PLANNED`
 
-Trigger case (2026-08-30 READ-ONLY audit): 9 published Busan `city_spots` rows render in the sea south of Haeundae — ids 272, 386, 395, 397, 400, 1133, 1135, 1138, 1167 (source `busan_enrichment_v1` / `canonical`) — plus id 7 Igidae (suspect) (D-27, `UNKNOWN_OR_REVERIFY` until corrected). Rendering uses DB lat/lng unchanged; the defect is data. Existence of lat/lng must no longer be the only eligibility test.
+Trigger case (2026-08-30): 9 published Busan `city_spots` rows render in the sea south of Haeundae — ids 272, 386, 395, 397, 400, 1133, 1135, 1138, 1167 — **CONFIRMED_WRONG** by geocoding each row's own address (0.6–3.9 km away, on land); corrections prepared in `data/main-intake/five-city-core-v3/corrections/owner-approved-corrections-v2-p0-busan.json` + guarded Owner SQL (D-27; Production write pending Owner). Id 7 Igidae is **AMBIGUOUS/HOLD** (4.7 km trail, no official point). P0 minimum gate implemented: `isSchedulableCoordinate` (D-08 `PARTIAL`). Existence of lat/lng is no longer the only eligibility test, but in-bounds errors still need data correction / V2 confidence.
 
 Future fields (names indicative, schema **not** yet designed): `coordinate_source`, `coordinate_confidence`, `coordinate_verified_at`, `address_coordinate_match`, `schedule_eligible`.
 Policy example: HIGH → auto-schedule; MEDIUM → limited use / confirm; LOW → excluded from auto-fill and scheduler candidates.
@@ -104,7 +104,7 @@ AI does not guess travel times. Phase 1: coordinate-based fast estimate (today: 
 ## 10. Route Quality Audit — `OWNER_DECISION` direction (D-13), `PLANNED`
 
 Before returning a generated Day: stop-to-stop distances, total daily movement, large jumps, same-area re-entry, backtracking, relation to the stay, whether a round trip is forced by a fixed item, coordinate confidence. Example pattern to judge: 해운대 → 송정 → 해운대 → 청사포 — required by a fixed item, or a scheduler quality problem?
-**`UNKNOWN_OR_REVERIFY` (D-26):** the route quality of the real 10-day Busan itinerary has **not** been audited; do not record it as verified.
+**(D-26) Audited 2026-08-30** (Owner conditions + Haeundae stay, QA tooling): the zigzag was a scheduler problem (fixed 0). After the P0 minimal fixes (penalties + segment reorder) total travel 884→817 min, 61.6→49.9 km, backtracks 8→5; with meals pinned, a ≥20% better feasible order remains only on Day 6 (21.2%), but area re-entries (해운대↔청사포/센텀) persist on Days 6–10 without fixed justification → route quality is **still `UNKNOWN_OR_REVERIFY` / not PASS**; the remaining cause is meal-window restaurant selection + ring-based zones (V2 P1).
 
 ## 11. Experience Scoring — `OWNER_DECISION` direction (D-14), `PARTIAL`
 
@@ -181,10 +181,10 @@ Intent compilation, natural-language constraint extraction, reasoning over struc
 | Pace | `CURRENT_IMPLEMENTATION` | `pace` stay tables + `trip_pace` candidate scoring (`slot-allocator.ts`, `profile-bias.ts`) | P0 |
 | Existing scheduler (v1) | `CURRENT_IMPLEMENTATION` | `src/lib/scheduler/engine.ts` 7-module pipeline (Anchor → Event → Greedy → Affiliate → Timeline), HC-1..9, meal windows, zone tracker | P0 |
 | Generation performance | `CURRENT_IMPLEMENTATION` | 10-day Busan 160 s+ → 4–7 s after `02d202a` (affiliate placeholder-client timeout removed); `[plan-timing]` log | P0 |
-| Coordinate confidence | `PLANNED` | only null/bbox checks today; 9+1 bad Busan rows pending Owner data correction | P1 |
+| Coordinate confidence | `PARTIAL` | P0 gate `isSchedulableCoordinate` (Korea bounds) for candidates + This Trip hints; 9 Busan rows CONFIRMED_WRONG with corrections prepared (Owner SQL pending), Igidae 7 HOLD | P1 |
 | Neighborhood clustering | `PARTIAL` | distance zones (3 km / 7 km) around the day start; no named-neighborhood model | P1 |
-| Backtracking audit | `PARTIAL` | `ZoneTracker` reverse-zone penalty and consecutive-distance penalty at scoring time; **no post-generation audit** | P1 |
-| Route quality audit | `PLANNED` | none; real 10-day itinerary **not audited** (`UNKNOWN_OR_REVERIFY`) | P1 |
+| Backtracking audit | `PARTIAL` | scoring-time penalties (0/30/70/110/150 + egress ½) and P3.5 segment reorder; 10-day Busan backtracks 8→5, travel 884→817 min; **no product post-generation audit** | P1 |
+| Route quality audit | `PARTIAL` | audited 2026-08-30 with QA tooling (Day 1–10 table in scratch `route-quality-audit-*.json`); residual zigzag Days 6–10 not fixed-justified → `SCHEDULER_ROUTE_QUALITY_PASS=NO` (D-26); no product-side gate | P1 |
 | Schedule confidence | `PLANNED` | none | P1 |
 | Naver validation | `PLANNED` | no Directions/route API call; travel time = distance-threshold table | P2 |
 | Opening hours feasibility | `PARTIAL` | HC-2 defined but always passes; `opening_hours` NULL-heavy | P2 |
@@ -193,7 +193,7 @@ Intent compilation, natural-language constraint extraction, reasoning over struc
 | User preference learning | `PLANNED` | none | P4 |
 | Map marker → place info | `CURRENT_IMPLEMENTATION` | numbered marker click → PlaceModal (`ItineraryDayMap`/`NaverMap` `onDayPlaceClick`, `02d202a`) | P0 |
 | KO locale resolver | `CURRENT_IMPLEMENTATION` | `src/lib/place-display-name.ts` across Explore/Picks/My Trip/PlaceModal/`/place`; ingest-annotation display strip (data still to be corrected) | P0 |
-| Today Trip weather | `PARTIAL` | honest KMA link chip only; no forecast source in repo | P3 |
+| Today Trip weather | `PARTIAL` | honest KMA link chip only; repo-wide + git-history re-check 2026-08-30: no forecast source ever existed (D-29) | P3 |
 
 ## 24. Things easy to confuse
 
@@ -203,3 +203,4 @@ Intent compilation, natural-language constraint extraction, reasoning over struc
 - The 14 s/day generation delay was an affiliate placeholder-client timeout, not scheduler cost; scheduler compute is ~1–7 ms per Day.
 - Sea markers are **data** (DB coordinates), not a rendering bug; correction is an Owner data action.
 - The unplaced store (`koreamate_unplaced_v1`) is per-trip local storage, not the itinerary record.
+- Gamcheon `entry_fee` ₩2,000 is the stamp-map price, not admission (D-28) — correction pending Owner SQL.

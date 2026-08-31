@@ -239,7 +239,7 @@ test("7·8: cart 는 주소가 아니라 저장소에서 읽는다 — My Place 
   assert.ok(isValidCoordinate(YEONGDO.lat, YEONGDO.lng));
   assert.match(picksSrc, /const hasCoord = isValidCoordinate\(s\.lat, s\.lng\);/);
   assert.match(read("src", "app", "itinerary", "page.tsx"),
-    /\.filter\(item => isValidCoordinate\(item\.lat, item\.lng\)\)/);
+    /\.filter\(item => isSchedulableCoordinate\(item\.lat, item\.lng\)\)/);
 });
 
 test("9·10: fixed 메타데이터가 anchor 로 그대로 바뀐다", () => {
