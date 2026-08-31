@@ -1,0 +1,245 @@
+{
+  "task": "TASK-MY-TRIP-RELEASE-CLOSURE-AND-DEV-OPERATING-GUARD-V1",
+  "prepared_at": "2026-08-31",
+  "owner_approved": false,
+  "production_write": "NOT EXECUTED in this CODE task — PROD-SQL task only",
+  "scope": "the 7 remaining Busan sea-coordinate rows only (272, 395, 397, 400, 1133, 1135, 1138)",
+  "method": "VWorld (Korean government) road-address geocoder, house-number level, on each row's own stored address; cross-checked against the P1 OSM Nominatim street-level geocode (agreement 29–172 m for 6 rows; 1135: OSM had road-level only, VWorld resolves house number 193 → 688 m apart, VWorld adopted). Same address-level standard as the 5 rows applied on 2026-08-31 (D-33). Name-similarity matches never used.",
+  "counts": {
+    "EXACT_VERIFIED": 7,
+    "SAFE_STREET_POINT": 0,
+    "AMBIGUOUS": 0,
+    "NOT_VERIFIABLE": 0
+  },
+  "correction_candidates": [
+    {
+      "city_spot_id": 272,
+      "name": "Osteria Eoboo",
+      "ko": "오스테리아 어부",
+      "address": "부산 해운대구 해운대로570번길 23, 3층",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.151,
+        "lng": 129.1623
+      },
+      "after": {
+        "lat": 35.1606509,
+        "lng": 129.156658
+      },
+      "rollback": {
+        "lat": 35.151,
+        "lng": 129.1623
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 해운대로570번길 23 (우동)",
+        "vworld_level": "해운대로570번길",
+        "osm_matched": "해운대로570번길, 우1동, 해운대구, 부산광역시, 48093, 대한민국",
+        "osm_point": {
+          "lat": 35.1603388,
+          "lng": 129.1573682
+        },
+        "osm_vworld_distance_m": 73,
+        "db_to_target_m": 1189,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 395,
+      "name": "Motnani Restaurant (Haeundae)",
+      "ko": "못난이식당 해운대점",
+      "address": "부산 해운대구 마린시티1로 91, 101동 201호",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.1517,
+        "lng": 129.1523
+      },
+      "after": {
+        "lat": 35.1551954,
+        "lng": 129.1447801
+      },
+      "rollback": {
+        "lat": 35.1517,
+        "lng": 129.1523
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 마린시티1로 91 (우동,마린시티두산위브포세이돈)",
+        "vworld_level": "마린시티1로",
+        "osm_matched": "마린시티1로, 우동, 우1동, 해운대구, 부산광역시, 48092, 대한민국",
+        "osm_point": {
+          "lat": 35.1544489,
+          "lng": 129.1433887
+        },
+        "osm_vworld_distance_m": 151,
+        "db_to_target_m": 786,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 397,
+      "name": "Sunchang Hoetjip",
+      "ko": "선창횟집",
+      "address": "부산 해운대구 달맞이길62번길 67",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.1511,
+        "lng": 129.1524
+      },
+      "after": {
+        "lat": 35.1568854,
+        "lng": 129.1738054
+      },
+      "rollback": {
+        "lat": 35.1511,
+        "lng": 129.1524
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 달맞이길62번길 67 (중동)",
+        "vworld_level": "달맞이길62번길",
+        "osm_matched": "달맞이길62번길, 중동, 중1동, 해운대구, 부산광역시, 48099, 대한민국",
+        "osm_point": {
+          "lat": 35.1578569,
+          "lng": 129.1723282
+        },
+        "osm_vworld_distance_m": 172,
+        "db_to_target_m": 2050,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 400,
+      "name": "Kujira Men",
+      "ko": "쿠지라멘",
+      "address": "부산 해운대구 우동2로 17",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.1528,
+        "lng": 129.173
+      },
+      "after": {
+        "lat": 35.1661615,
+        "lng": 129.1601504
+      },
+      "rollback": {
+        "lat": 35.1528,
+        "lng": 129.173
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 우동2로 17 (우동)",
+        "vworld_level": "우동2로",
+        "osm_matched": "우동2로, 우1동, 해운대구, 부산광역시, 48087, 대한민국",
+        "osm_point": {
+          "lat": 35.1660394,
+          "lng": 129.1604305
+        },
+        "osm_vworld_distance_m": 29,
+        "db_to_target_m": 1890,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 1133,
+      "name": "Gumsu Bokkuk (Haeundae)",
+      "ko": "금수복국 해운대본점",
+      "address": "부산 해운대구 중동1로43번길 23",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.1513,
+        "lng": 129.1624
+      },
+      "after": {
+        "lat": 35.1624176,
+        "lng": 129.1644905
+      },
+      "rollback": {
+        "lat": 35.1513,
+        "lng": 129.1624
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 중동1로43번길 23 (중동)",
+        "vworld_level": "중동1로43번길",
+        "osm_matched": "중동1로43번길, 중동, 중1동, 해운대구, 부산광역시, 48095, 대한민국",
+        "osm_point": {
+          "lat": 35.162162,
+          "lng": 129.1642443
+        },
+        "osm_vworld_distance_m": 36,
+        "db_to_target_m": 1251,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 1135,
+      "name": "Daltai",
+      "ko": "달타이",
+      "address": "부산 해운대구 달맞이길 193",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.1571,
+        "lng": 129.1642
+      },
+      "after": {
+        "lat": 35.1583079,
+        "lng": 129.1823274
+      },
+      "rollback": {
+        "lat": 35.1571,
+        "lng": 129.1642
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 달맞이길 193 (중동)",
+        "vworld_level": "달맞이길",
+        "osm_matched": "달맞이길, 중2동, 해운대구, 부산광역시, 48114, 대한민국",
+        "osm_point": {
+          "lat": 35.1584618,
+          "lng": 129.1747664
+        },
+        "osm_vworld_distance_m": 688,
+        "db_to_target_m": 1653,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    },
+    {
+      "city_spot_id": 1138,
+      "name": "Lab 24 by Kumuda",
+      "ko": "랩24 바이 쿠무다",
+      "address": "부산 해운대구 송정광어골로 41, 4층",
+      "verdict": "EXACT_VERIFIED",
+      "precision": "building (road address + house number, VWorld address geocoder; cross-checked with OSM Nominatim street geocode)",
+      "before": {
+        "lat": 35.151,
+        "lng": 129.1741
+      },
+      "after": {
+        "lat": 35.1774355,
+        "lng": 129.1971679
+      },
+      "rollback": {
+        "lat": 35.151,
+        "lng": 129.1741
+      },
+      "evidence": {
+        "vworld_refined": "부산광역시 해운대구 송정광어골로 41 (송정동)",
+        "vworld_level": "송정광어골로",
+        "osm_matched": "송정광어골로, 송정동, 해운대구, 부산광역시, 48073, 대한민국",
+        "osm_point": {
+          "lat": 35.1777498,
+          "lng": 129.1969861
+        },
+        "osm_vworld_distance_m": 39,
+        "db_to_target_m": 3611,
+        "naver_local_search": "not retried (401 on 2026-08-31, per Owner decision)"
+      }
+    }
+  ],
+  "not_touched": [
+    "Igidae id 7 (AMBIGUOUS HOLD)",
+    "STREET_ONLY inland rows (26)",
+    "NOT_FOUND rows (11)"
+  ]
+}

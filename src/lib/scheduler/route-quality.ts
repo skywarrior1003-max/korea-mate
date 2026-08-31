@@ -12,7 +12,7 @@
 //
 // backtracking 판정(P1 detector, closure V2 의미):
 //   · 방향 반전: 연속 두 leg 가 모두 MIN_LEG_M 이상이고 방향 코사인 < −0.5
-//   · 권역 재진입: 이미 떠난 권역으로 다시 들어옴
+//   · 권역 재진입: 이미 떠난 권역으로 다시 들어옴 — 권역 전환은 MIN_LEG_M 이상 leg 로 넘을 때만 "떠남/들어옴" 이다(경계 옆 50 m 이동은 아니다)
 //   JUSTIFIED 는 **pinned stop(고정 · This Trip 사용자 선택 · anchor/도착·출발 목적지)** 이 그 이동의 끝점일 때만이다.
 //   자동 식당(AUTO_MEAL)은 식사 창에 놓였다는 이유로 JUSTIFIED 가 되지 않는다. 자동 식당이 끝점이면
 //   AUTO_MEAL_BACKTRACK 이고, 호출자가 "전체 dataset 에도 인근 feasible 식당이 없었다"(NO_LOCAL_FEASIBLE_MEAL) 를
@@ -233,6 +233,9 @@ export function auditDayRoute(stops: ReadonlyArray<AuditStop>, clusters?: Cluste
       legs.push({ from: p.key, to: q.key, meters: Math.round(legsM[i - 1]!), minutes: legsMin[i - 1]!, reason });
     }
     if (c === undefined) continue;
+    // 권역 경계를 800 m 미만 leg 로 넘는 것은 "떠난 것" 이 아니다 — 50 m 옆 식당이 다른 리더에 붙어 있다고 재진입을 세지 않는다
+    // (실측 2026-08-31 부산 광안리: 939(c3) → 1192(c2, 50 m) → 1368(c3, 759 m) 가 재진입으로 잡혔다). 반전 규칙(MIN_LEG_M)과 같은 기준.
+    if (i > 0 && legsM[i - 1]! < MIN_LEG_M) continue;
     const last = seen.length ? seen[seen.length - 1]! : undefined;
     if (last === undefined || last !== c) {
       if (last !== undefined) clusterSwitches++;

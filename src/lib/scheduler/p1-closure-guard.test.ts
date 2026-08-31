@@ -161,3 +161,29 @@ test("★reason code 는 내부 전용 — page.tsx 는 렌더하지 않고 plan
   for (const code of ["REENTRY_REPAIRED", "LOCAL_ZIGZAG_REPAIRED", "BACKTRACK_REPAIRED"]) assert.ok(eng.includes(code), code);
   assert.ok(!/fetch\(|openai|gemini|anthropic/i.test(rq), "LLM 호출 없음");
 });
+
+// ── 8. 주 권역 점수 질량 동률 — 입력 순서와 무관하게 같은 일정 (release closure: 실측 부산 Day 6 c2 = c5) ──
+test("★primary cluster 질량이 동률이어도 후보 순서에 따라 일정이 바뀌지 않는다 (20회 shuffle)", () => {
+  const C1 = at(35.1600, 129.1600), C2 = at(35.1600, 129.1350);   // 두 권역, 각각 같은 점수 합
+  const tie: SchedulerInput = {
+    trip_date: "2026-09-10", start_time: "09:00", end_time: "21:00", base_coordinate: at(35.1600, 129.1475), pace: "normal",
+    candidates: [
+      ...Array.from({ length: 6 }, (_, i) => cand(`p${i}`, near(C1, i), 100)), cand("pfood", near(C1, 7), 100, "food"),
+      ...Array.from({ length: 6 }, (_, i) => cand(`q${i}`, near(C2, i), 100)), cand("qfood", near(C2, 7), 100, "food"),
+    ] as never,
+  };
+  const seq = (r: SchedulerResult) => r.success ? r.data.items.filter(it => it.item_type !== "affiliate").map(it => `${it.place_id}@${it.start_time}`).join(">") : "fail";
+  const base = seq(runScheduler(tie));
+  for (let k = 1; k <= 20; k++) assert.equal(seq(runScheduler({ ...tie, candidates: shuffled(tie.candidates as never[], 100 + k) as never })), base, `shuffle ${k}`);
+  assert.match(read("./engine.ts"), /mass === primaryMass && primaryCluster !== undefined && cid < primaryCluster/);
+});
+
+// ── 9. 권역 경계의 짧은 이동은 재진입이 아니다 (release closure: 실측 광안리 50 m 경계 hop) ──
+test("★권역 경계를 800 m 미만 leg 로 넘나드는 것은 재진입/전환으로 세지 않는다; 800 m 이상이면 그대로 센다", () => {
+  const s = (key: string, coordinate: { lat: number; lng: number }, clusterId: number): AuditStop => ({ key, coordinate, pinned: false, clusterId });
+  const P = at(35.1642, 129.1182), Q = at(35.1638, 129.1181), R = at(35.1579, 129.1138);        // P→Q 50 m (다른 권역 id), Q→R 760 m (P 의 권역으로 복귀)
+  const hop = auditDayRoute([s("p", P, 3), s("q", Q, 2), s("r", R, 3), s("t", at(35.1555, 129.1173), 3)]);
+  assert.equal(hop.clusterReentries, 0, JSON.stringify(hop.backtracks)); assert.equal(hop.clusterSwitches, 0);
+  const real = auditDayRoute([s("a", A, 0), s("b", B, 1), s("c", near(A, 1), 0)]);                 // 3.2 km 왕복
+  assert.equal(real.clusterReentries, 1); assert.equal(real.clusterSwitches, 2);
+});

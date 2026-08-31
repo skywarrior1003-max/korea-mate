@@ -271,7 +271,7 @@
       "decision": "9 restaurant rows CONFIRMED_WRONG (sea). EXACT subset (386, 1167 + 136, 1127, 340) and Gamcheon entry_fee corrected in Production 2026-08-31 (Owner-authorized v3 SQL, READ-BACK 6/6). 272, 395, 397, 400, 1133, 1135, 1138 remain STREET_ONLY HOLD (in the sea); Igidae 7 AMBIGUOUS HOLD.",
       "implementation_state": "PARTIAL",
       "priority": "P0",
-      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim). P1 v3 (2026-08-31, D-30): of the 9 sea rows only 386 and 1167 reached EXACT (building/POI); 272, 395, 397, 400, 1133, 1135, 1138 stay STREET_ONLY/NOT_FOUND HOLD. Guarded SQL for the 5 exact rows + Gamcheon entry_fee: OWNER-RUN-P1-busan-corrections-v2.sql (value-predicated; Production write pending Owner). Production precheck 2026-08-31 (READ-ONLY): all 6 write targets (1127, 136, 340, 386, 1167 lat/lng; id 2 entry_fee '₩2,000') still match the artifact values (6/6 PRED_MATCH); lat/lng are double precision, entry_fee varchar. Owner SQL v3 = one DO block (precondition 6/6 -> 5 coordinate UPDATEs -> fee UPDATE -> postcondition 6/6, RAISE + rollback otherwise); columns written lat, lng, entry_fee, updated_at only. Not applied by Claude.",
+      "evidence_note": "Root cause of the wrong coordinates unknown (foodservice OFFICIAL_API secondary source key only; intake provenance had flagged COORD_PRESENT_NEEDS_VERIFICATION / ADDRESS_COORD_CONFLICT). Precision: 2 building-level, 7 street-level (OSM Nominatim). P1 v3 (2026-08-31, D-30): of the 9 sea rows only 386 and 1167 reached EXACT (building/POI); 272, 395, 397, 400, 1133, 1135, 1138 stay STREET_ONLY/NOT_FOUND HOLD. Guarded SQL for the 5 exact rows + Gamcheon entry_fee: OWNER-RUN-P1-busan-corrections-v2.sql (value-predicated; Production write pending Owner). Production precheck 2026-08-31 (READ-ONLY): all 6 write targets (1127, 136, 340, 386, 1167 lat/lng; id 2 entry_fee '₩2,000') still match the artifact values (6/6 PRED_MATCH); lat/lng are double precision, entry_fee varchar. Owner SQL v3 = one DO block (precondition 6/6 -> 5 coordinate UPDATEs -> fee UPDATE -> postcondition 6/6, RAISE + rollback otherwise); columns written lat, lng, entry_fee, updated_at only. Not applied by Claude. Release closure 2026-08-31 (D-34): the 7 remaining sea rows are EXACT_VERIFIED via VWorld road-address geocoding (house-number level, OSM cross-check) — v4 artifact + self-verifying SQL prepared, not executed.",
       "do_not_assume": "That the 7 STREET_ONLY sea rows or Igidae are corrected; that /place/<id> static pages reflect the new fee before the next deploy."
     },
     {
@@ -333,6 +333,16 @@
       "priority": "P0",
       "evidence_note": "scratchpad/prod-readback.json, prod-count.json, p1c-audit-prod-postwrite.json, prod-shots-postwrite/*, exec-owner-v3.mjs (sha256-pinned executor, refuses any other SQL). No deploy, no migration, master unchanged.",
       "do_not_assume": "That STREET_ONLY/NOT_FOUND rows are resolved; that the live client loop resets to the stay each morning (Stay is PARTIAL); that Production /place/2 shows Free before the next deploy."
+    },
+    {
+      "id": "D-34",
+      "topic": "My Trip release closure: stay lifecycle, determinism, detector leg rule, sea-7 correction readiness, operating guard",
+      "status": "OWNER_DECISION",
+      "decision": "Stay contract confirmed (day starts at the covering stay, else carry-forward) — live and harness semantics identical with a valid stayArea preset; primary-cluster mass tie broken by smaller cluster id; cluster switch/re-entry counted only across legs >= 800 m; sea rows 272/395/397/400/1133/1135/1138 classified EXACT_VERIFIED (VWorld + OSM) and prepared as v4 SQL for a separate PROD-SQL task; development operating guard recorded in docs/architecture/development-operating-guard.md. Release stays HOLD until the v4 SQL is applied and the Owner accepts visually.",
+      "implementation_state": "CURRENT_IMPLEMENTATION",
+      "priority": "P0",
+      "evidence_note": "p1c-audit-prod-stay.json (Production + stay preset, corrected detector: 0 route defects, GOOD 6 / REVIEW 4 uncertainty-only, 200/200 shuffles), p1c-audit-prod-v4.json (v4 applied as test input: GOOD 8 / REVIEW 2), live-day-dump (REQ start coordinates per day; API 10/10 GOOD), sea7-vworld.json, prod-shots-closure/*, KO/EN/JA/ZH browser QA, 5-city sanity. Tests 2521 (baseline 8 failures unchanged), tsc 0, clean build.",
+      "do_not_assume": "That the 7 sea rows are corrected in Production before the PROD-SQL task; that STREET_ONLY inland rows (26) or NOT_FOUND rows (11) are verified; that Owner visual acceptance has happened."
     }
   ]
 }

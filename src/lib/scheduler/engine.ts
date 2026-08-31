@@ -230,7 +230,8 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
   const clusterMass = new Map<number, number>();
   for (const c of input.candidates) { if (c.score === 999) continue; const cid = clusterOf.get(c.place_id); if (cid === undefined) continue; clusterMass.set(cid, (clusterMass.get(cid) ?? 0) + Math.max(0, c.score)); }
   let primaryCluster: number | undefined; let primaryMass = -1;
-  for (const [cid, mass] of clusterMass) if (mass > primaryMass) { primaryCluster = cid; primaryMass = mass; }
+  // 동률이면 작은 cluster id(= 점수순 리더, 입력 순서 독립) — 후보 순서에 따라 주 권역이 바뀌지 않는다 (실측 2026-08-31 부산 Day 6: c2 = c5 = 1022.000)
+  for (const [cid, mass] of clusterMass) if (mass > primaryMass || (mass === primaryMass && primaryCluster !== undefined && cid < primaryCluster)) { primaryCluster = cid; primaryMass = mass; }
   const clusterOfItem = (it: ScheduledItem | undefined): number | undefined => {
     if (!it) return undefined;
     if (it.item_type === "place" && it.place_id) return clusterOf.get(it.place_id);
