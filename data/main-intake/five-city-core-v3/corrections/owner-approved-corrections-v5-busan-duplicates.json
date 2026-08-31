@@ -1,0 +1,172 @@
+{
+  "task": "TASK-MY-TRIP-TARGETED-DUPLICATE-IDENTITY-CLOSURE-V1",
+  "prepared_at": "2026-08-31",
+  "owner_approved": false,
+  "production_write": "NOT EXECUTED — PROD-SQL ONLY task",
+  "scope": "exactly two pairs seen twice in one generated day; no Busan-wide duplicate audit; no generic scheduler dedupe rule",
+  "pairs": [
+    {
+      "pair": "A",
+      "verdict": "SAME_CANONICAL_PLACE",
+      "keep": 1348,
+      "disable": 1438,
+      "evidence": {
+        "1348": {
+          "source": "Visit Busan uc_seq=1964 (busan-VB-1964)",
+          "name": "분홍이네 (page title; article headline stored as name)",
+          "address": "부산광역시 수영구 광안로45번길 2 지하1층",
+          "tel": "0507-1366-0523",
+          "homepage": "https://smartstore.naver.com/bunhongene",
+          "hours": "Sun–Fri 11:00–20:00, Sat 11:00–21:00",
+          "coords": [
+            35.15545,
+            129.11726
+          ],
+          "has": "image_url, official_url, en description"
+        },
+        "1438": {
+          "source": "KTO TourAPI contentId 2782747 (busan-K-00373)",
+          "name": "분홍이네",
+          "address": "부산광역시 수영구 광안로45번길 2 (광안동, 광안비취빌리지)",
+          "tel": "(empty in KTO)",
+          "coords": [
+            35.1554211893,
+            129.1173728455
+          ],
+          "has": "clean ko name, ko description (263 chars)"
+        },
+        "why_same": "identical shop name, identical road address + house number (광안로45번길 2, basement of 광안비취빌리지), 10 m apart, both sources describe the pink basement souvenir shop near Gwangalli; different collection sources (Visit Busan article vs KTO POI)"
+      },
+      "keep_rationale": "1348 carries image_url, official_url, en description and the official page has phone/hours; 1438 carries only the clean ko name and a ko description — both merged into 1348 (no information loss)",
+      "preserve_from_disabled": {
+        "name_l10n.ko": "분홍이네",
+        "desc_l10n.ko": "부산 광안리해수욕장 근처에 있는 소품 숍이다. 광안리는 예쁜 카페와 아기자기한 소품 숍이 많아 10~20대 이용객이 많은 곳이기도 하다. 가게 이름처럼 분홍색의 문을 열고 들어가면 핑크색 지하 공간이 나온다. 지하 공간이 생각보다 넓고, 테마별로 공간이 나누어져 있다. 옛날 추억의 교실로 꾸며놓은 곳부터 미키마우스, 월리를 찾아라, 심슨 등 다양한 캐릭터 인형들이 다양하게 구비되어 있고, 그 외에도 접시, 컵, 주방용품, 액세서리 등 여러 가지 품목을 취급하고 있다."
+      },
+      "before": {
+        "1438.is_published": true,
+        "1348.name_l10n": {
+          "en": "Everything you want is here! Gwangalli's biggest prop shop, Pink House",
+          "ko": "갖고 싶은 소품이 모두 여기에! 광안리 최대 소품샵 분홍이네"
+        },
+        "1348.desc_l10n": {
+          "en": "While you're in Gwangalli, you might want to pick up some souvenirs to remember your visit, so head to the Pink House, a large souvenir shop near Gwangalli Beach, and shop to your heart's content!"
+        }
+      },
+      "target": {
+        "1438.is_published": false,
+        "1348.name_l10n": {
+          "en": "Everything you want is here! Gwangalli's biggest prop shop, Pink House",
+          "ko": "분홍이네"
+        },
+        "1348.desc_l10n": {
+          "en": "While you're in Gwangalli, you might want to pick up some souvenirs to remember your visit, so head to the Pink House, a large souvenir shop near Gwangalli Beach, and shop to your heart's content!",
+          "ko": "부산 광안리해수욕장 근처에 있는 소품 숍이다. 광안리는 예쁜 카페와 아기자기한 소품 숍이 많아 10~20대 이용객이 많은 곳이기도 하다. 가게 이름처럼 분홍색의 문을 열고 들어가면 핑크색 지하 공간이 나온다. 지하 공간이 생각보다 넓고, 테마별로 공간이 나누어져 있다. 옛날 추억의 교실로 꾸며놓은 곳부터 미키마우스, 월리를 찾아라, 심슨 등 다양한 캐릭터 인형들이 다양하게 구비되어 있고, 그 외에도 접시, 컵, 주방용품, 액세서리 등 여러 가지 품목을 취급하고 있다."
+        }
+      },
+      "rollback": {
+        "1438.is_published": true,
+        "1348.name_l10n": {
+          "en": "Everything you want is here! Gwangalli's biggest prop shop, Pink House",
+          "ko": "갖고 싶은 소품이 모두 여기에! 광안리 최대 소품샵 분홍이네"
+        },
+        "1348.desc_l10n": {
+          "en": "While you're in Gwangalli, you might want to pick up some souvenirs to remember your visit, so head to the Pink House, a large souvenir shop near Gwangalli Beach, and shop to your heart's content!"
+        }
+      }
+    },
+    {
+      "pair": "B",
+      "verdict": "SAME_CANONICAL_PLACE",
+      "keep": 1335,
+      "disable": 1362,
+      "evidence": {
+        "1335": {
+          "source": "Visit Busan uc_seq=140 (busan-VB-140)",
+          "name": "부산요트투어(요트탈래) / YACHTTALE",
+          "address": "부산광역시 해운대구 동백로52 더베이101 요트투어 매표소",
+          "tel": "1599-1789",
+          "homepage": "http://www.yachttale.com",
+          "coords_db": [
+            35.160305,
+            129.14052
+          ],
+          "coords_note": "DB point is 1.3 km from its own address (The Bay 101); address geocode (VWorld 동백로 52) = (35.1565837, 129.1520693), KTO row agrees",
+          "has": "image_url, official_url, en description"
+        },
+        "1362": {
+          "source": "KTO TourAPI contentId 2825115 (busan-K-00447)",
+          "name": "요트탈래 / Yacht Tale",
+          "address": "부산광역시 해운대구 동백로 52",
+          "homepage": "http://www.yachttale.com",
+          "coords": [
+            35.1566216976,
+            129.152097571
+          ],
+          "has": "ko+en description"
+        },
+        "why_same": "same homepage yachttale.com on both official sources; 요트탈래(Yachttale) is the brand of 부산요트투어; same address 동백로 52 (The Bay 101 ticket office). Not merely the same building: brand/homepage identity matches. 1478 고고요트 / 1486 요트야 (해운대해변로 84) are different operators and are NOT touched."
+      },
+      "keep_rationale": "1335 carries image_url, official_url, en description, phone; 1362 carries the ko description and the address-accurate coordinate — both preserved (desc_l10n.ko merged, lat/lng set to the address point)",
+      "preserve_from_disabled": {
+        "desc_l10n.ko": "부산 해운대구에 위치한 요트탈래는 부산 바다의 매력을 느낄 수 있는 요트투어 이다. 맑고 파란 하늘 아래에서 즐기는 주간투어외 황홀한 석양을 감상할 수 있는 선셋투어, 화려한 야경을 만끽하는 야간투어까지 다양한 시간대로 준비되어 있다. 아름다운 해운대 광안리 일대 바다를 배경으로 최신형 쌍동선 요트를 타고 여유로운 바다 여행을 즐길 수 있으며, 고급스럽고 멋진 사진도 남길 수 있다. 지인이나 가족들과 함께 파티요트를 빌려 식사, 낚시 등 하고 싶은 것을 즐길 수 있는 투어도 있어 프라이빗하게 부산 바다를 즐길 수 있다.",
+        "coordinate": [
+          35.1565837,
+          129.1520693
+        ]
+      },
+      "before": {
+        "1362.is_published": true,
+        "1335.lat_lng": [
+          35.160305,
+          129.14052
+        ],
+        "1335.desc_l10n": {
+          "en": "Yachttale is Korea’s one and only yachting tour given by a marine tourism venture designated by the Korea Tour Organization. It enables you to enjoy the sea in front of Haeundae and Gwangalli beaches on the latest-model yacht."
+        }
+      },
+      "target": {
+        "1362.is_published": false,
+        "1335.lat_lng": [
+          35.1565837,
+          129.1520693
+        ],
+        "1335.desc_l10n": {
+          "en": "Yachttale is Korea’s one and only yachting tour given by a marine tourism venture designated by the Korea Tour Organization. It enables you to enjoy the sea in front of Haeundae and Gwangalli beaches on the latest-model yacht.",
+          "ko": "부산 해운대구에 위치한 요트탈래는 부산 바다의 매력을 느낄 수 있는 요트투어 이다. 맑고 파란 하늘 아래에서 즐기는 주간투어외 황홀한 석양을 감상할 수 있는 선셋투어, 화려한 야경을 만끽하는 야간투어까지 다양한 시간대로 준비되어 있다. 아름다운 해운대 광안리 일대 바다를 배경으로 최신형 쌍동선 요트를 타고 여유로운 바다 여행을 즐길 수 있으며, 고급스럽고 멋진 사진도 남길 수 있다. 지인이나 가족들과 함께 파티요트를 빌려 식사, 낚시 등 하고 싶은 것을 즐길 수 있는 투어도 있어 프라이빗하게 부산 바다를 즐길 수 있다."
+        }
+      },
+      "rollback": {
+        "1362.is_published": true,
+        "1335.lat_lng": [
+          35.160305,
+          129.14052
+        ],
+        "1335.desc_l10n": {
+          "en": "Yachttale is Korea’s one and only yachting tour given by a marine tourism venture designated by the Korea Tour Organization. It enables you to enjoy the sea in front of Haeundae and Gwangalli beaches on the latest-model yacht."
+        }
+      }
+    }
+  ],
+  "dependencies": {
+    "fk_constraints_referencing_city_spots": 0,
+    "trip_moments": 0,
+    "user_spots": 0,
+    "spot_reactions": 0,
+    "itineraries_days_mentioning": {
+      "1348": 0,
+      "1438": 0,
+      "1362": 1,
+      "1335": 1
+    },
+    "note": "saved itineraries hydrate places by id in reference mode (not filtered by is_published) — unpublishing keeps them renderable; city_spot_images/sources rows stay (no DELETE)"
+  },
+  "scheduler": {
+    "defect": false,
+    "root_cause": "two canonical ids for one business; HC-1 dedupes by place_id only — correct behaviour",
+    "generic_rule_added": false
+  },
+  "simulation": {
+    "file": "p1c-audit-dup-sim.json",
+    "result": "A→1348 only, B→1335 only, same-id twice 0, unjustified 0 / re-entry 0 / zigzag 0, GOOD 8 / REVIEW 2 (unchanged), protected loss 0, stops 80→79"
+  }
+}

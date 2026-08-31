@@ -348,11 +348,21 @@
       "id": "D-35",
       "topic": "Final product QA / Owner review readiness (milestone checkpoint)",
       "status": "UNKNOWN_OR_REVERIFY",
-      "decision": "MY_TRIP_OWNER_REVIEW_READY=YES on evidence (real Production data, canonical stay preset): known sea set 0, route defects 0, determinism 5/5 + 20/20, KO/EN/JA/ZH and 5-city browser QA pass, Gamcheon Free. Release HOLD stays until the Owner's visual acceptance. Open Owner data decision: duplicate published rows 1348/1438 and 1362/1335 (same business twice in a day).",
+      "decision": "MY_TRIP_OWNER_REVIEW_READY=YES on evidence (real Production data, canonical stay preset): known sea set 0, route defects 0, determinism 5/5 + 20/20, KO/EN/JA/ZH and 5-city browser QA pass, Gamcheon Free. Release HOLD stays until the Owner's visual acceptance. Duplicate pairs 1348/1438 and 1362/1335 verified SAME_CANONICAL_PLACE (D-36) — correction-ready, not yet applied.",
       "implementation_state": "CURRENT_IMPLEMENTATION",
       "priority": "P0",
       "evidence_note": "p1c-audit-prod-final.json, live-day-dump ×5 (seq hash identical), prod-shots-final/*, known12.json, sp/iq/oc2/locale/five-city outputs 2026-08-31. Note: the local wrangler preview ran out of heap after ~7 h of QA (restarted; not a product issue).",
       "do_not_assume": "That Busan coordinates beyond the known set are verified; that /place static pages in Production reflect the fee before the next deploy; that duplicates were merged."
+    },
+    {
+      "id": "D-36",
+      "topic": "Targeted duplicate identity closure (two pairs)",
+      "status": "OWNER_DECISION",
+      "decision": "Pair A 1348/1438 분홍이네 and Pair B 1335/1362 부산요트투어(요트탈래)/요트탈래 are the same businesses (same road address + house number; A: same shop name/description across Visit Busan and KTO; B: same homepage yachttale.com on both official sources). Correction = keep the richer row (1348, 1335), unpublish the duplicate (1438, 1362) — no DELETE — and merge the duplicate's ko name/description into the kept row; 1335 coordinate moved to its own address point (VWorld + KTO agree). No generic near-duplicate scheduler rule; HC-1 by place_id is correct behaviour. SQL prepared for a PROD-SQL task; not executed.",
+      "implementation_state": "PLANNED",
+      "priority": "P0",
+      "evidence_note": "data/main-intake/five-city-core-v3/corrections/owner-approved-corrections-v5-busan-duplicates.json; scratchpad/OWNER-RUN-P3-busan-duplicates-v5.sql; simulation p1c-audit-dup-sim.json (duplicate appearance 0, route defects 0, GOOD 8 / REVIEW 2 unchanged, stops 80 -> 79). References: FK 0, trip_moments/user_spots/reactions 0, itineraries mentioning 1362/1335: 1 each (id-hydration is reference-mode, unaffected).",
+      "do_not_assume": "That other Busan duplicates were audited; that the correction is applied before the PROD-SQL task."
     }
   ]
 }
