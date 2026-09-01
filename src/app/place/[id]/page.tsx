@@ -54,22 +54,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = placeUrl(id);
   // 크롤러에는 onError fallback 이 없다 — 죽은 URL 을 넣지 않는다.
   const image = resolvePublicMetadataImage(spot.city, spot.image_url);
+  // <title>/OG 는 build-time 영어다 — 도시 id("busan")는 표기용으로 첫 글자만 대문자
+  const cityTitle = spot.city.charAt(0).toUpperCase() + spot.city.slice(1);
 
   return {
-    title: `${spot.name} — ${spot.city} | gokoreamate`,
+    title: `${spot.name} — ${cityTitle} | gokoreamate`,
     description: desc,
     alternates: { canonical: url },
     // Gate B: 서비스에서 뺀 legacy(is_published=false)는 직접 링크로는 열리되 검색 색인에서는 뺀다
     ...(spot.is_published === false ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
-      title: `${spot.name} — ${spot.city}`,
+      title: `${spot.name} — ${cityTitle}`,
       description: desc,
       url,
       images: [{ url: image }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${spot.name} — ${spot.city}`,
+      title: `${spot.name} — ${cityTitle}`,
       description: desc,
       images: [image],
     },

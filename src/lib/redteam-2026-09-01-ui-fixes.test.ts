@@ -60,3 +60,35 @@ test("F2/F11: place detail localizes category/fee/duration; <html lang> follows 
   assert.ok(!pd.includes("~{spot.duration_minutes} min"));
   assert.ok(read("src", "components", "I18nProvider.tsx").includes("document.documentElement.lang = locale"));
 });
+
+// ── round 2 (Fable recheck on c604bd1: card Free/busan chips, event category, sunset/night slots, /place city, Home nature section, arrival labels)
+test("R2: message keys for round-2 fixes exist in all 4 locales", () => {
+  for (const l of LOCALES) {
+    const m = JSON.parse(read("src", "messages", `${l}.json`));
+    for (const k of ["viewDetails", "natureBadge", "attractionBadge", "minutes", "soloOk", "cashOnly", "cardOk", "freeEntry", "googleMaps", "naverMaps"]) assert.ok(m.homeUi[k], `${l}.homeUi.${k}`);
+    for (const k of ["slot_sunset", "slot_night", "slot_lunch"]) assert.ok(m.planner[k], `${l}.planner.${k}`);
+    assert.ok(m.discovery.catEvent, `${l}.discovery.catEvent`);
+    // every arrival preset label has a translation key (emoji stripped, non-alnum → _)
+    const labels = [...read("src", "data", "city-presets.ts").matchAll(/label:\s*"([^"]+)"/g)].map(x => x[1]);
+    assert.ok(labels.length >= 30);
+    for (const lb of labels) { const mm = lb.match(/^(\S+)\s+(.+)$/); const base = mm ? mm[2] : lb; const key = `arrival_${base.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "")}`; assert.ok(m.tripForm[key], `${l}.tripForm.${key}`); }
+  }
+});
+
+test("R2: SpotCard / modal / card / place use localized fee, city, event category, extra slots", () => {
+  const sc = read("src", "components", "SpotCard.tsx");
+  assert.ok(sc.includes('"event"]);') && sc.includes("{spot.district ?? cityDisplay}") && sc.includes('tB("free")'));
+  assert.ok(read("src", "components", "EventCard.tsx").includes('sunset: "slot_sunset", night: "slot_night"'));
+  const modal = read("src", "components", "EventDetailModal.tsx");
+  assert.ok(modal.includes('sunset: "slot_sunset", night: "slot_night"') && modal.includes('tDisc("catEvent")'));
+  const pd = read("src", "app", "place", "[id]", "PlaceDetailClient.tsx");
+  assert.ok(pd.includes('tD("catEvent")') && !pd.includes("{cap(spot.city)}") && pd.includes("{cityDisplay}"));
+  assert.ok(read("src", "app", "place", "[id]", "page.tsx").includes("${cityTitle} | gokoreamate"));
+});
+
+test("R2: Home nature section chrome and arrival labels are no longer hardcoded English", () => {
+  const home = read("src", "app", "HomeClient.tsx");
+  for (const s of ["View Details →", '"🌿 Nature" : "🏯 Attraction"', "👤 Solo OK", "💵 Cash Only", "💳 Card OK", "🆓 Free Entry", "🗺️ Google Maps", "💚 Naver Maps", "{item.durationMinutes}min"]) assert.ok(!home.includes(s), s);
+  assert.equal((home.match(/\{arrivalLabel\(loc\.label\)\}/g) || []).length, 2);
+  assert.ok(!/\{loc\.label\}/.test(home));
+});

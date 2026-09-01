@@ -500,7 +500,9 @@
     "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳이나 내 장소에서 골라 추가하세요.",
     "execTodayHint": "지금 일정과 다음 장소를 확인하세요.",
     "editFinish": "편집 마치기",
-    "mapHidden": "지도에 표시되지 않음"
+    "mapHidden": "지도에 표시되지 않음",
+    "slot_sunset": "일몰",
+    "slot_night": "밤"
   },
   "common": {
     "language": "언어",
@@ -963,7 +965,8 @@
     "openMap": "지도 열기",
     "catAttraction": "관광명소",
     "catRestaurant": "음식",
-    "catNature": "자연"
+    "catNature": "자연",
+    "catEvent": "행사"
   },
   "report": {
     "title": "문제 알려주기",
@@ -1132,7 +1135,40 @@
     "citySwitchTitle": "현재 지역에서 저장한 장소가 삭제됩니다",
     "citySwitchBody": "이 지역에서 저장한 장소가 삭제됩니다. {city}(으)로 이동하시겠습니까?",
     "citySwitchGo": "{city}(으)로 이동",
-    "citySwitchCancel": "취소"
+    "citySwitchCancel": "취소",
+    "arrival_Bulguksa": "불국사",
+    "arrival_Busan_Bus_Terminal": "부산종합버스터미널",
+    "arrival_Busan_Port_Terminal": "부산항 국제여객터미널",
+    "arrival_Dong_Seoul_Bus_Terminal": "동서울버스터미널",
+    "arrival_Dongdaemun": "동대문",
+    "arrival_Gangnam": "강남",
+    "arrival_Gimhae_Airport": "김해공항",
+    "arrival_Gwangalli_Beach": "광안리해수욕장",
+    "arrival_Gyeongju_City": "경주시내",
+    "arrival_Gyeongju_Express_Bus": "경주고속버스터미널",
+    "arrival_Gyeongju_Intercity_Bus": "경주시외버스터미널",
+    "arrival_Gyeongju_KTX": "신경주역(KTX)",
+    "arrival_Gyeongju_Station": "경주역",
+    "arrival_Haeundae": "해운대",
+    "arrival_Hamdeok_Beach": "함덕해변",
+    "arrival_Hanok_Village": "전주한옥마을",
+    "arrival_Hongdae": "홍대",
+    "arrival_Incheon_Airport": "인천공항",
+    "arrival_Jeju_Airport": "제주공항",
+    "arrival_Jeju_Bus_Terminal": "제주시외버스터미널",
+    "arrival_Jeju_City": "제주시내",
+    "arrival_Jeju_Ferry_Terminal": "제주연안여객터미널",
+    "arrival_Jeonju_Express_Bus": "전주고속버스터미널",
+    "arrival_Jeonju_Old_Town": "전주 구도심·객사",
+    "arrival_Jeonju_Station": "전주역",
+    "arrival_KTX_Busan_Station": "부산역(KTX)",
+    "arrival_Myeongdong": "명동",
+    "arrival_Nampo_dong": "남포동",
+    "arrival_Sasang_Bus_Terminal": "사상버스터미널",
+    "arrival_Seogwipo": "서귀포",
+    "arrival_Seomyeon": "서면",
+    "arrival_Seoul_Express_Terminal": "서울고속버스터미널",
+    "arrival_Seoul_Station": "서울역"
   },
   "homeUi": {
     "searchPlaces": "장소 검색",
@@ -1178,7 +1214,17 @@
     "foodGuideNew": "NEW · 2026 부산 미식 가이드",
     "foodGuidePicks": "미쉐린 · 부산의 맛 · 택슐랭 선정",
     "nearMe": "내 주변",
-    "gpsActive": "GPS 켜짐"
+    "gpsActive": "GPS 켜짐",
+    "viewDetails": "상세 보기",
+    "natureBadge": "자연",
+    "attractionBadge": "관광명소",
+    "minutes": "{n}분",
+    "soloOk": "혼자 OK",
+    "cashOnly": "현금만 가능",
+    "cardOk": "카드 가능",
+    "freeEntry": "무료 입장",
+    "googleMaps": "구글 지도",
+    "naverMaps": "네이버 지도"
   },
   "stay": {
     "question": "어디에서 주무세요?",

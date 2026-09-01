@@ -10,7 +10,7 @@ import type { CitySpot } from "@/data/cities/types";
 // 한국어·일본어·중국어 화면에서도 "🏯 Attraction" 이 그대로 나왔다.
 // explore.categories.* 는 all/attraction/restaurant/nature 만 있으므로
 // 그 밖의 값은 원본 category 를 그대로 쓴다 (없는 이름을 지어내지 않는다).
-const TRANSLATED_CATEGORIES = new Set(["attraction", "restaurant", "nature"]);
+const TRANSLATED_CATEGORIES = new Set(["attraction", "restaurant", "nature", "event"]);
 
 // 배지는 사진 위에 얹히므로 어느 사진에서도 읽히는 한 가지 어두운 색만 쓴다.
 // 예전엔 카테고리마다 주황·초록·보라를 따로 줘 한 화면에 색이 네 개 떴다.
@@ -58,11 +58,14 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
   const tD = useTranslations("discovery");
   const tP = useTranslations("picks");
   const tC = useTranslations("common");
+  const tF = useTranslations("tripForm");
+  // 구(district)가 없으면 도시 id("busan")가 아니라 locale 도시 이름을 보여 준다
+  const cityDisplay = (() => { const c = (spot.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tF.has(key) ? tF(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
 
   // 필터 칩("Attractions")과 배지("Attraction")는 수가 다르다 — 카드 한 장은
   // 한 곳이므로 단수 라벨을 따로 쓴다.
   const categoryLabel = TRANSLATED_CATEGORIES.has(spot.category)
-    ? tD(`cat${spot.category[0].toUpperCase()}${spot.category.slice(1)}` as "catAttraction" | "catRestaurant" | "catNature")
+    ? tD(`cat${spot.category[0].toUpperCase()}${spot.category.slice(1)}` as "catAttraction" | "catRestaurant" | "catNature" | "catEvent")
     : spot.category;
 
   const difficultyLabel =
@@ -127,11 +130,11 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
         {/* 지역 + 입장료 + 소요시간 */}
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs font-semibold text-gray-400 inline-flex items-center gap-1 min-w-0">
-            <PinIcon /><span className="truncate">{spot.district ?? spot.city}</span>
+            <PinIcon /><span className="truncate">{spot.district ?? cityDisplay}</span>
           </span>
           <div className="flex items-center gap-2">
             {spot.entryFee && (
-              <span className="text-xs font-bold text-emerald-600 inline-flex items-center gap-1"><TicketIcon />{spot.entryFee}</span>
+              <span className="text-xs font-bold text-emerald-600 inline-flex items-center gap-1"><TicketIcon />{/^free$/i.test(spot.entryFee.trim()) ? tB("free") : spot.entryFee}</span>
             )}
             {spot.durationMinutes && (
               <span className="text-xs font-semibold text-gray-400 inline-flex items-center gap-1"><ClockIcon />{tC("minutes", { n: spot.durationMinutes })}</span>

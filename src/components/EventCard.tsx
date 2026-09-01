@@ -46,6 +46,7 @@ function fastestTransit(transit: EventItem["transitFromAnchor"]): Transit {
 // 표시만 옮긴다. 셋은 planner 가 이미 갖고 있어 재사용하고, anytime 만 새로 둔다.
 const SLOT_KEY: Record<string, string> = {
   morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening",
+  lunch: "slot_lunch", sunset: "slot_sunset", night: "slot_night",
 };
 
 interface Props {

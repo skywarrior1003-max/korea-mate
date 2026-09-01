@@ -432,6 +432,8 @@ export default function HomeClient() {
   // 제휴 링크는 화면이 소유하지 않는다 — 상품 키만 넘기고 resolver 가 정한다.
   const locale = useLocale();
   const tf = useTranslations("tripForm");
+  // 도착/출발 지점 이름표는 locale 을 따른다(tripForm.arrival_*). value 는 그대로(URL·localStorage 계약).
+  const arrivalLabel = (label: string): string => { const m = label.match(/^(\S+)\s+(.+)$/); const emoji = m ? m[1] : ""; const base = m ? m[2] : label; const key = `arrival_${base.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "")}`; try { return tf.has(key) ? `${emoji} ${tf(key)}`.trim() : label; } catch { return label; } };
   const tPace = useTranslations("pace");
   const th = useTranslations("homeUi");
   const tn = useTranslations("nav");
@@ -1244,7 +1246,7 @@ export default function HomeClient() {
                           : "border-gray-200 bg-gray-50 text-gray-600 hover:border-orange-300"
                       }`}
                     >
-                      {loc.label}
+                      {arrivalLabel(loc.label)}
                     </button>
                   ))}
                 </div>
@@ -1324,7 +1326,7 @@ export default function HomeClient() {
                               : "border-gray-200 bg-white text-gray-600 hover:border-orange-300"
                           }`}
                         >
-                          {loc.label}
+                          {arrivalLabel(loc.label)}
                         </button>
                       ))}
                     </div>
@@ -2020,7 +2022,7 @@ export default function HomeClient() {
                             )}
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-500 flex items-center justify-center">
                               <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-                                View Details →
+                                {th("viewDetails")} →
                               </span>
                             </div>
                             <div className="absolute top-3 left-3">
@@ -2028,7 +2030,7 @@ export default function HomeClient() {
                                 className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"
                                 style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}
                               >
-                                {item.category === "nature" ? "🌿 Nature" : "🏯 Attraction"}
+                                {item.category === "nature" ? `🌿 ${th("natureBadge")}` : `🏯 ${th("attractionBadge")}`}
                               </span>
                             </div>
                           </div>
@@ -2037,11 +2039,11 @@ export default function HomeClient() {
                           <div className="p-5 flex flex-col flex-1">
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-xs font-semibold text-gray-400">
-                                📍 {item.district ?? item.city}
+                                📍 {item.district ?? (() => { const c = (item.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tf.has(key) ? tf(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })()}
                               </span>
                               {item.durationMinutes && (
                                 <span className="text-xs font-semibold text-gray-400">
-                                  🕐 {item.durationMinutes}min
+                                  🕐 {th("minutes", { n: item.durationMinutes })}
                                 </span>
                               )}
                             </div>
@@ -2056,22 +2058,22 @@ export default function HomeClient() {
                             <div className="flex flex-wrap gap-1.5 mb-4">
                               {item.soloFriendly && (
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
-                                  👤 Solo OK
+                                  👤 {th("soloOk")}
                                 </span>
                               )}
                               {item.cashOnly && (
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
-                                  💵 Cash Only
+                                  💵 {th("cashOnly")}
                                 </span>
                               )}
                               {item.foreignCardAccepted && !item.cashOnly && (
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                                  💳 Card OK
+                                  💳 {th("cardOk")}
                                 </span>
                               )}
                               {item.category === "nature" && (
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
-                                  🆓 Free Entry
+                                  🆓 {th("freeEntry")}
                                 </span>
                               )}
                             </div>
@@ -2085,7 +2087,7 @@ export default function HomeClient() {
                                 onClick={(e) => e.stopPropagation()}
                                 className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors"
                               >
-                                🗺️ Google Maps
+                                🗺️ {th("googleMaps")}
                               </a>
                               <a
                                 href={
@@ -2099,7 +2101,7 @@ export default function HomeClient() {
                                 onClick={(e) => e.stopPropagation()}
                                 className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors"
                               >
-                                💚 Naver Maps
+                                💚 {th("naverMaps")}
                               </a>
                             </div>
                           </div>

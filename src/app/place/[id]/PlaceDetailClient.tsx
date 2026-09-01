@@ -66,6 +66,7 @@ function cap(s: string): string {
 export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const t = useTranslations("place");
   const tExplore = useTranslations("explore");
+  const tForm = useTranslations("tripForm");
   const tD = useTranslations("discovery");
   const tSaved = useTranslations("saved");
   const tReport = useTranslations("report");
@@ -95,7 +96,9 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   // 시안의 chip 열 — 카테고리·세부카테고리·행정구는 실제 값만 쓴다.
   // 값이 없는 칩은 만들지 않는다(빈 칩은 정보가 아니라 잡음이다).
   // 카테고리는 Explore 와 같은 표를 쓴다(관광명소·음식 & 음료·자연 & 트레일). 표에 없는 값만 원문 대문자로.
-  const categoryLabel = ["attraction", "restaurant", "nature"].includes(spot.category) ? tExplore(`categories.${spot.category}`) : cap(spot.category);
+  const categoryLabel = ["attraction", "restaurant", "nature"].includes(spot.category) ? tExplore(`categories.${spot.category}`) : spot.category === "event" ? tD("catEvent") : cap(spot.category);
+  // 빵부스러기·도시 줄의 도시 이름도 locale 을 따른다(tripForm.city_*)
+  const cityDisplay = (() => { const c = (spot.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tForm.has(key) ? tForm(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
   const chips = [categoryLabel, spot.subcategory, spot.district].filter(Boolean) as string[];
   const safeImage = resolveDisplayImage(spot.image_url); // 죽은 호스트는 시도조차 하지 않는다
   const showImage = Boolean(safeImage) && !imgFailed;
@@ -338,7 +341,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         <ol className="flex items-center gap-1.5 text-xs text-faint">
           <li><Link href="/" className="gkm-focus hover:text-ink">gokoreamate</Link></li>
           <li aria-hidden>/</li>
-          <li><Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus hover:text-ink">{cap(spot.city)}</Link></li>
+          <li><Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus hover:text-ink">{cityDisplay}</Link></li>
           <li aria-hidden>/</li>
           <li className="text-sub font-medium truncate max-w-[280px]">{text.name ?? spot.name}</li>
         </ol>
@@ -415,7 +418,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
               <h1 className="text-2xl font-extrabold text-ink leading-tight" style={{ textWrap: "balance" }}>
                 {text.name ?? spot.name}
               </h1>
-              <p className="text-sm text-faint mt-1.5">{cap(spot.city)}</p>
+              <p className="text-sm text-faint mt-1.5">{cityDisplay}</p>
               <div className="mt-2">{provenanceLine}</div>
 
               {oneLiner && (

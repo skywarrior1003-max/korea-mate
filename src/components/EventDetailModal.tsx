@@ -105,8 +105,9 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
   const tSlotM       = useTranslations("planner");
   // 도시 id(busan)는 사용자에게 보이는 이름이 아니다 — tripForm 의 도시 이름표를 쓴다(없으면 첫 글자만 대문자).
   const cityDisplay = (() => { const c = (event.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tForm.has(key) ? tForm(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
-  const typeDisplay = ["attraction", "restaurant", "nature"].includes(event.type) ? tExplore(`categories.${event.type}`) : event.type;
-  const SLOT_KEY_M: Record<string, string> = { morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening" };
+  const tDisc        = useTranslations("discovery");
+  const typeDisplay = ["attraction", "restaurant", "nature"].includes(event.type) ? tExplore(`categories.${event.type}`) : event.type === "event" ? tDisc("catEvent") : event.type;
+  const SLOT_KEY_M: Record<string, string> = { morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening", lunch: "slot_lunch", sunset: "slot_sunset", night: "slot_night" };
   const bestTimeDisplay = SLOT_KEY_M[event.bestTimeSlot] ? tSlotM(SLOT_KEY_M[event.bestTimeSlot]) : event.bestTimeSlot === "anytime" ? tEvents("slotAnytime") : event.bestTimeSlot;
   const tItin        = useTranslations("itin");
   const citySpotDbId = parseCitySpotId(sourceKey);

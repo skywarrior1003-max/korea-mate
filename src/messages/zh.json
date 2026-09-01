@@ -500,7 +500,9 @@
     "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中添加。",
     "execTodayHint": "查看当前行程和下一站。",
     "editFinish": "完成编辑",
-    "mapHidden": "未在地图上显示"
+    "mapHidden": "未在地图上显示",
+    "slot_sunset": "日落",
+    "slot_night": "夜晚"
   },
   "common": {
     "language": "语言",
@@ -963,7 +965,8 @@
     "openMap": "打开地图",
     "catAttraction": "景点",
     "catRestaurant": "美食",
-    "catNature": "自然"
+    "catNature": "自然",
+    "catEvent": "活动"
   },
   "report": {
     "title": "报告问题",
@@ -1132,7 +1135,40 @@
     "citySwitchTitle": "当前地区保存的地点将被删除",
     "citySwitchBody": "当前地区保存的地点将被删除。要前往{city}吗？",
     "citySwitchGo": "前往{city}",
-    "citySwitchCancel": "取消"
+    "citySwitchCancel": "取消",
+    "arrival_Bulguksa": "佛国寺",
+    "arrival_Busan_Bus_Terminal": "釜山综合汽车站",
+    "arrival_Busan_Port_Terminal": "釜山港国际客运码头",
+    "arrival_Dong_Seoul_Bus_Terminal": "东首尔汽车站",
+    "arrival_Dongdaemun": "东大门",
+    "arrival_Gangnam": "江南",
+    "arrival_Gimhae_Airport": "金海机场",
+    "arrival_Gwangalli_Beach": "广安里海滩",
+    "arrival_Gyeongju_City": "庆州市区",
+    "arrival_Gyeongju_Express_Bus": "庆州高速汽车站",
+    "arrival_Gyeongju_Intercity_Bus": "庆州市外汽车站",
+    "arrival_Gyeongju_KTX": "新庆州站(KTX)",
+    "arrival_Gyeongju_Station": "庆州站",
+    "arrival_Haeundae": "海云台",
+    "arrival_Hamdeok_Beach": "咸德海滩",
+    "arrival_Hanok_Village": "全州韩屋村",
+    "arrival_Hongdae": "弘大",
+    "arrival_Incheon_Airport": "仁川机场",
+    "arrival_Jeju_Airport": "济州机场",
+    "arrival_Jeju_Bus_Terminal": "济州市外汽车站",
+    "arrival_Jeju_City": "济州市区",
+    "arrival_Jeju_Ferry_Terminal": "济州沿岸客运码头",
+    "arrival_Jeonju_Express_Bus": "全州高速汽车站",
+    "arrival_Jeonju_Old_Town": "全州老城区·客舍",
+    "arrival_Jeonju_Station": "全州站",
+    "arrival_KTX_Busan_Station": "釜山站(KTX)",
+    "arrival_Myeongdong": "明洞",
+    "arrival_Nampo_dong": "南浦洞",
+    "arrival_Sasang_Bus_Terminal": "沙上汽车站",
+    "arrival_Seogwipo": "西归浦",
+    "arrival_Seomyeon": "西面",
+    "arrival_Seoul_Express_Terminal": "首尔高速汽车站",
+    "arrival_Seoul_Station": "首尔站"
   },
   "homeUi": {
     "searchPlaces": "搜索地点",
@@ -1178,7 +1214,17 @@
     "foodGuideNew": "NEW · 2026 釜山美食指南",
     "foodGuidePicks": "米其林 · 釜山之味 · 出租车司机推荐精选",
     "nearMe": "附近",
-    "gpsActive": "GPS 已开启"
+    "gpsActive": "GPS 已开启",
+    "viewDetails": "查看详情",
+    "natureBadge": "自然",
+    "attractionBadge": "旅游景点",
+    "minutes": "{n}分钟",
+    "soloOk": "适合独行",
+    "cashOnly": "仅收现金",
+    "cardOk": "可刷卡",
+    "freeEntry": "免费入场",
+    "googleMaps": "Google 地图",
+    "naverMaps": "NAVER 地图"
   },
   "stay": {
     "question": "你住在哪里？",

@@ -500,7 +500,9 @@
     "addModeHint": "Only places not yet on this day are shown. Add from your picks or My Places.",
     "execTodayHint": "See what's now and what's next.",
     "editFinish": "Finish editing",
-    "mapHidden": "Not shown on map"
+    "mapHidden": "Not shown on map",
+    "slot_sunset": "Sunset",
+    "slot_night": "Night"
   },
   "common": {
     "language": "Language",
@@ -963,7 +965,8 @@
     "openMap": "Open map",
     "catAttraction": "Attraction",
     "catRestaurant": "Food",
-    "catNature": "Nature"
+    "catNature": "Nature",
+    "catEvent": "Event"
   },
   "report": {
     "title": "Report an issue",
@@ -1132,7 +1135,40 @@
     "citySwitchTitle": "Places you saved here will be removed",
     "citySwitchBody": "Saved places for this region will be cleared. Move to {city}?",
     "citySwitchGo": "Move to {city}",
-    "citySwitchCancel": "Cancel"
+    "citySwitchCancel": "Cancel",
+    "arrival_Bulguksa": "Bulguksa",
+    "arrival_Busan_Bus_Terminal": "Busan Bus Terminal",
+    "arrival_Busan_Port_Terminal": "Busan Port Terminal",
+    "arrival_Dong_Seoul_Bus_Terminal": "Dong Seoul Bus Terminal",
+    "arrival_Dongdaemun": "Dongdaemun",
+    "arrival_Gangnam": "Gangnam",
+    "arrival_Gimhae_Airport": "Gimhae Airport",
+    "arrival_Gwangalli_Beach": "Gwangalli Beach",
+    "arrival_Gyeongju_City": "Gyeongju City",
+    "arrival_Gyeongju_Express_Bus": "Gyeongju Express Bus",
+    "arrival_Gyeongju_Intercity_Bus": "Gyeongju Intercity Bus",
+    "arrival_Gyeongju_KTX": "Gyeongju KTX",
+    "arrival_Gyeongju_Station": "Gyeongju Station",
+    "arrival_Haeundae": "Haeundae",
+    "arrival_Hamdeok_Beach": "Hamdeok Beach",
+    "arrival_Hanok_Village": "Hanok Village",
+    "arrival_Hongdae": "Hongdae",
+    "arrival_Incheon_Airport": "Incheon Airport",
+    "arrival_Jeju_Airport": "Jeju Airport",
+    "arrival_Jeju_Bus_Terminal": "Jeju Bus Terminal",
+    "arrival_Jeju_City": "Jeju City",
+    "arrival_Jeju_Ferry_Terminal": "Jeju Ferry Terminal",
+    "arrival_Jeonju_Express_Bus": "Jeonju Express Bus",
+    "arrival_Jeonju_Old_Town": "Jeonju Old Town",
+    "arrival_Jeonju_Station": "Jeonju Station",
+    "arrival_KTX_Busan_Station": "KTX Busan Station",
+    "arrival_Myeongdong": "Myeongdong",
+    "arrival_Nampo_dong": "Nampo-dong",
+    "arrival_Sasang_Bus_Terminal": "Sasang Bus Terminal",
+    "arrival_Seogwipo": "Seogwipo",
+    "arrival_Seomyeon": "Seomyeon",
+    "arrival_Seoul_Express_Terminal": "Seoul Express Terminal",
+    "arrival_Seoul_Station": "Seoul Station"
   },
   "homeUi": {
     "searchPlaces": "Search places",
@@ -1178,7 +1214,17 @@
     "foodGuideNew": "NEW · 2026 Busan Food Guide",
     "foodGuidePicks": "Michelin · Busan Mat · Taegshlang picks",
     "nearMe": "Near Me",
-    "gpsActive": "GPS Active"
+    "gpsActive": "GPS Active",
+    "viewDetails": "View Details",
+    "natureBadge": "Nature",
+    "attractionBadge": "Attraction",
+    "minutes": "{n} min",
+    "soloOk": "Solo OK",
+    "cashOnly": "Cash Only",
+    "cardOk": "Card OK",
+    "freeEntry": "Free Entry",
+    "googleMaps": "Google Maps",
+    "naverMaps": "Naver Maps"
   },
   "stay": {
     "question": "Where are you staying?",

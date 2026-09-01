@@ -500,7 +500,9 @@
     "addModeHint": "このDayにまだ無い場所だけを表示します。保存した場所やMy Placesから追加してください。",
     "execTodayHint": "今の予定と次の場所を確認できます。",
     "editFinish": "編集を終える",
-    "mapHidden": "地図に表示されません"
+    "mapHidden": "地図に表示されません",
+    "slot_sunset": "夕暮れ",
+    "slot_night": "夜"
   },
   "common": {
     "language": "言語",
@@ -963,7 +965,8 @@
     "openMap": "地図を開く",
     "catAttraction": "観光スポット",
     "catRestaurant": "グルメ",
-    "catNature": "自然"
+    "catNature": "自然",
+    "catEvent": "イベント"
   },
   "report": {
     "title": "問題を報告",
@@ -1132,7 +1135,40 @@
     "citySwitchTitle": "この地域で保存した場所が削除されます",
     "citySwitchBody": "この地域で保存した場所が削除されます。{city}に移動しますか？",
     "citySwitchGo": "{city}に移動",
-    "citySwitchCancel": "キャンセル"
+    "citySwitchCancel": "キャンセル",
+    "arrival_Bulguksa": "仏国寺",
+    "arrival_Busan_Bus_Terminal": "釜山総合バスターミナル",
+    "arrival_Busan_Port_Terminal": "釜山港国際旅客ターミナル",
+    "arrival_Dong_Seoul_Bus_Terminal": "東ソウルバスターミナル",
+    "arrival_Dongdaemun": "東大門",
+    "arrival_Gangnam": "江南",
+    "arrival_Gimhae_Airport": "金海空港",
+    "arrival_Gwangalli_Beach": "広安里ビーチ",
+    "arrival_Gyeongju_City": "慶州市内",
+    "arrival_Gyeongju_Express_Bus": "慶州高速バスターミナル",
+    "arrival_Gyeongju_Intercity_Bus": "慶州市外バスターミナル",
+    "arrival_Gyeongju_KTX": "新慶州駅(KTX)",
+    "arrival_Gyeongju_Station": "慶州駅",
+    "arrival_Haeundae": "海雲台",
+    "arrival_Hamdeok_Beach": "咸徳ビーチ",
+    "arrival_Hanok_Village": "全州韓屋村",
+    "arrival_Hongdae": "弘大",
+    "arrival_Incheon_Airport": "仁川空港",
+    "arrival_Jeju_Airport": "済州空港",
+    "arrival_Jeju_Bus_Terminal": "済州市外バスターミナル",
+    "arrival_Jeju_City": "済州市内",
+    "arrival_Jeju_Ferry_Terminal": "済州沿岸旅客ターミナル",
+    "arrival_Jeonju_Express_Bus": "全州高速バスターミナル",
+    "arrival_Jeonju_Old_Town": "全州旧市街・客舎",
+    "arrival_Jeonju_Station": "全州駅",
+    "arrival_KTX_Busan_Station": "釜山駅(KTX)",
+    "arrival_Myeongdong": "明洞",
+    "arrival_Nampo_dong": "南浦洞",
+    "arrival_Sasang_Bus_Terminal": "沙上バスターミナル",
+    "arrival_Seogwipo": "西帰浦",
+    "arrival_Seomyeon": "西面",
+    "arrival_Seoul_Express_Terminal": "ソウル高速バスターミナル",
+    "arrival_Seoul_Station": "ソウル駅"
   },
   "homeUi": {
     "searchPlaces": "場所を検索",
@@ -1178,7 +1214,17 @@
     "foodGuideNew": "NEW · 2026 釜山グルメガイド",
     "foodGuidePicks": "ミシュラン · 釜山の味 · テクシュラン選定",
     "nearMe": "近くを探す",
-    "gpsActive": "GPS オン"
+    "gpsActive": "GPS オン",
+    "viewDetails": "詳細を見る",
+    "natureBadge": "自然",
+    "attractionBadge": "観光スポット",
+    "minutes": "{n}分",
+    "soloOk": "ひとりOK",
+    "cashOnly": "現金のみ",
+    "cardOk": "カード可",
+    "freeEntry": "入場無料",
+    "googleMaps": "Google マップ",
+    "naverMaps": "NAVER 地図"
   },
   "stay": {
     "question": "どこに泊まりますか？",
