@@ -47,6 +47,7 @@ function toEventItem(spot: CitySpot): EventItem {
     shortName: spot.name,
     nameL10n: spot.nameL10n ?? null,
     descriptionL10n: spot.descriptionL10n ?? null,
+    whyItMattersL10n: spot.whyItMattersL10n ?? null,
     tags: spot.tags ?? [],
     city: spot.city,
     district: spot.district ?? "",
@@ -737,7 +738,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       {selectedEvent && (
         <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)}
           displayName={displayPlaceName(selectedEvent.name, selectedEvent.nameL10n, locale)}
-          displayDescription={displayPlaceText(selectedEvent.description, selectedEvent.descriptionL10n, locale) ?? undefined} />
+          displayDescription={displayPlaceText(selectedEvent.description, selectedEvent.descriptionL10n, locale) ?? undefined}
+          displayWhyItMatters={displayPlaceText(selectedEvent.whyItMatters, selectedEvent.whyItMattersL10n, locale) ?? undefined} />
       )}
 
       {/* 담기 결과를 스크린리더에 알린다. 버튼 라벨만 바뀌면 시각적으로만

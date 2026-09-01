@@ -62,6 +62,7 @@ export interface EventItem {
   /** 표시용 l10n 원문(있을 때만) — identity 는 여전히 sourceKey/id. Explore·장소 상세에서 담을 때 채운다. */
   nameL10n?: LocalizedText | null;
   descriptionL10n?: LocalizedText | null;
+  whyItMattersL10n?: LocalizedText | null;
   tags: string[];
   city: string;
   district: string;

@@ -75,7 +75,7 @@
       "taxiMinutes": 10,
       "description": "12 min by subway (Busan Metro Line 2) from Asiad Main Stadium Station"
     },
-    "name": "ZM-ILLENNIAL (지밀레니얼) — Daeyeon-dong ARMY Pilgrimage",
+    "name": "ZM-ILLENNIAL (지밀레니얼) — Jimin's Father's Cafe, Daeyeon-dong",
     "shortName": "ZM-ILLENNIAL",
     "tags": [
       "#BTS",
@@ -83,14 +83,14 @@
       "#Pilgrimage",
       "#ARMY",
       "#PreEvent",
-      "#FanCafe"
+      "#Cafe"
     ],
     "city": "Busan",
     "district": "Nam-gu",
-    "address": "Daeyeon-dong, Nam-gu, Busan (대연동, 남구, 부산)",
+    "address": "135 Jinnam-ro, Nam-gu, Busan (부산 남구 진남로 135)",
     "mapUrl": "https://maps.google.com/?q=ZM-ILLENNIAL+%EC%A7%80%EB%B0%80%EB%A0%88%EB%8B%88%EC%96%BC+%EB%B6%80%EC%82%B0",
-    "description": "ZM-ILLENNIAL (지밀레니얼) is the iconic ARMY fan spot near Daeyeon station in Busan's Nam-gu — a stone's throw from JIMIN's childhood neighborhood. Browse limited fan merch, join the pre-concert buzz with global ARMY, and leave a message on the fan tribute wall.",
-    "whyItMatters": "This is where the ARMY pilgrimage begins. Every international JIMIN fan comes here first. Visit 1–2 days before the concert for maximum atmosphere and the best merch selection.",
+    "description": "ZM-ILLENNIAL (지밀레니얼) is the cafe in Daeyeon-dong, Nam-gu, run by BTS Jimin's father. It opened in 2019 as MAGNATE and was renamed in 2024. It serves coffee, bread and desserts, and ARMY from around the world gather here around Jimin's birthday and BTS concert dates.",
+    "whyItMatters": "A well-known BTS stop in Busan — expect long lines around Jimin's birthday (Oct 13) and on concert days.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
     "openingHours": {
@@ -107,7 +107,7 @@
     "englishMenu": true,
     "barrierFree": true,
     "koreanSurvivalScore": 72,
-    "notice": "Verify current exact address via BTS ARMY fan boards before visiting.",
+    "notice": "Expect queues around Jimin's birthday (Oct 13) and BTS concert dates; opening hours may change — check the official Instagram.",
     "commerce": {
       "affiliateType": null,
       "hasAffiliate": false,

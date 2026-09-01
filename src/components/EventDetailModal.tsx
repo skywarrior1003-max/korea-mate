@@ -88,9 +88,11 @@ interface Props {
   /** 표시용 이름/설명(locale resolver 결과). 없으면 event 원문. 저장·identity 는 event 를 그대로 쓴다. */
   displayName?: string;
   displayDescription?: string;
+  /** "여기가 특별한 이유" — why_l10n 이 있으면 그 locale 값. 없으면 event 원문(모달만 영어로 남던 결함, 2026-09-01). */
+  displayWhyItMatters?: string;
 }
 
-export default function EventDetailModal({ event, onClose, displayName, displayDescription }: Props) {
+export default function EventDetailModal({ event, onClose, displayName, displayDescription, displayWhyItMatters }: Props) {
   // 문자열로 고정한다 — effect 의존성이 event 객체가 아니라 안정적인 키가 된다.
   const sourceKey    = getItemSourceKey(event);
   const tModal       = useTranslations("modal");
@@ -338,7 +340,7 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
           {/* Why It Matters */}
           <div className="rounded-2xl p-4" style={{ backgroundColor: "#1a1f36" }}>
             <p className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">{tModal("whyItMatters")}</p>
-            <p className="text-sm text-white/90 leading-relaxed">{event.whyItMatters}</p>
+            <p className="text-sm text-white/90 leading-relaxed">{displayWhyItMatters ?? event.whyItMatters}</p>
           </div>
 
           {/* 상세 설명 */}
