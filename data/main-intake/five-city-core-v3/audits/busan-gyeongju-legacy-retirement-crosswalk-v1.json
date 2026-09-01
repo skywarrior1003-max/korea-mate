@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated_at": "2026-09-01T07:05:49Z",
+  "generated_at": "2026-09-01T07:56:20Z",
   "task": "TASK-BUSAN-GYEONGJU-LEGACY-RETIREMENT-CROSSWALK-V1",
   "production_master": "972a4afde8f6a463f4f90a6c9430b8de8449164f",
   "authoritative_sources": [
@@ -145,13 +145,17 @@
     94
    ]
   },
-  "SAFE_RETIRE_TARGET_COUNT": 13,
+  "SAFE_RETIRE_TARGET_COUNT": 17,
   "SAFE_RETIRE_IDS": [
    5,
    6,
+   7,
    23,
+   28,
+   29,
    32,
    39,
+   42,
    50,
    55,
    57,
@@ -162,14 +166,9 @@
    82
   ],
   "OWNER_DECISION_PENDING_UNPUBLISH": {
-   "count": 4,
-   "ids": [
-    7,
-    28,
-    29,
-    42
-   ],
-   "reason": "explicit prior Owner decision OWNER_OVERRIDE_KEEP_PUBLISHED (release 2026-08) — recorded, not overridden here; Final-absent under the current contract"
+   "count": 0,
+   "ids": [],
+   "reason": "resolved r2: historical OWNER_OVERRIDE_KEEP_PUBLISHED (7, 28, 29, 42) is metadata only; latest Owner principle = Final-authoritative retirement → included in SET A"
   },
   "already_hidden": 327,
   "in_place_current": 369,
@@ -189,15 +188,52 @@
   "user_reference_compatibility": {
    "contract": "unpublish != delete; /place/[id] and itinerary hydration use the reference scope (fetchPublicSpotIds('reference'), is_published only gates discovery) — saved trips keep opening",
    "safe_retire_reference_totals": {
-    "itineraries": 242,
-    "user_spots": 0
-   }
+    "itineraries": 352,
+    "user_spots": 2,
+    "trip_moments": 0
+   },
+   "code_contract": "src/app/place/[id]/page.tsx: generateStaticParams = fetchPublicSpotIds('reference') (hidden rows still built, dynamicParams=false, force-static); generateMetadata sets robots noindex,follow when is_published === false; itinerary/PlaceModal hydrate by id (reference scope). is_published only gates discovery (Explore/sitemap/planner candidates)."
   },
   "sql": {
-   "file": "OWNER-RUN-BUSAN-GYEONGJU-LEGACY-RETIREMENT-V1.sql",
-   "sha256": "af79904d10006101497dc47448b8488421ac36737c1b04aa295bc28a404cb7e9",
-   "target_rows": 13,
-   "deletes": 0
+   "file": "OWNER-RUN-BUSAN-GYEONGJU-LEGACY-RETIREMENT-V1-FINAL.sql",
+   "sha256": "116cc06509cf85e29b05710dd764dafd88dec664d2abb2cac4e160643d086e43",
+   "target_rows": 17,
+   "deletes": 0,
+   "superseded": [
+    "OWNER-RUN-BUSAN-GYEONGJU-LEGACY-RETIREMENT-V1.sql (13 rows, sha256 af79904d…cb7e9 — superseded, do not execute)",
+    "OWNER-RUN-P4-preopen-busan-jangsan-legacy-unpublish-v6.sql (id 6 only — superseded)"
+   ]
+  },
+  "revision": "r2 — TASK-BUSAN-GYEONGJU-LEGACY-RETIREMENT-SET-A-FINALIZE-AND-STATIC-CONTRACT-V1",
+  "historical_owner_override_ids": [
+   7,
+   28,
+   29,
+   42
+  ],
+  "strategic_excluded": {
+   "ids": [
+    94
+   ],
+   "EXCLUDED_FROM_SAFE_RETIRE": "STRATEGIC_REBUILD"
+  },
+  "reconciliation_r2": {
+   "PROD_RESIDUE_PUBLISHED": 18,
+   "SAFE_RETIRE_TARGET": 17,
+   "STRATEGIC_MISSING_FROM_FINAL": 1,
+   "BY_OTHER_ID_residue": 1,
+   "RETIRED_residue": 16,
+   "identity": "18 = 17 + 1; 17 = 1 + 16; owner_override_exclusion = 0"
+  },
+  "static_contract": {
+   "place_static_generation": "build-time: fetchPublicSpotIds('reference') + fetchSpot(id) read Production Supabase with cache:'no-store' → every reference row (published or not) is pre-rendered; content/robots are baked at build",
+   "noindex": "decided at build time from spot.is_published (page.tsx L63) → after SQL, targets keep their OLD static HTML (indexable) until a rebuild",
+   "sitemap": "src/app/sitemap.ts uses fetchPublicSpotIds('discovery') (is_published=eq.true) at build → static sitemap.xml; after SQL the 17 targets stay listed until a rebuild",
+   "production_now": "sitemap 4,676 /place URLs incl. all 17 targets + 94/30/93/1392; hidden rows (99/101/558/3) absent; hidden rows serve 200 + <meta robots noindex,follow>; published targets (6/7/28/42/5) have no robots meta",
+   "STATIC_REBUILD_REQUIRED_AFTER_SQL": true,
+   "same_sha_retry": "Cloudflare Pages git-connected; Stage C precedent: POST /deployments/{id}/retry re-ran master 972a4af (new deployment 2e3028b4) and re-baked Production DB → same mechanism applies",
+   "RECOMMENDED_RELEASE_SEQUENCE": "SQL_THEN_SAME_SHA_RETRY",
+   "sql_only_intermediate_state": "Explore/planner discovery hide the 17 immediately (runtime Supabase); /place/<id> static stays old (200, indexable) and sitemap keeps the 17 URLs until the retry deployment completes"
   }
  },
  "rows": [
@@ -240,7 +276,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 2,
@@ -281,7 +318,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 3,
@@ -328,7 +366,8 @@
     "published": true,
     "name": "Jagalchi Market"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 4,
@@ -375,7 +414,8 @@
     "published": true,
     "name": "Gwangalli offers a spectacular view at night."
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 5,
@@ -413,10 +453,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 6,
@@ -455,7 +497,7 @@
    "final_canonical_name": "To the peak of Jangsan Mountain that overlooks Marine City and Gwangandaegyo Bridge",
    "identity_evidence": "EXPLICIT_CLASSIFICATION note: 장산 정상(A-00084)은 #30 (same mountain; verified 2026-09-01 Naver/Google landing)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
    "final_canonical_production": {
@@ -463,7 +505,9 @@
     "published": true,
     "name": "To the peak of Jangsan Mountain that overlooks Marine City and Gwangandaegyo Bridge"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 7,
@@ -501,10 +545,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "OWNER_DECISION_PENDING_UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": true,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 16,
@@ -545,7 +591,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 17,
@@ -586,7 +633,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 18,
@@ -627,7 +675,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 19,
@@ -668,7 +717,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 21,
@@ -709,7 +759,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 22,
@@ -750,7 +801,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 23,
@@ -788,10 +840,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 24,
@@ -832,7 +886,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 25,
@@ -873,7 +928,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 26,
@@ -914,7 +970,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 27,
@@ -955,7 +1012,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 28,
@@ -993,10 +1051,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "OWNER_DECISION_PENDING_UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": true,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 29,
@@ -1034,10 +1094,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "OWNER_DECISION_PENDING_UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": true,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 30,
@@ -1078,7 +1140,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 31,
@@ -1119,7 +1182,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 32,
@@ -1157,10 +1221,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 33,
@@ -1201,7 +1267,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 34,
@@ -1242,7 +1309,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 35,
@@ -1283,7 +1351,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 36,
@@ -1324,7 +1393,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 37,
@@ -1365,7 +1435,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 38,
@@ -1406,7 +1477,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 39,
@@ -1444,10 +1516,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 40,
@@ -1488,7 +1562,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 41,
@@ -1529,7 +1604,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 42,
@@ -1567,10 +1643,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "OWNER_DECISION_PENDING_UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": true,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 43,
@@ -1611,7 +1689,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 44,
@@ -1652,7 +1731,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 45,
@@ -1693,7 +1773,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 46,
@@ -1734,7 +1815,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 47,
@@ -1775,7 +1857,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 48,
@@ -1816,7 +1899,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 49,
@@ -1863,7 +1947,8 @@
     "published": true,
     "name": "Taejongdae Park’s 100 years of history with Yeongdo Lighthouse"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 50,
@@ -1901,10 +1986,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 51,
@@ -1945,7 +2032,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 52,
@@ -1986,7 +2074,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 53,
@@ -2027,7 +2116,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 54,
@@ -2068,7 +2158,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 55,
@@ -2106,10 +2197,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 56,
@@ -2150,7 +2243,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 57,
@@ -2188,10 +2282,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 58,
@@ -2232,7 +2328,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 59,
@@ -2273,7 +2370,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 60,
@@ -2314,7 +2412,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 61,
@@ -2352,10 +2451,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 62,
@@ -2396,7 +2497,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 63,
@@ -2437,7 +2539,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 64,
@@ -2475,10 +2578,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 65,
@@ -2519,7 +2624,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 66,
@@ -2560,7 +2666,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 67,
@@ -2601,7 +2708,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 68,
@@ -2639,10 +2747,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 69,
@@ -2683,7 +2793,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 70,
@@ -2724,7 +2835,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 71,
@@ -2765,7 +2877,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 72,
@@ -2806,7 +2919,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 73,
@@ -2847,7 +2961,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 74,
@@ -2888,7 +3003,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 75,
@@ -2929,7 +3045,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 76,
@@ -2970,7 +3087,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 77,
@@ -3011,7 +3129,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 78,
@@ -3052,7 +3171,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 79,
@@ -3093,7 +3213,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 80,
@@ -3134,7 +3255,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 81,
@@ -3172,10 +3294,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 82,
@@ -3213,10 +3337,12 @@
    "final_canonical_name": null,
    "identity_evidence": "no same-entity record in Final busan/gyeongju universe (explicit artifacts + address/name/coordinate identity rules)",
    "production_status": "PROD_RESIDUE_PUBLISHED",
-   "action": "UNPUBLISH",
+   "action": "RETIRE_FROM_DISCOVERY",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
   },
   {
    "old_id": 83,
@@ -3257,7 +3383,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 84,
@@ -3298,7 +3425,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 85,
@@ -3339,7 +3467,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 86,
@@ -3380,7 +3509,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 87,
@@ -3421,7 +3551,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 88,
@@ -3462,7 +3593,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 89,
@@ -3503,7 +3635,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 90,
@@ -3544,7 +3677,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 91,
@@ -3585,7 +3719,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 92,
@@ -3626,7 +3761,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 93,
@@ -3667,7 +3803,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 94,
@@ -3708,7 +3845,9 @@
    "action": "STRATEGIC_REBUILD",
    "strategic_reason": "BTS World Tour 2026 Busan anchor venue (events.json evt-anchor-001), #Kpop tag; K-POP discovery theme",
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false,
+   "EXCLUDED_FROM_SAFE_RETIRE": "STRATEGIC_REBUILD"
   },
   {
    "old_id": 95,
@@ -3749,7 +3888,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 99,
@@ -3790,7 +3930,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 100,
@@ -3831,7 +3972,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 101,
@@ -3872,7 +4014,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 102,
@@ -3913,7 +4056,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 103,
@@ -3954,7 +4098,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 104,
@@ -3995,7 +4140,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 105,
@@ -4036,7 +4182,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 106,
@@ -4077,7 +4224,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 107,
@@ -4118,7 +4266,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 108,
@@ -4159,7 +4308,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 109,
@@ -4200,7 +4350,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 110,
@@ -4241,7 +4392,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 111,
@@ -4282,7 +4434,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 112,
@@ -4323,7 +4476,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 113,
@@ -4364,7 +4518,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 114,
@@ -4405,7 +4560,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 115,
@@ -4446,7 +4602,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 116,
@@ -4487,7 +4644,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 117,
@@ -4528,7 +4686,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 118,
@@ -4569,7 +4728,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 119,
@@ -4610,7 +4770,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 120,
@@ -4651,7 +4812,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 121,
@@ -4692,7 +4854,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 122,
@@ -4733,7 +4896,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 123,
@@ -4774,7 +4938,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 124,
@@ -4815,7 +4980,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 125,
@@ -4856,7 +5022,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 126,
@@ -4897,7 +5064,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 127,
@@ -4938,7 +5106,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 128,
@@ -4979,7 +5148,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 129,
@@ -5020,7 +5190,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 130,
@@ -5061,7 +5232,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 131,
@@ -5102,7 +5274,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 132,
@@ -5143,7 +5316,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 133,
@@ -5184,7 +5358,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 134,
@@ -5225,7 +5400,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 135,
@@ -5266,7 +5442,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 136,
@@ -5307,7 +5484,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 137,
@@ -5354,7 +5532,8 @@
     "published": true,
     "name": "Munhwa Gonggam Sujeong and Choryang 1941, where old stories remain"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 138,
@@ -5395,7 +5574,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 139,
@@ -5436,7 +5616,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 140,
@@ -5477,7 +5658,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 141,
@@ -5518,7 +5700,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 142,
@@ -5559,7 +5742,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 143,
@@ -5600,7 +5784,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 144,
@@ -5641,7 +5826,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 145,
@@ -5682,7 +5868,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 146,
@@ -5723,7 +5910,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 147,
@@ -5764,7 +5952,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 148,
@@ -5805,7 +5994,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 149,
@@ -5846,7 +6036,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 150,
@@ -5887,7 +6078,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 151,
@@ -5928,7 +6120,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 152,
@@ -5969,7 +6162,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 153,
@@ -6010,7 +6204,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 154,
@@ -6051,7 +6246,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 155,
@@ -6092,7 +6288,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 156,
@@ -6133,7 +6330,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 157,
@@ -6174,7 +6372,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 158,
@@ -6215,7 +6414,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 159,
@@ -6256,7 +6456,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 160,
@@ -6297,7 +6498,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 161,
@@ -6338,7 +6540,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 162,
@@ -6379,7 +6582,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 163,
@@ -6420,7 +6624,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 164,
@@ -6461,7 +6666,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 165,
@@ -6502,7 +6708,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 166,
@@ -6543,7 +6750,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 167,
@@ -6584,7 +6792,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 168,
@@ -6625,7 +6834,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 169,
@@ -6666,7 +6876,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 170,
@@ -6707,7 +6918,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 171,
@@ -6748,7 +6960,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 172,
@@ -6789,7 +7002,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 173,
@@ -6830,7 +7044,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 174,
@@ -6871,7 +7086,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 175,
@@ -6912,7 +7128,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 176,
@@ -6953,7 +7170,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 177,
@@ -6994,7 +7212,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 178,
@@ -7035,7 +7254,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 179,
@@ -7076,7 +7296,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 180,
@@ -7117,7 +7338,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 181,
@@ -7158,7 +7380,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 182,
@@ -7199,7 +7422,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 183,
@@ -7240,7 +7464,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 184,
@@ -7281,7 +7506,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 185,
@@ -7322,7 +7548,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 186,
@@ -7363,7 +7590,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 187,
@@ -7404,7 +7632,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 188,
@@ -7445,7 +7674,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 189,
@@ -7486,7 +7716,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 190,
@@ -7527,7 +7758,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 191,
@@ -7568,7 +7800,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 192,
@@ -7609,7 +7842,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 193,
@@ -7650,7 +7884,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 194,
@@ -7691,7 +7926,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 195,
@@ -7732,7 +7968,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 196,
@@ -7773,7 +8010,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 197,
@@ -7814,7 +8052,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 198,
@@ -7855,7 +8094,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 199,
@@ -7896,7 +8136,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 200,
@@ -7937,7 +8178,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 201,
@@ -7978,7 +8220,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 202,
@@ -8019,7 +8262,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 203,
@@ -8060,7 +8304,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 204,
@@ -8101,7 +8346,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 205,
@@ -8142,7 +8388,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 206,
@@ -8183,7 +8430,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 207,
@@ -8224,7 +8472,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 208,
@@ -8265,7 +8514,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 209,
@@ -8306,7 +8556,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 210,
@@ -8347,7 +8598,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 211,
@@ -8388,7 +8640,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 212,
@@ -8429,7 +8682,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 213,
@@ -8470,7 +8724,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 214,
@@ -8511,7 +8766,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 215,
@@ -8552,7 +8808,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 216,
@@ -8593,7 +8850,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 217,
@@ -8634,7 +8892,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 218,
@@ -8675,7 +8934,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 219,
@@ -8716,7 +8976,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 220,
@@ -8757,7 +9018,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 221,
@@ -8798,7 +9060,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 222,
@@ -8839,7 +9102,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 223,
@@ -8880,7 +9144,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 224,
@@ -8921,7 +9186,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 225,
@@ -8962,7 +9228,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 226,
@@ -9003,7 +9270,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 227,
@@ -9044,7 +9312,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 228,
@@ -9085,7 +9354,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 229,
@@ -9126,7 +9396,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 230,
@@ -9167,7 +9438,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 231,
@@ -9208,7 +9480,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 232,
@@ -9249,7 +9522,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 233,
@@ -9290,7 +9564,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 234,
@@ -9331,7 +9606,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 235,
@@ -9372,7 +9648,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 236,
@@ -9413,7 +9690,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 237,
@@ -9454,7 +9732,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 238,
@@ -9495,7 +9774,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 239,
@@ -9536,7 +9816,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 240,
@@ -9577,7 +9858,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 241,
@@ -9618,7 +9900,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 242,
@@ -9659,7 +9942,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 243,
@@ -9700,7 +9984,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 244,
@@ -9741,7 +10026,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 245,
@@ -9782,7 +10068,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 246,
@@ -9823,7 +10110,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 247,
@@ -9864,7 +10152,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 오륙도(A-00022) is the islets, old row is a restaurant — different entity"
+   "reviewed_not_same_entity": "Final 오륙도(A-00022) is the islets, old row is a restaurant — different entity",
+   "historical_owner_override": false
   },
   {
    "old_id": 248,
@@ -9905,7 +10194,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 249,
@@ -9946,7 +10236,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 250,
@@ -9987,7 +10278,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 251,
@@ -10028,7 +10320,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 252,
@@ -10069,7 +10362,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 253,
@@ -10110,7 +10404,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 254,
@@ -10151,7 +10446,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 255,
@@ -10192,7 +10488,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 256,
@@ -10233,7 +10530,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 257,
@@ -10274,7 +10572,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 258,
@@ -10315,7 +10614,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 259,
@@ -10356,7 +10656,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 260,
@@ -10397,7 +10698,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 261,
@@ -10438,7 +10740,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 262,
@@ -10479,7 +10782,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 263,
@@ -10520,7 +10824,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 264,
@@ -10561,7 +10866,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 265,
@@ -10602,7 +10908,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 266,
@@ -10643,7 +10950,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 267,
@@ -10684,7 +10992,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 268,
@@ -10725,7 +11034,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 269,
@@ -10766,7 +11076,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 270,
@@ -10807,7 +11118,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 271,
@@ -10848,7 +11160,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 272,
@@ -10889,7 +11202,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 273,
@@ -10930,7 +11244,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 274,
@@ -10971,7 +11286,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 275,
@@ -11012,7 +11328,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 276,
@@ -11053,7 +11370,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 277,
@@ -11094,7 +11412,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 278,
@@ -11135,7 +11454,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 279,
@@ -11176,7 +11496,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 280,
@@ -11217,7 +11538,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 281,
@@ -11258,7 +11580,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 282,
@@ -11299,7 +11622,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 283,
@@ -11340,7 +11664,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 284,
@@ -11381,7 +11706,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 285,
@@ -11422,7 +11748,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 286,
@@ -11463,7 +11790,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 287,
@@ -11504,7 +11832,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 288,
@@ -11545,7 +11874,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 289,
@@ -11586,7 +11916,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 290,
@@ -11627,7 +11958,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 291,
@@ -11674,7 +12006,8 @@
     "published": true,
     "name": "Jeonjitgan (Sinpyeong)"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 292,
@@ -11715,7 +12048,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 293,
@@ -11756,7 +12090,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 294,
@@ -11797,7 +12132,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 295,
@@ -11838,7 +12174,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 296,
@@ -11879,7 +12216,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 297,
@@ -11920,7 +12258,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 298,
@@ -11961,7 +12300,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 299,
@@ -12002,7 +12342,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 300,
@@ -12043,7 +12384,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 301,
@@ -12084,7 +12426,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 302,
@@ -12125,7 +12468,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 303,
@@ -12166,7 +12510,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 304,
@@ -12207,7 +12552,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 305,
@@ -12248,7 +12594,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 306,
@@ -12289,7 +12636,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 307,
@@ -12330,7 +12678,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 308,
@@ -12371,7 +12720,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 309,
@@ -12412,7 +12762,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 310,
@@ -12453,7 +12804,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 311,
@@ -12494,7 +12846,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 312,
@@ -12535,7 +12888,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 313,
@@ -12576,7 +12930,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 314,
@@ -12617,7 +12972,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 315,
@@ -12658,7 +13014,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 316,
@@ -12699,7 +13056,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 317,
@@ -12740,7 +13098,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 318,
@@ -12781,7 +13140,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 319,
@@ -12822,7 +13182,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 320,
@@ -12863,7 +13224,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 321,
@@ -12904,7 +13266,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 322,
@@ -12945,7 +13308,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 323,
@@ -12986,7 +13350,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 324,
@@ -13027,7 +13392,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 325,
@@ -13068,7 +13434,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 326,
@@ -13109,7 +13476,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 327,
@@ -13150,7 +13518,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 328,
@@ -13191,7 +13560,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 329,
@@ -13232,7 +13602,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 330,
@@ -13273,7 +13644,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "keyword 'fan' false positive (dessert lounge) — not strategic"
+   "reviewed_not_same_entity": "keyword 'fan' false positive (dessert lounge) — not strategic",
+   "historical_owner_override": false
   },
   {
    "old_id": 331,
@@ -13314,7 +13686,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 332,
@@ -13355,7 +13728,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 333,
@@ -13396,7 +13770,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 334,
@@ -13437,7 +13812,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 335,
@@ -13478,7 +13854,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 336,
@@ -13519,7 +13896,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 337,
@@ -13560,7 +13938,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 338,
@@ -13601,7 +13980,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 339,
@@ -13642,7 +14022,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 340,
@@ -13683,7 +14064,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 341,
@@ -13724,7 +14106,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 342,
@@ -13765,7 +14148,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 343,
@@ -13806,7 +14190,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 344,
@@ -13847,7 +14232,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 345,
@@ -13888,7 +14274,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 346,
@@ -13929,7 +14316,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 347,
@@ -13970,7 +14358,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 348,
@@ -14011,7 +14400,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 349,
@@ -14052,7 +14442,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 350,
@@ -14093,7 +14484,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 351,
@@ -14134,7 +14526,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 352,
@@ -14175,7 +14568,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 353,
@@ -14216,7 +14610,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 354,
@@ -14257,7 +14652,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 355,
@@ -14298,7 +14694,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 356,
@@ -14339,7 +14736,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 357,
@@ -14380,7 +14778,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 358,
@@ -14421,7 +14820,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 359,
@@ -14462,7 +14862,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 360,
@@ -14503,7 +14904,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 361,
@@ -14544,7 +14946,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 362,
@@ -14585,7 +14988,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 363,
@@ -14626,7 +15030,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 364,
@@ -14667,7 +15072,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 365,
@@ -14708,7 +15114,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 366,
@@ -14749,7 +15156,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 367,
@@ -14790,7 +15198,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 368,
@@ -14831,7 +15240,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 369,
@@ -14872,7 +15282,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 370,
@@ -14913,7 +15324,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 371,
@@ -14954,7 +15366,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 372,
@@ -14995,7 +15408,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 373,
@@ -15036,7 +15450,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 374,
@@ -15077,7 +15492,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 375,
@@ -15118,7 +15534,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 376,
@@ -15159,7 +15576,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 377,
@@ -15200,7 +15618,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 378,
@@ -15241,7 +15660,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 379,
@@ -15282,7 +15702,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 380,
@@ -15323,7 +15744,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 381,
@@ -15364,7 +15786,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 382,
@@ -15405,7 +15828,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 383,
@@ -15446,7 +15870,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 384,
@@ -15487,7 +15912,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 385,
@@ -15528,7 +15954,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 386,
@@ -15569,7 +15996,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 387,
@@ -15610,7 +16038,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 388,
@@ -15651,7 +16080,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 389,
@@ -15692,7 +16122,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 390,
@@ -15733,7 +16164,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 391,
@@ -15774,7 +16206,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 392,
@@ -15815,7 +16248,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 393,
@@ -15856,7 +16290,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 394,
@@ -15897,7 +16332,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 395,
@@ -15938,7 +16374,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 396,
@@ -15979,7 +16416,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 397,
@@ -16020,7 +16458,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 398,
@@ -16061,7 +16500,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 399,
@@ -16102,7 +16542,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 400,
@@ -16143,7 +16584,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 401,
@@ -16184,7 +16626,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 402,
@@ -16225,7 +16668,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 403,
@@ -16266,7 +16710,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 404,
@@ -16307,7 +16752,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 405,
@@ -16348,7 +16794,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 406,
@@ -16389,7 +16836,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 407,
@@ -16436,7 +16884,8 @@
     "published": true,
     "name": "Shunsai Kubo (Hwamyeong)"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 408,
@@ -16477,7 +16926,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 409,
@@ -16518,7 +16968,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 410,
@@ -16559,7 +17010,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 411,
@@ -16600,7 +17052,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 412,
@@ -16641,7 +17094,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 413,
@@ -16682,7 +17136,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 414,
@@ -16723,7 +17178,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 415,
@@ -16764,7 +17220,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 416,
@@ -16805,7 +17262,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 417,
@@ -16846,7 +17304,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 418,
@@ -16887,7 +17346,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 419,
@@ -16928,7 +17388,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 420,
@@ -16969,7 +17430,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 421,
@@ -17010,7 +17472,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 422,
@@ -17051,7 +17514,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 423,
@@ -17092,7 +17556,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 424,
@@ -17133,7 +17598,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 425,
@@ -17176,7 +17642,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 426,
@@ -17219,7 +17686,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 427,
@@ -17262,7 +17730,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 428,
@@ -17305,7 +17774,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 429,
@@ -17348,7 +17818,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 430,
@@ -17391,7 +17862,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 431,
@@ -17434,7 +17906,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 432,
@@ -17477,7 +17950,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 433,
@@ -17520,7 +17994,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 434,
@@ -17563,7 +18038,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 435,
@@ -17606,7 +18082,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 436,
@@ -17649,7 +18126,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 437,
@@ -17692,7 +18170,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 438,
@@ -17735,7 +18214,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 439,
@@ -17778,7 +18258,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 440,
@@ -17821,7 +18302,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 441,
@@ -17864,7 +18346,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 442,
@@ -17907,7 +18390,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 443,
@@ -17950,7 +18434,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 444,
@@ -17993,7 +18478,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 445,
@@ -18036,7 +18522,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 446,
@@ -18079,7 +18566,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 447,
@@ -18122,7 +18610,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 448,
@@ -18165,7 +18654,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 449,
@@ -18208,7 +18698,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 450,
@@ -18251,7 +18742,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 451,
@@ -18294,7 +18786,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 452,
@@ -18337,7 +18830,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 453,
@@ -18380,7 +18874,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 454,
@@ -18423,7 +18918,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 455,
@@ -18466,7 +18962,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 456,
@@ -18509,7 +19006,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 457,
@@ -18552,7 +19050,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 458,
@@ -18595,7 +19094,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 459,
@@ -18638,7 +19138,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 460,
@@ -18681,7 +19182,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 461,
@@ -18724,7 +19226,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 462,
@@ -18767,7 +19270,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 463,
@@ -18810,7 +19314,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 464,
@@ -18853,7 +19358,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 465,
@@ -18896,7 +19402,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 466,
@@ -18939,7 +19446,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 467,
@@ -18982,7 +19490,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 468,
@@ -19025,7 +19534,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 469,
@@ -19068,7 +19578,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 470,
@@ -19111,7 +19622,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 471,
@@ -19154,7 +19666,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 472,
@@ -19197,7 +19710,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 473,
@@ -19240,7 +19754,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 474,
@@ -19283,7 +19798,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 475,
@@ -19326,7 +19842,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 476,
@@ -19369,7 +19886,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 477,
@@ -19412,7 +19930,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 478,
@@ -19455,7 +19974,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 479,
@@ -19498,7 +20018,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 480,
@@ -19541,7 +20062,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 481,
@@ -19584,7 +20106,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 482,
@@ -19627,7 +20150,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 483,
@@ -19670,7 +20194,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 484,
@@ -19713,7 +20238,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 485,
@@ -19756,7 +20282,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 486,
@@ -19799,7 +20326,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 487,
@@ -19842,7 +20370,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 488,
@@ -19885,7 +20414,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 489,
@@ -19928,7 +20458,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 490,
@@ -19971,7 +20502,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 491,
@@ -20014,7 +20546,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 492,
@@ -20057,7 +20590,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 493,
@@ -20100,7 +20634,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 494,
@@ -20143,7 +20678,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 495,
@@ -20186,7 +20722,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 496,
@@ -20229,7 +20766,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 497,
@@ -20272,7 +20810,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 498,
@@ -20315,7 +20854,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 499,
@@ -20358,7 +20898,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 500,
@@ -20401,7 +20942,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 501,
@@ -20444,7 +20986,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 502,
@@ -20487,7 +21030,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 503,
@@ -20530,7 +21074,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 504,
@@ -20573,7 +21118,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 505,
@@ -20616,7 +21162,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 506,
@@ -20659,7 +21206,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 507,
@@ -20702,7 +21250,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 508,
@@ -20745,7 +21294,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 509,
@@ -20788,7 +21338,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 510,
@@ -20831,7 +21382,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 511,
@@ -20874,7 +21426,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 512,
@@ -20917,7 +21470,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 513,
@@ -20960,7 +21514,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 514,
@@ -21003,7 +21558,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 515,
@@ -21046,7 +21602,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 516,
@@ -21089,7 +21646,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 517,
@@ -21132,7 +21690,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 518,
@@ -21175,7 +21734,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 519,
@@ -21218,7 +21778,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 520,
@@ -21261,7 +21822,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 521,
@@ -21304,7 +21866,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 522,
@@ -21347,7 +21910,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 523,
@@ -21390,7 +21954,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 524,
@@ -21433,7 +21998,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 525,
@@ -21476,7 +22042,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 526,
@@ -21519,7 +22086,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 527,
@@ -21562,7 +22130,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 528,
@@ -21605,7 +22174,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 529,
@@ -21648,7 +22218,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 530,
@@ -21691,7 +22262,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 531,
@@ -21734,7 +22306,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 532,
@@ -21777,7 +22350,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 533,
@@ -21820,7 +22394,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 534,
@@ -21863,7 +22438,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 535,
@@ -21906,7 +22482,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 536,
@@ -21949,7 +22526,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 537,
@@ -21992,7 +22570,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 538,
@@ -22035,7 +22614,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 539,
@@ -22078,7 +22658,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 540,
@@ -22121,7 +22702,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 541,
@@ -22164,7 +22746,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 542,
@@ -22207,7 +22790,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 543,
@@ -22250,7 +22834,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 544,
@@ -22293,7 +22878,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 545,
@@ -22336,7 +22922,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 546,
@@ -22379,7 +22966,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 547,
@@ -22422,7 +23010,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 548,
@@ -22465,7 +23054,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 549,
@@ -22508,7 +23098,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 550,
@@ -22551,7 +23142,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 551,
@@ -22594,7 +23186,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 552,
@@ -22637,7 +23230,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 553,
@@ -22680,7 +23274,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 554,
@@ -22723,7 +23318,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 555,
@@ -22766,7 +23362,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 556,
@@ -22809,7 +23406,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 557,
@@ -22852,7 +23450,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 558,
@@ -22895,7 +23494,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 559,
@@ -22938,7 +23538,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 560,
@@ -22981,7 +23582,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 561,
@@ -23024,7 +23626,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 562,
@@ -23067,7 +23670,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 맷돌순두부(VG08-0011, 북군길 7) is 1.7 km from old 황남맷돌순두부(놋전2길 3) — different venue"
+   "reviewed_not_same_entity": "Final 맷돌순두부(VG08-0011, 북군길 7) is 1.7 km from old 황남맷돌순두부(놋전2길 3) — different venue",
+   "historical_owner_override": false
   },
   {
    "old_id": 563,
@@ -23110,7 +23714,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 564,
@@ -23153,7 +23758,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 565,
@@ -23196,7 +23802,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 566,
@@ -23239,7 +23846,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 567,
@@ -23282,7 +23890,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 568,
@@ -23325,7 +23934,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 569,
@@ -23368,7 +23978,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 570,
@@ -23411,7 +24022,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 571,
@@ -23454,7 +24066,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 572,
@@ -23497,7 +24110,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 573,
@@ -23540,7 +24154,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 574,
@@ -23583,7 +24198,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 575,
@@ -23626,7 +24242,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 576,
@@ -23669,7 +24286,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 577,
@@ -23712,7 +24330,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 578,
@@ -23755,7 +24374,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 579,
@@ -23798,7 +24418,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 580,
@@ -23841,7 +24462,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 581,
@@ -23884,7 +24506,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 582,
@@ -23927,7 +24550,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 583,
@@ -23970,7 +24594,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 584,
@@ -24013,7 +24638,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 585,
@@ -24056,7 +24682,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 진가네대구갈비(VG08-0069, 양정로) 2 km away — different venue"
+   "reviewed_not_same_entity": "Final 진가네대구갈비(VG08-0069, 양정로) 2 km away — different venue",
+   "historical_owner_override": false
   },
   {
    "old_id": 586,
@@ -24099,7 +24726,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 587,
@@ -24142,7 +24770,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 588,
@@ -24185,7 +24814,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 589,
@@ -24228,7 +24858,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 590,
@@ -24271,7 +24902,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 591,
@@ -24314,7 +24946,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 592,
@@ -24357,7 +24990,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 593,
@@ -24400,7 +25034,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 594,
@@ -24443,7 +25078,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 595,
@@ -24486,7 +25122,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 596,
@@ -24529,7 +25166,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 597,
@@ -24572,7 +25210,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 598,
@@ -24615,7 +25254,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 599,
@@ -24658,7 +25298,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 600,
@@ -24701,7 +25342,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 601,
@@ -24744,7 +25386,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 602,
@@ -24787,7 +25430,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 603,
@@ -24830,7 +25474,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 604,
@@ -24873,7 +25518,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 605,
@@ -24916,7 +25562,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 606,
@@ -24959,7 +25606,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 607,
@@ -25002,7 +25650,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 608,
@@ -25045,7 +25694,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 609,
@@ -25088,7 +25738,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 610,
@@ -25131,7 +25782,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 611,
@@ -25174,7 +25826,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 612,
@@ -25217,7 +25870,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 613,
@@ -25260,7 +25914,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 614,
@@ -25303,7 +25958,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 615,
@@ -25352,7 +26008,8 @@
     "published": true,
     "name": "Allbarut Kitchen Gyeongju Branch"
    },
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 616,
@@ -25395,7 +26052,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 617,
@@ -25438,7 +26096,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 618,
@@ -25481,7 +26140,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 619,
@@ -25524,7 +26184,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 620,
@@ -25567,7 +26228,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 621,
@@ -25610,7 +26272,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 622,
@@ -25653,7 +26316,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 623,
@@ -25696,7 +26360,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 624,
@@ -25739,7 +26404,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 625,
@@ -25782,7 +26448,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 626,
@@ -25825,7 +26492,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 627,
@@ -25868,7 +26536,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 628,
@@ -25911,7 +26580,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 629,
@@ -25954,7 +26624,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 630,
@@ -25997,7 +26668,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 631,
@@ -26040,7 +26712,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 632,
@@ -26083,7 +26756,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 633,
@@ -26126,7 +26800,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 634,
@@ -26169,7 +26844,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 635,
@@ -26212,7 +26888,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 636,
@@ -26255,7 +26932,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 637,
@@ -26298,7 +26976,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 638,
@@ -26341,7 +27020,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 639,
@@ -26384,7 +27064,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 640,
@@ -26427,7 +27108,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 641,
@@ -26470,7 +27152,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 642,
@@ -26513,7 +27196,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 643,
@@ -26556,7 +27240,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 644,
@@ -26599,7 +27284,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 645,
@@ -26642,7 +27328,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 646,
@@ -26685,7 +27372,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 647,
@@ -26728,7 +27416,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 648,
@@ -26771,7 +27460,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 649,
@@ -26814,7 +27504,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 650,
@@ -26857,7 +27548,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 651,
@@ -26900,7 +27592,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 호반오리(VG08-0035, 불국신택지) 8 km away — different venue"
+   "reviewed_not_same_entity": "Final 호반오리(VG08-0035, 불국신택지) 8 km away — different venue",
+   "historical_owner_override": false
   },
   {
    "old_id": 652,
@@ -26943,7 +27636,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 653,
@@ -26986,7 +27680,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 654,
@@ -27029,7 +27724,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 맷돌순두부(VG08-0011) 1.7 km away — different venue"
+   "reviewed_not_same_entity": "Final 맷돌순두부(VG08-0011) 1.7 km away — different venue",
+   "historical_owner_override": false
   },
   {
    "old_id": 655,
@@ -27072,7 +27768,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": "Final 운수대통닭갈비(VG08-0073, 원효로) 5 km away — different venue"
+   "reviewed_not_same_entity": "Final 운수대통닭갈비(VG08-0073, 원효로) 5 km away — different venue",
+   "historical_owner_override": false
   },
   {
    "old_id": 656,
@@ -27115,7 +27812,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 657,
@@ -27158,7 +27856,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 658,
@@ -27201,7 +27900,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 659,
@@ -27244,7 +27944,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 660,
@@ -27287,7 +27988,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 661,
@@ -27330,7 +28032,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 662,
@@ -27373,7 +28076,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 663,
@@ -27416,7 +28120,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 664,
@@ -27459,7 +28164,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 665,
@@ -27502,7 +28208,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 666,
@@ -27545,7 +28252,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 667,
@@ -27588,7 +28296,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 668,
@@ -27631,7 +28340,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 669,
@@ -27674,7 +28384,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 670,
@@ -27717,7 +28428,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 671,
@@ -27760,7 +28472,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 672,
@@ -27803,7 +28516,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 673,
@@ -27846,7 +28560,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 674,
@@ -27889,7 +28604,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 675,
@@ -27932,7 +28648,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 676,
@@ -27975,7 +28692,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 677,
@@ -28018,7 +28736,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 678,
@@ -28061,7 +28780,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 679,
@@ -28104,7 +28824,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 680,
@@ -28147,7 +28868,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 681,
@@ -28190,7 +28912,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 682,
@@ -28233,7 +28956,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 683,
@@ -28276,7 +29000,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 684,
@@ -28319,7 +29044,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 685,
@@ -28362,7 +29088,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 686,
@@ -28405,7 +29132,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 687,
@@ -28448,7 +29176,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 688,
@@ -28491,7 +29220,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 689,
@@ -28534,7 +29264,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 690,
@@ -28577,7 +29308,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 691,
@@ -28620,7 +29352,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 692,
@@ -28663,7 +29396,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 693,
@@ -28706,7 +29440,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 694,
@@ -28749,7 +29484,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 695,
@@ -28792,7 +29528,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 696,
@@ -28835,7 +29572,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 697,
@@ -28878,7 +29616,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 698,
@@ -28921,7 +29660,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 699,
@@ -28964,7 +29704,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 700,
@@ -29007,7 +29748,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 701,
@@ -29050,7 +29792,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 702,
@@ -29093,7 +29836,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 703,
@@ -29136,7 +29880,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 704,
@@ -29179,7 +29924,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 705,
@@ -29222,7 +29968,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 706,
@@ -29265,7 +30012,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 707,
@@ -29308,7 +30056,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 708,
@@ -29351,7 +30100,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 709,
@@ -29394,7 +30144,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 710,
@@ -29437,7 +30188,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 711,
@@ -29480,7 +30232,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 712,
@@ -29523,7 +30276,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 713,
@@ -29566,7 +30320,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 714,
@@ -29609,7 +30364,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 715,
@@ -29652,7 +30408,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 716,
@@ -29695,7 +30452,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 717,
@@ -29738,7 +30496,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 718,
@@ -29781,7 +30540,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 719,
@@ -29824,7 +30584,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 720,
@@ -29867,7 +30628,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 721,
@@ -29910,7 +30672,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 722,
@@ -29953,7 +30716,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 723,
@@ -29996,7 +30760,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 724,
@@ -30039,7 +30804,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 725,
@@ -30082,7 +30848,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   },
   {
    "old_id": 726,
@@ -30125,7 +30892,8 @@
    "action": "NONE",
    "strategic_reason": null,
    "hold_reason": null,
-   "reviewed_not_same_entity": null
+   "reviewed_not_same_entity": null,
+   "historical_owner_override": false
   }
  ]
 }
