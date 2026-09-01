@@ -1,7 +1,7 @@
 {
  "artifact": "owner-approved-corrections-v7-busan-zmillennial",
- "version": "final-2026-09-01",
- "task": "TASK-ZMILLENNIAL-CONTENT-EVIDENCE-AND-P6-FINALIZE-V1 (finalizes TASK-KPOP-ZMILLENNIAL-CANONICAL-CORRECTION-V1)",
+ "version": "final-2026-09-01-r2",
+ "task": "TASK-ZMILLENNIAL-P6-TAG-EVENT-CLEANUP-AND-FINAL-SQL-V1 (final r2; supersedes CONTENT-EVIDENCE-AND-P6-FINALIZE-V1)",
  "status": "FINAL CANDIDATE — Owner approval required before PROD-SQL; not executed",
  "canonical_keep_id": 93,
  "old_duplicate_ids": [],
@@ -203,16 +203,23 @@
     "S7"
    ],
    "used": false
+  },
+  {
+   "id": "M",
+   "claim": "queues / crowding on BTS concert days",
+   "status": "UNVERIFIED (S4 reports a June 2026 visitor surge but no direct queue/concert-day statement was confirmed on re-check)",
+   "evidence": [],
+   "used": false,
+   "action": "removed from events.json notice/description/why (birthday-season wording only)"
   }
  ],
  "tags": {
   "final": [
    "#Kpop",
    "#BTS",
-   "#Jimin",
    "#Cafe"
   ],
-  "taxonomy_basis": "Busan manual rows use '#'-prefixed tags (83 rows / 341 tags). Reused existing values: #Kpop (row 94), #BTS (rows 2, 93), #Cafe (9 Busan manual rows). New value: #Jimin (allowed discovery context, factual). Removed single-use ad-hoc values #ARMY, #FanRoute. Code does not consume tags for interest matching; tags affect Explore search + card chips only."
+  "taxonomy_basis": "Busan manual rows use '#'-prefixed tags (83 rows / 341 tags). Reused existing values: #Kpop (row 94), #BTS (rows 2, 93), #Cafe (9 Busan manual rows). Removed single-use ad-hoc values #ARMY, #FanRoute and the new value #Jimin (no new tag for one place; Jimin remains searchable via description/why text). Code does not consume tags for interest matching; tags affect Explore search + card chips only."
  },
  "corrections": [
   {
@@ -257,7 +264,6 @@
    "after": [
     "#Kpop",
     "#BTS",
-    "#Jimin",
     "#Cafe"
    ]
   },
@@ -353,6 +359,6 @@
  "rollback": "restore every 'before' value above; delete city_spot_images where city_spot_id=93 and image_url=IMG",
  "sql": {
   "file": "OWNER-RUN-P6-busan-zmillennial-canonical-v7-final.sql",
-  "sha256": "7aed1bf38368d584d15a25f18d32860f6bb91dcb832873f3d086c83a082413cc"
+  "sha256": "b1ec22604941249a10fefebef31408efbb0c84ad4e25b38cef9f7355f5cd9a88"
  }
 }
