@@ -12,6 +12,9 @@ import {
   resolveOneLiner,
   resolveProvenance,
   resolveMapLinks,
+  naverSearchQuery,
+  naverQueryFor,
+  normalizeOfficialUrl,
   toItineraryEvent,
   hasCommercialContext,
   placeEventId,
@@ -204,10 +207,50 @@ test("지도: 검증된 naver exact URL 을 최우선으로 쓴다", () => {
   assert.equal(m.naver, "https://naver.me/abc");
 });
 
-test("지도: naver exact 가 없으면 이름+주소 검색 URL 을 만든다", () => {
+test("지도: naver exact 가 없으면 한글 이름으로만 검색 URL 을 만든다 (주소를 잇지 않는다)", () => {
+  // 실측 2026-09-01: 이름+주소 결합 검색은 Naver 에서 "검색 결과가 없습니다".
+  const m = resolveMapLinks(spot({ name_l10n: { ko: "해운대해수욕장", en: "Haeundae Beach" } }), "Haeundae Beach");
+  assert.equal(m.naver, `https://map.naver.com/p/search/${encodeURIComponent("해운대해수욕장")}`);
+  // Google 은 기존대로 이름+주소
+  assert.ok(m.google?.includes(encodeURIComponent("Haeundae Beach 264 Haeundae-ro")));
+});
+
+test("지도: 한글 이름이 하나도 없으면 Naver 버튼을 만들지 않는다 (영문 검색은 다른 업체로 간다)", () => {
   const m = resolveMapLinks(spot(), "Haeundae Beach");
-  assert.ok(m.naver?.startsWith("https://map.naver.com/p/search/"));
-  assert.ok(m.naver?.includes(encodeURIComponent("Haeundae Beach 264 Haeundae-ro")));
+  assert.equal(m.naver, null);
+  assert.ok(m.google);
+});
+
+test("지도: 저장된 naver_map_url 이 영문 검색이면 버리고 한글 이름으로 다시 만든다", () => {
+  const m = resolveMapLinks(
+    spot({ naver_map_url: "https://map.naver.com/p/search/Gwangalli%20Beach%20Busan", name_l10n: { ko: "광안리해수욕장", en: "Gwangalli Beach" } }),
+    "Gwangalli Beach",
+  );
+  assert.equal(m.naver, `https://map.naver.com/p/search/${encodeURIComponent("광안리해수욕장")}`);
+});
+
+test("지도: 저장된 naver_map_url 이 한글 검색이면 그대로 쓴다 (v5 형식 포함)", () => {
+  const url = "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5";
+  assert.equal(resolveMapLinks(spot({ naver_map_url: url }), "Haeundae Beach").naver, url);
+  assert.equal(naverSearchQuery(url), "해운대해수욕장");
+  assert.equal(naverSearchQuery("https://naver.me/abc"), null);
+});
+
+test("지도: 검색어는 수집 주석을 뗀 한글 이름 — ko l10n > 표시 이름 > 원문 순", () => {
+  assert.equal(naverQueryFor(spot({ name_l10n: { ko: "장산(한,영,중간,중번,일)", en: "Jangsan" } }), "Jangsan"), "장산");
+  assert.equal(naverQueryFor(spot({ name: "달맞이동산" }), null), "달맞이동산");
+  assert.equal(naverQueryFor(spot(), "Jangsan Mountain Trail"), null);
+});
+
+test("공식 링크: scheme 없는 호스트는 https:// 를 붙이고, http(s) 가 아닌 값은 버린다", () => {
+  assert.equal(normalizeOfficialUrl("www.aechae.com"), "https://www.aechae.com");
+  assert.equal(normalizeOfficialUrl("vivianchoigallery.modoo.at"), "https://vivianchoigallery.modoo.at");
+  assert.equal(normalizeOfficialUrl("http://www.jogyesa.kr"), "http://www.jogyesa.kr");
+  assert.equal(normalizeOfficialUrl(" https://tour.jeonju.go.kr/x "), "https://tour.jeonju.go.kr/x");
+  assert.equal(normalizeOfficialUrl("javascript:alert(1)"), null);
+  assert.equal(normalizeOfficialUrl("mailto:a@b.c"), null);
+  assert.equal(normalizeOfficialUrl(""), null);
+  assert.equal(normalizeOfficialUrl(null), null);
 });
 
 test("지도: google exact URL 이 있으면 그것을 쓴다", () => {

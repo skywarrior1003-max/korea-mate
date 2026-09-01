@@ -308,16 +308,53 @@ export interface MapLinks {
   google: string | null;
 }
 
+const HANGUL = /[가-힣]/;
+
 /**
- * 검증된 exact URL 이 있으면 그것을, 없으면 이름+주소 또는 좌표로 검색 URL 을
- * 만든다. 이름도 좌표도 없으면 null — 버튼을 렌더하지 않는다.
+ * 저장된 naver_map_url 이 "이름 검색" 주소일 때 그 검색어. 검색 주소가 아니면(naver.me 단축·place entry) null.
+ * 실측(2026-09-01, Production 직접 클릭): `/p/search/Jangsan Mountain Busan` 은 "조건에 맞는 업체가 없습니다",
+ * `/p/search/Gwangalli Beach Busan` 은 광안동 식당·요트 업체 목록(해수욕장 아님) — 영문 검색어는 엉뚱한 곳이나
+ * 빈 화면으로 간다. 한글 검색어(`광안리해수욕장`·`해운대해수욕장`)는 첫 결과가 그 장소다.
+ */
+export function naverSearchQuery(url: string | null | undefined): string | null {
+  if (!hasText(url)) return null;
+  const m = url.match(/^https:\/\/map\.naver\.com\/(?:v5|p)\/search\/([^?#]+)/);
+  if (!m) return null;
+  try { return decodeURIComponent(m[1]!).trim(); } catch { return m[1]!.trim(); }
+}
+
+/**
+ * Naver 지도 검색어. 한글 이름만 쓴다 — 주소를 이어 붙인 긴 검색어는 Naver 에서 결과가 없고
+ * (실측: `장산 (부산 국가지질공원) 부산광역시 해운대구 장산로 331-18` → "검색 결과가 없습니다"),
+ * 영문 이름은 위와 같이 다른 업체로 간다. 한글 이름이 없으면 null — Naver 버튼을 만들지 않는다.
+ * 좌표·id 별 분기·도시명 덧붙이기는 하지 않는다(검증되지 않은 Naver URL 형식은 쓰지 않는다).
+ */
+export function naverQueryFor(spot: PlaceView, displayName: string | null): string | null {
+  const candidates = [pickLocalized(spot.name_l10n, "ko", null), displayName, spot.name];
+  for (const c of candidates) {
+    if (!hasText(c)) continue;
+    const n = stripIngestAnnotation(c).trim();
+    if (HANGUL.test(n)) return n;
+  }
+  return null;
+}
+
+/**
+ * 검증된 exact URL 이 있으면 그것을, 없으면 검색 URL 을 만든다. 이름도 좌표도 없으면 null — 버튼을 렌더하지 않는다.
+ *   Naver : 저장 URL 이 한글 검색 또는 검색이 아닌 exact 주소일 때만 신뢰. 영문 검색 저장 URL 은 버리고 한글 이름으로 다시 만든다.
+ *   Google: 저장 URL → 이름+주소 검색 → 좌표 검색 (Google 은 영문·주소 결합 검색이 실제로 그 장소에 닿는다).
  */
 export function resolveMapLinks(spot: PlaceView, displayName: string | null): MapLinks {
   const q = [displayName ?? spot.name, spot.address].filter(hasText).join(" ").trim();
   const hasCoord = typeof spot.lat === "number" && typeof spot.lng === "number";
 
-  let naver: string | null = hasText(spot.naver_map_url) ? spot.naver_map_url : null;
-  if (!naver && hasText(q)) naver = `https://map.naver.com/p/search/${encodeURIComponent(q)}`;
+  const storedNaverQuery = naverSearchQuery(spot.naver_map_url);
+  const storedNaverUsable = hasText(spot.naver_map_url) && (storedNaverQuery === null || HANGUL.test(storedNaverQuery));
+  let naver: string | null = storedNaverUsable ? spot.naver_map_url : null;
+  if (!naver) {
+    const nq = naverQueryFor(spot, displayName);
+    if (nq) naver = `https://map.naver.com/p/search/${encodeURIComponent(nq)}`;
+  }
 
   let google: string | null = hasText(spot.map_url) ? spot.map_url : null;
   if (!google && hasText(q)) {
@@ -327,6 +364,19 @@ export function resolveMapLinks(spot: PlaceView, displayName: string | null): Ma
   }
 
   return { naver, google };
+}
+
+/**
+ * 공식/홈페이지 링크로 내보내도 되는 절대 주소. scheme 이 빠진 값(`www.aechae.com`)은 그대로 href 에
+ * 넣으면 우리 사이트의 상대 경로(`/place/www.aechae.com`)가 돼 404 로 간다(Production 실측: 서울 21행).
+ * 호스트로 보이면 https:// 를 붙이고, http(s) 가 아닌 것(javascript:·mailto:·빈 값)은 null.
+ */
+export function normalizeOfficialUrl(url: string | null | undefined): string | null {
+  if (!hasText(url)) return null;
+  const u = url.trim();
+  if (/^https?:\/\//i.test(u)) return u;
+  if (/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(?:[/?#]|$)/i.test(u)) return `https://${u}`;
+  return null;
 }
 
 // ── 4. 일정 입력 어댑터 (비상업) ─────────────────────────────────────────────

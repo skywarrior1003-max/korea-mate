@@ -1,0 +1,657 @@
+{
+ "generated_at": "2026-09-01",
+ "task": "TASK-PREOPEN-LEGACY-DATA-LOCALE-LINK-HOME-UX-CLOSURE-V2",
+ "scope": "published rows whose KO UI shows a non-KO description (renderer contract: l10n[locale] else raw text; no translation is generated)",
+ "root_cause": {
+  "renderer": "OK — pickLocalized/displayPlaceText behave per contract (KO_MISSING_EN_FALLBACK)",
+  "data": "SOURCE_ONLY_ENGLISH — affected rows have only EN sources (VisitBusan EN content / visitjeonju EN / legacy manual seed); intake artifact five-city-core-active-v1 has 0 ko desc for busan-VB records"
+ },
+ "counts_by_city": {
+  "busan": {
+   "published": 805,
+   "desc_ko_missing_en_shown": 78,
+   "why_it_matters_en_only": 63,
+   "name_ko_missing_en_name": 18
+  },
+  "gyeongju": {
+   "published": 302,
+   "desc_ko_missing_en_shown": 0,
+   "desc_none": 65,
+   "ko_field_english_like": 6
+  },
+  "seoul": {
+   "published": 1837,
+   "desc_ko_missing_en_shown": 0,
+   "ko_field_english_like": 4
+  },
+  "jeju": {
+   "published": 1496,
+   "desc_ko_missing_en_shown": 0,
+   "desc_none": 10
+  },
+  "jeonju": {
+   "published": 236,
+   "desc_ko_present": 0,
+   "desc_ko_missing_en_shown": 85,
+   "desc_none": 151
+  }
+ },
+ "affected_rows_sample": [
+  {
+   "id": 43,
+   "city": "busan",
+   "name": "Busan X the Sky Observatory",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": null,
+   "en_head": "BUSAN X the SKY is located at Haeundae LCT Landmark Tower, t"
+  },
+  {
+   "id": 85,
+   "city": "busan",
+   "name": "Songdo Yonggung Suspension Bridge",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": null,
+   "en_head": "Songdo Yonggung Cloud Bridge is a must-visit attraction in S"
+  },
+  {
+   "id": 1327,
+   "city": "busan",
+   "name": "Create Your Signature Fragrance: One-day Perfume Workshop",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1742",
+   "ko_head": null,
+   "en_head": "A perfumer will help you find your own perfume.Green Pina, l"
+  },
+  {
+   "id": 1328,
+   "city": "busan",
+   "name": "HANJI LOVE",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1063",
+   "ko_head": null,
+   "en_head": "Ye-Rim Inc., managed by Korean paper crafts artist Song Ji H"
+  },
+  {
+   "id": 1329,
+   "city": "busan",
+   "name": "Medid",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1066",
+   "ko_head": null,
+   "en_head": "MEDID is a company operating a medical tourism platform for "
+  },
+  {
+   "id": 1330,
+   "city": "busan",
+   "name": "Enjoying scuba diving in Taejongdae Park",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1315",
+   "ko_head": null,
+   "en_head": "One of the most attractive things about Busan is that you ca"
+  },
+  {
+   "id": 1331,
+   "city": "busan",
+   "name": "Museum 1",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1316",
+   "ko_head": null,
+   "en_head": "Museum 1, located in Centum, Busan, is a media-specialized c"
+  },
+  {
+   "id": 1332,
+   "city": "busan",
+   "name": "A market full of trends —Millac the Market",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1323",
+   "ko_head": null,
+   "en_head": "ME World was a place of memories for Busan citizens in the p"
+  },
+  {
+   "id": 1333,
+   "city": "busan",
+   "name": "Night Views of Both the River and Sea from Haeundae River Cruise Ship",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1364",
+   "ko_head": null,
+   "en_head": "Very few cities are as colorful as Busan. Not to mention the"
+  },
+  {
+   "id": 1334,
+   "city": "busan",
+   "name": "Surfing Courses and Lessons",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-139",
+   "ko_head": null,
+   "en_head": "Surf Holic’s “Surfing Course”- What is surfing? It is a cour"
+  },
+  {
+   "id": 1336,
+   "city": "busan",
+   "name": "Skyline Luge Busan",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1624",
+   "ko_head": null,
+   "en_head": "Enter Skyline Luge, an activity that was developed in New Ze"
+  },
+  {
+   "id": 1337,
+   "city": "busan",
+   "name": "Dongbaek sanghoe",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1666",
+   "ko_head": null,
+   "en_head": "Busan Station is often the first impression that one has of "
+  },
+  {
+   "id": 1338,
+   "city": "busan",
+   "name": "Haeundae Souvenir Shop",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1667",
+   "ko_head": null,
+   "en_head": "Haeundae Beach, famous nationwide, is an unmissable place in"
+  },
+  {
+   "id": 1339,
+   "city": "busan",
+   "name": "A custom jewelry class to enjoy privately",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1733",
+   "ko_head": null,
+   "en_head": "531 Jewelry Workshop is an excellent indoor space that acts "
+  },
+  {
+   "id": 1340,
+   "city": "busan",
+   "name": "Unique Beeswax Craft Experience at Hello Coffee, Hi Honey in Mangmi Alley",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1743",
+   "ko_head": null,
+   "en_head": "Hello Coffee, Hi Honey, nestled at the end of Mangmi Alley, "
+  },
+  {
+   "id": 1341,
+   "city": "busan",
+   "name": "A drawing class on Jeonpogonggu-gil! Seongsu Misulgwan Seomyeon Busan",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1747",
+   "ko_head": null,
+   "en_head": "Seongsu Misulgwan in Seomyeon, Busan has emerged as a hot sp"
+  },
+  {
+   "id": 1342,
+   "city": "busan",
+   "name": "Let your fingers do some art in the pottery class at Green on the Brown",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1748",
+   "ko_head": null,
+   "en_head": "Green on the Brown is very popular as a pottery studio that "
+  },
+  {
+   "id": 1343,
+   "city": "busan",
+   "name": "SPA LAND Centum City",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1753",
+   "ko_head": null,
+   "en_head": "Another place where you can enjoy both bathing in a hot spri"
+  },
+  {
+   "id": 1344,
+   "city": "busan",
+   "name": "Hurshimchung Spa",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1754",
+   "ko_head": null,
+   "en_head": "Named as Oncheonjang Inn, this district has a long history. "
+  },
+  {
+   "id": 1345,
+   "city": "busan",
+   "name": "Red Clay Barefoot Trail In Gubongsan Healing Forest",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1799",
+   "ko_head": null,
+   "en_head": "Red Clay Barefoot Trail is part of the Healing Forest Trail "
+  },
+  {
+   "id": 1346,
+   "city": "busan",
+   "name": "Ryan Holiday in Busan",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1855",
+   "ko_head": null,
+   "en_head": "The most beloved emojis to people today, Kakao Friends, enjo"
+  },
+  {
+   "id": 1347,
+   "city": "busan",
+   "name": "Wellness Tourism Experience on the Sea, Gwangalli SUP Yoga",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-1955",
+   "ko_head": null,
+   "en_head": "Did you know that a wellness tourism experience can be enjoy"
+  },
+  {
+   "id": 1349,
+   "city": "busan",
+   "name": "Get to know yourself better at 4233 Mind Space, Gwangan Branch",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2066",
+   "ko_head": null,
+   "en_head": "4233 Mind Space opened in Gwangan-dong, Busan after Seoul. J"
+  },
+  {
+   "id": 1350,
+   "city": "busan",
+   "name": "BIG Shop: A Busan brand shop full of city charm",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2241",
+   "ko_head": null,
+   "en_head": "BIG Shop, a place where the cute Busan mascot Boogi welcomes"
+  },
+  {
+   "id": 1624,
+   "city": "busan",
+   "name": "Busan Duty Free Yongdusan Branch",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-539",
+   "ko_head": null,
+   "en_head": "Busan Duty Free is conveniently located at Busan Tower, Yong"
+  },
+  {
+   "id": 1625,
+   "city": "busan",
+   "name": "BAKING HARU, Make Your Day Special with Baking",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2249",
+   "ko_head": null,
+   "en_head": "Located in Suyeong-gu, Busan, BAKING HARU is a dedicated spa"
+  },
+  {
+   "id": 1626,
+   "city": "busan",
+   "name": "Gadeokdo Lighthouse Experience: Where History and Nature Come Together for a Special Day",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2294",
+   "ko_head": null,
+   "en_head": "Get a chance to stay at a special accommodation that require"
+  },
+  {
+   "id": 1627,
+   "city": "busan",
+   "name": "Get To Know a New Dimension of Sport at Busan E-Sports Arena!",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2309",
+   "ko_head": null,
+   "en_head": "Busan E-sports Arena (BRENA) is an e-sports stadium in Seomy"
+  },
+  {
+   "id": 1628,
+   "city": "busan",
+   "name": "Experience the Real Busan Sea at Gongsu Fishing Village",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2397",
+   "ko_head": null,
+   "en_head": "Gongsu Fishing Village (Gongsu Village) is a tranquil fishin"
+  },
+  {
+   "id": 1629,
+   "city": "busan",
+   "name": "Delight Project Haeundae Branch",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2398",
+   "ko_head": null,
+   "en_head": "Delight Project, a health-conscious snack brand, has opened "
+  },
+  {
+   "id": 1630,
+   "city": "busan",
+   "name": "Calling All Miffy Fans! It's Time for Miffy Café Busan!",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2555",
+   "ko_head": null,
+   "en_head": "Discover Miffy Café in Yeongdo, Busan—a cozy hideaway overfl"
+  },
+  {
+   "id": 1631,
+   "city": "busan",
+   "name": "Sabai Sabai in Jeonpo – A Space that Inspires Everyday Life",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2557",
+   "ko_head": null,
+   "en_head": "Sabai Sabai in Jeonpo is more than a shop. It captures the s"
+  },
+  {
+   "id": 1632,
+   "city": "busan",
+   "name": "Exploring 'Samyeong Jubang(삼영그릇)', a Kitchenware Specialty Store Since 1987",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2580",
+   "ko_head": null,
+   "en_head": "Located in Haeundae, Busan, Samyeong Jubang(삼영그릇) is a long-"
+  },
+  {
+   "id": 1633,
+   "city": "busan",
+   "name": "A Special Journey in Haeridan-gil street, 'Pretty Whale Gift Shop'",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2581",
+   "ko_head": null,
+   "en_head": "Pretty Whale Gift Shop is a charming boutique created by rem"
+  },
+  {
+   "id": 1634,
+   "city": "busan",
+   "name": "Breakout: Discover Busan’s Hidden Thrills",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2586",
+   "ko_head": null,
+   "en_head": "Where Gwangalli’s lights meet Haeundae’s waves, Breakout is "
+  },
+  {
+   "id": 1635,
+   "city": "busan",
+   "name": "Munhyeon-dong Antiques Street—An Antique Journey Beginning at the Rainbow Bridge",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2589",
+   "ko_head": null,
+   "en_head": "Munhyeon-dong Antiques Street in Nam-gu, Busan, is a place w"
+  },
+  {
+   "id": 1636,
+   "city": "busan",
+   "name": "SCENTICA: A Fragrance and Lifestyle Brand Capturing the Spirit of Busan",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-2662",
+   "ko_head": null,
+   "en_head": "1. SCENTICA Gwangalli If you want to remember Busan’s sea th"
+  },
+  {
+   "id": 1637,
+   "city": "busan",
+   "name": "Gijang Market with everything on the stands",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-292",
+   "ko_head": null,
+   "en_head": "The bright and generous smiles on the Gijang aunties’ faces "
+  },
+  {
+   "id": 1638,
+   "city": "busan",
+   "name": "Busan’s brilliant Seomyeon Market",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-328",
+   "ko_head": null,
+   "en_head": "Nearly 60 years old, Seomyeon Market is becoming a hotspot i"
+  },
+  {
+   "id": 1639,
+   "city": "busan",
+   "name": "Nakdong River Eco Tour Cruise, an exciting ecological tour along the Nakdonggang River!",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-336",
+   "ko_head": null,
+   "en_head": "Busan is blessed with natural resources composed of the sea,"
+  },
+  {
+   "id": 1640,
+   "city": "busan",
+   "name": "Discover nature’s wonder through paddleboarding",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-339",
+   "ko_head": null,
+   "en_head": "With a similar atmosphere to California where marine leisure"
+  },
+  {
+   "id": 1641,
+   "city": "busan",
+   "name": "Gwangbok-ro Fashion Street—Busan’s largest shopping street",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-413",
+   "ko_head": null,
+   "en_head": "Busan is full of many cultural streets with different themes"
+  },
+  {
+   "id": 1642,
+   "city": "busan",
+   "name": "Dongnae Market, a fun stopover for your Dongnae tour",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-422",
+   "ko_head": null,
+   "en_head": "Dongnae Market, now a clean, modern two-story building, is 2"
+  },
+  {
+   "id": 1643,
+   "city": "busan",
+   "name": "KidZania, a space for children who are the mirror of the future",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-43",
+   "ko_head": null,
+   "en_head": "“What do kids know?”This is what adults often say, but it is"
+  },
+  {
+   "id": 1644,
+   "city": "busan",
+   "name": "Walk around Hoedong Reservoir, a place that embraces eternal nature",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-436",
+   "ko_head": null,
+   "en_head": "The Hoedong Reservoir is a large area that combines rivers, "
+  },
+  {
+   "id": 1645,
+   "city": "busan",
+   "name": "Busan Aquarium, where you can see, smell, hear, and feel the sea",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-44",
+   "ko_head": null,
+   "en_head": "Haeundae Beach first comes to mind when people think about B"
+  },
+  {
+   "id": 1646,
+   "city": "busan",
+   "name": "Taekwondo—the spirit of Korea in its stiff uniform called dobok",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-448",
+   "ko_head": null,
+   "en_head": "Taekwondo is one of Korea’s traditional martial arts. Since "
+  },
+  {
+   "id": 1647,
+   "city": "busan",
+   "name": "Lotte Premium Outlets Dongbusan Branch, Let’s Go Shopping and Have Fun!",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-506",
+   "ko_head": null,
+   "en_head": "The refreshing white-and-blue facade and the lighthouse-shap"
+  },
+  {
+   "id": 1648,
+   "city": "busan",
+   "name": "Enjoy a picnic on the weekend at the farm.",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-530",
+   "ko_head": null,
+   "en_head": "What should I do this weekend? I’m going to visit the experi"
+  },
+  {
+   "id": 1649,
+   "city": "busan",
+   "name": "Lotte Duty Free Busan Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-537",
+   "ko_head": null,
+   "en_head": "The center of the tourist shopping in Busan is located in Se"
+  },
+  {
+   "id": 1650,
+   "city": "busan",
+   "name": "Lotte Duty Free Gimhae Airport Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-540",
+   "ko_head": null,
+   "en_head": "With more than 100 different brands available, this store of"
+  },
+  {
+   "id": 1651,
+   "city": "busan",
+   "name": "Lotte Department Store Busan Main Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-541",
+   "ko_head": null,
+   "en_head": "In addition to the main store in Busan, there are three othe"
+  },
+  {
+   "id": 1652,
+   "city": "busan",
+   "name": "Lotte Gwangbok Store with\u000bmusic fountain and observatory",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-545",
+   "ko_head": null,
+   "en_head": "Lotte Gwangbok Store is the only department store in Busan t"
+  },
+  {
+   "id": 1653,
+   "city": "busan",
+   "name": "Lotte Department Store Centum City Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-546",
+   "ko_head": null,
+   "en_head": "In addition to the main store in Busan, there are three othe"
+  },
+  {
+   "id": 1654,
+   "city": "busan",
+   "name": "Lotte Department Store Dongnae Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-547",
+   "ko_head": null,
+   "en_head": "In addition to the main store in Busan, there are three othe"
+  },
+  {
+   "id": 1655,
+   "city": "busan",
+   "name": "Shinsegae Centum City Department Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-548",
+   "ko_head": null,
+   "en_head": "Located in Centum City, Haeundae, Shinsegae Department Store"
+  },
+  {
+   "id": 1656,
+   "city": "busan",
+   "name": "Fall in love with the exotic shopping street! Busan Premium Outlets",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-552",
+   "ko_head": null,
+   "en_head": "Walk into Busan Premium Outlets and admire the architectural"
+  },
+  {
+   "id": 1657,
+   "city": "busan",
+   "name": "NC Department Store Haeundae Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-554",
+   "ko_head": null,
+   "en_head": "Maintaining a size between a department store and an outlet,"
+  },
+  {
+   "id": 1658,
+   "city": "busan",
+   "name": "NC Department Store Pusan National University Store",
+   "source_type": "canonical",
+   "external_id": "busan:busan-VB-555",
+   "ko_head": null,
+   "en_head": "Maintaining a size between a department store and an outlet,"
+  },
+  {
+   "id": 452,
+   "city": "gyeongju",
+   "name": "신라왕경숲",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 483,
+   "city": "gyeongju",
+   "name": "감포공설시장",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 490,
+   "city": "gyeongju",
+   "name": "관성솔밭해변",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 494,
+   "city": "gyeongju",
+   "name": "봉길대왕암해변",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 550,
+   "city": "gyeongju",
+   "name": "최제우 생가",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 556,
+   "city": "gyeongju",
+   "name": "흥무공원",
+   "source_type": "manual",
+   "external_id": null,
+   "ko_head": "Copyright 2019 Gyeongju Tourguide. All rights reserved.",
+   "en_head": null
+  },
+  {
+   "id": 3519,
+   "city": "seoul",
+   "name": "2026 서울국제정원박람회",
+   "source_type": "canonical",
+   "external_id": "seoul:seoul-KOP47mbp7",
+   "ko_head": "2026-05-01~2026-10-27. Ongoing as of 2026-08-17. Theme: Seoul, Green C",
+   "en_head": null
+  },
+  {
+   "id": 3520,
+   "city": "seoul",
+   "name": "2026 서울시 태권도 공연",
+   "source_type": "canonical",
+   "external_id": "seoul:seoul-KOPd5mmfg",
+   "ko_head": "2026-05-09~2026-10-18. Ongoing as of 2026-08-17. Free admission.",
+   "en_head": null
+  },
+  {
+   "id": 3724,
+   "city": "seoul",
+   "name": "2026 남산골 전통체험: 장인의 시간",
+   "source_type": "canonical",
+   "external_id": "seoul:seoul-KOPw5jg9e",
+   "ko_head": "2026-04-03~2026-10-25. July-August sessions suspended. September onwar",
+   "en_head": null
+  }
+ ],
+ "owner_decision_needed": [
+  "KO source acquisition for busan-VB (VisitBusan KR pages) / visitjeonju KR pages = new source fetch (Ask Zone)",
+  "fallback display policy (show EN as today vs hide vs mark locale) = product meaning (Ask Zone)"
+ ]
+}

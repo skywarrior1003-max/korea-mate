@@ -1,0 +1,65 @@
+{
+ "generated_at": "2026-09-01",
+ "baseline": "five-city-core-v3 main-classification (714) + publish-hide-union (327) + gyeongju-food-retire (94) + v5 duplicate unpublish (2)",
+ "production": {
+  "busan": {
+   "published": 805,
+   "hidden": 232
+  },
+  "gyeongju": {
+   "published": 302,
+   "hidden": 97
+  }
+ },
+ "result": {
+  "HIDE_intended_but_published": 0,
+  "classified_keep_but_hidden": 0,
+  "published_rows_outside_classification": {
+   "busan_canonical_new": 623,
+   "gyeongju_canonical_new": 97,
+   "note": "NEW canonical rows from crosswalk (decisions NEW 4291) — expected"
+  },
+  "busan_published_composition": {
+   "ACTIVE_MATCHED": 163,
+   "LEGACY_ONLY_VALID": 15,
+   "OWNER_OVERRIDE_KEEP_PUBLISHED": 4,
+   "canonical_new": 623
+  },
+  "gyeongju_published_composition": {
+   "ACTIVE_MATCHED": 205,
+   "canonical_new": 97
+  },
+  "hidden_composition": {
+   "EXCLUDED_FROM_SERVICE_REVIEW": 230,
+   "DUPLICATE_REVIEW": 3,
+   "GYEONGJU_FOOD_RETIRED_PUBLISH_HIDE": 94,
+   "v5_duplicates": 2
+  }
+ },
+ "classification": {
+  "EXPECTED_PUBLISHED": 1107,
+  "LEGACY_STILL_PUBLISHED": 0,
+  "HOLD_STILL_PUBLISHED": 0,
+  "DUPLICATE_OLD_AND_NEW_candidates": [
+   {
+    "legacy_id": 6,
+    "canonical_ids": [
+     30,
+     1392
+    ],
+    "status": "correction candidate (see v6)"
+   },
+   {
+    "legacy_id": 7,
+    "other_id": 29,
+    "status": "OWNER_OVERRIDE_KEEP_PUBLISHED at release — no change"
+   },
+   {
+    "legacy_id": 5,
+    "other_id": 33,
+    "status": "LEGACY_ONLY_VALID at release (trail vs observatory) — no change; official link dead"
+   }
+  ],
+  "UNKNOWN_NEEDS_EVIDENCE": 0
+ }
+}

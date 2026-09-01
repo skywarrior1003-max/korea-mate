@@ -13,6 +13,7 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
 import ContactModal from "@/components/ContactModal";
+import PreOpenNotice from "@/components/PreOpenNotice";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
@@ -2266,6 +2267,8 @@ export default function HomeClient() {
       </footer>
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+      {/* 정식 오픈 전 안내 — session 당 한 번, Home 첫 진입 (Owner 결정 2026-09-01) */}
+      <PreOpenNotice />
 
 
       {/* ── EventDetailModal ─────────────────────────────────── */}

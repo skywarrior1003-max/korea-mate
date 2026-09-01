@@ -1223,5 +1223,11 @@
     "scheduled": "Scheduled plans",
     "places": "Places to visit",
     "placesHint": "Your picks come first. We fill the rest."
+  },
+  "preopen": {
+    "kicker": "Notice",
+    "title": "GoKoreaMate is currently being improved before its official launch.",
+    "body": "Some page transitions, search features, and parts of the design are not yet complete, so the site may feel less convenient to use. We’re continuing to improve the experience.",
+    "close": "Got it, continue"
   }
 }

@@ -1,0 +1,393 @@
+{
+ "artifact": "candidate-corrections-v6-preopen",
+ "status": "CANDIDATE — Owner approval required; not executed",
+ "generated_at": "2026-09-01",
+ "corrections": [
+  {
+   "id": 6,
+   "city": "busan",
+   "field": "is_published",
+   "before": true,
+   "after": false,
+   "reason": "legacy duplicate of 30/1392, wrong coordinates, dead official link, EN-only, stock image",
+   "replacement_canonical_ids": [
+    30,
+    1392
+   ],
+   "dependencies": {
+    "itinerary_refs": 36,
+    "user_spots": 0,
+    "trip_moments": 0,
+    "reactions": 0
+   },
+   "compat": "reference-scope hydration keeps unpublished rows; /place/6 still built (noindex)",
+   "rollback": "is_published=true",
+   "sql": "OWNER-RUN-P4-preopen-busan-jangsan-legacy-unpublish-v6.sql"
+  },
+  {
+   "id": 7,
+   "city": "busan",
+   "field": "official_url",
+   "before": "https://www.namgu.busan.kr/",
+   "after": null,
+   "reason": "dead link (browser: 0 )",
+   "rollback": "https://www.namgu.busan.kr/",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 5,
+   "city": "busan",
+   "field": "official_url",
+   "before": "https://www.busan.go.kr/yeonje/hwangnyeong",
+   "after": null,
+   "reason": "dead link (browser: 200 부산 홈페이지 - Error page)",
+   "rollback": "https://www.busan.go.kr/yeonje/hwangnyeong",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 6,
+   "city": "busan",
+   "field": "official_url",
+   "before": "https://haeundae.go.kr/jangsanlocalpark/index.do",
+   "after": null,
+   "reason": "dead link (browser: 200 오류 메세지)",
+   "rollback": "https://haeundae.go.kr/jangsanlocalpark/index.do",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 764,
+   "city": "jeonju",
+   "field": "official_url",
+   "before": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101000000000&dataSid=9742",
+   "after": null,
+   "reason": "dead link (http/title: 200 RFC 3.0 오류 메세지)",
+   "rollback": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101000000000&dataSid=9742",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 919,
+   "city": "jeonju",
+   "field": "official_url",
+   "before": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101006003000&dataSid=16672",
+   "after": null,
+   "reason": "dead link (http/title: 200 RFC 3.0 오류 메세지)",
+   "rollback": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101006003000&dataSid=16672",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 1104,
+   "city": "jeonju",
+   "field": "official_url",
+   "before": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101010000000&dataSid=9789",
+   "after": null,
+   "reason": "dead link (http/title: 200 RFC 3.0 오류 메세지)",
+   "rollback": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101010000000&dataSid=9789",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3145,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://parks.seoul.go.kr/template/sub/seonyudo.do",
+   "after": null,
+   "reason": "dead link (browser: 404 요청하신 페이지를 찾을 수 없습니다.)",
+   "rollback": "http://parks.seoul.go.kr/template/sub/seonyudo.do",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3170,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://www.leeumhoam.org/",
+   "after": null,
+   "reason": "dead link (browser: 0 )",
+   "rollback": "https://www.leeumhoam.org/",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3337,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=881",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=881",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3338,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=947",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=947",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3354,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://kr.philakorea2025.kr/",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "http://kr.philakorea2025.kr/",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3362,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=1149",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=1149",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3363,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=1169",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=1169",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3367,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://sssmuseum.org",
+   "after": null,
+   "reason": "dead link (browser: 0 )",
+   "rollback": "http://sssmuseum.org",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3394,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://sdtt.or.kr/user/program/2024/11/1602",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://sdtt.or.kr/user/program/2024/11/1602",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3403,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://lrl.kr/hCho",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://lrl.kr/hCho",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3407,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://www.gallerygwanghwa.co.kr/main/main.php",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "http://www.gallerygwanghwa.co.kr/main/main.php",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3426,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://seoulart2025.com/",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://seoulart2025.com/",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3441,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://sdtt.or.kr/user",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://sdtt.or.kr/user",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3444,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://seoulvibe.kr",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "http://seoulvibe.kr",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3483,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://www.immersive-k.com/",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://www.immersive-k.com/",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3566,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=947",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=947",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3570,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=925",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=925",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3599,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://www.gallerygwanghwa.co.kr/main/main.php",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "http://www.gallerygwanghwa.co.kr/main/main.php",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3626,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://mediacityseoul.kr/kr/today",
+   "after": null,
+   "reason": "dead link (http/title: 404 error – 서울미디어시티비엔날레)",
+   "rollback": "https://mediacityseoul.kr/kr/today",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3647,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=1192",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=1192",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3648,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://sdtt.or.kr/user",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://sdtt.or.kr/user",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3661,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://www.seoulphil.or.kr/perfview?perfNo=7435",
+   "after": null,
+   "reason": "dead link (http/title: 404 서울시립교향악단)",
+   "rollback": "https://www.seoulphil.or.kr/perfview?perfNo=7435",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3663,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "http://www.museum.seoul.kr/sulm/index.do",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "http://www.museum.seoul.kr/sulm/index.do",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3668,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://url.kr/7xxjau",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://url.kr/7xxjau",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3710,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://url.kr/jvw2vu",
+   "after": null,
+   "reason": "dead link (dns: 0 )",
+   "rollback": "https://url.kr/jvw2vu",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3731,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=1073",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=1073",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  },
+  {
+   "id": 3746,
+   "city": "seoul",
+   "field": "official_url",
+   "before": "https://designhouse.co.kr/indexmain/view?idx=1121",
+   "after": null,
+   "reason": "dead link (http/title: 404 404 — Page Not Found — design house)",
+   "rollback": "https://designhouse.co.kr/indexmain/view?idx=1121",
+   "sql": "OWNER-RUN-P5-preopen-dead-official-url-null-v6.sql"
+  }
+ ],
+ "not_corrected_by_data": {
+  "malformed_schemeless_official_url": [
+   3360,
+   3399,
+   3412,
+   3421,
+   3430,
+   3438,
+   3463,
+   3524,
+   3533,
+   3556,
+   3559,
+   3575,
+   3576,
+   3604,
+   3675,
+   3678,
+   3685,
+   3692,
+   3704,
+   3732
+  ],
+  "note": "handled in code by normalizeOfficialUrl (https:// prefix); data fix optional"
+ },
+ "open_owner_decisions": [
+  {
+   "topic": "30 vs 1392 both = 장산 (VisitBusan article vs KTO geopark entry) — keep both or merge",
+   "evidence": "different entrances (대천공원 vs 장산로 331-18), 1392 has no image; identity merge needs Owner"
+  },
+  {
+   "topic": "78 busan manual rows have English-query naver_map_url — code now ignores them; optional data NULL",
+   "evidence": "Naver English query → wrong businesses / no result (verified)"
+  }
+ ]
+}

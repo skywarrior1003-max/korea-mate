@@ -120,6 +120,20 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [search,           setSearch]          = useState(searchParams.get("q") ?? "");
   const [selectedCategory, setSelectedCategory]= useState(searchParams.get("category") ?? "all");
   const [selectedEvent,    setSelectedEvent]   = useState<EventItem | null>(null);
+  // 검색어·카테고리를 주소(?q=&category=)에 그대로 적어 둔다 — 카드 → /place 로 갔다가 뒤로 오면
+  // 위의 useState 초기값이 주소에서 다시 살아난다(실측 2026-09-01: 뒤로가기 후 검색어가 비어 있었다).
+  // replaceState 라 history 항목이 늘지 않고, 화면 전환도 없다.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    const q = search.trim();
+    if (q) url.searchParams.set("q", q); else url.searchParams.delete("q");
+    if (selectedCategory && selectedCategory !== "all") url.searchParams.set("category", selectedCategory);
+    else url.searchParams.delete("category");
+    const next = url.pathname + url.search + url.hash;
+    if (next === window.location.pathname + window.location.search + window.location.hash) return;
+    try { window.history.replaceState(window.history.state, "", next); } catch { /* ignore */ }
+  }, [search, selectedCategory]);
   // Cart 는 여기서 한 번만 구독한다. 카드에는 boolean 만 내려보내 158개가
   // 담기 한 번에 전부 리렌더되지 않게 한다.
   const [savedKeys, setSavedKeys] = useState<Set<string>>(new Set());

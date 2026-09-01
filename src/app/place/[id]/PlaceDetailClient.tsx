@@ -34,6 +34,7 @@ import {
   resolveDisplayImage,
   resolveProvenance,
   resolveMapLinks,
+  normalizeOfficialUrl,
   toItineraryEvent,
   stripCommercialKeys,
   placeEventId,
@@ -88,6 +89,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const text      = resolvePlaceText(spot, locale);
   const oneLiner  = resolvePublicPlaceSummary(text); // 내부 운영 메모 차단
   const maps      = resolveMapLinks(spot, text.name);
+  const officialHref = normalizeOfficialUrl(spot.official_url);
   const provKind  = resolveProvenance(spot);
   // 시안의 chip 열 — 카테고리·세부카테고리·행정구는 실제 값만 쓴다.
   // 값이 없는 칩은 만들지 않는다(빈 칩은 정보가 아니라 잡음이다).
@@ -223,9 +225,9 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
         </a>
       )}
-      {spot.official_url ? (
-        <a href={spot.official_url} target="_blank" rel="noopener noreferrer"
-           aria-label={t("openExternal", { service: officialSourceName(spot.official_url) })}
+      {officialHref ? (
+        <a href={officialHref} target="_blank" rel="noopener noreferrer"
+           aria-label={t("openExternal", { service: officialSourceName(officialHref) })}
            className={`${EXT_LINK} bg-official-tint text-official border-transparent hover:text-official`}>
           {t("officialInfo")}
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
