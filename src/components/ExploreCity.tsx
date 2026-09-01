@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { displayPlaceName, displayPlaceText } from "@/lib/place-display-name";
+import { exploreSearchTier, matchesExploreSearch, normalizeSearchQuery } from "@/lib/explore-search-core";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -348,24 +349,18 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   }, [spots, nearMeActive, userLocation]);
 
   const filteredSpots = useMemo(() => {
-    const q = search.trim().toLowerCase();
+    const q = normalizeSearchQuery(search);
     const list = spots
       .filter(s => s.city.toLowerCase() === city.name.toLowerCase())
       .filter(s => selectedCategory === "all" || s.category === selectedCategory)
-      .filter(s => {
-        if (!q) return true;
-        return (
-          s.name.toLowerCase().includes(q) ||
-          // 표시 이름(name_l10n)도 찾는다 — 한글 이름으로 검색하는 사용자가 EN canonical 만 있는 행을 놓치지 않게
-          Object.values(s.nameL10n ?? {}).some(v => typeof v === "string" && v.toLowerCase().includes(q)) ||
-          s.description.toLowerCase().includes(q) ||
-          (s.tags ?? []).some(t => t.toLowerCase().includes(q)) ||
-          (s.district ?? "").toLowerCase().includes(q)
-        );
-      });
+      // 보이는 텍스트 전부(name·name_l10n·description·desc_l10n·why·why_l10n·tags·subcategory·district)를
+      // substring 으로 찾는다 — 어느 언어로 검색해도 같은 장소. 계약은 explore-search-core.ts.
+      .filter(s => matchesExploreSearch(s, q));
     if (nearMeActive && userLocation) {
       return [...list].sort((a, b) => (distances.get(a.id) ?? Infinity) - (distances.get(b.id) ?? Infinity));
     }
+    // 검색 중이면 이름이 맞은 장소를 먼저 — 설명에서 언급만 된 행이 앞을 가리지 않게 (stable sort, 기존 순서 유지)
+    if (q) return [...list].sort((a, b) => exploreSearchTier(a, q) - exploreSearchTier(b, q));
     return list;
   }, [spots, selectedCategory, search, nearMeActive, userLocation, distances, city.name]);
 
