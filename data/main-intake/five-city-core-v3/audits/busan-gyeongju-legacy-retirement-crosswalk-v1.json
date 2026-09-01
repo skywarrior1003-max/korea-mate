@@ -736,6 +736,12 @@
     }
    ],
    "FINAL_RELEASE_PLAN": "NEW_COMMIT (feature HEAD → origin/master fast-forward → Cloudflare Production build bakes DB unpublished state + static residue fix; no same-SHA retry needed)"
+  },
+  "owner_exceptions_after_retirement": {
+   "ids": [
+    28
+   ],
+   "note": "single Owner exception (Oryukdo Skywalk) — current canonical restore prepared; counts not recomputed"
   }
  },
  "rows": [
@@ -1558,7 +1564,11 @@
    "hold_reason": null,
    "reviewed_not_same_entity": null,
    "historical_owner_override": true,
-   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval"
+   "current_decision": "latest Final-authoritative retirement (2026-09-01) — historical override not reinterpreted as publish approval",
+   "owner_exception_2026_09_01": {
+    "decision": "OWNER_APPROVED_SINGLE_EXCEPTION_CURRENT_CANONICAL_RESTORE",
+    "note": "retired by SET A on 2026-09-01; Owner then designated Oryukdo Skywalk as the single exception → upgrade-in-place to current verified canonical + republish (candidate-corrections-oryukdo-skywalk-current-canonical-v1.json, P7 SQL). Historical classification kept; no other row re-evaluated."
+   }
   },
   {
    "old_id": 29,

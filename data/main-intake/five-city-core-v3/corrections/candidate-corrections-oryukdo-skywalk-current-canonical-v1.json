@@ -1,0 +1,199 @@
+{
+ "artifact": "candidate-corrections-oryukdo-skywalk-current-canonical-v1",
+ "task": "TASK-ORYUKDO-SKYWALK-CURRENT-CANONICAL-RESTORE-V1",
+ "generated_at": "2026-09-01T09:43:35Z",
+ "status": "CANDIDATE — Owner approval required before PROD-SQL; not executed",
+ "target_id": 28,
+ "city": "busan",
+ "classification": "OWNER_APPROVED_SINGLE_EXCEPTION_CURRENT_CANONICAL_RESTORE",
+ "previous_state": "FINAL_RETIRED + PROD_RESIDUE_PUBLISHED → retired 2026-09-01 08:14 UTC by OWNER-RUN-BUSAN-GYEONGJU-LEGACY-RETIREMENT-V1-FINAL.sql (is_published=false); old V1 content (manual seed, unsplash stock image, generic VisitBusan homepage, English Naver search URL)",
+ "owner_decision": "Oryukdo Skywalk stays in GoKoreaMate (single exception; not a re-evaluation of other retired rows): keep numeric id 28 for saved-trip compatibility, replace old content with current verified canonical data, then republish",
+ "current_identity": {
+  "name_ko": "오륙도 스카이워크 (operator spelling 오륙도스카이워크)",
+  "name_en": "Oryukdo Skywalk",
+  "address": "부산광역시 남구 오륙도로 137 (137 Oryukdo-ro, Nam-gu) — operator page also lists 용호동 950-3 일원 / 백운포로 110",
+  "district": "Nam-gu",
+  "coordinates": [
+   35.1006767,
+   129.1244009
+  ],
+  "coordinate_source": "Google place pin (old 35.1004,129.1226 was ~170 m west)",
+  "operating": "open year-round; 09:00–18:00 (Jun–Sep 09:00–19:00; 설·추석 12:00–); last entry 10 min before close (KTO); restricted in snow/rain/strong wind or maintenance (operator)",
+  "fee": "free",
+  "galmaetgil": "adjacent to the start of the Igidae–Oryukdo section of Galmaet-gil; independently visitable",
+  "facility": "15 m glass-floored walkway on a 35 m sea cliff, opened 2013-10-18, operator 부산광역시 남구시설관리공단",
+  "phone": "051-601-3400 (operator) / 051-601-3417 (KTO listing)"
+ },
+ "duplicate_identity_search": "Production city_spots: only id 28 (name/name_l10n/address ~ skywalk/스카이워크/오륙도로 137); id 961 (A-00022 오륙도 islets article) and 1354 (송도 구름산책로) are different entities. Final active: no Oryukdo Skywalk record (A-00022/VB-278 = islets) → id 28 is the sole canonical",
+ "direct_click": {
+  "naver": "search 오륙도스카이워크 → place 33461396 → entry route https://map.naver.com/p/entry/place/33461396 verified (title/address on landing)",
+  "google": "query 오륙도 스카이워크 부산 남구 오륙도로 137 → place '오륙도 스카이워크 · 전망대 · 남구 오륙도로 137' (35.1006767,129.1244009)",
+  "official": "https://bnfmc.or.kr/portal/contents.do?mId=0102010000 → 200 '오륙도스카이워크 | 관광시설 | 사업안내' (operator page); old visitbusan.net/en/index.do = generic homepage → replaced"
+ },
+ "sources": {
+  "S1": {
+   "tier": 1,
+   "type": "operator official page",
+   "ref": "https://bnfmc.or.kr/portal/contents.do?mId=0102010000",
+   "checked": "2026-09-01",
+   "gives": "official facility name 오륙도스카이워크, operator 부산광역시 남구시설관리공단, 09:00–18:00 연중무휴 / 6–9월 09:00–19:00 / 설·추석 12:00–18:00, 무료, '안전을 위하여 눈, 비, 강풍 및 시설 개·보수 시 개장 제한', opened 2013-10-18, 15 m glass bridge (24 panels) on a 35 m cliff, 55.49 mm laminated glass, contact 051-601-3400; operator page lists 용호동 950-3 일원 / 백운포로 110"
+  },
+  "S2": {
+   "tier": 3,
+   "type": "KTO VisitKorea (EN)",
+   "ref": "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=73894",
+   "gives": "EN name 'Oryukdo Skywalk', address 137 Oryukdo-ro, Nam-gu, Oct–May 09:00–18:00 (last 17:50) / Jun–Sep 09:00–19:00 (last 18:50), free, open year-round, hours subject to weather, +82-51-601-3417"
+  },
+  "S3": {
+   "tier": 3,
+   "type": "KTO 열린관광 (KO)",
+   "ref": "https://access.visitkorea.or.kr/ms/detail.do?cotId=deb20f06-d4e3-468f-837a-fbb6b316085d",
+   "gives": "주소 오륙도로 137, 하절기/동절기 시간·입장 마감, 연중무휴, 남구시설관리공단 051-601-3416, 접근성(장애인 주차 2대·화장실)"
+  },
+  "S4": {
+   "tier": 2,
+   "type": "Visit Busan",
+   "ref": "https://www.visitbusan.net/index.do?menuCd=DOM_000000201001001000&uc_seq=49&lang_cd=ko",
+   "gives": "부산 3대 스카이워크(오륙도·송도·청사포) 소개 — corroboration"
+  },
+  "S5": {
+   "tier": 4,
+   "type": "map basic info",
+   "ref": "Naver place 33461396 (https://map.naver.com/p/entry/place/33461396) / Google place 오륙도 스카이워크 · 전망대 · 부산광역시 남구 오륙도로 137 · 35.1006767,129.1244009 · korean.visitkorea.or.kr · 051-607-6395",
+   "gives": "address, coordinates, category"
+  },
+  "excluded": "blogs / AI summaries / reviewer photos not used",
+  "S6": {
+   "tier": 2,
+   "type": "Visit Busan JA/ZH pages",
+   "ref": "https://www.visitbusan.net/index.do?menuCd=DOM_000000401001001000&uc_seq=282&lang_cd=ja / https://visitbusan.net/index.do?lang_cd=cng&menuCd=DOM_000000501001001000&uc_seq=282",
+   "gives": "locale naming 五六島スカイウォーク (JA) / 五六岛天空步道 (ZH), JA page: 09:00–18:00 final entry 17:50, closed only for snow/rain/strong wind/maintenance, +82-51-607-6395"
+  }
+ },
+ "taxonomy": {
+  "category": "attraction (unchanged)",
+  "subcategory": "Landmark → Viewpoint (existing Busan manual value ×3; skywalk is a viewing facility)",
+  "tags": {
+   "before": [
+    "#Skywalk",
+    "#OceanView",
+    "#PhotoSpot",
+    "#Free"
+   ],
+   "after": [
+    "#Viewpoint",
+    "#OceanView",
+    "#Free",
+    "#CoastalWalk",
+    "#PhotoSpot"
+   ],
+   "basis": "all existing Busan '#' tag values (#Viewpoint ×6, #OceanView ×17, #Free ×15, #CoastalWalk ×4, #PhotoSpot ×15); single-use #Skywalk dropped"
+  }
+ },
+ "image": {
+  "decision": "image_url → NULL",
+  "reason": "no owner/operator/official image with confirmed reuse rights (operator/KTO/VisitBusan photos are rights-restricted); old unsplash stock URL is not the venue; the place UI renders the '사진 준비 중' fallback (resolveDisplayImage null) — same as 1392; no generated image",
+  "city_spot_images_insert": 0
+ },
+ "content_provenance": "product-authored KO first from S1/S2/S3 facts (cliff 35 m, glass walkway 15 m, free, hours, weather restriction, Galmaet-gil relation, independent visit); EN/JA/ZH same facts only; no superlatives",
+ "before": {
+  "name": "Oryukdo Skywalk",
+  "name_l10n": null,
+  "description": "A glass skywalk overlooking Oryukdo Islets and the open sea",
+  "desc_l10n": null,
+  "why_it_matters": "Powerful short stop for coastal tours and Igidae trail starts",
+  "why_l10n": null,
+  "address": "137 Oryukdo-ro, Nam-gu, Busan",
+  "district": "Nam-gu",
+  "lat": 35.1004,
+  "lng": 129.1226,
+  "category": "attraction",
+  "subcategory": "Landmark",
+  "tags": [
+   "#Skywalk",
+   "#OceanView",
+   "#PhotoSpot",
+   "#Free"
+  ],
+  "official_url": "https://www.visitbusan.net/en/index.do",
+  "naver_map_url": "https://map.naver.com/p/search/Oryukdo%20Skywalk%20Busan",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=Oryukdo+Skywalk+Busan",
+  "image_url": "https://source.unsplash.com/1200x800/?busan,ocean,skywalk",
+  "opening_hours": {
+   "open": "09:00",
+   "close": "18:00"
+  },
+  "entry_fee": "Free",
+  "duration_minutes": 45,
+  "best_time_slot": "morning",
+  "is_published": false,
+  "source_type": "manual",
+  "external_id": null
+ },
+ "after": {
+  "name": "Oryukdo Skywalk",
+  "name_l10n": {
+   "ko": "오륙도 스카이워크",
+   "en": "Oryukdo Skywalk",
+   "ja": "五六島スカイウォーク",
+   "zh": "五六岛天空步道"
+  },
+  "description": "Oryukdo Skywalk is a 15 m glass-floored viewing walkway set on a 35 m sea cliff facing the Oryukdo islets in Nam-gu, Busan. You look straight down at the waves and rocks and get a close view of the islets and the open sea. It sits beside the start of the Igidae–Oryukdo section of the Galmaet-gil trail, but you can visit the skywalk on its own without hiking. Free admission, 09:00–18:00 (until 19:00 in June–September); closed in snow, rain or strong wind.",
+  "desc_l10n": {
+   "ko": "오륙도 스카이워크는 부산 남구 오륙도 앞 35m 해안 절벽 위에 놓인 15m 길이의 유리 바닥 전망 시설입니다. 발아래로 파도와 바위를 내려다보고 오륙도와 남해 경관을 가까이서 볼 수 있습니다. 이기대·오륙도 구간 갈맷길의 출발점 옆에 있지만 트레킹 없이 스카이워크만 따로 방문할 수 있습니다. 이용료 무료, 09:00–18:00(6–9월 19:00까지), 눈·비·강풍 때는 개방이 제한됩니다.",
+   "en": "Oryukdo Skywalk is a 15 m glass-floored viewing walkway set on a 35 m sea cliff facing the Oryukdo islets in Nam-gu, Busan. You look straight down at the waves and rocks and get a close view of the islets and the open sea. It sits beside the start of the Igidae–Oryukdo section of the Galmaet-gil trail, but you can visit the skywalk on its own without hiking. Free admission, 09:00–18:00 (until 19:00 in June–September); closed in snow, rain or strong wind.",
+   "ja": "五六島スカイウォークは、釜山・南区の五六島に面した高さ35mの海岸絶壁の上に設けられた、長さ15mのガラス床の展望通路です。足元の波と岩を見下ろし、五六島と南海の景色を間近に楽しめます。イギデ〜五六島区間のカルメッキル(散策路)の起点の隣にありますが、トレッキングをしなくてもスカイウォークだけを訪れることができます。入場無料、09:00〜18:00(6〜9月は19:00まで)、雪・雨・強風時は開放が制限されます。",
+   "zh": "五六岛天空步道位于釜山南区五六岛前方35米高的海岸悬崖上，是一条长15米的玻璃地面观景步道。可以俯瞰脚下的海浪和岩石，近距离欣赏五六岛与南海风光。它紧邻二妓台—五六岛段“Galmaet-gil”海岸步道的起点，但无需徒步也可以单独游览天空步道。免费入场，09:00–18:00（6–9月至19:00），下雪、下雨或强风时限制开放。"
+  },
+  "why_it_matters": "A quick free stop for Busan's sea-cliff views — the ocean shows right through the glass floor.",
+  "why_l10n": {
+   "ko": "짧게 들러도 좋은 부산 해안 절벽 전망 — 무료, 유리 바닥 아래로 바다가 보인다.",
+   "en": "A quick free stop for Busan's sea-cliff views — the ocean shows right through the glass floor.",
+   "ja": "短時間でも楽しめる釜山の海岸絶壁の眺め — 無料で、ガラス床の下に海が見える。",
+   "zh": "值得短暂停留的釜山海岸悬崖景观——免费，透过玻璃地面就能看到大海。"
+  },
+  "address": "137 Oryukdo-ro, Nam-gu, Busan",
+  "district": "Nam-gu",
+  "lat": 35.1006767,
+  "lng": 129.1244009,
+  "category": "attraction",
+  "subcategory": "Viewpoint",
+  "tags": [
+   "#Viewpoint",
+   "#OceanView",
+   "#Free",
+   "#CoastalWalk",
+   "#PhotoSpot"
+  ],
+  "official_url": "https://bnfmc.or.kr/portal/contents.do?mId=0102010000",
+  "naver_map_url": "https://map.naver.com/p/entry/place/33461396",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=%EC%98%A4%EB%A5%99%EB%8F%84%20%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%9B%8C%ED%81%AC%20%EB%B6%80%EC%82%B0%20%EB%82%A8%EA%B5%AC%20%EC%98%A4%EB%A5%99%EB%8F%84%EB%A1%9C%20137",
+  "image_url": null,
+  "opening_hours": {
+   "open": "09:00",
+   "close": "18:00"
+  },
+  "entry_fee": "Free",
+  "duration_minutes": 45,
+  "best_time_slot": "morning",
+  "is_published": true
+ },
+ "user_references": {
+  "itineraries": 22,
+  "user_spots": 0,
+  "trip_moments": 0,
+  "note": "id 28 preserved; hydration by id continues; no migration"
+ },
+ "static_duplicate": "public/data/events.json spot-busan-010 stays removed (81a34a4); HomeClient/local-info/busan.ts V1 cards not re-added — single canonical = city_spots id 28",
+ "other_retired_rows": "16 other retired rows untouched (5,6,7,23,29,32,39,42,50,55,57,61,64,68,81,82 remain is_published=false); 714 crosswalk not re-audited",
+ "rollback": "restore 'before' values; is_published=false",
+ "sql": {
+  "file": "OWNER-RUN-P7-busan-oryukdo-skywalk-current-canonical-v1.sql",
+  "sha256": "bba1c3803844c43a49c3873e7a7054ace18ba4f454735663dbbb9b2ee3cda635",
+  "writes": {
+   "city_spots UPDATE": 1,
+   "city_spot_images INSERT": 0,
+   "DELETE": 0
+  }
+ }
+}
