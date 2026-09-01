@@ -50,6 +50,8 @@ function dayCount(t: PopularTrip): number | null {
 
 export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
   const t = useTranslations("home");
+  const tCityLinks = useTranslations("cityLinks");
+  const tCityName = useTranslations("tripForm");
   const [trips, setTrips] = useState<PopularTrip[] | null>(null);
   const [asked, setAsked] = useState(false);
 
@@ -62,9 +64,11 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
 
   const cities = CITY_SLUGS.map(slug => ({
     slug,
-    label: CITY_LABEL[slug] ?? slug,
+    // 도시 이름표도 locale 을 따른다(tripForm.city_*). 표에 없는 도시만 영어 원문.
+    label: (() => { const key = `city_${slug.charAt(0).toUpperCase()}${slug.slice(1)}`; try { return tCityName.has(key) ? tCityName(key) : (CITY_LABEL[slug] ?? slug); } catch { return CITY_LABEL[slug] ?? slug; } })(),
     plannerReady: CITY_CONFIGS[slug]?.planningReady ?? false,
-    tagline: CITY_ENTRY_CONTENT[slug]?.tagline || CITY_CONFIGS[slug]?.seoDescription || "",
+    // 한 줄 소개는 일반 UI 문구라 번역한다(cityLinks.desc*). 표에 없는 도시만 영어 원문.
+    tagline: (() => { const key = `desc${slug.charAt(0).toUpperCase()}${slug.slice(1)}`; try { return tCityLinks.has(key) ? tCityLinks(key) : (CITY_ENTRY_CONTENT[slug]?.tagline || CITY_CONFIGS[slug]?.seoDescription || ""); } catch { return CITY_ENTRY_CONTENT[slug]?.tagline || ""; } })(),
     image: cityVisual(slug),
   }));
 

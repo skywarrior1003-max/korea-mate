@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { displayPlaceName, displayPlaceText } from "@/lib/place-display-name";
+import { cityLabelKey } from "@/data/cities";
 import { exploreSearchTier, matchesExploreSearch, normalizeSearchQuery } from "@/lib/explore-search-core";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
@@ -55,6 +56,8 @@ function toEventItem(spot: CitySpot): EventItem {
     address: spot.address,
     mapUrl: spot.mapUrl,
     naverMapUrl: spot.naverMapUrl,
+    // 모달의 "네이버에 붙여 넣을 한국어 이름" 줄 — 한글 이름이 있을 때만
+    naverSearchKeyword: (() => { const ko = (spot.nameL10n as Record<string, unknown> | null | undefined)?.ko; return typeof ko === "string" && ko.trim() ? ko.trim() : undefined; })(),
     description: spot.description,
     whyItMatters: spot.whyItMatters ?? (spot.description ? spot.description.split(".")[0] + "." : ""),
     recommendedDurationMinutes: spot.durationMinutes ?? 60,
@@ -107,6 +110,7 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
 function ExploreCityContent({ city }: { city: CityConfig }) {
   const locale = useLocale();
   const tE = useTranslations("explore");
+  const tf = useTranslations("tripForm");
   const tN = useTranslations("nav");
 
   const spotCategories = SPOT_CATEGORY_VALUES.map(v => ({
@@ -233,6 +237,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       const eventItems: RawEventSpot[] = Array.isArray(eventsRaw) ? (eventsRaw as RawEventSpot[]) : [];
       let evtIdx = 0;
       for (const e of eventItems) {
+        // Version 1 정적 장소 카드(type "permanent")는 이제 city_spots 가 canonical 이라 섞지 않는다 —
+        // 같은 장소가 두 장(동백섬 ×3, 영화의전당 ×2 …)으로 보이던 원인 (2026-09-01 red-team).
+        if ((e as { type?: unknown }).type === "permanent") continue;
         if (
           e.city !== city.name || e.lat == null || e.lng == null ||
           e.spotCategory == null || typeof e.name !== "string" ||
@@ -538,7 +545,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         <>
           <p className="mb-3 flex justify-center text-gray-300"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg></p>
           <p className="text-gray-900 font-black text-lg mb-2">{tE("comingSoon.title")}</p>
-          <p className="text-sm text-gray-400 mb-4">{tE("comingSoon.description", { city: city.name })}</p>
+          <p className="text-sm text-gray-400 mb-4">{tE("comingSoon.description", { city: tf(cityLabelKey(city)) })}</p>
           <p className="text-sm text-gray-400">{tE("comingSoon.guide", { city: city.name })}</p>
         </>
       ) : (
@@ -696,7 +703,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                 <div className="min-w-0 flex-1">
                   <p className="font-black text-gray-900 text-sm leading-snug truncate">{mapPickedSpot.name}</p>
                   <p className="text-[11px] text-gray-400 mt-0.5 truncate">
-                    {mapPickedSpot.district || mapPickedSpot.city}
+                    {mapPickedSpot.district || tf(cityLabelKey(city))}
                   </p>
                 </div>
                 <button
@@ -749,6 +756,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 export default function ExploreCity({ city }: { city: CityConfig }) {
   const tE = useTranslations("explore");
   const tN = useTranslations("nav");
+  const tfCity = useTranslations("tripForm"); // 제목의 도시 이름도 locale 을 따른다("Busan 탐험하기" → "부산 탐험하기")
   const tD = useTranslations("discovery");
   const tF = useTranslations("footer");
 
@@ -775,6 +783,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
                 형식은 도시 진입 화면(CityEntry)이 쓰는 것과 같고, 해석은
                 resolveCityParam 한 곳에서만 한다. 플래너가 없는 도시(전주)는
                 그쪽에서 자기 진입 화면으로 돌려보낸다. */}
+            <LanguageSwitcher variant="icon" className="text-gray-700" />
             <Link
               href={`/?city=${city.slug}#planner`}
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
@@ -809,7 +818,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             통째로 들어가 첫 화면의 절반을 산문이 먹었다. SEO 문구는 metadata
             에서 이미 제공한다. */}
         <div className="shrink-0 bg-white px-4 lg:px-6 pt-4 pb-1">
-          <h1 className="text-[22px] font-black text-gray-900 leading-tight">{tE("title", { city: city.name })}</h1>
+          <h1 className="text-[22px] font-black text-gray-900 leading-tight">{tE("title", { city: tfCity(cityLabelKey(city)) })}</h1>
           <p className="text-[14px] text-gray-500 mt-1">{tD("cityTagline")}</p>
         </div>
         <Suspense fallback={

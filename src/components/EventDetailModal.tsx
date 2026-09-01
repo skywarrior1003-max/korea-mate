@@ -100,6 +100,14 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
   const tPlace       = useTranslations("place");
   const tBadges      = useTranslations("badges");
   const tEvents      = useTranslations("events");
+  const tExplore     = useTranslations("explore");
+  const tForm        = useTranslations("tripForm");
+  const tSlotM       = useTranslations("planner");
+  // 도시 id(busan)는 사용자에게 보이는 이름이 아니다 — tripForm 의 도시 이름표를 쓴다(없으면 첫 글자만 대문자).
+  const cityDisplay = (() => { const c = (event.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tForm.has(key) ? tForm(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
+  const typeDisplay = ["attraction", "restaurant", "nature"].includes(event.type) ? tExplore(`categories.${event.type}`) : event.type;
+  const SLOT_KEY_M: Record<string, string> = { morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening" };
+  const bestTimeDisplay = SLOT_KEY_M[event.bestTimeSlot] ? tSlotM(SLOT_KEY_M[event.bestTimeSlot]) : event.bestTimeSlot === "anytime" ? tEvents("slotAnytime") : event.bestTimeSlot;
   const tItin        = useTranslations("itin");
   const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);
@@ -248,16 +256,19 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
           {/* 이미지 하단 제목 */}
           <div className="absolute bottom-4 left-5 right-5">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/15 text-white/80 capitalize backdrop-blur-sm cursor-default">
-                {event.stage}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/10 text-white/70 capitalize backdrop-blur-sm cursor-default">
-                {event.type}
+              {/* "Standalone" 은 내부 클러스터 값이라 보여 주지 않는다 — 여정 단계(Pre-Event 등)만 칩으로 */}
+              {event.stage && event.stage !== "Standalone" && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/15 text-white/80 capitalize backdrop-blur-sm cursor-default">
+                  {event.stage}
+                </span>
+              )}
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/10 text-white/70 backdrop-blur-sm cursor-default">
+                {typeDisplay}
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow">{displayName ?? event.name}</h2>
             <p className="text-sm text-white/80 mt-1">
-              📍 {event.city}{event.district ? `, ${event.district}` : ""}
+              📍 {cityDisplay}{event.district ? `, ${event.district}` : ""}
             </p>
           </div>
         </div>
@@ -357,7 +368,7 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("bestTime")}</p>
-              <p className="text-sm font-semibold text-gray-800 capitalize">☀️ {event.bestTimeSlot}</p>
+              <p className="text-sm font-semibold text-gray-800">☀️ {bestTimeDisplay}</p>
             </div>
             {event.openingHours && (
               <div className="rounded-xl bg-gray-50 p-3">

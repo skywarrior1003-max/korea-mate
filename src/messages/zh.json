@@ -81,7 +81,8 @@
     "transitTaxi": "打车 {n}分钟",
     "slotAnytime": "随时",
     "score": "{n}分",
-    "scoreTooltip": "韩国旅行友好度评分 — 对外国旅客的便利程度"
+    "scoreTooltip": "韩国旅行友好度评分 — 对外国旅客的便利程度",
+    "trendingBadge": "热门"
   },
   "trending": {
     "filterAll": "全部",
@@ -355,7 +356,9 @@
     "openExternal": "在新标签页打开{service}",
     "keepAsMyPlace": "留作我的地点",
     "keptAsMyPlace": "已留在我的地点",
-    "keepFailed": "无法保存这个地点，请重试。"
+    "keepFailed": "无法保存这个地点，请重试。",
+    "free": "免费",
+    "durationApprox": "约{n}分钟"
   },
   "adaptive": {
     "inTripTitle": "您正在旅行中",
@@ -730,7 +733,7 @@
     "findMore": "发现更多地点",
     "explore": "探索地点",
     "selectedEmpty": "本次行程还没有地点",
-    "selectedEmptyHint": "从 Explore 或 Saved 添加想去的地点吧。",
+    "selectedEmptyHint": "从“探索”或已保存的地点中添加想去的地方吧。",
     "savedEmpty": "还没有保存的地点",
     "savedEmptyHint": "点击地点上的书签即可收藏到这里。",
     "mineEmpty": "还没有自己添加的地点",
@@ -1061,7 +1064,8 @@
     "district_nampo": "南浦 · 中区 · 西区",
     "district_dongnae": "东莱 · 金井",
     "district_bukgu": "北区 · 沙上 · 江西",
-    "gpsNearby": "距我 3 公里内"
+    "gpsNearby": "距我 3 公里内",
+    "foodGuideBanner": "2026 釜山美食指南 — 米其林 · 釜山之味 · 出租车司机推荐"
   },
   "tripForm": {
     "title": "✨ 用 AI 规划你的韩国之旅",
@@ -1169,7 +1173,12 @@
     "svSoloDesc": "不用尴尬，一个人也自在",
     "readMore": "了解更多 →",
     "footerData": "数据来源：韩国观光公社",
-    "footerAi": "AI 协助规划"
+    "footerAi": "AI 协助规划",
+    "foodGuideTitle": "2026 釜山美食指南",
+    "foodGuideNew": "NEW · 2026 釜山美食指南",
+    "foodGuidePicks": "米其林 · 釜山之味 · 出租车司机推荐精选",
+    "nearMe": "附近",
+    "gpsActive": "GPS 已开启"
   },
   "stay": {
     "question": "你住在哪里？",

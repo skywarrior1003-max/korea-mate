@@ -115,6 +115,7 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
   onStart: (city: string, startDate: string, endDate: string) => void;
 }) {
   const known = STARTER_CITIES.find(c => c.toLowerCase() === (defaultCity ?? "").toLowerCase());
+  const tCityName = useTranslations("tripForm");
   const [city, setCity]   = useState(known ?? "Busan");
   const [start, setStart] = useState("");
   const [end, setEnd]     = useState("");
@@ -130,7 +131,7 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
             onChange={e => setCity(e.target.value)}
             className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink"
           >
-            {STARTER_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+            {STARTER_CITIES.map(c => <option key={c} value={c}>{tCityName(`city_${c}`)}</option>)}
           </select>
         </label>
         <div className="flex gap-2">

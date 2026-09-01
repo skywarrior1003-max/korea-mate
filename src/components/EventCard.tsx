@@ -61,6 +61,8 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
   const tB      = useTranslations("badges");
   const tR      = useTranslations("report");
   const tSlot   = useTranslations("planner");
+  const tForm   = useTranslations("tripForm");
+  const cityDisplay = (() => { const c = (event.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tForm.has(key) ? tForm(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
   const [disliked,    setDisliked]    = useState(false);
@@ -130,7 +132,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         {/* Trending 뱃지 */}
         {event.isTrending && (
           <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500 text-white shadow">
-            🔥 Trending
+            🔥 {tE("trendingBadge")}
           </span>
         )}
 
@@ -209,7 +211,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
 
         {/* 도시 + 지역 + 거리 뱃지 */}
         <p className="text-xs font-semibold text-orange-500 uppercase tracking-wider flex items-center gap-1.5 flex-wrap">
-          <span>{event.city}{event.district ? ` · ${event.district}` : ""}</span>
+          <span>{cityDisplay}{event.district ? ` · ${event.district}` : ""}</span>
           {distanceBadge && (
             <span className="px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-700 font-bold normal-case text-[10px] shrink-0">
               📍 {distanceBadge}

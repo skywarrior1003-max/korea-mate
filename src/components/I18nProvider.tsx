@@ -47,6 +47,11 @@ export default function I18nProvider({ children }: { children: React.ReactNode }
     Promise.resolve(resolveLocale()).then(setLocale);
   }, []);
 
+  // 정적 export 는 lang="en" 으로 굽는다 — 실제 locale 이 정해지면 문서 언어를 맞춘다(스크린리더·번역 툴·검색엔진).
+  useEffect(() => {
+    try { document.documentElement.lang = locale; } catch { /* ignore */ }
+  }, [locale]);
+
   return (
     <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]}>
       {children}

@@ -14,5 +14,4 @@
   <!-- Ground -->
   <ellipse cx="200" cy="200" rx="90" ry="12" fill="#c7d6f5" opacity="0.5"/>
   <!-- Text -->
-  <text x="200" y="240" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#9ca3af" text-anchor="middle">No Image Available</text>
 </svg>

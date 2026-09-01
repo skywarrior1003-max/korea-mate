@@ -81,7 +81,8 @@
     "transitTaxi": "{n}min taxi",
     "slotAnytime": "Anytime",
     "score": "{n}pts",
-    "scoreTooltip": "Korean Survival Score — how easy this place is for foreign travelers"
+    "scoreTooltip": "Korean Survival Score — how easy this place is for foreign travelers",
+    "trendingBadge": "Trending"
   },
   "trending": {
     "filterAll": "All",
@@ -355,7 +356,9 @@
     "openExternal": "Opens {service} in a new tab",
     "keepAsMyPlace": "Keep as my place",
     "keptAsMyPlace": "Kept in My Places",
-    "keepFailed": "Could not save this place. Please try again."
+    "keepFailed": "Could not save this place. Please try again.",
+    "free": "Free",
+    "durationApprox": "~{n} min"
   },
   "adaptive": {
     "inTripTitle": "You're traveling now",
@@ -1061,7 +1064,8 @@
     "district_nampo": "Nampo · Jung · Seo-gu",
     "district_dongnae": "Dongnae · Geumjeong",
     "district_bukgu": "Buk · Sasang · Gangseo",
-    "gpsNearby": "Within 3km of me"
+    "gpsNearby": "Within 3km of me",
+    "foodGuideBanner": "2026 Busan Food Guide — Michelin · Busan Mat · Taegshlang"
   },
   "tripForm": {
     "title": "✨ Plan Your Korea Trip with AI",
@@ -1169,7 +1173,12 @@
     "svSoloDesc": "Eat alone without awkwardness",
     "readMore": "Read More →",
     "footerData": "Data by Korea Tourism Organization",
-    "footerAi": "AI-assisted planning"
+    "footerAi": "AI-assisted planning",
+    "foodGuideTitle": "2026 Busan Food Guide",
+    "foodGuideNew": "NEW · 2026 Busan Food Guide",
+    "foodGuidePicks": "Michelin · Busan Mat · Taegshlang picks",
+    "nearMe": "Near Me",
+    "gpsActive": "GPS Active"
   },
   "stay": {
     "question": "Where are you staying?",

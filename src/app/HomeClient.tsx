@@ -1051,6 +1051,7 @@ export default function HomeClient() {
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("myTrips")}</Link>
             {/* 데스크톱 CTA 도 Home 시안 색을 따른다. 이모지 라벨과 주황 버튼은
                 구버전 인상이 강해 Hero 보다 메뉴가 먼저 읽혔다 */}
+            <LanguageSwitcher variant="icon" className="text-gray-700" />
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
@@ -1679,7 +1680,7 @@ export default function HomeClient() {
                   style={{ backgroundColor: "#fff7ed", color: "#c2410c", borderColor: "#fed7aa" }}
                 >
                   <span className="text-xl">⭐</span>
-                  <span className="whitespace-nowrap">2026 Busan Food Guide</span>
+                  <span className="whitespace-nowrap">{th("foodGuideTitle")}</span>
                 </Link>
                 <button
                   onClick={handleGpsToggle}
@@ -1697,7 +1698,7 @@ export default function HomeClient() {
                     <span className="text-base">📍</span>
                   )}
                   <span className="whitespace-nowrap">
-                    {gpsActive ? "GPS Active" : "Near Me"}
+                    {gpsActive ? th("gpsActive") : th("nearMe")}
                   </span>
                 </button>
               </div>
@@ -1937,7 +1938,7 @@ export default function HomeClient() {
               <div>
                 <SectionHeader
                   emoji="⭐🍽️"
-                  title="2026 Busan Food Guide"
+                  title={th("foodGuideTitle")}
                   subtitle={th("foodSub")}
                   count={michelinFood.length}
                   onViewAll={() => router.push("/restaurants")}
@@ -1949,8 +1950,8 @@ export default function HomeClient() {
                 >
                   <span className="text-4xl shrink-0">🍽️</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 Busan Food Guide</p>
-                    <p className="text-base font-black text-gray-900">Michelin · Busan Mat · Taegshlang picks</p>
+                    <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">{th("foodGuideNew")}</p>
+                    <p className="text-base font-black text-gray-900">{th("foodGuidePicks")}</p>
                     <p className="text-xs text-gray-500 mt-0.5">{th("foodGuideMeta")}</p>
                   </div>
                   <span className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white bg-orange-500 group-hover:bg-orange-600 transition-colors whitespace-nowrap">

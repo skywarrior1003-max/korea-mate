@@ -81,7 +81,8 @@
     "transitTaxi": "택시 {n}분",
     "slotAnytime": "아무 때나",
     "score": "{n}점",
-    "scoreTooltip": "한국 여행 난이도 점수 — 외국인 여행자에게 얼마나 편한 곳인지"
+    "scoreTooltip": "한국 여행 난이도 점수 — 외국인 여행자에게 얼마나 편한 곳인지",
+    "trendingBadge": "인기"
   },
   "trending": {
     "filterAll": "전체",
@@ -355,7 +356,9 @@
     "openExternal": "새 탭에서 {service} 열기",
     "keepAsMyPlace": "내 장소로 남기기",
     "keptAsMyPlace": "내 장소에 남겼어요",
-    "keepFailed": "이 장소를 남기지 못했습니다. 다시 시도해 주세요."
+    "keepFailed": "이 장소를 남기지 못했습니다. 다시 시도해 주세요.",
+    "free": "무료",
+    "durationApprox": "약 {n}분"
   },
   "adaptive": {
     "inTripTitle": "여행 중이시네요",
@@ -730,7 +733,7 @@
     "findMore": "장소 더 찾기",
     "explore": "장소 둘러보기",
     "selectedEmpty": "이번 여행에 담은 곳이 없어요",
-    "selectedEmptyHint": "Explore 나 Saved 에서 가고 싶은 곳을 담아 보세요.",
+    "selectedEmptyHint": "둘러보기나 저장한 곳에서 가고 싶은 곳을 담아 보세요.",
     "savedEmpty": "아직 저장한 곳이 없어요",
     "savedEmptyHint": "장소의 북마크를 누르면 여기에 모여요.",
     "mineEmpty": "직접 등록한 장소가 없어요",
@@ -1061,7 +1064,8 @@
     "district_nampo": "남포 · 중구 · 서구",
     "district_dongnae": "동래 · 금정",
     "district_bukgu": "북구 · 사상 · 강서",
-    "gpsNearby": "내 위치에서 3km 이내"
+    "gpsNearby": "내 위치에서 3km 이내",
+    "foodGuideBanner": "2026 부산 미식 가이드 — 미쉐린 · 부산의 맛 · 택슐랭"
   },
   "tripForm": {
     "title": "✨ AI 와 함께 한국 여행 계획하기",
@@ -1169,7 +1173,12 @@
     "svSoloDesc": "눈치 보지 않고 혼자 먹기",
     "readMore": "더 보기 →",
     "footerData": "데이터 제공: 한국관광공사",
-    "footerAi": "AI 가 돕는 일정"
+    "footerAi": "AI 가 돕는 일정",
+    "foodGuideTitle": "2026 부산 미식 가이드",
+    "foodGuideNew": "NEW · 2026 부산 미식 가이드",
+    "foodGuidePicks": "미쉐린 · 부산의 맛 · 택슐랭 선정",
+    "nearMe": "내 주변",
+    "gpsActive": "GPS 켜짐"
   },
   "stay": {
     "question": "어디에서 주무세요?",

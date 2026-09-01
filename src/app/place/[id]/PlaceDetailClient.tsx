@@ -65,6 +65,7 @@ function cap(s: string): string {
 
 export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const t = useTranslations("place");
+  const tExplore = useTranslations("explore");
   const tD = useTranslations("discovery");
   const tSaved = useTranslations("saved");
   const tReport = useTranslations("report");
@@ -93,7 +94,9 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const provKind  = resolveProvenance(spot);
   // 시안의 chip 열 — 카테고리·세부카테고리·행정구는 실제 값만 쓴다.
   // 값이 없는 칩은 만들지 않는다(빈 칩은 정보가 아니라 잡음이다).
-  const chips = [cap(spot.category), spot.subcategory, spot.district].filter(Boolean) as string[];
+  // 카테고리는 Explore 와 같은 표를 쓴다(관광명소·음식 & 음료·자연 & 트레일). 표에 없는 값만 원문 대문자로.
+  const categoryLabel = ["attraction", "restaurant", "nature"].includes(spot.category) ? tExplore(`categories.${spot.category}`) : cap(spot.category);
+  const chips = [categoryLabel, spot.subcategory, spot.district].filter(Boolean) as string[];
   const safeImage = resolveDisplayImage(spot.image_url); // 죽은 호스트는 시도조차 하지 않는다
   const showImage = Boolean(safeImage) && !imgFailed;
 
@@ -298,7 +301,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           label={t("entryFee")}
           icon={<svg {...ICON} aria-hidden><rect x="3" y="6.5" width="18" height="11" rx="2" /><circle cx="12" cy="12" r="2.6" /></svg>}
         >
-          <span className="font-medium">{spot.entry_fee}</span>
+          <span className="font-medium">{/^free$/i.test(spot.entry_fee.trim()) ? t("free") : spot.entry_fee}</span>
         </InfoRow>
       )}
       {typeof spot.duration_minutes === "number" && spot.duration_minutes > 0 && (
@@ -306,7 +309,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           label={t("duration")}
           icon={<svg {...ICON} aria-hidden><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3.5 1.4" /></svg>}
         >
-          <span className="font-medium">~{spot.duration_minutes} min</span>
+          <span className="font-medium">{t("durationApprox", { n: spot.duration_minutes })}</span>
         </InfoRow>
       )}
       {spot.address && (

@@ -81,7 +81,8 @@
     "transitTaxi": "タクシー {n}分",
     "slotAnytime": "いつでも",
     "score": "{n}点",
-    "scoreTooltip": "韓国旅行のしやすさスコア — 海外からの旅行者にとっての行きやすさ"
+    "scoreTooltip": "韓国旅行のしやすさスコア — 海外からの旅行者にとっての行きやすさ",
+    "trendingBadge": "人気"
   },
   "trending": {
     "filterAll": "すべて",
@@ -355,7 +356,9 @@
     "openExternal": "新しいタブで{service}を開く",
     "keepAsMyPlace": "自分の場所に残す",
     "keptAsMyPlace": "自分の場所に残しました",
-    "keepFailed": "この場所を残せませんでした。もう一度お試しください。"
+    "keepFailed": "この場所を残せませんでした。もう一度お試しください。",
+    "free": "無料",
+    "durationApprox": "約{n}分"
   },
   "adaptive": {
     "inTripTitle": "旅行中ですね",
@@ -730,7 +733,7 @@
     "findMore": "他の場所を探す",
     "explore": "場所を探す",
     "selectedEmpty": "この旅行にはまだ何もありません",
-    "selectedEmptyHint": "Explore や Saved から行きたい場所を追加しましょう。",
+    "selectedEmptyHint": "「探す」や保存した場所から行きたい場所を追加しましょう。",
     "savedEmpty": "保存した場所はまだありません",
     "savedEmptyHint": "場所のブックマークを押すとここに集まります。",
     "mineEmpty": "自分で登録した場所がありません",
@@ -1061,7 +1064,8 @@
     "district_nampo": "南浦 · 中区 · 西区",
     "district_dongnae": "東莱 · 金井",
     "district_bukgu": "北区 · 沙上 · 江西",
-    "gpsNearby": "現在地から3km以内"
+    "gpsNearby": "現在地から3km以内",
+    "foodGuideBanner": "2026 釜山グルメガイド — ミシュラン · 釜山の味 · テクシュラン"
   },
   "tripForm": {
     "title": "✨ AI と韓国旅行を計画する",
@@ -1169,7 +1173,12 @@
     "svSoloDesc": "気兼ねなくひとりで食べる",
     "readMore": "もっと見る →",
     "footerData": "データ提供: 韓国観光公社",
-    "footerAi": "AI がつくる旅程"
+    "footerAi": "AI がつくる旅程",
+    "foodGuideTitle": "2026 釜山グルメガイド",
+    "foodGuideNew": "NEW · 2026 釜山グルメガイド",
+    "foodGuidePicks": "ミシュラン · 釜山の味 · テクシュラン選定",
+    "nearMe": "近くを探す",
+    "gpsActive": "GPS オン"
   },
   "stay": {
     "question": "どこに泊まりますか？",
