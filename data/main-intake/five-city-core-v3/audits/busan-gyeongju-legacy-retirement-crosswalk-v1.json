@@ -234,6 +234,508 @@
    "same_sha_retry": "Cloudflare Pages git-connected; Stage C precedent: POST /deployments/{id}/retry re-ran master 972a4af (new deployment 2e3028b4) and re-baked Production DB → same mechanism applies",
    "RECOMMENDED_RELEASE_SEQUENCE": "SQL_THEN_SAME_SHA_RETRY",
    "sql_only_intermediate_state": "Explore/planner discovery hide the 17 immediately (runtime Supabase); /place/<id> static stays old (200, indexable) and sitemap keeps the 17 URLs until the retry deployment completes"
+  },
+  "static_residue_audit": {
+   "generated_at": "2026-09-01T09:00:23Z",
+   "task": "TASK-BUSAN-GYEONGJU-LEGACY-STATIC-RESIDUE-AUDIT-AND-FINAL-RELEASE-PREP-V1",
+   "sources_searched": [
+    "public/data/events.json",
+    "public/data/local-info.json",
+    "public/data/restaurants.json",
+    "public/data/restaurants_part1.json",
+    "public/data/restaurants_part2.json",
+    "public/data/route_templates.json",
+    "src/app/HomeClient.tsx (BUSAN_SPOTS)",
+    "src/data/city-presets.ts",
+    "src/data/city-spot-aliases.ts",
+    "src/data/cities/busan.ts (staticSpots — Explore initial state / Supabase-empty fallback)"
+   ],
+   "surfaces_verified_on_production_before_fix": {
+    "home_discover_feed": [
+     "Jangsan Mountain Trail",
+     "Igidae Coastal Walk",
+     "Hwangnyeongsan Night View Trail",
+     "Oryukdo Skywalk"
+    ],
+    "home_search": [
+     "BIFF광장 (local-info 31)"
+    ],
+    "trending/all-spots/explore": [
+     "Oryukdo Skywalk (spot-busan-010)"
+    ]
+   },
+   "STATIC_USER_FACING_RESIDUE_COUNT_BEFORE": 14,
+   "STATIC_USER_FACING_RESIDUE_COUNT_AFTER": 0,
+   "removed": {
+    "events.json": [
+     "spot-busan-010"
+    ],
+    "local-info.json": [
+     13,
+     14,
+     15,
+     20,
+     24,
+     31
+    ],
+    "HomeClient BUSAN_SPOTS": [
+     13,
+     14,
+     15
+    ],
+    "src/data/cities/busan.ts staticSpots": [
+     "Hwangnyeongsan Night View Trail",
+     "Jangsan Mountain Trail",
+     "Igidae Coastal Walk"
+    ]
+   },
+   "valid_independent_events_kept": [
+    "kpop-idol-001",
+    "kpop-idol-011",
+    "mega-event-014",
+    "kpop-idol-009",
+    "visit-busan-002",
+    "visit-busan-003"
+   ],
+   "ambiguous": 0,
+   "oryukdo_spot_busan_010": "RETIRED_PLACE_DUPLICATE_STATIC — permanent type, no dates, no source, no detail link, standalone card duplicating retired id 28 → removed",
+   "matrix": [
+    {
+     "old_id": 5,
+     "old_name": "Hwangnyeongsan Night View Trail",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 6,
+     "user_facing_matches": 4,
+     "classification": "FALSE_POSITIVE; INTERNAL_REFERENCE; RETIRED_PLACE_DUPLICATE_STATIC; VALID_INDEPENDENT_EVENT",
+     "matches": [
+      {
+       "path_item": "src/app/HomeClient.tsx BUSAN_SPOTS id 13 'Hwangnyeongsan Night View Trail'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "public/data/local-info.json id 13",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "events.json kpop-idol-009 (황령산 야경 K-POP photo spot event, venue text)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "VALID_INDEPENDENT_EVENT",
+       "action": "KEEP"
+      },
+      {
+       "path_item": "restaurants.json rest-140 description mention",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/data/city-spot-aliases.ts",
+       "match_class": "INTERNAL_REFERENCE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/data/cities/busan.ts staticSpots V1 card",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 3
+    },
+    {
+     "old_id": 6,
+     "old_name": "Jangsan Mountain Trail",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 4,
+     "user_facing_matches": 3,
+     "classification": "CANONICAL_REPLACEMENT_LINKABLE; INTERNAL_REFERENCE",
+     "matches": [
+      {
+       "path_item": "src/app/HomeClient.tsx BUSAN_SPOTS id 14 'Jangsan Mountain Trail'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "CANONICAL_REPLACEMENT_LINKABLE",
+       "action": "REMOVED (canonical id 30 is served from city_spots; static duplicate not re-created)"
+      },
+      {
+       "path_item": "public/data/local-info.json id 14",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "CANONICAL_REPLACEMENT_LINKABLE",
+       "action": "REMOVED (canonical id 30)"
+      },
+      {
+       "path_item": "src/data/city-spot-aliases.ts",
+       "match_class": "INTERNAL_REFERENCE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/data/cities/busan.ts staticSpots V1 card",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "CANONICAL_REPLACEMENT_LINKABLE",
+       "action": "REMOVED"
+      }
+     ],
+     "current_canonical": 30,
+     "residue_removed": 3
+    },
+    {
+     "old_id": 7,
+     "old_name": "Igidae Coastal Walk",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 5,
+     "user_facing_matches": 3,
+     "classification": "FALSE_POSITIVE; RETIRED_PLACE_DUPLICATE_STATIC",
+     "matches": [
+      {
+       "path_item": "src/app/HomeClient.tsx BUSAN_SPOTS id 15 'Igidae Coastal Walk'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "public/data/local-info.json id 15",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "events.json spot-busan-010 description mention",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE (card removed under id 28)"
+      },
+      {
+       "path_item": "restaurants.json rest-155 (이기대 입구 식당) description",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/data/cities/busan.ts staticSpots V1 card",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 3
+    },
+    {
+     "old_id": 23,
+     "old_name": "BIFF Square",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 4,
+     "user_facing_matches": 2,
+     "classification": "FALSE_POSITIVE; RETIRED_PLACE_DUPLICATE_STATIC; VALID_INDEPENDENT_EVENT",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 31 'BIFF광장 & 남포동 (BIFF Square Nampo)'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "events.json kpop-idol-001 / kpop-idol-011 / mega-event-014 (venue text 'BIFF Square')",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "VALID_INDEPENDENT_EVENT",
+       "action": "KEEP"
+      },
+      {
+       "path_item": "events.json spot-busan-013 'Busan Cinema Center (BIFF)' (= 영화의전당, canonical 74)",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "restaurants_part2.json rest-bm-005/rest-ts-009 descriptions",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 1
+    },
+    {
+     "old_id": 28,
+     "old_name": "Oryukdo Skywalk",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 4,
+     "user_facing_matches": 1,
+     "classification": "FALSE_POSITIVE; RETIRED_PLACE_DUPLICATE_STATIC",
+     "matches": [
+      {
+       "path_item": "public/data/events.json spot-busan-010 'Oryukdo Skywalk' (type permanent, no dates, no source, no detail link, standalone place card)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "restaurants_part2.json rest-ts-034 description",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/app/HomeClient.tsx BUSAN_SPOTS id 15 description text",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE (entry removed under id 7)"
+      },
+      {
+       "path_item": "src/app/api/generate-itinerary/route.ts sample template mentions 'Oryukdo Skywalk'",
+       "match_class": "INTERNAL_REFERENCE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 1
+    },
+    {
+     "old_id": 29,
+     "old_name": "Igidae Coastal Trail",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 3,
+     "user_facing_matches": 2,
+     "classification": "FALSE_POSITIVE; RETIRED_PLACE_DUPLICATE_STATIC",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 15 / HomeClient id 15 (same Igidae card as id 7)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED (with id 7)"
+      },
+      {
+       "path_item": "restaurants.json rest-155",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "src/data/cities/busan.ts staticSpots 'Igidae Coastal Walk' (same card as id 7)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED (with id 7)"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 1
+    },
+    {
+     "old_id": 32,
+     "old_name": "Geumjeongsanseong Fortress",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 2,
+     "user_facing_matches": 0,
+     "classification": "FALSE_POSITIVE",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 41 '금정산 (Geumjeongsan Mountain)' (= canonical 31, published)",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "events.json Beomeosa description mention",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 39,
+     "old_name": "Cheongsapo Daritdol Observatory",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 2,
+     "user_facing_matches": 0,
+     "classification": "FALSE_POSITIVE",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 30 '청사포 (Cheongsapo Seaside Village)' (= canonical A-00055 청사포와 미포, published)",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      },
+      {
+       "path_item": "restaurants.json rest-065/066/067 (청사포 식당)",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 42,
+     "old_name": "The Bay 101",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 1,
+     "user_facing_matches": 0,
+     "classification": "FALSE_POSITIVE",
+     "matches": [
+      {
+       "path_item": "description mentions only (restaurants/events text)",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 50,
+     "old_name": "Busan Harbor Bridge Viewpoint",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 1,
+     "user_facing_matches": 1,
+     "classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 20 '부산항대교 전망 (Busan Harbor Bridge View)'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 1
+    },
+    {
+     "old_id": 55,
+     "old_name": "Seomyeon Shopping District",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 0,
+     "user_facing_matches": 0,
+     "classification": "NO_STATIC_RESIDUE",
+     "matches": [],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 57,
+     "old_name": "Oncheoncheon Stream Park",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 2,
+     "user_facing_matches": 1,
+     "classification": "FALSE_POSITIVE; RETIRED_PLACE_DUPLICATE_STATIC",
+     "matches": [
+      {
+       "path_item": "public/data/local-info.json id 24 '온천천 벚꽃 산책로 (Oncheonjeon Cherry Walk)'",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "RETIRED_PLACE_DUPLICATE_STATIC",
+       "action": "REMOVED"
+      },
+      {
+       "path_item": "restaurants.json rest-014 description",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 1
+    },
+    {
+     "old_id": 61,
+     "old_name": "Mandeok Pass Deck",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 0,
+     "user_facing_matches": 0,
+     "classification": "NO_STATIC_RESIDUE",
+     "matches": [],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 64,
+     "old_name": "Nakdong River Estuary Eco Center",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 0,
+     "user_facing_matches": 0,
+     "classification": "NO_STATIC_RESIDUE",
+     "matches": [],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 68,
+     "old_name": "Ananti Cove Gijang",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 0,
+     "user_facing_matches": 0,
+     "classification": "NO_STATIC_RESIDUE",
+     "matches": [],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 81,
+     "old_name": "Busan Station",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 3,
+     "user_facing_matches": 1,
+     "classification": "FALSE_POSITIVE; INTERNAL_REFERENCE; VALID_INDEPENDENT_EVENT",
+     "matches": [
+      {
+       "path_item": "events.json visit-busan-002 / visit-busan-003 (dated official Visit Busan welcome events at Busan Station, 2026-06)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "VALID_INDEPENDENT_EVENT",
+       "action": "KEEP"
+      },
+      {
+       "path_item": "src/data/city-presets.ts arrival option 'KTX Busan Station'",
+       "match_class": "INTERNAL_REFERENCE",
+       "static_classification": null,
+       "action": "NONE (functional preset, not a place card)"
+      },
+      {
+       "path_item": "restaurants*.json descriptions / local-info Ibagu-gil address text",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 0
+    },
+    {
+     "old_id": 82,
+     "old_name": "168 Stairs and Monorail Area",
+     "aliases_searched": "old name + KO/EN aliases (see task log)",
+     "static_matches": 2,
+     "user_facing_matches": 1,
+     "classification": "CANONICAL_REPLACEMENT_LINKABLE; FALSE_POSITIVE",
+     "matches": [
+      {
+       "path_item": "public/data/events.json spot-busan-014 'Choryang Ibagu-gil 168 Steps' (identity = 초량 이바구길, canonical 83 published)",
+       "match_class": "USER_FACING_STATIC",
+       "static_classification": "CANONICAL_REPLACEMENT_LINKABLE",
+       "action": "NONE (represents live canonical 83, not the retired '168 Stairs and Monorail Area' row; static-duplicate-of-live-canonical backlog)"
+      },
+      {
+       "path_item": "restaurants_part2.json rest-ts-002 description",
+       "match_class": "FALSE_POSITIVE",
+       "static_classification": null,
+       "action": "NONE"
+      }
+     ],
+     "current_canonical": null,
+     "residue_removed": 0
+    }
+   ],
+   "FINAL_RELEASE_PLAN": "NEW_COMMIT (feature HEAD → origin/master fast-forward → Cloudflare Production build bakes DB unpublished state + static residue fix; no same-SHA retry needed)"
   }
  },
  "rows": [

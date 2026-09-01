@@ -72,6 +72,8 @@ interface LocalInfo {
 //  HARDCODED BUSAN SPOTS
 // ═══════════════════════════════════════════════
 
+// V1 정적 카드 목록. 2026-09-01 legacy retirement: 황령산 야경 트레일(13)·장산 트레일(14)·이기대(15)는
+// Production city_spots 5/6/7/29 퇴역과 함께 제거 — 장산은 canonical id 30 이 Explore/DB 로 제공된다.
 const BUSAN_SPOTS: LocalInfo[] = [
   {
     id: 6,
@@ -157,72 +159,6 @@ const BUSAN_SPOTS: LocalInfo[] = [
     soloFriendly: true,
     foreignCardAccepted: true,
     image: "https://images.unsplash.com/photo-1583689397935-7de22f67e3c7?w=600",
-  },
-  {
-    id: 13,
-    name: "Hwangnyeongsan Night View Trail",
-    category: "nature",
-    city: "Busan",
-    district: "Yeonje-gu",
-    address: "Hwangnyeong-dong, Yeonje-gu, Busan — Bus 41 or 42 to Hwangnyeongsan trailhead",
-    whyItMatters: "Busan's best free experience — a 40-min hike to a 360° city panorama consistently ranked #1 by foreign visitors.",
-    description:
-      "Hwangnyeongsan (황령산, 427m) sits at the geographic center of Busan, offering unobstructed 360° views of the city, Gwangalli Bridge, and the ocean. The summit is reached in about 40 minutes via the main trail. Go after 19:00 for the city-light panorama. Wear non-slip shoes; the trail is rocky after rain. Free entry, no facilities at the top — bring water. Bus 41 or 42 from Yeonsan-dong stops at the trailhead. No subway access; a taxi (₩5,000–₩8,000) is easiest.",
-    mapUrl: "https://maps.google.com/maps?q=35.16867,129.08802&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/황령산전망대",
-    durationMinutes: 120,
-    bestTimeSlot: "evening",
-    openingHours: null,
-    tags: ["#NightView", "#Hiking", "#PhotoSpot", "#Busan", "#Free"],
-    relatedSurvivalGuides: ["getting-around"],
-    soloFriendly: true,
-    foreignCardAccepted: false,
-    cashOnly: false,
-    image: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=600",
-  },
-  {
-    id: 14,
-    name: "Jangsan Mountain Trail",
-    category: "nature",
-    city: "Busan",
-    district: "Haeundae-gu",
-    address: "Jangsan, Haeundae-gu, Busan — Jangsan Station (Line 2, Exit 7) → 15-min walk to trailhead",
-    whyItMatters: "Haeundae's hidden green lung — forest trails and streams just 15 minutes from the beach.",
-    description:
-      "Jangsan (장산, 634m) is the highest peak in Haeundae-gu. Multiple trails range from easy valley walks (1hr round trip) to full summit routes (3hr). The valley path features small waterfalls and pine-scented air. The summit offers partial views of the East Sea on clear days. Free entry. Take Line 2 to Jangsan Station (Exit 7) and walk 15 minutes uphill to the main entrance. Bring water; no refreshment stands on the trail. Suitable for solo hikers — the trail is well-marked in Korean and partially in English.",
-    mapUrl: "https://maps.google.com/maps?q=35.20543,129.17343&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/장산등산로입구",
-    durationMinutes: 180,
-    bestTimeSlot: "morning",
-    openingHours: null,
-    tags: ["#Hiking", "#Forest", "#Stream", "#Haeundae", "#Free"],
-    relatedSurvivalGuides: ["getting-around"],
-    soloFriendly: true,
-    foreignCardAccepted: false,
-    cashOnly: false,
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600",
-  },
-  {
-    id: 15,
-    name: "Igidae Coastal Walk",
-    category: "nature",
-    city: "Busan",
-    district: "Nam-gu",
-    address: "Igidae Park entrance: 116 Igidae-ro, Nam-gu, Busan — Bus 27 or 131 to Igidae Park stop",
-    whyItMatters: "The most dramatic free coastal trail in Korea — 5km of sea cliffs, caves, and crashing waves.",
-    description:
-      "Igidae (이기대) is a 4.7km coastal cliff trail in Nam-gu connecting Oryukdo Skywalk to Gwangalli Beach. The path runs along the edge of sheer sea cliffs with views across the bay toward Haeundae. Highlights include sea caves, tidal pools, and wildflowers (spring). Difficulty: easy-moderate. The trail is paved in sections and has wooden boardwalks along the cliff edges. Entrance near Oryukdo Skywalk: Bus 27 or 131 from Gwangalli or Namcheon Station. Free entry. Bring water — no vending facilities on the trail. Allow 2.5–3 hours for the full route.",
-    mapUrl: "https://maps.google.com/maps?q=35.11040,129.11945&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/이기대해안산책로",
-    durationMinutes: 150,
-    bestTimeSlot: "afternoon",
-    openingHours: null,
-    tags: ["#CoastalWalk", "#Cliffs", "#OceanView", "#Free", "#Oryukdo"],
-    relatedSurvivalGuides: ["getting-around"],
-    soloFriendly: true,
-    foreignCardAccepted: false,
-    cashOnly: false,
-    image: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600",
   },
 ];
 

@@ -1015,65 +1015,6 @@
     "lng": 129.0918
   },
   {
-    "id": "spot-busan-010",
-    "type": "permanent",
-    "spotCategory": "attraction",
-    "isAnchor": false,
-    "journeyCluster": "busan-explore",
-    "stage": "Standalone",
-    "anchorEventId": null,
-    "relatedSpotIds": [],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "transitFromAnchor": null,
-    "name": "Oryukdo Skywalk",
-    "shortName": "Oryukdo Skywalk",
-    "tags": [
-      "#Oryukdo",
-      "#Skywalk",
-      "#GlassFloor",
-      "#SeaCliff",
-      "#Nam-gu",
-      "#Free"
-    ],
-    "city": "Busan",
-    "district": "Nam-gu",
-    "address": "170 Oryukdo-ro, Nam-gu, Busan — Bus 24 or 131 to Oryukdo Skywalk stop",
-    "mapUrl": "https://maps.google.com/?q=Oryukdo+Skywalk+Busan",
-    "naverSearchKeyword": "Oryukdo Skywalk",
-    "description": "A 15m glass-floor observation deck cantilevered over a 35m sea cliff on the southern tip of Busan. Look straight down through the floor to the ocean and rocks below. Shoe covers are provided at the entrance (mandatory). Free entry. The walk from the parking lot to the skywalk is 500m of scenic coastal path. Connects to the start of the Igidae Coastal Walk for those wanting a full-day coastal hike. Open 09:00–18:00 daily.",
-    "whyItMatters": "Five seconds on the glass floor over a 35m cliff tells you more about Busan's raw natural power than an hour of beach walking.",
-    "recommendedDurationMinutes": 60,
-    "bestTimeSlot": "afternoon",
-    "openingHours": {
-      "open": "09:00",
-      "close": "18:00"
-    },
-    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400",
-    "startDate": null,
-    "endDate": null,
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": false,
-    "koreanSurvivalScore": 86,
-    "notice": "Free. Shoe covers provided (mandatory). No subway — Bus 24 or 131 from Gwangan or Namcheon Station.",
-    "commerce": {
-      "affiliateType": null,
-      "hasAffiliate": false,
-      "affiliatePartner": null,
-      "affiliateUrl": null,
-      "hasMerchandise": false,
-      "hasTicketing": false,
-      "bookingUrl": null
-    },
-    "lat": 35.084,
-    "lng": 129.0912
-  },
-  {
     "id": "spot-busan-011",
     "type": "permanent",
     "spotCategory": "restaurant",

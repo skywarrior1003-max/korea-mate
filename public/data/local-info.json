@@ -367,93 +367,6 @@
     "foreignCardAccepted": true
   },
   {
-    "id": 13,
-    "name": "Hwangnyeongsan Night View Trail",
-    "searchKeyword": "황령산야경",
-    "category": "nature",
-    "city": "Busan",
-    "district": "Yeonje-gu",
-    "address": "San 7, Hwangnyeong-dong, Yeonje-gu, Busan (황령산, 연제구, 부산)",
-    "description": "Busan's best night view mountain — 360° panorama of the city lights, Gwangalli Bridge, and the ocean. 40-min hike to the summit. Foreign visitors consistently call it their #1 Busan memory.",
-    "mapUrl": "https://maps.google.com/?q=%ED%99%A9%EB%A0%B9%EC%82%B0+%EB%B6%80%EC%82%B0",
-    "naverMapUrl": "https://map.naver.com/v5/search/%ED%99%A9%EB%A0%B9%EC%82%B0",
-    "durationMinutes": 120,
-    "bestTimeSlot": "evening",
-    "openingHours": null,
-    "tags": [
-      "#NightView",
-      "#Hiking",
-      "#PhotoSpot",
-      "#Busan",
-      "#NatureFree"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": false,
-    "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=400"
-  },
-  {
-    "id": 14,
-    "name": "Jangsan Mountain Trail",
-    "searchKeyword": "장산등산로",
-    "category": "nature",
-    "city": "Busan",
-    "district": "Haeundae-gu",
-    "address": "Jangsan, Haeundae-gu, Busan (장산, 해운대구, 부산)",
-    "description": "A beloved local trail in Haeundae-gu with dense forests, waterfalls, and partial sea views. Easy/medium difficulty. Great escape from the beach crowd.",
-    "mapUrl": "https://maps.google.com/?q=%EC%9E%A5%EC%82%B0+%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC+%EB%B6%80%EC%82%B0",
-    "naverMapUrl": "https://map.naver.com/v5/search/%EC%9E%A5%EC%82%B0%EB%93%B1%EC%82%B0%EB%A1%9C",
-    "durationMinutes": 180,
-    "bestTimeSlot": "morning",
-    "openingHours": null,
-    "tags": [
-      "#Hiking",
-      "#Forest",
-      "#Waterfall",
-      "#Haeundae",
-      "#NatureFree"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": false,
-    "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400"
-  },
-  {
-    "id": 15,
-    "name": "Igidae Coastal Walk",
-    "searchKeyword": "이기대해안산책로",
-    "category": "nature",
-    "city": "Busan",
-    "district": "Nam-gu",
-    "address": "Igidae Park, Nam-gu, Busan (이기대공원, 남구, 부산)",
-    "description": "A dramatic 5km cliff-edge walk between Gwangalli and Oryukdo. Sea caves, ocean spray, and wildflowers. The most beautiful free coastal trail in Korea.",
-    "mapUrl": "https://maps.google.com/?q=%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C+%EB%B6%80%EC%82%B0",
-    "naverMapUrl": "https://map.naver.com/v5/search/%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C",
-    "durationMinutes": 150,
-    "bestTimeSlot": "afternoon",
-    "openingHours": null,
-    "tags": [
-      "#CoastalWalk",
-      "#Cliffs",
-      "#OceanView",
-      "#NatureFree",
-      "#Oryukdo"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": false,
-    "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400"
-  },
-  {
     "id": 16,
     "name": "부산박물관 (Busan Museum)",
     "searchKeyword": "부산박물관 유물 역사",
@@ -583,36 +496,6 @@
     "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400"
   },
   {
-    "id": 20,
-    "name": "부산항대교 전망 (Busan Harbor Bridge View)",
-    "searchKeyword": "부산항대교 야경 전망",
-    "category": "attraction",
-    "city": "Busan",
-    "district": "Dong-gu",
-    "address": "Busan Harbor Bridge, Dong-gu, Busan (부산항대교, 동구, 부산)",
-    "description": "The 3.3 km cable-stay bridge spanning the inner harbor is stunning from Jangnim Port or the Yeongdo waterfront after dark when it lights up in color-shifting LEDs. Drive across or watch from Bongnaesan hill for a panoramic harbor view. On clear nights the reflections create a perfect mirror image on the water.",
-    "whyItMatters": "Best night-view bridge in Busan — combine with Yeongdo Drawbridge for a harbor evening.",
-    "mapUrl": "https://maps.google.com/?q=%EB%B6%80%EC%82%B0%ED%95%AD%EB%8C%80%EA%B5%90",
-    "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%ED%95%AD%EB%8C%80%EA%B5%90",
-    "durationMinutes": 30,
-    "bestTimeSlot": "evening",
-    "openingHours": null,
-    "tags": [
-      "#NightView",
-      "#Bridge",
-      "#HarborView",
-      "#CableStay",
-      "#BusanSkyline"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": false,
-    "cashOnly": false,
-    "image": ""
-  },
-  {
     "id": 21,
     "name": "동래읍성 (Dongrae Eupseong Fortress)",
     "searchKeyword": "동래읍성 성곽 임진왜란",
@@ -704,36 +587,6 @@
     "foreignCardAccepted": false,
     "cashOnly": false,
     "image": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400"
-  },
-  {
-    "id": 24,
-    "name": "온천천 벚꽃 산책로 (Oncheonjeon Cherry Walk)",
-    "searchKeyword": "온천천 벚꽃 산책로",
-    "category": "attraction",
-    "city": "Busan",
-    "district": "Dongnae-gu",
-    "address": "Oncheonjeon Stream, Dongnae-gu, Busan (온천천, 동래구, 부산)",
-    "description": "A 4km riverside greenway lined with hundreds of cherry trees that form a pink tunnel in late March and early April. Locals cycle, jog, and picnic along the stream. Summer brings kingfishers and herons; autumn turns the canopy gold. A beloved daily escape for Busan residents.",
-    "whyItMatters": "Busan's best sakura walk — free, accessible by metro (Oncheonjang station), and uncrowded on weekdays.",
-    "mapUrl": "https://maps.google.com/?q=%EC%98%A8%EC%B2%9C%EC%B2%9C+%EB%B2%9A%EA%BD%83",
-    "naverMapUrl": "https://map.naver.com/v5/search/%EC%98%A8%EC%B2%9C%EC%B2%9C+%EB%B2%9A%EA%BD%83",
-    "durationMinutes": 60,
-    "bestTimeSlot": "morning",
-    "openingHours": null,
-    "tags": [
-      "#CherryBlossoms",
-      "#Riverside",
-      "#FreeEntry",
-      "#Spring",
-      "#Cycling"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": false,
-    "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400"
   },
   {
     "id": 25,
@@ -920,36 +773,6 @@
     "foreignCardAccepted": true,
     "cashOnly": false,
     "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400"
-  },
-  {
-    "id": 31,
-    "name": "BIFF광장 & 남포동 (BIFF Square Nampo)",
-    "searchKeyword": "BIFF광장 남포동 영화거리",
-    "category": "attraction",
-    "city": "Busan",
-    "district": "Jung-gu",
-    "address": "BIFF Square, Nampo-dong, Jung-gu, Busan (남포동 BIFF광장, 중구, 부산)",
-    "description": "The pedestrian heart of old Busan, paved with handprints of Korean cinema's greatest directors and stars. Every October the streets transform into the Busan International Film Festival's red-carpet zone. Year-round, street vendors sell ssiat hotteok (seed pancakes) and the old cinemas still project indie films.",
-    "whyItMatters": "The Times Square of Korean cinema — even without BIFF season the street energy and hotteok are legendary.",
-    "mapUrl": "https://maps.google.com/maps?q=35.0979,129.0306&z=17",
-    "naverMapUrl": "https://map.naver.com/v5/search/BIFF%EA%B4%91%EC%9E%A5",
-    "durationMinutes": 60,
-    "bestTimeSlot": "evening",
-    "openingHours": null,
-    "tags": [
-      "#BIFF",
-      "#FilmFestival",
-      "#Nampo",
-      "#StreetFood",
-      "#Hotteok"
-    ],
-    "relatedSurvivalGuides": [
-      "getting-around"
-    ],
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "image": ""
   },
   {
     "id": 32,
