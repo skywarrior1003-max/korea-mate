@@ -110,3 +110,14 @@ test("R4: Home footer copyright uses footer.copyright", () => {
   assert.ok(home.includes('tFooter("copyright", { year: new Date().getFullYear() })') && !home.includes("All rights reserved."));
   for (const l of LOCALES) assert.match(JSON.parse(read("src", "messages", `${l}.json`)).footer.copyright, /\{year\}/);
 });
+
+// ── round 5 (Fable recheck on eba155a: ContactModal English form, /trending copyright literal, Anchor badge literal)
+test("R5: ContactModal, /trending footer and Anchor badge are localized", () => {
+  const cm = read("src", "components", "ContactModal.tsx");
+  assert.ok(cm.includes('useTranslations("contactForm")') && cm.includes("t(INQUIRY_KEY[it])") && cm.includes('{t("privacy")}'));
+  for (const s of ["Contact gokoreamate\n", '"Sending…"', "Email is required.", 'placeholder="e.g. ARMY Busan fan"']) assert.ok(!cm.includes(s), s);
+  const KEYS = ["title", "close", "sentTitle", "sentBody", "typeLabel", "nameLabel", "optional", "namePlaceholder", "emailLabel", "messageLabel", "messagePlaceholder", "privacy", "cancel", "sending", "send", "errEmailRequired", "errEmailInvalid", "errMessageShort", "errMessageLong", "errGeneric", "errNetwork", "type_general", "type_restaurant", "type_map", "type_closed", "type_suggest", "type_partnership", "type_other"];
+  for (const l of LOCALES) { const m = JSON.parse(read("src", "messages", `${l}.json`)).contactForm; for (const k of KEYS) assert.ok(m[k], `${l}.contactForm.${k}`); }
+  assert.ok(!read("src", "app", "trending", "page.tsx").includes("All rights reserved."));
+  assert.ok(read("src", "components", "EventCard.tsx").includes('⭐ {tModal("anchor")}'));
+});

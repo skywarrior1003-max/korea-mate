@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 const INQUIRY_TYPES = [
   "General question",
@@ -11,6 +12,11 @@ const INQUIRY_TYPES = [
   "Partnership / business inquiry",
   "Other",
 ] as const;
+// select 의 value(영어)는 /api/contact 계약이라 그대로 두고, 보이는 글자만 locale 로 바꾼다
+const INQUIRY_KEY: Record<(typeof INQUIRY_TYPES)[number], string> = {
+  "General question": "type_general", "Wrong restaurant information": "type_restaurant", "Wrong map location": "type_map",
+  "Closed or moved place": "type_closed", "Suggest a place": "type_suggest", "Partnership / business inquiry": "type_partnership", "Other": "type_other",
+};
 
 export type ContactModalProps = {
   open: boolean;
@@ -27,6 +33,7 @@ export default function ContactModal({
   relatedPlaceId,
   relatedPlaceName,
 }: ContactModalProps) {
+  const t = useTranslations("contactForm");
   const [type,    setType]    = useState<string>(INQUIRY_TYPES[0]);
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
@@ -69,17 +76,17 @@ export default function ContactModal({
     if (status === "loading") return;
 
     // Client-side validation
-    if (!email.trim()) { setErrMsg("Email is required."); return; }
+    if (!email.trim()) { setErrMsg(t("errEmailRequired")); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setErrMsg("Please enter a valid email address.");
+      setErrMsg(t("errEmailInvalid"));
       return;
     }
     if (message.trim().length < 10) {
-      setErrMsg("Message must be at least 10 characters.");
+      setErrMsg(t("errMessageShort"));
       return;
     }
     if (message.trim().length > 3000) {
-      setErrMsg("Message is too long (max 3000 characters).");
+      setErrMsg(t("errMessageLong"));
       return;
     }
 
@@ -108,11 +115,11 @@ export default function ContactModal({
         setStatus("success");
       } else {
         setStatus("error");
-        setErrMsg(data.error || "Something went wrong. Please try again.");
+        setErrMsg(data.error || t("errGeneric"));
       }
     } catch {
       setStatus("error");
-      setErrMsg("Network error. Please check your connection and try again.");
+      setErrMsg(t("errNetwork"));
     }
   }
 
@@ -132,12 +139,12 @@ export default function ContactModal({
         <div className="px-6 pt-5 pb-1 shrink-0">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-black text-gray-900 tracking-tight">
-              Contact gokoreamate
+              {t("title")}
             </h2>
             <button
               onClick={onClose}
               className="w-8 h-8 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors text-lg flex items-center justify-center"
-              aria-label="Close"
+              aria-label={t("close")}
             >
               ✕
             </button>
@@ -148,17 +155,16 @@ export default function ContactModal({
           {status === "success" ? (
             <div className="py-10 text-center">
               <div className="text-5xl mb-4">✅</div>
-              <h3 className="text-base font-black text-gray-900 mb-2">Message sent!</h3>
+              <h3 className="text-base font-black text-gray-900 mb-2">{t("sentTitle")}</h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                Thank you for reaching out. We&apos;ll review your message and get back
-                to you if needed.
+                {t("sentBody")}
               </p>
               <button
                 onClick={onClose}
                 className="mt-6 px-6 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
                 style={{ backgroundColor: "#FF4A2D" }}
               >
-                Close
+                {t("close")}
               </button>
             </div>
           ) : (
@@ -177,7 +183,7 @@ export default function ContactModal({
               {/* Inquiry type */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">
-                  Inquiry type <span className="text-orange-500">*</span>
+                  {t("typeLabel")} <span className="text-orange-500">*</span>
                 </label>
                 <select
                   ref={firstRef}
@@ -185,8 +191,8 @@ export default function ContactModal({
                   onChange={(e) => setType(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                 >
-                  {INQUIRY_TYPES.map((t) => (
-                    <option key={t} value={t}>{t}</option>
+                  {INQUIRY_TYPES.map((it) => (
+                    <option key={it} value={it}>{t(INQUIRY_KEY[it])}</option>
                   ))}
                 </select>
               </div>
@@ -194,14 +200,14 @@ export default function ContactModal({
               {/* Name */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">
-                  Name or nickname <span className="text-gray-400 font-normal">(optional)</span>
+                  {t("nameLabel")} <span className="text-gray-400 font-normal">{t("optional")}</span>
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={60}
-                  placeholder="e.g. ARMY Busan fan"
+                  placeholder={t("namePlaceholder")}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                 />
               </div>
@@ -209,14 +215,14 @@ export default function ContactModal({
               {/* Email */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">
-                  Email <span className="text-orange-500">*</span>
+                  {t("emailLabel")} <span className="text-orange-500">*</span>
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   maxLength={200}
-                  placeholder="you@example.com"
+                  placeholder={t("emailPlaceholder")}
                   autoComplete="email"
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                 />
@@ -225,21 +231,21 @@ export default function ContactModal({
               {/* Related place (if provided) */}
               {relatedPlaceName && (
                 <div className="px-3 py-2.5 rounded-xl bg-orange-50 border border-orange-100 text-sm text-orange-700 font-medium">
-                  📍 Related place: <strong>{relatedPlaceName}</strong>
+                  📍 {t("relatedPlace")} <strong>{relatedPlaceName}</strong>
                 </div>
               )}
 
               {/* Message */}
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">
-                  Message <span className="text-orange-500">*</span>
+                  {t("messageLabel")} <span className="text-orange-500">*</span>
                 </label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
                   maxLength={3000}
-                  placeholder="Please describe your question or feedback in detail (min 10 characters)..."
+                  placeholder={t("messagePlaceholder")}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent resize-none"
                 />
                 <p className="text-right text-[10px] text-gray-400 mt-0.5">
@@ -256,8 +262,7 @@ export default function ContactModal({
 
               {/* Privacy note */}
               <p className="text-[11px] text-gray-400 leading-relaxed">
-                By submitting this form, your message and email address will be stored
-                so we can review and respond to your inquiry.
+                {t("privacy")}
               </p>
 
               {/* Buttons */}
@@ -267,7 +272,7 @@ export default function ContactModal({
                   onClick={onClose}
                   className="flex-1 py-3 rounded-xl text-sm font-bold text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button
                   type="submit"
@@ -275,7 +280,7 @@ export default function ContactModal({
                   className="flex-1 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90 disabled:opacity-60"
                   style={{ backgroundColor: "#FF4A2D" }}
                 >
-                  {status === "loading" ? "Sending…" : "Send message"}
+                  {status === "loading" ? t("sending") : t("send")}
                 </button>
               </div>
             </form>

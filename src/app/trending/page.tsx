@@ -381,6 +381,7 @@ export default function TrendingPage() {
   const tNav = useTranslations("nav");
   const tE   = useTranslations("explore");
   const tF   = useTranslations("tripForm");
+  const tFoot = useTranslations("footer");
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
@@ -437,7 +438,7 @@ export default function TrendingPage() {
 
       {/* ── Footer ─────────────────────────────────── */}
       <footer className="mt-auto py-8 px-4 border-t border-gray-100 text-center text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
+        <p>{tFoot("copyright", { year: new Date().getFullYear() })}</p>
       </footer>
     </div>
   );

@@ -63,6 +63,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
   const tR      = useTranslations("report");
   const tSlot   = useTranslations("planner");
   const tForm   = useTranslations("tripForm");
+  const tModal  = useTranslations("modal");
   const cityDisplay = (() => { const c = (event.city || "").trim(); if (!c) return ""; const key = `city_${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`; try { return tForm.has(key) ? tForm(key) : c.charAt(0).toUpperCase() + c.slice(1); } catch { return c; } })();
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
@@ -140,7 +141,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         {/* Anchor 뱃지 */}
         {event.isAnchor && (
           <span className="absolute top-3 right-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-yellow-400 text-gray-900 shadow">
-            ⭐ Anchor
+            ⭐ {tModal("anchor")}
           </span>
         )}
 
