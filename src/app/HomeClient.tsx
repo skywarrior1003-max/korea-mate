@@ -437,6 +437,7 @@ export default function HomeClient() {
   const tPace = useTranslations("pace");
   const th = useTranslations("homeUi");
   const tn = useTranslations("nav");
+  const tFooter = useTranslations("footer"); // 저작권 줄도 Explore 와 같은 footer.copyright 를 쓴다
   // 카테고리 문구는 /all-spots 와 공유한다
   const tCat = useTranslations("allSpots");
 
@@ -2200,7 +2201,7 @@ export default function HomeClient() {
             </p>
           </div>
           <div className="border-t border-white/5 pt-6 text-center">
-            <p className="text-xs text-gray-600">© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
+            <p className="text-xs text-gray-600">{tFooter("copyright", { year: new Date().getFullYear() })}</p>
           </div>
         </div>
       </footer>

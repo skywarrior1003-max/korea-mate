@@ -103,3 +103,10 @@ test("R3: footer Contact, modal slot fallback and picks category captions are lo
   const picks = read("src", "app", "picks", "PicksClient.tsx");
   assert.ok(picks.includes("{catLabel(item.type)}") && picks.includes("{catLabel(e.type)}") && !picks.includes("mt-1\">{item.type}</p>"));
 });
+
+// ── round 4 (Fable recheck on 39f07ee: Home footer copyright literal)
+test("R4: Home footer copyright uses footer.copyright", () => {
+  const home = read("src", "app", "HomeClient.tsx");
+  assert.ok(home.includes('tFooter("copyright", { year: new Date().getFullYear() })') && !home.includes("All rights reserved."));
+  for (const l of LOCALES) assert.match(JSON.parse(read("src", "messages", `${l}.json`)).footer.copyright, /\{year\}/);
+});
