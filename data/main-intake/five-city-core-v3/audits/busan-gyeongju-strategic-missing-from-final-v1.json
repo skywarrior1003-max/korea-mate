@@ -1,0 +1,51 @@
+{
+ "generated_at": "2026-09-01T07:05:49Z",
+ "task": "TASK-BUSAN-GYEONGJU-LEGACY-RETIREMENT-CROSSWALK-V1",
+ "count": 1,
+ "rows": [
+  {
+   "old_id": 94,
+   "old_name": "Busan Asiad Main Stadium",
+   "strategic_reason": "BTS World Tour 2026 Busan anchor venue (events.json evt-anchor-001), #Kpop tag; K-POP discovery theme",
+   "production": {
+    "published": true,
+    "name": "Busan Asiad Main Stadium",
+    "address": "344 World Cup-daero, Yeonje-gu, Busan",
+    "lat": 35.1901,
+    "lng": 129.0587,
+    "tags": [
+     "#Stadium",
+     "#Kpop",
+     "#Event",
+     "#Transit"
+    ],
+    "official_url": "https://www.busan.go.kr",
+    "naver_map_url": "https://map.naver.com/p/search/Busan%20Asiad%20Main%20Stadium",
+    "map_url": "https://www.google.com/maps/search/?api=1&query=Busan+Asiad+Main+Stadium",
+    "image_url": "https://source.unsplash.com/1200x800/?stadium,busan",
+    "has_ko_desc": false
+   },
+   "current_identity": {
+    "name_ko": "부산아시아드주경기장",
+    "name_en": "Busan Asiad Main Stadium",
+    "operator": "부산시설공단 (Busan Infrastructure Corporation)",
+    "address": "부산광역시 연제구 월드컵대로 344 (거제동)",
+    "district": "Yeonje-gu",
+    "category": "attraction",
+    "subcategory": "Stadium",
+    "kpop_context": "BTS World Tour 2026 Busan anchor venue (events.json evt-anchor-001, 2026-10-17/18); large-scale K-POP concert venue",
+    "official_url_candidate": "https://www.bisco.or.kr (부산시설공단) — verify exact venue page",
+    "naver_query": "부산아시아드주경기장",
+    "google_query": "부산아시아드주경기장",
+    "image": "no Owner/venue-provided image; Production image is a stock URL — do NOT reuse; leave image pending",
+    "content": "KO/EN/JA/ZH product-authored rebuild feasible (verified facts: venue, address, capacity context, BTS 2026 anchor)"
+   },
+   "recommended_action": "UPGRADE_IN_PLACE (keep id 94 — 20 itinerary references; retire old content by rewriting to current verified canonical)",
+   "verification_status": "PENDING direct-click (see audit report §20 sample)",
+   "user_reference_implications": {
+    "itineraries": 20,
+    "note": "id preserved; no hydration impact"
+   }
+  }
+ ]
+}
