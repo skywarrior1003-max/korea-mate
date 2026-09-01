@@ -355,6 +355,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         if (!q) return true;
         return (
           s.name.toLowerCase().includes(q) ||
+          // 표시 이름(name_l10n)도 찾는다 — 한글 이름으로 검색하는 사용자가 EN canonical 만 있는 행을 놓치지 않게
+          Object.values(s.nameL10n ?? {}).some(v => typeof v === "string" && v.toLowerCase().includes(q)) ||
           s.description.toLowerCase().includes(q) ||
           (s.tags ?? []).some(t => t.toLowerCase().includes(q)) ||
           (s.district ?? "").toLowerCase().includes(q)

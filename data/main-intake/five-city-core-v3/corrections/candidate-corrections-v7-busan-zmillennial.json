@@ -1,0 +1,172 @@
+{
+ "artifact": "owner-approved-corrections-v7-busan-zmillennial",
+ "task": "TASK-KPOP-ZMILLENNIAL-CANONICAL-CORRECTION-V1",
+ "status": "CANDIDATE — Owner approval required before PROD-SQL; not executed",
+ "generated_at": "2026-09-01",
+ "canonical_keep_id": 93,
+ "old_duplicate_ids": [],
+ "identity": "single row (manual legacy seed) corrected in place — no separate new canonical row exists in Production or intake artifacts (v3 classification: LEGACY_ONLY_VALID, no canonical counterpart)",
+ "evidence": {
+  "google": "place 지밀레니얼 · 카페 · 부산광역시 남구 진남로 135 · 35.1388747,129.0801719 · instagram.com · 051-635-5005 (actual landing 2026-09-01)",
+  "naver": "search 지밀레니얼 → pcmap restaurant/1487056208 · 카페,디저트 · 부산 남구 진남로 135 B동 1층 · '지민의 아버지가 직접 운영하는 카페'(AI 요약) · entry route verified: https://map.naver.com/p/entry/place/1487056208 → title '지밀레니얼 - 네이버지도'",
+  "official": "https://www.instagram.com/zmillennial_cafe/ (200, 'zmillennial (@zmillennial_cafe)', bio still says MAGNATE CAFE OFFICIAL)",
+  "web": "tabling / diningcode / triple: 부산 남구 진남로 135, 10:00–21:50, 지민 아버지 운영, 전 MAGNATE"
+ },
+ "corrections": [
+  {
+   "field": "name",
+   "before": "Magnate Cafe BTS Jimin Family Area",
+   "after": "ZM-ILLENNIAL"
+  },
+  {
+   "field": "name_l10n",
+   "before": null,
+   "after": {
+    "ko": "지밀레니얼",
+    "en": "ZM-ILLENNIAL",
+    "ja": "ZM-ILLENNIAL",
+    "zh": "ZM-ILLENNIAL"
+   }
+  },
+  {
+   "field": "district",
+   "before": "Suyeong-gu",
+   "after": "Nam-gu"
+  },
+  {
+   "field": "lat/lng",
+   "before": [
+    35.1385,
+    129.0847
+   ],
+   "after": [
+    35.1388747,
+    129.0801719
+   ],
+   "note": "Google place pin; ~430 m east error before"
+  },
+  {
+   "field": "category/subcategory",
+   "before": [
+    "restaurant",
+    "Cafe"
+   ],
+   "after": [
+    "restaurant",
+    "Cafe"
+   ],
+   "note": "schema has no cafe category (VALID_CATEGORIES); Cafe = subcategory like the other 251 cafes — unchanged"
+  },
+  {
+   "field": "tags",
+   "before": [
+    "#BTS",
+    "#Cafe",
+    "#ARMY",
+    "#FanRoute"
+   ],
+   "after": [
+    "#K-POP",
+    "#BTS",
+    "#Jimin",
+    "#ARMY",
+    "#Cafe",
+    "#FanRoute"
+   ]
+  },
+  {
+   "field": "description",
+   "before": "A cafe known among BTS fans because of its connection to Jimin's family",
+   "after": "ZM-ILLENNIAL (지밀레니얼) is a large warehouse-style cafe in Daeyeon-dong, Nam-gu, run by the father of BTS's Jimin. Formerly known as MAGNATE, it was renamed ZM-ILLENNIAL; ARMY from around the world visit for the coffee and bakery, and around Jimin's birthday the cafe fills with fan gifts and banners.",
+   "provenance": "product-authored (manual seed row; no official description exists). Historical name MAGNATE kept in text as search alias"
+  },
+  {
+   "field": "desc_l10n",
+   "before": null,
+   "after": {
+    "ko": "지밀레니얼(ZM-ILLENNIAL)은 부산 남구 대연동에 있는 창고형 대형 카페로, BTS 지민의 아버지가 운영합니다. 예전 이름은 MAGNATE(매그네이트)였으며 지밀레니얼로 상호를 바꿨습니다. 커피와 베이커리를 즐기러 전 세계 아미가 찾고, 지민 생일 무렵에는 팬들이 보낸 선물과 배너로 매장이 가득 찹니다.",
+    "en": "ZM-ILLENNIAL (지밀레니얼) is a large warehouse-style cafe in Daeyeon-dong, Nam-gu, run by the father of BTS's Jimin. Formerly known as MAGNATE, it was renamed ZM-ILLENNIAL; ARMY from around the world visit for the coffee and bakery, and around Jimin's birthday the cafe fills with fan gifts and banners."
+   },
+   "provenance": "product-authored KO/EN, verified facts only — not an official description"
+  },
+  {
+   "field": "why_it_matters",
+   "before": null,
+   "after": "Busan's BTS pilgrimage stop — the cafe run by Jimin's father (formerly MAGNATE)."
+  },
+  {
+   "field": "why_l10n",
+   "before": null,
+   "after": {
+    "ko": "부산 BTS 성지순례 코스 — 지민 아버지가 운영하는 카페(전 MAGNATE).",
+    "en": "Busan's BTS pilgrimage stop — the cafe run by Jimin's father (formerly MAGNATE).",
+    "ja": "釜山のBTS聖地巡礼スポット — ジミンのお父さんが営むカフェ(旧MAGNATE)。",
+    "zh": "釜山BTS圣地巡礼打卡点——智旻父亲经营的咖啡馆(前身MAGNATE)。"
+   },
+   "provenance": "product-authored curation line, 4 locales"
+  },
+  {
+   "field": "official_url",
+   "before": "https://www.visitbusan.net/en/index.do",
+   "after": "https://www.instagram.com/zmillennial_cafe/",
+   "note": "generic VisitBusan homepage → current official account"
+  },
+  {
+   "field": "naver_map_url",
+   "before": "https://map.naver.com/p/search/MAGNATE%20Cafe%20Busan",
+   "after": "https://map.naver.com/p/entry/place/1487056208",
+   "note": "exact entity route captured from a real 지밀레니얼 search (not guessed)"
+  },
+  {
+   "field": "map_url",
+   "before": "https://www.google.com/maps/search/?api=1&query=MAGNATE+Cafe+Busan",
+   "after": "https://www.google.com/maps/search/?api=1&query=%EC%A7%80%EB%B0%80%EB%A0%88%EB%8B%88%EC%96%BC%20%EB%B6%80%EC%82%B0%20%EB%82%A8%EA%B5%AC%20%EC%A7%84%EB%82%A8%EB%A1%9C%20135",
+   "note": "current-name query; verified landing 지밀레니얼"
+  },
+  {
+   "field": "image_url",
+   "before": "https://source.unsplash.com/1200x800/?korea,cafe,bts",
+   "after": "https://gokoreamate.com/images/spots/zmillennial-busan-representative-illustration.webp",
+   "note": "Owner-provided illustration (representative, NOT a venue photo). Repo asset public/images/spots/zmillennial-busan-representative-illustration.webp 848x1264 58KB"
+  },
+  {
+   "field": "opening_hours",
+   "before": {
+    "open": "10:00",
+    "close": "21:00"
+   },
+   "after": {
+    "open": "10:00",
+    "close": "21:50"
+   },
+   "note": "Google (phone-verified) close 21:50; Naver last order 21:20"
+  },
+  {
+   "table": "city_spot_images",
+   "action": "INSERT provenance row",
+   "row": {
+    "city_spot_id": 93,
+    "image_url": "https://gokoreamate.com/images/spots/zmillennial-busan-representative-illustration.webp",
+    "rights_status": "OWNER_PROVIDED_ILLUSTRATION",
+    "attribution_required": false,
+    "rights_note": "Owner-provided stylized illustration of the current ZM-ILLENNIAL facade (2026-09-01). Representative image; not an actual venue photo; no MAGNATE-era signage.",
+    "display_eligible": true,
+    "is_primary": true,
+    "sort_order": 0,
+    "as_of": "2026-09-01"
+   },
+   "note": "schema has no image-type column; illustration/non-photo provenance recorded in rights_status + rights_note"
+  }
+ ],
+ "not_changed": {
+  "secondary_images": "none added — the representative illustration is sufficient for the card; Naver owner photos not collected (rights/signage review pending)",
+  "legacy_alias_schema": "no alias column; MAGNATE preserved in description text (Explore search matches description)"
+ },
+ "dependencies": {
+  "itinerary_refs": 13,
+  "user_spots": 0,
+  "trip_moments": 0,
+  "note": "row id unchanged; saved itineraries keep hydrating (same id)"
+ },
+ "rollback": "restore the 'before' values above; delete the inserted city_spot_images row (city_spot_id=93, image_url=IMG)"
+}
