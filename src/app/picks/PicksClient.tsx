@@ -157,6 +157,9 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
 
 function PicksContent() {
   const t   = useTranslations("picks");
+  const tDisc = useTranslations("discovery");
+  // 이름 아래 분류 캡션은 카테고리 id(attraction)가 아니라 locale 이름표(관광명소)로 — SpotCard 와 같은 표
+  const catLabel = (c: string): string => ["attraction", "restaurant", "nature", "event"].includes(c) ? tDisc(`cat${c.charAt(0).toUpperCase()}${c.slice(1)}` as "catAttraction" | "catRestaurant" | "catNature" | "catEvent") : c;
   const locale = useLocale();
   const tS  = useTranslations("shell");
   const tP  = useTranslations("place");
@@ -797,7 +800,7 @@ function PicksContent() {
                           <div className="min-w-0 flex-1">
                             <p className="font-bold text-ink text-base leading-snug">{displayPlaceName(item.shortName || item.name, item.nameL10n, locale)}</p>
                             {item.type && (
-                              <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{item.type}</p>
+                              <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{catLabel(item.type)}</p>
                             )}
                             <p className="text-xs text-faint mt-1 truncate">
                               {[item.district, item.city].filter(Boolean).join(", ") || "—"}
@@ -1000,7 +1003,7 @@ function PicksContent() {
                             이름 바로 아래 파란 대문자 캡션으로 둔다. This Trip 카드가
                             이미 같은 자리·같은 스타일을 쓰고 있어 그대로 맞춘다. */}
                         {e.type && (
-                          <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{e.type}</p>
+                          <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{catLabel(e.type)}</p>
                         )}
                         <p className="text-xs text-faint mt-1 truncate">
                           {[e.district, e.city].filter(Boolean).join(", ") || "—"}

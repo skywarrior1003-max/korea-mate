@@ -108,7 +108,8 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
   const tDisc        = useTranslations("discovery");
   const typeDisplay = ["attraction", "restaurant", "nature"].includes(event.type) ? tExplore(`categories.${event.type}`) : event.type === "event" ? tDisc("catEvent") : event.type;
   const SLOT_KEY_M: Record<string, string> = { morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening", lunch: "slot_lunch", sunset: "slot_sunset", night: "slot_night" };
-  const bestTimeDisplay = SLOT_KEY_M[event.bestTimeSlot] ? tSlotM(SLOT_KEY_M[event.bestTimeSlot]) : event.bestTimeSlot === "anytime" ? tEvents("slotAnytime") : event.bestTimeSlot;
+  // 표에 없는 슬롯 값(데이터 오염 등)은 카드(EventCard)와 같이 "언제든지" 로 — 내부 값을 그대로 노출하지 않는다
+  const bestTimeDisplay = SLOT_KEY_M[event.bestTimeSlot] ? tSlotM(SLOT_KEY_M[event.bestTimeSlot]) : tEvents("slotAnytime");
   const tItin        = useTranslations("itin");
   const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);

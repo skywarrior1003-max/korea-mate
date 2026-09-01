@@ -92,3 +92,14 @@ test("R2: Home nature section chrome and arrival labels are no longer hardcoded 
   assert.equal((home.match(/\{arrivalLabel\(loc\.label\)\}/g) || []).length, 2);
   assert.ok(!/\{loc\.label\}/.test(home));
 });
+
+// ── round 3 (Fable recheck on f157007: footer Contact literal, modal unknown-slot fallback, /picks raw category ids)
+test("R3: footer Contact, modal slot fallback and picks category captions are localized", () => {
+  for (const l of LOCALES) assert.ok(JSON.parse(read("src", "messages", `${l}.json`)).nav.contact, `${l}.nav.contact`);
+  const home = read("src", "app", "HomeClient.tsx");
+  assert.ok(home.includes('{tn("contact")}') && !/>\s*Contact\s*<\/button>/.test(home));
+  const modal = read("src", "components", "EventDetailModal.tsx");
+  assert.ok(modal.includes(': tEvents("slotAnytime");') && !modal.includes(": event.bestTimeSlot;"));
+  const picks = read("src", "app", "picks", "PicksClient.tsx");
+  assert.ok(picks.includes("{catLabel(item.type)}") && picks.includes("{catLabel(e.type)}") && !picks.includes("mt-1\">{item.type}</p>"));
+});

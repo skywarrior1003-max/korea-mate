@@ -2192,7 +2192,7 @@ export default function HomeClient() {
                 onClick={() => setContactOpen(true)}
                 className="text-sm font-semibold text-gray-400 hover:text-white transition-colors"
               >
-                Contact
+                {tn("contact")}
               </button>
             </div>
             <p className="text-xs text-gray-500 text-center sm:text-right leading-relaxed">
