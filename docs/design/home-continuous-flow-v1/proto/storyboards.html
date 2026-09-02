@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>D. Transition Storyboards</title>
+<link rel="stylesheet" href="proto.css">
+<style>.frame{width:390px;height:620px;}</style></head><body>
+<h1 class="pagetitle">D. Transition Storyboards — motion 은 "같은 공간에서의 이동"을 설명할 때만</h1>
+<p class="pagesub">구현 전제: CSS transform/opacity + 표준 스크롤. WebGL·3D·physics·scroll-jacking 없음. 제안 수치(OPEN, 프로토타입 제안): 이동/확장 380–460ms, ease [0.32, 0.72, 0, 1], 사진 scale 1.0→1.06, fade 200ms. snap 은 Cover↔Floor 경계 1곳만 soft snap 제안.</p>
+
+<div class="dirlabel" style="font-size:14px;font-weight:900;margin-bottom:6px;">Storyboard 1 · Cover → Floor (Home 1 → Home 2)</div>
+<div class="row">
+<div class="cell"><div class="shot frame" data-name="SB1-start">
+  <div class="cover"><img class="bg" src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="grade"></div>
+    <div class="wordmark" style="top:24px;">gokoreamate</div>
+    <div class="cover-caption" style="bottom:170px;"><div class="line1" style="font-size:24px;">Stayed at Gwangalli longer than planned.</div><div class="line2">Gwangalli, around 9pm.</div></div>
+    <div class="searchpill" style="bottom:96px;"><span class="mag"></span>Search Korea</div>
+    <div class="scrollcue" style="bottom:44px;">KOREA, BELOW</div></div>
+</div><div class="cap">START<small>photo + caption + Search pill.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="SB1-mid">
+  <div class="cover" style="height:44%; overflow:hidden;"><img class="bg" src="../../../../public/images/home/city-busan-hero.jpg" alt="" style="transform:scale(1.06) translateY(-5%);"><div class="grade"></div>
+    <div class="cover-caption" style="bottom:70px; opacity:.35;"><div class="line1" style="font-size:19px;">Stayed at Gwangalli longer…</div></div></div>
+  <div class="searchpill" style="top:246px; bottom:auto; background:rgba(255,255,255,.75); border-color:#fff; color:var(--ink); box-shadow:0 6px 22px rgba(10,14,20,.18); z-index:60;"><span class="mag" style="border-color:var(--sub);"></span>Search Korea</div>
+  <div class="floor" style="top:44%; border-radius:22px 22px 0 0; padding-top:66px; box-shadow:0 -10px 28px rgba(10,14,20,.12);">
+    <div class="eyebrow" style="margin-top:0;">CITIES</div>
+    <div class="citycard" style="height:78px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm" style="bottom:24px;">Busan</div><div class="ds" style="bottom:9px;">Beaches · Seafood · Night Views</div></div>
+  </div>
+</div><div class="cap">MID<small>photo/caption 은 물러나는 중, Search 는 살아서 이동, Floor 상승.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="SB1-end">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock"><span class="mag"></span>Search Korea</div>
+    <div class="eyebrow">CITIES</div>
+    <div class="citycard"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+  </div>
+</div><div class="cap">END<small>같은 Search 가 functional dock 으로 정착. URL 전환·Start 버튼 없음.</small></div></div>
+</div>
+
+<div class="dirlabel" style="font-size:14px;font-weight:900;margin-bottom:6px;">Storyboard 2 · City → Hub (Busan)</div>
+<div class="row">
+<div class="cell"><div class="shot frame" data-name="SB2-start">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock"><span class="mag"></span>Search Korea</div>
+    <div class="eyebrow">CITIES</div>
+    <div class="citycard" style="outline:3px solid var(--action); outline-offset:2px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+  </div>
+</div><div class="cap">START<small>Busan 타일 tap(파란 표시는 storyboard 강조용).</small></div></div>
+<div class="cell"><div class="shot frame" data-name="SB2-mid">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock" style="opacity:.25;"><span class="mag"></span>Search Korea</div></div>
+  <div class="citycard" style="position:absolute; left:8px; right:8px; top:76px; height:330px; border-radius:20px; z-index:50; box-shadow:0 16px 40px rgba(10,14,20,.3);">
+    <img src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="veil" style="background:linear-gradient(to bottom, rgba(12,14,18,.25), rgba(12,14,18,.5));"></div>
+    <div class="nm" style="font-size:27px; bottom:38px;">Busan</div><div class="ds" style="bottom:18px;">Beaches · Seafood · Night Views</div></div>
+  <div style="position:absolute; left:0; right:0; bottom:0; height:170px; background:#fff; border-radius:20px 20px 0 0; z-index:40; box-shadow:0 -8px 24px rgba(10,14,20,.1); padding:16px 20px;">
+    <div class="eyebrow" style="margin-top:0; opacity:.5;">RECOMMENDED TRIPS</div></div>
+</div><div class="cap">MID<small>타일이 Hero 로 확장(shared-element), Hub 콘텐츠가 아래서 준비.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="SB2-end">
+  <div style="position:absolute; inset:0; background:#fff; overflow:hidden;">
+    <div class="hubhero" style="height:230px;"><img src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="veil"></div><div class="back">‹</div><div class="nm">BUSAN</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="hubbody" style="padding-bottom:16px;">
+      <div class="rowhead"><div class="eyebrow" style="margin-top:0;">RECOMMENDED TRIPS</div><span class="viewall">View All →</span></div>
+      <div class="tripcard"><div class="ph" style="height:120px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div>
+        <div class="bd"><div class="tt">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast &amp; markets</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">END<small>"Busan 안으로 들어왔다". back(‹)으로 Home 2 복귀.</small></div></div>
+</div>
+
+<div class="dirlabel" style="font-size:14px;font-weight:900;margin-bottom:6px;">Reduced Motion (prefers-reduced-motion)</div>
+<div class="row">
+<div class="cell"><div class="shot frame" data-name="SB3-reduced-motion" style="background:#fff; padding:26px 24px;">
+  <div style="font-size:16px; font-weight:900;">Reduced-motion contract</div>
+  <div style="font-size:13px; color:var(--sub); line-height:1.8; margin-top:12px; font-weight:600;">
+    · Cover→Floor: parallax·scale·pill 이동 애니메이션 제거 →<br>&nbsp;&nbsp;<b>표준 세로 스크롤 + 200ms cross-fade</b> 만.<br>
+    · Search pill → dock: 같은 자리에 즉시 상태 교체(이동 연출 없음).<br>
+    · City→Hub: 확장 연출 제거 → <b>단순 fade 페이지 표시</b>.<br>
+    · soft snap 해제 — 자유 스크롤.<br>
+    · 의미는 motion 없이도 완전: COVER 아래에 FLOOR 가 항상<br>&nbsp;&nbsp;정적 문서 순서로 존재하고, Search·도시 목록·Hub 구조는<br>&nbsp;&nbsp;동일하게 렌더된다(정보 구조 불변).<br>
+    · motion 으로만 전달되는 의미 0 · 색으로만 전달되는 타입 0.
+  </div>
+</div><div class="cap">Reduced motion<small>모든 전환의 non-motion 등가 상태 정의.</small></div></div>
+</div>
+</body></html>

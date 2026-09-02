@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>A. Visual Direction Comparison — same UX, three skins</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+  .frame { width: 390px; height: 620px; }
+  .dirlabel { font-size: 14px; font-weight: 900; margin: 8px 0 2px; }
+  .dirlabel small { display:block; font-weight: 600; color: var(--sub); font-size: 11.5px; margin-top: 2px; max-width: 390px; line-height: 1.45; }
+</style></head><body>
+<h1 class="pagetitle">A. Visual Direction Comparison — UX 구조는 3방향 모두 동일(LEVEL 2 고정), 시각 언어만 다름</h1>
+<p class="pagesub">각 방향 4프레임: Home 1 · Home 2 · Search active · City Hub. 사진은 repo 권리 안전 자산, Trip 콘텐츠는 DESIGN_SAMPLE. 상세 비교는 ../direction-comparison.md.</p>
+
+<!-- ══ DIRECTION A ══ -->
+<div class="dirlabel">Direction A — Photography-led Editorial<small>serif 이탤릭 캡션, 모서리 각(4px), 큰 사진, 잡지 지면 감각. 가장 문학적 — 대신 tone 이 "여행문학"으로 넘어갈 위험과 JA/ZH serif 품질 리스크.</small></div>
+<div class="row">
+<div class="cell"><div class="shot frame dirA" data-name="dirA-1-home1">
+  <div class="cover"><img class="bg" src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="grade"></div>
+    <div class="wordmark" style="top:26px;">gokoreamate</div>
+    <div class="cover-caption" style="bottom:150px;"><div class="line1">Stayed at Gwangalli longer than planned.</div><div class="line2">Gwangalli, around 9pm.</div></div>
+    <div class="searchpill" style="bottom:76px;"><span class="mag"></span>Search Korea</div></div>
+</div><div class="cap">A · Home 1</div></div>
+<div class="cell"><div class="shot frame dirA" data-name="dirA-2-home2">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock"><span class="mag"></span>Search Korea</div>
+    <div class="eyebrow">Cities</div>
+    <div class="citycard"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+  </div>
+</div><div class="cap">A · Home 2</div></div>
+<div class="cell"><div class="shot frame dirA" data-name="dirA-3-search">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>busan<span class="cancel-link">Cancel</span></div>
+    <div style="height:12px;"></div>
+    <div class="result"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+    <div class="result"><img class="th trip" src="../../../../public/images/home/story-card-market.jpg" alt=""><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+    <div class="result"><img class="th place" src="../../../../public/images/home/story-hero-photo.jpg" alt=""><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div>
+  </div>
+</div><div class="cap">A · Search</div></div>
+<div class="cell"><div class="shot frame dirA" data-name="dirA-4-hub">
+  <div style="position:absolute; inset:0; background:#fff; overflow:hidden;">
+    <div class="hubhero" style="height:250px;"><img src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="veil"></div><div class="nm" style="font-family:var(--serif); font-weight:600; letter-spacing:.06em;">BUSAN</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="hubbody" style="padding-bottom:20px;">
+      <div class="rowhead"><div class="eyebrow" style="margin-top:0;">Recommended Trips</div><span class="viewall">View All →</span></div>
+      <div class="tripcard"><div class="ph" style="height:130px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div>
+        <div class="bd"><div class="tt" style="font-family:var(--serif); font-weight:600;">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast &amp; markets</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">A · City Hub</div></div>
+</div>
+
+<!-- ══ DIRECTION B ══ -->
+<div class="dirlabel">Direction B — Quiet Modern Minimal<small>sans 전용, 사진 최소(도시 리스트는 텍스트 우선), 최고 밀도 효율. 가장 조용하지만 "photography protagonist" 원칙이 약해진다 — Home 1 과 Home 2 의 세계가 분리되어 보일 위험.</small></div>
+<div class="row">
+<div class="cell"><div class="shot frame dirB" data-name="dirB-1-home1">
+  <div class="cover"><img class="bg" src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="grade"></div>
+    <div class="wordmark" style="top:26px;">gokoreamate</div>
+    <div class="cover-caption" style="bottom:150px;"><div class="line1">Stayed at Gwangalli longer than planned.</div><div class="line2">Gwangalli · 9pm</div></div>
+    <div class="searchpill" style="bottom:76px;"><span class="mag"></span>Search Korea</div></div>
+</div><div class="cap">B · Home 1</div></div>
+<div class="cell"><div class="shot frame dirB" data-name="dirB-2-home2">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock"><span class="mag"></span>Search Korea</div>
+    <div class="eyebrow">CITIES</div>
+    <div class="citycard"><div class="nm">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="citycard"><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+    <div class="citycard"><div class="nm">Seoul</div><div class="ds">K-pop · Palaces · Street Food</div></div>
+    <div class="citycard"><div class="nm">Jeju Island</div><div class="ds">Hallasan · Olle Trail · Nature</div></div>
+  </div>
+</div><div class="cap">B · Home 2</div></div>
+<div class="cell"><div class="shot frame dirB" data-name="dirB-3-search">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>busan<span class="cancel-link">Cancel</span></div>
+    <div style="height:12px;"></div>
+    <div class="result"><div class="th city" style="display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--sub);">B</div><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+    <div class="result"><div class="th trip"></div><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+    <div class="result"><div class="th place"></div><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div>
+  </div>
+</div><div class="cap">B · Search</div></div>
+<div class="cell"><div class="shot frame dirB" data-name="dirB-4-hub">
+  <div style="position:absolute; inset:0; background:#fff; overflow:hidden;">
+    <div class="hubhero" style="height:170px;"><img src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="veil"></div><div class="nm" style="font-size:26px;">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="hubbody" style="padding-bottom:20px;">
+      <div class="rowhead"><div class="eyebrow" style="margin-top:0;">RECOMMENDED TRIPS</div><span class="viewall">View All →</span></div>
+      <div class="tripcard"><div class="ph"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div>
+        <div class="bd"><div class="tt">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast &amp; markets</div></div></div>
+      <div class="tripcard"><div class="bd"><div class="tt">One Night, Two Beaches</div><div class="mt"><b>1 day</b> · Haeundae → Gwangalli</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">B · City Hub</div></div>
+</div>
+
+<!-- ══ DIRECTION C ══ -->
+<div class="dirlabel">Direction C — Refined Editorial Hybrid ★ RECOMMENDED<small>사진 주인공 + 조용한 sans 기능 표면. serif 는 Home 1 캡션에만(=Story 와 같은 계열). 현행 브랜드(블루 액션·12–16px 라운드)와 이어져 제품 전체가 한 서비스로 읽힘. 4개 언어·구현비 리스크 최소.</small></div>
+<div class="row">
+<div class="cell"><div class="shot frame" data-name="dirC-1-home1">
+  <div class="cover"><img class="bg" src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="grade"></div>
+    <div class="wordmark" style="top:26px;">gokoreamate</div>
+    <div class="cover-caption" style="bottom:150px;"><div class="line1">Stayed at Gwangalli longer than planned.</div><div class="line2">Gwangalli, around 9pm.</div></div>
+    <div class="searchpill" style="bottom:76px;"><span class="mag"></span>Search Korea</div></div>
+</div><div class="cap">C · Home 1</div></div>
+<div class="cell"><div class="shot frame" data-name="dirC-2-home2">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock"><span class="mag"></span>Search Korea</div>
+    <div class="eyebrow">CITIES</div>
+    <div class="citycard"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+    <div class="citycard"><img src="../../../../public/images/cities/city-seoul-v1.webp" alt=""><div class="veil"></div><div class="nm">Seoul</div><div class="ds">K-pop · Palaces · Street Food</div><div class="soon">Coming soon</div></div>
+  </div>
+</div><div class="cap">C · Home 2</div></div>
+<div class="cell"><div class="shot frame" data-name="dirC-3-search">
+  <div class="floor" style="padding-top:28px;">
+    <div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>busan<span class="cancel-link">Cancel</span></div>
+    <div style="height:12px;"></div>
+    <div class="result sel"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+    <div class="result"><img class="th trip" src="../../../../public/images/home/story-card-market.jpg" alt=""><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+    <div class="result"><img class="th place" src="../../../../public/images/home/story-hero-photo.jpg" alt=""><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div>
+  </div>
+</div><div class="cap">C · Search</div></div>
+<div class="cell"><div class="shot frame" data-name="dirC-4-hub">
+  <div style="position:absolute; inset:0; background:#fff; overflow:hidden;">
+    <div class="hubhero" style="height:230px;"><img src="../../../../public/images/home/city-busan-hero.jpg" alt=""><div class="veil"></div><div class="nm">BUSAN</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+    <div class="hubbody" style="padding-bottom:20px;">
+      <div class="rowhead"><div class="eyebrow" style="margin-top:0;">RECOMMENDED TRIPS</div><span class="viewall">View All →</span></div>
+      <div class="tripcard"><div class="ph" style="height:126px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div>
+        <div class="bd"><div class="tt">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast &amp; markets</div></div></div>
+      <div class="tripcard"><div class="bd"><div class="tt">One Night, Two Beaches</div><div class="mt"><b>1 day</b> · Haeundae → Gwangalli</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">C · City Hub</div></div>
+</div>
+</body></html>

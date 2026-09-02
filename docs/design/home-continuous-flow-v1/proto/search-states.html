@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>E. Search State Board — Anchored Inline Search</title>
+<link rel="stylesheet" href="proto.css">
+<style>.frame{width:390px;height:560px;}</style></head><body>
+<h1 class="pagetitle">E. Search State Board — Anchored Inline Search (mobile 390)</h1>
+<p class="pagesub">6개 상태 전부에서 Search field 는 같은 자리·같은 컴포넌트. 시트/모달/순간이동 없음. keyboard/focus 상태는 향후 combobox/listbox 시맨틱(Arrow·Enter·Escape) 구현을 전제로 한 시각 상태.</p>
+<div class="row">
+<div class="cell"><div class="shot frame" data-name="E1-default">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock"><span class="mag"></span>Search Korea</div>
+  <div class="eyebrow">CITIES</div>
+  <div class="citycard" style="height:80px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm" style="bottom:26px;">Busan</div><div class="ds" style="bottom:10px;">Beaches · Seafood · Night Views</div></div></div>
+</div><div class="cap">E1 · Default<small>Home 2 안의 dock 상태.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="E2-active-empty">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock focus"><span class="mag"></span><span class="caret"></span><span class="cancel-link">Cancel</span></div>
+  <div class="eyebrow">CITIES</div>
+  <div><span class="chip">Busan</span><span class="chip">Gyeongju</span><span class="chip">Seoul</span><span class="chip">Jeju Island</span><span class="chip">Jeonju</span></div>
+  <div class="eyebrow" style="margin-top:18px;">RECENT</div>
+  <div style="font-size:13px;color:var(--faint);font-weight:600;">Searches you make will show up here.</div></div>
+</div><div class="cap">E2 · Active / Empty<small>같은 자리 focus + 파란 focus ring. 아래 공간이 결과 표면으로.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="E3-query">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>busan<span class="caret"></span><span class="cancel-link">Cancel</span></div>
+  <div style="height:12px;"></div>
+  <div class="result"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+  <div class="result"><img class="th trip" src="../../../../public/images/home/story-card-market.jpg" alt=""><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+  <div class="result"><img class="th place" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Gwangalli Beach</div><div class="mt">Busan · Beach</div></div></div>
+  <div class="result"><img class="th place" src="../../../../public/images/home/story-hero-photo.jpg" alt=""><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div></div>
+</div><div class="cap">E3 · Query → Unified list<small>City/Trip/Place 혼합 단일 리스트. 썸네일 모양 + 텍스트 메타 이중 구분.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="E4-selected">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>busan<span class="cancel-link">Cancel</span></div>
+  <div style="height:12px;"></div>
+  <div class="result"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+  <div class="result sel"><img class="th trip" src="../../../../public/images/home/story-card-market.jpg" alt=""><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+  <div class="result"><img class="th place" src="../../../../public/images/home/story-hero-photo.jpg" alt=""><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div></div>
+</div><div class="cap">E4 · Selected / focused row<small>키보드 ↑↓ 선택 = tint 배경 + 좌측 3px 블루 바(색+형태 이중 신호). Enter=이동, Escape=닫기.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="E5-no-result">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock focus" style="color:var(--ink);"><span class="mag"></span>qzxv<span class="caret"></span><span class="cancel-link">Cancel</span></div>
+  <div style="margin-top:22px; font-size:14.5px; font-weight:700;">No matches for “qzxv”.</div>
+  <div style="margin-top:6px; font-size:13px; color:var(--faint); font-weight:600;">Try a city, a trip, or a place name.</div>
+  <div class="eyebrow" style="margin-top:20px;">CITIES</div>
+  <div><span class="chip">Busan</span><span class="chip">Gyeongju</span><span class="chip">Seoul</span></div></div>
+</div><div class="cap">E5 · No result<small>한 문장 + 도시 chip. 같은 자리 유지, 유도/광고 없음.</small></div></div>
+<div class="cell"><div class="shot frame" data-name="E6-keyboard-focus">
+  <div class="floor" style="padding-top:28px;"><div class="search-dock focus" style="color:var(--ink); outline:2px solid var(--action); outline-offset:3px;"><span class="mag"></span>busan<span class="caret"></span><span class="cancel-link">Cancel</span></div>
+  <div style="height:12px;"></div>
+  <div class="result sel"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+  <div style="margin-top:16px; font-size:11.5px; color:var(--sub); font-weight:700; line-height:1.7;">키보드 계약(구현 단계): ↑↓ 행 이동 · Enter 열기 · Escape 닫고 필드 유지 →<br>한 번 더 Escape = Cancel. focus ring 은 field(외곽 2px)와 row(내부 바+tint)를 구분.</div></div>
+</div><div class="cap">E6 · Keyboard / focus visibility<small>field-level focus(바깥 ring)와 row-level selection(안쪽 bar) 시각 구분.</small></div></div>
+</div>
+</body></html>

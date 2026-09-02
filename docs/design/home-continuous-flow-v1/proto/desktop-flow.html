@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>C. Desktop Responsive Flow — 1440×900</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+  .dcol { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
+  .citygrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .citygrid .citycard { height: 150px; margin: 0; }
+  .citygrid .citycard.wide { grid-column: span 2; height: 190px; }
+  .tripcols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tripcols .tripcard { margin: 0; }
+  .dsearch { max-width: 620px; margin: 0 auto; position: relative; }
+  .dpanel { position: absolute; top: 58px; left: -30px; right: -30px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: 0 18px 50px rgba(12,16,24,.14); padding: 10px 18px; z-index: 60; }
+  .vgrid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .vgrid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+</style></head><body>
+<h1 class="pagetitle">C. Recommended Direction — Desktop Responsive (1440×900)</h1>
+<p class="pagesub">모바일 확대판이 아니라 같은 시스템의 지면 재배치. Search 는 데스크톱에서도 field 아래 anchored panel — center modal/command palette 아님. Trip/사진 콘텐츠는 DESIGN_SAMPLE.</p>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D1-home1-cover">
+  <div class="dcover">
+    <img src="../../../../public/images/home/city-busan-hero.jpg" alt="">
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,12,16,.35), rgba(10,12,16,.05) 34%, rgba(10,12,16,.55));"></div>
+    <div style="position:absolute; top:0; left:0; right:0; height:64px; display:flex; align-items:center; gap:30px; padding:0 48px; color:#fff; z-index:30;">
+      <span style="font-size:17px; font-weight:900;">gokoreamate</span>
+      <span style="font-size:13.5px; font-weight:700; opacity:.85;">Blog</span><span style="font-size:13.5px; font-weight:700; opacity:.85;">Food Guide</span><span style="font-size:13.5px; font-weight:700; opacity:.85;">Survival Guide</span><span style="font-size:13.5px; font-weight:700; opacity:.85;">About</span><span style="font-size:13.5px; font-weight:700; opacity:.85;">My Trips</span>
+      <span style="margin-left:auto; font-size:13px; font-weight:700; opacity:.9;">EN ▾</span>
+      <span class="cta">Plan My Trip</span>
+    </div>
+    <div style="position:absolute; left:96px; bottom:220px; color:#fff; max-width:640px;">
+      <div style="font-family:var(--serif); font-size:44px; line-height:1.25; text-shadow:0 2px 30px rgba(0,0,0,.35);">Stayed at Gwangalli longer than&nbsp;planned.</div>
+      <div style="margin-top:14px; font-size:15px; font-weight:600; color:rgba(255,255,255,.85);">Gwangalli, around 9pm.</div>
+    </div>
+    <div class="searchpill" style="left:96px; right:auto; width:520px; bottom:130px;"><span class="mag"></span>Search Korea</div>
+    <div class="scrollcue" style="bottom:36px;">KOREA, BELOW</div>
+  </div>
+</div><div class="cap">D1 · Home 1 — Cover<small>좌측 정렬 캡션 + 같은 Search pill. 광고 히어로가 아니라 한 장의 기록. 헤더는 현행 IA 그대로.</small></div></div></div>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D2-home2">
+  <div class="dheader"><span class="wm">gokoreamate</span><span class="lnk">Blog</span><span class="lnk">Food Guide</span><span class="lnk">Survival Guide</span><span class="lnk">About</span><span class="lnk">My Trips</span><div class="right"><span class="lnk">EN ▾</span><span class="cta">Plan My Trip</span></div></div>
+  <div class="dcol">
+    <div class="dsearch"><div class="search-dock" style="height:54px;"><span class="mag"></span>Search Korea</div></div>
+    <div class="eyebrow" style="margin-top:34px;">CITIES</div>
+    <div class="citygrid">
+      <div class="citycard wide"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm" style="font-size:24px;">Busan</div><div class="ds">Beaches · Seafood · Night Views</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div><div class="ds">Temples · Royal Tombs · History</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-seoul-v1.webp" alt=""><div class="veil"></div><div class="nm">Seoul</div><div class="ds">K-pop · Palaces · Street Food</div><div class="soon">Coming soon</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-jeju-v1.webp" alt=""><div class="veil"></div><div class="nm">Jeju Island</div><div class="ds">Hallasan · Olle Trail · Nature</div><div class="soon">Coming soon</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-jeonju-v1.webp" alt=""><div class="veil"></div><div class="nm">Jeonju</div><div class="ds">Hanok Village · Bibimbap · Slow Food</div><div class="soon">Coming soon</div></div>
+    </div>
+    <div class="rowhead" style="margin-top:30px;"><div class="eyebrow" style="margin:0;">KOREAMATE PICKS</div></div>
+    <div class="tripcols" style="margin-top:10px;">
+      <div class="tripcard"><div class="ph" style="height:120px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div><div class="bd"><div class="tt">3 Days by the Sea</div><div class="mt"><b>Busan</b> · 3 days</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:120px;"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""></div><div class="bd"><div class="tt">Old Capital, Slow Walk</div><div class="mt"><b>Gyeongju</b> · 2 days</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:120px;"><img src="../../../../public/images/home/story-card-village.jpg" alt=""></div><div class="bd"><div class="tt">Hillside Alleys</div><div class="mt"><b>Busan</b> · 2 days</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">D2 · Home 2 — Floor<small>1000px 컬럼: Search → 도시 5장(2+3, 부산만 넓게) → Picks 3장. 5도시가 스크롤 없이 한 화면에 읽힘. 빈 공간 과잉 없음.</small></div></div></div>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D3-search-active">
+  <div class="dheader"><span class="wm">gokoreamate</span><span class="lnk">Blog</span><span class="lnk">Food Guide</span><span class="lnk">Survival Guide</span><span class="lnk">About</span><span class="lnk">My Trips</span><div class="right"><span class="lnk">EN ▾</span><span class="cta">Plan My Trip</span></div></div>
+  <div class="dcol">
+    <div class="dsearch">
+      <div class="search-dock focus" style="height:54px; color:var(--ink);"><span class="mag"></span>busan<span class="caret"></span><span class="cancel-link">Esc</span></div>
+      <div class="dpanel">
+        <div class="result sel"><img class="th city" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Busan</div><div class="mt">City</div></div></div>
+        <div class="result"><img class="th trip" src="../../../../public/images/home/story-card-market.jpg" alt=""><div><div class="tt">3 Days by the Sea</div><div class="mt">Busan · 3 days</div></div></div>
+        <div class="result"><img class="th place" src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Gwangalli Beach</div><div class="mt">Busan · Beach</div></div></div>
+        <div class="result" style="border-bottom:0;"><img class="th place" src="../../../../public/images/home/story-hero-photo.jpg" alt=""><div><div class="tt">Oryukdo Skywalk</div><div class="mt">Busan · Viewpoint</div></div></div>
+      </div>
+    </div>
+    <div class="eyebrow" style="margin-top:96px; opacity:.35;">CITIES</div>
+    <div class="citygrid" style="opacity:.35;">
+      <div class="citycard wide"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div class="veil"></div><div class="nm" style="font-size:24px;">Busan</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""><div class="veil"></div><div class="nm">Gyeongju</div></div>
+      <div class="citycard"><img src="../../../../public/images/cities/city-seoul-v1.webp" alt=""><div class="veil"></div><div class="nm">Seoul</div></div>
+    </div>
+  </div>
+</div><div class="cap">D3 · Search — anchored panel<small>field 바로 아래, field 보다 약간 넓은 panel(+30px). 배경은 dim 만 — center modal/palette 감 없음. ↑↓·Enter·Escape 지원 전제.</small></div></div></div>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D4-city-hub">
+  <div class="dheader"><span class="wm">gokoreamate</span><span class="lnk">Blog</span><span class="lnk">Food Guide</span><span class="lnk">Survival Guide</span><span class="lnk">About</span><span class="lnk">My Trips</span><div class="right"><span class="lnk">EN ▾</span><span class="cta">Plan My Trip</span></div></div>
+  <div style="position:relative; height:300px;">
+    <img src="../../../../public/images/home/city-busan-hero.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,12,16,.2), rgba(10,12,16,.5));"></div>
+    <div style="position:absolute; left:96px; bottom:34px; color:#fff;"><div style="font-size:42px; font-weight:900; letter-spacing:.02em;">BUSAN</div><div style="font-size:14px; font-weight:600; color:rgba(255,255,255,.88);">Beaches · Seafood · Night Views</div></div>
+  </div>
+  <div class="dcol" style="padding-top:26px;">
+    <div class="rowhead"><div class="eyebrow" style="margin:0;">RECOMMENDED TRIPS</div><span class="viewall">View All →</span></div>
+    <div class="tripcols" style="margin-top:10px;">
+      <div class="tripcard"><div class="ph" style="height:110px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div><div class="bd"><div class="tt">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast &amp; markets</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:110px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""></div><div class="bd"><div class="tt">One Night, Two Beaches</div><div class="mt"><b>1 day</b> · Haeundae → Gwangalli</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:110px;"><img src="../../../../public/images/home/story-card-village.jpg" alt=""></div><div class="bd"><div class="tt">Hillside Alleys, Slow Walk</div><div class="mt"><b>2 days</b> · Gamcheon · Songdo</div></div></div>
+    </div>
+    <div class="rowhead" style="margin-top:22px;"><div class="eyebrow" style="margin:0;">RECOMMENDED PLACES</div><span class="viewall">View All →</span></div>
+    <div class="vgrid2" style="margin-top:6px;">
+      <div class="placerow"><img src="../../../../public/images/home/city-busan.jpg" alt=""><div><div class="tt">Gwangalli Beach</div><div class="mt">Beach · Suyeong-gu</div></div><span class="save">♡</span></div>
+      <div class="placerow"><img src="../../../../public/images/home/story-card-village.jpg" alt=""><div><div class="tt">Gamcheon Culture Village</div><div class="mt">Attraction · Saha-gu</div></div><span class="save">♡</span></div>
+    </div>
+    <div class="explore-entry"><div><div class="tt">Explore Busan</div><div class="mt">Map, filters, all 780+ places</div></div><span class="go">→</span></div>
+  </div>
+</div><div class="cap">D4 · City Hub — Busan<small>Hero(관광청 slogan 없음) → Trips 3 → Places → Explore. 콘텐츠 흐름 끝 진입 유지.</small></div></div></div>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D5-trips-view-all">
+  <div class="dheader"><span class="wm">gokoreamate</span><span class="lnk">Blog</span><span class="lnk">Food Guide</span><span class="lnk">Survival Guide</span><span class="lnk">About</span><span class="lnk">My Trips</span><div class="right"><span class="lnk">EN ▾</span><span class="cta">Plan My Trip</span></div></div>
+  <div class="dcol">
+    <div style="font-size:26px; font-weight:900;">Busan Trips</div>
+    <div style="font-size:12.5px; color:var(--faint); font-weight:700; margin:4px 0 20px;">KOREAMATE PICKS · curated</div>
+    <div class="vgrid2">
+      <div class="tripcard"><div class="ph" style="height:200px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""></div><div class="bd"><div class="tt" style="font-size:17px;">3 Days by the Sea</div><div class="mt"><b>3 days</b> · coast, markets, night views</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:200px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""></div><div class="bd"><div class="tt" style="font-size:17px;">One Night, Two Beaches</div><div class="mt"><b>1 day</b> · Haeundae → Gwangalli</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:200px;"><img src="../../../../public/images/home/story-card-village.jpg" alt=""></div><div class="bd"><div class="tt" style="font-size:17px;">Hillside Alleys, Slow Walk</div><div class="mt"><b>2 days</b> · Gamcheon · Songdo</div></div></div>
+      <div class="tripcard"><div class="ph" style="height:200px;"><img src="../../../../public/images/cities/city-gyeongju-v1.webp" alt=""></div><div class="bd"><div class="tt" style="font-size:17px;">Coast Road South</div><div class="mt"><b>2 days</b> · Songjeong → Oryukdo</div></div></div>
+    </div>
+  </div>
+</div><div class="cap">D5 · Trips View all — 2열 Structured Editorial<small>동일 지오메트리·비교 가능. masonry·별점·순위 없음.</small></div></div></div>
+
+<div class="row"><div class="cell"><div class="shot desk" data-name="D6-places-view-all">
+  <div class="dheader"><span class="wm">gokoreamate</span><span class="lnk">Blog</span><span class="lnk">Food Guide</span><span class="lnk">Survival Guide</span><span class="lnk">About</span><span class="lnk">My Trips</span><div class="right"><span class="lnk">EN ▾</span><span class="cta">Plan My Trip</span></div></div>
+  <div class="dcol">
+    <div style="font-size:26px; font-weight:900;">Recommended Places</div>
+    <div style="font-size:12.5px; color:var(--faint); font-weight:700; margin:4px 0 20px;">Curated for Busan</div>
+    <div class="vgrid3">
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">Gwangalli Beach</div><div class="mt">Beach · Suyeong-gu</div></div>
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/home/story-card-village.jpg" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">Gamcheon Culture Village</div><div class="mt">Attraction · Saha-gu</div></div>
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/home/story-hero-photo.jpg" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">Oryukdo Skywalk</div><div class="mt">Viewpoint · Nam-gu</div></div>
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/home/city-busan.jpg" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">Haeundae Beach</div><div class="mt">Beach · Haeundae-gu</div></div>
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/home/story-card-market.jpg" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">Jagalchi Market</div><div class="mt">Market · Jung-gu</div></div>
+      <div class="placecard"><div class="ph" style="height:150px;"><img src="../../../../public/images/spots/zmillennial-busan-representative-illustration.webp" alt=""><span class="save">♡</span></div><div class="tt" style="font-size:14.5px;">ZM-ILLENNIAL</div><div class="mt">Cafe · Nam-gu</div></div>
+    </div>
+  </div>
+</div><div class="cap">D6 · Places View all — 3열 curated grid<small>지도 없음. 카드 → 기존 /place/[id]. Save 만.</small></div></div></div>
+</body></html>
