@@ -11,6 +11,7 @@
 | `decided_on` | 2026-09-02 (Owner + GPT 확정 방향을 문서화) |
 | `verified_commit` | `6f93f4f` (작성 시점 master) |
 | `supersedes` | `home-experience-decision-v1.md`의 **Home 전환 방식 확정 부분** — 전환 방식은 본 문서에서 `OPEN_DECISION`으로 재개봉한다(§16). 그 외 항목은 그대로 둔다 |
+| `ux_decision_layer` | LEVEL 2 UX 결정은 `home-ux-decision-ssot-v1.md`가 갖는다 — §16 OPEN 중 Home 1↔2 관계·Search 기본 interaction·Home 2 구조·City Hub 계층·View all 성격·Explore 경계는 그 문서가 닫았다(2026-09-02). 나머지 §16 항목은 계속 OPEN |
 | `conflict_rule` | Constitution 과 충돌하면 Constitution 우선. 코드·DB 와 충돌하면 임의 진행하지 않고 중단·보고 |
 | `implementation_status` | **미구현 기준 문서.** 현재 코드가 이 방향과 다른 부분이 있어도 이 문서가 코드를 고치라는 지시는 아니다. 향후 Home closure task 의 판단 기준이다 |
 
@@ -255,6 +256,8 @@ Home 구현 · Home redesign · Search 구현 · External AI parser 구현 · Ge
 이 문서는 향후 해당 작업들의 **판단 기준만** 정의한다.
 
 ## 16. Open Decisions — 전부 `OPEN_DECISION`, 추측으로 CLOSED 금지
+
+> 2026-09-02: 아래 중 Home 1↔2 관계·Search 기본 interaction·Home 2 정보 구조·City Hub 정보 계층·View all 성격·Explore 경계는 Owner 가 `home-ux-decision-ssot-v1.md`(LEVEL 2)에서 닫았다. 그 문서가 다시 OPEN 으로 남긴 세부(visual·motion·ranking·parser 등)는 계속 OPEN 이다.
 
 ### Home
 - Home 1 → Home 2 transition 방식 · scroll / cinematic transition / interaction 방식
