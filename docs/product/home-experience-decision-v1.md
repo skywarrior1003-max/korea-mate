@@ -13,6 +13,8 @@
 | `decided_on` | 2026-08-01 |
 | `verified_commit` | `b3b3202` (충돌 대조 기준 코드) |
 
+> **2026-09-02 방향 갱신** — Home 의 현재 방향(Home 1/2 역할, 전환 방식 재개봉 `OPEN_DECISION`)은 `home-discovery-external-ai-product-direction-ssot-v1.md`가 우선한다. 이 문서의 그 외 결정은 유지된다.
+
 **이 문서에 쓰지 않는 것** 애니메이션 커브 · 픽셀값 · 컴포넌트 파일 경로 · 전환 임계 일수 같은 구현 파라미터. 구현 설계 단계에서 정하고 그 결과는 Status 문서가 기록한다.
 
 ---
