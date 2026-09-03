@@ -202,11 +202,15 @@ test("★Like 와 Report 를 한 점수로 합치지 않는다", () => {
 //
 // 그래서 요구를 뒤집는다 — 지금 지켜야 할 규칙은 "장소 상세의 첫 액션은
 // Save 이고, 거기에 일반 Like 를 되살리지 않는다" 이다.
-test("★L20 장소 상세의 첫 액션은 Save 이고 일반 Like 를 되살리지 않는다", () => {
+// (4fa94ad 당시) 장소 상세에서 Like 를 뺐던 결정은 최종 Social Actions 계약
+// (SOCIAL-ACTIONS-FOUNDATION-V1: Heart=Like · Bookmark=Save 병존)으로 대체됐다.
+// 지키는 것: Save 가 1차 액션으로 남고, Like 는 정확히 한 번, 별도 버튼으로 있다.
+test("★L20 장소 상세: Save 1차 + Heart Like 병존 (최종 Social 계약)", () => {
   const page = read("src", "app", "place", "[id]", "PlaceDetailClient.tsx");
-  assert.equal((page.match(/<PlaceLikeButton/g) ?? []).length, 0,
-    "장소 상세에 일반 Like 를 다시 넣지 않는다 (4fa94ad)");
-  // Save 는 남아 있어야 한다 — 이 화면의 유일한 1차 액션이다
+  assert.equal((page.match(/<PlaceLikeButton/g) ?? []).length, 1,
+    "장소 상세의 Like 버튼은 정확히 하나다");
+  assert.ok(page.indexOf("onClick={handleSave}") < page.indexOf("<PlaceLikeButton"),
+    "Save 가 Like 보다 먼저 온다 — 1차 액션 유지");
   assert.match(page, /togglePlaceSaved/, "Save 액션이 사라졌다");
   assert.match(page, /useTranslations\("saved"\)/, "Save 문구는 번역을 거친다");
 });

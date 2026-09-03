@@ -2,8 +2,8 @@
 
 // 장소 좋아요 버튼 — 공개 장소 전체가 함께 쓴다.
 //
-// Saved 와 시각적으로 겹치지 않게 한다. Saved 가 북마크(리본)라면 여기는
-// 엄지다. 사용자가 두 버튼을 같은 것으로 오해하면 둘 다 쓸모가 없어진다.
+// Saved 와 시각적으로 겹치지 않게 한다. 최종 Social 문법에 따라 Like 는 하트,
+// Saved 는 북마크다. 사용자가 두 버튼을 같은 것으로 오해하면 둘 다 쓸모가 없어진다.
 //
 // 무엇을 하지 않나
 //   · Like 를 눌러도 Saved 가 바뀌지 않는다.
@@ -78,12 +78,12 @@ export default function PlaceLikeButton({ targetType, targetKey, className }: Pr
         "gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink disabled:opacity-60"}
     >
       <span className="inline-flex items-center justify-center gap-1.5">
-        {/* 엄지 — Saved 의 북마크와 겹치지 않는 모양 */}
+        {/* 하트 — 최종 Social 문법: Heart = Like (전 서비스 동일). Saved 는
+            북마크 모양이라 겹치지 않는다. 데이터·API 는 그대로다. */}
         <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden
              fill={liked ? "currentColor" : "none"} stroke="currentColor"
              strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M7 10.5v9H4.5a1 1 0 01-1-1v-7a1 1 0 011-1H7z" />
-          <path d="M7 10.5l4-7a2 2 0 013.7 1.3l-.7 3.7h4.3a2 2 0 011.95 2.45l-1.3 6A2 2 0 0117 18.5H7" />
+          <path d="M12 20.5s-7.2-4.7-9.3-9A5.1 5.1 0 0112 6.6a5.1 5.1 0 019.3 4.9c-2.1 4.3-9.3 9-9.3 9z" />
         </svg>
         {liked ? t("liked") : t("like")}
         {count !== null && count > 0 && (

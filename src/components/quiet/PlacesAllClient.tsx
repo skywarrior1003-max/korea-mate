@@ -3,8 +3,8 @@
 // Places View All — 추천 장소를 더 보는 곳(Explore 아님: 지도·필터 없음).
 // 카드 = 사진 + 이름 + 간결한 메타 + Save. 탭하면 기존 canonical /place/[id] 로.
 // Save 는 기존 semantics 그대로: Saved = 장기 북마크(favorites) — My Places·
-// This Trip 자동 추가 없음. toggleFavorite + cacheSavedSpot(기존 Explore 저장과
-// 동일 identity: EventItem id + citySpotSourceKey) → 조용한 toast 만.
+// This Trip 자동 추가 없음. 아이콘도 북마크다(하트는 Like 전용). 저장은 다른
+// 화면과 같은 중앙 togglePlaceSaved 를 쓴다 → 조용한 toast 만.
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -12,7 +12,8 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { displayPlaceName } from "@/lib/place-display-name";
-import { isFavorited, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
+import { isFavorited, FAVORITES_EVENT } from "@/lib/favorites";
+import { togglePlaceSaved } from "@/lib/place-actions/place-actions-core";
 import { toEventItem } from "@/components/ExploreCity";
 import { loadCitySpots, quietCity } from "./quiet-data";
 
@@ -42,8 +43,8 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
     e.preventDefault();
     e.stopPropagation();
     const item = toEventItem(spot);
-    const nowSaved = toggleFavorite(item.id, item.sourceKey);
-    if (nowSaved) cacheSavedSpot(item); else uncacheSavedSpot(item.id, item.sourceKey);
+    // 다른 화면과 같은 중앙 toggle 을 쓴다 — 캐시·서버 save-signal 까지 한 곳에서.
+    const nowSaved = togglePlaceSaved(item);
     setSavedTick(n => n + 1);
     if (toastTimer.current) clearTimeout(toastTimer.current);
     setToast(nowSaved ? t("saved") : t("removed"));
@@ -90,11 +91,16 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
                   onClick={e => onSave(e, s)}
                   className="absolute top-0.5 right-0.5 w-11 h-11 flex items-center justify-center gkm-focus"
                 >
+                  {/* Save = 북마크 — 하트는 Like 전용(최종 Social 문법) */}
                   <span
-                    className="w-[34px] h-[34px] rounded-full flex items-center justify-center text-[15px]"
+                    className="w-[34px] h-[34px] rounded-full flex items-center justify-center"
                     style={{ background: "rgba(255,255,255,.92)", color: saved ? "var(--qh-clay)" : "var(--qh-ink)" }}
                   >
-                    {saved ? "♥" : "♡"}
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden
+                         fill={saved ? "currentColor" : "none"} stroke="currentColor"
+                         strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M6.5 4.5h11a1 1 0 011 1V20l-6.5-3.4L5.5 20V5.5a1 1 0 011-1z" />
+                    </svg>
                   </span>
                 </button>
               </div>

@@ -16,6 +16,7 @@ import {
 import {
   cacheSavedSpot, getFavoriteSourceKeys, getFavorites, toggleFavorite, uncacheSavedSpot,
 } from "../favorites.ts";
+import { reportPlaceSaveSignal } from "@/lib/social/signals";
 import { getItemSourceKey, parseCitySpotId } from "../place-identity.ts";
 import { placeUrl } from "../place-detail/place-detail-core.ts";
 
@@ -38,6 +39,8 @@ export function savePlace(place: EventItem): void {
   if (isPlaceSaved(place)) return;
   toggleFavorite(place.id, getItemSourceKey(place));
   cacheSavedSpot(place);
+  // ranking 용 서버 신호 — fire-and-forget. 실패해도 Saved 는 기기에서 그대로다.
+  reportPlaceSaveSignal(place, true);
 }
 
 /** 저장을 푼다. This Trip 선택은 건드리지 않는다 — 다른 이야기다. */
@@ -45,6 +48,7 @@ export function unsavePlace(place: EventItem): void {
   if (!isPlaceSaved(place)) return;
   toggleFavorite(place.id, getItemSourceKey(place));
   uncacheSavedSpot(place.id, getItemSourceKey(place));
+  reportPlaceSaveSignal(place, false);
 }
 
 /** 눌렀을 때의 결과 상태를 돌려준다. */

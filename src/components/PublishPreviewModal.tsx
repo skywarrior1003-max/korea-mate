@@ -6,6 +6,7 @@
 
 "use client";
 
+import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { resolveTheme, coverProxyPath, coverEyebrow, coverAlt } from "@/lib/trip-cover/cover-core";
@@ -210,6 +211,7 @@ export default function PublishPreviewModal({
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopyState("copied");
+      { const sid = shareIdFromUrl(shareUrl); if (sid) reportShareEvent("story", sid, "copy_link"); }
       return true;
     } catch {
       setCopyState("failed");
@@ -267,6 +269,7 @@ export default function PublishPreviewModal({
     if (!shareUrl) return;
     try {
       await navigator.share({ title, text: `${city} · ${startDate} – ${endDate}`, url: shareUrl });
+      { const sid = shareIdFromUrl(shareUrl); if (sid) reportShareEvent("story", sid, "web_share"); }
     } catch {
       // 사용자 취소(AbortError)·미지원은 오류 아님 — 상태 변경 없음
     }

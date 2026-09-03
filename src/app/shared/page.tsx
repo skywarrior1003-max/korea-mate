@@ -19,6 +19,7 @@ import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
+import ContentLikeButton from "@/components/ContentLikeButton";
 import StoryCover from "@/components/story/StoryCover";
 import StoryNavHide from "@/components/story/StoryNavHide";
 import StoryReport from "@/components/story/StoryReport";
@@ -418,6 +419,11 @@ export default function SharedTripPage() {
 
         {/* 맨 아래 조용한 신고 자리. 보낸다고 아무것도 가려지지 않는다 —
             사람이 보고 정한다. */}
+        {/* Story 표면의 Like — 같은 여행 id, 다른 표면(story) */}
+        <div className="px-4 pt-1 pb-3 flex justify-center">
+          <ContentLikeButton targetType="story" targetKey={trip.id} />
+        </div>
+
         <StoryReport shareId={trip.id} deviceId={getDeviceId()} />
 
         {storyExportOpen && (
@@ -668,9 +674,19 @@ export default function SharedTripPage() {
           >
             {/* 이 화면은 아이콘 SVG 가 없어 이모지가 곧 아이콘이다 — 그래서 붙여 둔다.
                 Story 화면은 StorySummary 가 아이콘을 그리므로 거기엔 붙이지 않는다. */}
-            {isCopying ? tStory("copying") : `📋 ${tStory("copyTrip")}`}
+            {isCopying ? tStory("copying") : tStory("copyTrip")}
           </button>
           <p className="text-xs text-white/50 mt-1.5 mb-1">{tStory("copyHint")}</p>
+
+          {/* Heart = Like — 공개 여행에 대한 공개 반응. Helpful 과 다른 축이며
+              복사·저장과도 섞이지 않는다. count 0 이면 숫자는 숨고 버튼만 남는다. */}
+          <div className="mt-2 mb-1 flex justify-center">
+            <ContentLikeButton
+              targetType="itinerary"
+              targetKey={trip.id}
+              className="gkm-focus inline-flex items-center justify-center gap-1.5 min-h-11 px-4 rounded-xl border border-white/25 text-sm font-semibold text-white/85 hover:text-white disabled:opacity-60"
+            />
+          </div>
           {copyError && (
             <p className="text-xs text-red-400 mb-3">{copyError}</p>
           )}

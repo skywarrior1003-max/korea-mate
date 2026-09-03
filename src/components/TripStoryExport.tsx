@@ -4,6 +4,7 @@
 // TASK-022: canvas API PNG 생성
 // TASK-024: Web Share API 1-tap 공유 + 3-tier fallback topology
 
+import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
 import { useRef, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
@@ -369,7 +370,11 @@ export default function TripStoryExport({
       link.click();
     }
     // 2. 링크 클립보드 복사
-    try { await navigator.clipboard.writeText(shareUrl); } catch { /* 무시 */ }
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      const sid = shareIdFromUrl(shareUrl);
+      if (sid) reportShareEvent("story", sid, "copy_link");
+    } catch { /* 무시 */ }
     // 3. 배너 노출 (3초 후 자동 소멸)
     setFallbackMsg(`📥 ${t("savedAndCopied")}`);
     setTimeout(() => setFallbackMsg(null), 3500);
@@ -406,6 +411,7 @@ export default function TripStoryExport({
     if (canShareFiles(pngFile)) {
       try {
         await navigator.share({ title: shareTitle, text: shareText, url: shareUrl, files: [pngFile] });
+        { const sid = shareIdFromUrl(shareUrl); if (sid) reportShareEvent("story", sid, "web_share"); }
         setSharing(false);
         return;
       } catch (err) {
@@ -418,6 +424,7 @@ export default function TripStoryExport({
     // [경로 B] 파일 불허 but share 지원 → 텍스트+URL 공유 시트
     try {
       await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+      { const sid = shareIdFromUrl(shareUrl); if (sid) reportShareEvent("story", sid, "web_share"); }
       setSharing(false);
       return;
     } catch (err) {

@@ -24,6 +24,8 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
+import PlaceLikeButton from "@/components/PlaceLikeButton";
+import { reportShareEvent } from "@/lib/social/signals";
 import { togglePlaceSaved, sharePlace } from "@/lib/place-actions/place-actions-core";
 import { apiCreateUserSpotFromCanonical, apiEnrichUserSpot } from "@/lib/user-spots-api";
 import PlaceReportModal from "@/components/PlaceReportModal";
@@ -168,6 +170,8 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         place_id: spot.id, city: spot.city,
         method: outcome === "shared" ? "web_share" : "copy",
       });
+      // ranking 용 서버 share 신호(비공개 count) — fire-and-forget
+      reportShareEvent("city_spot", String(spot.id), outcome === "shared" ? "web_share" : "copy_link");
     }
     if (outcome === "copied") {
       setShareMsg(t("linkCopied"));
@@ -508,6 +512,9 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   {saved ? t("savedState") : t("save")}
                 </span>
               </button>
+
+              {/* Heart = Like — 공개 반응. Saved(위)와 다른 축이고 서로를 바꾸지 않는다 */}
+              <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
 
               {keepAsMyPlaceAction}
 
