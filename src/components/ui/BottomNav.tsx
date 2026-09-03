@@ -67,7 +67,9 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
       {TABS.map(tab => {
         const active =
           tab.key === "more" ? MORE_SECTION.some(base => inSection(pathname, base))
-          : tab.href === "/" ? pathname === "/"
+          // City Hub 와 그 View All 은 Home 발견 흐름의 깊이다 — Explore 로 handoff
+          // 되기 전까지 Home 탭이 켜져 있어야 사용자가 스택을 잃지 않는다 (RT-01).
+          : tab.href === "/" ? pathname === "/" || inSection(pathname, "/city")
           : pathname.startsWith(tab.href.split("/").slice(0, 2).join("/"));
         return (
           <Link

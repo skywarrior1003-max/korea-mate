@@ -193,3 +193,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .gkm-coach-pulse { animation: none; }
 }
+
+
+/* ── Quiet Travel Editorial (Home · Search · City Hub) ──────────────────────
+   최종 Home 디자인 전용 토큰. 전역 리디자인이 아니라 .qh 범위에서만 쓴다.
+   paper/ink/clay 는 GoKoreaMate App.dc.html(Turn 3) 값 그대로다. */
+:root {
+  --qh-paper: #f7f3ec;
+  --qh-ink: #211d17;
+  --qh-faint: rgba(33, 29, 23, 0.5);
+  --qh-faint2: rgba(33, 29, 23, 0.45);
+  --qh-line: rgba(33, 29, 23, 0.1);
+  --qh-clay: #8a4b2a;
+  --qh-sans: var(--font-quiet-sans), "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --qh-serif: var(--font-quiet-serif), "Nanum Myeongjo", "Noto Serif KR", "Noto Serif JP",
+    "Yu Mincho", "Songti SC", serif;
+}
+.qh { font-family: var(--qh-sans); color: var(--qh-ink); }
+/* 검색 field 의 브라우저 기본 ✕(webkit search cancel)은 우리 Cancel 과 중복 — 숨긴다 */
+.qh input[type="search"]::-webkit-search-cancel-button,
+.qh input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.qh-serif { font-family: var(--qh-serif); }
+/* 스크롤 연출 없이도 구조가 성립해야 한다(reduced motion 은 컴포넌트에서 분기) */

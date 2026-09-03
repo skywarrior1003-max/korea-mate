@@ -20,8 +20,7 @@ import { trackEvent } from "@/lib/analytics";
 import { localInfoSourceKey } from "@/lib/place-identity";
 import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
-import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
-import HomeExperience from "@/components/home/HomeExperience";
+import QuietHome from "@/components/quiet/QuietHome";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
 import StayFieldsSection from "@/components/StayFields";
@@ -1102,10 +1101,9 @@ export default function HomeClient() {
           마무리한 여행), Page 2 는 발견이다. 예전 Hero(베이지·골드 그라디언트)
           자리를 그대로 대체한다 — 페이저는 이 블록 안에서만 움직이고 아래
           Planner·섹션들은 평소처럼 세로로 이어진다. */}
-      <HomeExperience />
-
-      {/* Adaptive Home — 여행 상태(pre/in/post) 실데이터 기반 조건부 모듈 (S1) */}
-      <AdaptiveHomeCard />
+      {/* Quiet Travel Editorial — 최종 Home(Cover→Floor). 이전 HomeExperience/AdaptiveHomeCard 는
+          컴포넌트로 남아 있고 이 화면에서만 교체된다. */}
+      <QuietHome />
 
       {/* ══════════════════════════════════════════════════════════
           AI 일정 생성 폼

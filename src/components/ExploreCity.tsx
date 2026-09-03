@@ -32,7 +32,7 @@ const SPOT_CATEGORY_VALUES = ["all", "attraction", "restaurant", "nature"] as co
 
 // ── CitySpot → EventItem adapter ────────────────────────────────────────────
 
-function toEventItem(spot: CitySpot): EventItem {
+export function toEventItem(spot: CitySpot): EventItem {
   return {
     // id 는 저장 일정·공유 호환용이라 형식을 바꾸지 않는다. 판정은 sourceKey 로 한다.
     id: `local-${spot.id}`,

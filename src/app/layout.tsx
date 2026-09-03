@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Plus_Jakarta_Sans, Noto_Serif, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Plus_Jakarta_Sans, Noto_Serif, Inter, Instrument_Sans, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 import "./globals.css";
@@ -60,6 +60,23 @@ const storySans = Inter({
   display: "swap",
 });
 
+// Quiet Travel Editorial (Home/Search/City Hub) 전용 서체 — 최종 디자인의
+// Instrument Sans/Serif. CJK 글리프가 없으므로 CSS 스택에서 항상 국문/일문/중문
+// 폴백과 함께 쓴다(globals.css --qh-sans/--qh-serif). Latin 이 CJK 를 지원한다고
+// 가정하지 않는다(RT-03).
+const quietSans = Instrument_Sans({
+  variable: "--font-quiet-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+const quietSerif = Instrument_Serif({
+  variable: "--font-quiet-serif",
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "gokoreamate — AI Korea Trip Planner · Capture & Share Your Story",
   description:
@@ -107,7 +124,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jakarta.variable} ${storySerif.variable} ${storySans.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jakarta.variable} ${storySerif.variable} ${storySans.variable} ${quietSans.variable} ${quietSerif.variable} h-full antialiased`}
     >
       {(() => {
         const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
