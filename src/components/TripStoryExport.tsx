@@ -5,6 +5,7 @@
 // TASK-024: Web Share API 1-tap 공유 + 3-tier fallback topology
 
 import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
+import ShareIcon from "@/components/ui/ShareIcon";
 import { useRef, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
@@ -519,11 +520,14 @@ export default function TripStoryExport({
                 className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
                 style={{ backgroundColor: "#FF4A2D" }}
               >
-                {sharing
-                  ? t("sharing")
-                  : nativeShareSupported
-                  ? `📤 ${t("shareNow")}`
-                  : `📤 ${t("shareCard")}`}
+                <span className="inline-flex items-center justify-center gap-2">
+                  {!sharing && <ShareIcon size={15} strokeWidth={2} />}
+                  {sharing
+                    ? t("sharing")
+                    : nativeShareSupported
+                    ? t("shareNow")
+                    : t("shareCard")}
+                </span>
               </button>
 
               {/* Secondary row: 이미지 저장 + 링크 복사 */}

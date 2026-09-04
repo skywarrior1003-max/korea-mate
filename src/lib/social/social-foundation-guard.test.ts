@@ -140,3 +140,27 @@ test("CLOSEOUT J: 060 은 Story/Trip Save 를 포함하지 않는다 — Save �
     assert.ok(!mig.includes(bad), `story/trip save 테이블 금지: ${bad}`);
   }
 });
+
+// ── Share glyph 단일 원천 (SHARE-GLYPH-CONSISTENCY-V1) ─────────────────────
+test("SHARE: 모든 Share 표면이 공용 ShareIcon 하나를 쓴다 — 레거시 glyph·이모지 금지", () => {
+  const surfaces = [
+    ["src", "app", "place", "[id]", "PlaceDetailClient.tsx"],
+    ["src", "components", "story", "StorySummary.tsx"],
+    ["src", "app", "shared", "page.tsx"],
+    ["src", "components", "TripStoryExport.tsx"],
+    ["src", "components", "PublishPreviewModal.tsx"],
+  ];
+  for (const f of surfaces) {
+    const s = read(...f);
+    assert.ok(s.includes('from "@/components/ui/ShareIcon"'), `${f.join("/")} — ShareIcon import`);
+    assert.ok(!s.includes("M8.6 13.5l6.8 4"), `${f.join("/")} — 3-node 레거시 share path 금지`);
+    assert.ok(!s.includes("\u{1F4E4}") && !s.includes("\u{1F4CB}"), `${f.join("/")} — share 이모지 금지`);
+  }
+  // 원천은 하나: 트레이+화살 path 는 ShareIcon 안에만 있다
+  const icon = read("src", "components", "ui", "ShareIcon.tsx");
+  assert.ok(icon.includes("M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5"));
+  for (const f of surfaces) {
+    assert.ok(!read(...f).includes("M12 16V4M12 4L7.5"), `${f.join("/")} — 인라인 중복 금지`);
+  }
+});
+

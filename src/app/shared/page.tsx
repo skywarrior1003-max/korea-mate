@@ -20,6 +20,7 @@ import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
 import ContentLikeButton from "@/components/ContentLikeButton";
+import ShareIcon from "@/components/ui/ShareIcon";
 import StoryCover from "@/components/story/StoryCover";
 import StoryNavHide from "@/components/story/StoryNavHide";
 import StoryReport from "@/components/story/StoryReport";
@@ -706,7 +707,7 @@ export default function SharedTripPage() {
             className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95 w-full"
             style={{ color: "rgba(255,255,255,0.80)", borderColor: "rgba(212,175,55,0.50)" }}
           >
-            📤 {tPublish("openStoryCard")}
+            <ShareIcon size={15} /> {tPublish("openStoryCard")}
           </button>
 
           {/* Tertiary — 처음부터 새 여행 */}

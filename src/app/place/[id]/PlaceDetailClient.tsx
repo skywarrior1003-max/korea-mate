@@ -25,6 +25,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import PlaceLikeButton from "@/components/PlaceLikeButton";
+import ShareIcon from "@/components/ui/ShareIcon";
 import { reportShareEvent } from "@/lib/social/signals";
 import { togglePlaceSaved, sharePlace } from "@/lib/place-actions/place-actions-core";
 import { apiCreateUserSpotFromCanonical, apiEnrichUserSpot } from "@/lib/user-spots-api";
@@ -525,7 +526,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
               >
                 <span className="inline-flex items-center justify-center gap-1.5">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5" /><path d="M5 14v4.5a1.5 1.5 0 001.5 1.5h11a1.5 1.5 0 001.5-1.5V14" /></svg>
+                  <ShareIcon />
                   {t("share")}
                 </span>
               </button>
@@ -564,7 +565,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           aria-label={t("share")}
           className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line inline-flex items-center justify-center text-sub"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5" /><path d="M5 14v4.5a1.5 1.5 0 001.5 1.5h11a1.5 1.5 0 001.5-1.5V14" /></svg>
+          <ShareIcon />
         </button>
       </div>
 

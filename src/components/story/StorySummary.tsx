@@ -12,6 +12,7 @@
 //   주지 않으면 시안의 빈 상자를 그대로 보여 준다. 실제 연결은 기존 지도를
 //   읽어 본 뒤 별도 작업에서 한다.
 
+import ShareIcon from "@/components/ui/ShareIcon";
 import type { ReactNode } from "react";
 import type { StorySummaryData } from "./story-types";
 import {
@@ -122,11 +123,8 @@ export default function StorySummary({
               className="py-2 flex items-center justify-center gap-2 transition-colors gkm-focus"
               style={{ ...BODY_LG, color: ON_SURFACE_VARIANT }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden fill="none"
-                   stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-                <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
-              </svg>
+              {/* Share glyph 는 전 서비스 공용 ShareIcon 하나만 쓴다 */}
+              <ShareIcon size={18} strokeWidth={2} />
               {shareLabel}
             </button>
           )}

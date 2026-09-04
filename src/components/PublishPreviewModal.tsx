@@ -7,6 +7,7 @@
 "use client";
 
 import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
+import ShareIcon from "@/components/ui/ShareIcon";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { resolveTheme, coverProxyPath, coverEyebrow, coverAlt } from "@/lib/trip-cover/cover-core";
@@ -423,7 +424,10 @@ export default function PublishPreviewModal({
                   className="gkm-focus flex-1 min-h-12 rounded-full"
                   style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE, backgroundColor: "#fff", border: `1px solid ${SURFACE_VARIANT}` }}
                 >
-                  {t("share")}
+                  <span className="inline-flex items-center justify-center gap-1.5">
+                    <ShareIcon size={15} />
+                    {t("share")}
+                  </span>
                 </button>
               )}
             </div>
