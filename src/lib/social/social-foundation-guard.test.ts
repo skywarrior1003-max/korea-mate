@@ -2,7 +2,7 @@
 // 실행: node --experimental-strip-types src/lib/social/social-foundation-guard.test.ts
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
@@ -85,5 +85,58 @@ test("메시지: + My Trip 4개 언어 · Like 라벨 존재", () => {
     const m = JSON.parse(read("src", "messages", `${l}.json`));
     assert.equal(m.story.copyTrip, want[l], l);
     assert.ok(m.like?.like && m.like?.liked, `${l}.like.*`);
+  }
+});
+
+// ── CLOSEOUT (2026-09-04 Owner 확정): Save 는 V1 에서 Place 에만 존재한다.
+// Place = Like/Save/Share · Story = Like/Share · 공유된 여행 일정 = Like/Share/+My Trip.
+// 같은 아이콘 = 같은 의미이지만, 모든 콘텐츠에 모든 액션이 있어야 하는 것은 아니다.
+const BOOKMARK_PATH = "M6.5 4.5h11";
+
+test("CLOSEOUT C/D: Story·공유 여행 상세에 Bookmark Save 가 없다", () => {
+  for (const f of [
+    ["src", "app", "shared", "page.tsx"],
+    ["src", "components", "story", "StorySummary.tsx"],
+    ["src", "components", "story", "StoryJournal.tsx"],
+    ["src", "components", "story", "StoryCover.tsx"],
+  ]) {
+    const s = read(...f);
+    assert.ok(!s.includes(BOOKMARK_PATH) && !s.includes("togglePlaceSaved"), f.join("/"));
+  }
+});
+
+test("CLOSEOUT E: Place Detail = Like + Save + Share", () => {
+  const s = read("src", "app", "place", "[id]", "PlaceDetailClient.tsx");
+  assert.ok(s.includes("<PlaceLikeButton"), "Like");
+  assert.ok(s.includes("togglePlaceSaved"), "Save");
+  assert.ok(s.includes("handleShare") && s.includes("reportShareEvent"), "Share");
+});
+
+test("CLOSEOUT F/G: 공유 여행 = Like/Share/+My Trip · Story 표면 = Like/Share", () => {
+  const s = read("src", "app", "shared", "page.tsx");
+  assert.ok(s.includes('targetType="itinerary"') && s.includes('targetType="story"'), "Like 두 표면");
+  assert.ok(s.includes("apiCopyItinerary"), "+ My Trip(copy) 유지");
+  assert.ok(s.includes("onShare") || s.includes("share"), "Share 유지");
+  const en = JSON.parse(read("src", "messages", "en.json"));
+  assert.equal(en.story.copyTrip, "+ My Trip");
+});
+
+test("CLOSEOUT H/I: Picks>Saved 는 Place 저장 그대로 — 새 Saved IA 없음", () => {
+  const picks = read("src", "app", "picks", "PicksClient.tsx");
+  assert.ok(picks.includes("getFavorites") || picks.includes("favorites"), "Place favorites 기반 유지");
+  const appDirs = readdirSync(path.join(ROOT, "src", "app"));
+  for (const bad of ["saved", "saved-stories", "saved-trips", "library"]) {
+    assert.ok(!appDirs.includes(bad), `신규 Saved IA 라우트 금지: /${bad}`);
+  }
+  // 하단 내비 5탭 키 불변
+  const nav = read("src", "components", "ui", "BottomNav.tsx");
+  for (const k of ['key: "home"', 'key: "explore"', 'key: "picks"', 'key: "trips"', 'key: "more"']) assert.ok(nav.includes(k), k);
+});
+
+test("CLOSEOUT J: 060 은 Story/Trip Save 를 포함하지 않는다 — Save 대상은 city_spot 뿐", () => {
+  const mig = read("supabase", "migrations", "060_social_actions_foundation.sql");
+  assert.ok(mig.includes("check (target_type in ('city_spot'))"), "place_saves 는 city_spot 전용");
+  for (const bad of ["story_saves", "trip_saves", "itinerary_saves", "saved_stories", "saved_trips"]) {
+    assert.ok(!mig.includes(bad), `story/trip save 테이블 금지: ${bad}`);
   }
 });
