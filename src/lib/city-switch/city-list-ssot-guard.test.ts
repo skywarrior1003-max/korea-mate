@@ -21,7 +21,9 @@ const strip = (s: string) =>
 
 const QUICK = read("src", "components", "CityQuickLinks.tsx");
 const ENTRY = read("src", "components", "CityEntry.tsx");
-const HOME  = read("src", "app", "HomeClient.tsx");
+// 플래너 surface 는 PLANNER-SPOTS-SEPARATION-V1 에서 Home 섹션 → /planner 로
+// 이사했다. 이 가드가 보던 "홈의 플래너" 코드는 그대로 그 파일 안에 있다.
+const HOME  = read("src", "app", "planner", "PlannerClient.tsx");
 const TYPES = read("src", "data", "cities", "types.ts");
 const SLUGS = ["busan", "seoul", "jeju", "gyeongju", "jeonju"];
 

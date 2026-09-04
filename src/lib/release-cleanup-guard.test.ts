@@ -9,13 +9,53 @@ import path from "node:path";
 const ROOT = process.cwd();
 const read = (...p: string[]) => readFileSync(path.join(ROOT, ...p), "utf8");
 
-test("A: 제거 확정된 Home legacy 섹션이 돌아오지 않는다", () => {
+test("A: 제거 확정된 Home legacy 섹션이 돌아오지 않는다 (PLANNER-SPOTS-SEPARATION-V1 반영)", () => {
   const s = read("src", "app", "HomeClient.tsx");
   assert.ok(!s.includes('id="essential"'), "#essential 섹션 금지");
   assert.ok(!s.includes("<CityQuickLinks"), "CityQuickLinks Home 재장착 금지");
   assert.ok(!/Survival Guide Preview ─/.test(s), "Survival 다크 프리뷰 재장착 금지");
-  // #planner 와 #spots-main 은 Owner 결정 전까지 의도적으로 유지된다(§planner 감사).
-  assert.ok(s.includes('id="planner"'), "planner 는 유일한 일정 생성 진입 — 임의 삭제 금지");
+  // Owner 결정: #planner 는 /planner 로 분리, #spots-main 은 제거.
+  assert.ok(!s.includes('id="planner"'), "planner 섹션은 Home 에 다시 넣지 않는다");
+  assert.ok(!s.includes('id="spots-main"') && !s.includes('getElementById("spots-main'), "#spots-main 은 Home 에 다시 넣지 않는다");
+  const pc = read("src", "app", "planner", "PlannerClient.tsx");
+  assert.ok(pc.includes('id="planner"'), "플래너 기능은 /planner 에 보존된다");
+  assert.ok(!pc.includes('id="spots-main"') && !pc.includes('getElementById("spots-main'), "#spots-main 은 플래너 페이지로도 이사하지 않는다");
+});
+
+test("A2: 7개 플래너 CTA 가 /planner 를 가리키고 legacy #planner 참조가 없다", () => {
+  const surfaces: Array<[string[], RegExp]> = [
+    [["src", "app", "my-trips", "page.tsx"], /href="\/planner"/],
+    [["src", "app", "place", "[id]", "PlaceDetailClient.tsx"], /href="\/planner"/],
+    [["src", "app", "trending", "page.tsx"], /href="\/planner"/],
+    [["src", "components", "CartDrawer.tsx"], /router\.push\("\/planner"\)/],
+    // city context 보존: ?city=slug 가 그대로 넘어간다 (§9)
+    [["src", "components", "CityEntry.tsx"], /href=\{`\/planner\?city=\$\{city\.slug\}`\}/],
+    [["src", "components", "ExploreCity.tsx"], /href=\{`\/planner\?city=\$\{city\.slug\}`\}/],
+    [["src", "app", "HomeClient.tsx"], /href="\/planner"/],
+  ];
+  for (const [f, re] of surfaces) {
+    const s = read(...f);
+    assert.match(s, re, f.join("/"));
+    assert.ok(!s.includes('"/#planner"') && !s.includes("#planner`"), `${f.join("/")} — legacy anchor 금지`);
+  }
+  // Home 은 legacy deep-link(/#planner·?city=·?ref=clone)를 /planner 로 승계한다
+  const home = read("src", "app", "HomeClient.tsx");
+  assert.match(home, /#planner"[\s\S]{0,120}router\.replace\(`\/planner\$\{window\.location\.search\}`\)/);
+});
+
+test("A3: 모바일 검색 트리거는 Anchored Inline Search 로 간다", () => {
+  assert.match(read("src", "app", "HomeClient.tsx"), /getElementById\("qh-global-search"\)\?\.focus\(\)/);
+  assert.match(read("src", "components", "quiet", "QuietSearch.tsx"), /id="qh-global-search"/);
+});
+
+test("A4: 플래너 이동에서 계약 보존 — clone·draft·생성 semantics 그대로", () => {
+  const pc = read("src", "app", "planner", "PlannerClient.tsx");
+  for (const must of ["resolveCityParam", 'p.get("ref") === "clone"', "readTripDraft", "writeTripDraft",
+    "buildItineraryGenerationUrl", "handlePickVibeClick"]) {
+    assert.ok(pc.includes(must), must);
+  }
+  // vibe Pick 은 기존 Explore 로 최소 retarget — 새 discovery flow 발명 금지
+  assert.match(pc, /router\.push\(`\/explore\/\$\{cityConfigOf\(city\)\?\.slug \?\? "busan"\}`\)/);
 });
 
 test("B: 공개 Helpful UI 가 target surface 에 없다 (데이터와 별개)", () => {

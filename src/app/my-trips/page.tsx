@@ -8,7 +8,7 @@
 //   My Trips (headline, serif)
 //   TRAVELING NOW  — 진행 중인 여행 하나를 큰 사진 카드로 (날짜·도시 / 제목 / Today · 장소)
 //   UPCOMING       — 예정 여행을 썸네일 한 줄로 반복
-//   + New trip     — 점선 (기존 플래너 /#planner 로)
+//   + New trip     — 점선 (분리된 플래너 /planner 로)
 //   Past trips live in Story → — 지난 여행은 목록에 큰 카드로 반복하지 않는다.
 //                   한 줄을 누르면 같은 줄 문법으로 펼쳐지고, 각 줄은 그 여행의 Story
 //                   (`/itinerary?id=…&view=story`) 로 간다 — Story 진입 계약 보존.
@@ -270,8 +270,8 @@ export default function MyTripsPage() {
             <div className="grid grid-cols-1" style={{ gap: SP.sm }}>
               {upcoming.map(trip => rowOf(trip, `/itinerary?id=${trip.id}`))}
               {/* 여행을 만들러 가는 길 — Home 최상단이 아니라 플래너로 (Picks·Place Detail·
-                  Explore·Trending 이 모두 /#planner 로 들어간다) */}
-              <DashedAction href="/#planner">{t("newTrip")}</DashedAction>
+                  Explore·Trending 이 모두 /planner 로 들어간다) */}
+              <DashedAction href="/planner">{t("newTrip")}</DashedAction>
             </div>
 
             {/* ── 지난 여행 → Story ── */}

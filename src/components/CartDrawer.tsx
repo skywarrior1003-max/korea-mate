@@ -53,7 +53,7 @@ export default function CartDrawer() {
       picked_count: items.length,
       cta_position: surface,
     });
-    router.push("/#planner");
+    router.push("/planner");
   }
 
   // 인자는 sourceKey 다 — id 로 지우면 같은 id 의 다른 장소까지 사라진다.

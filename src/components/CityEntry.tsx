@@ -138,7 +138,7 @@ export default function CityEntry({ city, content }: Props) {
 
             {plannerOpen ? (
               <Link
-                href={`/?city=${city.slug}#planner`}
+                href={`/planner?city=${city.slug}`}
                 className="gkm-focus inline-flex items-center justify-center min-h-13 h-13 px-7 rounded-full text-white text-[15px] font-bold transition-colors"
                 style={{ border: "1px solid rgba(255,255,255,0.30)" }}
               >
@@ -231,7 +231,7 @@ export default function CityEntry({ city, content }: Props) {
             <h2 className="text-2xl font-black text-white mb-3">{content.plannerTitle}</h2>
             <p className="text-white/60 text-sm leading-relaxed mb-7 max-w-md mx-auto">{content.plannerDesc}</p>
             <Link
-              href={`/?city=${city.slug}#planner`}
+              href={`/planner?city=${city.slug}`}
               className="gkm-focus inline-flex items-center justify-center min-h-13 h-13 px-8 rounded-full text-white text-[15px] font-black shadow-cta transition-transform active:scale-95"
               style={{ backgroundColor: DESIGN_PRIMARY }}
             >

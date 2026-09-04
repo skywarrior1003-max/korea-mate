@@ -233,15 +233,33 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
 });
 
 // ── 10·11. migration ────────────────────────────────────────────────────────
-test("★migration 을 건드리지 않았다 — 041 이 마지막이고 042 는 없다", () => {
+// 이 가드의 뜻은 원래도 "UI 작업이 DB 를 건드리지 않았다" 였다. 041 이후의
+// migration 들은 각각 명시적 TASK 가 추가한 것이라, 목적을 지키는 형태는
+// "현재 승인된 migration 집합의 스냅숏" 이다 — 예상 밖의 파일이 생기거나
+// 사라지면 여기서 걸리고, 의도적 DB 작업만 이 스냅숏을 갱신한다.
+// (RELEASE-CLEANUP-V1 보고에서 stale 로 확인되어 PLANNER-SPOTS-SEPARATION-V1
+//  에서 현실 반영 — assertion 약화가 아니라 오히려 파일명 전수 고정이다.)
+test("★migration 집합 스냅숏 — 승인된 60개 그대로, 예상 밖 추가/삭제 없음", () => {
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 44);   // 042·043·044 는 피드백/알림 작업이 추가했다
+  assert.equal(files.length, 60, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  // 이 가드의 뜻은 "이 작업이 DB 를 건드리지 않았다" 이다.
-  // 042(place_reports)·043(place_likes)는 피드백 작업이 추가한 것으로 이 작업과 무관하다.
-  // 그 밖의 migration 이 생기면 여기서 걸린다.
+  assert.equal(files[files.length - 1], "060_social_actions_foundation.sql",
+    "060(Social Actions Foundation, PROD 미적용) 이 마지막이어야 한다");
+  // 번호 공백·중복 금지: 001..060 이 정확히 한 번씩.
+  const nums = files.map(f => f.slice(0, 3));
+  assert.equal(new Set(nums).size, 60, "번호 중복");
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
-    assert.match(f, /^04[234]_(place_reports|place_likes|admin_notification_events)\.sql$/, `예상치 못한 migration: ${f}`);
+    assert.match(f, new RegExp(
+      "^(042_place_reports|043_place_likes|044_admin_notification_events|" +
+      "045_city_spot_sources|046_city_spot_images|047_user_spots_nullable_name|" +
+      "048_user_spots_photo_privacy_foundation|049_user_spots_photo_anchor|" +
+      "050_user_spots_canonical_display_foundation|051_revoke_shared_itinerary_public_execute|" +
+      "052_trip_moment_photos|053_trip_moments_place_and_public_consent|" +
+      "054_story_reports_and_moderation|055_trip_moments_stop_key|" +
+      "056_city_spots_is_published|057_city_spots_drop_city_name_unique|" +
+      "058_city_spot_sources_allow_multi_source_keys_per_provider|" +
+      "059_user_spots_related_unique|060_social_actions_foundation)\\.sql$"),
+      `예상치 못한 migration: ${f}`);
   }
 });

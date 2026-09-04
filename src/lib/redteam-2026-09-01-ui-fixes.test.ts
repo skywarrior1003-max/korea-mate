@@ -87,10 +87,15 @@ test("R2: SpotCard / modal / card / place use localized fee, city, event categor
 });
 
 test("R2: Home nature section chrome and arrival labels are no longer hardcoded English", () => {
+  // 플래너(도착 라벨 포함)는 /planner 로 이사했다 — nature 섹션은 Home 정리로
+  // 사라졌으므로 두 파일 모두에서 hardcoded 영문이 돌아오지 않는지 본다.
   const home = read("src", "app", "HomeClient.tsx");
-  for (const s of ["View Details →", '"🌿 Nature" : "🏯 Attraction"', "👤 Solo OK", "💵 Cash Only", "💳 Card OK", "🆓 Free Entry", "🗺️ Google Maps", "💚 Naver Maps", "{item.durationMinutes}min"]) assert.ok(!home.includes(s), s);
-  assert.equal((home.match(/\{arrivalLabel\(loc\.label\)\}/g) || []).length, 2);
-  assert.ok(!/\{loc\.label\}/.test(home));
+  const planner = read("src", "app", "planner", "PlannerClient.tsx");
+  for (const s of ["View Details →", '"🌿 Nature" : "🏯 Attraction"', "👤 Solo OK", "💵 Cash Only", "💳 Card OK", "🆓 Free Entry", "🗺️ Google Maps", "💚 Naver Maps", "{item.durationMinutes}min"]) {
+    assert.ok(!home.includes(s) && !planner.includes(s), s);
+  }
+  assert.equal((planner.match(/\{arrivalLabel\(loc\.label\)\}/g) || []).length, 2);
+  assert.ok(!/\{loc\.label\}/.test(planner));
 });
 
 // ── round 3 (Fable recheck on f157007: footer Contact literal, modal unknown-slot fallback, /picks raw category ids)

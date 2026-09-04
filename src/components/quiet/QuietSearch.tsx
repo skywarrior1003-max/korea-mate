@@ -157,6 +157,7 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
         </svg>
         <input
           ref={inputRef}
+          id="qh-global-search"
           type="search"
           role="combobox"
           aria-expanded={showPanel}

@@ -777,7 +777,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
                 모바일 BottomNav 의 픽 탭과 같은 곳이다 (PICKS-TO-TRIP-JOURNEY-RESTORE-V1) */}
             <Link href="/picks"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("picks")}</Link>
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("myTrips")}</Link>
-            {/* 플래너는 Home 안의 섹션이라 /#planner 로 들어간다. 여기서는
+            {/* 플래너는 분리된 /planner route 로 들어간다. 여기서는
                 보고 있던 도시까지 함께 넘긴다 — 서울을 보다가 눌렀는데 플래너가
                 Busan 으로 열리면 방금 한 선택을 다시 해야 한다.
                 형식은 도시 진입 화면(CityEntry)이 쓰는 것과 같고, 해석은
@@ -785,7 +785,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
                 그쪽에서 자기 진입 화면으로 돌려보낸다. */}
             <LanguageSwitcher variant="icon" className="text-gray-700" />
             <Link
-              href={`/?city=${city.slug}#planner`}
+              href={`/planner?city=${city.slug}`}
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >

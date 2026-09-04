@@ -574,7 +574,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
           <span className="inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>{t("savedState")}</span>
           <Link
-            href="/#planner"
+            href="/planner"
             className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
             onClick={() => setSavedT(false)}
           >
