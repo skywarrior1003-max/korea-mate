@@ -17,7 +17,8 @@ const strip = (s: string) =>
   s.replace(/\/\*[\s\S]*?\*\//g, "")
    .split("\n").filter(l => !l.trimStart().startsWith("//")).join("\n");
 
-const HOME = read("src", "app", "HomeClient.tsx");
+// 플래너 화면(도시 목록·coming-soon 표시)은 /planner 의 PlannerClient 다.
+const HOME = read("src", "app", "planner", "PlannerClient.tsx");
 const CODE = strip(HOME);
 
 /** 도시 목록 블록만 — 이 화면의 다른 곳까지 끌어와 판단하지 않는다. */
@@ -89,3 +90,11 @@ test("★지역 전환 로직은 이번에 건드리지 않았다", () => {
   assert.match(CODE, /clearCityCart\(city\)/);
   assert.match(CODE, /clearTripDraft\(\)/);
 });
+
+test("★Home 에는 플래너 폼이 다시 생기지 않는다 — 진입은 /planner 뿐", () => {
+  const home = read("src", "app", "HomeClient.tsx");
+  assert.doesNotMatch(home, /id="planner"/);
+  assert.doesNotMatch(home, /requestCitySwitch|planningReady/);
+  assert.match(home, /href="\/planner"/);
+});
+

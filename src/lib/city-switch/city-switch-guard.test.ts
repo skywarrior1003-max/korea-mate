@@ -17,7 +17,9 @@ const strip = (s: string) =>
   s.replace(/\/\*[\s\S]*?\*\//g, "")
    .split("\n").filter(l => !l.trimStart().startsWith("//")).join("\n");
 
-const HOME = read("src", "app", "HomeClient.tsx");
+// 플래너(도시 선택·전환 UI 포함)는 PLANNER-SPOTS-SEPARATION-V1 에서
+// Home 섹션 → /planner 로 이사했다. 검사 대상 코드는 그대로 그 파일에 있다.
+const HOME = read("src", "app", "planner", "PlannerClient.tsx");
 const CODE = strip(HOME);
 const CORE = read("src", "lib", "city-switch", "city-switch-core.ts");
 
@@ -55,7 +57,10 @@ test("★도시 버튼은 setCity 를 직접 부르지 않는다", () => {
 test("★열리지 않은 도시를 고르면 아무 상태도 바뀌지 않는다", () => {
   // blocked·noop 은 어떤 setter 도 부르지 않고 그대로 돌아간다
   assert.match(CODE, /if \(action === "blocked" \|\| action === "noop"\) return;/);
-  const fn = CODE.slice(CODE.indexOf("function requestCitySwitch"), CODE.indexOf("useEffect(() => {\n    setStartLocation"));
+  const s = CODE.indexOf("function requestCitySwitch");
+  const e = CODE.indexOf("setStartLocation(CITY_ARRIVAL_DEFAULTS");
+  assert.ok(s > 0 && e > s, "requestCitySwitch 범위를 못 찾았다");
+  const fn = CODE.slice(s, e);
   assert.doesNotMatch(fn, /removeFavorite|clearCityCart|setStartDate/, "판단 함수가 상태를 바꾼다");
 });
 

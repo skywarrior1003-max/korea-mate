@@ -94,6 +94,16 @@ test("E: TripStoryExport 액션/토스트 이모지 제거", () => {
   for (const e of ["⬇️", "📥", "✅", "🔗", "📤", "🎴", "✨"]) assert.ok(!s.includes(e), e);
 });
 
+test("F2: 플래너 액션/타이틀 문자열에 ✨ 이모지가 없다 (4언어)", () => {
+  for (const loc of ["en", "ko", "ja", "zh"]) {
+    const tf = JSON.parse(read("src", "messages", `${loc}.json`)).tripForm;
+    for (const k of ["title", "pickVibe", "generate"]) {
+      assert.ok(!tf[k].includes("✨"), `${loc}.tripForm.${k}`);
+      assert.ok(tf[k].trim().length > 0, `${loc}.tripForm.${k} 가 비면 안 된다`);
+    }
+  }
+});
+
 test("I: 060 마이그레이션 불변 — sha256 고정 (PRODUCTION APPLIED = NO 상태 유지)", () => {
   const buf = readFileSync(path.join(ROOT, "supabase", "migrations", "060_social_actions_foundation.sql"));
   assert.equal(createHash("sha256").update(buf).digest("hex"),

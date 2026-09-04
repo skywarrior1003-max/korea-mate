@@ -189,7 +189,8 @@ test("H: 숙소는 가두지 않는다 — 먼 This Trip 은 그대로 배치된
 
 const read = (...p: string[]) => readFileSync(path.join(process.cwd(), ...p), "utf8");
 const pageSrc = read("src", "app", "itinerary", "page.tsx");
-const homeSrc = read("src", "app", "HomeClient.tsx");
+// 플래너 코드는 PLANNER-SPOTS-SEPARATION-V1 에서 /planner 로 이사했다 — 검사 대상은 동일 코드다.
+const homeSrc = read("src", "app", "planner", "PlannerClient.tsx");
 const coreSrc = read("src", "lib", "trip-stay", "stay-core.ts");
 
 test("page.tsx: 그날 시작점이 숙소 → 기존 fallback 순서다", () => {

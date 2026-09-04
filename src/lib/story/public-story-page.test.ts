@@ -69,11 +69,13 @@ test("S2 Memory 는 공개 projection 에서만 온다", () => {
   assert.match(PAGE, /fetchSharedItinerary/);
 });
 
-test("S3 Share 는 정본 렌더러를 연다 — 중복 CTA 없음", () => {
-  const story = PAGE.slice(PAGE.indexOf("hasPublicMemories(apiStory)"), PAGE.indexOf("return (\n    <div className=\"min-h-screen\""));
-  assert.match(story, /onShare=\{\(\) => setStoryExportOpen\(true\)\}/);
-  assert.equal((story.match(/<TripStoryExport/g) ?? []).length, 1);
-  assert.ok(!/renderShareCard/.test(story), "공개 Story 에 예전 렌더러를 붙이지 않는다");
+test("S3 Share 는 정본 렌더러를 연다 — 예전 렌더러 0, 분기당 정확히 하나", () => {
+  // 화면은 공개 Memory 유/무 두 분기다. 각 분기가 자기 TripStoryExport 하나를
+  // 연다(총 2 마운트) — 예전 renderShareCard 는 어디에도 없다.
+  assert.match(PAGE, /onShare=\{\(\) => setStoryExportOpen\(true\)\}/);
+  assert.equal((PAGE.match(/<TripStoryExport/g) ?? []).length, 2, "분기당 하나씩, 총 둘");
+  assert.equal((PAGE.match(/storyExportOpen && \(/g) ?? []).length, 2, "둘 다 같은 열림 상태를 쓴다");
+  assert.ok(!/renderShareCard/.test(PAGE), "공개 Story 에 예전 렌더러를 붙이지 않는다");
 });
 
 // ── Z: 예전 분기 ────────────────────────────────────────────────────────────
@@ -102,9 +104,12 @@ test("Y2 고정 Copy 바를 남겨 두지 않았다", () => {
   assert.ok(!/Copy this trip"/.test(PAGE));
 });
 
-test("Y3 남긴 CTA 는 locale 을 쓴다", () => {
-  assert.match(PAGE, /isCopying \? tStory\("copying"\) : `📋 \$\{tStory\("copyTrip"\)\}`/);
-  assert.ok(!/"📋 Copy This Trip"|"Copying Trip…"/.test(PAGE));
+test("Y3 남긴 CTA 는 locale 을 쓴다 — CLOSEOUT: 라벨은 + My Trip(이모지 금지)", () => {
+  // SOCIAL-ACTIONS-CLOSEOUT 에서 공개 copy 액션 표기는 tStory("copyTrip")
+  // = "+ My Trip" 계열로 확정됐고 📋 이모지는 제거됐다. API(copy/copy_of)는 그대로다.
+  assert.match(PAGE, /isCopying \? tStory\("copying"\) : tStory\("copyTrip"\)/);
+  assert.ok(!PAGE.includes("📋"), "clipboard 이모지를 UI 에 되살리지 않는다");
+  assert.ok(!/"Copy This Trip"|"Copying Trip…"/.test(PAGE));
 });
 
 test("Y4 BottomNav 여백은 남는다 — 빼면 푸터가 메뉴에 가린다", () => {

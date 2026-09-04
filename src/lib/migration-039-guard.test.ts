@@ -138,13 +138,18 @@ test("★이미 운영에 적용된 038 을 수정하지 않았다", () => {
 test("★브라우저·Pages Function 어디에도 restaurants 테이블 접근이 없다", () => {
   const strip = (s: string) => s.replace(/\/\*[\s\S]*?\*\//g, "")
     .split("\n").filter(l => !l.trimStart().startsWith("//")).join("\n");
-  for (const f of [["src", "app", "HomeClient.tsx"], ["src", "app", "all-spots", "page.tsx"],
+  for (const f of [["src", "app", "HomeClient.tsx"], ["src", "app", "planner", "PlannerClient.tsx"],
+                   ["src", "app", "all-spots", "page.tsx"],
                    ["src", "app", "restaurants", "RestaurantsClient.tsx"]]) {
     const src = strip(readFileSync(join(ROOT, ...f), "utf8"));
     assert.doesNotMatch(src, /from\(["']restaurants["']\)/, `${f.join("/")}: supabase.from`);
     assert.doesNotMatch(src, /rest\/v1\/restaurants/,       `${f.join("/")}: REST 직접 호출`);
   }
-  // 화면이 실제로 쓰는 것은 정적 JSON 이다 — 회수해도 깨지지 않는 근거
-  const home = readFileSync(join(ROOT, "src", "app", "HomeClient.tsx"), "utf8");
-  assert.match(home, /fetch\("\/data\/restaurants\.json"\)/);
+  // 화면이 실제로 쓰는 것은 정적 JSON 이다 — 회수해도 깨지지 않는 근거.
+  // (Home 의 음식 디렉토리는 RELEASE-CLEANUP 에서 제거됐다 — 현재 소비처는
+  //  /restaurants fallback 과 /all-spots 다.)
+  assert.match(readFileSync(join(ROOT, "src", "app", "restaurants", "RestaurantsClient.tsx"), "utf8"),
+    /fetch\("\/data\/restaurants\.json"\)/);
+  assert.match(readFileSync(join(ROOT, "src", "app", "all-spots", "page.tsx"), "utf8"),
+    /fetch\("\/data\/restaurants\.json"\)/);
 });

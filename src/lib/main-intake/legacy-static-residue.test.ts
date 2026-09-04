@@ -24,12 +24,16 @@ test("local-info.json: V1 static duplicates of retired rows are gone (13/14/15/2
   assert.ok(li.some(x => x.id === 6 && x.name === "Haeundae Beach"));
 });
 
-test("HomeClient BUSAN_SPOTS: retired V1 cards removed, remaining four intact", () => {
-  const src = read("src", "app", "HomeClient.tsx");
-  const block = src.slice(src.indexOf("const BUSAN_SPOTS"), src.indexOf("];", src.indexOf("const BUSAN_SPOTS")));
-  for (const n of RETIRED_STATIC_NAMES) assert.ok(!block.includes(`name: "${n}"`), n);
-  for (const n of ["Haeundae Beach", "Gamcheon Culture Village", "Jagalchi Fish Market", "Gwangalli Beach & Bridge"]) assert.ok(block.includes(`name: "${n}"`), n);
-  assert.equal((block.match(/\n  \{\n    id: \d+,/g) || []).length, 4);
+test("Home/Planner: V1 정적 카드 목록 자체가 제거됐고 은퇴 장소가 되살아나지 않는다", () => {
+  // RELEASE-CLEANUP/PLANNER-SPOTS-SEPARATION 에서 Home 의 BUSAN_SPOTS V1
+  // 디렉토리는 통째로 제거됐다(발견은 Search·City Hub·Explore 담당).
+  // 원 invariant("은퇴한 legacy 장소가 사용자-facing 정적 카드로 살아남지
+  // 않는다")는 더 강한 형태 — 목록 부재 — 로 유지된다.
+  for (const f of [["src", "app", "HomeClient.tsx"], ["src", "app", "planner", "PlannerClient.tsx"]]) {
+    const src = read(...f);
+    assert.ok(!src.includes("BUSAN_SPOTS"), `${f.join("/")}: V1 목록 재등장 금지`);
+    for (const n of RETIRED_STATIC_NAMES) assert.ok(!src.includes(`name: "${n}"`), `${f.join("/")}: ${n}`);
+  }
 });
 
 test("src/data/cities/busan.ts staticSpots (Explore initial/fallback list): retired V1 cards removed", () => {

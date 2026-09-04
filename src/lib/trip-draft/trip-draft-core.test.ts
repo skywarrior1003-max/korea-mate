@@ -223,7 +223,8 @@ test("I: HC-9 — 서로 갈 수 없는 두 약속은 충돌로 알린다", () =
 // ── 배선 guard ────────────────────────────────────────────────────────────────
 
 const read = (...p: string[]) => readFileSync(path.join(process.cwd(), ...p), "utf8");
-const homeSrc  = read("src", "app", "HomeClient.tsx");
+// 플래너 코드는 PLANNER-SPOTS-SEPARATION-V1 에서 /planner 로 이사했다 — 검사 대상은 동일 코드다.
+const homeSrc  = read("src", "app", "planner", "PlannerClient.tsx");
 const picksSrc = read("src", "app", "picks", "PicksClient.tsx");
 
 test("HomeClient: 여행 조건이 실제로 바뀔 때만 draft 를 쓴다", () => {

@@ -39,7 +39,8 @@ const strip = (s: string) =>
    .replace(/\/\/[^\n]*/g, m => " ".repeat(m.length));
 
 const PICKS = strip(read("src", "app", "picks", "PicksClient.tsx"));
-const HOME  = strip(read("src", "app", "HomeClient.tsx"));
+// 플래너 코드는 PLANNER-SPOTS-SEPARATION-V1 에서 /planner 로 이사했다 — 검사 대상은 동일 코드다.
+const HOME  = strip(read("src", "app", "planner", "PlannerClient.tsx"));
 const PANEL = strip(read("src", "components", "TripSetupPanel.tsx"));
 const ITIN  = strip(read("src", "app", "itinerary", "page.tsx"));
 

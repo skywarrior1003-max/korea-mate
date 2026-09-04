@@ -25,7 +25,7 @@ test("U1: 네 덩어리 — 히어로 · 예정 줄 · 점선 New trip · 지난
   assert.match(page, /<TravelingNowHero/);
   assert.match(page, /t\("sectionTravelingNow"\)/);
   assert.match(page, /t\("sectionUpcoming"\)/);
-  assert.match(page, /<DashedAction href="\/#planner">\{t\("newTrip"\)\}<\/DashedAction>/);
+  assert.match(page, /<DashedAction href="\/planner">\{t\("newTrip"\)\}<\/DashedAction>/);
   assert.match(page, /t\("pastTripsStory"\)/);
 });
 

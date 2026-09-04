@@ -1072,7 +1072,7 @@
     "foodGuideBanner": "2026 釜山美食指南 — 米其林 · 釜山之味 · 出租车司机推荐"
   },
   "tripForm": {
-    "title": "✨ 用 AI 规划你的韩国之旅",
+    "title": "用 AI 规划你的韩国之旅",
     "subtitle": "免费 • 无需注册 • 30 秒完成",
     "sharedBanner": "已从分享的行程带入日期和旅行风格 — 改成你自己的吧！",
     "cityLabel": "想去哪里？（城市）",
@@ -1085,7 +1085,7 @@
     "city_Jeonju": "全州",
     "exploreOnMap": "在地图上查看{city}的地点 →",
     "styleLabel": "旅行风格",
-    "pickVibe": "✨ 选择偏好",
+    "pickVibe": "选择偏好",
     "styleAria": "旅行风格",
     "stylePlaceholder": "— 请选择旅行风格 —",
     "style_Solo": "独自旅行",
@@ -1117,7 +1117,7 @@
     "departureFrom": "📍 你从哪里出发？",
     "departureTime": "🕐 最后一天的出发时间",
     "generating": "⏳ 生成中...",
-    "generate": "✨ 生成我的行程",
+    "generate": "生成我的行程",
     "vibeTitle": "先选几个想去的地方吧",
     "vibeBody": "点下面的 K-POP、美食、景点卡片告诉我们你的喜好。我们会围绕你选的地点安排行程 — 跳过的话就为你均衡搭配。",
     "vibePick": "🎯 选择地点 →",

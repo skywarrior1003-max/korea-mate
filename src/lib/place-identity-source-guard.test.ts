@@ -25,16 +25,15 @@ function stripComments(src: string): string {
   return noBlock.replace(/\/\/[^\n]*/g, m => " ".repeat(m.length));
 }
 
-test("★Home 은 local-info 항목에 city_spot 키를 만들지 않는다", () => {
-  const src = stripComments(read("src", "app", "HomeClient.tsx"));
-  assert.doesNotMatch(
-    src, /citySpotSourceKey\s*\(/,
-    "HomeClient 의 장소는 local-info.json 파일 ID 라서 canonical 키를 만들면 안 된다",
-  );
-  assert.match(
-    src, /localInfoSourceKey\s*\(\s*spot\.city\s*,\s*spot\.id\s*\)/,
-    "local-info 항목은 local_info:<city>:<id> 로 식별해야 한다",
-  );
+test("★Home/Planner 는 local-info 장소 카드를 더 이상 들지 않는다 — canonical 키 오염 경로 0", () => {
+  // RELEASE-CLEANUP/SEPARATION 으로 Home 의 V1 장소 디렉토리 자체가 제거됐다.
+  // 원 invariant("local-info 파일 ID 로 canonical 키를 만들지 않는다")는
+  // 소비처가 사라진 지금 "그 호출부가 되살아나지 않는다" 로 지킨다.
+  for (const f of [["src", "app", "HomeClient.tsx"], ["src", "app", "planner", "PlannerClient.tsx"]]) {
+    const src = stripComments(read(...f));
+    assert.doesNotMatch(src, /citySpotSourceKey\s*\(/, `${f.join("/")}: canonical 키 생성 금지`);
+    assert.doesNotMatch(src, /local-info\.json/, `${f.join("/")}: V1 목록 재소비 금지`);
+  }
 });
 
 test("★Explore 의 staticSpots fallback 은 canonical 키를 만들지 않는다", () => {
@@ -68,8 +67,9 @@ test("★Version 1 정적 목록과 canonical id 는 서로 다른 공간이다"
   const src = read("src", "data", "cities", "busan.ts");
   const ids = [...src.matchAll(/id:\s*(\d+),\s*\n\s*name:\s*"/g)].map(m => Number(m[1]));
   assert.ok(ids.length > 0, "busan.ts staticSpots 를 읽지 못했다");
+  // V1 legacy-retirement(2026-09-01) 이후 13/14/15 는 은퇴했다 — 남은 4건.
   assert.deepEqual(
-    ids, [6, 7, 8, 12, 13, 14, 15],
+    ids, [6, 7, 8, 12],
     "staticSpots 의 id 는 local-info.json 파일 ID 다. 값을 바꾸려면 소비처의 " +
     "sourceKey 규칙부터 확인해야 한다",
   );

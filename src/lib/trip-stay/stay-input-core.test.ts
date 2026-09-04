@@ -45,7 +45,8 @@ const strip = (s: string) =>
 const CORE   = strip(read("src", "lib", "trip-stay", "stay-input-core.ts"));
 const PICKER = strip(read("src", "components", "StayLocationPicker.tsx"));
 const FIELDS = strip(read("src", "components", "StayFields.tsx"));
-const HOME   = strip(read("src", "app", "HomeClient.tsx"));
+// 플래너 코드는 PLANNER-SPOTS-SEPARATION-V1 에서 /planner 로 이사했다 — 검사 대상은 동일 코드다.
+const HOME   = strip(read("src", "app", "planner", "PlannerClient.tsx"));
 
 const AREA  = "Haeundae (해운대)";   // 실제 프리셋 value — 라벨이 값이다
 const HOTEL = { lat: 35.1589, lng: 129.1600 };   // 해운대 근처

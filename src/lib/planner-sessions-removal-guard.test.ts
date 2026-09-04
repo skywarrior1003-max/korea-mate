@@ -178,16 +178,19 @@ test("★016·022·030·038·039·040 실행 본문이 바뀌지 않았다", () 
   for (const [f, h] of Object.entries(expected)) assert.equal(md5(migBody(f)), h, f);
 });
 
-test("★migration 이 추가되지 않았다 — 041 이 마지막이고 042 는 없다", () => {
-  const files = readdirSync(MIGDIR).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 44, files.length + "개");   // 042·043·044 는 피드백/알림 작업이 추가했다
+test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 를 건드리지 않았다", () => {
+  // PLANNER-SPOTS-SEPARATION 이후 migration 은 060(Social Foundation, PROD 미적용)
+  // 까지 60개다. 이 가드의 원 뜻("이 작업이 migration 을 추가하지 않았다")을
+  // "승인된 집합에서 벗어난 파일이 생기면 걸린다" 로 보존한다 — 파일명 전체
+  // 목록의 digest 를 고정하므로 추가·삭제·개명 모두 잡힌다. 정식 목록은
+  // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
+  const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
+  assert.equal(files.length, 60, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  // 이 가드의 뜻은 "이 작업이 DB 를 건드리지 않았다" 이다.
-  // 042(place_reports)·043(place_likes)는 피드백 작업이 추가한 것으로 이 작업과 무관하다.
-  // 그 밖의 migration 이 생기면 여기서 걸린다.
-  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
-    assert.match(f, /^04[234]_(place_reports|place_likes|admin_notification_events)\.sql$/, `예상치 못한 migration: ${f}`);
-  }
+  assert.equal(files[files.length - 1], "060_social_actions_foundation.sql");
+  assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
+    "b50b835e61b7e755a0df0c3a0eb572700c7a89351a3aefa4d5b29afd662f5aab",
+    "승인 목록 밖의 migration 변경");
 });
 
 test("★이번 정리가 권한을 여는 SQL 을 끌고 들어오지 않았다", () => {

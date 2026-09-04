@@ -26,7 +26,8 @@ function test(name: string, fn: () => void): void {
 }
 
 const read = (...p: string[]) => readFileSync(path.join(process.cwd(), ...p), "utf8");
-const homeSrc  = read("src", "app", "HomeClient.tsx");
+// 플래너 코드는 PLANNER-SPOTS-SEPARATION-V1 에서 /planner 로 이사했다 — 검사 대상은 동일 코드다.
+const homeSrc  = read("src", "app", "planner", "PlannerClient.tsx");
 const picksSrc = read("src", "app", "picks", "PicksClient.tsx");
 
 const D1 = "2026-10-24", D2 = "2026-10-25", D3 = "2026-10-26";
