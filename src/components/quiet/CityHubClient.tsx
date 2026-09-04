@@ -13,7 +13,7 @@ import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { displayPlaceName } from "@/lib/place-display-name";
 import { cityVisual } from "@/lib/city-visual";
-import { curatedTripsForCity } from "@/data/curated-trips";
+import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 
 /** 추천 3: 카탈로그 순서(기존 fetch 의 id asc)에서 이미지 있는 행 우선 — 인기 주장 없음 */
@@ -36,8 +36,17 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const cityLabel = tForm(city.labelKey);
   const desc = tLinks(`desc${slug.charAt(0).toUpperCase()}${slug.slice(1)}`);
   const v = cityVisual(slug);
-  const trips = curatedTripsForCity(slug).slice(0, 3);
-  const places = spots ? pickRecommended(spots, 3) : [];
+  const trips = getRecommendedTrips(slug).slice(0, 3);
+  // 추천 장소: 공식 recommended_now 의 canonical 연결(순서 보존)을 먼저,
+  // 부족분만 카탈로그에서 보충 — 임의 매칭·가짜 인기 없음.
+  const officialIds = recommendedSpotIds(slug);
+  const places = (() => {
+    if (!spots) return [];
+    const byId = new Map(spots.map(s => [Number(s.id), s]));
+    const official = officialIds.map(id => byId.get(id)).filter((s): s is CitySpot => Boolean(s));
+    const fill = pickRecommended(spots.filter(s => !official.includes(s)), 3);
+    return [...official, ...fill].slice(0, 3);
+  })();
 
   return (
     <div className="qh min-h-screen pb-20" style={{ backgroundColor: "var(--qh-paper)" }}>
@@ -81,9 +90,11 @@ export default function CityHubClient({ slug }: { slug: string }) {
               <li key={trip.id}>
                 <Link href={`/city/${slug}/trips`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
-                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{trip.title}</span>
+                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{tripDisplayTitle(trip, locale)}</span>
                     <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
-                      {trip.days ? `${trip.days}d${trip.stops ? ` · ${trip.stops} stops` : ""}` : trip.category ?? t("officialCourse")}
+                      {trip.days && Number.isInteger(trip.days) && trip.days >= 1
+                        ? `${trip.days}d${trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}`
+                        : trip.stops.length > 0 ? `${t("officialCourse")} · ${trip.stops.length} stops` : t("officialCourse")}
                     </span>
                   </span>
                 </Link>

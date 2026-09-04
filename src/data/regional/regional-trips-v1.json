@@ -1,0 +1,1103 @@
+{
+ "provenance": {
+  "schema": "regional-runtime-v1",
+  "builtFrom": "data/regional-recommendations/normalized/* (normalized-v1, as_of 2026-08-22)",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "canonicalResolution": "city_spots.external_id / city_spot_sources.source_key (read-only lookup 2026-09-04, 64/64 published)"
+ },
+ "trips": [
+  {
+   "id": "busan-C-001",
+   "city": "busan",
+   "title": "2박 3일에 완성하는 부산 완전정복",
+   "titleEn": "Complete Busan in 2 Nights, 3 Days",
+   "theme": "종합 — 사찰·역사·해안·도시 명소 전반",
+   "durationLabel": "2박 3일",
+   "days": null,
+   "stops": [
+    {
+     "name": "범어사",
+     "nameEn": "Beomeosa Temple",
+     "spotId": 1073,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "동래읍성",
+     "nameEn": "Dongnae Eupseong Fortress",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "복천동고분박물관",
+     "nameEn": "Bokcheon Museum",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "해동용궁사",
+     "nameEn": "Haedong Yonggungsa Temple",
+     "spotId": 25,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "송정해수욕장",
+     "nameEn": "Songjeong Beach",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "해운대해수욕장",
+     "nameEn": "Haeundae Beach",
+     "spotId": 1,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "오륙도스카이워크",
+     "nameEn": "Oryukdo Skypark",
+     "spotId": 961,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "태종대",
+     "nameEn": "Taejongdae Park",
+     "spotId": 27,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "영도대교",
+     "nameEn": "Yeongdo Bridge",
+     "spotId": 950,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "용두산공원",
+     "nameEn": "Yongdusan Park",
+     "spotId": 24,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "감천문화마을",
+     "nameEn": "Gamcheon Culture Village",
+     "spotId": 1081,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "송도해수욕장·케이블카",
+     "nameEn": "Songdo Beach & Cable Car",
+     "spotId": 963,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "다대포해수욕장",
+     "nameEn": "Dadaepo Beach",
+     "spotId": 1054,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "장림포구",
+     "nameEn": "Jangnim Port",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "을숙도·낙동강하구",
+     "nameEn": "Eulseukdo Island / Nakdong River Estuary",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    }
+   ],
+   "source": {
+    "provider": "부산광역시 공식 관광포털 Visit Busan",
+    "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=392&lang_cd=ko",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "busan-C-002",
+   "city": "busan",
+   "title": "1박 2일에 완성하는 부산 해안선 완전정복",
+   "titleEn": "Complete Busan Coastline in 1 Night, 2 Days",
+   "theme": "해안선 집중 — 절벽·포구·해안산책로·해수욕장",
+   "durationLabel": "1박 2일",
+   "days": null,
+   "stops": [
+    {
+     "name": "영도대교",
+     "nameEn": "Yeongdo Bridge",
+     "spotId": 950,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "흰여울문화마을",
+     "nameEn": "Huinnyeoul Culture Village",
+     "spotId": 47,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "절영해안산책로",
+     "nameEn": "Jeoryeong Coastal Walking Path",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "태종대",
+     "nameEn": "Taejongdae Park",
+     "spotId": 27,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "국제시장",
+     "nameEn": "Gukje (International) Market",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "부평깡통시장",
+     "nameEn": "Bupyeong Kkangtong Market",
+     "spotId": 954,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "용두산공원",
+     "nameEn": "Yongdusan Park",
+     "spotId": 24,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "해운대해수욕장",
+     "nameEn": "Haeundae Beach",
+     "spotId": 1,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "부산아쿠아리움",
+     "nameEn": "Busan Aquarium",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "동백해안산책로·누리마루APEC하우스",
+     "nameEn": "Dongbaek Coastal Path & Nurimaru APEC House",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "오륙도스카이워크",
+     "nameEn": "Oryukdo Skypark",
+     "spotId": 961,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "이기대해안산책로",
+     "nameEn": "Igidae Coastal Walking Path",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "광안리해수욕장·광안대교",
+     "nameEn": "Gwangalli Beach & Gwangandaegyo Bridge",
+     "spotId": 1061,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "부산광역시 공식 관광포털 Visit Busan",
+    "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=320&lang_cd=ko",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "busan-C-003",
+   "city": "busan",
+   "title": "친구들과 함께하는 2박 3일 부산 뚜벅이 여행 코스",
+   "titleEn": "2-Night 3-Day Busan Friends & Transit Travel Course",
+   "theme": "친구 여행 · 대중교통 — 카페거리·해리단길·해안뷰·서부 해안",
+   "durationLabel": "2박 3일",
+   "days": null,
+   "stops": [
+    {
+     "name": "부산역",
+     "nameEn": "Busan Station",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "삼정타워",
+     "nameEn": "Samjeong Tower",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "전포카페거리",
+     "nameEn": "Jeonpo Café Street",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "호천마을",
+     "nameEn": "Hocheon Village",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "해리단길",
+     "nameEn": "Haeridan-gil",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "해운대해변열차·스카이캡슐",
+     "nameEn": "Haeundae Beach Train / Sky Capsule",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "청사포다릿돌전망대",
+     "nameEn": "Cheongsapo Darittol Observation Deck",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "광안리해수욕장·민락수변공원",
+     "nameEn": "Gwangalli Beach & Millak Waterfront Park",
+     "spotId": 1061,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "장림포구",
+     "nameEn": "Jangnim Port",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "몰운대해안데크길",
+     "nameEn": "Molundae Coastal Deck Trail",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "다대포해수욕장·고우니생태길",
+     "nameEn": "Dadaepo Beach & Gouni Ecological Trail",
+     "spotId": 1054,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "부산광역시 공식 관광포털 Visit Busan",
+    "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=1211&lang_cd=ko",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "busan-C-R01",
+   "city": "busan",
+   "title": "반짝임이 가득한 겨울의 부산",
+   "titleEn": "Sparkling Winter in Busan",
+   "theme": "겨울·야간관광 — 일루미네이션·전망대·크리스마스",
+   "durationLabel": "당일 또는 1박",
+   "days": null,
+   "stops": [
+    {
+     "name": "밀락더마켓",
+     "nameEn": "Millak Luche Festa (Millak Waterfront Park illumination)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "X the SKY 전망대",
+     "nameEn": "X the SKY Observatory (LCT Landmark Tower 98-100F)",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "부산 자유도매시장",
+     "nameEn": "Busan Jayou Wholesale Market",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "광안리해수욕장 (광안리 디셈버)",
+     "nameEn": "Gwangalli Beach — Gwangalli December",
+     "spotId": 1061,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "부산광역시 공식 관광포털 Visit Busan",
+    "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=2619&lang_cd=ko",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "seoul-C-001",
+   "city": "seoul",
+   "title": "서울 도보관광: 경복궁 코스",
+   "titleEn": "Seoul Guided Walking Tour: Gyeongbokgung Palace Course",
+   "theme": "조선왕조 역사·궁궐·광화문",
+   "durationLabel": "약 2시간",
+   "days": 0.25,
+   "stops": [
+    {
+     "name": "경복궁 (광화문)",
+     "nameEn": "Gyeongbokgung Palace (Gwanghwamun Gate)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "근정전·향원정 일원",
+     "nameEn": "Geunjeongjeon & Hyangwonjeong area",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "국립민속박물관",
+     "nameEn": "National Folk Museum of Korea",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "광화문광장 해치마당",
+     "nameEn": "Gwanghwamun Square — Haechi Madang",
+     "spotId": 3536,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+    "source_url": "https://english.visitseoul.net/walking-tour",
+    "as_of": "2026-08-21",
+    "review_by": "2027-01-01"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "seoul-C-002",
+   "city": "seoul",
+   "title": "서울 도보관광: 북촌한옥마을 코스",
+   "titleEn": "Seoul Guided Walking Tour: Bukchon Hanok Village Course",
+   "theme": "전통 한옥·600년 도시 역사·골목길",
+   "durationLabel": "약 2~3시간",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "안국역 인근 집합",
+     "nameEn": "Meeting point near Anguk Station",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "북촌한옥마을 (가회동 일원)",
+     "nameEn": "Bukchon Hanok Village (Gahoe-dong)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "창덕궁 방면 (창덕궁길)",
+     "nameEn": "Toward Changdeokgung Palace (Changdeokgung-gil)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "인사동",
+     "nameEn": "Insadong",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    }
+   ],
+   "source": {
+    "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+    "source_url": "https://english.visitseoul.net/walking-tour",
+    "as_of": "2026-08-21",
+    "review_by": "2027-01-01"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "seoul-C-003",
+   "city": "seoul",
+   "title": "국립중앙박물관·이촌한강 여름 코스",
+   "titleEn": "National Museum & Ichon Han River — Seoul Summer Course",
+   "theme": "여름·자연·문화·한강 피서",
+   "durationLabel": "반나절~하루 (4~6시간)",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "국립중앙박물관 야외 공원·연못",
+     "nameEn": "National Museum of Korea — Outdoor Park & Pond",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "국립중앙박물관 내부",
+     "nameEn": "National Museum of Korea — Interior",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "이촌한강공원",
+     "nameEn": "Ichon Hangang Park",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    }
+   ],
+   "source": {
+    "provider": "VisitSeoul / 서울관광재단 Seoulites' Picks",
+    "source_url": "https://english.visitseoul.net/editorspicks/2026-SummerInSeoul/ENNn721f2",
+    "as_of": "2026-08-21",
+    "review_by": "2026-11-01",
+    "freshness_note": "여름 시즌 editorial. 박물관 운영시간은 별도 재확인 권장"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "seoul-C-R01",
+   "city": "seoul",
+   "title": "서울 도보관광 야간: 낙산성곽 한양의 한밤중",
+   "titleEn": "Seoul Night Walking Tour: Midnight in Hanyang (Naksan City Wall)",
+   "theme": "성곽·야경·낭만",
+   "durationLabel": "약 2시간",
+   "days": null,
+   "stops": [],
+   "source": {
+    "provider": "서울관광재단 (STO)",
+    "source_url": "https://english.visitseoul.net/walking-tour",
+    "as_of": "2026-08-21",
+    "review_by": "2027-01-01"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "jeju-C-001",
+   "city": "jeju",
+   "title": "제주 올레 7코스 (외돌개~월평 포구)",
+   "titleEn": "Jeju Olle Trail Course 7 (Oedolgae to Wollang Port)",
+   "theme": "서귀포 해안 절경 트레킹",
+   "durationLabel": "약 5~6시간 (17.6km)",
+   "days": 1,
+   "stops": [
+    {
+     "name": "외돌개 (출발점)",
+     "nameEn": "Oedolgae Rock (start)",
+     "spotId": 1692,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "서귀포 해안선 (구간)",
+     "nameEn": "Seogwipo Coastline (route section)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "법환포구",
+     "nameEn": "Beophwan Port",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "월평 포구 (종착점)",
+     "nameEn": "Wollang Port (end)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    }
+   ],
+   "source": {
+    "provider": "제주올레 (Jeju Olle)",
+    "source_url": "https://www.jejuolle.org/course-info/course7",
+    "as_of": "2026-08-22",
+    "review_by": "2027-03-01",
+    "note": "코스 경로·거리·소요 시간은 jejuolle.org에서 재확인 권장"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeju-C-002",
+   "city": "jeju",
+   "title": "한라산 영실 고산 트레킹",
+   "titleEn": "Hallasan Yeongsil Alpine Trail",
+   "theme": "한라산 영실기암·고산식물·윗세오름",
+   "durationLabel": "약 5~6시간 (왕복, 영실주차장 기준 7.4km)",
+   "days": 1,
+   "stops": [
+    {
+     "name": "영실탐방안내소 (출발점)",
+     "nameEn": "Yeongsil Visitor Center (start)",
+     "spotId": 1871,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "영실기암 (병풍바위·오백나한)",
+     "nameEn": "Yeongsil Rocks (Byeongpung Bawi / Obaek Nahan)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "윗세오름 대피소 (종착·회귀점)",
+     "nameEn": "Witseoreum Shelter (turnaround point)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    }
+   ],
+   "source": {
+    "provider": "국립공원공단 한라산국립공원",
+    "source_url": "https://www.hallasan.go.kr/contents/info.php",
+    "as_of": "2026-08-22",
+    "review_by": "2027-01-01",
+    "note": "입산 시간·통제 정보는 방문 전 hallasan.go.kr 공식 확인 필수"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeju-C-003",
+   "city": "jeju",
+   "title": "제주 동부 유네스코 자연유산 1일 코스",
+   "titleEn": "Jeju East — UNESCO World Natural Heritage Day Course",
+   "theme": "UNESCO 세계자연유산·용암동굴·일출봉·천연기념물 숲",
+   "durationLabel": "약 7~9시간 (렌터카 이동 포함)",
+   "days": 1,
+   "stops": [
+    {
+     "name": "성산일출봉 (UNESCO 세계자연유산)",
+     "nameEn": "Seongsan Ilchulbong (UNESCO World Natural Heritage)",
+     "spotId": 2733,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "섭지코지 (옵션)",
+     "nameEn": "Seopjikoji (optional stop)",
+     "spotId": 2729,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "만장굴 (UNESCO 거문오름 용암동굴계)",
+     "nameEn": "Manjanggul Cave (UNESCO Geomunoreum Lava Tube System)",
+     "spotId": 2646,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "비자림 (천연기념물 제374호)",
+     "nameEn": "Bijarim Forest (Natural Monument No. 374)",
+     "spotId": 2690,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "VisitJeju / 제주관광공사",
+    "source_url": "https://www.visitjeju.net/en/more/itinerary",
+    "as_of": "2026-08-22",
+    "review_by": "2027-03-01"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeju-C-R01",
+   "city": "jeju",
+   "title": "사려니숲길 + 용눈이오름 동부 중산간 코스",
+   "titleEn": "Saryeoni Forest + Yongnuni Oreum — East Midland Course",
+   "theme": "제주 중산간 숲길·오름 탐방",
+   "durationLabel": "반나절~하루 (4~6시간)",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "사려니숲길",
+     "nameEn": "Saryeoni Forest Road",
+     "spotId": 2699,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "용눈이오름",
+     "nameEn": "Yongnuni Oreum",
+     "spotId": 2792,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "VisitJeju / 제주관광공사",
+    "source_url": "https://www.visitjeju.net/en/more/itinerary",
+    "as_of": "2026-08-22",
+    "review_by": "2027-01-01"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeju-C-R02",
+   "city": "jeju",
+   "title": "우도 당일 섬 투어",
+   "titleEn": "Udo Island Day Tour",
+   "theme": "제주 부속 섬·우도봉·홍조단괴해빈",
+   "durationLabel": "당일 (4~6시간, 여객선 포함)",
+   "days": 1,
+   "stops": [
+    {
+     "name": "우도봉 (등반)",
+     "nameEn": "Udong Peak (hike)",
+     "spotId": 2085,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "서빈백사해수욕장 (홍조단괴해빈)",
+     "nameEn": "Seobinbaeksa Beach (coral sand beach)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    }
+   ],
+   "source": {
+    "provider": "VisitJeju / 제주관광공사",
+    "source_url": "https://www.visitjeju.net/en/attractions/beaches",
+    "as_of": "2026-08-22",
+    "review_by": "2027-01-01"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "gyeongju-C-001",
+   "city": "gyeongju",
+   "title": "경주 시내권 핵심 바이블",
+   "titleEn": "Core Gyeongju City Center: The Essential",
+   "theme": "신라 역사·문화유산 — 박물관·왕릉·첨성대·야경",
+   "durationLabel": "1~2일",
+   "days": null,
+   "stops": [
+    {
+     "name": "국립경주박물관",
+     "nameEn": "National Gyeongju Museum",
+     "spotId": 432,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "월정교",
+     "nameEn": "Woljeong Bridge",
+     "spotId": 436,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "첨성대",
+     "nameEn": "Cheomseongdae Observatory",
+     "spotId": 457,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "대릉원",
+     "nameEn": "Daereungwon Royal Tomb Complex",
+     "spotId": 454,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "동궁과 월지",
+     "nameEn": "Donggung Palace & Wolji Pond",
+     "spotId": 439,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "월성 발굴현장",
+     "nameEn": "Wolseong Excavation Site",
+     "spotId": 475,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "황리단길",
+     "nameEn": "Hwangridan-gil Street",
+     "spotId": 462,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "경주시 공식 관광포털",
+    "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2297",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "gyeongju-C-002",
+   "city": "gyeongju",
+   "title": "달빛테라피 '경주야경산책'",
+   "titleEn": "Moonlight Therapy: Gyeongju Night Walk",
+   "theme": "야간관광 — 일몰 이후 역사 유적지 야경·야시장",
+   "durationLabel": "반나절 (저녁~야간, 약 3시간 이상)",
+   "days": null,
+   "stops": [
+    {
+     "name": "황리단길 루프탑 카페",
+     "nameEn": "Hwangridan-gil Rooftop Café (start point)",
+     "spotId": 462,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "대릉원",
+     "nameEn": "Daereungwon Royal Tomb Complex",
+     "spotId": 454,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "첨성대",
+     "nameEn": "Cheomseongdae Observatory",
+     "spotId": 457,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "계림",
+     "nameEn": "Gyerim Forest",
+     "spotId": 425,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "월정교",
+     "nameEn": "Woljeong Bridge (night illumination)",
+     "spotId": 436,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "동궁과 월지",
+     "nameEn": "Donggung Palace & Wolji Pond (야간 조명)",
+     "spotId": 439,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "중앙시장 야시장",
+     "nameEn": "Jungang Market Night Market",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    }
+   ],
+   "source": {
+    "provider": "경주시 공식 관광포털 — 도보여행 코스",
+    "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2299",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "gyeongju-C-003",
+   "city": "gyeongju",
+   "title": "삼릉가는 길 — 두바퀴로 누비는 신라 흥망의 길",
+   "titleEn": "Route to Samneung: Cycling the Rise and Fall of Silla",
+   "theme": "자전거·역사 — 신라 발상지·왕릉·석불·솔숲",
+   "durationLabel": "반나절 (약 4시간)",
+   "days": null,
+   "stops": [
+    {
+     "name": "월정교",
+     "nameEn": "Woljeong Bridge (start)",
+     "spotId": 436,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "오릉",
+     "nameEn": "Oryeong (Five Royal Tombs)",
+     "spotId": 473,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "나정",
+     "nameEn": "Najeong (Birthplace of Park Hyeokgeose)",
+     "spotId": 468,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "포석정지",
+     "nameEn": "Poseokjeong Site",
+     "spotId": 481,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "배동석조여래삼존입상",
+     "nameEn": "Baedong Stone Buddha Triad",
+     "spotId": 665,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "삼릉",
+     "nameEn": "Samneung (Three Royal Tombs)",
+     "spotId": 530,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "플레이스씨",
+     "nameEn": "Place C (cultural complex)",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    }
+   ],
+   "source": {
+    "provider": "경주시 공식 관광포털 — 자전거 코스",
+    "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2300",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "gyeongju-C-R01",
+   "city": "gyeongju",
+   "title": "버스타GO '알짜배기 경주여행' (Route 10)",
+   "titleEn": "Route 10 Bus: Essential Gyeongju Tour",
+   "theme": "대중교통 — 시내버스 1대로 주요 관광지 순환",
+   "durationLabel": "자유 (하차 자유)",
+   "days": null,
+   "stops": [
+    {
+     "name": "터미널",
+     "nameEn": "Gyeongju Express Bus Terminal",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "경주역",
+     "nameEn": "Gyeongju Station",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "첨성대",
+     "nameEn": "Cheomseongdae Observatory",
+     "spotId": 457,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "분황사",
+     "nameEn": "Bunhwangsa Temple",
+     "spotId": 444,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "보문관광단지",
+     "nameEn": "Bomun Tourist Complex",
+     "spotId": 511,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "경주월드",
+     "nameEn": "Gyeongju World",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "엑스포공원",
+     "nameEn": "Expo Park",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "불국사",
+     "nameEn": "Bulguksa Temple",
+     "spotId": null,
+     "linkage": "UNCERTAIN"
+    },
+    {
+     "name": "국립경주박물관",
+     "nameEn": "National Gyeongju Museum",
+     "spotId": 432,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "동궁과 월지",
+     "nameEn": "Donggung Palace & Wolji Pond",
+     "spotId": 439,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "경주시 공식 관광포털 — 버스여행 코스",
+    "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2301",
+    "as_of": "2026-08-21"
+   },
+   "asOf": "2026-08-21"
+  },
+  {
+   "id": "jeonju-C-001",
+   "city": "jeonju",
+   "title": "전주 한옥마을 핵심 도보 코스",
+   "titleEn": "Jeonju Hanok Village Core Walking Route",
+   "theme": "역사·전통문화·도보",
+   "durationLabel": "2~3",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "경기전",
+     "nameEn": "Gyeonggijeon Shrine",
+     "spotId": 729,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "전동성당",
+     "nameEn": "Jeondong Catholic Cathedral",
+     "spotId": 1089,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "풍남문",
+     "nameEn": "Pungnammun Gate",
+     "spotId": 765,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "전주한옥마을",
+     "nameEn": "Jeonju Hanok Village",
+     "spotId": 749,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "청연루·남천교",
+     "nameEn": "Cheongyeonru Pavilion & Namcheon Bridge",
+     "spotId": 744,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "전주시 관광 (tour.jeonju.go.kr)",
+    "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+    "as_of": "2026-08-22"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeonju-C-002",
+   "city": "jeonju",
+   "title": "전주천·오목대 역사 산책 코스",
+   "titleEn": "Jeonjucheon Stream & Omokdae Historical Walk",
+   "theme": "역사·자연·도보",
+   "durationLabel": "2~3",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "전주천",
+     "nameEn": "Jeonjucheon Stream",
+     "spotId": 1126,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "한벽당",
+     "nameEn": "Hanbeoktang Pavilion",
+     "spotId": 763,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "오목대·이목대",
+     "nameEn": "Omokdae & Imokdae Pavilions",
+     "spotId": 764,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "조경단",
+     "nameEn": "Jogyeongdan Altar",
+     "spotId": 917,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "전주시 관광 (tour.jeonju.go.kr)",
+    "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+    "as_of": "2026-08-22"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeonju-C-003",
+   "city": "jeonju",
+   "title": "전주 전통문화 체험 & 미식 1일 코스",
+   "titleEn": "Jeonju Traditional Culture & Food Full-Day Route",
+   "theme": "음식·미식·전통공예·시장",
+   "durationLabel": "6~8",
+   "days": 1,
+   "stops": [
+    {
+     "name": "남부시장·청년몰",
+     "nameEn": "Nambu Market & Youth Mall",
+     "spotId": 742,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "전주비빔밥 거리 (풍남동)",
+     "nameEn": "Jeonju Bibimbap Restaurant Street (Pungnamdong)",
+     "spotId": null,
+     "linkage": "RELATION_OR_AREA_ONLY"
+    },
+    {
+     "name": "전주전통술박물관",
+     "nameEn": "Jeonju Traditional Liquor Museum",
+     "spotId": 1109,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "전주한지박물관",
+     "nameEn": "Jeonju Hanji Museum",
+     "spotId": 1125,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "남부시장 한옥마을 야시장",
+     "nameEn": "Nambu Market Hanok Village Night Market",
+     "spotId": 743,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "전주시 관광 / UNESCO 창의도시 미식 관광 (tour.jeonju.go.kr)",
+    "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+    "as_of": "2026-08-22"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeonju-C-R01",
+   "city": "jeonju",
+   "title": "덕진공원·전주향교 산책 코스",
+   "titleEn": "Deokjin Park & Jeonju Hyanggyo Nature & History Walk",
+   "theme": "자연·역사·계절",
+   "durationLabel": "2~3",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "덕진공원",
+     "nameEn": "Deokjin Park",
+     "spotId": 1098,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "전주향교",
+     "nameEn": "Jeonju Hyanggyo (Confucian Academy)",
+     "spotId": 1088,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "전주시 관광 (tour.jeonju.go.kr)",
+    "source_url": "https://tour.jeonju.go.kr/kor",
+    "as_of": "2026-08-22"
+   },
+   "asOf": "2026-08-22"
+  },
+  {
+   "id": "jeonju-C-R02",
+   "city": "jeonju",
+   "title": "완산칠봉꽃동산·한벽당 계절 코스",
+   "titleEn": "Wansanchilbong Flower Garden & Hanbeoktang Seasonal Route",
+   "theme": "자연·계절·역사",
+   "durationLabel": "2~3",
+   "days": 0.5,
+   "stops": [
+    {
+     "name": "완산꽃동산(완산칠봉꽃동산)",
+     "nameEn": "Wansan Flower Garden (Wansanchilbong)",
+     "spotId": 736,
+     "linkage": "EXACT_CANONICAL_LINK"
+    },
+    {
+     "name": "한벽당",
+     "nameEn": "Hanbeoktang Pavilion",
+     "spotId": 763,
+     "linkage": "EXACT_CANONICAL_LINK"
+    }
+   ],
+   "source": {
+    "provider": "전주시 관광 (tour.jeonju.go.kr)",
+    "source_url": "https://tour.jeonju.go.kr/kor",
+    "as_of": "2026-08-22"
+   },
+   "asOf": "2026-08-22"
+  }
+ ]
+}

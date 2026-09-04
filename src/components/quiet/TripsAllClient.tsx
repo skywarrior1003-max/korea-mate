@@ -7,17 +7,18 @@
 // masonry 금지: 모바일 1열 · 데스크톱 2열 동일 지오메트리.
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
-import { curatedTripsForCity } from "@/data/curated-trips";
+import { useTranslations, useLocale } from "next-intl";
+import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { quietCity } from "./quiet-data";
 
 export default function TripsAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
+  const locale = useLocale();
   const city = quietCity(slug);
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
-  const trips = curatedTripsForCity(slug);
+  const trips = getRecommendedTrips(slug);
 
   return (
     <div className="qh min-h-screen pb-20" style={{ backgroundColor: "var(--qh-paper)" }}>
@@ -35,16 +36,17 @@ export default function TripsAllClient({ slug }: { slug: string }) {
             {trips.map(trip => (
               <li key={trip.id} className="py-4 border-b border-[var(--qh-line)]">
                 <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="text-[16px] font-semibold text-[var(--qh-ink)] leading-snug">{trip.title}</h2>
-                  {trip.days && (
+                  <h2 className="text-[16px] font-semibold text-[var(--qh-ink)] leading-snug">{tripDisplayTitle(trip, locale)}</h2>
+                  {trip.days && Number.isInteger(trip.days) && trip.days >= 1 && (
                     <span className="flex-none whitespace-nowrap text-[12px] text-[var(--qh-faint)]">
-                      {trip.days}d{trip.stops ? ` · ${trip.stops} stops` : ""}
+                      {trip.days}d{trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}
                     </span>
                   )}
                 </div>
-                {trip.category && (
-                  <p className="mt-0.5 text-[12px] text-[var(--qh-faint)]">{t("officialCourse")} · {trip.category}</p>
-                )}
+                <p className="mt-0.5 text-[12px] text-[var(--qh-faint)]">
+                  {t("officialCourse")}
+                  {!Number.isInteger(trip.days) && trip.durationLabel && locale === "ko" ? ` · ${trip.durationLabel}` : ""}
+                </p>
                 {trip.theme && (
                   <p className="mt-1 text-[13px] leading-relaxed" style={{ color: "rgba(33,29,23,.6)" }}>{trip.theme}</p>
                 )}

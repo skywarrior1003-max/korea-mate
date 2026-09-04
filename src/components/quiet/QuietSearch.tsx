@@ -22,7 +22,7 @@ import type { CitySpot } from "@/data/cities/types";
 import { normalizeSearchQuery, matchesExploreSearch, exploreSearchTier } from "@/lib/explore-search-core";
 import { displayPlaceName } from "@/lib/place-display-name";
 import { cityVisual } from "@/lib/city-visual";
-import { CURATED_TRIPS } from "@/data/curated-trips";
+import { getAllRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { QUIET_CITIES, loadSearchSpots } from "./quiet-data";
 
 interface ResultRow {
@@ -81,15 +81,15 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
       }
       if (rows.length >= 2) break;
     }
-    // 2) curated trips — 제목·도시명 매칭
+    // 2) 5도시 공식 추천 여행 — 제목(원제+영문)·도시명 매칭
     let tripCount = 0;
-    for (const trip of CURATED_TRIPS) {
+    for (const trip of getAllRecommendedTrips()) {
       const cityLabel = tForm(`city_${trip.city.charAt(0).toUpperCase()}${trip.city.slice(1)}`);
-      const hay = `${trip.title} ${trip.city} ${cityLabel}`.toLowerCase();
+      const hay = `${trip.title} ${trip.titleEn ?? ""} ${trip.city} ${cityLabel}`.toLowerCase();
       if (hay.includes(ql)) {
         rows.push({
-          key: `trip-${trip.id}`, kind: "trip", title: trip.title,
-          meta: `${t("typeTrip")} · ${cityLabel}${trip.days ? ` · ${trip.days}d` : ""}`,
+          key: `trip-${trip.id}`, kind: "trip", title: tripDisplayTitle(trip, locale),
+          meta: `${t("typeTrip")} · ${cityLabel}${trip.days && Number.isInteger(trip.days) && trip.days >= 1 ? ` · ${trip.days}d` : ""}`,
           href: `/city/${trip.city}/trips`,
         });
         if (++tripCount >= 2) break;

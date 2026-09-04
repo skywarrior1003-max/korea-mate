@@ -1,0 +1,1055 @@
+{
+  "schema_version": "normalized-v1",
+  "city": "seoul",
+  "as_of": "2026-08-22",
+  "source_branch": "data/five-city-regional-content-handoff-v1",
+  "recommended_courses": [
+    {
+      "id": "seoul-C-001",
+      "title": "서울 도보관광: 경복궁 코스",
+      "title_en": "Seoul Guided Walking Tour: Gyeongbokgung Palace Course",
+      "theme": "조선왕조 역사·궁궐·광화문",
+      "traveler_fit": "처음 방문 외국인 여행자, 역사/궁궐 관심, 가족, 단체",
+      "recommended_reason": "서울관광재단(STO) 공식 운영 무료 도보관광 프로그램. 조선 최초·최대 궁궐 경복궁을 전문 해설사와 함께 탐방. 외국어(영·일·중) 가이드 제공. 광화문광장 해치마당~국립민속박물관까지 연결되는 역사 축.",
+      "duration": "약 2시간",
+      "days": 0.25,
+      "seasonality": "연중 (야외 구간 포함, 하절기 모자·물 권장)",
+      "difficulty": "평지·도보",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "경복궁 (광화문)",
+          "name_en": "Gyeongbokgung Palace (Gwanghwamun Gate)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "경복궁은 문화재청(cha.go.kr) 관리 유적으로 VisitSeoul API 1837 canonical에 미포함",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "근정전·향원정 일원",
+          "name_en": "Geunjeongjeon & Hyangwonjeong area",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "경복궁 내 핵심 구역 해설",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "국립민속박물관",
+          "name_en": "National Folk Museum of Korea",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "국립민속박물관 canonical 미확인 (검색 결과 없음)",
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "광화문광장 해치마당",
+          "name_en": "Gwanghwamun Square — Haechi Madang",
+          "canonical_id": "seoul-KOPj1ro8q",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "relation_note": "코스 마무리. 세종대왕상·이순신장군상·해치 조형물",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-C-002",
+      "title": "서울 도보관광: 북촌한옥마을 코스",
+      "title_en": "Seoul Guided Walking Tour: Bukchon Hanok Village Course",
+      "theme": "전통 한옥·600년 도시 역사·골목길",
+      "traveler_fit": "처음 방문 외국인, 한국 전통문화 관심, 커플, 사진 여행자",
+      "recommended_reason": "서울관광재단(STO) 공식 운영 무료 도보관광. 600년 서울 역사가 농축된 북촌한옥마을을 전문 가이드와 함께 탐방. 가회동 주요 골목, 한옥 전경, 창덕궁 방면까지 연결. 외국어 가이드 제공.",
+      "duration": "약 2~3시간",
+      "days": 0.5,
+      "seasonality": "연중 (봄·가을 단풍·꽃 시즌 특히 인기, 주말 혼잡 주의)",
+      "difficulty": "경사 구간 포함 (골목길 언덕)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "안국역 인근 집합",
+          "name_en": "Meeting point near Anguk Station",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "지하철역은 canonical place 아님",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "북촌한옥마을 (가회동 일원)",
+          "name_en": "Bukchon Hanok Village (Gahoe-dong)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "북촌한옥마을 canonical 미포함 — 관광안내소(KOP027189)만 존재",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "창덕궁 방면 (창덕궁길)",
+          "name_en": "Toward Changdeokgung Palace (Changdeokgung-gil)",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "창덕궁은 문화재청 관리, canonical 미포함",
+          "stop_role": null
+        },
+        {
+          "sequence": 4,
+          "name": "인사동",
+          "name_en": "Insadong",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "인사동 지역 canonical 미포함 — 식당·갤러리 개별 장소만 일부 존재",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-C-003",
+      "title": "국립중앙박물관·이촌한강 여름 코스",
+      "title_en": "National Museum & Ichon Han River — Seoul Summer Course",
+      "theme": "여름·자연·문화·한강 피서",
+      "traveler_fit": "여름 방문자, 문화·자연 복합 선호, 가족, 더위를 피하고 싶은 여행자",
+      "recommended_reason": "VisitSeoul 서울리스트 픽스(Seoulites' Picks) 2026 여름 서울 공식 편집. 무료입장 국립중앙박물관 내부(냉방·한국 보물) → 야외 연못 공원 → 이촌한강공원(석양)의 반나절 여름 피서 코스. 한강 공원은 연중 개방, 입장 무료.",
+      "duration": "반나절~하루 (4~6시간)",
+      "days": 0.5,
+      "seasonality": "여름(6월~8월) 특화. 박물관은 연중 무료 운영",
+      "difficulty": "평지·도보 (이촌역~한강공원 1.2km)",
+      "is_reserve": false,
+      "stops": [
+        {
+          "sequence": 1,
+          "name": "국립중앙박물관 야외 공원·연못",
+          "name_en": "National Museum of Korea — Outdoor Park & Pond",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "국립중앙박물관 canonical 미확인 (VisitSeoul API에 별도 포함 여부 미확인)",
+          "stop_role": null
+        },
+        {
+          "sequence": 2,
+          "name": "국립중앙박물관 내부",
+          "name_en": "National Museum of Korea — Interior",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "고려청자·신라금관·달항아리 등 한국 대표 유물. 무료입장. 수/토 야간 21:00까지",
+          "stop_role": null
+        },
+        {
+          "sequence": 3,
+          "name": "이촌한강공원",
+          "name_en": "Ichon Hangang Park",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "이촌한강공원 별도 canonical 미확인. 한강(nature) canonical seoul-KOP015060 부분 연관",
+          "stop_role": null
+        }
+      ],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단 Seoulites' Picks",
+        "source_url": "https://english.visitseoul.net/editorspicks/2026-SummerInSeoul/ENNn721f2",
+        "as_of": "2026-08-21",
+        "review_by": "2026-11-01",
+        "freshness_note": "여름 시즌 editorial. 박물관 운영시간은 별도 재확인 권장"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-C-R01",
+      "title": "서울 도보관광 야간: 낙산성곽 한양의 한밤중",
+      "title_en": "Seoul Night Walking Tour: Midnight in Hanyang (Naksan City Wall)",
+      "theme": "성곽·야경·낭만",
+      "traveler_fit": "야간관광 선호, 커플, 사진 여행자, 도시 야경 관심",
+      "recommended_reason": "서울관광재단 STO 공식 야간 도보관광 코스. 낙산성곽 일대를 밤에 탐방. 서울을 '한국의 몽마르뜨르'로 소개하는 코스. 커플 및 사진 여행자에게 인기. 야간 운영 특수.",
+      "duration": "약 2시간",
+      "days": null,
+      "seasonality": "봄·가을 특히 인기 (야간 기온 고려)",
+      "difficulty": null,
+      "is_reserve": true,
+      "stops": [],
+      "source": {
+        "provider": "서울관광재단 (STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "excluded_stale_recommended_now": [
+    {
+      "name": "수미조 40주년 기념 CONTINUUM",
+      "reason": "기준일(2026-08-21) 다음 날(8-22) 종료 예정. 사실상 종료 직전 — excluded 처리."
+    },
+    {
+      "name": "봄 시즌 벚꽃·봄꽃 행사류",
+      "reason": "봄 한정 계절 행사. 기준일(2026-08-21) 비해당."
+    },
+    {
+      "name": "겨울 시즌 야간 조명 축제류",
+      "reason": "겨울 한정 행사. 기준일 비해당."
+    }
+  ],
+  "recommended_now": [
+    {
+      "id": "seoul-RN-001",
+      "name": "KAWS: FRIENDS AND NEIGHBORS",
+      "name_en": "KAWS: FRIENDS AND NEIGHBORS",
+      "category": "현대미술 전시",
+      "why_now": "세계적 현대미술 작가 KAWS의 대형 전시. 2026년 7월 23일부터 12월 27일까지 Space K Seoul에서 열리는 장기 전시. 기준일 현재 운영 중. 외국인 방문자에게도 널리 알려진 글로벌 아티스트 작품.",
+      "valid_from": "2026-07-23",
+      "valid_to": "2026-12-27",
+      "review_by": "2026-12-27",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "EVENT_OR_TEMPORARY_CONTENT",
+      "is_reserve": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-RN-002",
+      "name": "The Art of Learning: 우리는 서로의 학교",
+      "name_en": "The Art of Learning: Becoming Each Other's School",
+      "category": "현대미술 전시",
+      "why_now": "2026년 8월 7일부터 9월 27일까지 아르코미술관에서 진행 중인 전시. 기준일 현재 운영 중. 대학로·마로니에공원 인근 위치로 접근성 좋음.",
+      "valid_from": "2026-08-07",
+      "valid_to": "2026-09-27",
+      "review_by": "2026-09-27",
+      "canonical_id": "seoul-KOP018992",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-RN-003",
+      "name": "서초 한강 아트투어",
+      "name_en": "Seocho Han River Art Tour",
+      "category": "야외 예술 체험·한강",
+      "why_now": "2026년 8월 6일부터 8월 30일까지 서초 한강 일대에서 진행되는 야외 아트 체험 행사. 기준일 현재 운영 중. 한강 + 예술의 조합으로 외국인 여행자에게도 추천.",
+      "valid_from": "2026-08-06",
+      "valid_to": "2026-08-30",
+      "review_by": "2026-08-30",
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-RN-R01",
+      "name": "서울, 세계와 노래하다",
+      "name_en": "Seoul, Singing with the World",
+      "category": "전시",
+      "why_now": "2026-08-21~08-23, 기준일 당일 시작. 단 3일 운영으로 현재 추천에 포함하기엔 유효기간이 너무 짧아 RESERVE 처리.",
+      "valid_from": "2026-08-21",
+      "valid_to": "2026-08-23",
+      "review_by": null,
+      "canonical_id": null,
+      "canonical_ids_all": null,
+      "linkage_type": "RELATION_OR_AREA_ONLY",
+      "is_reserve": true,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    },
+    {
+      "id": "seoul-RN-R02",
+      "name": "2026 한강 불빛 공연 : 드론라이트쇼",
+      "name_en": "2026 Han River Light Performance: Drone Light Show",
+      "category": "야간 공연·한강",
+      "why_now": "서울 한강에서 진행되는 드론 라이트쇼 시리즈. 여름 시즌 한강 야간관광 대표 콘텐츠. 구체적 공연 일정이 공식 source에서 확인되지 않아 RESERVE 처리.",
+      "valid_from": null,
+      "valid_to": null,
+      "review_by": null,
+      "canonical_id": "seoul-KOPij6dx2",
+      "canonical_ids_all": null,
+      "linkage_type": "EXACT_CANONICAL_LINK",
+      "is_reserve": true,
+      "source": {
+        "provider": "VisitSeoul (canonical 데이터)",
+        "source_url": "https://english.visitseoul.net/",
+        "as_of": "2026-08-21"
+      },
+      "as_of": "2026-08-21"
+    }
+  ],
+  "official_guides": [
+    {
+      "id": "seoul-G-KO-001",
+      "title": "서울관광안내서",
+      "type": "tourist_guidebook",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1154&fileTy=ATTACH&fileNo=7",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-KO-002",
+      "title": "서울관광지도",
+      "type": "tourist_map",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1152&fileTy=ATTACH&fileNo=5",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-KO-003",
+      "title": "서울 아트투어 가이드북 (TRAVEL FOR ARTS, SEOUL)",
+      "type": "theme_guidebook",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1240&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-KO-004",
+      "title": "서울 등산관광 안내서",
+      "type": "hiking_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1211&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-KO-005",
+      "title": "유니버설 관광 거버넌스 통합 가이드북 (2025)",
+      "type": "accessibility_guide",
+      "locales": [
+        "ko"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1238&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-06-01"
+    },
+    {
+      "id": "seoul-G-EN-001",
+      "title": "Seoul Tourist Guidebook",
+      "type": "tourist_guidebook",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1164&fileTy=ATTACH&fileNo=7",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-002",
+      "title": "Seoul Tourist Map",
+      "type": "tourist_map",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1153&fileTy=ATTACH&fileNo=5",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-003",
+      "title": "DISCOVER SEOUL PASS — Guide",
+      "type": "pass_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1111&fileTy=ATTACH&fileNo=9",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-004",
+      "title": "TRAVEL FOR ARTS, SEOUL",
+      "type": "theme_guidebook",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1241&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-005",
+      "title": "Seoul Hiking Tourism Guide Book",
+      "type": "hiking_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1212&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-006",
+      "title": "Inwangsan Trail Leaflet",
+      "type": "trail_leaflet",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1234&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-007",
+      "title": "Bukhansan Trail Leaflet",
+      "type": "trail_leaflet",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1229&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-008",
+      "title": "Bugaksan Trail Leaflet",
+      "type": "trail_leaflet",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1224&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-009",
+      "title": "Gwanaksan Trail Leaflet",
+      "type": "trail_leaflet",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1219&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-EN-010",
+      "title": "Guidebook for Universal Tourism Governance (2025)",
+      "type": "accessibility_guide",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1239&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-06-01"
+    },
+    {
+      "id": "seoul-G-EN-011",
+      "title": "Antennashop Seoul Guide Book",
+      "type": "regional_guidebook",
+      "locales": [
+        "en"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "Seoul Tourism Organization (STO)",
+      "source_url": null,
+      "download_url": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1254&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-001",
+      "title": "ソウル観光ガイドブック",
+      "type": "tourist_guidebook",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1165&fileTy=ATTACH&fileNo=7",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-002",
+      "title": "ソウル観光マップ",
+      "type": "tourist_map",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1159&fileTy=ATTACH&fileNo=5",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-003",
+      "title": "ディスカバーソウルパス (ツアーパス)",
+      "type": "pass_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1110&fileTy=ATTACH&fileNo=9",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-004",
+      "title": "ソウル登山観光 ガイドブック",
+      "type": "hiking_guide",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1217&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-005",
+      "title": "イヌァンサン(仁王山) コース",
+      "type": "trail_leaflet",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1235&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-006",
+      "title": "プカンサン(北漢山) コース",
+      "type": "trail_leaflet",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1230&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-007",
+      "title": "プガクサン(北岳山) コース",
+      "type": "trail_leaflet",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1225&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-JA-008",
+      "title": "クァナクサン(冠岳山) コース",
+      "type": "trail_leaflet",
+      "locales": [
+        "ja"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "ソウル観光財団 (STO)",
+      "source_url": null,
+      "download_url": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1220&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-001",
+      "title": "旅游指南",
+      "type": "tourist_guidebook",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1166&fileTy=ATTACH&fileNo=7",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-002",
+      "title": "旅游地图",
+      "type": "tourist_map",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1161&fileTy=ATTACH&fileNo=8",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-003",
+      "title": "首尔转转卡(旅游券)",
+      "type": "pass_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1082&fileTy=ATTACH&fileNo=9",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-004",
+      "title": "首尔登山 旅游指南",
+      "type": "hiking_guide",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1213&fileTy=ATTACH&fileNo=2",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-005",
+      "title": "仁王山路线",
+      "type": "trail_leaflet",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1236&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-006",
+      "title": "北汉山路线",
+      "type": "trail_leaflet",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1231&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-007",
+      "title": "北岳山路线",
+      "type": "trail_leaflet",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1226&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-ZH-008",
+      "title": "冠岳山路线",
+      "type": "trail_leaflet",
+      "locales": [
+        "zh-CN"
+      ],
+      "edition": null,
+      "issue_date": null,
+      "provider": "首尔观光财团 (STO)",
+      "source_url": null,
+      "download_url": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1221&fileTy=ATTACH&fileNo=1",
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-MULTI-001",
+      "title": "Attractive Seoul Map (Digital Tour Map)",
+      "type": "interactive_digital_map",
+      "locales": [],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울특별시 / Seoul Metropolitan Government",
+      "source_url": "https://map.seoul.go.kr/global/tourmap",
+      "download_url": null,
+      "review_by": "2027-01-01"
+    },
+    {
+      "id": "seoul-G-MULTI-002",
+      "title": "i-Tour Seoul 공식 관광 앱",
+      "type": "mobile_app",
+      "locales": [],
+      "edition": null,
+      "issue_date": null,
+      "provider": "서울관광재단 (STO)",
+      "source_url": null,
+      "download_url": null,
+      "review_by": "2027-01-01"
+    }
+  ],
+  "travel_utility": [
+    {
+      "id": "seoul-U-001",
+      "category": "지하철",
+      "title": "서울 지하철 — 도심 주요 이동 수단",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-002",
+      "category": "시내버스",
+      "title": "서울 시내버스 — 색상 구분 노선 체계",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-003",
+      "category": "AREX / 공항→도심",
+      "title": "인천국제공항 → 서울 도심: AREX 공항철도",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-004",
+      "category": "공항 리무진버스",
+      "title": "인천공항 → 서울 시내: 공항 리무진버스",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-005",
+      "category": "교통카드 — T-money",
+      "title": "T-money 교통카드 — 서울 대중교통 기본 카드",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-006",
+      "category": "교통카드 — T-money Mpass (외국인 관광객 대상)",
+      "title": "T-money Mpass — 외국인 관광객 교통 패스",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-007",
+      "category": "교통카드 — 기후동행카드 (Climate Card)",
+      "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-008",
+      "category": "택시",
+      "title": "서울 택시 — 일반·고급·국제관광택시",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-009",
+      "category": "관광 패스 — Discover Seoul Pass",
+      "title": "다스서울패스 (Discover Seoul Pass) — 외국인 전용 관광 통합 패스",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-010",
+      "category": "관광안내소",
+      "title": "서울 관광안내소 — 다국어 방문자 지원",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-011",
+      "category": "관광 핫라인",
+      "title": "관광 안내 전화 1330",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-012",
+      "category": "면세·세금환급 (Tax Refund)",
+      "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    },
+    {
+      "id": "seoul-U-013",
+      "category": "Visit Seoul 공식 앱",
+      "title": "i-Tour Seoul — 서울 공식 관광 앱",
+      "summary": null,
+      "eligibility": null,
+      "locales": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN"
+      ],
+      "provider": null,
+      "source_url": null,
+      "as_of": "2026-08-21",
+      "review_by": null,
+      "freshness_note": null
+    }
+  ],
+  "source_summary": {
+    "source_files": [
+      "data/regional-recommendations/seoul/seoul-recommended-courses-v1.json",
+      "data/regional-recommendations/seoul/seoul-recommended-now-v1.json",
+      "data/regional-recommendations/seoul/seoul-official-guides-v1.json",
+      "data/regional-recommendations/seoul/seoul-travel-utility-v1.json"
+    ],
+    "source_course_key": "final_recommended_courses",
+    "source_rn_stale_key": "stale_or_excluded",
+    "stop_structure_in_source": "mixed_or_list"
+  },
+  "quality_metadata": {
+    "source_courses_final": 3,
+    "source_courses_reserve": 1,
+    "normalized_courses_total": 4,
+    "normalized_courses_final": 3,
+    "normalized_courses_reserve": 1,
+    "total_course_stops": 11,
+    "course_stops_final": 11,
+    "course_stops_reserve": 0,
+    "source_rn_final": 3,
+    "source_rn_reserve": 2,
+    "source_rn_stale": 3,
+    "normalized_rn_final": 3,
+    "normalized_rn_reserve": 2,
+    "normalized_guides": 34,
+    "normalized_utility": 13,
+    "course_stop_linkage": {
+      "RELATION_OR_AREA_ONLY": 10,
+      "EXACT_CANONICAL_LINK": 1
+    },
+    "rn_linkage": {
+      "EVENT_OR_TEMPORARY_CONTENT": 1,
+      "EXACT_CANONICAL_LINK": 2,
+      "RELATION_OR_AREA_ONLY": 2
+    },
+    "source_records_dropped": 0,
+    "recommendation_records_dropped": 0,
+    "provenance_dropped": 0,
+    "known_issues": [
+      "RELATION 10건(코스 stops): 서울 주요 관광지(경복궁·국립민속박물관 등) VisitSeoul canonical 미포함. 의도적 공백."
+    ]
+  }
+}

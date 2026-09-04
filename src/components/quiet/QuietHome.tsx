@@ -18,9 +18,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { cityVisual } from "@/lib/city-visual";
-import { curatedTripsForCity } from "@/data/curated-trips";
+import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { QUIET_CITIES } from "./quiet-data";
 import QuietSearch from "./QuietSearch";
 
@@ -29,6 +29,7 @@ const COVER_IMG = cityVisual("busan"); // 서비스 도시 대표 비주얼 — 
 export default function QuietHome() {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
+  const locale = useLocale();
   const coverRef = useRef<HTMLElement>(null);
   const floorRef = useRef<HTMLElement>(null);
   const [overCover, setOverCover] = useState(true);
@@ -66,9 +67,11 @@ export default function QuietHome() {
     floorRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
   }, []);
 
-  // 홈 Picks: curated 코스에서 3개(현재 저장소의 curated = 경주 공식 코스).
-  // 다른 도시 코스가 추가되면 자연히 섞인다 — 하드코드 제목 없음.
-  const picks = curatedTripsForCity("gyeongju").slice(0, 3);
+  // 홈 Picks: 5도시 공식 추천에서 도시 교차로 3개(부산·서울·제주의 첫 코스).
+  // 결정적 선택 — 회전/랜덤/랭킹은 이 단계에서 발명하지 않는다(OPEN).
+  const picks = ["busan", "seoul", "jeju"]
+    .map(c => getRecommendedTrips(c)[0])
+    .filter((tr): tr is NonNullable<typeof tr> => Boolean(tr));
 
   return (
     <div className="qh" style={{ backgroundColor: "var(--qh-paper)" }}>
@@ -152,10 +155,10 @@ export default function QuietHome() {
                 )}
                 <span className="absolute inset-x-0 bottom-0 h-[64px]" style={{ background: "linear-gradient(180deg,transparent,rgba(10,10,8,.6))" }} />
               </span>
-              <span className="block mt-2 text-[16px] font-semibold text-[var(--qh-ink)]">{picks[0].title}</span>
+              <span className="block mt-2 text-[16px] font-semibold text-[var(--qh-ink)]">{tripDisplayTitle(picks[0], locale)}</span>
               <span className="block mt-0.5 text-[12.5px] text-[var(--qh-faint)]">
                 {t("typeTrip")} · {tForm(`city_${picks[0].city.charAt(0).toUpperCase()}${picks[0].city.slice(1)}`)}
-                {picks[0].days ? ` · ${picks[0].days}d` : picks[0].category ? ` · ${picks[0].category}` : ""}
+                {picks[0].days && Number.isInteger(picks[0].days) && picks[0].days >= 1 ? ` · ${picks[0].days}d` : ""}
               </span>
             </Link>
           )}
@@ -170,10 +173,10 @@ export default function QuietHome() {
                     )}
                   </span>
                   <span className="flex-1 min-w-0">
-                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{p.title}</span>
+                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{tripDisplayTitle(p, locale)}</span>
                     <span className="block text-[12px] text-[var(--qh-faint)] truncate">
                       {t("typeTrip")} · {tForm(`city_${p.city.charAt(0).toUpperCase()}${p.city.slice(1)}`)}
-                      {p.days ? ` · ${p.days}d` : p.category ? ` · ${p.category}` : ""}
+                      {p.days && Number.isInteger(p.days) && p.days >= 1 ? ` · ${p.days}d` : ""}
                     </span>
                   </span>
                 </Link>

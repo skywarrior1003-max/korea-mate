@@ -8,7 +8,7 @@
 //
 // 부산 등 다른 도시의 curated 코스는 아직 저장소에 없다. 없는 도시는 빈 배열을
 // 반환하고, 화면은 "준비 중" 사실 문구를 보여 준다(가짜 목록 금지).
-import raw from "./curated-trips.json";
+import raw from "./curated-trips.json" with { type: "json" };
 
 export interface CuratedTrip {
   id: string;

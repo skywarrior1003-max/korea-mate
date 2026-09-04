@@ -16,6 +16,7 @@ import { isFavorited, FAVORITES_EVENT } from "@/lib/favorites";
 import { togglePlaceSaved } from "@/lib/place-actions/place-actions-core";
 import { toEventItem } from "@/components/ExploreCity";
 import { loadCitySpots, quietCity } from "./quiet-data";
+import { recommendedSpotIds } from "@/data/regional/regional-recommendations";
 
 export default function PlacesAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
@@ -37,7 +38,16 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
 
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
-  const list = (spots ?? []).filter(s => s.image).concat((spots ?? []).filter(s => !s.image));
+  // 공식 recommended_now 의 canonical 연결 장소를 먼저, 그 뒤 카탈로그(사진 우선).
+  // 배지·순위 숫자는 붙이지 않는다 — 정렬 provenance 만.
+  const list = (() => {
+    const all = spots ?? [];
+    const ids = recommendedSpotIds(slug);
+    const byId = new Map(all.map(s => [Number(s.id), s]));
+    const official = ids.map(id => byId.get(id)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+    const rest = all.filter(s => !official.includes(s));
+    return [...official, ...rest.filter(s => s.image), ...rest.filter(s => !s.image)];
+  })();
 
   const onSave = (e: React.MouseEvent, spot: CitySpot) => {
     e.preventDefault();
