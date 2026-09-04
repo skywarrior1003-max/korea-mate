@@ -129,16 +129,9 @@ export default function TripCover({
             ))}
           </div>
 
-          {(copyCount > 0 || helpfulCount > 0) && (
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 pt-4 text-sm font-bold">
-              {copyCount > 0 && (
-                <span style={{ color: CORAL }}>Copied {copyCount}×</span>
-              )}
-              {helpfulCount > 0 && (
-                <span className="text-emerald-400">{helpfulCount} found it helpful</span>
-              )}
-            </div>
-          )}
+          {/* RELEASE-CLEANUP-V1: 공개 반응 문법은 Heart=Like 하나다. legacy
+              Copied×·helpful 카운트 공개 노출은 제거 — copy/helpful 데이터와
+              props 계약은 보존한다(내부·랭킹 용도). */}
 
           {/* Trip highlights — 일정의 실제 장소. 사진 촬영지가 아님을 시각적으로 분리 */}
           {highlights.length > 0 && (

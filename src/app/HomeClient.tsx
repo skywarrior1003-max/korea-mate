@@ -19,7 +19,6 @@ import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
 import { localInfoSourceKey } from "@/lib/place-identity";
 import { haversineKm, fmtDist } from "@/lib/geo";
-import CityQuickLinks from "@/components/CityQuickLinks";
 import QuietHome from "@/components/quiet/QuietHome";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
@@ -1565,94 +1564,9 @@ export default function HomeClient() {
         <AdBanner />
       </div>
 
-      {/* ── City Quick Links ─────────────────────────────────────── */}
-      <CityQuickLinks />
-
-      {/* ── Essential for Foreign Travelers ─────────────────────── */}
-      <section id="essential" className="py-20" style={{ backgroundColor: "#f0f4ff" }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-              {th("essentialTitle")}
-            </h2>
-            <p className="text-base font-medium text-gray-500">
-              {th("essentialSub")}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: "✈️",
-                title: "Airport Limousine",
-                desc: "Private car from Incheon/Gimhae Airport straight to your hotel. No subway stress with luggage.",
-                href: resolveOffer("airport_transfer", locale, { variant: "literal" })?.url ?? "",
-                cta: "Book Transfer →",
-                external: true,
-                highlight: true,
-              },
-              {
-                icon: "📱",
-                title: "Stay Connected",
-                desc: "Get your Korea eSIM before landing. No registration hassle.",
-                href: resolveOffer("esim", locale)?.url ?? "",
-                cta: "Get 10% Off eSIM →",
-                external: true,
-                highlight: false,
-              },
-              {
-                icon: "🚇",
-                title: th("cardTransportTitle"),
-                desc: th("cardTransportDesc"),
-                href: "/survival-guide",
-                cta: th("cardCtaGuide"),
-                external: false,
-                highlight: false,
-              },
-              {
-                icon: "💳",
-                title: th("cardCashTitle"),
-                desc: th("cardCashDesc"),
-                href: "/survival-guide",
-                cta: th("cardCtaGuide"),
-                external: false,
-                highlight: false,
-              },
-            ]
-              // Trip-Flow Commerce (§14-1-A) — 홈은 일정 생성 이전 단계다.
-              // external 카드는 제휴 판매 CTA 이므로 게이트가 false 면 제외한다.
-              // 내부 링크 카드(external: false)는 그대로 유지된다.
-              .filter((card) => TRIP_FLOW_COMMERCE_ENABLED || !card.external)
-              .map((card) => (
-              <div
-                key={card.title}
-                className={`rounded-2xl p-8 shadow-sm flex flex-col ${card.highlight ? "border-2 bg-white" : "bg-white border border-gray-100"}`}
-                style={card.highlight ? { borderColor: "#FF4A2D" } : {}}
-              >
-                {card.highlight && (
-                  <span className="self-start mb-3 px-2.5 py-0.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest" style={{ backgroundColor: "#FF4A2D" }}>
-                    🔥 MUST BOOK
-                  </span>
-                )}
-                <div className="text-4xl mb-4">{card.icon}</div>
-                <h3 className="text-xl font-black text-gray-900 mb-2">{card.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-6 flex-1">{card.desc}</p>
-                {card.external ? (
-                  <a href={card.href} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: "#FF4A2D" }}>
-                    {card.cta}
-                  </a>
-                ) : (
-                  <Link href={card.href}
-                    className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-bold text-gray-900 border-2 border-gray-200 hover:border-gray-400 transition-colors">
-                    {card.cta}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* RELEASE-CLEANUP-V1: City Quick Links · #essential 카드는 Home 에서 제거.
+          도시 진입은 Floor 의 5도시 타일이, 생존 정보는 /survival-guide 페이지가
+          담당한다 — 콘텐츠 원천(페이지·데이터)은 그대로다. */}
 
       {/* ══════════════════════════════════════════════════════════
           메인 스팟 콘텐츠 — 4섹션 구획 / 검색 통합 모드
@@ -2145,37 +2059,8 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ── Survival Guide Preview ──────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: "#1a1f36" }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">{th("survivalTitle")}</h2>
-            <p className="text-base font-medium text-gray-400">{th("survivalSub")}</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { icon: "🚇", title: th("svTransitTitle"), desc: th("svTransitDesc") },
-              { icon: "💳", title: th("svPayTitle"),     desc: th("svPayDesc") },
-              { icon: "🍜", title: th("svSoloTitle"),    desc: th("svSoloDesc") },
-            ].map((card) => (
-              <Link
-                key={card.title}
-                href="/survival-guide"
-                className="group rounded-2xl p-8 flex flex-col gap-3 border border-white/10 transition-all hover:bg-white/10"
-                style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
-              >
-                <div className="text-4xl">{card.icon}</div>
-                <h3 className="text-xl font-black text-white">{card.title}</h3>
-                <p className="text-sm font-medium text-gray-400">{card.desc}</p>
-                <span className="text-sm font-bold mt-2 group-hover:underline" style={{ color: "#FF4A2D" }}>
-                  {th("readMore")}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      {/* RELEASE-CLEANUP-V1: Survival Guide Preview 다크 섹션 제거 — /survival-guide
+          페이지는 데스크톱 내비·푸터에서 그대로 접근된다. */}
       {/* ── 푸터 ────────────────────────────────────────────────── */}
       <footer className="py-12 px-4" style={{ backgroundColor: "#111827" }}>
         <div className="max-w-7xl mx-auto">

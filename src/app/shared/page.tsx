@@ -503,7 +503,7 @@ export default function SharedTripPage() {
               Copied·Helpful 은 Trip Cover 가 담당하므로 여기서는 view_count 만 남긴다. */}
           {(trip.view_count ?? 0) >= 2 && (
             <div className="mb-6 flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
-              <span className="text-amber-400">🔥 {trip.view_count} views</span>
+              <span className="text-amber-400">{trip.view_count} views</span>
             </div>
           )}
 

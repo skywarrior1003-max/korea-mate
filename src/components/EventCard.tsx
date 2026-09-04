@@ -134,7 +134,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         {/* Trending 뱃지 */}
         {event.isTrending && (
           <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500 text-white shadow">
-            🔥 {tE("trendingBadge")}
+            {tE("trendingBadge")}
           </span>
         )}
 

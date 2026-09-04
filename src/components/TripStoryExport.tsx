@@ -377,7 +377,7 @@ export default function TripStoryExport({
       if (sid) reportShareEvent("story", sid, "copy_link");
     } catch { /* 무시 */ }
     // 3. 배너 노출 (3초 후 자동 소멸)
-    setFallbackMsg(`📥 ${t("savedAndCopied")}`);
+    setFallbackMsg(t("savedAndCopied"));
     setTimeout(() => setFallbackMsg(null), 3500);
   }, [pngFilename, t]);
 
@@ -469,7 +469,7 @@ export default function TripStoryExport({
       <div className="bg-[#1a1a2e] rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl">
         {/* 헤더 */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-          <h2 className="text-base font-black text-white">🎴 {t("cardTitle")}</h2>
+          <h2 className="text-base font-black text-white">{t("cardTitle")}</h2>
           <button onClick={onClose} className="text-white/40 hover:text-white text-xl cursor-pointer">✕</button>
         </div>
 
@@ -509,7 +509,7 @@ export default function TripStoryExport({
               className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all disabled:opacity-50 cursor-pointer"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              {rendering ? t("creating") : photoError ? `↻ ${t("tryAgain")}` : `✨ ${t("createCard")}`}
+              {rendering ? t("creating") : photoError ? `↻ ${t("tryAgain")}` : t("createCard")}
             </button>
           ) : (
             <>
@@ -536,7 +536,7 @@ export default function TripStoryExport({
                   onClick={handleDownload}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                 >
-                  ⬇️ {t("saveImage")}
+                  {t("saveImage")}
                 </button>
                 <button
                   onClick={handleCopyLink}
@@ -545,7 +545,7 @@ export default function TripStoryExport({
                     ? { backgroundColor: "#065f46", borderColor: "#10b981", color: "#6ee7b7" }
                     : { backgroundColor: "transparent", borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.7)" }}
                 >
-                  {copied ? `✅ ${t("linkCopied")}` : `🔗 ${t("copyLink")}`}
+                  {copied ? `✓ ${t("linkCopied")}` : t("copyLink")}
                 </button>
               </div>
 

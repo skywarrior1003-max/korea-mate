@@ -248,7 +248,7 @@ export default function EventDetailModal({ event, onClose, displayName, displayD
           {/* 뱃지들 */}
           <div className="absolute top-4 left-16 flex flex-wrap gap-2">
             {event.isTrending && (
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-500 text-white">🔥 {tModal("trending")}</span>
+              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-500 text-white">{tModal("trending")}</span>
             )}
             {event.isAnchor && (
               <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400 text-gray-900">⭐ {tModal("anchor")}</span>

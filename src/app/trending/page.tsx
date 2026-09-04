@@ -241,14 +241,10 @@ function TrendingContent() {
                     </span>
                   </div>
                   <div className="flex items-center gap-3 text-xs font-semibold text-gray-400 border-t border-gray-100 pt-3">
+                    {/* RELEASE-CLEANUP-V1: 공개 helpful 배지·공개 copy count 는 제거.
+                        정렬(legacy score)은 서버 그대로 — 카드에는 중립 메타(views)만 남긴다. */}
                     {trip.view_count >= 2 && (
-                      <span className="text-amber-500">🔥 {tH("views", { n: trip.view_count })}</span>
-                    )}
-                    {(trip.helpful_count ?? 0) >= 1 && (
-                      <span className="text-emerald-500">👍 {tH("helpful", { n: trip.helpful_count ?? 0 })}</span>
-                    )}
-                    {(trip.copy_count ?? 0) >= 1 && (
-                      <span className="text-blue-500">📋 {tH("copies", { n: trip.copy_count ?? 0 })}</span>
+                      <span>{tH("views", { n: trip.view_count })}</span>
                     )}
                   </div>
                 </Link>
@@ -273,7 +269,7 @@ function TrendingContent() {
         <div className="relative flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-6">
           <div>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-orange-400 border border-orange-400/30 bg-orange-400/10 mb-4 uppercase tracking-widest">
-              🔥 {t("eyebrowAll")}
+              {t("eyebrowAll")}
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-2">
               {t("title")}
