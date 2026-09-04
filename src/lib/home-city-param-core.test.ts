@@ -24,8 +24,8 @@ test("seoul query goes to its city entry — 아직 열지 않았다", () => {
   assert.deepEqual(resolveCityParam("seoul"), { kind: "redirect", href: "/seoul/" });
 });
 
-test("jeju query goes to its city entry — 아직 열지 않았다", () => {
-  assert.deepEqual(resolveCityParam("jeju"), { kind: "redirect", href: "/jeju/" });
+test("jeju query keeps the Jeju planner context — JEJU ACTIVATION 으로 열렸다", () => {
+  assert.deepEqual(resolveCityParam("jeju"), { kind: "planner", city: "Jeju" });
 });
 
 test("gyeongju query keeps the Gyeongju planner context", () => {
@@ -37,7 +37,7 @@ test("capitalised city names from clone links still resolve", () => {
   assert.deepEqual(resolveCityParam("Busan"),    { kind: "planner", city: "Busan" });
   assert.deepEqual(resolveCityParam("Gyeongju"), { kind: "planner", city: "Gyeongju" });
   // 대소문자·공백 처리는 그대로다. 열려 있지 않은 도시는 진입 화면으로 간다.
-  assert.deepEqual(resolveCityParam("  jEjU  "), { kind: "redirect", href: "/jeju/" });
+  assert.deepEqual(resolveCityParam("  jEjU  "), { kind: "planner", city: "Jeju" });
 });
 
 // ── 미지원 도시 — 진입 화면으로 ─────────────────────────────────────────────

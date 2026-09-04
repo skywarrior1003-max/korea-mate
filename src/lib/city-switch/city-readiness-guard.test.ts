@@ -101,6 +101,15 @@ test("★등록만 하고 프리셋을 넣지 않은 도시가 남아 있는지 
   assert.deepEqual(notYet, [], `프리셋이 아직 없는 도시: ${notYet.join(", ")}`);
 });
 
+// ── 오너 활성화 스냅숏 ───────────────────────────────────────────────────────
+// planningReady 는 도시별 명시적 Activation task 로만 바뀐다. 이 스냅숏이
+// 현재 오너가 승인한 활성 집합이다 — 의도 없는 스위치 변경은 여기서 걸린다.
+// (JEJU-PLANNER-PRODUCTION-ACTIVATION-V1: jeju true 승격)
+test("★활성화 스위치는 오너 승인 집합 그대로다 — busan·gyeongju·jeju ON / seoul·jeonju OFF", () => {
+  const state = Object.fromEntries(SLUGS.map(s => [s, configOf(s).planningReady]));
+  assert.deepEqual(state, { busan: true, seoul: false, jeju: true, gyeongju: true, jeonju: false });
+});
+
 // ── 규칙 자체 ────────────────────────────────────────────────────────────────
 const base: CityReadinessInput = {
   name: "Testville", planningReady: true,
