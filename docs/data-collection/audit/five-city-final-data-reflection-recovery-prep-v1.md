@@ -13,7 +13,7 @@
 |---|---|---|
 | jeju-l10n-apply-v1.sql | `f5a7e8d5e315bd1239c0568be360a7c9d5df242ca918643028194b4cffa123f3` | 제주 1,483곳 name_l10n/desc_l10n 반영(기존 키 우선 병합·idempotent) |
 | jeju-l10n-precheck-v1.sql / -readback-v1.sql | (READ-ONLY) | 적용 전/후 검증 |
-| gyeongju-owner-two-images-apply-v1.sql | `dce913d664b21ef94053753b73ab6f283c8ddf51b6dba3002504707002d26aaa` | 동궁과 월지(439)·자동차박물관(506) 공식 이미지 + primary |
+| gyeongju-owner-two-images-apply-v1.sql | `dce913d664b21ef94053753b73ab6f283c8ddf51b6dba3002504707002d26aaa` | 동궁과 월지(439)·자동차박물관(506) — **SUPERSEDED — DO NOT APPLY**(2026-09-05, `gyeongju-official-page-images-*-v2` 가 완전 대체) |
 | gyeongju-…-precheck/-readback-v1.sql | (READ-ONLY) | 〃 |
 
 ## 2. Jeju multilingual — 근거와 수치

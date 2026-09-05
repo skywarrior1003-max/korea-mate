@@ -44,6 +44,8 @@
 
 ## 4. 복구 패키지 (immutable)
 
+> ⚠ **v1 패키지는 v2 로 대체됨(2026-09-05, FINALIZE-V1 태스크) — §7. v1 은 HISTORICAL — DO NOT APPLY.**
+
 `data/main-intake/five-city-reflection-recovery-v1/`
 
 | 파일 | 내용 |
@@ -70,6 +72,28 @@
   total 888 · insertable 888 · prim_rows 132 · prim_blocked 0 · spots 133 · missing_spot 0 · bad_source 0.
 - 중복 relation 0 · spot 당 primary ≤1 · 행 정합 888 = 813+74+1 (기존 84 = 74+9 stamp+1 pick7_img24).
 - Production 기준선: 133 전수 relation 0·primary 0·image_url 0 (경주생활체육공원 505 만 unpublished — 반영은 무관).
+
+## 6-1. FINALIZE v2 (2026-09-05 — TASK-…-DONGGUNG-OWNER-PRIMARY-LOCK-AND-GYEONGJU-APPLY-PACKAGE-FINALIZE-V1)
+
+**Owner 최종 선택: 동궁과 월지 primary = 후보표 3번.** Owner review 페이지(9종, 게시 순서 그대로 —
+재정렬 0)의 3번 = **`moonCourse13.jpg`**(`https://www.gyeongju.go.kr/design/tour2019/img/sub/moonCourse13.jpg`,
+게재 페이지 mnu_uid 2299, alt "동궁과 월지 야경", 1380×600px·187,452B·image/jpeg 200 실측).
+provenance-exact-match-recovery-prep-v1 §4 표의 3행과도 동일 — OWNER_PRIMARY_OVERRIDE=TRUE ·
+OWNER_SELECTED_CANDIDATE=3.
+
+- **v2 = 유일 authoritative 패키지**: `gyeongju-official-page-images-{master,apply,precheck,readback}-v2`.
+  v1 대비 변경은 439 한 곳뿐 — owner #3 를 primary(sort 1)로 추가, 기존 슬라이더 8행 sort 2..9 이동,
+  primary_pending 해소. **다른 132곳 880행은 v1 과 byte-identical**(검증 완료).
+- 합계: relation **889** · primary **133/133** · image_url 예상 **133** · pending 0 · stamp gif 0 ·
+  자동차박물관 506 primary pick7_img24 유지.
+- apply v2 sha256 `30f9862b740615aaf31685ff439e7ab5742c4f58ad6604e37f9bf58a6fefd86a`.
+- 검증(2026-09-05): 서버측 READ-ONLY dry-run — total 889·insertable 889·prim_rows 133·prim_blocked 0·
+  spots 133·missing_spot 0·bad_source 0·dg_owner3_prim 1·stamp 0·non_gyeongju 0. precheck v2 실서버 실측 —
+  targets 133·published 132·has_img 0·rel 0·prim 0·dg 0/0·cm 0·무관 경주 relation 274(직전과 drift 0).
+- **적용 대상 지정**: Production 에는 **v2 apply 단 하나만** 실행한다.
+  `gyeongju-exact38-*` = SUPERSEDED · `gyeongju-owner-two-images-apply-v1.sql` = **SUPERSEDED — DO NOT APPLY**
+  (Owner #3 가 moonCourse13 로 확정되어 439 부분까지 v2 가 완전 포함 — 별도 실행 불필요·금지) ·
+  `…official-page-images-*-v1` = HISTORICAL — DO NOT APPLY.
 
 ## 6. 발견 사항 (수정하지 않음 — Owner 보고)
 

@@ -48,6 +48,10 @@ Owner 야경 지정본 확정 후 실행한다.
 
 ## 4. 동궁과 월지 — OWNER CONFIRMATION REQUIRED
 
+> ✅ **해소(2026-09-05)**: Owner 가 아래 후보표 **3번 = moonCourse13.jpg** 를 primary 로 최종 지정.
+> 반영은 `gyeongju-official-page-images-*-v2` 패키지(유일 apply 대상). `gyeongju-owner-two-images-apply-v1.sql`
+> 은 **SUPERSEDED — DO NOT APPLY**.
+
 repo·로컬 기록 전수 탐색 결과 과거 지정본의 파일명/URL 증거 **없음** →
 OWNER_SELECTED_EXACT_IMAGE = **NO**. 임의 선택·moonCourse13 자동 확정 **하지 않음**.
 공식 야경 후보 9종(전부 gyeongju.go.kr, 클릭 확인 가능):
