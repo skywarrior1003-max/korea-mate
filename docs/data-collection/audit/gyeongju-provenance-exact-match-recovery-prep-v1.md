@@ -1,5 +1,9 @@
 # 경주 provenance 정확명 매칭 복구 준비 v1 (2026-09-05)
 
+> ⚠ **SUPERSEDED (2026-09-05)** — `gyeongju-exact38-*` 패키지는
+> `gyeongju-official-page-images-*` (OFFICIAL-PAGE-IMAGE-GAPFILL-V1, 133 전수) 로 대체됨.
+> **DO NOT APPLY SEPARATELY.** 상세: `gyeongju-official-page-image-gapfill-v1.md` §4.
+
 > TASK-GOKOREAMATE-GYEONGJU-PROVENANCE-EXACT-MATCH-RECOVERY-PREP-V1 (Owner 승인 B 경로).
 > 상위: gyeongju-official-image-api-completion-status-v1(HOLD 배경) · recovery-prep v1 · 감사 v1.
 > Production 실행 없음 — 적용은 별도 Owner 승인 PROD-SQL 태스크.
