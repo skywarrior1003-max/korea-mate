@@ -1,0 +1,26 @@
+{
+ "probed_at": "2026-09-05T04:47:19.990155Z",
+ "note": "serviceKey redacted",
+ "results": {
+  "GJ01": {
+   "resultCode": "00",
+   "totalCount": 159
+  },
+  "GJ03": {
+   "resultCode": "00",
+   "totalCount": 0
+  },
+  "GJ04": {
+   "resultCode": "00",
+   "totalCount": 0
+  },
+  "GJ05": {
+   "resultCode": "00",
+   "totalCount": 0
+  },
+  "GJ06": {
+   "resultCode": "00",
+   "totalCount": 10
+  }
+ }
+}
