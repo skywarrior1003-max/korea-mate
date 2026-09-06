@@ -1350,6 +1350,9 @@
     "travelEssentials": "旅行实用信息",
     "ongoing": "进行中",
     "upcoming": "即将开始",
-    "eventsSoon": "{city}的活动信息正在准备中。"
+    "eventsSoon": "{city}的活动信息正在准备中。",
+    "planCity": "制定{city}行程",
+    "planCitySub": "在这座城市开始你自己的行程",
+    "courseNoStops": "该路线的详细站点正根据官方指南准备中。"
   }
 }

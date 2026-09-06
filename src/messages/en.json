@@ -1350,6 +1350,9 @@
     "travelEssentials": "TRAVEL ESSENTIALS",
     "ongoing": "Ongoing",
     "upcoming": "Upcoming",
-    "eventsSoon": "Events in {city} are on the way."
+    "eventsSoon": "Events in {city} are on the way.",
+    "planCity": "Plan a {city} trip",
+    "planCitySub": "Start your own itinerary in this city",
+    "courseNoStops": "Detailed stops for this course are being prepared from the official guide."
   }
 }

@@ -1350,6 +1350,9 @@
     "travelEssentials": "旅の実用情報",
     "ongoing": "開催中",
     "upcoming": "開催予定",
-    "eventsSoon": "{city}のイベント情報を準備中です。"
+    "eventsSoon": "{city}のイベント情報を準備中です。",
+    "planCity": "{city}の日程をつくる",
+    "planCitySub": "この都市で自分の旅程を始めましょう",
+    "courseNoStops": "このコースの詳しい構成は公式案内をもとに準備中です。"
   }
 }

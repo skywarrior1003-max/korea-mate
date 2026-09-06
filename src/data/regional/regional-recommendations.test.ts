@@ -108,6 +108,17 @@ test("표시 규칙: 번역 창작 없음 — locale 별 제목은 원문 필드
   if (noEn) assert.equal(tripDisplayTitle(noEn, "en"), noEn.title); // 없으면 원제 — 창작 금지
 });
 
+// ── P0-4: 코스 상세 라우트 안전 — id 가 곧 URL 세그먼트다 ────────────────────
+
+test("코스 id 는 도시 안에서 유일하고 URL-safe 하다 (정적 상세 라우트 전제)", () => {
+  for (const c of CITIES) {
+    const trips = getRecommendedTrips(c);
+    const ids = trips.map(t => t.id);
+    assert.equal(new Set(ids).size, ids.length, `${c} 중복 id`);
+    for (const id of ids) assert.match(id, /^[A-Za-z0-9-]+$/, `${c}:${id}`);
+  }
+});
+
 // ── P0-2: City Hub Events + Travel Essentials ───────────────────────────────
 
 test("Events: 기간 명시 콘텐츠만 · 종료분 제외 · 상태는 ISO 날짜에서만 계산", () => {

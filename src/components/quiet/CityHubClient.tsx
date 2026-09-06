@@ -92,7 +92,8 @@ export default function CityHubClient({ slug }: { slug: string }) {
           <ul className="mt-1">
             {trips.map(trip => (
               <li key={trip.id}>
-                <Link href={`/city/${slug}/trips`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                {/* 각 행은 해당 코스의 상세(코스 흐름·stop·장소 진입)로 간다 */}
+                <Link href={`/city/${slug}/trips/${trip.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{tripDisplayTitle(trip, locale)}</span>
                     <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
