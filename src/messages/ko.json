@@ -633,7 +633,7 @@
     "catCulture": "문화",
     "catRandom": "기타",
     "syncPendingMeta": "이 기기에 저장됨 · 동기화 대기",
-    "syncPendingPhoto": "Memory 저장됨 · 사진 동기화 대기",
+    "syncPendingPhoto": "기록 저장됨 · 사진 동기화 대기",
     "syncDone": "동기화 완료",
     "coverNeedsSync": "사진 동기화 후 여행 표지로 사용할 수 있습니다.",
     "localSaveFailed": "이 기기에 저장하지 못했습니다. 다시 시도해 주세요.",
@@ -702,7 +702,7 @@
     "applying": "적용 중…",
     "cancel": "취소",
     "useMyPhoto": "내 사진 사용",
-    "noPhotos": "이 여행에 Memory 사진을 먼저 추가하세요"
+    "noPhotos": "이 여행에 사진을 먼저 추가하세요"
   },
   "picks": {
     "title": "내가 고른 곳",

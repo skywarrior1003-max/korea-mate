@@ -633,7 +633,7 @@
     "catCulture": "Culture",
     "catRandom": "Random",
     "syncPendingMeta": "Saved on this device · waiting to sync",
-    "syncPendingPhoto": "Memory saved · photo syncing",
+    "syncPendingPhoto": "Moment saved · photo syncing",
     "syncDone": "Synced",
     "coverNeedsSync": "You can use this photo as your trip cover once it finishes syncing.",
     "localSaveFailed": "Couldn't save on this device. Please try again.",
@@ -644,7 +644,7 @@
     "tourismCoverRestored": "Tourism cover restored",
     "coverUpdateFailed": "Couldn't update your cover. Please try again.",
     "dayUnassigned": "Other memories",
-    "addMemoryToDay": "Add memory to Day {n}",
+    "addMemoryToDay": "Add a moment to Day {n}",
     "photoCount": "{n} photos",
     "photoFailed": "{n} photo(s) could not be added.",
     "removePhoto": "Remove photo",
@@ -702,7 +702,7 @@
     "applying": "Applying…",
     "cancel": "Cancel",
     "useMyPhoto": "Use my photo",
-    "noPhotos": "Add a Memory photo to this trip first"
+    "noPhotos": "Add a photo to this trip first"
   },
   "picks": {
     "title": "My Picks",

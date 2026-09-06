@@ -633,7 +633,7 @@
     "catCulture": "文化",
     "catRandom": "その他",
     "syncPendingMeta": "この端末に保存済み · 同期待ち",
-    "syncPendingPhoto": "Memory を保存しました · 写真を同期中",
+    "syncPendingPhoto": "記録を保存しました · 写真を同期中",
     "syncDone": "同期完了",
     "coverNeedsSync": "写真の同期が完了すると、旅の表紙に使用できます。",
     "localSaveFailed": "この端末に保存できませんでした。もう一度お試しください。",
@@ -702,7 +702,7 @@
     "applying": "適用中…",
     "cancel": "キャンセル",
     "useMyPhoto": "自分の写真を使う",
-    "noPhotos": "まずこの旅行にMemory写真を追加してください"
+    "noPhotos": "まずこの旅行に写真を追加してください"
   },
   "picks": {
     "title": "マイピック",
