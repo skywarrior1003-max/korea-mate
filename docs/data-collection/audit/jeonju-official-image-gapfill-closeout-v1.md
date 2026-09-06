@@ -1,5 +1,20 @@
 # 전주 공식 이미지 gapfill·마감 v1 (2026-09-06)
 
+> ⚠ **SUPERSEDED (2026-09-06)** — `jeonju-images-full-*-v2` 는 Owner 최종 결정(25곳 서비스 제외)을
+> 반영한 **`jeonju-final-closeout-*-v1`** 로 대체됨. **DO NOT APPLY.**
+>
+> **Owner 최종 결정(FINAL-IMAGE-CLOSEOUT-PREP-V1)**: 서비스 대상 = 공식 원천 확인 가능한 **211곳**
+> (이미지 211/211) · 미확인 **25곳은 삭제 없이 is_published=false**(레코드·수집 provenance 보존,
+> 사유 `OWNER_EXCLUDED_OFFICIAL_SOURCE_NOT_FOUND_2026-09-06` — 목록/사유는
+> `data/main-intake/five-city-reflection-recovery-v1/jeonju-excluded-25-v1.jsonl` 에 고정;
+> city_spots 에 제외사유 전용 컬럼이 없어 DB 는 is_published=false 만, 사유는 repo 아티팩트가 SSOT).
+> 최종 패키지: `jeonju-final-closeout-{precheck,apply,readback}-v1.sql`
+> — apply sha256 `f11e17e856afbd94e1caf2fc71bc39db0473496b64d0e803f58a8eb4b14fd7c9`
+> (이미지 반영 부분은 v2 와 동일 문장 + 25곳 unpublish 1문 추가 · 삭제 0 · 타 도시 0 · idempotent).
+> precheck 실서버 실측(2026-09-06): 174/174·eligible 0·overlap 0·spot_img 0·published 211·
+> excl 25/25(published)/rel 0 — 기대 정확 일치. 기대 readback: total 236 · published 211 ·
+> rel 224 · eligible 224 · prim 211 · spot_img 211 · **published_without_img 0**.
+
 > TASK-GOKOREAMATE-JEONJU-OFFICIAL-IMAGE-GAPFILL-AND-CLOSEOUT-V1. Production 실행 없음 —
 > 적용은 TASK-GOKOREAMATE-JEONJU-IMAGE-PRODUCTION-REFLECTION-APPLY-V2(오너 승인).
 
