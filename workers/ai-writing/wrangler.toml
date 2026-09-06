@@ -1,0 +1,13 @@
+name = "gokoreamate-ai-writing"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+# canary 기간 한정 노출(모든 요청은 x-internal-auth 이중 잠금).
+# Service Binding 연결이 확정되면 false 로 전환한다.
+workers_dev = true
+
+# 이 Worker 의 존재 이유: Pages Functions 는 region placement 를 지원하지 않아
+# 한국 사용자의 ingress colo 가 HKG 로 잡히면 Gemini 가 지역 차단(400)된다.
+# 서울 GCP 리전(asia-northeast3) 최저 latency 지점에서 실행되도록 고정한다.
+[placement]
+region = "gcp:asia-northeast3"
