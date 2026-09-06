@@ -1358,6 +1358,11 @@
     "essentialsIn": "{city}旅行实用信息",
     "officialLink": "查看官方信息",
     "asOfLine": "信息截至 {date}",
-    "viewPlace": "查看地点"
+    "viewPlace": "查看地点",
+    "typeLink": "链接",
+    "urlOpenShared": "打开分享的行程",
+    "urlOpenInternal": "打开 GoKoreaMate 链接",
+    "urlExternalSoonTitle": "外部链接导入即将上线",
+    "urlExternalSoonBody": "目前可粘贴 GoKoreaMate 分享行程链接直接打开。外部旅行页面导入即将支持。"
   }
 }

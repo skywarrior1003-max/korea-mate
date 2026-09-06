@@ -24,6 +24,7 @@ import { displayPlaceName } from "@/lib/place-display-name";
 import { cityVisual } from "@/lib/city-visual";
 import { getAllRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { QUIET_CITIES, loadSearchSpots } from "./quiet-data";
+import { detectPastedUrl } from "@/lib/home-url-detect";
 
 interface ResultRow {
   key: string;
@@ -64,8 +65,20 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
   }, [active, spots]);
 
   const nq = normalizeSearchQuery(query);
+  // Search + Paste URL 단일 입력 — URL 이면 검색 매칭 대신 링크 흐름(P1-1 확정).
+  // 자기 링크는 기존 canonical 경로로 그대로 이동, 외부 URL 은 준비 중 안내만(P2-1).
+  const pastedUrl = useMemo(() => detectPastedUrl(query), [query]);
 
   const results: ResultRow[] = useMemo(() => {
+    if (pastedUrl?.kind === "internal") {
+      return [{
+        key: "url-internal", kind: "trip",
+        title: t(pastedUrl.shared ? "urlOpenShared" : "urlOpenInternal"),
+        meta: `${t("typeLink")} · gokoreamate.com`,
+        href: pastedUrl.path,
+      }];
+    }
+    if (pastedUrl?.kind === "external") return [];
     if (!nq) return [];
     const rows: ResultRow[] = [];
     const ql = nq.toLowerCase();
@@ -112,7 +125,7 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
       }
     }
     return rows.slice(0, 8);
-  }, [nq, spots, t, tForm, locale]);
+  }, [nq, pastedUrl, spots, t, tForm, locale]);
 
   const openRow = useCallback((row: ResultRow) => { router.push(row.href); }, [router]);
 
@@ -130,8 +143,8 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
   };
 
   const glass = variant === "cover" && !active;
-  const showPanel = active && nq.length > 0;
-  const showIdle = active && nq.length === 0;
+  const showPanel = active && (nq.length > 0 || pastedUrl !== null);
+  const showIdle = active && nq.length === 0 && pastedUrl === null;
 
   const thumbClass = (kind: ResultRow["kind"]) =>
     kind === "city" ? "w-11 h-11 rounded-full"
@@ -201,7 +214,14 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
           {showIdle && (
             <p className="pt-4 pb-1 text-[13px] text-[var(--qh-faint2)]">{t("searchIdleHint")}</p>
           )}
-          {showPanel && results.length === 0 && (
+          {/* 외부 URL — 엔진(P2-1) 전이라 사실대로 말한다. 없는 기능을 흉내내지 않는다 */}
+          {showPanel && pastedUrl?.kind === "external" && (
+            <div className="pt-5 pb-3">
+              <p className="text-[15px] font-semibold text-[var(--qh-ink)]">{t("urlExternalSoonTitle")}</p>
+              <p className="mt-1 text-[13px] leading-relaxed text-[var(--qh-faint)]">{t("urlExternalSoonBody")}</p>
+            </div>
+          )}
+          {showPanel && pastedUrl?.kind !== "external" && results.length === 0 && (
             <div className="pt-5 pb-2">
               <p className="text-[15px] font-semibold text-[var(--qh-ink)]">{t("noResults", { q: query.trim() })}</p>
               <p className="mt-1 text-[13px] text-[var(--qh-faint)]">{t("noResultsHint")}</p>

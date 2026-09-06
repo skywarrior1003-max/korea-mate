@@ -1358,6 +1358,11 @@
     "essentialsIn": "Travel essentials in {city}",
     "officialLink": "Official information",
     "asOfLine": "Information as of {date}",
-    "viewPlace": "View place"
+    "viewPlace": "View place",
+    "typeLink": "Link",
+    "urlOpenShared": "Open shared trip",
+    "urlOpenInternal": "Open GoKoreaMate link",
+    "urlExternalSoonTitle": "External link import is coming soon",
+    "urlExternalSoonBody": "For now you can paste a GoKoreaMate shared trip link. Importing outside travel pages is on the way."
   }
 }

@@ -1358,6 +1358,11 @@
     "essentialsIn": "{city}の旅の実用情報",
     "officialLink": "公式案内を見る",
     "asOfLine": "{date}時点の情報",
-    "viewPlace": "場所を見る"
+    "viewPlace": "場所を見る",
+    "typeLink": "リンク",
+    "urlOpenShared": "共有された旅を開く",
+    "urlOpenInternal": "GoKoreaMateリンクを開く",
+    "urlExternalSoonTitle": "外部リンクの取り込みは準備中です",
+    "urlExternalSoonBody": "現在はGoKoreaMateの共有リンクを貼り付けて開けます。外部の旅行ページの取り込みは近日対応予定です。"
   }
 }

@@ -120,7 +120,10 @@ export default function QuietHome() {
       </div>
 
       {/* ══ HOME 2 — FLOOR ══ */}
-      <section ref={floorRef} className="max-w-3xl mx-auto px-5 md:px-6 pt-6 pb-12" style={{ scrollMarginTop: "3.4rem" }}>
+      {/* pt-12: sticky Search dock(-mt-[104px] 오버랩) 아래로 "도시" 라벨이 완전히
+          내려오도록 시작 여백을 확보한다 — 정적 흐름에서 field 하단과 라벨 사이가
+          0px 이라 dock 상태에서 라벨이 가려지던 실측 버그의 최소 수정. */}
+      <section ref={floorRef} className="max-w-3xl mx-auto px-5 md:px-6 pt-12 pb-12" style={{ scrollMarginTop: "4.2rem" }}>
         {/* 모바일에서 검색 활성 중엔 결과 표면이 곧 화면 — 아래 섹션은 조용히 물러난다 */}
         <div className={searchActive ? "hidden md:block" : undefined}>
           <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-4">{t("citiesLabel")}</h2>
