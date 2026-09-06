@@ -13,6 +13,7 @@
 
 import { stripIngestAnnotation } from "../place-display-name.ts";
 import type { CitySpotRow } from "@/lib/city-spots";
+import { structuredOpeningHours } from "../opening-hours.ts";
 import type { EventItem } from "@/lib/cart";
 import { citySpotSourceKey } from "../place-identity.ts";
 
@@ -425,7 +426,9 @@ export function toItineraryEvent(spot: PlaceView, text?: LocalizedPlaceText): Ev
     whyItMatters:                text?.whyItMatters ?? spot.why_it_matters ?? "",
     recommendedDurationMinutes:  spot.duration_minutes ?? 60,
     bestTimeSlot:                spot.best_time_slot ?? "anytime",
-    openingHours:                spot.opening_hours,
+    // raw-only 운영시간은 표시 전용 — 고정 일정·visit-time 가드 계약({open, close})에
+    // 부분 객체가 들어가지 않도록 구조화 값일 때만 전달한다.
+    openingHours:                structuredOpeningHours(spot.opening_hours),
     image:                       spot.image_url,
     startDate:                   null,
     endDate:                     null,

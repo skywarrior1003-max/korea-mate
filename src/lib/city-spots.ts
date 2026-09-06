@@ -2,6 +2,7 @@ import { supabase } from "./supabase";
 import { applyVisibility, type VisibilityScope } from "@/lib/city-spots-visibility";
 import { collectAllKeyset, chunk, ID_LOOKUP_CHUNK, uniqueNumericIds } from "@/lib/city-spots-paging";
 import type { CitySpot, LocalizedText } from "@/data/cities/types";
+import { structuredOpeningHours } from "./opening-hours";
 
 // ── 카테고리 타입 가드 ────────────────────────────────────────────────────────
 
@@ -37,7 +38,7 @@ export interface CitySpotRow {
   lng: number | null;
   duration_minutes: number | null;
   best_time_slot: string | null;
-  opening_hours: { open: string; close: string } | null;
+  opening_hours: { open?: string; close?: string; raw?: string } | null;
   tags: string[] | null;
   solo_friendly: boolean;
   foreign_card_accepted: boolean;
@@ -70,7 +71,7 @@ export function rowToCitySpot(row: CitySpotRow): CitySpot {
     naverMapUrl:          row.naver_map_url ?? undefined,
     durationMinutes:      row.duration_minutes ?? undefined,
     bestTimeSlot:         row.best_time_slot ?? undefined,
-    openingHours:         row.opening_hours ?? null,
+    openingHours:         structuredOpeningHours(row.opening_hours),
     tags:                 row.tags ?? [],
     relatedSurvivalGuides: [],
     soloFriendly:         row.solo_friendly,
@@ -144,7 +145,7 @@ export function rowToPublicCitySpot(row: PublicCitySpotRow): CitySpot {
     naverMapUrl:           row.naver_map_url ?? undefined,
     durationMinutes:       row.duration_minutes ?? undefined,
     bestTimeSlot:          row.best_time_slot ?? undefined,
-    openingHours:          row.opening_hours ?? null,
+    openingHours:          structuredOpeningHours(row.opening_hours),
     tags:                  row.tags ?? [],
     relatedSurvivalGuides: [],
     soloFriendly:          row.solo_friendly,

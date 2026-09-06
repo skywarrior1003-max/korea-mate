@@ -45,6 +45,7 @@ import {
   PROVENANCE_MESSAGE_KEY,
 } from "@/lib/place-detail/place-detail-core";
 import type { PlaceView } from "@/lib/place-detail/place-detail-core";
+import { structuredOpeningHours, rawOpeningHours } from "@/lib/opening-hours";
 
 // 공식 링크 출처 기관명 추출 (도메인 기반 — 알 수 없으면 도메인 자체 표기)
 function officialSourceName(url: string): string {
@@ -295,8 +296,16 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         label={t("hours")}
         icon={<svg {...ICON} aria-hidden><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>}
       >
-        {spot.opening_hours ? (
-          <span className="font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</span>
+        {/* structured 우선 · 구조화 불가 원문(raw)은 그대로 fallback 표시(요약/번역 금지) */}
+        {structuredOpeningHours(spot.opening_hours) ? (
+          <span className="font-medium">
+            {structuredOpeningHours(spot.opening_hours)!.open} – {structuredOpeningHours(spot.opening_hours)!.close}
+          </span>
+        ) : rawOpeningHours(spot.opening_hours) ? (
+          <>
+            <span className="font-medium whitespace-pre-line">{rawOpeningHours(spot.opening_hours)}</span><br />
+            <span className="text-faint">{t("hoursMayChange")}</span>
+          </>
         ) : (
           <>
             <span className="text-sub">{t("hoursMayChange")}</span><br />
