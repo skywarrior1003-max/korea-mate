@@ -66,7 +66,10 @@ export async function onRequestPost(
     const latencyMs = Date.now() - started;
 
     if (!res.ok) {
-      log({ ok: false, kind: "http", status: res.status, latencyMs, target: body.target, dir: body.direction, locale: body.locale });
+      // provider 오류 종류 진단용 — 원문은 짧게, secret/사용자 텍스트 없음
+      let errSnippet = "";
+      try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
+      log({ ok: false, kind: "http", status: res.status, latencyMs, err: errSnippet, target: body.target, dir: body.direction, locale: body.locale });
       return reply(null, `fallback_http_${res.status}`);
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
