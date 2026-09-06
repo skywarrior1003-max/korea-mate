@@ -12,6 +12,7 @@
 // 경주의 보조 원천으로 이 어댑터 아래에서 병합한다 — Gyeongju-only 의존은 제거.
 import tripsRaw from "./regional-trips-v1.json" with { type: "json" };
 import placesRaw from "./regional-places-v1.json" with { type: "json" };
+import essentialsRaw from "./regional-essentials-v1.json" with { type: "json" };
 import { curatedTripsForCity } from "../curated-trips.ts";
 
 export interface RegionalTripStop {
@@ -48,6 +49,8 @@ export interface RecommendedPlace {
   validFrom: string | null;
   validTo: string | null;
   whyNow: string | null;
+  /** 공식 provenance(제공처·안내 URL) — normalized 원문 그대로, 없으면 null */
+  source?: { provider?: string | null; source_url?: string | null; as_of?: string | null } | null;
 }
 
 interface TripsFile { trips: Array<Omit<RecommendedTrip, "origin">> }
@@ -106,6 +109,68 @@ export function getRecommendedPlaces(city: string, today = new Date()): Recommen
     if (p.validTo && p.validTo < iso) return false;
     return true;
   });
+}
+
+// ── City Hub: Events + Travel Essentials (P0-2) ─────────────────────────────
+//
+// Events = recommended_now 중 기간(valid_from/valid_to)이 명시된 한시 콘텐츠.
+// 종료(valid_to < 오늘)는 조용히 제외한다. 상태는 ISO 날짜가 실제로 있을 때만
+// 계산한다 — "2026-08 (exact date TBC)" 같은 원문은 그대로 보여주고 상태를
+// 지어내지 않는다. 7일 freshness 재검(신규/변경/중단/취소/종료/가격/운영시간/
+// 이용조건/위치/공식 링크)은 원문의 review_by/as_of 를 근거로 운영 태스크가 수행한다.
+
+export interface CityEvent extends RecommendedPlace {
+  /** ISO valid_from 이 미래면 upcoming, 아니면 ongoing. 날짜가 원문 텍스트뿐이면 null */
+  status: "ongoing" | "upcoming" | null;
+}
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function getCityEvents(city: string, today = new Date()): CityEvent[] {
+  const slug = city.toLowerCase();
+  const iso = today.toISOString().slice(0, 10);
+  return REGIONAL_PLACES
+    .filter(p => p.city === slug && (p.validFrom !== null || p.validTo !== null))
+    .filter(p => !(p.validTo && ISO_DATE.test(p.validTo) && p.validTo < iso))
+    .map(p => ({
+      ...p,
+      status: p.validFrom && ISO_DATE.test(p.validFrom)
+        ? (p.validFrom > iso ? "upcoming" as const : "ongoing" as const)
+        : null,
+    }));
+}
+
+export interface TravelEssential {
+  id: string;
+  city: string;
+  category: string | null;
+  title: string | null;
+  /** 도시별 원문이 문자열(부산/서울/경주) 또는 l10n 객체(제주/전주 {ko, en?…}) — 원문 구조 그대로 */
+  summary: string | Record<string, string> | null;
+  eligibility: string | null;
+  provider: string | null;
+  sourceUrl: string | null;
+  asOf: string | null;
+  reviewBy: string | null;
+  freshnessNote: string | null;
+}
+
+interface EssentialsFile { essentials: TravelEssential[] }
+const REGIONAL_ESSENTIALS: TravelEssential[] = (essentialsRaw as unknown as EssentialsFile).essentials;
+
+/** 도시별 Travel Essentials — normalized travel_utility 원문 순서 그대로 */
+export function getTravelEssentials(city: string): TravelEssential[] {
+  const slug = city.toLowerCase();
+  return REGIONAL_ESSENTIALS.filter(e => e.city === slug && e.title);
+}
+
+/** summary 원문에서 locale 값을 고른다 — 번역 창작 없음(없으면 ko → 아무 값) */
+export function essentialSummary(es: TravelEssential, locale: string): string | null {
+  const s = es.summary;
+  if (s === null || s === undefined) return null;
+  if (typeof s === "string") return s.trim() || null;
+  const v = s[locale] ?? (locale === "zh" ? s["zh-CN"] : undefined) ?? s.ko ?? Object.values(s)[0];
+  return typeof v === "string" && v.trim() ? v : null;
 }
 
 /** canonical 연결이 확정된 추천 장소의 city_spot id 목록(도시별, 순서 보존) */

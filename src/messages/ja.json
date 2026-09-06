@@ -1345,6 +1345,11 @@
     "saved": "保存しました",
     "removed": "保存を解除",
     "comingSoon": "準備中",
-    "officialCourse": "公式コース"
+    "officialCourse": "公式コース",
+    "whatsHappening": "開催中の情報",
+    "travelEssentials": "旅の実用情報",
+    "ongoing": "開催中",
+    "upcoming": "開催予定",
+    "eventsSoon": "{city}のイベント情報を準備中です。"
   }
 }

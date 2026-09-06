@@ -266,8 +266,9 @@
    "whyNow": "8월 한여름 제주 폭염을 피해 이른 새벽(5~6시) 한라산 어리목 코스 탐방이 VisitJeju 여름 특집으로 소개. 해발 1,100m 고산지대 선선함. 영실과 연결 탐방도 가능.",
    "source": {
     "provider": "국립공원공단 한라산 / VisitJeju",
-    "source_url": "https://www.hallasan.go.kr/contents/info.php",
-    "as_of": "2026-08-22"
+    "source_url": null,
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN: hallasan.go.kr) — 링크 비노출"
    },
    "asOf": "2026-08-22"
   },
@@ -386,8 +387,9 @@
    "whyNow": "전주 남부시장이 매주 금·토 저녁(18:00~23:00 내외) 야시장을 운영 중. 운영 기간 4월~10월 사이 기준일(2026-08-22) 하계 시즌 한창. 전주 로컬 음식(비빔밥·두부두루치기·초코파이 등 다양한 먹거리)·공예·공연을 동시에 체험 가능. tour.jeonju.go.kr 공식 야간관광 특집 추천 프로그램. 전주 방문자 사이 입소문이 높은 공식 인정 야간 프로그램.",
    "source": {
     "provider": "전주시 / 남부시장 야시장 운영위",
-    "source_url": "https://tour.jeonju.go.kr/kor",
-    "as_of": "2026-08-22"
+    "source_url": "https://tour.jeonju.go.kr/",
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
    },
    "asOf": "2026-08-22"
   },
@@ -407,8 +409,9 @@
    "whyNow": "덕진공원 대형 연못의 연꽃이 7월 중순~8월 중순 절정을 지나 8월 하순 현재 후기 시즌 진행 중. 연꽃과 함께 수련(수면 위 연꽃)이 여전히 감상 가능. 덕진공원은 전주 시민 여름 나들이 명소로 tour.jeonju.go.kr 여름 추천 장소 등재. 2026-08-22 기준 후기 시즌으로 조기 방문 권장(8월 말까지).",
    "source": {
     "provider": "전주시 관광 (tour.jeonju.go.kr)",
-    "source_url": "https://tour.jeonju.go.kr/kor",
-    "as_of": "2026-08-22"
+    "source_url": "https://tour.jeonju.go.kr/",
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
    },
    "asOf": "2026-08-22"
   },
@@ -429,8 +432,9 @@
    "whyNow": "경기전은 하절기(6~8월) 야간 특별개방 프로그램(달빛 경기전)을 운영하여 일반 관람 시간 이후 야간 입장이 가능. 한옥마을 전체도 여름 저녁 방문객이 가장 많은 성수기로 야간 상점·공연·한복 체험이 활발히 운영 중. tour.jeonju.go.kr 하절기 야간관광 특집 추천.",
    "source": {
     "provider": "전주시 / 경기전 관리소 (tour.jeonju.go.kr)",
-    "source_url": "https://tour.jeonju.go.kr/kor",
-    "as_of": "2026-08-22"
+    "source_url": "https://tour.jeonju.go.kr/",
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
    },
    "asOf": "2026-08-22"
   },
@@ -450,8 +454,9 @@
    "whyNow": "8월 폭염 피해 전주 전통주(막걸리·소주) 제조 과정 관람 및 시음 체험 가능한 실내 시설. 전주는 전통주 문화로 유명하며 tour.jeonju.go.kr 음식·문화체험 특집 등재. 연중 운영이어서 계절 특화성이 낮아 RESERVE 분류.",
    "source": {
     "provider": "전주시 관광 (tour.jeonju.go.kr)",
-    "source_url": "https://tour.jeonju.go.kr/kor",
-    "as_of": "2026-08-22"
+    "source_url": "https://tour.jeonju.go.kr/",
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
    },
    "asOf": "2026-08-22"
   },
@@ -469,8 +474,9 @@
    "whyNow": "전주 세계소리축제는 매년 9월 말~10월 초 국립민속국악원·한국소리문화의전당 등지에서 개최되는 국제 전통음악 축제. 세계 각국 전통음악·판소리·국악을 무료~저가로 즐길 수 있어 외국인 방문자에게 특히 유익. 기준일(2026-08-22) 아직 미개최이나 9월 방문 예정자에게 유용.",
    "source": {
     "provider": "전주세계소리축제 조직위원회",
-    "source_url": "https://tour.jeonju.go.kr/kor",
-    "as_of": "2026-08-22"
+    "source_url": "https://tour.jeonju.go.kr/",
+    "as_of": "2026-08-22",
+    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
    },
    "asOf": "2026-08-22"
   }

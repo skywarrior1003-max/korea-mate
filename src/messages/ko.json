@@ -1345,6 +1345,11 @@
     "saved": "저장됨",
     "removed": "저장 해제",
     "comingSoon": "준비 중",
-    "officialCourse": "공식 코스"
+    "officialCourse": "공식 코스",
+    "whatsHappening": "지금 열리는",
+    "travelEssentials": "여행 편의정보",
+    "ongoing": "진행 중",
+    "upcoming": "진행 예정",
+    "eventsSoon": "{city}의 행사 소식을 준비하고 있어요."
   }
 }

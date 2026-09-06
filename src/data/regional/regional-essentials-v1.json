@@ -1,0 +1,709 @@
+{
+ "note": "normalized travel_utility 원문 필드 subset — 값 창작 없음(null 은 null)",
+ "essentials": [
+  {
+   "id": "busan-U-001",
+   "city": "busan",
+   "category": "도시철도",
+   "title": "부산 도시철도 (Busan Metro)",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-002",
+   "city": "busan",
+   "category": "시내버스",
+   "title": "부산 시내버스",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-003",
+   "city": "busan",
+   "category": "공항리무진",
+   "title": "김해국제공항 ↔ 해운대 리무진버스",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-004",
+   "city": "busan",
+   "category": "교통카드",
+   "title": "Hanaro Card (하나로카드) / T-money",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-005",
+   "city": "busan",
+   "category": "동백패스",
+   "title": "동백패스 (Dongbaek Pass) — 대중교통 통합 할인제",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-006",
+   "city": "busan",
+   "category": "택시",
+   "title": "부산 택시",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "busan-U-007",
+   "city": "busan",
+   "category": "여행 안내 핫라인",
+   "title": "부산 관광 안내 전화",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-001",
+   "city": "seoul",
+   "category": "지하철",
+   "title": "서울 지하철 — 도심 주요 이동 수단",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-002",
+   "city": "seoul",
+   "category": "시내버스",
+   "title": "서울 시내버스 — 색상 구분 노선 체계",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-003",
+   "city": "seoul",
+   "category": "AREX / 공항→도심",
+   "title": "인천국제공항 → 서울 도심: AREX 공항철도",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-004",
+   "city": "seoul",
+   "category": "공항 리무진버스",
+   "title": "인천공항 → 서울 시내: 공항 리무진버스",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-005",
+   "city": "seoul",
+   "category": "교통카드 — T-money",
+   "title": "T-money 교통카드 — 서울 대중교통 기본 카드",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-006",
+   "city": "seoul",
+   "category": "교통카드 — T-money Mpass (외국인 관광객 대상)",
+   "title": "T-money Mpass — 외국인 관광객 교통 패스",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-007",
+   "city": "seoul",
+   "category": "교통카드 — 기후동행카드 (Climate Card)",
+   "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-008",
+   "city": "seoul",
+   "category": "택시",
+   "title": "서울 택시 — 일반·고급·국제관광택시",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-009",
+   "city": "seoul",
+   "category": "관광 패스 — Discover Seoul Pass",
+   "title": "다스서울패스 (Discover Seoul Pass) — 외국인 전용 관광 통합 패스",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-010",
+   "city": "seoul",
+   "category": "관광안내소",
+   "title": "서울 관광안내소 — 다국어 방문자 지원",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-011",
+   "city": "seoul",
+   "category": "관광 핫라인",
+   "title": "관광 안내 전화 1330",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-012",
+   "city": "seoul",
+   "category": "면세·세금환급 (Tax Refund)",
+   "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "seoul-U-013",
+   "city": "seoul",
+   "category": "Visit Seoul 공식 앱",
+   "title": "i-Tour Seoul — 서울 공식 관광 앱",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-001",
+   "city": "jeju",
+   "category": "공항 → 제주시내 버스",
+   "title": "제주공항 → 제주시내 급행버스 (100번·110번)",
+   "summary": {
+    "ko": "제주국제공항 1층 출국장 앞 버스정류장. 100번·110번 급행버스로 제주시 주요 지점 이동. 600번 버스는 서귀포 방면 직행."
+   },
+   "eligibility": null,
+   "provider": "제주특별자치도 버스정보시스템",
+   "sourceUrl": "https://bus.jeju.go.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": "요금·노선번호 변동 가능. 출발 전 bus.jeju.go.kr 확인 권장."
+  },
+  {
+   "id": "jeju-U-002",
+   "city": "jeju",
+   "category": "렌터카",
+   "title": "제주 렌터카 (사실상 필수 교통수단)",
+   "summary": {
+    "ko": "제주는 대중교통만으로는 오름·중산간·해안 명소 접근이 제한적. 렌터카가 사실상 필수. 제주공항 인근 렌터카 업체 밀집. 사전 예약 강력 권장 (성수기 매진 빠름)."
+   },
+   "eligibility": null,
+   "provider": "한국렌터카사업조합 / 제주렌터카협회",
+   "sourceUrl": "https://www.visitjeju.net/en/map-brochure/rent-car",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-003",
+   "city": "jeju",
+   "category": "시내·간선·순환버스",
+   "title": "제주 버스 노선 체계",
+   "summary": {
+    "ko": "제주 버스는 급행(100번대)·간선(200~300번대)·지선(400~500번대)·순환(800번대)으로 구성. 제주시↔서귀포 간선 및 주요 관광지 연결. 버스 이용 시 카카오버스 앱 추천."
+   },
+   "eligibility": null,
+   "provider": "제주특별자치도 버스정보시스템",
+   "sourceUrl": "https://bus.jeju.go.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-004",
+   "city": "jeju",
+   "category": "택시",
+   "title": "제주 택시 이용 안내",
+   "summary": {
+    "ko": "제주시·서귀포시 전역 일반 택시·콜택시 이용 가능. 카카오T 앱 호출 가능. 공항·주요 관광지 앞 택시 상시 대기."
+   },
+   "eligibility": null,
+   "provider": "제주특별자치도 / 한국국제관광택시",
+   "sourceUrl": "https://www.intltaxi.co.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-005",
+   "city": "jeju",
+   "category": "우도 여객선",
+   "title": "성산포항 → 우도 여객선",
+   "summary": {
+    "ko": "우도 방문은 성산포항 여객선 필수. 일 다수 편 운항. 우도 내 자전거·전동킥보드·전기차 대여 이용 가능."
+   },
+   "eligibility": null,
+   "provider": "우도 여객선 운항사 (성산항 여객선 터미널)",
+   "sourceUrl": null,
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN: udoferry.co.kr) — 링크 비노출"
+  },
+  {
+   "id": "jeju-U-006",
+   "city": "jeju",
+   "category": "마라도 여객선",
+   "title": "모슬포항 → 마라도 여객선",
+   "summary": {
+    "ko": "한국 최남단 마라도(천연기념물)는 모슬포항 출발 여객선 이용. 소규모 섬 방문 특수 경험."
+   },
+   "eligibility": null,
+   "provider": "마라도 여객선 운항사",
+   "sourceUrl": "https://www.visitjeju.net/en/see-do/island-tour",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": "요금·운항 시간 변동 가능. 출발 전 확인 필수."
+  },
+  {
+   "id": "jeju-U-007",
+   "city": "jeju",
+   "category": "교통카드",
+   "title": "T-money 교통카드",
+   "summary": {
+    "ko": "제주 버스·일부 택시에서 T-money 교통카드 사용 가능. 편의점(세븐일레븐·CU 등)에서 구매·충전. 환승 할인 적용."
+   },
+   "eligibility": null,
+   "provider": "한국스마트카드 (T-money)",
+   "sourceUrl": "https://www.t-money.co.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-008",
+   "city": "jeju",
+   "category": "관광안내소",
+   "title": "제주 관광안내소",
+   "summary": {
+    "ko": "제주국제공항 1층·제주시청·서귀포시청·중문관광단지 등 주요 거점에 관광안내소 운영. 한국어·영어·일본어·중국어 안내 가능."
+   },
+   "eligibility": null,
+   "provider": "제주관광공사 / 제주특별자치도",
+   "sourceUrl": "https://www.visitjeju.net/en/plan/visitor-center",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-009",
+   "city": "jeju",
+   "category": "관광 전화 안내",
+   "title": "1330 한국관광공사 관광안내전화",
+   "summary": {
+    "ko": "24시간 연중무휴 관광안내 전화. 한국어·영어·일본어·중국어 지원."
+   },
+   "eligibility": null,
+   "provider": "한국관광공사",
+   "sourceUrl": "https://www.visitkorea.or.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2028-01-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "jeju-U-010",
+   "city": "jeju",
+   "category": "제주 올레 여권",
+   "title": "제주올레 여권 (Olle Passport)",
+   "summary": {
+    "ko": "제주올레 공식 운영 스탬프 수첩. 27개 코스 시작점·종착점 스탬프 보관함에서 날인. 올레 탐방 기념품으로 인기."
+   },
+   "eligibility": null,
+   "provider": "사단법인 제주올레",
+   "sourceUrl": "https://www.jejuolle.org/en/jeju-olle-passport",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeju-U-011",
+   "city": "jeju",
+   "category": "세금환급 (Tax Refund)",
+   "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+   "summary": {
+    "ko": "외국인 관광객은 사후 면세점(Tax Free) 표시 가게에서 구매 시 부가가치세(VAT 10%) 환급 가능. 출국 전 공항 세관 창구에서 처리."
+   },
+   "eligibility": null,
+   "provider": "한국 기획재정부 / 세관",
+   "sourceUrl": "https://www.visitkorea.or.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2028-01-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "jeju-U-012",
+   "city": "jeju",
+   "category": "짐 보관·배송",
+   "title": "제주공항 수하물 보관 서비스",
+   "summary": {
+    "ko": "제주국제공항 내 코인로커 및 수하물 보관 서비스 운영. 당일 이동 중 짐 보관 가능."
+   },
+   "eligibility": null,
+   "provider": "제주국제공항 (한국공항공사)",
+   "sourceUrl": "https://www.airport.co.kr/jeju/main.do",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-001",
+   "city": "gyeongju",
+   "category": "경주 도착 교통",
+   "title": "신경주역(KTX) vs 경주역(일반열차) — 외국인 방문자 핵심 정보",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-002",
+   "city": "gyeongju",
+   "category": "시내버스 (관광 특화 노선)",
+   "title": "10번 버스 — 알짜배기 경주여행",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-003",
+   "city": "gyeongju",
+   "category": "관광지 입장료",
+   "title": "경주 주요 관광지 입장료",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-004",
+   "city": "gyeongju",
+   "category": "관광안내소",
+   "title": "경주시 관광안내소 (4개소)",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-005",
+   "city": "gyeongju",
+   "category": "짐보관",
+   "title": "경주 짐보관 서비스 (20개소)",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-006",
+   "city": "gyeongju",
+   "category": "무료 문화관광해설 서비스",
+   "title": "경주 문화관광해설사 (무료 다국어 해설)",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-007",
+   "city": "gyeongju",
+   "category": "여행 안내 핫라인",
+   "title": "관광 안내 전화",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-008",
+   "city": "gyeongju",
+   "category": "공공 Wi-Fi",
+   "title": "경주 관광지 공공 Wi-Fi",
+   "summary": null,
+   "eligibility": null,
+   "provider": null,
+   "sourceUrl": null,
+   "asOf": "2026-08-21",
+   "reviewBy": null,
+   "freshnessNote": null
+  },
+  {
+   "id": "jeonju-U-001",
+   "city": "jeonju",
+   "category": "광역 교통 → 전주",
+   "title": "KTX/SRT 전주역 도착 → 한옥마을·도심 이동",
+   "summary": {
+    "ko": "전주역(KTX·SRT 정차)에서 한옥마을까지 버스 5-1번·119번 이용 약 15~20분, 택시 약 10분(요금 ~5,000~6,000원). 도보 약 25분. 전주역은 경기전·한옥마을에서 약 2km. 역 내 관광안내소 및 버스 안내 표지판 있음.",
+    "en": "From Jeonju Station (KTX/SRT): take bus 5-1 or 119 (~15-20 min, T-money accepted) or taxi (~10 min, ~₩5,000-6,000) to reach Hanok Village. Walking distance ~25 min."
+   },
+   "eligibility": null,
+   "provider": "전주시 / 코레일",
+   "sourceUrl": "https://tour.jeonju.go.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2026-12-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "jeonju-U-002",
+   "city": "jeonju",
+   "category": "광역 교통 → 전주",
+   "title": "전주 고속/시외버스터미널 → 관광지 이동",
+   "summary": {
+    "ko": "전주고속버스터미널·전주시외버스터미널은 전주 시내에 위치. 터미널에서 한옥마을까지 시내버스 또는 택시로 15~25분. 서울(센트럴시티·동서울) ↔ 전주 고속버스 약 2시간 30분~3시간. 버스터미널에서 전주역보다 한옥마을 방향 접근이 더 용이한 경우 있음.",
+    "en": "Jeonju Intercity/Express Bus Terminal is centrally located. Express buses from Seoul (Central City, East Seoul) take ~2.5-3 hours. From terminal to Hanok Village: bus or taxi 15-25 min."
+   },
+   "eligibility": null,
+   "provider": "전주시 / 코버스 / 이지티켓",
+   "sourceUrl": "https://tour.jeonju.go.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2026-12-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "jeonju-U-003",
+   "city": "jeonju",
+   "category": "시내 교통",
+   "title": "전주 시내버스 (한옥마을·주요 관광지 노선)",
+   "summary": {
+    "ko": "전주 시내버스 운영. 한옥마을 핵심 노선: 5-1번(전주역↔한옥마을), 119번(한옥마을 경유). 기본요금 ~1,500원(성인·카드). T-money 교통카드 사용 가능. 환승 할인 적용. 배차 간격 15~20분 내외. 버스 노선 정보: 전주 버스정보시스템(bis.jeonju.go.kr).",
+    "en": "City buses connect major sights. Key routes for Hanok Village: bus 5-1 (Jeonju Station ↔ Hanok Village), bus 119. Fare ~₩1,500/adult (T-money card). Transfer discounts apply."
+   },
+   "eligibility": null,
+   "provider": "전주시 버스정보시스템",
+   "sourceUrl": null,
+   "asOf": "2026-08-22",
+   "reviewBy": "2026-12-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN: bis.jeonju.go.kr) — 링크 비노출"
+  },
+  {
+   "id": "jeonju-U-004",
+   "city": "jeonju",
+   "category": "시내 교통",
+   "title": "전주 택시",
+   "summary": {
+    "ko": "전주 택시 기본요금 ~4,000원대(2024년 기준·변동 가능). 한옥마을 내부는 차량 통행 제한 구역 있음 → 인근 주차장 하차 후 도보 이동 필요. 카카오T 앱 호출 가능. 심야 할증 적용. 전주역↔한옥마을 ~5,000~6,000원 예상.",
+    "en": "Taxis available throughout Jeonju. Base fare ~₩4,000 (may change). Kakao T app works for hailing. Note: vehicle access restricted inside Hanok Village core — alight nearby and walk. Jeonju Station → Hanok Village: ~₩5,000-6,000."
+   },
+   "eligibility": null,
+   "provider": "전주시 / 카카오T",
+   "sourceUrl": "https://www.kakaomobility.com",
+   "asOf": "2026-08-22",
+   "reviewBy": "2026-12-01",
+   "freshnessNote": "기본요금은 지자체 결정에 따라 변동 가능. 방문 전 카카오T 또는 현지 안내 확인."
+  },
+  {
+   "id": "jeonju-U-005",
+   "city": "jeonju",
+   "category": "한옥마을 내부 이동",
+   "title": "전주한옥마을 내부 도보 특성 (차량통행 제한)",
+   "summary": {
+    "ko": "전주한옥마을 핵심 구역(태조로·은행로 등)은 차량 통행 제한 구역. 대부분의 명소(경기전·전동성당·풍남문·골목)는 도보로 15~30분 이내 접근 가능. 전동 킥보드는 일부 구역 이용 제한. 돌바닥·한옥 진입로는 휠체어 접근에 일부 제한 있음.",
+    "en": "The Hanok Village core is largely vehicle-restricted — most sights (Gyeonggijeon, Jeondong Cathedral, Pungnammun) are within 15-30 min walking distance of each other. Electric scooters restricted in some areas. Stone alleys may limit wheelchair access."
+   },
+   "eligibility": null,
+   "provider": "전주시 한옥마을 관리사무소",
+   "sourceUrl": "https://hanok.jeonju.go.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeonju-U-006",
+   "city": "jeonju",
+   "category": "교통카드",
+   "title": "T-money 교통카드",
+   "summary": {
+    "ko": "전주 시내버스 T-money 카드 사용 가능. 전주역·버스터미널 인근 편의점(GS25·CU·세븐일레븐 등)에서 발급(~3,000원) 및 충전 가능. 후불 교통카드(국내 은행 체크·신용카드) 도 시내버스 사용 가능. 외국인 방문자는 선불 T-money 권장.",
+    "en": "T-money cards work on Jeonju city buses. Purchase (~₩3,000) and top-up at convenience stores (GS25, CU, 7-Eleven) near Jeonju Station or bus terminal. Foreign visitors recommended to use prepaid T-money."
+   },
+   "eligibility": null,
+   "provider": "T-money (선불) / 각 카드사 (후불)",
+   "sourceUrl": "https://www.t-money.co.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeonju-U-007",
+   "city": "jeonju",
+   "category": "관광안내소",
+   "title": "전주 관광안내소 (한옥마을·전주역·터미널)",
+   "summary": {
+    "ko": "주요 안내소: (1) 한옥마을 관광안내소 (경기전 앞) — 지도·관광 정보·다국어 상담, (2) 전주역 관광안내소, (3) 전주고속버스터미널 안내소. 한국어·영어·일본어·중국어 대응 (수준 상이). 무료 관광지도 배포.",
+    "en": "Key visitor centers: (1) Hanok Village Tourism Info Center (in front of Gyeonggijeon) — maps, multilingual info; (2) Jeonju Station; (3) Express Bus Terminal. KO/EN/JA/ZH support available (levels vary)."
+   },
+   "eligibility": null,
+   "provider": "전주시 관광과",
+   "sourceUrl": "https://tour.jeonju.go.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "jeonju-U-008",
+   "city": "jeonju",
+   "category": "관광 안내 전화",
+   "title": "1330 관광안내전화 (한국관광공사)",
+   "summary": {
+    "ko": "한국관광공사 운영 24시간 관광안내전화. 전화번호: 1330 (국내) / +82-2-1330 (해외). 한국어·영어·일본어·중국어 상담 가능. 전주 관광정보·교통·숙박 등 문의 가능.",
+    "en": "KTO-operated tourism hotline, 24/7. Call 1330 (domestic) or +82-2-1330 (international). Available in KO/EN/JA/ZH. Can assist with Jeonju travel information, transport, and accommodation."
+   },
+   "eligibility": null,
+   "provider": "한국관광공사 (KTO)",
+   "sourceUrl": "https://www.visitkorea.or.kr",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "jeonju-U-009",
+   "city": "jeonju",
+   "category": "짐 보관",
+   "title": "전주역 코인로커 / 짐 보관",
+   "summary": {
+    "ko": "전주역 내 코인로커 설치(소·중·대 크기, ~3,000~5,000원/회). 한옥마을 내부에는 별도 공식 짐보관소 없음(일부 게스트하우스·카페 유료 보관 가능). 당일치기 방문자는 전주역 코인로커 이용 후 도보·버스로 이동 권장.",
+    "en": "Coin lockers at Jeonju Station (S/M/L sizes, ~₩3,000-5,000/use). No official luggage storage in Hanok Village core — some guesthouses/cafes may offer paid storage. Day-trippers recommended to use station lockers before heading to Hanok Village."
+   },
+   "eligibility": null,
+   "provider": "한국철도공사 (코레일) / 전주역",
+   "sourceUrl": "https://www.letskorail.com",
+   "asOf": "2026-08-22",
+   "reviewBy": "2026-12-01",
+   "freshnessNote": "코인로커 수·요금 변동 가능. 성수기 만실 가능성 있음."
+  },
+  {
+   "id": "jeonju-U-010",
+   "city": "jeonju",
+   "category": "환전·결제",
+   "title": "전주 환전 및 결제 정보",
+   "summary": {
+    "ko": "한옥마을 인근 KB국민은행·신한은행·우리은행 지점에서 외화 환전 가능. ATM(Global/Mastercard 호환): 한옥마을 인근 및 편의점 ATM. 한옥마을 내 상점 대부분 카드결제 가능. 일부 소규모 노점·식당은 현금만 가능 — 소액 원화 현금 휴대 권장. 전주페이(지역화폐)는 외국인 이용 불가.",
+    "en": "Currency exchange: bank branches near Hanok Village (KB, Shinhan, Woori). ATMs available at convenience stores and banks — Mastercard/Visa networks supported. Most shops in Hanok Village accept cards. Small vendors/stalls may be cash-only — carry some Korean won. Jeonjupay (local currency) not available to foreign visitors."
+   },
+   "eligibility": null,
+   "provider": "전주시 / 각 은행",
+   "sourceUrl": "https://tour.jeonju.go.kr/",
+   "asOf": "2026-08-22",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+  }
+ ]
+}

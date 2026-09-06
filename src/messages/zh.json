@@ -1345,6 +1345,11 @@
     "saved": "已收藏",
     "removed": "已取消收藏",
     "comingSoon": "即将推出",
-    "officialCourse": "官方路线"
+    "officialCourse": "官方路线",
+    "whatsHappening": "当前活动",
+    "travelEssentials": "旅行实用信息",
+    "ongoing": "进行中",
+    "upcoming": "即将开始",
+    "eventsSoon": "{city}的活动信息正在准备中。"
   }
 }

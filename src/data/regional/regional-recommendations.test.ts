@@ -7,6 +7,7 @@ import path from "node:path";
 import {
   getRecommendedTrips, getAllRecommendedTrips, getRecommendedPlaces,
   recommendedSpotIds, tripDisplayTitle, tripLinkedSpotIds,
+  getCityEvents, getTravelEssentials, essentialSummary,
 } from "./regional-recommendations.ts";
 
 const CITIES = ["seoul", "busan", "jeju", "gyeongju", "jeonju"] as const;
@@ -105,6 +106,48 @@ test("표시 규칙: 번역 창작 없음 — locale 별 제목은 원문 필드
   assert.equal(tripDisplayTitle(t0!, "en"), t0!.titleEn);
   const noEn = getAllRecommendedTrips().find(t => !t.titleEn);
   if (noEn) assert.equal(tripDisplayTitle(noEn, "en"), noEn.title); // 없으면 원제 — 창작 금지
+});
+
+// ── P0-2: City Hub Events + Travel Essentials ───────────────────────────────
+
+test("Events: 기간 명시 콘텐츠만 · 종료분 제외 · 상태는 ISO 날짜에서만 계산", () => {
+  // as_of(2026-08-22) 기준 — 5도시 전부 이벤트가 존재한다
+  for (const c of CITIES) assert.ok(getCityEvents(c, new Date("2026-08-22")).length > 0, `${c} events`);
+  const busan = getCityEvents("busan", new Date("2026-09-06"));
+  assert.ok(!busan.some(e => e.id === "busan-RN-002"), "8/31 종료 행사 제외");
+  const ongoing = getCityEvents("seoul", new Date("2026-09-06")).find(e => e.id === "seoul-RN-001");
+  assert.equal(ongoing?.status, "ongoing");
+  const upcoming = getCityEvents("seoul", new Date("2026-07-01")).find(e => e.id === "seoul-RN-001");
+  assert.equal(upcoming?.status, "upcoming");
+  // 원문이 ISO 가 아닌 기간("… TBC")은 상태를 지어내지 않는다
+  const tbc = getCityEvents("jeju", new Date("2026-09-06")).find(e => e.id === "jeju-RN-R01");
+  assert.ok(tbc);
+  assert.equal(tbc!.status, null);
+  // 모든 이벤트는 상세 이동 경로(내부 place 또는 공식 URL)를 가진다
+  for (const c of CITIES) for (const e of getCityEvents(c, new Date("2026-08-22"))) {
+    assert.ok(e.spotId !== null || Boolean(e.source && (e.source as { source_url?: string | null }).source_url), `${e.id} detail path`);
+  }
+});
+
+test("Travel Essentials: Final 기준 수치 그대로(부산7·서울13·제주12·경주8·전주10)", () => {
+  const expected: Record<string, number> = { busan: 7, seoul: 13, jeju: 12, gyeongju: 8, jeonju: 10 };
+  for (const c of CITIES) {
+    const es = getTravelEssentials(c);
+    assert.equal(es.length, expected[c], `${c} essentials`);
+    for (const e of es) {
+      assert.ok(e.title && e.title.trim(), `${e.id} title`);
+      assert.equal(e.city, c);
+      // summary 는 문자열이든 l10n 객체든 렌더 가능한 문자열(또는 null)로만 해석된다
+      for (const loc of ["ko", "en", "ja", "zh"]) {
+        const v = essentialSummary(e, loc);
+        assert.ok(v === null || typeof v === "string", `${e.id} summary ${loc}`);
+      }
+    }
+  }
+  // 제주 원문 summary 는 l10n 객체 — ko 해석이 실제 문자열로 나온다(객체 렌더 사고 방지)
+  const jejuFirst = getTravelEssentials("jeju")[0];
+  assert.equal(typeof essentialSummary(jejuFirst, "ko"), "string");
+  assert.equal(typeof essentialSummary(jejuFirst, "en"), "string"); // en 없으면 ko fallback — 창작 없음
 });
 
 test("추천 장소: canonical 연결 id 는 published 해석본만, 순서 보존", () => {

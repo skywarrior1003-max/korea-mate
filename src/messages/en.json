@@ -1345,6 +1345,11 @@
     "saved": "Saved",
     "removed": "Removed",
     "comingSoon": "Coming soon",
-    "officialCourse": "Official course"
+    "officialCourse": "Official course",
+    "whatsHappening": "WHAT'S HAPPENING",
+    "travelEssentials": "TRAVEL ESSENTIALS",
+    "ongoing": "Ongoing",
+    "upcoming": "Upcoming",
+    "eventsSoon": "Events in {city} are on the way."
   }
 }
