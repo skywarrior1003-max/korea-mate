@@ -1,17 +1,29 @@
 {
- "note": "normalized travel_utility 원문 필드 subset — 값 창작 없음(null 은 null)",
+ "note": "도시별 travel-utility 원본(pre-normalize, handoff 브랜치) 필드 subset — normalize 가 유실한 traveler_summary/key_info/source 복원. 값 창작 없음(null 은 null). 링크는 2026-09-06 freshness 실측 반영.",
  "essentials": [
   {
    "id": "busan-U-001",
    "city": "busan",
    "category": "도시철도",
    "title": "부산 도시철도 (Busan Metro)",
-   "summary": null,
+   "summary": "1~4호선 + 부산김해경전철(BGL) + 동해선 운행. 오전 5시~자정. 1회용 QR 승차권(자동발매기), 모바일 앱(부산도시철도), 정기권(1·3·30일) 이용 가능. 해운대·광안리·남포·서면 등 주요 관광지 연결.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "operating_hours": "05:00~23:59 (역마다 첫·막차 상이)",
+    "ticket_types": [
+     "1회용 QR",
+     "모바일 승차권 (부산도시철도 앱)",
+     "정기승차권(1/3/30일)",
+     "Hanaro Card 교통카드"
+    ],
+    "transfer_discount": "30분 이내 환승 할인 (최대 2회)",
+    "mobile_app": "부산도시철도 앱 (Google Play / App Store)"
+   },
+   "foreignNote": null,
+   "provider": "부산교통공사 (Busan Transportation Corporation)",
+   "sourceUrl": "http://www.humetro.busan.kr/homepage/cyberstation/mapeng.do",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -19,12 +31,18 @@
    "city": "busan",
    "category": "시내버스",
    "title": "부산 시내버스",
-   "summary": null,
+   "summary": "노선번호 구간: 일반 1~500번, 급행 1000번대~2000번대. 짐 규정: 20kg 이하, 최대 50×40×20cm. 23:40 이후 야간 할증 적용. T-money 및 Hanaro Card 사용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "luggage_limit": "20kg 이하, 50×40×20cm 이하",
+    "night_surcharge": "23:40 이후",
+    "transit_card": "T-money, Hanaro Card"
+   },
+   "foreignNote": null,
+   "provider": "부산광역시 교통정보",
+   "sourceUrl": "https://its.busan.go.kr/",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -32,12 +50,18 @@
    "city": "busan",
    "category": "공항리무진",
    "title": "김해국제공항 ↔ 해운대 리무진버스",
-   "summary": null,
+   "summary": "김해국제공항에서 해운대 신시가지를 연결. 동서고가로·황령산 터널 경유. 소요 약 1시간. 공항 공식 사이트에서 시간표·노선 확인.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "route": "김해국제공항 → 해운대 신시가지",
+    "duration": "약 60분",
+    "via": "동서고가로, 황령산 터널"
+   },
+   "foreignNote": null,
+   "provider": "한국공항공사 김해공항",
+   "sourceUrl": "https://www.airport.co.kr/gimhaeeng/cms/frCon/index.do?MENU_ID=110",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -45,12 +69,22 @@
    "city": "busan",
    "category": "교통카드",
    "title": "Hanaro Card (하나로카드) / T-money",
-   "summary": null,
+   "summary": "부산 도시철도·버스 통합 이용 교통카드. 역내 자동발매기, 편의점, 부산은행 지점에서 구매. 30분 이내 환승 할인. T-money도 사용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "purchase_locations": [
+     "도시철도 자동발매기",
+     "편의점",
+     "부산은행 지점"
+    ],
+    "transfer_discount": "30분 이내 환승 할인 2회",
+    "foreign_visitor_note": "외국 방문자는 Hanaro Card 충전식 구매 가능. 동백패스(선불형)는 외국인등록증 필요."
+   },
+   "foreignNote": null,
+   "provider": "부산광역시",
+   "sourceUrl": "https://www.busan.go.kr/depart/ahcard01",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -58,12 +92,18 @@
    "city": "busan",
    "category": "동백패스",
    "title": "동백패스 (Dongbaek Pass) — 대중교통 통합 할인제",
-   "summary": null,
+   "summary": "부산 대중교통 통합 정기권. 단, 선불형은 외국인등록증 보유자만 신청 가능 (동백전 앱 또는 부산은행 지점). 외국인 단기 방문자는 Hanaro Card 또는 T-money 이용 권장.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "eligibility_foreign": "외국인등록증 소지자, 본인 명의 스마트폰",
+    "purchase": "동백전 앱 또는 부산은행 영업점",
+    "short_visit_note": "단기 방문 외국인은 Hanaro Card 또는 T-money 권장"
+   },
+   "foreignNote": null,
+   "provider": "부산광역시",
+   "sourceUrl": "https://www.busan.go.kr/depart/dongbaegpass001",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -71,12 +111,20 @@
    "city": "busan",
    "category": "택시",
    "title": "부산 택시",
-   "summary": null,
+   "summary": "일반·모범·대형 3종류. 모범·대형은 일반 대비 50% 요금 추가. 앱 택시(카카오T 등) 이용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "types": [
+     "일반 (regular)",
+     "모범 (deluxe, +50%)",
+     "대형 (large, +50%)"
+    ]
+   },
+   "foreignNote": null,
+   "provider": "부산광역시 공식 관광포털 Visit Busan",
+   "sourceUrl": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -84,12 +132,18 @@
    "city": "busan",
    "category": "여행 안내 핫라인",
    "title": "부산 관광 안내 전화",
-   "summary": null,
+   "summary": "다국어 관광 안내: 1330 (한국관광공사 전국 통합). 부산시 민원: 051-120 (평일 08:30~18:30). 현장 관광안내소 정보는 visitbusan.net 여행 준비 섹션 참조.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "tourism_hotline": "1330",
+    "city_hotline": "051-120",
+    "city_hotline_hours": "평일 08:30~18:30"
+   },
+   "foreignNote": null,
+   "provider": "한국관광공사 / 부산광역시",
+   "sourceUrl": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-06-01",
    "freshnessNote": null
   },
   {
@@ -97,12 +151,25 @@
    "city": "seoul",
    "category": "지하철",
    "title": "서울 지하철 — 도심 주요 이동 수단",
-   "summary": null,
+   "summary": "서울 지하철은 약 5:30~자정 운행하는 대중교통의 핵심. 모든 노선 역명이 한국어·영어·중국어 병기. T-money 카드 또는 1회권 사용. 환승 무료(30분 이내, 10km 이하). 외국인도 별도 등록 없이 T-money 카드 구매 후 즉시 사용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "operating_hours": "약 05:30 ~ 자정 (노선별 상이)",
+    "fare_adult_card": 1400,
+    "fare_adult_ticket": 1500,
+    "fare_teen_13to18_card": 800,
+    "fare_child_6to12": 500,
+    "unit": "KRW",
+    "transfer_policy": "무료 환승 (30분 이내, 10km 이하)",
+    "single_journey_deposit": "1회권 보증금 500원 (반환 가능)",
+    "multilingual_signs": "한국어·영어·중국어",
+    "fare_as_of": "2023-10-07"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -110,12 +177,24 @@
    "city": "seoul",
    "category": "시내버스",
    "title": "서울 시내버스 — 색상 구분 노선 체계",
-   "summary": null,
+   "summary": "서울 버스는 색상별 역할 구분: 파란색(간선), 초록색(지선), 노란색(순환), 빨간색(광역). T-money 사용 시 100원 할인 및 버스↔지하철 환승 무료(30분 이내). 관광객은 파란색·노란색 버스가 주요 관광지 연결. 요금 550~3,000원 (버스 종류별 상이).",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "colors": {
+     "blue": "간선버스 (주요 간선 노선)",
+     "green": "지선버스 (지역 순환)",
+     "yellow": "순환버스 (도심 순환)",
+     "red": "광역버스 (급행, 시외 방면)"
+    },
+    "fare_range_krw": "550~3,000 (버스 종류·거리별)",
+    "t_money_discount": 100,
+    "transfer_policy": "T-money 사용 시 버스↔지하철 무료 환승 (30분 이내 10km 이하)"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -123,12 +202,29 @@
    "city": "seoul",
    "category": "AREX / 공항→도심",
    "title": "인천국제공항 → 서울 도심: AREX 공항철도",
-   "summary": null,
+   "summary": "인천국제공항(ICN)에서 서울역까지 AREX 공항철도 2가지 옵션. ①직통(Express): 비정차, 약 40분, 9,500원 (배차 20~40분). ②일반(All-Stop): 전역 정차, 약 60분, 4,150~4,750원 (배차 5~10분, 05:30~자정). 김포공항(GMP)에서도 AREX 이용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "arex_express": {
+     "route": "인천공항T1/T2 → 서울역 (비정차)",
+     "duration_min": 40,
+     "fare_krw": 9500,
+     "interval_min": "20~40분",
+     "operating_hours": "공항→서울역 / 서울역→공항 (시간표 확인 권장)"
+    },
+    "arex_all_stop": {
+     "route": "인천공항T1/T2 → (전역 정차) → 서울역",
+     "duration_min": 60,
+     "fare_range_krw": "4,150~4,750",
+     "interval_min": "5~10분",
+     "operating_hours": "05:30 ~ 자정"
+    }
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/airport-to-seoul",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -136,12 +232,20 @@
    "city": "seoul",
    "category": "공항 리무진버스",
    "title": "인천공항 → 서울 시내: 공항 리무진버스",
-   "summary": null,
+   "summary": "인천공항에서 서울 각 지역(강남·홍대·잠실 등)으로 직접 연결하는 리무진버스. 36개 노선 운영. 소요 60~80분 (교통 상황 따라 편차). 요금 5,000~15,000원. 현금·T-money·신용카드 사용 가능. 가족 할인: 성인 3인 이상 동반 시 1인 무료(36개 노선).",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "routes": 36,
+    "duration_min": "60~80 (교통 상황 따라 상이)",
+    "fare_range_krw": "5,000~15,000",
+    "payment": "현금, T-money, 신용카드",
+    "family_discount": "성인 3인 이상 동반 시 1인 무료 (36개 노선 적용)"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/airport-to-seoul",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -149,12 +253,35 @@
    "city": "seoul",
    "category": "교통카드 — T-money",
    "title": "T-money 교통카드 — 서울 대중교통 기본 카드",
-   "summary": null,
+   "summary": "서울 지하철·버스 통합 교통카드. 편의점(GS25·CU·세븐일레븐 등), 지하철역 자동판매기에서 구매. 카드 본체 3,000원 (환급 불가). 충전 후 지하철·버스·택시·편의점 결제 사용. 유효기간 없음. 외국인도 별도 등록 없이 즉시 사용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "card_cost_krw": 3000,
+    "refundable_card_cost": false,
+    "purchase_locations": [
+     "편의점 (GS25, CU, 세븐일레븐)",
+     "지하철역 자동판매기"
+    ],
+    "recharge_locations": [
+     "편의점",
+     "지하철역 자동판매기",
+     "지하철역 충전기"
+    ],
+    "usable_on": [
+     "지하철",
+     "시내버스",
+     "택시 일부",
+     "편의점 결제"
+    ],
+    "expiry": "없음",
+    "balance_refund": "잔액 500원 이하 편의점 환급 / 그 이상은 수수료 공제 후 환급",
+    "foreign_eligibility": "외국인 등록 불필요"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -162,12 +289,25 @@
    "city": "seoul",
    "category": "교통카드 — T-money Mpass (외국인 관광객 대상)",
    "title": "T-money Mpass — 외국인 관광객 교통 패스",
-   "summary": null,
+   "summary": "외국인 방문자를 위한 T-money 기반 교통 정기권. 하루 최대 20회 탑승(지하철·버스). 1개월권 기준 15,000~64,500원 (5pm 이후 할인). 단기 방문자에게 T-money 일반 충전 대비 경제적일 수 있음. 서울역·인천공항 등에서 구매.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "max_daily_trips": 20,
+    "eligible": "외국인 관광객",
+    "duration": "1개월",
+    "price_range_krw": "15,000~64,500",
+    "discount_note": "오후 5시 이후 탑승 시 할인 적용",
+    "purchase_locations": [
+     "서울역",
+     "인천국제공항",
+     "지정 편의점·역사"
+    ]
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -175,12 +315,21 @@
    "city": "seoul",
    "category": "교통카드 — 기후동행카드 (Climate Card)",
    "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
-   "summary": null,
+   "summary": "서울시에서 운영하는 월정액 무제한 교통 통합 정기권. 서울 내 지하철·버스(공항버스 제외) 무제한 탑승. 외국인 관광객도 일부 판매채널에서 구매 가능(여권 제출). 30일 기준 약 65,000원(기본형). 단기 여행보다 장기 체류자에게 경제적.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "coverage": "서울 내 지하철 전 노선 + 서울 시내버스 (공항버스·광역버스 제외)",
+    "duration": "30일 (기간 선택 가능)",
+    "price_approx_krw": 65000,
+    "foreign_eligibility": "외국인 구매 가능 (여권 지참 필요, 판매처 확인)",
+    "purchase": "서울 지하철역 무인발권기, 지정 판매처",
+    "note": "2024년 1월 서울시 도입. 관광 단기 여행자보다 1~4주 이상 체류자에 적합"
+   },
+   "foreignNote": null,
+   "provider": "서울특별시 (Seoul Metropolitan Government)",
+   "sourceUrl": "https://www.seoul.go.kr",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -188,12 +337,35 @@
    "city": "seoul",
    "category": "택시",
    "title": "서울 택시 — 일반·고급·국제관광택시",
-   "summary": null,
+   "summary": "서울 택시 종류: ①일반택시(주황/흰색/회색, 기본요금 4,800원/1.6km), ②모범택시(검정+금색, 기본요금 7,000원/3km, 고급 서비스), ③국제관광택시(영어·중국어·일본어 기사, 예약제, intltaxi.co.kr), ④점보택시(최대 8인). 야간(23:00~04:00) 20% 할증. 카카오T 앱 이용 가능.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "regular_taxi": {
+     "base_fare_krw": 4800,
+     "base_distance_km": 1.6,
+     "night_surcharge": "23:00~04:00 20%"
+    },
+    "deluxe_taxi": {
+     "base_fare_krw": 7000,
+     "base_distance_km": 3,
+     "color": "검정(블랙) + 금색 줄"
+    },
+    "international_taxi": {
+     "languages": [
+      "en",
+      "zh-CN",
+      "ja"
+     ],
+     "booking": "예약제",
+     "website": "https://www.intltaxi.co.kr"
+    },
+    "app": "카카오T (iOS/Android)"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -201,12 +373,32 @@
    "city": "seoul",
    "category": "관광 패스 — Discover Seoul Pass",
    "title": "다스서울패스 (Discover Seoul Pass) — 외국인 전용 관광 통합 패스",
-   "summary": null,
+   "summary": "외국인 방문자 전용 서울 관광 통합 패스. 24/48/72시간 옵션. 주요 관광지 무료 입장(경복궁·창덕궁·덕수궁·국립중앙박물관·남산서울타워 등 30곳 이상) + 대중교통 무제한(지하철·버스). 인천공항·서울역·온라인에서 구매. 외국인(여권 소지자) 전용, 국내 거주자 제외.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "durations": [
+     "24시간",
+     "48시간",
+     "72시간"
+    ],
+    "included_attractions_count": "30곳 이상 (내용 변동 가능)",
+    "transit": "구매 기간 내 지하철·버스 무제한",
+    "eligible": "외국 여권 소지자 (국내 거주자 제외)",
+    "purchase_locations": [
+     "인천국제공항 공항관광재단 부스",
+     "서울역",
+     "온라인(공식 사이트)"
+    ],
+    "official_site": "https://discoverseoulpass.com",
+    "guide_download_en": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1111&fileTy=ATTACH&fileNo=9",
+    "guide_download_ja": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1110&fileTy=ATTACH&fileNo=9",
+    "guide_download_zh": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1082&fileTy=ATTACH&fileNo=9"
+   },
+   "foreignNote": null,
+   "provider": "서울관광재단 (STO) / discoverseoulpass.com",
+   "sourceUrl": "https://english.visitseoul.net/map-guide-book",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -214,12 +406,41 @@
    "city": "seoul",
    "category": "관광안내소",
    "title": "서울 관광안내소 — 다국어 방문자 지원",
-   "summary": null,
+   "summary": "서울시내 주요 관광거점에 관광안내소 운영. KO/EN/JA/ZH-CN 다국어 안내 가능. 지도·가이드 무료 배포. 문의처: 서울관광재단 02-6925-0777 / staff@visitseoul.net (평일 09:00~18:00). 주요 위치: 광화문·인사동·명동·이태원·홍대·강남·공항 등.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "info_center_contact": {
+     "phone": "02-6925-0777",
+     "email": "staff@visitseoul.net",
+     "hours": "평일 09:00~18:00 KST"
+    },
+    "confirmed_centers": [
+     {
+      "name": "광화문 관광안내소",
+      "canonical_id": "seoul-KOP027225"
+     },
+     {
+      "name": "이태원 관광안내소(지하)",
+      "canonical_id": "seoul-KOP027218"
+     },
+     {
+      "name": "북촌마을 관광안내소",
+      "canonical_id": "seoul-KOP027189"
+     }
+    ],
+    "languages": [
+     "ko",
+     "en",
+     "ja",
+     "zh-CN"
+    ],
+    "note": "안내소별 운영시간·지원 언어 상이. 방문 전 공식 사이트 확인 권장"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/traveler-support",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -227,12 +448,25 @@
    "city": "seoul",
    "category": "관광 핫라인",
    "title": "관광 안내 전화 1330",
-   "summary": null,
+   "summary": "한국관광공사 전국 다국어 관광안내 콜센터. KO/EN/JA/ZH-CN 24시간 운영. 국내 전화: 1330. 해외 발신: +82-2-1330. 교통·숙박·관광지·긴급상황 안내.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "hotline_domestic": "1330",
+    "hotline_international": "+82-2-1330",
+    "languages": [
+     "ko",
+     "en",
+     "ja",
+     "zh-CN"
+    ],
+    "operating_hours": "24시간",
+    "operator": "한국관광공사 (KTO)"
+   },
+   "foreignNote": null,
+   "provider": "한국관광공사 / VisitSeoul",
+   "sourceUrl": "https://english.visitseoul.net/traveler-support",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-06-01",
    "freshnessNote": null
   },
   {
@@ -240,12 +474,24 @@
    "city": "seoul",
    "category": "면세·세금환급 (Tax Refund)",
    "title": "외국인 관광객 부가세 환급 (Tax Refund)",
-   "summary": null,
+   "summary": "외국인 관광객은 가맹점에서 30,000원 이상 구매 시 부가가치세(10%) 환급 가능. 즉시환급(Immediate Refund, 가맹점 현장)과 사후환급(공항 출국 시) 두 가지 방식. 출국 3개월 이내 구매 영수증·여권 지참. 인천공항 세금환급 카운터에서 현금·카드 환급.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "minimum_purchase_krw": 30000,
+    "refund_rate": "부가가치세(VAT) 10% (수수료 제외)",
+    "methods": {
+     "immediate_refund": "가맹 매장 현장 즉시 환급 (Tax Free 마크 확인)",
+     "post_refund": "공항 출국장 세금환급 카운터"
+    },
+    "deadline": "구매일로부터 3개월 이내 출국",
+    "documents": "영수증, 여권, 세금환급신청서",
+    "airport_counters": "인천공항 1·2 터미널 출국장 세금환급 카운터"
+   },
+   "foreignNote": null,
+   "provider": "VisitSeoul / 서울관광재단",
+   "sourceUrl": "https://english.visitseoul.net/Before-You-Go",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -253,12 +499,25 @@
    "city": "seoul",
    "category": "Visit Seoul 공식 앱",
    "title": "i-Tour Seoul — 서울 공식 관광 앱",
-   "summary": null,
+   "summary": "서울관광재단 공식 앱. 명소·음식점·쇼핑·숙박·교통 정보 포함. KO/EN/JA/ZH-CN 지원. iOS·Android 무료 다운로드.",
    "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
+   "keyInfo": {
+    "app_name": "i-Tour Seoul",
+    "app_store": "https://apps.apple.com/kr/app/i-tour-seoul/id327568019",
+    "google_play": "https://play.google.com/store/apps/details?id=kr.co.seoulbest.application",
+    "languages": [
+     "ko",
+     "en",
+     "ja",
+     "zh-CN"
+    ],
+    "fee": "무료"
+   },
+   "foreignNote": null,
+   "provider": "서울관광재단 (STO)",
+   "sourceUrl": "https://english.visitseoul.net/",
    "asOf": "2026-08-21",
-   "reviewBy": null,
+   "reviewBy": "2027-01-01",
    "freshnessNote": null
   },
   {
@@ -266,10 +525,14 @@
    "city": "jeju",
    "category": "공항 → 제주시내 버스",
    "title": "제주공항 → 제주시내 급행버스 (100번·110번)",
-   "summary": {
-    "ko": "제주국제공항 1층 출국장 앞 버스정류장. 100번·110번 급행버스로 제주시 주요 지점 이동. 600번 버스는 서귀포 방면 직행."
-   },
+   "summary": "제주국제공항 1층 출국장 앞 버스정류장. 100번·110번 급행버스로 제주시 주요 지점 이동. 600번 버스는 서귀포 방면 직행.",
    "eligibility": null,
+   "keyInfo": {
+    "100번": "제주공항 → 중문 → 서귀포 (약 60~80분, 3,000원 내외)",
+    "600번": "제주공항 → 중문관광단지 → 서귀포 버스터미널 (약 80분, 3,000원 내외)",
+    "교통카드_할인": "T-money 사용 시 약 100원 할인 및 환승 할인 적용"
+   },
+   "foreignNote": "T-money 교통카드 또는 현금 이용 가능. 버스 내 소지품 주의.",
    "provider": "제주특별자치도 버스정보시스템",
    "sourceUrl": "https://bus.jeju.go.kr",
    "asOf": "2026-08-22",
@@ -281,10 +544,15 @@
    "city": "jeju",
    "category": "렌터카",
    "title": "제주 렌터카 (사실상 필수 교통수단)",
-   "summary": {
-    "ko": "제주는 대중교통만으로는 오름·중산간·해안 명소 접근이 제한적. 렌터카가 사실상 필수. 제주공항 인근 렌터카 업체 밀집. 사전 예약 강력 권장 (성수기 매진 빠름)."
-   },
+   "summary": "제주는 대중교통만으로는 오름·중산간·해안 명소 접근이 제한적. 렌터카가 사실상 필수. 제주공항 인근 렌터카 업체 밀집. 사전 예약 강력 권장 (성수기 매진 빠름).",
    "eligibility": null,
+   "keyInfo": {
+    "국제면허": "국제운전면허증(IDP) 필수. 본국 면허증 동시 지참",
+    "예약": "한국 주요 렌터카(롯데, SK, 제주렌터카 등) 사전 예약",
+    "주의사항": "제주 도심·주요 관광지 성수기 주차 혼잡. 내비게이션 필수.",
+    "내비": "카카오내비·T맵 한국어/영어 모드 지원"
+   },
+   "foreignNote": "국제운전면허증(IDP)과 본국 면허증 반드시 소지. 한국은 좌측통행 아님 (우측 통행).",
    "provider": "한국렌터카사업조합 / 제주렌터카협회",
    "sourceUrl": "https://www.visitjeju.net/en/map-brochure/rent-car",
    "asOf": "2026-08-22",
@@ -296,10 +564,17 @@
    "city": "jeju",
    "category": "시내·간선·순환버스",
    "title": "제주 버스 노선 체계",
-   "summary": {
-    "ko": "제주 버스는 급행(100번대)·간선(200~300번대)·지선(400~500번대)·순환(800번대)으로 구성. 제주시↔서귀포 간선 및 주요 관광지 연결. 버스 이용 시 카카오버스 앱 추천."
-   },
+   "summary": "제주 버스는 급행(100번대)·간선(200~300번대)·지선(400~500번대)·순환(800번대)으로 구성. 제주시↔서귀포 간선 및 주요 관광지 연결. 버스 이용 시 카카오버스 앱 추천.",
    "eligibility": null,
+   "keyInfo": {
+    "급행버스": "100, 110, 120번대 — 주요 간선 급행",
+    "간선버스": "200~370번대 — 제주시/서귀포 지역 연결",
+    "지선버스": "400~500번대 — 마을·소규모 관광지",
+    "관광순환": "810번 — 서귀포 관광지 순환 (중문관광단지 방면)",
+    "기본요금": "1,200원 (카드 기준, 2025년 기준, 변동 가능)",
+    "환승": "T-money 카드 30분 이내 1회 환승 할인"
+   },
+   "foreignNote": "제주버스 앱·카카오버스에서 영어 노선 확인 가능.",
    "provider": "제주특별자치도 버스정보시스템",
    "sourceUrl": "https://bus.jeju.go.kr",
    "asOf": "2026-08-22",
@@ -311,10 +586,15 @@
    "city": "jeju",
    "category": "택시",
    "title": "제주 택시 이용 안내",
-   "summary": {
-    "ko": "제주시·서귀포시 전역 일반 택시·콜택시 이용 가능. 카카오T 앱 호출 가능. 공항·주요 관광지 앞 택시 상시 대기."
-   },
+   "summary": "제주시·서귀포시 전역 일반 택시·콜택시 이용 가능. 카카오T 앱 호출 가능. 공항·주요 관광지 앞 택시 상시 대기.",
    "eligibility": null,
+   "keyInfo": {
+    "기본요금": "약 3,800원 (2025년 기준, 변동 가능)",
+    "공항→서귀포": "약 40,000~50,000원 (거리에 따라 상이)",
+    "카카오T": "앱 호출 — 외국인도 신용카드 결제 가능",
+    "관광택시": "외국어 가능 관광 택시 사전 예약 가능 (한국국제관광택시 intltaxi.co.kr)"
+   },
+   "foreignNote": "기사님과 한국어 소통 어려울 경우 목적지를 한국어로 쓴 메모 활용 또는 카카오T 앱 사용 권장.",
    "provider": "제주특별자치도 / 한국국제관광택시",
    "sourceUrl": "https://www.intltaxi.co.kr",
    "asOf": "2026-08-22",
@@ -326,25 +606,36 @@
    "city": "jeju",
    "category": "우도 여객선",
    "title": "성산포항 → 우도 여객선",
-   "summary": {
-    "ko": "우도 방문은 성산포항 여객선 필수. 일 다수 편 운항. 우도 내 자전거·전동킥보드·전기차 대여 이용 가능."
-   },
+   "summary": "우도 방문은 성산포항 여객선 필수. 일 다수 편 운항. 우도 내 자전거·전동킥보드·전기차 대여 이용 가능.",
    "eligibility": null,
+   "keyInfo": {
+    "출발지": "성산포항 연안여객터미널",
+    "소요시간": "약 15분",
+    "왕복요금": "성인 약 6,500~7,000원 (우도 입도세 포함, 변동 가능)",
+    "운항횟수": "1일 다수 편 (첫 배~마지막 배 계절별 상이)",
+    "우도내_이동": "자전거·전동킥보드·전기차 대여 (섬 내 개인차량 반입 원칙적 금지)"
+   },
+   "foreignNote": "성수기 선착순 탑승 대기 있음. 이른 시간 출발 권장. 현장 발권 또는 온라인 예약.",
    "provider": "우도 여객선 운항사 (성산항 여객선 터미널)",
    "sourceUrl": null,
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
-   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN: udoferry.co.kr) — 링크 비노출"
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN) — 링크 비노출"
   },
   {
    "id": "jeju-U-006",
    "city": "jeju",
    "category": "마라도 여객선",
    "title": "모슬포항 → 마라도 여객선",
-   "summary": {
-    "ko": "한국 최남단 마라도(천연기념물)는 모슬포항 출발 여객선 이용. 소규모 섬 방문 특수 경험."
-   },
+   "summary": "한국 최남단 마라도(천연기념물)는 모슬포항 출발 여객선 이용. 소규모 섬 방문 특수 경험.",
    "eligibility": null,
+   "keyInfo": {
+    "출발지": "대정읍 모슬포항",
+    "소요시간": "약 25~30분",
+    "왕복요금": "성인 약 27,000원 전후 (2025년 기준, 변동 가능)",
+    "주의사항": "기상 악화 시 결항. 방문 전 운항 여부 확인 필수."
+   },
+   "foreignNote": "현장 발권. 섬 내 체류 시간 제한(선박 일정에 따름).",
    "provider": "마라도 여객선 운항사",
    "sourceUrl": "https://www.visitjeju.net/en/see-do/island-tour",
    "asOf": "2026-08-22",
@@ -356,10 +647,15 @@
    "city": "jeju",
    "category": "교통카드",
    "title": "T-money 교통카드",
-   "summary": {
-    "ko": "제주 버스·일부 택시에서 T-money 교통카드 사용 가능. 편의점(세븐일레븐·CU 등)에서 구매·충전. 환승 할인 적용."
-   },
+   "summary": "제주 버스·일부 택시에서 T-money 교통카드 사용 가능. 편의점(세븐일레븐·CU 등)에서 구매·충전. 환승 할인 적용.",
    "eligibility": null,
+   "keyInfo": {
+    "구매가": "카드 발급 3,000원 + 충전 잔액",
+    "사용처": "제주 시내버스·급행버스. 일부 택시.",
+    "충전": "제주공항 편의점·지하철역 무인단말기",
+    "환승할인": "버스 간 30분 이내 1회 환승 할인"
+   },
+   "foreignNote": "한국 전국 대중교통(서울·부산 등 모두) 공통 사용. 제주 방문 후 서울 등 타 도시 이동 시 계속 사용 가능.",
    "provider": "한국스마트카드 (T-money)",
    "sourceUrl": "https://www.t-money.co.kr",
    "asOf": "2026-08-22",
@@ -371,10 +667,15 @@
    "city": "jeju",
    "category": "관광안내소",
    "title": "제주 관광안내소",
-   "summary": {
-    "ko": "제주국제공항 1층·제주시청·서귀포시청·중문관광단지 등 주요 거점에 관광안내소 운영. 한국어·영어·일본어·중국어 안내 가능."
-   },
+   "summary": "제주국제공항 1층·제주시청·서귀포시청·중문관광단지 등 주요 거점에 관광안내소 운영. 한국어·영어·일본어·중국어 안내 가능.",
    "eligibility": null,
+   "keyInfo": {
+    "제주공항": "제주국제공항 1층 도착홀 내. 연중 운영.",
+    "제주시": "제주시 관음사 관광안내소 등",
+    "서귀포": "서귀포시 중심가 관광안내소",
+    "중문": "중문관광단지 안내소"
+   },
+   "foreignNote": "지도·가이드북 무료 배포. 숙소·관광지 정보 상담.",
    "provider": "제주관광공사 / 제주특별자치도",
    "sourceUrl": "https://www.visitjeju.net/en/plan/visitor-center",
    "asOf": "2026-08-22",
@@ -386,10 +687,15 @@
    "city": "jeju",
    "category": "관광 전화 안내",
    "title": "1330 한국관광공사 관광안내전화",
-   "summary": {
-    "ko": "24시간 연중무휴 관광안내 전화. 한국어·영어·일본어·중국어 지원."
-   },
+   "summary": "24시간 연중무휴 관광안내 전화. 한국어·영어·일본어·중국어 지원.",
    "eligibility": null,
+   "keyInfo": {
+    "번호": "1330 (국내 통화)",
+    "국제전화": "+82-2-1330",
+    "운영": "24시간 연중무휴",
+    "언어": "KO / EN / JA / ZH-CN"
+   },
+   "foreignNote": "긴급 관광 민원·통역 지원도 가능.",
    "provider": "한국관광공사",
    "sourceUrl": "https://www.visitkorea.or.kr/",
    "asOf": "2026-08-22",
@@ -401,10 +707,15 @@
    "city": "jeju",
    "category": "제주 올레 여권",
    "title": "제주올레 여권 (Olle Passport)",
-   "summary": {
-    "ko": "제주올레 공식 운영 스탬프 수첩. 27개 코스 시작점·종착점 스탬프 보관함에서 날인. 올레 탐방 기념품으로 인기."
-   },
+   "summary": "제주올레 공식 운영 스탬프 수첩. 27개 코스 시작점·종착점 스탬프 보관함에서 날인. 올레 탐방 기념품으로 인기.",
    "eligibility": null,
+   "keyInfo": {
+    "구매처": "제주올레 여행자센터 (제주시·서귀포 등 올레 안내소)",
+    "가격": "약 3,000원 내외 (변동 가능)",
+    "스탬프": "각 코스 출발점·종착점 보관함에서 자유 날인",
+    "완주증": "전 코스 완주 시 완주 인증서 신청 가능"
+   },
+   "foreignNote": "외국인 올레 도전자에게 기념 아이템. 영어 설명 삽입.",
    "provider": "사단법인 제주올레",
    "sourceUrl": "https://www.jejuolle.org/en/jeju-olle-passport",
    "asOf": "2026-08-22",
@@ -416,10 +727,15 @@
    "city": "jeju",
    "category": "세금환급 (Tax Refund)",
    "title": "외국인 관광객 부가세 환급 (Tax Refund)",
-   "summary": {
-    "ko": "외국인 관광객은 사후 면세점(Tax Free) 표시 가게에서 구매 시 부가가치세(VAT 10%) 환급 가능. 출국 전 공항 세관 창구에서 처리."
-   },
+   "summary": "외국인 관광객은 사후 면세점(Tax Free) 표시 가게에서 구매 시 부가가치세(VAT 10%) 환급 가능. 출국 전 공항 세관 창구에서 처리.",
    "eligibility": null,
+   "keyInfo": {
+    "최소금액": "1회 구매 30,000원 이상",
+    "조건": "구매일로부터 3개월 이내 출국",
+    "환급처": "제주국제공항 출국장 세관 환급 창구",
+    "표시": "Tax Free 로고 매장에서만 가능"
+   },
+   "foreignNote": "여권 지참 필수. 환급 금액 제한 없음(금액에 따라 즉시 환급 또는 우편 환급).",
    "provider": "한국 기획재정부 / 세관",
    "sourceUrl": "https://www.visitkorea.or.kr/",
    "asOf": "2026-08-22",
@@ -431,118 +747,19 @@
    "city": "jeju",
    "category": "짐 보관·배송",
    "title": "제주공항 수하물 보관 서비스",
-   "summary": {
-    "ko": "제주국제공항 내 코인로커 및 수하물 보관 서비스 운영. 당일 이동 중 짐 보관 가능."
-   },
+   "summary": "제주국제공항 내 코인로커 및 수하물 보관 서비스 운영. 당일 이동 중 짐 보관 가능.",
    "eligibility": null,
+   "keyInfo": {
+    "위치": "제주국제공항 1층 (입국홀·출발홀 인근)",
+    "요금": "코인로커 1,000~3,000원/시간 (크기별, 변동 가능)",
+    "운영시간": "공항 운영 시간 내 (연중)",
+    "배송서비스": "숙소↔공항 짐 배송 서비스 일부 업체 운영 (공항 내 안내 데스크 확인)"
+   },
+   "foreignNote": "짐 없이 제주 탐방 후 귀국 당일 짐 찾기 가능.",
    "provider": "제주국제공항 (한국공항공사)",
    "sourceUrl": "https://www.airport.co.kr/jeju/main.do",
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-001",
-   "city": "gyeongju",
-   "category": "경주 도착 교통",
-   "title": "신경주역(KTX) vs 경주역(일반열차) — 외국인 방문자 핵심 정보",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-002",
-   "city": "gyeongju",
-   "category": "시내버스 (관광 특화 노선)",
-   "title": "10번 버스 — 알짜배기 경주여행",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-003",
-   "city": "gyeongju",
-   "category": "관광지 입장료",
-   "title": "경주 주요 관광지 입장료",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-004",
-   "city": "gyeongju",
-   "category": "관광안내소",
-   "title": "경주시 관광안내소 (4개소)",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-005",
-   "city": "gyeongju",
-   "category": "짐보관",
-   "title": "경주 짐보관 서비스 (20개소)",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-006",
-   "city": "gyeongju",
-   "category": "무료 문화관광해설 서비스",
-   "title": "경주 문화관광해설사 (무료 다국어 해설)",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-007",
-   "city": "gyeongju",
-   "category": "여행 안내 핫라인",
-   "title": "관광 안내 전화",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
-   "freshnessNote": null
-  },
-  {
-   "id": "gyeongju-U-008",
-   "city": "gyeongju",
-   "category": "공공 Wi-Fi",
-   "title": "경주 관광지 공공 Wi-Fi",
-   "summary": null,
-   "eligibility": null,
-   "provider": null,
-   "sourceUrl": null,
-   "asOf": "2026-08-21",
-   "reviewBy": null,
    "freshnessNote": null
   },
   {
@@ -555,6 +772,8 @@
     "en": "From Jeonju Station (KTX/SRT): take bus 5-1 or 119 (~15-20 min, T-money accepted) or taxi (~10 min, ~₩5,000-6,000) to reach Hanok Village. Walking distance ~25 min."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 / 코레일",
    "sourceUrl": "https://tour.jeonju.go.kr/",
    "asOf": "2026-08-22",
@@ -571,6 +790,8 @@
     "en": "Jeonju Intercity/Express Bus Terminal is centrally located. Express buses from Seoul (Central City, East Seoul) take ~2.5-3 hours. From terminal to Hanok Village: bus or taxi 15-25 min."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 / 코버스 / 이지티켓",
    "sourceUrl": "https://tour.jeonju.go.kr/",
    "asOf": "2026-08-22",
@@ -587,11 +808,13 @@
     "en": "City buses connect major sights. Key routes for Hanok Village: bus 5-1 (Jeonju Station ↔ Hanok Village), bus 119. Fare ~₩1,500/adult (T-money card). Transfer discounts apply."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 버스정보시스템",
    "sourceUrl": null,
    "asOf": "2026-08-22",
    "reviewBy": "2026-12-01",
-   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN: bis.jeonju.go.kr) — 링크 비노출"
+   "freshnessNote": "2026-09-06 주간 freshness 실측: 공식 링크 도메인 사멸(DNS NXDOMAIN) — 링크 비노출"
   },
   {
    "id": "jeonju-U-004",
@@ -603,6 +826,8 @@
     "en": "Taxis available throughout Jeonju. Base fare ~₩4,000 (may change). Kakao T app works for hailing. Note: vehicle access restricted inside Hanok Village core — alight nearby and walk. Jeonju Station → Hanok Village: ~₩5,000-6,000."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 / 카카오T",
    "sourceUrl": "https://www.kakaomobility.com",
    "asOf": "2026-08-22",
@@ -619,6 +844,8 @@
     "en": "The Hanok Village core is largely vehicle-restricted — most sights (Gyeonggijeon, Jeondong Cathedral, Pungnammun) are within 15-30 min walking distance of each other. Electric scooters restricted in some areas. Stone alleys may limit wheelchair access."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 한옥마을 관리사무소",
    "sourceUrl": "https://hanok.jeonju.go.kr",
    "asOf": "2026-08-22",
@@ -635,6 +862,8 @@
     "en": "T-money cards work on Jeonju city buses. Purchase (~₩3,000) and top-up at convenience stores (GS25, CU, 7-Eleven) near Jeonju Station or bus terminal. Foreign visitors recommended to use prepaid T-money."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "T-money (선불) / 각 카드사 (후불)",
    "sourceUrl": "https://www.t-money.co.kr",
    "asOf": "2026-08-22",
@@ -651,6 +880,8 @@
     "en": "Key visitor centers: (1) Hanok Village Tourism Info Center (in front of Gyeonggijeon) — maps, multilingual info; (2) Jeonju Station; (3) Express Bus Terminal. KO/EN/JA/ZH support available (levels vary)."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 관광과",
    "sourceUrl": "https://tour.jeonju.go.kr/",
    "asOf": "2026-08-22",
@@ -667,6 +898,8 @@
     "en": "KTO-operated tourism hotline, 24/7. Call 1330 (domestic) or +82-2-1330 (international). Available in KO/EN/JA/ZH. Can assist with Jeonju travel information, transport, and accommodation."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "한국관광공사 (KTO)",
    "sourceUrl": "https://www.visitkorea.or.kr",
    "asOf": "2026-08-22",
@@ -683,6 +916,8 @@
     "en": "Coin lockers at Jeonju Station (S/M/L sizes, ~₩3,000-5,000/use). No official luggage storage in Hanok Village core — some guesthouses/cafes may offer paid storage. Day-trippers recommended to use station lockers before heading to Hanok Village."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "한국철도공사 (코레일) / 전주역",
    "sourceUrl": "https://www.letskorail.com",
    "asOf": "2026-08-22",
@@ -699,11 +934,252 @@
     "en": "Currency exchange: bank branches near Hanok Village (KB, Shinhan, Woori). ATMs available at convenience stores and banks — Mastercard/Visa networks supported. Most shops in Hanok Village accept cards. Small vendors/stalls may be cash-only — carry some Korean won. Jeonjupay (local currency) not available to foreign visitors."
    },
    "eligibility": null,
+   "keyInfo": null,
+   "foreignNote": null,
    "provider": "전주시 / 각 은행",
    "sourceUrl": "https://tour.jeonju.go.kr/",
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
    "freshnessNote": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+  },
+  {
+   "id": "gyeongju-U-001",
+   "city": "gyeongju",
+   "category": "경주 도착 교통",
+   "title": "신경주역(KTX) vs 경주역(일반열차) — 외국인 방문자 핵심 정보",
+   "summary": "경주에는 KTX 정차역(신경주역)과 일반열차 역(경주역) 두 곳이 있다. 신경주역: KTX 경부선 정차. 서울→신경주 약 2시간 10분. 단, 신경주역은 경주 시내에서 약 10~15km 외곽(구미방면)에 위치해 시내까지 시내버스·택시 환승 필요. 경주역: 일반열차(무궁화·새마을) 정차, 경주 시내(성동동) 인접. 도심 접근이 쉬우나 서울에서 약 4시간 이상 소요. 고속버스: 서울→경주 약 3시간 30분, 부산·대구→경주 약 50~70분.",
+   "eligibility": null,
+   "keyInfo": {
+    "ktx_station": "신경주역 (경주 도심 10~15km 외곽)",
+    "regular_train_station": "경주역 (경주 시내 인접)",
+    "seoul_to_singyeongju_ktx": "약 2시간 10분",
+    "daegu_to_gyeongju": "약 20분 (KTX·일반열차)",
+    "busan_to_gyeongju": "약 30분 (KTX·일반열차)",
+    "express_bus_from_seoul": "약 3시간 30분"
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2381",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-002",
+   "city": "gyeongju",
+   "category": "시내버스 (관광 특화 노선)",
+   "title": "10번 버스 — 알짜배기 경주여행",
+   "summary": "경주 관광지를 순환하는 대표 시내버스. 터미널→경주역→첨성대→분황사→보문관광단지→경주월드→엑스포공원→불국사→국립경주박물관→동궁과 월지→경주역/터미널 순환. 1,300원(성인), 카드 50원 할인. 운행 06:00~21:40, 배차 약 20분. 전국스마트버스 앱으로 실시간 위치 확인.",
+   "eligibility": null,
+   "keyInfo": {
+    "route": "터미널→경주역→첨성대→분황사→보문→경주월드→엑스포→불국사→박물관→동궁과 월지→복귀",
+    "fare_adult": 1300,
+    "fare_youth": 1000,
+    "fare_child": 700,
+    "card_discount": 50,
+    "first_bus": "06:00",
+    "last_bus": "21:40",
+    "interval_min": 20,
+    "app": "전국스마트버스 (앱스토어/플레이스토어)",
+    "operator": "새천년미소 (newsmilebus.com)",
+    "unit": "KRW"
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2301",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-003",
+   "city": "gyeongju",
+   "category": "관광지 입장료",
+   "title": "경주 주요 관광지 입장료",
+   "summary": "주요 유료 관광지 입장료. 65세 이상·7세 미만 무료. 장애인등록증 소지자 50% 할인. 30인 이상 단체 할인(20~33%). 불국사·석굴암은 조계종 별도 운영(요금 별도 확인 필요).",
+   "eligibility": null,
+   "keyInfo": {
+    "sites": [
+     {
+      "name": "천마총 (Cheonmachong Tomb)",
+      "adult": 3000,
+      "youth": 2000,
+      "child": 1000,
+      "group_discount": "30인 이상 20%"
+     },
+     {
+      "name": "동궁과 월지 (Donggung & Wolji)",
+      "adult": 3000,
+      "youth": 2000,
+      "child": 1000,
+      "group_discount": "30인 이상 20%"
+     },
+     {
+      "name": "황룡사역사문화관 (Hwangryongsa History Center)",
+      "adult": 3000,
+      "youth": 2000,
+      "child": 1500,
+      "group_discount": "33%"
+     },
+     {
+      "name": "양동마을 (Yangdong Folk Village)",
+      "adult": 4000,
+      "youth": 2000,
+      "child": 1500,
+      "group_discount": "15%"
+     },
+     {
+      "name": "신라역사과학관 (Silla Science Museum)",
+      "adult": 5000,
+      "youth": 3500,
+      "child": 3500,
+      "group_discount": "20%"
+     },
+     {
+      "name": "불국사 / 석굴암",
+      "adult": "별도 확인",
+      "note": "조계종 운영, 요금 변동 가능 — 공식 사이트 확인"
+     }
+    ],
+    "free_admission": [
+     "만 7세 미만",
+     "만 65세 이상",
+     "국가유공자 등 (해당 증명 지참)"
+    ],
+    "discount": "장애인등록증 소지자 50% 할인"
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2378",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-004",
+   "city": "gyeongju",
+   "category": "관광안내소",
+   "title": "경주시 관광안내소 (4개소)",
+   "summary": "경주 주요 거점 4개 관광안내소. 연중무휴 운영. KO/EN/JA/ZH-CN 다국어 안내. 관광지도 무료 배포. 외국인 대상 전문 안내 가능.",
+   "eligibility": null,
+   "keyInfo": {
+    "centers": [
+     {
+      "name": "터미널 관광안내소",
+      "address": "태종로685번길 4 (경주터미널 내)",
+      "phone": "054-772-9289",
+      "hours": "연중무휴"
+     },
+     {
+      "name": "불국사 관광안내소",
+      "address": "진현로2길 61-3 (불국사 주차장)",
+      "phone": "054-746-4747",
+      "hours": "연중무휴"
+     },
+     {
+      "name": "접근성 관광안내소 (장애인 특화)",
+      "address": "대종로767 (신라대종 뒤편)",
+      "phone": "054-777-1330",
+      "hours": "연중무휴"
+     },
+     {
+      "name": "경주역 관광안내소",
+      "address": "경주역으로80 (천북읍, 경주역 내)",
+      "phone": "054-771-1336",
+      "hours": "연중무휴"
+     }
+    ]
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2376",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-005",
+   "city": "gyeongju",
+   "category": "짐보관",
+   "title": "경주 짐보관 서비스 (20개소)",
+   "summary": "경주역 물품보관함(1,000~2,500원/2시간), 황리단길문화센터(1회 무료, 10:00~18:30), 고속버스터미널(2,000~5,000원, 06:00~21:00), 카페 짐보관(1,500~7,000원) 등 20개소. 사이즈별 요금 상이.",
+   "eligibility": null,
+   "keyInfo": {
+    "total_locations": 20,
+    "highlight_free": "황리단길문화센터 1회 무료 (10:00~18:30)",
+    "station_lockers": "경주역 1,000~2,500원 / 2시간",
+    "terminal": "고속버스터미널 2,000~5,000원 / 06:00~21:00",
+    "typical_range": "1,000~7,000원 (사이즈·시간별 상이)",
+    "note": "상세 위치·운영시간은 경주시 공식 포털 확인 또는 개별 업체 문의"
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=4030",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-006",
+   "city": "gyeongju",
+   "category": "무료 문화관광해설 서비스",
+   "title": "경주 문화관광해설사 (무료 다국어 해설)",
+   "summary": "경주 17개 유적지에서 무료로 전문 해설사 운영. 외국어(EN/JA/ZH) 해설사 8개 주요 거점(불국사·석굴암·양동마을 포함)에 배치. 단체(10인 이상)는 3~5주 전 예약 필요. 개인 방문 시 현장에서 가이드 가능.",
+   "eligibility": null,
+   "keyInfo": {
+    "locations": 17,
+    "foreign_language_sites": 8,
+    "foreign_languages": [
+     "en",
+     "ja",
+     "zh-CN"
+    ],
+    "group_booking": "10인 이상, 3~5주 전 신청서 제출",
+    "contact": "070-7718-0333",
+    "fee": "무료"
+   },
+   "foreignNote": null,
+   "provider": "경주시 공식 관광포털",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2395",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-007",
+   "city": "gyeongju",
+   "category": "여행 안내 핫라인",
+   "title": "관광 안내 전화",
+   "summary": "1330 (한국관광공사 전국 다국어 관광안내 — KO/EN/JA/ZH-CN). 경주시 민원: 054-779-8600 (평일). 현장 관광안내소 전화번호는 경주-U-004 참조.",
+   "eligibility": null,
+   "keyInfo": {
+    "national_tourism_hotline": "1330 (KO/EN/JA/zh-CN 다국어)",
+    "gyeongju_city_main": "054-779-8600"
+   },
+   "foreignNote": null,
+   "provider": "한국관광공사 / 경주시",
+   "sourceUrl": "https://gyeongju.go.kr/tour/index.do",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-06-01",
+   "freshnessNote": null
+  },
+  {
+   "id": "gyeongju-U-008",
+   "city": "gyeongju",
+   "category": "공공 Wi-Fi",
+   "title": "경주 관광지 공공 Wi-Fi",
+   "summary": "경주 주요 관광지에 공공 Wi-Fi 운영. 정확한 거점 목록은 경주시 공식 포털 여행정보 Wi-Fi 섹션 참조.",
+   "eligibility": null,
+   "keyInfo": {
+    "coverage": "주요 관광지·공공시설",
+    "ssid_info": "경주시 공식 포털 확인"
+   },
+   "foreignNote": null,
+   "provider": "경주시",
+   "sourceUrl": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2380",
+   "asOf": "2026-08-21",
+   "reviewBy": "2027-01-01",
+   "freshnessNote": null
   }
  ]
 }

@@ -205,6 +205,10 @@ body {
   --qh-faint2: rgba(33, 29, 23, 0.45);
   --qh-line: rgba(33, 29, 23, 0.1);
   --qh-clay: #8a4b2a;
+  /* 확정 GoKoreaMate Blue 계열(trips-tokens 과 동일 값) — 지역 City Hub 이후 화면의
+     행동/링크/선택 위계에 쓴다. 화면을 파랗게 칠하는 용도가 아니다. */
+  --qh-blue: #0041c9;
+  --qh-navy: #001654;
   --qh-sans: var(--font-quiet-sans), "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
     "Hiragino Kaku Gothic ProN", "Yu Gothic", "Microsoft YaHei", "PingFang SC", sans-serif;
   --qh-serif: var(--font-quiet-serif), "Nanum Myeongjo", "Noto Serif KR", "Noto Serif JP",

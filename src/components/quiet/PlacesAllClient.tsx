@@ -104,7 +104,7 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
                   {/* Save = 북마크 — 하트는 Like 전용(최종 Social 문법) */}
                   <span
                     className="w-[34px] h-[34px] rounded-full flex items-center justify-center"
-                    style={{ background: "rgba(255,255,255,.92)", color: saved ? "var(--qh-clay)" : "var(--qh-ink)" }}
+                    style={{ background: "rgba(255,255,255,.92)", color: saved ? "var(--qh-blue)" : "var(--qh-ink)" }}
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden
                          fill={saved ? "currentColor" : "none"} stroke="currentColor"

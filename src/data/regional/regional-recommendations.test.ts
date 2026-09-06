@@ -7,7 +7,7 @@ import path from "node:path";
 import {
   getRecommendedTrips, getAllRecommendedTrips, getRecommendedPlaces,
   recommendedSpotIds, tripDisplayTitle, tripLinkedSpotIds,
-  getCityEvents, getTravelEssentials, essentialSummary,
+  getCityEvents, getCityEventById, getTravelEssentials, essentialSummary,
 } from "./regional-recommendations.ts";
 
 const CITIES = ["seoul", "busan", "jeju", "gyeongju", "jeonju"] as const;
@@ -138,6 +138,16 @@ test("Events: 기간 명시 콘텐츠만 · 종료분 제외 · 상태는 ISO �
   for (const c of CITIES) for (const e of getCityEvents(c, new Date("2026-08-22"))) {
     assert.ok(e.spotId !== null || Boolean(e.source && (e.source as { source_url?: string | null }).source_url), `${e.id} detail path`);
   }
+});
+
+test("Event 상세 단건 조회: 종료분도 찾되 지난 행사에 상태를 붙이지 않는다", () => {
+  // busan-RN-002 는 8/31 종료 — 목록에선 빠지지만 상세는 열린다
+  const ended = getCityEventById("busan", "busan-RN-002", new Date("2026-09-06"));
+  assert.ok(ended);
+  assert.equal(ended!.status, null);
+  const live = getCityEventById("seoul", "seoul-RN-001", new Date("2026-09-06"));
+  assert.equal(live?.status, "ongoing");
+  assert.equal(getCityEventById("seoul", "no-such-id"), null);
 });
 
 test("Travel Essentials: Final 기준 수치 그대로(부산7·서울13·제주12·경주8·전주10)", () => {

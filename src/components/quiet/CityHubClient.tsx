@@ -81,7 +81,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
         <div className="flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("recommendedTrips")}</h2>
           {trips.length > 0 && (
-            <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-clay)" }}>
+            <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
             </Link>
           )}
@@ -111,7 +111,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
         {/* ── Recommended Places ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("recommendedPlaces")}</h2>
-          <Link href={`/city/${slug}/places`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-clay)" }}>
+          <Link href={`/city/${slug}/places`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
             {t("viewAll")}
           </Link>
         </div>
@@ -136,97 +136,89 @@ export default function CityHubClient({ slug }: { slug: string }) {
           ))}
         </div>
 
-        {/* ── What's happening — 공식 한시 콘텐츠(recommended_now), 종료분은 조용히 제외 ── */}
+        {/* ── What's happening — 대표 2~3개 · 카드 → 내부 상세(외부 직행 없음) ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("whatsHappening")}</h2>
+          {events.length > 0 && (
+            <Link href={`/city/${slug}/events`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
+              {t("viewAll")}
+            </Link>
+          )}
         </div>
         {events.length === 0 ? (
           <p className="mt-3 text-[13px] text-[var(--qh-faint2)]">{t("eventsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-1">
-            {events.map(ev => {
+            {events.slice(0, 3).map(ev => {
               const name = locale !== "ko" && ev.nameEn ? ev.nameEn : (ev.name ?? "");
               const period = [ev.validFrom, ev.validTo].filter(Boolean).join(" – ");
-              const body = (
-                <>
-                  <span className="flex-1 min-w-0">
-                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{name}</span>
-                    <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
-                      {ev.status && (
-                        <span className="font-medium" style={{ color: ev.status === "ongoing" ? "var(--qh-clay)" : "var(--qh-faint)" }}>
-                          {t(ev.status)}{" · "}
-                        </span>
-                      )}
-                      {period}{ev.category ? ` · ${ev.category}` : ""}
-                    </span>
-                    {ev.whyNow && (
-                      <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
-                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                        {ev.whyNow}
-                      </span>
-                    )}
-                  </span>
-                  <span className="flex-none text-[13px] text-[var(--qh-faint)]" aria-hidden>{ev.spotId !== null ? "→" : "↗"}</span>
-                </>
-              );
-              const rowCls = "flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11";
               return (
                 <li key={ev.id}>
-                  {ev.spotId !== null ? (
-                    <Link href={`/place/${ev.spotId}/`} className={rowCls}>{body}</Link>
-                  ) : ev.source?.source_url ? (
-                    <a href={ev.source.source_url} target="_blank" rel="noopener noreferrer" className={rowCls}>{body}</a>
-                  ) : (
-                    <div className={rowCls.replace(" gkm-focus", "")}>{body}</div>
-                  )}
+                  <Link href={`/city/${slug}/events/${ev.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{name}</span>
+                      <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
+                        {ev.status && (
+                          <span className="font-medium" style={{ color: ev.status === "ongoing" ? "var(--qh-blue)" : "var(--qh-faint)" }}>
+                            {t(ev.status)}{" · "}
+                          </span>
+                        )}
+                        {period}{ev.category ? ` · ${ev.category}` : ""}
+                      </span>
+                      {ev.whyNow && (
+                        <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
+                          style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                          {ev.whyNow}
+                        </span>
+                      )}
+                    </span>
+                    <span className="flex-none text-[13px]" style={{ color: "var(--qh-blue)" }} aria-hidden>→</span>
+                  </Link>
                 </li>
               );
             })}
           </ul>
         )}
 
-        {/* ── Travel Essentials — 공식 여행 편의정보(travel_utility 원문 순서) ── */}
+        {/* ── Travel Essentials — 대표 1~2개 · 카드 → 내부 상세 · 공식 링크는 상세 안 ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("travelEssentials")}</h2>
+          {essentials.length > 0 && (
+            <Link href={`/city/${slug}/essentials`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
+              {t("viewAll")}
+            </Link>
+          )}
         </div>
         <ul className="mt-1">
-          {essentials.map(es => {
+          {essentials.slice(0, 2).map(es => {
             const summary = essentialSummary(es, locale);
-            const body = (
-              <>
-                <span className="flex-1 min-w-0">
-                  <span className="block text-[14px] font-medium text-[var(--qh-ink)] leading-snug">{es.title}</span>
-                  <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)] truncate">
-                    {es.category ?? ""}{es.provider ? ` · ${es.provider}` : ""}
-                  </span>
-                  {summary && (
-                    <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
-                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                      {summary}
-                    </span>
-                  )}
-                </span>
-                {es.sourceUrl && <span className="flex-none text-[13px] text-[var(--qh-faint)]" aria-hidden>↗</span>}
-              </>
-            );
-            const rowCls = "flex items-start gap-3.5 py-2.5 border-b border-[var(--qh-line)] min-h-11";
             return (
               <li key={es.id}>
-                {es.sourceUrl ? (
-                  <a href={es.sourceUrl} target="_blank" rel="noopener noreferrer" className={`${rowCls} gkm-focus`}>{body}</a>
-                ) : (
-                  <div className={rowCls}>{body}</div>
-                )}
+                <Link href={`/city/${slug}/essentials/${es.id}`} className="flex items-start gap-3.5 py-2.5 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[14px] font-medium text-[var(--qh-ink)] leading-snug">{es.title}</span>
+                    <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)] truncate">
+                      {es.category ?? ""}{es.provider ? ` · ${es.provider}` : ""}
+                    </span>
+                    {summary && (
+                      <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
+                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {summary}
+                      </span>
+                    )}
+                  </span>
+                  <span className="flex-none text-[13px]" style={{ color: "var(--qh-blue)" }} aria-hidden>→</span>
+                </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* ── Explore — 흐름의 끝, 스코프 유지 handoff ── */}
+        {/* ── Explore — 흐름의 끝, 스코프 유지 handoff (확정 Blue: navy CTA) ── */}
         <Link
           href={`/explore/${slug}`}
           className="mt-6 flex items-center justify-between rounded-[4px] px-4 py-3.5 gkm-focus"
-          style={{ backgroundColor: "var(--qh-ink)" }}
+          style={{ backgroundColor: "var(--qh-navy)" }}
         >
           <span>
             <span className="block text-[15px] font-semibold" style={{ color: "var(--qh-paper)" }}>{t("exploreCity", { city: cityLabel })}</span>

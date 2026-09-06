@@ -142,7 +142,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
         <Link
           href={`/planner?city=${slug}`}
           className="mt-7 flex items-center justify-between rounded-[4px] px-4 py-3.5 gkm-focus"
-          style={{ backgroundColor: "var(--qh-ink)" }}
+          style={{ backgroundColor: "var(--qh-navy)" }}
         >
           <span>
             <span className="block text-[15px] font-semibold" style={{ color: "var(--qh-paper)" }}>{t("planCity", { city: cityLabel })}</span>

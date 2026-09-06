@@ -1353,6 +1353,11 @@
     "eventsSoon": "{city}의 행사 소식을 준비하고 있어요.",
     "planCity": "{city} 일정 만들기",
     "planCitySub": "이 코스의 도시에서 내 일정을 시작해요",
-    "courseNoStops": "이 코스의 상세 구성은 공식 안내를 기준으로 준비 중이에요."
+    "courseNoStops": "이 코스의 상세 구성은 공식 안내를 기준으로 준비 중이에요.",
+    "eventsIn": "{city}의 지금 열리는",
+    "essentialsIn": "{city} 여행 편의정보",
+    "officialLink": "공식 안내 보기",
+    "asOfLine": "{date} 기준 정보",
+    "viewPlace": "장소 상세 보기"
   }
 }

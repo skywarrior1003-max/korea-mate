@@ -140,14 +140,36 @@ export function getCityEvents(city: string, today = new Date()): CityEvent[] {
     }));
 }
 
+/**
+ * 내부 상세용 단건 조회 — 종료된 행사도 찾는다(공유된 상세 링크가 죽지 않게).
+ * 단, 종료분의 status 는 null 로 둔다: 지난 행사에 '진행 예정'을 붙이지 않는다.
+ */
+export function getCityEventById(city: string, id: string, today = new Date()): CityEvent | null {
+  const slug = city.toLowerCase();
+  const iso = today.toISOString().slice(0, 10);
+  const p = REGIONAL_PLACES.find(r => r.city === slug && r.id === id && (r.validFrom !== null || r.validTo !== null));
+  if (!p) return null;
+  const expired = Boolean(p.validTo && ISO_DATE.test(p.validTo) && p.validTo < iso);
+  return {
+    ...p,
+    status: !expired && p.validFrom && ISO_DATE.test(p.validFrom)
+      ? (p.validFrom > iso ? "upcoming" : "ongoing")
+      : null,
+  };
+}
+
 export interface TravelEssential {
   id: string;
   city: string;
   category: string | null;
   title: string | null;
-  /** 도시별 원문이 문자열(부산/서울/경주) 또는 l10n 객체(제주/전주 {ko, en?…}) — 원문 구조 그대로 */
+  /** 도시별 원문이 문자열 또는 l10n 객체({ko, en?…}) — 원문 구조 그대로 */
   summary: string | Record<string, string> | null;
   eligibility: string | null;
+  /** 수집 원문의 상세 항목(운영시간·요금·이용조건 등) — 키/값 원문 그대로, 창작 없음 */
+  keyInfo?: Record<string, unknown> | null;
+  /** 외국인 방문자 참고(제주 원문 필드) */
+  foreignNote?: string | Record<string, string> | null;
   provider: string | null;
   sourceUrl: string | null;
   asOf: string | null;
@@ -164,13 +186,39 @@ export function getTravelEssentials(city: string): TravelEssential[] {
   return REGIONAL_ESSENTIALS.filter(e => e.city === slug && e.title);
 }
 
-/** summary 원문에서 locale 값을 고른다 — 번역 창작 없음(없으면 ko → 아무 값) */
-export function essentialSummary(es: TravelEssential, locale: string): string | null {
-  const s = es.summary;
+/** 문자열 또는 l10n 객체에서 locale 값을 고른다 — 번역 창작 없음(없으면 ko → 아무 값) */
+export function localizedText(s: string | Record<string, string> | null | undefined, locale: string): string | null {
   if (s === null || s === undefined) return null;
   if (typeof s === "string") return s.trim() || null;
   const v = s[locale] ?? (locale === "zh" ? s["zh-CN"] : undefined) ?? s.ko ?? Object.values(s)[0];
   return typeof v === "string" && v.trim() ? v : null;
+}
+
+export function essentialSummary(es: TravelEssential, locale: string): string | null {
+  return localizedText(es.summary, locale);
+}
+
+/**
+ * key_info 원문을 표시 가능한 [라벨, 값] 행으로 만든다.
+ * 라벨은 키의 기계적 정리('_'→공백)뿐 — 번역·라벨 창작 없음. 값은 문자열/배열/
+ * 1단계 객체까지만 펼치고 그 밖의 형태는 그리지 않는다(지어내지 않는다).
+ */
+export function essentialKeyInfoRows(es: TravelEssential): Array<[string, string]> {
+  const ki = es.keyInfo;
+  if (!ki || typeof ki !== "object") return [];
+  const rows: Array<[string, string]> = [];
+  for (const [k, v] of Object.entries(ki)) {
+    const label = k.replace(/_/g, " ");
+    if (typeof v === "string" || typeof v === "number") rows.push([label, String(v)]);
+    else if (Array.isArray(v) && v.every(x => typeof x === "string" || typeof x === "number")) rows.push([label, v.join(" · ")]);
+    else if (v && typeof v === "object") {
+      const flat = Object.entries(v as Record<string, unknown>)
+        .filter(([, x]) => typeof x === "string" || typeof x === "number")
+        .map(([kk, x]) => `${kk.replace(/_/g, " ")}: ${x}`);
+      if (flat.length > 0) rows.push([label, flat.join(" · ")]);
+    }
+  }
+  return rows;
 }
 
 /** canonical 연결이 확정된 추천 장소의 city_spot id 목록(도시별, 순서 보존) */
