@@ -1,5 +1,9 @@
 # 전주 이미지 반영 준비 v1 (2026-09-05)
 
+> ⚠ **SUPERSEDED (2026-09-06)** — `jeonju-images-eligibility-*-v1` 패키지는 236 전체 기준
+> `jeonju-images-full-*-v2` (GAPFILL-AND-CLOSEOUT-V1) 로 대체됨. **DO NOT APPLY.**
+> 상세: `jeonju-official-image-gapfill-closeout-v1.md`.
+
 > TASK-GOKOREAMATE-JEONJU-IMAGE-PRODUCTION-REFLECTION-PREP-V1. Production 실행 없음 — 적용은
 > 별도 Owner 승인 PROD-SQL 태스크(TASK-GOKOREAMATE-JEONJU-IMAGE-PRODUCTION-REFLECTION-APPLY-V1).
 
