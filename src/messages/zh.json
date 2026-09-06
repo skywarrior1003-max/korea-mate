@@ -18,7 +18,13 @@
     "aboutDesc": "我们的目标、数据来源，以及规划行程的 AI",
     "blogDesc": "旅行随笔与城市指南",
     "guideDesc": "现金、交通、出租车、一个人吃饭",
-    "contactDesc": "发送反馈或报告错误信息"
+    "contactDesc": "发送反馈或报告错误信息",
+    "groupTips": "旅行提示",
+    "tipsToggle": "首次旅程引导",
+    "tipsDesc": "开启或关闭页面中的小提示",
+    "tipsReplay": "重看引导",
+    "tipsReplayDesc": "从头再看一遍各个提示",
+    "tipsReplayDone": "下个页面开始将再次显示"
   },
   "explore": {
     "title": "探索{city}",
@@ -1364,5 +1370,29 @@
     "urlOpenInternal": "打开 GoKoreaMate 链接",
     "urlExternalSoonTitle": "外部链接导入即将上线",
     "urlExternalSoonBody": "目前可粘贴 GoKoreaMate 分享行程链接直接打开。外部旅行页面导入即将支持。"
+  },
+  "aiWrite": {
+    "label": "AI 文字风格",
+    "dir_calm": "克制平实",
+    "dir_witty": "幽默风趣",
+    "dir_warm": "感性",
+    "go": "用 AI 来写",
+    "busy": "生成中…",
+    "failed": "暂时无法生成，请稍后再试。",
+    "editableHint": "可以自由修改建议的文字。这些内容也会出现在故事中。"
+  },
+  "guide": {
+    "gotIt": "知道了",
+    "save": "喜欢的地方先保存 — 都会汇集到 Picks › Saved。",
+    "thisTrip": "在 Saved 里把这次要去的地方选进 This Trip，旅程从这里开始。",
+    "planner": "This Trip with AI — 你选的地点和 AI 一起规划路线，只需定日期和节奏。",
+    "myTripEdit": "这是你的行程：可自由添加、删除地点并调整顺序。",
+    "directions": "每个地点都有 NAVER/Google 地图按钮，一键打开导航。",
+    "photo": "随手记录旅途瞬间 — 一张照片加一句话就够了。",
+    "aiWriting": "不知道怎么写？从三种 AI 文字风格中挑一个开始，随时可以自己修改。",
+    "story": "你的记录会在故事标签里以旅行的方式呈现 — 同样的内容，无需额外操作。",
+    "myPlaces": "只有你知道的地方，用「留为我的地点」收藏，配上照片和笔记。",
+    "share": "分享只公开你选中的内容，照片和笔记在选择前保持私密。",
+    "finale": "完成了一次旅程！这些提示可在更多(⋯)中关闭或重看。"
   }
 }

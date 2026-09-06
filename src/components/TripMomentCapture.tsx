@@ -1,5 +1,6 @@
 "use client";
 import GlyphIcon from "@/components/ui/GlyphIcon";
+import JourneyCoach from "@/components/JourneyCoach";
 
 // gokoreamate — Trip Moment Capture Modal
 // TASK-022: photo + GPS + memo + category 캡처
@@ -9,11 +10,14 @@ import { useTranslations } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
+import AiWritingAssist from "@/components/AiWritingAssist";
 
 interface Props {
   itineraryId: string;
   deviceId:    string;
   dayNumber:   number | null;
+  /** AI 글쓰기 맥락용 도시명(여행의 city). 표시/저장에는 쓰지 않는다 */
+  city?:       string | null;
   /**
    * 일정 장소에서 시작한 순간 (TASK-TRIP-MOMENT-STOP-BINDING-V1).
    * 장소명은 미리 채워 두고, 공식 장소의 `city_spot_id` 는 화면에 보이지 않는
@@ -33,7 +37,7 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   /**
@@ -354,6 +358,22 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
           )}
           <div>
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
+            {/* AI 글 방향 3종 — 결과는 아래 textarea 에 채워지고 그대로 고칠 수 있다 */}
+            <div className="mb-2"><JourneyCoach step="aiWriting" /></div>
+            <div className="mb-3">
+              <AiWritingAssist
+                target="memo" dark
+                buildContext={() => ({
+                  city: (city ?? "").trim() || "Korea",
+                  placeName: placeName || null,
+                  category,
+                  dayNumber,
+                  hasPhoto: photoData !== null,
+                  draft: memo.trim() || null,
+                })}
+                onSuggestion={text => setMemo(text.slice(0, 300))}
+              />
+            </div>
             <textarea
               value={memo}
               onChange={e => setMemo(e.target.value)}

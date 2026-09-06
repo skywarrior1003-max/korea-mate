@@ -1,6 +1,7 @@
 "use client";
 
 import type { LocalizedText } from "@/data/cities/types";
+import JourneyCoach from "@/components/JourneyCoach";
 import { useSearchParams, useRouter } from "next/navigation";
 // TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
 import StoryJournal from "@/components/story/StoryJournal";
@@ -36,6 +37,7 @@ import { pickL10n } from "@/lib/place-display-name";
 import WeatherLinkChip from "@/components/planner/WeatherLinkChip";
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
+import AiWritingAssist from "@/components/AiWritingAssist";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo, setMomentPublic } from "@/lib/trip-moments";
@@ -2745,21 +2747,40 @@ function ItineraryResult() {
         onEditTitle={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
         editing={editingTitle}
         editSlot={
-          <input
-            autoFocus
-            type="text"
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleTitleSave();
-              if (e.key === "Escape") setEditingTitle(false);
-            }}
-            onBlur={handleTitleSave}
-            aria-label={tPlanner("editTitle")}
-            className="gkm-focus w-full text-[26px] sm:text-4xl font-black text-[#131b2e] bg-white/95 rounded-2xl px-4 py-2"
-            placeholder={`My ${city} Trip`}
-            maxLength={60}
-          />
+          <span className="block">
+            <input
+              autoFocus
+              type="text"
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleTitleSave();
+                if (e.key === "Escape") setEditingTitle(false);
+              }}
+              aria-label={tPlanner("editTitle")}
+              className="gkm-focus w-full text-[26px] sm:text-4xl font-black text-[#131b2e] bg-white/95 rounded-2xl px-4 py-2"
+              placeholder={`My ${city} Trip`}
+              maxLength={60}
+            />
+            {/* My Trip 제목 AI 3방향 — 제안은 input 으로 들어가고 Enter/저장으로 확정한다.
+                blur 저장을 버튼 클릭과 겹치지 않게, 편집 종료는 Enter/Escape/저장 버튼만. */}
+            <span className="mt-2 flex items-start justify-between gap-3 rounded-2xl bg-white/95 px-4 py-2.5">
+              <AiWritingAssist
+                target="title"
+                buildContext={() => ({
+                  city,
+                  dates: `${startDate} – ${endDate}`,
+                  draft: titleInput.trim() || null,
+                })}
+                onSuggestion={text => setTitleInput(text.slice(0, 60))}
+              />
+              <button type="button" onClick={handleTitleSave}
+                className="flex-none text-[13px] font-bold text-white rounded-full px-3.5 py-2 min-h-9"
+                style={{ backgroundColor: "#131b2e" }}>
+                {tMemo("save")}
+              </button>
+            </span>
+          </span>
         }
       />
 
@@ -2866,6 +2887,18 @@ function ItineraryResult() {
           ]}
         />
       </div>
+
+      {/* ── First Trip Journey Guide — 방문마다 다음 한 장만(전역 잠금, 순서 고정) ── */}
+      {(!shareId || isOwner) && itinId && (
+        <div className="max-w-xl mx-auto mb-4 flex flex-col gap-2">
+          <JourneyCoach step="myTripEdit" />
+          <JourneyCoach step="directions" />
+          <JourneyCoach step="photo" />
+          <JourneyCoach step="story" />
+          <JourneyCoach step="share" />
+          <JourneyCoach step="finale" />
+        </div>
+      )}
 
       {/* ── 일정 | Story — 같은 여행의 두 view (TASK-STORY-LIVE-BASELINE-V1) ── */}
       {(!shareId || isOwner) && itinId && (
@@ -3825,6 +3858,7 @@ function ItineraryResult() {
         <TripMomentCapture
           itineraryId={itinId}
           deviceId={getDeviceId()}
+          city={city}
           dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
           initialPlaceName={captureStop?.placeName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}

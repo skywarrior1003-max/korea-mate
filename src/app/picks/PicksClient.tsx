@@ -11,6 +11,7 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useState } from "react";
+import JourneyCoach from "@/components/JourneyCoach";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -676,6 +677,9 @@ function PicksContent() {
           <p className="text-sm text-sub mt-1">{t("subtitle")}</p>
         </div>
         <p className="md:hidden text-sm text-sub mb-4">{t("subtitle")}</p>
+
+        {/* First Trip Journey Guide — Saved → This Trip 의 다음 걸음 안내 */}
+        <JourneyCoach step="thisTrip" className="mb-3" />
 
         {/* ── 탭 ── */}
         {/* 밑줄형 탭 — 최종 디자인(my_picks_selected_places) 기준.

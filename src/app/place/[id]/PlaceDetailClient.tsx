@@ -19,6 +19,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import JourneyCoach from "@/components/JourneyCoach";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
@@ -363,6 +364,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
       {/* pb-32: 모바일 sticky CTA + BottomNav 에 본문이 가려지지 않도록 */}
       <main className="flex-1 w-full max-w-[1100px] mx-auto md:px-4 md:py-6 pb-32 md:pb-10">
+        {/* First Trip Journey Guide — 발견의 첫 걸음(저장) · 다음 방문엔 내 장소 남기기 */}
+        <div className="px-4 md:px-0 pt-3 md:pt-0 md:mb-3 flex flex-col gap-2">
+          <JourneyCoach step="save" />
+          <JourneyCoach step="myPlaces" />
+        </div>
         <div className="md:grid md:grid-cols-[minmax(0,1fr)_340px] md:gap-6 md:items-start">
 
           {/* ── 왼쪽: 내용 ────────────────────────────────────────────────── */}
@@ -549,7 +555,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
       {/* ── 모바일 sticky CTA — primary 1개만, BottomNav 위, safe-area 고려 ── */}
       <div
-        className="md:hidden fixed left-0 right-0 bottom-16 z-40 bg-surface border-t border-line px-4 py-3 flex items-center gap-2"
+        className="md:hidden fixed left-0 right-0 bottom-16 z-40 bg-surface border-t border-line px-4 py-3 flex flex-wrap items-center gap-2"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         {/* 이 화면에서 가장 중요한 동작인데 아이콘 하나만 있고 글자가 없어서,

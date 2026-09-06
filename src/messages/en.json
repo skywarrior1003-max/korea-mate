@@ -18,7 +18,13 @@
     "aboutDesc": "Our mission, data sources, and the AI behind the plans",
     "blogDesc": "Travel notes and city guides",
     "guideDesc": "Cash, transit, taxis, and eating alone in Korea",
-    "contactDesc": "Send feedback or report something wrong"
+    "contactDesc": "Send feedback or report something wrong",
+    "groupTips": "Travel tips",
+    "tipsToggle": "First-trip guide",
+    "tipsDesc": "Turn the small in-context tips on or off",
+    "tipsReplay": "Replay the guide",
+    "tipsReplayDesc": "See each tip once more from the start",
+    "tipsReplayDone": "Tips will show again from your next screen"
   },
   "explore": {
     "title": "Explore {city}",
@@ -1364,5 +1370,29 @@
     "urlOpenInternal": "Open GoKoreaMate link",
     "urlExternalSoonTitle": "External link import is coming soon",
     "urlExternalSoonBody": "For now you can paste a GoKoreaMate shared trip link. Importing outside travel pages is on the way."
+  },
+  "aiWrite": {
+    "label": "AI writing direction",
+    "dir_calm": "Calm & restrained",
+    "dir_witty": "Witty",
+    "dir_warm": "Heartfelt",
+    "go": "Write with AI",
+    "busy": "Writing…",
+    "failed": "Couldn't write right now. Please try again in a moment.",
+    "editableHint": "You can edit the suggestion freely. This text also appears in your Story."
+  },
+  "guide": {
+    "gotIt": "Got it",
+    "save": "Save places you like — they gather in Picks › Saved.",
+    "thisTrip": "From Saved, pick what goes into This Trip. That's where your trip begins.",
+    "planner": "This Trip with AI — your picks and AI build the route together. Just set dates and pace.",
+    "myTripEdit": "This is your trip. Add or remove places and reorder them freely.",
+    "directions": "Each place has Naver/Google map buttons for instant directions.",
+    "photo": "Capture moments as you go — a photo and one line is enough.",
+    "aiWriting": "Stuck for words? Start from one of three AI writing directions. You can always edit.",
+    "story": "Your records appear in the Story tab, told like a journey — same content, no extra work.",
+    "myPlaces": "Found somewhere only you know? Keep it as My Place with photos and notes.",
+    "share": "Sharing publishes only what you choose. Photos and notes stay private until you pick them.",
+    "finale": "You completed a trip! You can turn these tips off or replay them in More (⋯)."
   }
 }

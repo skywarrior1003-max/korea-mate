@@ -8,6 +8,7 @@
 // 담당한다(데이터·canonical route·/all-spots 는 그대로).
 
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import JourneyCoach from "@/components/JourneyCoach";
 import { resolveCityParam, stripCityParam } from "@/lib/home-city-param-core";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -562,6 +563,8 @@ export default function PlannerClient() {
                   {tf("pickVibe")}
                 </button>
               </div>
+              {/* First Trip Journey Guide — This Trip with AI 의 의미와 날짜/속도 안내 */}
+              <div className="sm:col-span-2"><JourneyCoach step="planner" /></div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("startDate")}</label>
                 <DatePicker

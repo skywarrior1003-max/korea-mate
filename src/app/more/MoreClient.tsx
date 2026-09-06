@@ -14,9 +14,13 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import {
+  readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen,
+} from "@/lib/journey-guide/guide-core";
 
 /** 아이콘은 이 저장소가 쓰는 방식 그대로 인라인 SVG · currentColor 다 */
 const ICON = {
@@ -69,6 +73,21 @@ export default function MoreClient() {
   const tAbout = useTranslations("about");
   const tFooter = useTranslations("footer");
 
+  // First Trip Journey Guide 설정 — 상태는 이 기기(localStorage)뿐이다
+  const [tipsOn, setTipsOn] = useState(true);
+  const [replayed, setReplayed] = useState(false);
+  useEffect(() => { setTipsOn(readGuideState().enabled); }, []);
+  const toggleTips = () => {
+    const next = !tipsOn;
+    setTipsOn(next);
+    writeGuideState(setGuideEnabled(readGuideState(), next));
+  };
+  const replayTips = () => {
+    writeGuideState(setGuideEnabled(resetGuideSeen(readGuideState()), true));
+    setTipsOn(true);
+    setReplayed(true);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
       <header className="border-b border-[#E6DFD5] bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-50">
@@ -104,6 +123,48 @@ export default function MoreClient() {
             desc={t("guideDesc")}
             icon={<svg {...ICON} aria-hidden><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z" /><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z" /></svg>}
           />
+        </Group>
+
+        {/* First Trip Journey Guide — 팁 ON/OFF · 다시 보기 (Owner 확정) */}
+        <Group title={t("groupTips")}>
+          <div className="flex items-center gap-4 px-5 min-h-16 py-4">
+            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
+              <svg {...ICON} aria-hidden><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M18.4 5.6L17 7M21 12h-2" /><path d="M9.5 18h5M10.5 21h3M8.5 14.5a4.5 4.5 0 117 0c-.8.8-1.5 1.6-1.5 2.5h-4c0-.9-.7-1.7-1.5-2.5z" /></svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("tipsToggle")}</span>
+              <span className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">{t("tipsDesc")}</span>
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={tipsOn}
+              onClick={toggleTips}
+              className="gkm-focus relative shrink-0 w-12 h-7 rounded-full transition-colors"
+              style={{ backgroundColor: tipsOn ? "#FF4A2D" : "#D9D2C7" }}
+            >
+              <span
+                className="absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-all"
+                style={{ left: tipsOn ? "calc(100% - 1.625rem)" : "0.125rem" }}
+              />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={replayTips}
+            className="gkm-focus w-full text-left flex items-center gap-4 px-5 min-h-16 py-4 hover:bg-[#F3EEE3] transition-colors"
+          >
+            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
+              <svg {...ICON} aria-hidden><path d="M3.5 8a8.5 8.5 0 111.2 8" /><path d="M3.5 3.5V8H8" /></svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("tipsReplay")}</span>
+              <span className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">
+                {replayed ? t("tipsReplayDone") : t("tipsReplayDesc")}
+              </span>
+            </span>
+            {CHEVRON}
+          </button>
         </Group>
 
         <Group title={t("groupSupport")}>
