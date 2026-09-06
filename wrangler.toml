@@ -7,4 +7,5 @@ compatibility_flags = ["nodejs_compat"]
 # 이유: 한국 사용자의 ingress colo 가 라우팅에 따라 HKG 로 잡히면 Gemini API 가
 # egress 지역 차단(400 FAILED_PRECONDITION)으로 실패한다. 실측: HKG=차단, NRT/KR=정상.
 [placement]
+mode = "smart"
 region = "gcp:asia-northeast3"
