@@ -154,10 +154,14 @@ export default {
     catch { return reply(null, "invalid_request"); }
     if (!isWritingRequest(body)) return reply(null, "invalid_request");
 
-    const outcome = await callProvider(apiKey, buildWritingPrompt(body), body.target);
+    // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
+    const [outcome, colo] = await Promise.all([
+      callProvider(apiKey, buildWritingPrompt(body), body.target),
+      executionColo(),
+    ]);
     log({
       ok: outcome.suggestion !== null, ai_status: outcome.ai_status,
-      httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs,
+      httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
       target: body.target, dir: body.direction, locale: body.locale,
       outLen: outcome.suggestion?.length ?? 0, err: outcome.errSnippet,
     });

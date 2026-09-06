@@ -2,3 +2,10 @@ name = "korea-mate"
 pages_build_output_dir = "out"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
+
+# My Trip AI 글쓰기의 Gemini 호출을 서울 placement Worker 로 위임한다.
+# 이유: Pages Functions 는 region placement 미지원이라 HKG ingress 시 Gemini 가
+# 지역 차단된다. canary 실측: ingress HKG/NRT/KIX 무관 Worker 실행 colo=ICN, live 12/12.
+[[services]]
+binding = "AI_WRITING"
+service = "gokoreamate-ai-writing"
