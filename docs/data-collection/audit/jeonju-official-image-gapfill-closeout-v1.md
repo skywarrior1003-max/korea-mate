@@ -8,8 +8,18 @@
 > 사유 `OWNER_EXCLUDED_OFFICIAL_SOURCE_NOT_FOUND_2026-09-06` — 목록/사유는
 > `data/main-intake/five-city-reflection-recovery-v1/jeonju-excluded-25-v1.jsonl` 에 고정;
 > city_spots 에 제외사유 전용 컬럼이 없어 DB 는 is_published=false 만, 사유는 repo 아티팩트가 SSOT).
-> 최종 패키지: `jeonju-final-closeout-{precheck,apply,readback}-v1.sql`
-> — apply sha256 `f11e17e856afbd94e1caf2fc71bc39db0473496b64d0e803f58a8eb4b14fd7c9`
+> ~~최종 패키지: `jeonju-final-closeout-*-v1`~~ → ⚠ **v1 apply 는 FAILED-ATTEMPT / SUPERSEDED — DO NOT RE-RUN**
+> (2026-09-06 실행 시 CHECK `csi_unknown_rights_not_public` 위반으로 전체 롤백 — Production 변경 0.
+> 원인: 기존 174행 rights_status=KTO_TYPE_UNKNOWN 상태에서 eligible=true 시도 — DB 권리 게이트가 차단).
+> **최종 유일 apply = `jeonju-final-closeout-*-v2`** — v1 대비 유일 변경: 기존 174행 rights_status
+> KTO_TYPE_UNKNOWN → **'KTO_OFFICIAL'**(Owner 결정 2026-09-06: "공식 KTO 공급 원천 + Owner 정책상 공개
+> 승인" 분류 — KTO 의 개별 법적 보증 의미 아님; rights_note 의 'cpyrhtDivCd 미확인' 이력 보존; CHECK
+> constraint 변경 0). 신규 50 insert 는 전부 결정 권리(VISITJEONJU_OFFICIAL 32·Type1 9·Type3 9)라 무변경.
+> v2 precheck 는 constraint 존재·계획 상태 충돌 0 검증 포함(실서버 실측: constraint_present 1·
+> planned_conflict 0·current_unknown_eligible 0 + v1 항목 전부 기대 일치).
+> apply v2 sha256 `216cf5a43e003175157ba8742a5df2aa3ab0792fef900feb6cd3ce44542c9101`
+> · master mapping v2 = `jeonju-images-master-v2.jsonl`(권리 전환만 반영, 그 외 v1 과 동일)
+> · v1 sha(기록용) `f11e17e856afbd94e1caf2fc71bc39db0473496b64d0e803f58a8eb4b14fd7c9`
 > (이미지 반영 부분은 v2 와 동일 문장 + 25곳 unpublish 1문 추가 · 삭제 0 · 타 도시 0 · idempotent).
 > precheck 실서버 실측(2026-09-06): 174/174·eligible 0·overlap 0·spot_img 0·published 211·
 > excl 25/25(published)/rel 0 — 기대 정확 일치. 기대 readback: total 236 · published 211 ·
