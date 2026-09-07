@@ -19,6 +19,23 @@ LIVE Blog(공식 기반 여행 이해 콘텐츠)의 **후보 공급층**이다. 
 | 본체: KTO TourAPI | `KorService2/areaBasedList2` contentTypeId=25 | **전국 여행코스**(실측 1,069건) — Blog 여행 아이디어 주 공급원 | ko |
 | 본체: KTO TourAPI | `KorService2·EngService2/searchFestival2` | 다가오는 전국 행사 — REVIEW 전용(단순 복사 금지) | ko·en |
 | 보조: VisitKorea(영문) | Travel News 공식 목록 1페이지 | 외국인 대상 프로그램·전국/교차지역 캠페인 | en |
+| 보조: KTO 보도자료 | `knto.or.kr/pressRelease` 목록 2페이지 | **여행자 가치 사실 탐지 레이더** — 외국인 방한 프로그램·국가/언어권 캠페인·지방공항 연계·교차지역·바우처 | ko |
+
+### 원천별 역할 (Blog 공식원천 계약)
+
+- **KTO TourAPI** = 구조화 관광정보(코스·행사·장소)
+- **VISITKOREA Travel News** = 여행자 대상 공식 콘텐츠
+- **KTO Press Release** = 외국인/전국/교차지역 프로그램 **탐지 레이더**
+- **지역 Visit/지자체** = 실제 지역 시행 세부 확인(기존 Events/Essentials 7일 운영과 별개)
+
+> **작성 원칙**: 공식 자료의 **사실**을 사용하되 원문 표현을 복제하지 않고,
+> GoKoreaMate 가 외국인 여행자 관점에서 **독립적으로 새 콘텐츠를 작성**한다.
+> 보도자료 전문 재게시·번역 게시·문장 치환·제목/문단 구조 모방 금지.
+> 수집기는 보도자료의 **제목과 구조화 메타만** 저장한다(본문 미수집) —
+> 복제가 구조적으로 불가능하다. 사진은 글과 별개 권리로 판단하며
+> `image_rights_status: NOT_VERIFIED_DO_NOT_AUTOUSE` 로 자동 사용을 차단한다.
+> 공공누리 유형은 상세 페이지 마커가 확인될 때만 `kogl_type` 으로 기록한다
+> (실측: KOGL_TYPE1 출처표시 — 확인 불가 시 null, 추측하지 않는다).
 
 - KTO **Jpn/Chs 서비스는 403** — data.go.kr 별도 활용신청 필요(OWNER 결정 대기).
 - VisitKorea 는 RSS/공개 API 부재 실측(404/302) → 공식 목록 페이지 1곳 브라우저
@@ -47,6 +64,14 @@ status · blog_fit · fit_reason`. TourAPI 후보의 출처는 provider+service 
   지역 Events 정본의 단순 복사는 금지(정본 화면으로 링크).
 - `UNFIT_PRACTICAL` — 규정·요금·운영 등 실용정보. **Travel Essentials 가 정본** —
   Blog 에 싣지 않는다.
+- `UNFIT_INSTITUTIONAL` — 인사·업무협약·세미나·산업정책 등 기관 소식(보도자료 전용).
+
+### 탐지 레이더 실증 (2026-09-07)
+
+최근 2페이지 30건에서: FIT — "외국인 5명 중 1명 지방공항으로"(지방공항×지역관광),
+"태국 방한관광"(국가권), "몽골 K-의료관광"(언어권). 아카이브 검색 실측 —
+"이스타항공, **지방공항 중화권** 관광객 유치", "**중화권** 웨딩관광객 **거제·통영**
+방문"(주최=전국기관 × 목적지=특정 지역 — '라원 유형' 교차지역) 탐지 확인.
 
 ## 호출 예산
 

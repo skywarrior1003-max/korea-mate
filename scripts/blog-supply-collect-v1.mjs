@@ -25,7 +25,15 @@
 //   NEW / CHANGED(title·date) / GONE(이번 수집에 없음 — 종료·만료·URL 변경 후보) 를
 //   data/blog-supply/blog-supply-diff-<date>.json 에 남긴다.
 //
-// usage: node scripts/blog-supply-collect-v1.mjs [--source kto|news|all] [--dry-run]
+//   ③ 보조: KTO 보도자료(knto.or.kr/pressRelease) — "여행자 가치 사실 탐지 레이더"
+//      (BLOG-KTO-PRESS-RELEASE-SUPPLY-V1). 외국인 방한 프로그램·국가/언어권 캠페인·
+//      지방공항 연계·교차지역·바우처 유형을 탐지한다. **제목과 구조화 메타만**
+//      저장한다 — 본문을 아예 수집하지 않으므로 원문 문장 복제가 구조적으로
+//      불가능하다. 게시는 GoKoreaMate 가 여행자 관점으로 완전히 새로 쓴다.
+//      상세 페이지의 공공누리(KOGL) 마커를 확인해 kogl_type 으로 기록하고,
+//      이미지는 수집하지 않으며 image_rights_status 로 자동 사용을 차단한다.
+//
+// usage: node scripts/blog-supply-collect-v1.mjs [--source kto|news|press|all] [--dry-run]
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync } from "node:fs";
 import { createHash } from "node:crypto";
@@ -186,6 +194,104 @@ async function collectNews() {
   });
 }
 
+// ── ③ KTO 보도자료 (knto.or.kr — 서버렌더 HTML, 브라우저 불필요) ─────────────
+//
+// 여행자 관련성 분류 — §1 계약:
+//   FIT: 외국인/방한/국가·언어권 캠페인·지방공항·바우처 등 여행자가 실제 참여
+//        가능한 유형(교차지역 관광 캠페인 포함)
+//   UNFIT_INSTITUTIONAL: 인사·협약·세미나·산업정책 등 기관 소식
+//   REVIEW: 그 외 — 사람이 여행자 가치 판정
+const PRESS_FIT_RE = /방한|외국인|외래\s?관광|인바운드|관광객\s?유치|캠페인|프로모션|바우처|할인권|지방\s?공항|공항\s?노선|전세기|크루즈|무비자|비자\s?완화|중화권|일본인|대만|홍콩|동남아|무슬림|K-?컬처|한류|체험\s?프로그램|여행\s?프로그램|워케이션|템플스테이/;
+const PRESS_INSTITUTIONAL_RE = /인사|임명|취임|이사장|사장\s?후보|업무협약|MOU|협약\s?체결|세미나|포럼|공청회|간담회|채용|입찰|공모(?!전)|윤리|ESG|감사|조직\s?개편|경영\s?평가|이사회|노사/;
+
+function classifyPress(title) {
+  if (PRESS_INSTITUTIONAL_RE.test(title)) return { fit: "UNFIT_INSTITUTIONAL", reason: "기관 소식/산업정책 — 여행자 직접 관련 없음" };
+  if (PRACTICAL_RE.test(title)) return { fit: "UNFIT_PRACTICAL", reason: "실용정보 성격 — Essentials 정본 영역" };
+  if (PRESS_FIT_RE.test(title)) return { fit: "FIT", reason: "외국인/전국/교차지역 여행자 프로그램·캠페인 후보 — 사실 추출 후 독립 작성" };
+  return { fit: "REVIEW", reason: "여행자 가치 판정 필요 — 원문 복제 금지, 사실만 추출" };
+}
+
+const PRESS_BASE = "https://knto.or.kr";
+const UA = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" };
+
+function parsePressList(html) {
+  // 행: <a href="/pressRelease/<id>?...">제목</a> … 날짜(YYYY-MM-DD)
+  const rows = [];
+  const seen = new Set();
+  const re = /<a\s+href="\/pressRelease\/(\d+)[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const id = m[1];
+    if (seen.has(id)) continue;
+    const title = m[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    if (title.length < 6) continue;
+    // 링크 뒤쪽 500자 안의 첫 날짜를 그 행의 게시일로 본다
+    const tail = html.slice(m.index, m.index + 800);
+    const dm = tail.match(/20\d{2}-\d{2}-\d{2}/);
+    seen.add(id);
+    rows.push({ id, title: title.slice(0, 180), date: dm ? dm[0] : null });
+  }
+  return rows;
+}
+
+/** 상세 페이지에서 공공누리 유형만 확인한다. 본문은 저장하지 않는다. */
+async function pressKogl(id) {
+  try {
+    const r = await fetch(`${PRESS_BASE}/pressRelease/${id}`, { headers: UA, signal: AbortSignal.timeout(20000) });
+    const t = await r.text();
+    const m = t.match(/kogl\.or\.kr\/info\/licenseType(\d)\.do|공공누리\s*제?\s*(\d)\s*유형|공공누리:출처표시/);
+    if (!m) return null;
+    const n = m[1] ?? m[2] ?? "1";
+    return `KOGL_TYPE${n}`;
+  } catch { return null; }
+}
+
+async function collectPress() {
+  const out = [];
+  for (const pageNo of [1, 2]) {
+    const r = await fetch(`${PRESS_BASE}/pressRelease?curPage=${pageNo}`, { headers: UA, signal: AbortSignal.timeout(25000) });
+    const rows = parsePressList(await r.text());
+    for (const rw of rows) {
+      const cls = classifyPress(rw.title);
+      out.push({
+        candidate_id: `kto-press-${rw.id}`,
+        source_provider: "kto-press",
+        source_service: "knto.or.kr/pressRelease",
+        source_key: `kto-press:${rw.id}:ko`,
+        source_language: "ko",
+        title: rw.title,
+        source_title: rw.title,
+        summary: null, // 본문 미수집 — 원문 복제 구조적 차단
+        official_url: `${PRESS_BASE}/pressRelease/${rw.id}`,
+        source_date: rw.date,
+        region: null,
+        theme: "press_release",
+        content_type_id: null,
+        source_modified: rw.date,
+        event_start: null,
+        event_end: null,
+        collected_at: COLLECTED_AT,
+        status: "ACTIVE",
+        blog_fit: cls.fit,
+        fit_reason: cls.reason,
+        kogl_type: null,               // FIT/REVIEW 만 상세에서 확인해 채운다
+        image_rights_status: "NOT_VERIFIED_DO_NOT_AUTOUSE", // 사진은 글과 별개 권리 — 자동 사용 금지
+      });
+    }
+    await sleep(1000);
+  }
+  // 권리 메타: 여행자 후보(FIT/REVIEW)만 상세 1회씩 확인 (politeness 1s)
+  let detailFetches = 0;
+  for (const c of out) {
+    if (c.blog_fit !== "FIT" && c.blog_fit !== "REVIEW") continue;
+    if (detailFetches >= 12) break;
+    c.kogl_type = await pressKogl(c.candidate_id.replace("kto-press-", ""));
+    detailFetches += 1;
+    await sleep(1000);
+  }
+  return out;
+}
+
 // ── diff (refresh 구조) ──────────────────────────────────────────────────────
 function loadPrevious() {
   if (!existsSync(CANDIDATES)) return new Map();
@@ -214,6 +320,11 @@ function loadPrevious() {
     const n = await collectNews();
     collected.push(...n);
     totals.news_en = n.length;
+  }
+  if (argSource === "press" || argSource === "all") {
+    const pr = await collectPress();
+    collected.push(...pr);
+    totals.press_ko = pr.length;
   }
 
   // 같은 실행 내 dedup
