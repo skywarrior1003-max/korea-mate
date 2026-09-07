@@ -6,7 +6,7 @@ import JourneyCoach from "@/components/JourneyCoach";
 // TASK-022: photo + GPS + memo + category 캡처
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
@@ -39,6 +39,8 @@ interface Props {
 
 export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
   const t = useTranslations("memo");
+  // 기록 시각 미리보기도 UI locale 을 따른다 (Timeline 과 같은 결함 수정).
+  const locale = useLocale();
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   /**
    * 두 번째 이후 사진들. 첫 장을 따로 두는 것은 서버 구조가 그렇기 때문이다 —
@@ -388,7 +390,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
           {/* 날짜/시간 */}
           <div className="flex items-center gap-2 text-xs text-white/30">
             <span>🕐</span>
-            <span>{new Date().toLocaleString("ko-KR", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
+            <span>{new Date().toLocaleString(locale, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
             {dayNumber !== null && <span>· Day {dayNumber}</span>}
             <span>· {catInfo.emoji} {catLabel(catInfo.key)}</span>
           </div>

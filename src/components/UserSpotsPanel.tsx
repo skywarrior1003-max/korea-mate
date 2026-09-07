@@ -425,6 +425,9 @@ export default function UserSpotsPanel({
         onSubmit={onSubmit}
         onCancel={onCancel}
         mode={editSpotId ? "edit" : "create"}
+        // city 가 빠지면 GPS 거절 사용자의 지도 시작점(도시 프리셋)이 죽는다 —
+        // PicksClient 는 이미 넘기고 있었고 이 자리만 빠져 있었다(실측 결함).
+        city={city}
         photoFile={photoFile}
         onPickPhoto={setPhotoFile}
         existingPhotoUrl={editSpotId ? photoUrl : null}

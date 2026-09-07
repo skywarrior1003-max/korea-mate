@@ -126,12 +126,19 @@ export default function SpotLocationPicker({
     const el = boxRef.current;
     const naver = typeof window !== "undefined" ? window.naver : undefined;
     // SDK 가 아직 안 왔을 수 있다. 그때도 화면은 닫을 수 있어야 한다.
-    if (!el || !naver?.maps || !center) return;
+    if (!el || !naver?.maps) return;
+
+    // 시작점이 전혀 없어도 지도는 열어야 한다. locSeedNone 문구가 "지도를 움직여
+    // 직접 정하세요" 라고 이미 약속한다 — center 없음 → 지도 없음이면 그 약속이
+    // 죽은 문장이 되고 저장 버튼도 영영 잠긴다(GOLDEN-PATH-ACCEPTANCE 실측 결함).
+    // 남한 전체가 들어오는 중심에서 넓게 연다. 저장값은 언제나 사용자가 맞춘
+    // 지도 중심이므로 이 기본값이 데이터로 저장될 일은 없다.
+    const start = center ?? { lat: 36.35, lng: 127.8 };
 
     const { maps } = naver;
     const map = new maps.Map(el, {
-      center: new maps.LatLng(center.lat, center.lng),
-      zoom:   zoomedIn ? 18 : 16,
+      center: new maps.LatLng(start.lat, start.lng),
+      zoom:   center ? (zoomedIn ? 18 : 16) : 7,
       mapDataControl: false,
       scaleControl:   false,
       logoControlOptions: { position: 3 },

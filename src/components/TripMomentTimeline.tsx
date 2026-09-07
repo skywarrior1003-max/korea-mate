@@ -5,7 +5,7 @@ import GlyphIcon from "@/components/ui/GlyphIcon";
 // TASK-022: 기록된 순간들의 아름다운 타임라인 뷰
 
 import { useState, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { TripMoment } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 
@@ -88,6 +88,9 @@ export default function TripMomentTimeline({
   onUseAsCover, onClearCover, coverBusy = false, onSetPublic,
 }: Props) {
   const t = useTranslations("memo");
+  // 기록 시각 표기는 UI locale 을 따른다 — "ko-KR" 고정이면 EN/JA/ZH 사용자가
+  // "9월 7일" 을 읽게 된다 (GOLDEN-PATH-ACCEPTANCE 실측 결함).
+  const locale = useLocale();
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   /** 공개 확인 창을 띄운 Memory. 켜기 요청에만 뜬다 — 끄기는 묻지 않는다. */
   const [consentFor,  setConsentFor]  = useState<TripMoment | null>(null);
@@ -194,7 +197,7 @@ export default function TripMomentTimeline({
       const isLastGroup = gi === groups.length - 1;
       // 그 Day 의 마지막 기록 시각을 묶음 라벨로 쓴다 — 새로 만든 값이 아니다
       const groupDate = group.items[0]
-        ? new Date(group.items[0].captured_at).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })
+        ? new Date(group.items[0].captured_at).toLocaleDateString(locale, { month: "short", day: "numeric" })
         : "";
 
       return (
@@ -225,7 +228,7 @@ export default function TripMomentTimeline({
         const cat      = MOMENT_CATEGORIES.find(c => c.key === m.category) ?? MOMENT_CATEGORIES[4];
         const color    = CAT_COLORS[m.category] ?? "#FF4A2D";
         const isOpen   = expanded === m.moment_id;
-        const dateStr  = new Date(m.captured_at).toLocaleString("ko-KR", {
+        const dateStr  = new Date(m.captured_at).toLocaleString(locale, {
           month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
         });
 
