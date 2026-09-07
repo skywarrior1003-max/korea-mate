@@ -7,6 +7,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { resolveCityParam, stripCityParam } from "./home-city-param-core.ts";
 
 // ── 플래너 지원 도시 4개 — 기존 동작 보존 ───────────────────────────────────
@@ -41,23 +42,21 @@ test("capitalised city names from clone links still resolve", () => {
 });
 
 // ── 미지원 도시 — 진입 화면으로 ─────────────────────────────────────────────
-test("jeonju redirects to its own city entry, not the planner", () => {
-  assert.deepEqual(resolveCityParam("jeonju"), { kind: "redirect", href: "/jeonju/" });
+test("jeonju query keeps the Jeonju planner context — JEONJU-PLANNER-PRODUCTION-V1 로 열렸다", () => {
+  assert.deepEqual(resolveCityParam("jeonju"), { kind: "planner", city: "Jeonju" });
 });
 
 test("jeonju never falls back to Busan", () => {
   const r = resolveCityParam("jeonju");
-  assert.notEqual(r.kind, "planner");
   assert.equal(JSON.stringify(r).includes("Busan"), false);
 });
 
 // redirect 목적지가 다시 ?city= 를 달고 있으면 루프가 된다.
+// 닫힌 도시가 더 없으므로(5도시 전부 ON) 코어가 만드는 redirect 형태(`/${slug}/`)
+// 자체를 계약으로 고정한다 — 소스에 쿼리를 붙이는 변경이 들어오면 여기서 걸린다.
 test("redirect target carries no city query, so it cannot loop", () => {
-  const r = resolveCityParam("jeonju");
-  assert.equal(r.kind, "redirect");
-  if (r.kind !== "redirect") return;
-  assert.equal(r.href.includes("?"), false);
-  assert.equal(r.href, "/jeonju/");
+  const src = readFileSync(new URL("./home-city-param-core.ts", import.meta.url), "utf8");
+  assert.match(src, /return \{ kind: "redirect", href: `\/\$\{slug\}\/` \};/);
   // 목적지 경로에는 city 파라미터가 없으므로 두 번째 판정은 none 이다.
   assert.deepEqual(resolveCityParam(new URLSearchParams("").get("city")), { kind: "none" });
 });

@@ -106,9 +106,10 @@ test("★등록만 하고 프리셋을 넣지 않은 도시가 남아 있는지 
 // 현재 오너가 승인한 활성 집합이다 — 의도 없는 스위치 변경은 여기서 걸린다.
 // (JEJU-PLANNER-PRODUCTION-ACTIVATION-V1: jeju true 승격)
 // (SEOUL-PLANNER-PRODUCTION-V1: seoul true 승격 — 기본 도착지 서울역 + far-airport 규칙)
-test("★활성화 스위치는 오너 승인 집합 그대로다 — busan·gyeongju·jeju·seoul ON / jeonju OFF", () => {
+// (JEONJU-PLANNER-PRODUCTION-V1: jeonju true 승격 — 기본 도착지 전주역, 5도시 전부 ON)
+test("★활성화 스위치는 오너 승인 집합 그대로다 — 5도시 전부 ON", () => {
   const state = Object.fromEntries(SLUGS.map(s => [s, configOf(s).planningReady]));
-  assert.deepEqual(state, { busan: true, seoul: true, jeju: true, gyeongju: true, jeonju: false });
+  assert.deepEqual(state, { busan: true, seoul: true, jeju: true, gyeongju: true, jeonju: true });
 });
 
 // ── 규칙 자체 ────────────────────────────────────────────────────────────────
