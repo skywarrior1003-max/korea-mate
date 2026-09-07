@@ -17,6 +17,17 @@ Claude 가 발견한 tech debt·아이디어는 Owner 승인 없이 이 순서�
 5. **Seoul Planner**
 6. **Jeonju Planner**
 
+## 진행 기록
+
+- 2026-09-07: ① AI 기반 마감 완료(서울 Worker·writing·personalization LIVE),
+  ② Shared Story LIVE, ③ Blog v1 LIVE(공식 기반 3편·4-locale).
+- 2026-09-07: **Blog 공식 원천 공급층 v1**(TASK-GOKOREAMATE-BLOG-OFFICIAL-SOURCE-SUPPLY-V1,
+  Owner 승인 Blog 후속) — KTO TourAPI(KorService2/EngService2) + VisitKorea Travel News
+  candidate 구조. `docs/data-collection/blog-supply/blog-supply-structure-v1.md` 참조.
+  수집=후보일 뿐, 게시는 별도 큐레이션. refresh cadence 는 Owner 결정 대기.
+- 다음 본선은 **④ External URL Import 실제 엔진**이다. 발견사항을 그 사이에
+  임의 삽입하지 않는다.
+
 ## 별도 정리 (본선 순서 밖)
 
 - legacy V1 `functions/api/generate-itinerary.ts` 는 본선 우선순위가 아니다.

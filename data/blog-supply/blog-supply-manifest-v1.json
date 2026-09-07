@@ -1,0 +1,33 @@
+{
+  "task": "TASK-GOKOREAMATE-BLOG-OFFICIAL-SOURCE-SUPPLY-V1",
+  "schema_version": 1,
+  "as_of": "2026-09-07",
+  "generated_at": "2026-09-07T04:26:57.122Z",
+  "sources_run": [
+    "kto"
+  ],
+  "kto_calls_this_run": 3,
+  "source_totals_reported": {
+    "course_ko": 1069,
+    "festival_ko": 251,
+    "festival_en": 76
+  },
+  "candidates": 285,
+  "fit_counts": {
+    "REVIEW": 184,
+    "UNFIT_PRACTICAL": 1,
+    "FIT": 100
+  },
+  "diff_counts": {
+    "new": 0,
+    "changed": 0,
+    "gone": 0
+  },
+  "candidates_sha256": "e572d0c41fc4abc082b863f991e8abbeb8594bed618c9f1a210858242ee3c85f",
+  "refresh_cadence": "OWNER_DECISION_PENDING",
+  "notes": [
+    "자동 게시 없음 — Blog 게시는 별도 큐레이션 작업에서 4-locale 로 집필한다",
+    "KTO Jpn/Chs 서비스는 403(별도 data.go.kr 활용신청 필요) — ko/en 만 수집",
+    "festival 후보는 지역 Events 정본과 구분: 단순 복사 금지, REVIEW 분류"
+  ]
+}
