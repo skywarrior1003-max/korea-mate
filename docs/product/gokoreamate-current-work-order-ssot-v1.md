@@ -25,8 +25,14 @@ Claude 가 발견한 tech debt·아이디어는 Owner 승인 없이 이 순서�
   Owner 승인 Blog 후속) — KTO TourAPI(KorService2/EngService2) + VisitKorea Travel News
   candidate 구조. `docs/data-collection/blog-supply/blog-supply-structure-v1.md` 참조.
   수집=후보일 뿐, 게시는 별도 큐레이션. refresh cadence 는 Owner 결정 대기.
-- 다음 본선은 **④ External URL Import 실제 엔진**이다. 발견사항을 그 사이에
-  임의 삽입하지 않는다.
+- 2026-09-07: ④ External URL Import 엔진 LIVE(Preview-first·provider-neutral·SSRF 방어,
+  master 6509ec5), ⑤ Seoul Planner LIVE→최종 CLOSED(서울역 기본·far-airport 규칙·
+  This Trip/Fixed 최종 QA, master c85ea17→3cd811c).
+- 2026-09-07: **⑥ Jeonju Planner LIVE→CLOSED**(TASK-GOKOREAMATE-JEONJU-PLANNER-PRODUCTION-V1,
+  master a8f6fa0) — planningReady 게이트만 개방(기본 도착 전주역=기존 승인 프리셋·
+  published 211·데이터 재수집 0), Production 브라우저 QA 전항 PASS(기본/늦은 도착/출발
+  buffer/This Trip/Fixed 2건/AI 취향 차등/대표성/5도시 회귀/4-locale).
+  **본선 ①~⑥ 전부 CLOSED — 다음 작업은 Owner 새 지시로만 시작한다.**
 
 ## 별도 정리 (본선 순서 밖)
 
