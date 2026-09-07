@@ -25,7 +25,11 @@ export interface CityPresetOption {
 // Default arrival option value per city (shown when city tab changes).
 export const CITY_ARRIVAL_DEFAULTS: Record<string, string> = {
   Busan:    "KTX Busan Station (부산역)",
-  Seoul:    "Incheon International Airport (인천공항)",
+  // SEOUL-PLANNER-PRODUCTION-V1(Owner 확정): 서울 기본 도착지는 서울역이다.
+  // 인천공항은 도심에서 ~50km 라 기본값이면 Day 1 후보 공급이 공항 반경에 묶여
+  // 붕괴한다(readiness 실측: 공항 7km 내 published 3곳). ICN 은 사용자가 직접
+  // 선택할 수 있고, 그 경우는 far-airport 규칙이 도심 기준으로 공급한다.
+  Seoul:    "Seoul Station (서울역)",
   Jeju:     "Jeju International Airport (제주공항)",
   Gyeongju: "Gyeongju KTX Station (신경주역)",
   Jeonju:   "Jeonju Station (전주역)",

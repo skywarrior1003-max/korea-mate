@@ -20,8 +20,8 @@ test("busan query keeps the Busan planner context", () => {
 // `CityConfig.planningReady` 와 어긋나 있었다. 버튼에는 "준비 중" 이라고
 // 적혀 있는데 `?city=seoul` 로는 들어가졌다 — 그 도시에는 장소가 한 곳도
 // 없어서 빈 일정이 나온다.
-test("seoul query goes to its city entry — 아직 열지 않았다", () => {
-  assert.deepEqual(resolveCityParam("seoul"), { kind: "redirect", href: "/seoul/" });
+test("seoul query keeps the Seoul planner context — SEOUL-PLANNER-PRODUCTION-V1 로 열렸다", () => {
+  assert.deepEqual(resolveCityParam("seoul"), { kind: "planner", city: "Seoul" });
 });
 
 test("jeju query keeps the Jeju planner context — JEJU ACTIVATION 으로 열렸다", () => {

@@ -407,6 +407,8 @@ async function generateWithNewApi(
   exactStay?: { coordinate: { lat: number; lng: number }; name: string | null } | null,
   /** 사용자가 고른 여행 속도. 없으면 balanced 로 읽는다. */
   tripPace?: TripPaceChoice,
+  /** 도착 지점 종류(city-presets type). far-airport 판정에만 쓴다. */
+  arrivalType?: string,
 ): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
@@ -490,7 +492,25 @@ async function generateWithNewApi(
   // TASK-056-A: Per-day coordinate — starts at arrival coord (or fallback), updated
   // after each day to the last scheduled place so the next day's NearMe query is
   // anchored near where the traveller actually ends up.
-  let currentCoordinate = arrivalCoord ?? fallbackCoord;
+  //
+  // SEOUL-PLANNER-PRODUCTION-V1: 도착 공항이 도심에서 먼 경우(인천공항→서울 ~50km)
+  // 마지막 날 출발과 같은 원칙을 Day 1 도착에도 적용한다 — 공항은 닿아 오는 곳이지
+  // 그 주변을 뒤져야 하는 곳이 아니다. Day 1 후보 검색 원점을 도심(fallbackCoord)에
+  // 두고, 공항→도심 진입시간(60분)을 첫 슬롯 앞에 확보한다. 도심에 가까운 공항
+  // (김해·제주)은 기존 그대로다 — 도시 이름이 없는 공통 규칙이다.
+  const FAR_AIRPORT_KM = 20;
+  const FAR_AIRPORT_TRANSIT_MIN = 60;
+  const farAirportArrival =
+    arrivalType === "airport" && arrivalCoord != null &&
+    haversineKm(arrivalCoord.lat, arrivalCoord.lng, fallbackCoord.lat, fallbackCoord.lng) > FAR_AIRPORT_KM;
+  const shiftHHMM = (t: string, min: number): string => {
+    const [h, m] = t.split(":").map(Number);
+    const total = Math.min(23 * 60 + 59, (h ?? 0) * 60 + (m ?? 0) + min);
+    return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+  };
+  // 첫날의 실효 도착시각 — 공항 착륙 시각이 아니라 도심에 실제로 설 수 있는 시각.
+  const effectiveArrTime = farAirportArrival && arrTime ? shiftHHMM(arrTime, FAR_AIRPORT_TRANSIT_MIN) : arrTime;
+  let currentCoordinate = farAirportArrival ? fallbackCoord : (arrivalCoord ?? fallbackCoord);
 
   // TASK-054: Sequential per-day generation (was Promise.all) so each day can
   // exclude places already scheduled in previous days, preventing Day 2/3/4 repeats.
@@ -550,7 +570,7 @@ async function generateWithNewApi(
 
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
-    const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
+    const start_time = i === 0 ? (effectiveArrTime ?? "09:00") : "09:00";
     const isLastDay = i === dates.length - 1;
 
     // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
@@ -608,7 +628,7 @@ async function generateWithNewApi(
     // 첫날의 도착 시각과 마지막 날의 출발 시각만 실제 경계이고, 중간 날들의
     // 09:00·21:00 은 "이 시간대에 알아서 채워 준다" 는 기본값일 뿐이다.
     // 기본값으로 사용자가 정한 19시 공연을 막으면 안 된다.
-    const hardStart = i === 0                 ? (arrTime          ?? null) : null;
+    const hardStart = i === 0                 ? (effectiveArrTime ?? null) : null;
     const hardEnd   = i === dates.length - 1  ? (effectiveDeptTime ?? null) : null;
     const anchorPlan     = planDayAnchors(remainingCartHints, trip_date, hardStart, hardEnd);
     const todayCartHints = mergeDayHints(nearEnough, anchorPlan);
@@ -1828,7 +1848,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace, paramArrivalType || undefined)
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
               // 여행 전체가 끝난 뒤 한 번만 판정한다. 남은 곳이 있으면 이 결과를
               // 일정으로 확정하지 않는다 — setDays 를 하지 않으면 저장 effect 도
@@ -1885,7 +1905,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace, paramArrivalType || undefined)
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
           const reduce = reduciblePicks(unplaced, outOfWindow);
           if (reduce.length > 0) {

@@ -225,11 +225,15 @@ test("★제목은 화면에 한 곳에만 있다 — 어느 쪽이 편집 대�
   assert.match(PAGE, /<PlannerCoverHeader/);
 });
 
-test("★제목 편집 계약이 그대로다 — Enter 저장·ESC 취소·길이 제한", () => {
+test("★제목 편집 계약이 그대로다 — Enter/저장버튼 저장·ESC 취소·길이 제한·blur 저장 없음", () => {
+  // MYTRIP-AI-WRITING-V1(오너 보고 승인)에서 blur 자동저장을 제거했다 — AI 3방향
+  // 버튼을 누르는 순간 blur 저장이 먼저 터지던 충돌 때문이다. 편집 종료는
+  // Enter / Escape / 명시 저장 버튼뿐이다.
   assert.match(PAGE, /if \(e\.key === "Enter"\) handleTitleSave\(\);/);
   assert.match(PAGE, /if \(e\.key === "Escape"\) setEditingTitle\(false\);/);
   assert.match(PAGE, /maxLength=\{60\}/);
-  assert.match(PAGE, /onBlur=\{handleTitleSave\}/);
+  assert.match(PAGE, /onClick=\{handleTitleSave\}/, "명시 저장 버튼이 있어야 한다");
+  assert.doesNotMatch(PAGE, /onBlur=\{handleTitleSave\}/, "blur 자동저장이 되살아났다");
 });
 
 // ── 대표 이미지 ──────────────────────────────────────────────────────────────
