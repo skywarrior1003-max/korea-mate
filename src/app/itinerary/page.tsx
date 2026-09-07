@@ -1869,7 +1869,6 @@ function ItineraryResult() {
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               if (skipped.length > 0) setSkippedCartNames(skipped);
-          if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
               if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
               setUnplacedPicks(unplaced);
               const notes: string[] = [];
@@ -1922,6 +1921,10 @@ function ItineraryResult() {
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
           if (skipped.length > 0) setSkippedCartNames(skipped);
+          // SEOUL-PLANNER-FINAL-QA-V1: 이 콜백만 이 두 줄이 빠져 있어, 창 밖
+          // 고정 일정이 알림 없이 조용히 사라졌다(위 1852 콜백과 동일해야 한다).
+          if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
+          setUnplacedPicks(unplaced);
           const notes: string[] = [];
           if (deferred)     notes.push("noteDeferred");   // itin.noteDeferred — 렌더 시 t() 로 푼다
           if (centroidUsed) notes.push("noteNearby");     // itin.noteNearby
