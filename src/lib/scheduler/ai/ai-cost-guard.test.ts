@@ -13,6 +13,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join } from "node:path";
 import {
   resolveAiMode, modeAllowsProviderCall, AI_MODES,
@@ -89,9 +90,10 @@ test("★endpoint 에 재시도 루프가 없다 — fetch 는 정확히 한 번
   assert.equal((s.match(/await providerFetch\(/g) ?? []).length, 1);
   assert.equal((s.match(/await fetch\(/g) ?? []).length, 0);   // 주입을 우회하는 직접 호출 없음
   // 호출 코드가 공용 provider 로 옮겨졌다. 주입 경계는 그대로 두 지점에 있다 —
-  // provider 가 기본값을 정하고, route 가 자기 ctx.fetchFn 을 그대로 넘긴다.
+  // provider 가 기본값을 정하고, route 는 canary 의 ctx.fetchFn 을 최우선으로,
+  // 없으면 서울 placement Worker binding 경유 fetch 를 넘긴다(HKG egress 차단 회피).
   assert.match(s, /const providerFetch = args\.fetchFn \?\? fetch;/);
-  assert.match(s, /callProfileProvider\(\{ prompt, apiKey, fetchFn: ctx\.fetchFn \}\)/);
+  assert.match(s, /fetchFn: ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
   assert.doesNotMatch(s, /for\s*\([^)]*attempt/);
   assert.doesNotMatch(s, /while\s*\(/);
   assert.doesNotMatch(s, /\.retry|retryCount|setInterval/);
@@ -279,11 +281,14 @@ test("★legacy generate-itinerary 는 mode 가 켜져 있지 않으면 provider
   const s = strip(LEGACY);
   const hIdx = s.indexOf("onRequestPost");
   const sHandler = hIdx > 0 ? s.slice(hIdx) : s;
-  const gate  = sHandler.indexOf("modeAllowsProviderCall(resolveAiMode(env.AI_PERSONALIZATION_MODE))");
+  const gate  = sHandler.indexOf("modeAllowsProviderCall(resolveAiMode(env.LEGACY_ITINERARY_AI_MODE))");
   const call  = sHandler.indexOf("await callGemini(");
   assert.ok(gate > 0, "게이트가 없다 — 외부에서 POST 만 해도 요금이 발생한다");
   assert.ok(call > gate, "게이트가 provider 호출보다 뒤에 있다");
   assert.match(sHandler, /status: 410/);
+  // 게이트 변수는 legacy 전용이어야 한다 — AI_PERSONALIZATION_MODE(개인화 프로필
+  // 스위치)를 켰을 때 이 무인증 endpoint 까지 함께 열리면 비용이 노출된다.
+  assert.doesNotMatch(s, /AI_PERSONALIZATION_MODE/);
 });
 
 test("★신규 personalize 가 유일한 AI 진입점이다", () => {
@@ -300,9 +305,14 @@ test("★신규 personalize 가 유일한 AI 진입점이다", () => {
   const hits = walk(join(ROOT, "functions"))
     .filter(f => /generativelanguage/.test(readFileSync(f, "utf8")))
     .map(f => f.replace(ROOT, "").replace(/\\/g, "/"));
-  // profile AI 의 호출 코드는 공용 provider 로 옮겨졌다. functions/ 에 직접
-  // provider 를 부르는 것은 legacy 하나뿐이고, 그건 위 테스트가 게이트를 강제한다.
-  assert.deepEqual(hits.sort(), ["/functions/api/generate-itinerary.ts"]);
+  // profile AI 의 호출 코드는 공용 provider 로 옮겨졌다. functions/ 에서 provider
+  // URL 을 갖는 것은 둘뿐이다 — legacy(위 테스트가 전용 게이트 강제)와
+  // mytrip/writing(승인 기능: Production 은 서울 Worker binding 경유가 우선이고,
+  // 직결 코드는 binding 없는 로컬 dev/테스트 fallback 전용 + 자체 kill switch).
+  assert.deepEqual(hits.sort(), [
+    "/functions/api/generate-itinerary.ts",
+    "/functions/api/mytrip/writing.ts",
+  ]);
 
   // 그리고 profile AI 의 provider 는 src/lib 의 그 한 파일뿐이어야 한다.
   const libHits = walk(join(ROOT, "src", "lib"))
@@ -351,14 +361,16 @@ test("★NEXT_PUBLIC 계열로 key 를 노출하지 않는다", () => {
 });
 
 // ── migration ────────────────────────────────────────────────────────────────
-test("★migration 을 건드리지 않았다 — 041 이 마지막", () => {
+test("★AI 작업은 migration 을 추가하지 않는다 — 060 스냅숏 고정", () => {
+  // e1bcb27 이 041 시대 스냅숏 가드 4개를 이 방식(파일명 digest)으로 정비했는데
+  // 이 파일만 누락돼 stale 로 실패하고 있었다. 의도는 그대로다 — AI 기능 작업이
+  // DB migration 을 몰래 늘리면 이 digest 가 깨진다. migration 이 승인 작업으로
+  // 추가되면 그 TASK 가 digest 를 갱신한다.
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 44);   // 042·043·044 는 피드백/알림 작업이 추가했다
-  // 042·043 은 AI 와 무관한 별도 작업이다. 그 밖의 migration 은 없어야 한다.
-  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
-    assert.match(f, /^04[234]_(place_reports|place_likes|admin_notification_events)\.sql$/, `예상치 못한 migration: ${f}`);
-  }
+  assert.equal(files.length, 60);
+  const digest = createHash("sha256").update(files.join("\n")).digest("hex");
+  assert.equal(digest, "b50b835e61b7e755a0df0c3a0eb572700c7a89351a3aefa4d5b29afd662f5aab");
 });
 
 // ── 같은 흐름 안의 중복 차단 ─────────────────────────────────────────────────

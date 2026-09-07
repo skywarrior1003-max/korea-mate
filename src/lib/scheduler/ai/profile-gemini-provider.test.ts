@@ -173,7 +173,7 @@ test("G provider 는 환경변수·secret 을 읽지 않는다", () => {
 
 test("route 는 자기 fetch 를 갖지 않고 공용 provider 를 부른다", () => {
   const route = code("functions", "api", "trip", "personalize.ts");
-  assert.match(route, /callProfileProvider\(\{ prompt, apiKey, fetchFn: ctx\.fetchFn \}\)/);
+  assert.match(route, /fetchFn: ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
   // route 안에 provider 호출 코드가 남아 있으면 두 벌이 된다
   for (const gone of ["generativelanguage.googleapis.com", "new AbortController", "generationConfig"]) {
     assert.ok(!route.includes(gone), `route 에 ${gone} 이 남아 있다`);

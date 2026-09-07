@@ -1,6 +1,12 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 interface Env {
-  AI_PERSONALIZATION_MODE?: string;
+  /**
+   * 이 레거시 endpoint 전용 게이트. 기본 미설정 = 영구 410.
+   * 과거에는 AI_PERSONALIZATION_MODE 를 함께 봤지만, 그 변수는 이제
+   * /api/trip/personalize(개인화 프로필)를 켜는 용도라 — 개인화를 켜는 순간
+   * 인증 없는 이 endpoint 까지 인터넷에 열려 비용이 노출된다. 그래서 분리했다.
+   */
+  LEGACY_ITINERARY_AI_MODE?: string;
   GEMINI_API_KEY: string;
 }
 
@@ -734,7 +740,7 @@ export const onRequestPost: (context: {
   // 인증도 rate limit 도 없이 인터넷에 열려 있어서, 게이트가 없으면 외부에서
   // POST 만 해도 실제 Gemini 요금이 발생한다. AI 모드가 켜져 있지 않으면
   // provider 에 도달하기 전에 끊는다. 기본값은 off 다.
-  if (!modeAllowsProviderCall(resolveAiMode(env.AI_PERSONALIZATION_MODE))) {
+  if (!modeAllowsProviderCall(resolveAiMode(env.LEGACY_ITINERARY_AI_MODE))) {
     return new Response(
       JSON.stringify({ error: "This endpoint is disabled.", ai_status: "disabled" }),
       { status: 410, headers: corsHeaders },

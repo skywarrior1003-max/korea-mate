@@ -147,6 +147,44 @@ export default {
       });
     }
 
+    if (path === "/provider") {
+      // 자사 Pages Functions 전용 provider 프록시(트립 personalize 등).
+      // 모델·키·URL 은 이 Worker 가 고정하고, 호출측은 자기 계약의 요청 본문
+      // (contents + generationConfig)만 보낸다. 접근은 binding + x-internal-auth 뿐.
+      let raw = "";
+      try { raw = await request.text(); } catch { return json({ error: "invalid_body" }, 400); }
+      if (raw.length > 64_000) return json({ error: "body_too_large" }, 413);
+      let parsed: unknown;
+      try { parsed = JSON.parse(raw); } catch { return json({ error: "invalid_body" }, 400); }
+      if (!parsed || typeof parsed !== "object" || !Array.isArray((parsed as { contents?: unknown }).contents)) {
+        return json({ error: "invalid_body" }, 400);
+      }
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+      const started = Date.now();
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            signal: controller.signal,
+            body: raw,
+          },
+        );
+        clearTimeout(timer);
+        const [text, colo] = await Promise.all([res.text(), executionColo()]);
+        log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length });
+        // 상태·본문을 그대로 넘긴다 — 호출측의 기존 오류 분기(!res.ok)가 그대로 동작한다.
+        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
+      } catch (err) {
+        clearTimeout(timer);
+        const isAbort = err instanceof Error && err.name === "AbortError";
+        log({ kind: "provider", ok: false, err: isAbort ? "timeout" : "error", latencyMs: Date.now() - started });
+        return json({ error: isAbort ? "timeout" : "unreachable" }, 502);
+      }
+    }
+
     if (path !== "/generate") return json({ error: "not_found" }, 404);
 
     let body: unknown;

@@ -33,6 +33,32 @@ import { callProfileProvider } from "../../../src/lib/scheduler/ai/profile-gemin
 interface Env {
   GEMINI_API_KEY?:           string;
   AI_PERSONALIZATION_MODE?:  string;
+  /** 서울 placement Worker(gokoreamate-ai-writing) Service Binding — Production 상시. */
+  AI_WRITING?:               { fetch: typeof fetch };
+  /** Worker 의 x-internal-auth 이중 잠금 키. */
+  INTERNAL_KEY?:             string;
+}
+
+/**
+ * 서울 Worker 경유 provider fetch.
+ *
+ * Pages Function 은 사용자의 ingress colo 에서 실행되는데, 한국 트래픽이 HKG 로
+ * 붙으면 Gemini 가 egress 지역 차단(400)된다 — mytrip/writing 에서 실측·해결한
+ * 것과 같은 문제다. Worker 는 ICN 에서 실행되므로 이 경유가 차단을 제거한다.
+ * 요청 URL(우리 key 포함)은 버리고 본문만 보낸다 — key 는 Worker 것을 쓴다.
+ * binding 이 없는 로컬/테스트 환경은 undefined 를 돌려 기존 직결로 간다.
+ */
+function bindingProviderFetch(env: Env): typeof fetch | undefined {
+  const binding = env.AI_WRITING;
+  const key = env.INTERNAL_KEY;
+  if (!binding || typeof binding.fetch !== "function" || !key) return undefined;
+  return ((_url: RequestInfo | URL, init?: RequestInit) =>
+    binding.fetch("https://ai-writing.internal/provider", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", "x-internal-auth": key },
+      body:    init?.body ?? null,
+      signal:  init?.signal ?? undefined,
+    })) as typeof fetch;
 }
 
 
@@ -131,7 +157,12 @@ export async function onRequestPost(
   // ── 실제 호출: 정확히 1회. 재시도 루프가 없다. ──
   // 호출 코드는 공용 provider 한 벌뿐이다. 로컬 harness 도 같은 것을 쓴다 —
   // 검증한 것과 실제로 나가는 것이 달라지면 검증이 아니다.
-  const call = await callProfileProvider({ prompt, apiKey, fetchFn: ctx.fetchFn });
+  // ctx.fetchFn(canary 주입)이 있으면 그것을 그대로 쓰고, 없으면 서울 Worker
+  // binding 경유, 그것도 없으면(로컬) 런타임 기본 fetch 로 직결한다.
+  const call = await callProfileProvider({
+    prompt, apiKey,
+    fetchFn: ctx.fetchFn ?? bindingProviderFetch(ctx.env),
+  });
 
   if (!call.ok) {
     if (call.kind === "http") {

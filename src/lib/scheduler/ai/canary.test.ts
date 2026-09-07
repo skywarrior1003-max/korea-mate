@@ -450,7 +450,8 @@ test("C23 일반 요청은 주입 없이 런타임 기본 fetch 를 쓴다", () 
   const per = code(readFileSync("functions/api/trip/personalize.ts", "utf8"));
   const prov = code(readFileSync("src/lib/scheduler/ai/profile-gemini-provider.ts", "utf8"));
   assert.match(per,  /fetchFn\?: typeof fetch;/);
-  assert.match(per,  /callProfileProvider\(\{ prompt, apiKey, fetchFn: ctx\.fetchFn \}\)/);
+  // canary 의 ctx.fetchFn 이 최우선이고, 없으면 서울 Worker binding 경유다.
+  assert.match(per,  /fetchFn: ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
   assert.match(prov, /const providerFetch = args\.fetchFn \?\? fetch;/);
   // Cloudflare 가 넘기는 ctx 에는 fetchFn 이 없다 → 기본 fetch
   assert.equal((prov.match(/await providerFetch\(/g) ?? []).length, 1);
