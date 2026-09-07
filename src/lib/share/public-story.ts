@@ -71,6 +71,10 @@ export function publicPlace(raw: unknown): Record<string, unknown> {
     if (typeof p.place_id === "string" || typeof p.place_id === "number") {
       out.place_id = p.place_id;
     }
+    // 카탈로그 대표 이미지(city_spots.image_url) — 공개 장소 페이지에 이미 노출되는
+    // 공식 이미지다. user_spot 의 image 는 사용자 사진일 수 있으므로 canonical 밖에서는
+    // 내보내지 않는다. (SHARED-STORY-RICH-EXPERIENCE-V1: 공유 Story 의 일정 뼈대용)
+    if (typeof p.image === "string" && p.image.length > 0) out.image = p.image;
   }
   return out;
 }

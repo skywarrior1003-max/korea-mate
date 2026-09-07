@@ -17,6 +17,7 @@
 
 import type { StoryDay, StoryMemory, StoryPhoto } from "@/components/story/story-types";
 import type { StoryCardMoment } from "@/components/TripStoryExport";
+import { resolveDisplayImage } from "../place-detail/place-detail-core.ts";
 
 /** `/api/shared/{id}/story` 가 주는 Memory 한 개 */
 export interface ApiMemory {
@@ -49,6 +50,14 @@ export function memoryPhotoUrl(itineraryId: string, ref: string): string {
   return `/img/memory/${encodeURIComponent(itineraryId)}/${encodeURIComponent(ref)}`;
 }
 
+/** 공개 응답의 장소에서 이 어댑터가 읽는 것 — 전부 공개 serializer 를 통과한 값이다. */
+interface ApiPlace {
+  name?:     unknown;
+  place_id?: unknown;
+  /** 카탈로그 대표 이미지 — 공식 장소일 때만 응답에 온다 */
+  image?:    unknown;
+}
+
 /** 저장된 days 에서 하루씩 꺼낸다. 모양 두 가지를 다 받는다. */
 function scheduledDays(raw: unknown): { dayNumber?: number; date?: string; places?: unknown[] }[] {
   if (Array.isArray(raw)) return raw as { dayNumber?: number; date?: string; places?: unknown[] }[];
@@ -61,57 +70,113 @@ function scheduledDays(raw: unknown): { dayNumber?: number; date?: string; place
   return [];
 }
 
+const str = (v: unknown): string => (typeof v === "string" ? v.trim() : "");
+
+/** 일정 장소 하나 → Story 의 기본 항목. 소유자 어댑터의 baselineItem 과 같은 규칙이다. */
+function baselineItem(dayNumber: number, idx: number, place: ApiPlace): StoryMemory {
+  const name = str(place.name) || undefined;
+  const img  = resolveDisplayImage(str(place.image) || null);
+  return {
+    id:        `stop-${dayNumber}-${idx}`,
+    memo:      "",
+    placeName: name,
+    photos:    img ? [{ url: img, alt: name }] : [],
+  };
+}
+
+/** Memory ↔ 일정 장소 결합 — 정본 열쇠(place_id)로만 한다. 장소명으로 추측하지 않는다. */
+function memoryBelongsToPlace(m: ApiMemory, place: ApiPlace): boolean {
+  if (typeof m.placeId !== "string" || m.placeId === "") return false;
+  const pid = place.place_id;
+  if (typeof pid !== "string" && typeof pid !== "number") return false;
+  return String(pid) === m.placeId;
+}
+
 /**
- * Memory 를 Day 로 묶는다.
+ * 공개 일정 + 공개 Memory → StoryDay[]. (SHARED-STORY-RICH-EXPERIENCE-V1)
  *
- * day 번호가 있는 것은 그 Day 로 간다. **없는 것은 버리지 않고 맨 뒤 Day 에
- * 붙인다** — 새 구역을 만들지 않는다(시안에 없는 화면을 지어내지 않기 위해).
- * 붙일 Day 조차 없으면(일정에 Day 가 하나도 없는 경우) 마지막 수단으로 Day 1 을
- * 만들어 담는다. 어느 경우에도 사라지지 않는다.
+ * Story 의 뼈대는 일정이다 — 소유자 Story(private-story-adapter)와 같은 원칙.
+ * 공유받은 사람은 사진이 없는 여행에서도 Day 별 장소 흐름(카탈로그 대표 이미지 +
+ * 장소명)을 본다. 공개 Memory 가 그 장소에 결합되면 그 항목이 개인 기록으로
+ * 풍부해진다. 결합은 정본 열쇠(place_id)로만 하고, day 가 없거나 일정에 없는
+ * 번호의 Memory 는 버리지 않고 마지막 Day 에 붙인다(기존 규칙 그대로).
  *
- * 같은 Day 안의 순서는 서버가 정한 순서 그대로다 — 여기서 다시 정렬하지 않는다.
+ * 여기 들어오는 값은 전부 공개 serializer 를 통과한 것뿐이다 — 좌표·경로·내부
+ * id 는 응답에 오지 않으므로 여기서도 만들 수 없다.
+ *
+ * 같은 Day 안의 순서는 일정 순서 → 결합되지 않은 Memory 순서다.
  */
 export function toStoryDays(api: ApiStory): StoryDay[] {
   const memories = api.memories ?? [];
-  if (memories.length === 0) return [];
-
   const sched = scheduledDays(api.days);
+
   const dayNumbers = sched
     .map((d, i) => (typeof d.dayNumber === "number" ? d.dayNumber : i + 1))
     .filter((n, i, arr) => arr.indexOf(n) === i)
     .sort((a, b) => a - b);
-
-  const byDay = new Map<number, StoryMemory[]>();
   const known = new Set(dayNumbers);
-  // day 가 없거나 일정에 없는 번호는 마지막 Day 로 모은다
   const lastDay = dayNumbers.length > 0 ? dayNumbers[dayNumbers.length - 1]! : 1;
 
+  // Day 별 Memory — day 가 없거나 일정에 없는 번호는 마지막 Day 로 모은다
+  const byDay = new Map<number, { m: ApiMemory; idx: number }[]>();
   memories.forEach((m, idx) => {
     const target = m.dayNumber !== null && known.has(m.dayNumber) ? m.dayNumber : lastDay;
-    const photos: StoryPhoto[] = m.photos.map(p => ({
-      url: memoryPhotoUrl(api.id, p.ref),
-      alt: m.placeName ?? undefined,
-    }));
     const list = byDay.get(target) ?? [];
-    list.push({
-      // 화면 안에서만 쓰는 key. 서버가 준 내부 id 가 아니다(응답에 오지도 않는다).
-      id:        `d${target}-${idx}`,
-      memo:      m.memo ?? "",
-      placeName: m.placeName ?? undefined,
-      photos,
-    });
+    list.push({ m, idx });
     byDay.set(target, list);
   });
 
-  const dateOf = (n: number): string => {
-    const hit = sched.find((d, i) => (typeof d.dayNumber === "number" ? d.dayNumber : i + 1) === n);
-    return typeof hit?.date === "string" ? hit.date : "";
-  };
+  const memoryItem = (m: ApiMemory, idx: number, target: number, placeName?: string): StoryMemory => ({
+    // 화면 안에서만 쓰는 key. 서버가 준 내부 id 가 아니다(응답에 오지도 않는다).
+    id:        `d${target}-${idx}`,
+    memo:      m.memo ?? "",
+    placeName: m.placeName ?? placeName,
+    photos:    m.photos.map(p => ({ url: memoryPhotoUrl(api.id, p.ref), alt: m.placeName ?? placeName })),
+  });
 
-  const days = dayNumbers.length > 0 ? dayNumbers : [1];
-  return days
-    .filter(n => (byDay.get(n) ?? []).length > 0)
-    .map(n => ({ dayNumber: n, dateLabel: dateOf(n), memories: byDay.get(n) ?? [] }));
+  const out: StoryDay[] = [];
+  const renderDays = dayNumbers.length > 0 ? dayNumbers : (memories.length > 0 ? [1] : []);
+
+  for (const n of renderDays) {
+    const day = sched.find((d, i) => (typeof d.dayNumber === "number" ? d.dayNumber : i + 1) === n);
+    const dateLabel = typeof day?.date === "string" ? day.date : "";
+    const places = Array.isArray(day?.places) ? (day.places as ApiPlace[]) : [];
+    const dayMemories = byDay.get(n) ?? [];
+    const used = new Set<number>();
+    const items: StoryMemory[] = [];
+
+    places.forEach((place, idx) => {
+      const matched = dayMemories.filter(e => !used.has(e.idx) && memoryBelongsToPlace(e.m, place));
+      if (matched.length > 0) {
+        for (const e of matched) { used.add(e.idx); items.push(memoryItem(e.m, e.idx, n, str(place.name) || undefined)); }
+      } else {
+        items.push(baselineItem(n, idx, place));
+      }
+    });
+
+    // 결합되지 않은 Memory 는 그 Day 의 독립 항목으로 — 남긴 것은 사라지지 않는다
+    for (const e of dayMemories) {
+      if (used.has(e.idx)) continue;
+      items.push(memoryItem(e.m, e.idx, n));
+    }
+
+    if (items.length > 0) out.push({ dayNumber: n, dateLabel, memories: items });
+  }
+  return out;
+}
+
+/**
+ * Cover 대체 이미지 — 개인 사진이 하나도 공개되지 않은 여행의 표지.
+ * 일정의 첫 공식 장소 카탈로그 이미지다. 없으면 null(표지는 글자만으로 간다).
+ */
+export function coverFallbackUrl(api: ApiStory): string | null {
+  for (const day of scheduledDays(api.days)) {
+    for (const raw of day.places ?? []) {
+      const img = resolveDisplayImage(str((raw as ApiPlace).image) || null);
+      if (img) return img;
+    }
+  }
+  return null;
 }
 
 /** Cover 에 쓸 사진 — 공개된 Memory 중 첫 사진. 없으면 null. */

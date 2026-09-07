@@ -40,7 +40,7 @@ test("M3 글이 없을 때 alt 로 빈 조각을 넣지 않는다", () => {
 // ── L: 언어 ─────────────────────────────────────────────────────────────────
 
 test("L1 공개 Story 분기의 버튼 문구가 locale 을 쓴다", () => {
-  const story = PAGE.slice(PAGE.indexOf("hasPublicMemories(apiStory)"), PAGE.indexOf("<StoryReport"));
+  const story = PAGE.slice(PAGE.indexOf("richStoryDays.length > 0"), PAGE.indexOf("<StoryReport"));
   assert.match(story, /copyLabel=\{isCopying \? tStory\("copying"\) : tStory\("copyTrip"\)\}/);
   assert.match(story, /shareLabel=\{tStory\("share"\)\}/);
   assert.ok(!/"Copy This Trip"|"Copying Trip…"|shareLabel="Share"/.test(story),
@@ -80,9 +80,15 @@ test("S3 Share 는 정본 렌더러를 연다 — 예전 렌더러 0, 분기당 
 
 // ── Z: 예전 분기 ────────────────────────────────────────────────────────────
 
-test("Z1 공개 Memory 0 건 분기는 그대로다", () => {
+test("Z1 Story 가 기본이고, 예전 화면은 내용 없는 여행의 fallback 으로만 남는다", () => {
+  // SHARED-STORY-RICH-EXPERIENCE-V1: 일정이 Story 의 뼈대라 공개 Memory 0 건도
+  // Story 로 간다. 예전 카드 화면은 일정·Memory 둘 다 없는 껍데기에서만 나온다.
+  assert.match(PAGE, /const richStoryDays = toStoryDays\(apiStory\)/);
+  assert.match(PAGE, /if \(richStoryDays\.length > 0\)/);
+  // fallback 분기의 9:16 카드는 여전히 빈 moments 를 넘긴다(넣을 것이 없다)
   assert.match(PAGE, /moments=\{\[\]\}/);
-  assert.match(PAGE, /if \(hasPublicMemories\(apiStory\)\)/);
+  // 개인 사진이 없으면 카탈로그 표지로, 그것도 없으면 글자 표지로 간다
+  assert.match(PAGE, /coverPhotoUrl\(apiStory\) \?\? coverFallbackUrl\(apiStory\)/);
 });
 
 // ── Y: 예전 분기의 Copy 버튼 ─────────────────────────────────────────────────
@@ -233,6 +239,6 @@ test("E5 주석이 실제 구현과 맞는다", () => {
 test("E6 이번 정리로 동작이 바뀌지 않았다", () => {
   assert.equal((PAGE.match(/onClick=\{handleCopyTrip\}/g) ?? []).length, 1);
   assert.match(PAGE, /onShare=\{\(\) => setStoryExportOpen\(true\)\}/);
-  assert.match(PAGE, /if \(hasPublicMemories\(apiStory\)\)/);
+  assert.match(PAGE, /if \(richStoryDays\.length > 0\)/);
   assert.equal((PAGE.match(/publicStoryUrl\(window\.location\.origin, trip\.id\)/g) ?? []).length, 2);
 });

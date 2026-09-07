@@ -31,7 +31,7 @@ import StorySummary from "@/components/story/StorySummary";
 import { PAGE_BG } from "@/components/story/story-tokens";
 import type { StoryMemory } from "@/components/story/story-types";
 import {
-  toStoryDays, coverPhotoUrl, coverEyebrow, storyStats, hasPublicMemories,
+  toStoryDays, coverPhotoUrl, coverFallbackUrl, coverEyebrow, storyStats,
   toStoryCardMoments, publicStoryUrl,
   type ApiStory,
 } from "@/lib/share/story-adapter";
@@ -357,28 +357,33 @@ export default function SharedTripPage() {
     new Set(coverPlaces.map((p) => (p.name ?? "").trim()).filter(Boolean)),
   ).slice(0, 4);
 
-  // ── 공개한 Memory 가 있으면 Story 로 보여 준다 ─────────────────────────────
+  // ── 공유 화면의 기본은 Story 다 (SHARED-STORY-RICH-EXPERIENCE-V1) ─────────
   //
-  // 없으면 아래 기존 공유 화면 그대로다. 공개한 기억이 없는 여행에 빈 Journal 을
-  // 억지로 띄우지 않는다 — 그건 이 사람이 만든 것이 아니다.
+  // 공유받은 사람은 사이트 안내 카드가 아니라 **그 여행 자체**를 본다 — 분위기
+  // 사진(개인 공개 사진, 없으면 일정의 공식 카탈로그 이미지) → 제목 → Day 별
+  // 장소 흐름 → 마지막에 조용한 CTA. 일정이 Story 의 뼈대라, 공개 Memory 가
+  // 없어도 Journal 은 비어 있지 않다.
   //
   // 여기 들어오는 값은 전부 서버가 정제한 것이다. 좌표도, 저장 경로도, 내부
   // id 도 응답에 오지 않으므로 화면이 볼 수 없다.
+  //
+  // storyDays 가 비는 것은 일정도 공개 Memory 도 없는 껍데기뿐일 때다 — 그때만
+  // 아래 기존 공유 화면(fallback)으로 간다.
   const apiStory = trip as unknown as ApiStory;
-  if (hasPublicMemories(apiStory)) {
-    const storyDays = toStoryDays(apiStory);
-    const cover     = coverPhotoUrl(apiStory);
+  const richStoryDays = toStoryDays(apiStory);
+  if (richStoryDays.length > 0) {
+    const storyDays = richStoryDays;
+    const cover     = coverPhotoUrl(apiStory) ?? coverFallbackUrl(apiStory);
     const stats     = storyStats(apiStory);
     const title     = trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`;
 
     return (
       <div style={{ backgroundColor: PAGE_BG }}>
         {/* 이 화면이 켜져 있는 동안에는 앱 하단 네비게이션을 감춘다.
-            바깥 사람이 보는 독립된 화면이라 앱 메뉴가 낄 자리가 아니다.
-            Story 가 아닌 공유 화면은 그대로 둔다. */}
+            바깥 사람이 보는 독립된 화면이라 앱 메뉴가 낄 자리가 아니다. */}
         <StoryNavHide />
 
-        {cover && (
+        {cover ? (
           <StoryCover
             scrollHint="story-journal"
             data={{
@@ -388,6 +393,15 @@ export default function SharedTripPage() {
               // 작성자 표시값이 서비스에 없다. 없는 이름을 지어내지 않고 줄을 숨긴다.
             }}
           />
+        ) : (
+          /* 표지에 쓸 사진이 하나도 없는 여행 — 글자만으로 조용히 연다.
+             빈 이미지 상자를 그리지 않는다. */
+          <header className="max-w-4xl mx-auto px-6 pt-20 pb-2 text-center">
+            <p className="uppercase text-xs font-bold tracking-widest text-[#8A919B] mb-3">
+              {coverEyebrow(apiStory)}
+            </p>
+            <h1 className="text-3xl font-black text-[#191C21]">{title}</h1>
+          </header>
         )}
 
         <StoryJournal
@@ -426,6 +440,18 @@ export default function SharedTripPage() {
         </div>
 
         <StoryReport shareId={trip.id} deviceId={getDeviceId()} />
+
+        {/* 여행을 다 본 사람에게만 보이는 마무리 — 강요하지 않는 한 줄이다.
+            복사(+ My Trip)는 위 StorySummary 가 담당하므로 여기서 반복하지 않는다. */}
+        <div className="pb-16 pt-2 text-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1 text-sm font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
+          >
+            ✨ {tStory("startScratch")} →
+          </Link>
+          <p className="text-xs text-[#8A919B] mt-4">{tStory("generatedBy")}</p>
+        </div>
 
         {storyExportOpen && (
           <TripStoryExport
