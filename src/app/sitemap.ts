@@ -1,19 +1,16 @@
 import { MetadataRoute } from "next";
-import fs from "fs";
-import path from "path";
 import { fetchPublicSpotIds } from "@/lib/place-detail/place-source";
+import { BLOG_POSTS } from "@/data/blog/blog-posts-v1";
 
 export const dynamic = "force-static";
 
 const siteUrl = "https://gokoreamate.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const postsDir = path.join(process.cwd(), "src/content/posts");
-  const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".md"));
-
-  const blogPosts = files.map((filename) => ({
-    url: `${siteUrl}/blog/${filename.replace(/\.md$/, "")}/`,
-    lastModified: new Date(),
+  // Blog 는 구조화 데이터 모듈이 정본이다 (BLOG-OFFICIAL-TRAVEL-CONTENT-V1)
+  const blogPosts = BLOG_POSTS.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}/`,
+    lastModified: new Date(post.date),
   }));
 
   // V1-A: 장소 상세는 검색 유입의 주 경로인데 지금까지 sitemap 에 0건이었다.

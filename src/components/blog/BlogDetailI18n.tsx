@@ -8,7 +8,6 @@
 // 그래서 페이지를 통째로 client 로 바꾸지 않고, 번역이 필요한 UI 만 여기로
 // 뺀다. 카드의 provider·url·선정 결과는 Server 가 정해서 props 로 넘긴다.
 
-import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { PARTNER_LABEL, type ProductKey } from "@/config/affiliate-registry";
 import { resolveOffer } from "@/lib/affiliate-resolve";
@@ -117,59 +116,10 @@ export function BlogPublishedDate({ date }: { date: string }) {
   );
 }
 
-// ─── 목록으로 돌아가기 ────────────────────────────────────────────────────
-
-export function BlogBackLink() {
-  const t = useTranslations("blogAffiliate");
-  return (
-    <Link
-      href="/blog"
-      className="inline-flex items-center gap-1.5 text-base font-extrabold hover:text-[#D4AF37] transition-colors mb-8"
-    >
-      ← {t("backToBlog")}
-    </Link>
-  );
-}
-
-// ─── 고지 · 원본 출처 ─────────────────────────────────────────────────────
-
-// 예전 고지는 "모든 글이 한국관광공사 데이터를 근거로 AI 가 작성했다" 고
-// 단언했다. eSIM·교통 같은 글은 관광공사 데이터에서 나올 수 없어 사실과
-// 달랐다. 특정 기관·provider 를 모든 글의 출처로 지목하지 않는 형태로 바꿨다.
-export function BlogNotices({ sourceLink }: { sourceLink: string }) {
-  const t = useTranslations("blogAffiliate");
-  return (
-    <>
-      <div className="mt-8 bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-6 text-sm sm:text-base text-[#61554D] leading-relaxed">
-        <p className="font-bold flex items-center gap-1.5 text-[#8C6239] mb-1">
-          ⚠️ {t("contentNotice")}
-        </p>
-        {t("aiNotice")}
-      </div>
-
-      <div className="mt-4 text-sm text-[#61554D]">
-        <a
-          href={sourceLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-bold underline hover:text-[#D4AF37]"
-        >
-          {t("originalSource")}
-        </a>
-      </div>
-    </>
-  );
-}
-
-// ─── 푸터 ─────────────────────────────────────────────────────────────────
-
-export function BlogFooterCredit() {
-  const t = useTranslations("blogAffiliate");
-  const tFooter = useTranslations("footer");
-  return (
-    <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>{tFooter("copyright", { year: new Date().getFullYear() })}</p>
-      <p className="font-bold tracking-wide">{t("dataCredit")}</p>
-    </div>
-  );
-}
+// BLOG-OFFICIAL-TRAVEL-CONTENT-V1 에서 제거된 것들
+//  · BlogNotices — "Original Source" 링크가 항상 visitkorea 폴백으로 떨어져
+//    eSIM·교통 글에까지 거짓 출처를 달았다. 출처는 이제 글 데이터의 sources 가
+//    글별로 정확히 밝힌다.
+//  · BlogFooterCredit — 모든 글에 "KTO 데이터 기반" 크레딧을 달았지만 사실이
+//    아니었다. 같은 이유로 제거.
+//  · BlogBackLink — 새 상세 화면이 quiet 톤으로 직접 그린다.

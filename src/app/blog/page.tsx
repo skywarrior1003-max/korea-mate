@@ -1,105 +1,18 @@
-import { getSortedPostsData } from "@/lib/posts";
-import Link from "next/link";
-import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
-import EditorialNav from "@/components/ui/EditorialNav";
-import { BlogFooterCredit } from "@/components/blog/BlogDetailI18n";
+// Blog 목록 — 공식 기반 여행 이해 콘텐츠. (BLOG-OFFICIAL-TRAVEL-CONTENT-V1)
+//
+// Server Component 는 metadata 만 담당하고 화면은 client 가 그린다 —
+// 글 데이터에 4개 locale 전문이 동봉돼 있어 locale 전환이 즉시 반영된다.
+// SEO metadata 는 사이트 전체 관례대로 영어 기본값이다.
+
+import BlogListClient from "@/components/blog/BlogListClient";
 
 export const metadata = {
   title: "Korea Travel Blog — gokoreamate.com",
-  description: "Tips, guides, and stories for foreign travelers in Korea.",
+  description:
+    "Official-source travel reading for visiting Korea: seasons, city character, and where to find official guidebooks and maps.",
   alternates: { canonical: "https://gokoreamate.com/blog/" },
 };
 
 export default function BlogListPage() {
-  const posts = getSortedPostsData();
-
-  return (
-    <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
-      {/* Navigation Header */}
-      <header className="border-b border-[#E6DFD5] bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="text-2xl font-normal tracking-tight text-[#2C2520] flex items-center gap-1.5">
-              <span className="font-black tracking-tight">gokoreamate</span>
-            </Link>
-          </div>
-          <LanguageSwitcher variant="icon" className="sm:hidden text-[#2C2520]" />
-          {/* 좁은 화면에서는 이 링크들이 하단 More 탭(/more)에 모여 있다.
-              가로 폭이 이미 x=378 까지 차 있어 지구본과 공존할 수 없다. */}
-          <EditorialNav active="blog" />
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#F3EEE3] to-[#FAF7F2] border-b border-[#E6DFD5] py-16 sm:py-20 text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl sm:text-5xl font-black text-[#2C2520] tracking-tight">
-            Korea Travel Blog
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl text-[#61554D] font-bold">
-            Tips, guides, and stories for foreign travelers in Korea
-          </p>
-        </div>
-      </section>
-
-      {/* Blog Cards List */}
-      <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-16 flex-1">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post) => (
-            <article
-              key={post.slug}
-              className="bg-white rounded-3xl border border-[#E6DFD5] p-6 sm:p-8 hover:shadow-lg transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-black uppercase bg-[#EAE3D2] text-[#8C6239] px-2.5 py-0.5 rounded-md">
-                    {post.category}
-                  </span>
-                  <span className="text-xs font-bold text-[#61554D]">
-                    📅 {post.date}
-                  </span>
-                </div>
-
-                <h2 className="text-2xl font-black text-[#2C2520] mb-3 hover:text-[#D4AF37] transition-colors leading-snug">
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                </h2>
-
-                <p className="text-base text-[#61554D] mb-6 leading-relaxed line-clamp-3">
-                  {post.summary}
-                </p>
-              </div>
-
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-bold bg-[#FAF7F2] text-[#8C6239] border border-[#E6DFD5] px-2.5 py-0.5 rounded-full"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="inline-flex items-center justify-center gap-1 px-4 py-2.5 text-sm font-black bg-[#FAF7F2] hover:bg-[#F3EEE3] text-[#2C2520] border border-[#E6DFD5] hover:border-[#D4AF37] rounded-xl transition-all w-full text-center"
-                >
-                  Read Post →
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4 mt-auto">
-        {/* 저작권·출처 문구는 blog 상세와 같은 조각을 쓴다. 예전에는 여기 영어가
-            직접 적혀 있어 한국어 화면에도 영어가 남았고, 모든 글이 Gemini 로
-            만들어진다고 단언하고 있었다. */}
-        <BlogFooterCredit />
-      </footer>
-    </div>
-  );
+  return <BlogListClient />;
 }
