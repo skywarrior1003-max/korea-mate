@@ -900,7 +900,8 @@
     "starterCity": "都市",
     "startTrip": "この条件で始める",
     "addedToTrip": "{name} — 今回の旅に追加しました",
-    "needsLocation": "位置の確認が必要"
+    "needsLocation": "位置の確認が必要",
+    "importFromLink": "リンクから取り込む"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",
@@ -1369,7 +1370,8 @@
     "urlOpenShared": "共有された旅を開く",
     "urlOpenInternal": "GoKoreaMateリンクを開く",
     "urlExternalSoonTitle": "外部リンクの取り込みは準備中です",
-    "urlExternalSoonBody": "現在はGoKoreaMateの共有リンクを貼り付けて開けます。外部の旅行ページの取り込みは近日対応予定です。"
+    "urlExternalSoonBody": "現在はGoKoreaMateの共有リンクを貼り付けて開けます。外部の旅行ページの取り込みは近日対応予定です。",
+    "urlAnalyzeCta": "リンクを分析して取り込む"
   },
   "aiWrite": {
     "label": "AIの文章スタイル",
@@ -1402,5 +1404,38 @@
     "catSeasons": "季節",
     "catCities": "都市を知る",
     "catOfficial": "公式資料"
+  },
+  "importer": {
+    "title": "リンクから取り込む",
+    "pasteLabel": "旅程や場所が載ったリンクを貼り付けてください",
+    "analyze": "分析する",
+    "analyzing": "リンクを読み込んでいます…",
+    "previewNote": "保存前に内容をご確認ください。元の順序のまま取り込み、自動保存はされません。",
+    "kindItinerary": "旅程",
+    "kindPlace": "場所",
+    "kindMulti": "場所リスト",
+    "unsupportedTitle": "取り込める旅行情報が見つかりません",
+    "unsupportedBody": "このページから旅程や場所を読み取れませんでした。別のリンクをお試しください。",
+    "errFetch": "ページを読み込めませんでした。ログインやスクリプトが必要な可能性があります。",
+    "errBlocked": "対応していないアドレスです。",
+    "matched": "連携済み",
+    "unmatched": "要確認",
+    "tripTitleLabel": "旅行タイトル",
+    "cityLabel": "都市",
+    "startLabel": "開始日",
+    "endLabel": "終了日",
+    "importToMyTrip": "My Trip に取り込む",
+    "importing": "取り込み中…",
+    "saveToSaved": "Saved に保存",
+    "savedDone": "保存しました",
+    "addToThisTrip": "This Trip に追加",
+    "addedToThisTrip": "This Trip に追加しました",
+    "selectHint": "取り込む場所を選んでください",
+    "openOriginal": "元ページを開く",
+    "unmatchedSingle": "この場所はまだ GoKoreaMate カタログに無いため Saved に保存できません。",
+    "sourceLine": "元リンク",
+    "excludeHint": "外すにはチェックを解除",
+    "cityRequired": "都市を入力してください",
+    "pickCity": "この旅行の都市"
   }
 }

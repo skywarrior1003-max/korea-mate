@@ -900,7 +900,8 @@
     "starterCity": "城市",
     "startTrip": "以此条件开始",
     "addedToTrip": "{name} — 已加入本次行程",
-    "needsLocation": "需要确认位置"
+    "needsLocation": "需要确认位置",
+    "importFromLink": "从链接导入"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",
@@ -1369,7 +1370,8 @@
     "urlOpenShared": "打开分享的行程",
     "urlOpenInternal": "打开 GoKoreaMate 链接",
     "urlExternalSoonTitle": "外部链接导入即将上线",
-    "urlExternalSoonBody": "目前可粘贴 GoKoreaMate 分享行程链接直接打开。外部旅行页面导入即将支持。"
+    "urlExternalSoonBody": "目前可粘贴 GoKoreaMate 分享行程链接直接打开。外部旅行页面导入即将支持。",
+    "urlAnalyzeCta": "分析并导入此链接"
   },
   "aiWrite": {
     "label": "AI 文字风格",
@@ -1402,5 +1404,38 @@
     "catSeasons": "季节",
     "catCities": "读懂城市",
     "catOfficial": "官方资料"
+  },
+  "importer": {
+    "title": "从链接导入",
+    "pasteLabel": "粘贴包含行程或地点的链接",
+    "analyze": "分析",
+    "analyzing": "正在读取链接…",
+    "previewNote": "保存前请确认内容。将按原文顺序导入，不会自动保存。",
+    "kindItinerary": "行程",
+    "kindPlace": "地点",
+    "kindMulti": "地点列表",
+    "unsupportedTitle": "未找到可导入的旅行信息",
+    "unsupportedBody": "无法从该页面读取行程或地点，请尝试其他链接。",
+    "errFetch": "无法读取页面，可能需要登录或脚本。",
+    "errBlocked": "不支持该地址。",
+    "matched": "已关联",
+    "unmatched": "待确认",
+    "tripTitleLabel": "旅行标题",
+    "cityLabel": "城市",
+    "startLabel": "开始日期",
+    "endLabel": "结束日期",
+    "importToMyTrip": "导入到 My Trip",
+    "importing": "正在导入…",
+    "saveToSaved": "保存到 Saved",
+    "savedDone": "已保存",
+    "addToThisTrip": "加入 This Trip",
+    "addedToThisTrip": "已加入 This Trip",
+    "selectHint": "选择要导入的地点",
+    "openOriginal": "打开原文",
+    "unmatchedSingle": "该地点尚未收录于 GoKoreaMate 目录，无法保存到 Saved。",
+    "sourceLine": "原文链接",
+    "excludeHint": "取消勾选即可排除",
+    "cityRequired": "请输入城市",
+    "pickCity": "本次旅行的城市"
   }
 }

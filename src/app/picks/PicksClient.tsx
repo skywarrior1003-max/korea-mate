@@ -733,6 +733,16 @@ function PicksContent() {
               <TripSetupPanel draft={draft} onChange={patchDraft} />
             </div>
           )}
+          {/* P2-1 확정 (b): This Trip 의 별도 URL Import 진입 — 새 상단 입력창이
+              아니라 Import 화면으로 가는 조용한 링크다. 저장은 Preview 확인 후에만. */}
+          {tab === "selected" && (
+            <a
+              href="/import"
+              className="gkm-focus mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sub hover:text-ink"
+            >
+              {t("importFromLink")} <span aria-hidden>→</span>
+            </a>
+          )}
           {/* 여행이 아직 없으면 여기서 바로 시작한다 — 안내만 하고 길을 끊지 않는다.
               도시·날짜가 정해지는 순간 TripDraft 가 되고 아래 TripSetupPanel 로 이어진다. */}
           {tab === "selected" && !draft && (

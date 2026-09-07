@@ -900,7 +900,8 @@
     "starterCity": "City",
     "startTrip": "Start with these",
     "addedToTrip": "{name} — added to This Trip",
-    "needsLocation": "Location needed"
+    "needsLocation": "Location needed",
+    "importFromLink": "Import from a link"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",
@@ -1369,7 +1370,8 @@
     "urlOpenShared": "Open shared trip",
     "urlOpenInternal": "Open GoKoreaMate link",
     "urlExternalSoonTitle": "External link import is coming soon",
-    "urlExternalSoonBody": "For now you can paste a GoKoreaMate shared trip link. Importing outside travel pages is on the way."
+    "urlExternalSoonBody": "For now you can paste a GoKoreaMate shared trip link. Importing outside travel pages is on the way.",
+    "urlAnalyzeCta": "Analyze and import this link"
   },
   "aiWrite": {
     "label": "AI writing direction",
@@ -1402,5 +1404,38 @@
     "catSeasons": "Seasons",
     "catCities": "Understanding cities",
     "catOfficial": "Official resources"
+  },
+  "importer": {
+    "title": "Import from a link",
+    "pasteLabel": "Paste a link with an itinerary or places",
+    "analyze": "Analyze",
+    "analyzing": "Reading the link…",
+    "previewNote": "Review before saving. The original order is kept and nothing is saved automatically.",
+    "kindItinerary": "Itinerary",
+    "kindPlace": "Place",
+    "kindMulti": "Places",
+    "unsupportedTitle": "No travel content found",
+    "unsupportedBody": "We could not read an itinerary or places from this page. Try another link.",
+    "errFetch": "Could not read the page. It may need login or scripts.",
+    "errBlocked": "This address is not supported.",
+    "matched": "Linked",
+    "unmatched": "Needs check",
+    "tripTitleLabel": "Trip title",
+    "cityLabel": "City",
+    "startLabel": "Start date",
+    "endLabel": "End date",
+    "importToMyTrip": "Import to My Trip",
+    "importing": "Importing…",
+    "saveToSaved": "Save to Saved",
+    "savedDone": "Saved",
+    "addToThisTrip": "Add to This Trip",
+    "addedToThisTrip": "Added to This Trip",
+    "selectHint": "Choose places to bring in",
+    "openOriginal": "Open original",
+    "unmatchedSingle": "This place is not in the GoKoreaMate catalog yet, so it cannot be saved.",
+    "sourceLine": "Source link",
+    "excludeHint": "Uncheck to leave out",
+    "cityRequired": "Please enter a city",
+    "pickCity": "City for this trip"
   }
 }

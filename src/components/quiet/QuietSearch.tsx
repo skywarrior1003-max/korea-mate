@@ -214,11 +214,20 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
           {showIdle && (
             <p className="pt-4 pb-1 text-[13px] text-[var(--qh-faint2)]">{t("searchIdleHint")}</p>
           )}
-          {/* 외부 URL — 엔진(P2-1) 전이라 사실대로 말한다. 없는 기능을 흉내내지 않는다 */}
+          {/* 외부 URL — Import 엔진으로 보낸다. 저장은 /import 의 Preview 확인 후에만
+              일어난다(EXTERNAL-URL-IMPORT-ENGINE-V1). 입력창은 이 하나 그대로다. */}
           {showPanel && pastedUrl?.kind === "external" && (
             <div className="pt-5 pb-3">
-              <p className="text-[15px] font-semibold text-[var(--qh-ink)]">{t("urlExternalSoonTitle")}</p>
-              <p className="mt-1 text-[13px] leading-relaxed text-[var(--qh-faint)]">{t("urlExternalSoonBody")}</p>
+              <a
+                href={`/import?url=${encodeURIComponent(pastedUrl.url)}`}
+                className="gkm-focus flex items-center justify-between gap-3 text-[15px] font-semibold text-[var(--qh-ink)] hover:text-[var(--qh-blue)]"
+              >
+                <span>{t("urlAnalyzeCta")}</span>
+                <span aria-hidden className="text-[var(--qh-clay)]">→</span>
+              </a>
+              <p className="mt-1 text-[13px] leading-relaxed text-[var(--qh-faint)]">
+                {new URL(pastedUrl.url).hostname}
+              </p>
             </div>
           )}
           {showPanel && pastedUrl?.kind !== "external" && results.length === 0 && (
