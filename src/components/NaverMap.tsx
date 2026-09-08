@@ -387,7 +387,11 @@ export default function NaverMap({
     // 개별 장소 마커 (+ 충분히 확대됐으면 이름 pill — 상한 5 + selected)
     let labeledCount = 0;
     for (const spot of plan.singles) {
-      const color = CATEGORY_COLOR[spot.category] ?? "#1a1a2e";
+      // Living Map(photo 스타일)에서는 base 핀을 회색으로 죽인다 — 회고 지도의
+      // 주인공은 사진 마커·순서이고, 다른 Day 의 진한 카테고리색 점들이
+      // "설명 없는 미스터리 핀" 으로 읽혔다(2026-09-08 blind 재검). 기능(탭 →
+      // 프리뷰 → Add to this day)은 그대로다.
+      const color = dayMarkerStyle === "photo" ? "#B7BEC9" : (CATEGORY_COLOR[spot.category] ?? "#1a1a2e");
       const key = spotKey(spot);
       // 라벨 정책(디자인 SSOT): selected 는 항상, 그 외에는 상위 5개까지만 —
       // Naver 기본 POI 라벨과 겹쳐 지도가 글자판이 되는 것을 막는다.
@@ -449,7 +453,7 @@ export default function NaverMap({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveSpot(prev => (prev === null ? prev : null));
     renderSpotLayerRef.current(true);
-  }, [spots, clusterZoomLabels, ready]);
+  }, [spots, clusterZoomLabels, dayMarkerStyle, ready]);
 
   // 줌 변화 — 리스너는 지도당 한 번만 건다. 계획이 같으면 렌더는 건너뛴다.
   useEffect(() => {
@@ -643,7 +647,7 @@ export default function NaverMap({
       } else {
         const bounds = new map.LatLngBounds(latlngs[0], latlngs[0]);
         latlngs.forEach(l => bounds.extend(l));
-        nmap.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
+        nmap.fitBounds(bounds, { top: dayMarkerStyle === "photo" ? 96 : 40, right: 40, bottom: 40, left: 40 });
       }
     }
   }, [dayPlaces, dayMarkerStyle, ready]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행

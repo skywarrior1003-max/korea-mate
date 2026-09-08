@@ -115,13 +115,23 @@ warm 잔재 치환 · navy Explore CTA. → §4.
 5도시 regId, taMin/taMax + wf, 제공 창(+4~+10일) 밖은 정직하게 미표시.
 **삭제 금지 · 축소 금지.** 현재기온(초단기실황)은 Owner 결정으로 범위 밖. → §3.
 
-### E. Living Map — AUDIT REQUIRED
-과거 final design/계약 존재. 현재 Production 의 실제 최종 구현 여부는 미확정.
-audit 전 CLOSED 선언 금지. → §5.
+### E. Living Map — CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1)
+승인 living_map_final 계약 구현·Production QA PASS: 마커 우선순위(사용자 사진→
+카탈로그→숫자, Story 와 같은 결합 규칙 한 벌)·사각 사진+번호 배지(원형 crop 0)·
+Day/Whole Trip(Whole 도 Day 마다 1부터·Day 색·범례)·STOP 시트(Directions handoff·
+Add Photo=기존 캡처)·이름 pill 상시 표시 제거·base 핀 회색 강등. → §5.
 
-### F. Story final visual fidelity — AUDIT REQUIRED
-data/function 은 PASS. final approved photo-led Story 와 current Production 의
-visual fidelity 비교는 AUDIT REQUIRED. → §6.
+### F. Story final visual fidelity — CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1)
+owner Story 에 몰입형 Cover + Journey Summary + map context(Living Map 읽기 전용
+Whole Trip) 추가, 공개 Story cover 우선순위(동의 지정 cover→공개 사진→대표성
+카탈로그 — 단순 첫 장 금지). 콜라주/인용 리듬·Day 챕터는 기존 승인 구현 유지.
+공개 summary 의 지도는 좌표 비노출 계약상 의도적으로 없음. → §6.
+
+### F-2. Focus — CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1)
+memory_focus_view 계약의 풀스크린 trip-wide 모먼트 뷰어가 owner/공개 Story 양쪽
+LIVE: 분절 progress(여행 전체 기준)·k/N·DAY·지역 칩·큰 세리프 인용·SWIPE 힌트
+(첫 이동 후 소멸)·좌우 탭/스와이프/키보드·**browser back 은 Focus 만 닫음**
+(pushState 계약). 캡션 pointer-events 통과로 하단 탭 결함 수정.
 
 ### G. 9:16 Share Image — VISUAL ACCEPTANCE OPEN
 생성 기능은 있으나 Owner 판단 "약하다". → §7.2.
@@ -616,9 +626,10 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Explore current-location indicator | CLOSED (2026-09-08, 51c855e — blue pulse) |
 | Explore recenter | CLOSED (2026-09-08, 51c855e) |
 | Explore label collision | CLOSED best-effort (2026-09-08, 51c855e — 라벨 상한 5+선택) |
-| Living Map final | PARTIAL / OPEN |
-| Story visual fidelity | PARTIAL / OPEN |
-| Focus | NOT IMPLEMENTED / OPEN |
+| Living Map final | CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1) |
+| Story visual fidelity | CLOSED (2026-09-08 — 공개 summary 지도는 좌표 비노출 계약상 없음) |
+| Focus | CLOSED (2026-09-08 — trip-wide 뷰어, back 계약 포함) |
+| Travel Memory bundle (PHASE 6) | CLOSED (2026-09-08) |
 | 9:16 Share Image | WEAK / OPEN |
 | OG Share Preview | WEAK / OPEN |
 | AI Writing infrastructure | LIVE |

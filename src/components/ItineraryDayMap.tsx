@@ -235,9 +235,11 @@ export default function ItineraryDayMap({
         </div>
       )}
 
-      {/* Whole Trip — Day 색 범례. 번호는 Day 마다 1부터라는 계약을 색이 받친다. */}
+      {/* Whole Trip — Day 색 범례. 번호는 Day 마다 1부터라는 계약을 색이 받친다.
+          아래쪽에 둔다 — 상단 토글과 겹쳐 쌓이면 fitBounds 로 위쪽에 모인 마커를
+          가린다(2026-09-08 blind 재검). */}
       {mode === "whole" && days.length > 1 && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-10 flex flex-wrap justify-center gap-x-3 gap-y-1 px-3 py-1.5 rounded-full bg-white/90 border border-line shadow-sm max-w-[92%]">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex flex-wrap justify-center gap-x-3 gap-y-1 px-3 py-1.5 rounded-full bg-white/90 border border-line shadow-sm max-w-[92%]">
           {days.map(d => (
             <span key={d.dayNumber} className="flex items-center gap-1 text-[11px] font-bold text-ink">
               <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: livingMapDayColor(d.dayNumber) }} />
@@ -293,12 +295,12 @@ export default function ItineraryDayMap({
                 <button
                   type="button"
                   onClick={() => onStopClick(sheet.dayIdx, sheet.placeIdx)}
-                  className="gkm-focus text-left text-[15px] font-bold text-ink leading-snug"
+                  className="gkm-focus text-left text-[15px] font-bold text-ink leading-snug line-clamp-2"
                 >
                   {sheet.name}
                 </button>
               ) : (
-                <p className="text-[15px] font-bold text-ink leading-snug">{sheet.name}</p>
+                <p className="text-[15px] font-bold text-ink leading-snug line-clamp-2">{sheet.name}</p>
               )}
               {sheet.memo && (
                 <p className="text-xs text-sub italic truncate mt-0.5">{`“${sheet.memo}”`}</p>

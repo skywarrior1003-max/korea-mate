@@ -143,12 +143,16 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
           className="relative z-20 w-full flex flex-col gap-4"
           style={{ paddingLeft: MARGIN_MOBILE, paddingRight: MARGIN_MOBILE, paddingTop: 32 }}
         >
-          <div className="flex gap-2 w-full max-w-2xl mx-auto" aria-hidden>
-            {Array.from({ length: current.photoCount }, (_, n) => (
+          {/* 진행 바 = 여행 전체 구간(시안의 분절 바). 장소별 사진 수로 나누면
+              "장소마다 1장" 인 보통 여행에서 바가 항상 꽉 찬 한 줄이 되어 아무
+              정보도 주지 못했다(2026-09-08 blind 재검). k/N 과 같은 기준으로
+              전체 슬라이드를 분절한다. gap 은 슬라이드 수에 따라 줄인다. */}
+          <div className="flex w-full max-w-2xl mx-auto" style={{ gap: total > 12 ? 3 : 8 }} aria-hidden>
+            {Array.from({ length: total }, (_, n) => (
               <div key={n} className="h-1 flex-1 bg-white/30 rounded-full overflow-hidden backdrop-blur-md">
                 <div
                   className="h-full bg-white transition-all duration-300"
-                  style={{ width: n <= current.photoIndex ? "100%" : "0%" }}
+                  style={{ width: n <= i ? "100%" : "0%" }}
                 />
               </div>
             ))}
