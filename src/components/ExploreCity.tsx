@@ -114,6 +114,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const tQ = useTranslations("quiet");
   const tP = useTranslations("picks");
   const tPl = useTranslations("place");
+  const tM = useTranslations("modal");
   const tf = useTranslations("tripForm");
   const tN = useTranslations("nav");
 
@@ -814,7 +815,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               <div className="flex items-center gap-2">
                 <div className="flex-1"><SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} /></div>
                 <button onClick={() => setSearchExpanded(false)}
-                  className="gkm-focus shrink-0 min-h-11 px-2.5 text-sm font-bold text-gray-500">{tE("turnOff")}</button>
+                  className="gkm-focus shrink-0 min-h-11 px-2.5 text-sm font-bold text-gray-500">{tM("closeAria")}</button>
               </div>
               {pastedUrl && (
                 <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
@@ -918,7 +919,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                 </div>
                 <button
                   onClick={() => setMapPickedKey(null)}
-                  aria-label={tE("turnOff")}
+                  aria-label={tM("closeAria")}
                   className="gkm-focus shrink-0 w-8 h-8 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
