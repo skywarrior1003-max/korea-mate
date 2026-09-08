@@ -453,7 +453,8 @@
     "mapOrderHint": "点線は訪問順のつながりです。実際の経路案内は場所を開いてNaver・Googleマップでご確認ください。",
     "syncSaving": "保存中…",
     "syncSaved": "保存済み",
-    "syncFailed": "保存に失敗"
+    "syncFailed": "保存に失敗",
+    "wholeTrip": "全日程"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

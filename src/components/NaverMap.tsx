@@ -85,6 +85,18 @@ export interface DayPlace {
   order?: number;
   /** 그 Day places 배열 인덱스 — 마커 클릭을 정확한 stop 으로 되돌리는 identity */
   idx?: number;
+  /**
+   * Living Map 사진 마커(TRAVEL-MEMORY-PRODUCTION-V1) — 사용자 사진 또는
+   * 카탈로그 대표사진. 있으면 **사각형 사진 카드 + 번호 배지**로 그린다.
+   * 원형 crop 금지 계약(SSOT §5.2)이라 사진은 직사각형 그대로 축소된다.
+   */
+  photoUrl?: string | null;
+  /** 번호 배지·순서선 색. Whole Trip 에서 Day 를 가른다. 없으면 기존 coral. */
+  color?: string;
+  /** Whole Trip 폴리라인 그룹(=dayNumber). 없으면 전부 한 그룹. */
+  groupKey?: number;
+  /** 선택된 stop — 시안대로 더 크게 + blue 테두리 + 아래 꼭지. */
+  selected?: boolean;
 }
 
 interface Props {
@@ -102,6 +114,12 @@ interface Props {
   hideInfoWindow?: boolean;
   /** trip 레이어 번호 마커 클릭 — 그 stop(DayPlace) 을 돌려준다 */
   onDayPlaceClick?: (place: DayPlace) => void;
+  /**
+   * trip 레이어 마커 스타일. "classic"(기본) = 기존 번호원+이름 pill — 플래너 등
+   * 기존 화면 무변경. "photo" = Living Map 계약: 사진 카드+번호 배지, 이름 pill
+   * 상시 표시 없음(라벨 충돌 계약 — 이름은 STOP 시트가 맡는다).
+   */
+  dayMarkerStyle?: "classic" | "photo";
   /** 강조할 마커의 선택 키(sourceKey ?? id). 지정하면 그 마커만 크게 그린다. */
   selectedKey?: string | null;
   /**
@@ -171,6 +189,45 @@ function markerIcon(color: string, selected: boolean, label?: string | null): st
     + `</div>`;
 }
 
+/**
+ * Living Map 사진 마커 (승인 시안 living_map_final 계약).
+ *
+ * 사진은 **직사각형 그대로** 축소한다 — 원형 crop 금지(SSOT §5.2). 번호 배지는
+ * 카드 우상단에 겹치고, 선택되면 카드가 커지며 blue 테두리 + 아래 꼭지가 붙는다.
+ * 이름 pill 은 없다 — 라벨 충돌 계약: 이름은 선택 시 STOP 시트가 말한다.
+ * 사진이 없으면 번호 원 하나만 그린다(fallback 3단계의 마지막).
+ */
+function dayMarkerIcon(p: { order?: number; idx?: number; photoUrl?: string | null; color?: string; selected?: boolean }, fallbackOrder: number): { html: string; ax: number; ay: number } {
+  const n = p.order ?? fallbackOrder;
+  const color = p.color ?? "#FF4A2D";
+  const sel = p.selected === true;
+  if (p.photoUrl) {
+    const w = sel ? 72 : 56, h = sel ? 54 : 42;
+    const badge = sel ? 26 : 22;
+    const border = sel ? `2px solid #0041C9` : `1.5px solid rgba(255,255,255,0.95)`;
+    const tip = sel
+      ? `<span style="position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #0041C9"></span>`
+      : "";
+    return {
+      html: `<div style="position:relative;width:${w}px;height:${h}px;cursor:pointer">`
+        + `<div style="width:${w}px;height:${h}px;border-radius:8px;overflow:hidden;background:#fff;border:${border};box-shadow:0 2px 8px rgba(0,20,70,0.3)">`
+        + `<img src="${escapeHtml(p.photoUrl)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy"/></div>`
+        + `<span style="position:absolute;top:-7px;right:-7px;width:${badge}px;height:${badge}px;border-radius:50%;background:${sel ? "#0041C9" : color};color:#fff;font-size:${sel ? 13 : 12}px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.3)">${n}</span>`
+        + tip
+        + `</div>`,
+      // anchor: 카드 중심이 좌표에 오게
+      ax: w / 2, ay: h / 2,
+    };
+  }
+  const d = sel ? 32 : 26;
+  return {
+    html: `<div style="position:relative;width:${d}px;height:${d}px;cursor:pointer">`
+      + `<span style="display:flex;align-items:center;justify-content:center;width:${d}px;height:${d}px;border-radius:50%;background:${sel ? "#0041C9" : color};color:#fff;font-size:${sel ? 15 : 13}px;font-weight:800;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${n}</span>`
+      + `</div>`,
+    ax: d / 2, ay: d / 2,
+  };
+}
+
 /** 클러스터 뱃지 — 숫자만 읽히면 되므로 원 하나. 그라디언트·그림자 과용 금지. */
 const CLUSTER_HIT = 56;
 function clusterIcon(count: number): string {
@@ -194,6 +251,7 @@ export default function NaverMap({
   onSpotClick,
   dayPlaces,
   onDayPlaceClick,
+  dayMarkerStyle = "classic",
   hideInfoWindow,
   selectedKey,
   clusterZoomLabels,
@@ -221,6 +279,10 @@ export default function NaverMap({
   const openInfoRef   = useRef<NaverInfoWindowObj | null>(null);
   const dayMarkersRef = useRef<NaverMarkerObj[]>([]);
   const dayLineRef    = useRef<NaverShapeObj | null>(null);
+  /** Whole Trip — Day(그룹)별 순서선. dayLineRef 와 별도로 여러 개를 관리한다. */
+  const dayLinesRef   = useRef<NaverShapeObj[]>([]);
+  /** 마지막으로 fit 한 trip 레이어 좌표 시그니처 — 선택 변경 재렌더에 지도가 튀지 않게 */
+  const dayFitSigRef  = useRef<string>("");
   const [ready,      setReady]      = useState(false);
   // SDK 가 인증에 실패했거나(허용되지 않은 origin 의 401) 지도를 만들다 터졌다.
   // 이때 지도 칸만 비우고 나머지 화면은 살린다 — 예전엔 SDK 정리 코드가 null 을
@@ -505,9 +567,11 @@ export default function NaverMap({
     try {
       dayMarkersRef.current.forEach(m => m.setMap(null));
       dayLineRef.current?.setMap(null);
+      dayLinesRef.current.forEach(l => l.setMap(null));
     } catch { /* SDK 미초기화 */ }
     dayMarkersRef.current = [];
     dayLineRef.current = null;
+    dayLinesRef.current = [];
 
     const pts = (dayPlaces ?? []).filter(p => p.lat && p.lng);
     if (pts.length === 0) return;
@@ -517,32 +581,49 @@ export default function NaverMap({
 
     const latlngs = pts.map(p => new map.LatLng(p.lat, p.lng));
 
-    // 순서선 (점선 — planned-visit 관계 표현)
-    if (latlngs.length >= 2) {
-      dayLineRef.current = new map.Polyline({
+    // 순서선 (점선 — planned-visit 관계 표현).
+    // groupKey(=Whole Trip 의 Day)별로 따로 잇는다 — Day 사이를 잇는 선은
+    // 방문 순서가 아니다. 그룹이 없으면 예전처럼 전체 한 줄이다.
+    const groups = new Map<number | undefined, number[]>();
+    pts.forEach((p, i) => {
+      const list = groups.get(p.groupKey) ?? [];
+      list.push(i);
+      groups.set(p.groupKey, list);
+    });
+    for (const [, idxs] of groups) {
+      if (idxs.length < 2) continue;
+      const line = new map.Polyline({
         map: nmap as unknown as Record<string, unknown>,
-        path: latlngs,
-        strokeColor: "#FF4A2D",
+        path: idxs.map(i => latlngs[i]),
+        strokeColor: pts[idxs[0]!]!.color ?? "#FF4A2D",
         strokeOpacity: 0.55,
         strokeWeight: 3,
         strokeStyle: "shortdash",
         zIndex: 150,
       });
+      dayLinesRef.current.push(line);
     }
 
-    // 번호 마커 1..n
+    // 마커 1..n — "photo" 스타일은 Living Map 계약(사진 카드+번호 배지, 이름 pill 없음)
     pts.forEach((p, i) => {
-      const marker = new map.Marker({
-        position: latlngs[i],
-        map: nmap as unknown as Record<string, unknown>,
-        zIndex: 200,
-        icon: {
+      let icon: Record<string, unknown>;
+      if (dayMarkerStyle === "photo") {
+        const m = dayMarkerIcon(p, i + 1);
+        icon = { content: m.html, anchor: new map.Point(m.ax, m.ay) };
+      } else {
+        icon = {
           content: `<div style="display:flex;align-items:center;gap:5px">
             <div style="width:26px;height:26px;border-radius:50%;background:#FF4A2D;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${p.order ?? i + 1}</div>
             <div style="background:rgba(255,255,255,0.95);color:#191C21;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.2)">${p.name.length > 12 ? p.name.slice(0, 11) + "…" : p.name}</div>
           </div>`,
           anchor: new map.Point(13, 13),
-        },
+        };
+      }
+      const marker = new map.Marker({
+        position: latlngs[i],
+        map: nmap as unknown as Record<string, unknown>,
+        zIndex: p.selected ? 260 : 200,
+        icon,
       });
       if (onDayPlaceClickRef.current) {
         map.Event.addListener(marker, "click", () => { onDayPlaceClickRef.current?.(p); });
@@ -550,16 +631,22 @@ export default function NaverMap({
       dayMarkersRef.current.push(marker);
     });
 
-    // 해당 Day 전체가 보이도록 fit (1곳이면 center만)
-    if (latlngs.length === 1) {
-      nmap.setCenter(latlngs[0]);
-      nmap.setZoom(14);
-    } else {
-      const bounds = new map.LatLngBounds(latlngs[0], latlngs[0]);
-      latlngs.forEach(l => bounds.extend(l));
-      nmap.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
+    // 해당 Day 전체가 보이도록 fit (1곳이면 center만).
+    // 좌표 집합이 같으면 다시 fit 하지 않는다 — stop 선택(selected)만 바뀌어도
+    // 이 effect 는 마커를 다시 그리는데, 그때마다 지도가 튀면 회고를 방해한다.
+    const fitSig = pts.map(p => `${p.lat},${p.lng}`).join("|");
+    if (dayFitSigRef.current !== fitSig) {
+      dayFitSigRef.current = fitSig;
+      if (latlngs.length === 1) {
+        nmap.setCenter(latlngs[0]);
+        nmap.setZoom(14);
+      } else {
+        const bounds = new map.LatLngBounds(latlngs[0], latlngs[0]);
+        latlngs.forEach(l => bounds.extend(l));
+        nmap.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
+      }
     }
-  }, [dayPlaces, ready]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행
+  }, [dayPlaces, dayMarkerStyle, ready]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행
 
   // User location marker
   useEffect(() => {

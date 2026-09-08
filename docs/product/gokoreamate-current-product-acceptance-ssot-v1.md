@@ -105,7 +105,7 @@ warm 잔재 치환 · navy Explore CTA. → §4.
 
 ### C. City Hub Weather — SUPERSEDED (재OPEN 금지)
 2026-09-08 actual repo audit 당시 "NOT CURRENTLY IMPLEMENTED / 최신 Owner 계약
-→ §3" 이었으나, **2026-09-09 Owner weather scope 결정으로 SUPERSEDED**:
+→ §3" 이었으나, **2026-09-08 Owner weather scope 결정으로 SUPERSEDED**:
 중기예보(My Trip Day 예보 칩, §3.5)만으로 충분하다. City Hub 현재기온 칩은
 구현하지 않으며, 단기/초단기 API 추가·KMA 활용신청·새 provider 도입을 이유로
 **이 항목을 다시 OPEN 으로 만들지 않는다.** → §3.2 SUPERSEDED 주석.
@@ -149,7 +149,7 @@ TASK-GOKOREAMATE-WEATHER-PRODUCT-CONTRACT-RECORD-V1 실측:
 
 ### 3.2 City Hub Weather — SUPERSEDED (원문 보존)
 
-> **SUPERSEDED — 2026-09-09 Owner weather scope 결정.** 아래 원문(당시 Owner
+> **SUPERSEDED — 2026-09-08 Owner weather scope 결정.** 아래 원문(당시 Owner
 > 계약)은 기록으로 보존하되 더 이상 요구사항이 아니다. Owner 최신 결정:
 > **"중기예보만으로 충분하다."** City Hub 현재기온 칩은 구현하지 않는다.
 > 단기예보/초단기실황 API 추가 금지 · KMA 활용신청 요구 금지 · 새 weather
@@ -189,7 +189,7 @@ weather 로 대체 금지 · City Hub 추가를 이유로 축소 금지.
 (갱신 2026-09-08) My Trip Weather 는 **STAGE B LIVE** — 공공데이터 KMA
 중기예보(MidFcstInfoService, Owner 확정 provider) 로 Day 예보 칩(최저/최고 +
 하늘상태 glyph) 이 Production 에 연결되었다(master 8ec30ad). 제공 창(발표 기준
-+4~+10일) 밖 날짜는 지어내지 않고 미표시. 2026-09-09 Owner weather scope 결정:
++4~+10일) 밖 날짜는 지어내지 않고 미표시. 2026-09-08 Owner weather scope 결정:
 **여기까지가 weather 의 전부다** — 추가 확장(단기/초단기·현재기온·새 provider)
 금지, 이 기능 자체는 KEEP(삭제/축소 금지).
 
@@ -603,7 +603,7 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Opening-hours data coverage | KNOWN GAP / NOT CURRENT PRIORITY |
 | City Hub final visual | CLOSED (2026-09-08, 51c855e) — 부산 Hero 자산만 OWNER ATTENTION |
 | City Hub Hero | treatment CLOSED / 부산 밝은 자산 OWNER ATTENTION (§2.B) |
-| City Hub Weather | SUPERSEDED (2026-09-09 Owner weather scope — 재OPEN 금지, §3.2) |
+| City Hub Weather | SUPERSEDED (2026-09-08 Owner weather scope — 재OPEN 금지, §3.2) |
 | My Trip Weather STAGE B | LIVE (8ec30ad, KMA 중기예보 — KEEP·확장 금지) |
 | Discovery Search consistency | CLOSED (2026-09-08, 51c855e — Explore 에 URL 문법 통일) |
 | Recommended Trip legacy route | NOT REPRODUCED (Sweep + 5도시 smoke 정상 — 변경 금지) |

@@ -75,9 +75,12 @@ export default function StorySummary({
         <p style={{ ...TITLE_MD, color: PRIMARY, letterSpacing: "0.02em", marginBottom: 24 }}>
           {data.stats}
         </p>
+        {/* 설명이 없으면 줄 자체를 그리지 않는다 — 빈 문단이 여백만 어색하게 만든다 */}
+        {data.description.trim() !== "" && (
         <p className="max-w-md" style={{ ...BODY_LG, color: ON_SURFACE_VARIANT, marginBottom: STACK_LG }}>
           {data.description}
         </p>
+        )}
 
         {/* 지도 자리 — 실제 지도는 후속 작업에서 이 안에 들어온다 */}
         {!hideMapSlot && (

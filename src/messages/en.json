@@ -453,7 +453,8 @@
     "mapOrderHint": "The dotted line links your visit order — for real directions, open a place in Naver or Google Maps.",
     "syncSaving": "Saving…",
     "syncSaved": "Saved",
-    "syncFailed": "Save failed"
+    "syncFailed": "Save failed",
+    "wholeTrip": "Whole Trip"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

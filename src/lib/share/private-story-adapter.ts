@@ -132,8 +132,12 @@ function baselineItem(dayNumber: number, idx: number, stop: StoryStopInput): Sto
  *   ① stop_key(055, sourceKey 문법)가 있으면 그것으로. 공식 장소·내 장소·행사 모두 같은 문법.
  *   ② stop_key 가 없는 옛 행은 공식 장소에 한해 city_spot_id 로(026, 검증된 기존 경로).
  * 둘 다 같은 Day 안에서만 센다 — 같은 장소를 여러 날 가면 Day 로 가른다.
+ *
+ * export 이유(TRAVEL-MEMORY-PRODUCTION-V1): Living Map 의 사진 마커가 Story 와
+ * **똑같은 결합 규칙**을 써야 한다 — 두 surface 가 다른 규칙으로 붙이면 같은
+ * 순간이 지도와 저널에서 다른 장소에 나타난다. 규칙은 여기 한 벌뿐이다.
  */
-function momentBelongsToStop(m: StoryMomentInput, stop: StoryStopInput): boolean {
+export function momentBelongsToStop(m: StoryMomentInput, stop: StoryStopInput): boolean {
   const key = stopKeyOf(stop);
   if (key === null) return false;
   const mk = s(m.stop_key);

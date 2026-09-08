@@ -179,6 +179,37 @@ export function coverFallbackUrl(api: ApiStory): string | null {
   return null;
 }
 
+/**
+ * 대표성 있는 카탈로그 cover (TRAVEL-MEMORY-PRODUCTION-V1 §9).
+ *
+ * "단순 첫 catalog image" 대신, **사용자가 실제로 기록을 남긴 장소**의 카탈로그
+ * 이미지를 우선한다 — 공개 Memory 가 가장 많이 결합된 장소가 이 여행을 가장
+ * 잘 대표한다는, 지어내지 않은 신호다. 동률이면 일정 순서가 빠른 쪽.
+ * 아무 신호가 없으면(공개 Memory 0) 첫 카탈로그 이미지가 남은 유일한 정직한
+ * 선택이라 그대로 쓴다.
+ */
+export function representativeCoverUrl(api: ApiStory): string | null {
+  const memories = api.memories ?? [];
+  const counts = new Map<string, number>();
+  for (const m of memories) {
+    if (typeof m.placeId === "string" && m.placeId !== "") {
+      counts.set(m.placeId, (counts.get(m.placeId) ?? 0) + 1);
+    }
+  }
+  let best: { img: string; count: number } | null = null;
+  for (const day of scheduledDays(api.days)) {
+    for (const raw of day.places ?? []) {
+      const place = raw as ApiPlace;
+      const img = resolveDisplayImage(str(place.image) || null);
+      if (!img) continue;
+      const pid = place.place_id;
+      const count = (typeof pid === "string" || typeof pid === "number") ? (counts.get(String(pid)) ?? 0) : 0;
+      if (!best || count > best.count) best = { img, count };
+    }
+  }
+  return best?.img ?? null;
+}
+
 /** Cover 에 쓸 사진 — 공개된 Memory 중 첫 사진. 없으면 null. */
 export function coverPhotoUrl(api: ApiStory): string | null {
   for (const m of api.memories ?? []) {

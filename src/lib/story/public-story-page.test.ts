@@ -87,8 +87,10 @@ test("Z1 Story 가 기본이고, 예전 화면은 내용 없는 여행의 fallba
   assert.match(PAGE, /if \(richStoryDays\.length > 0\)/);
   // fallback 분기의 9:16 카드는 여전히 빈 moments 를 넘긴다(넣을 것이 없다)
   assert.match(PAGE, /moments=\{\[\]\}/);
-  // 개인 사진이 없으면 카탈로그 표지로, 그것도 없으면 글자 표지로 간다
-  assert.match(PAGE, /coverPhotoUrl\(apiStory\) \?\? coverFallbackUrl\(apiStory\)/);
+  // Cover 우선순위(TRAVEL-MEMORY-PRODUCTION-V1 §9): 동의된 개인 지정 cover →
+  // 공개 Memory 첫 사진 → 대표성 있는 카탈로그(단순 첫 장 금지) → 글자 표지.
+  assert.match(PAGE, /coverKind === "personal"/);
+  assert.match(PAGE, /coverPhotoUrl\(apiStory\)\s*\?\? representativeCoverUrl\(apiStory\)/);
 });
 
 // ── Y: 예전 분기의 Copy 버튼 ─────────────────────────────────────────────────

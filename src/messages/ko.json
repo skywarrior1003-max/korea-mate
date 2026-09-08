@@ -453,7 +453,8 @@
     "mapOrderHint": "지도 위 점선은 방문 순서 연결이에요. 실제 길찾기는 장소를 눌러 Naver·Google 지도로 이동하세요.",
     "syncSaving": "저장 중…",
     "syncSaved": "저장됨",
-    "syncFailed": "저장 실패"
+    "syncFailed": "저장 실패",
+    "wholeTrip": "전체 여행"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

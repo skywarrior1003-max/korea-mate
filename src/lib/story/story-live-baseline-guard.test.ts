@@ -43,7 +43,8 @@ test("V3: 끝난 여행의 일정은 읽기 전용 — 편집·추가·완주 �
 });
 
 test("V4: Story view 는 승인된 StoryJournal/Focus 를 재사용한다", () => {
-  assert.match(page, /<StoryJournal\s+days=\{storyDays\}/);
+  // (TRAVEL-MEMORY-PRODUCTION-V1: StoryJournal 에 id(스크롤 앵커)가 앞서 붙는다)
+  assert.match(page, /<StoryJournal[\s\S]{0,120}days=\{storyDays\}/);
   assert.match(page, /<StoryMemoryFocus[\s\S]{0,160}slides=\{slides\}/);
 });
 

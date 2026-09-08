@@ -5,6 +5,8 @@ import JourneyCoach from "@/components/JourneyCoach";
 import { useSearchParams, useRouter } from "next/navigation";
 // TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
 import StoryJournal from "@/components/story/StoryJournal";
+import StoryCover from "@/components/story/StoryCover";
+import StorySummary from "@/components/story/StorySummary";
 import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
 import { buildFocusSequence, findSlideIndex } from "@/lib/share/story-focus-core";
 import type { StoryMemory } from "@/components/story/story-types";
@@ -1303,6 +1305,14 @@ function ItineraryResult() {
     const d = days[dayIdx]; const p = d?.places[placeIdx];
     if (!d || !p) return;
     setSelectedPlace(p); setSelectedPlaceDay(d.dayNumber);
+  };
+  // Living Map STOP 시트의 Add Photo — 기존 순간 캡처 흐름을 그 stop 결합으로 연다.
+  // 전체화면 지도(z-70) 위에서는 캡처 모달(z-50)이 가려지므로 지도를 먼저 닫는다.
+  const handleMapAddPhoto = (dayNumber: number, stop: { placeName: string; citySpotId: number | null; stopKey: string | null }) => {
+    if (mapFull) closeMapFull();
+    setCaptureDay(dayNumber);
+    setCaptureStop(stop);
+    setCaptureOpen(true);
   };
   /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
   // 지도는 늘 보인다 — "지도 닫기" 대신 전체화면(overlay)만 있다 (OWNER-UX-CORRECTION-V1 #5)
@@ -3022,11 +3032,52 @@ function ItineraryResult() {
             )}
           </div>
           {storyDays.length > 0 ? (
-            <StoryJournal
-              days={storyDays}
-              onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
-              onPhotoError={(m) => handlePhotoError(m.id)}
-            />
+            (() => {
+              // Cover — 소유자 데이터의 첫 사진(순간이 있으면 순간, 없으면 카탈로그).
+              // 공개 Story 와 같은 언어의 몰입형 표지. 사진이 하나도 없으면 표지를
+              // 그리지 않는다 — 빈 이미지 상자를 만들지 않는다.
+              const coverUrl = storyDays.flatMap(d => d.memories).flatMap(m => m.photos)[0]?.url ?? null;
+              const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), city].filter(Boolean).join(" · ");
+              const storyTitle = tripTitle.trim() || `${days.length}-Day ${city.charAt(0).toUpperCase() + city.slice(1)} Trip`;
+              const placeTotal = days.reduce((n, d) => n + d.places.length, 0);
+              return (
+                <>
+                  {coverUrl && (
+                    <StoryCover
+                      scrollHint="owner-story-journal"
+                      data={{ imageUrl: coverUrl, eyebrow, title: storyTitle }}
+                    />
+                  )}
+                  <StoryJournal
+                    id="owner-story-journal"
+                    days={storyDays}
+                    onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
+                    onPhotoError={(m) => handlePhotoError(m.id)}
+                  />
+                  {/* Journey Summary + map context — Living Map 전체 여정을 작게.
+                      새 지도가 아니라 같은 Living Map 의 읽기 전용 Whole Trip 이다(§12). */}
+                  <StorySummary
+                    data={{ title: storyTitle, stats: `${days.length} Days · ${placeTotal} Places`, description: "" }}
+                    copyLabel=""
+                    shareLabel=""
+                    mapSlot={
+                      <div className="w-full h-full">
+                        <ItineraryDayMap
+                          days={days}
+                          city={city}
+                          selectedDay={0}
+                          onSelectDay={() => {}}
+                          showDayTabs={false}
+                          mapHeight={256}
+                          variant="context"
+                          moments={displayMoments}
+                        />
+                      </div>
+                    }
+                  />
+                </>
+              );
+            })()
           ) : (
             /* 진행 중인데 아직 지난 장소가 없다. 미래 장소를 미리 넣지 않는다. */
             <p className="px-6 py-16 text-center text-sm text-sub font-medium">{t("storyEmptyLive")}</p>
@@ -3532,6 +3583,8 @@ function ItineraryResult() {
               onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
               onStopClick={openStopFromMap}
               showDayTabs={false}
+              moments={displayMoments}
+              onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
             />
           )}
           {days.filter(day => day.dayNumber === clampDay(days.length, plannerDay)).map((day) => {
@@ -3822,6 +3875,7 @@ function ItineraryResult() {
             <StoryMemoryFocus
               slides={slides}
               startIndex={findSlideIndex(slides, storyFocus.m, storyFocus.i)}
+              regionLabel={`${city.charAt(0).toUpperCase() + city.slice(1)}, South Korea`}
               onClose={() => setStoryFocus(null)}
             />
           );
@@ -3928,6 +3982,8 @@ function ItineraryResult() {
               onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
               onStopClick={openStopFromMap}
               mapHeight="62vh"
+              moments={displayMoments}
+              onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
             />
           </div>
         </div>

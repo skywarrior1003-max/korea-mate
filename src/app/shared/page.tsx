@@ -31,7 +31,7 @@ import StorySummary from "@/components/story/StorySummary";
 import { PAGE_BG } from "@/components/story/story-tokens";
 import type { StoryMemory } from "@/components/story/story-types";
 import {
-  toStoryDays, coverPhotoUrl, coverFallbackUrl, coverEyebrow, storyStats,
+  toStoryDays, coverPhotoUrl, representativeCoverUrl, coverEyebrow, storyStats,
   toStoryCardMoments, publicStoryUrl,
   type ApiStory,
 } from "@/lib/share/story-adapter";
@@ -373,7 +373,16 @@ export default function SharedTripPage() {
   const richStoryDays = toStoryDays(apiStory);
   if (richStoryDays.length > 0) {
     const storyDays = richStoryDays;
-    const cover     = coverPhotoUrl(apiStory) ?? coverFallbackUrl(apiStory);
+    // Cover 우선순위 (TRAVEL-MEMORY-PRODUCTION-V1 §9)
+    //   ① 소유자가 지정하고 동의한 개인 cover(kind=personal) — 프록시가 매 요청
+    //      공개·동의를 재검증하므로 여기서는 주소만 만든다
+    //   ② 공개된 Memory 의 첫 사진
+    //   ③ 대표성 있는 카탈로그 이미지(공개 기록이 가장 많은 장소 — 단순 첫 장 금지)
+    //   ④ 아무것도 없으면 글자 표지
+    const cover =
+      (coverKind === "personal" ? `/img/trip-cover/${encodeURIComponent(trip.id)}?v=${encodeURIComponent(trip.updated_at ?? "0")}` : null)
+      ?? coverPhotoUrl(apiStory)
+      ?? representativeCoverUrl(apiStory);
     const stats     = storyStats(apiStory);
     const title     = trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`;
 
@@ -474,6 +483,7 @@ export default function SharedTripPage() {
                들어가는 것은 이미 공개 serializer 를 통과한 storyDays 뿐이다. */
             slides={buildFocusSequence(storyDays)}
             startIndex={findSlideIndex(buildFocusSequence(storyDays), storyFocus.m, storyFocus.i)}
+            regionLabel={`${cityCap}, South Korea`}
             onClose={() => setStoryFocus(null)}
           />
         )}

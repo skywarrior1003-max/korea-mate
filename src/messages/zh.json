@@ -453,7 +453,8 @@
     "mapOrderHint": "虚线表示游览顺序。实际导航请打开地点并使用 Naver 或 Google 地图。",
     "syncSaving": "保存中…",
     "syncSaved": "已保存",
-    "syncFailed": "保存失败"
+    "syncFailed": "保存失败",
+    "wholeTrip": "全程"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",

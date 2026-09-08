@@ -56,23 +56,41 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
   }, [total, slides]);
 
   // 열려 있는 동안 뒤 화면이 스크롤되지 않게 한다. Esc·뒤로가기로도 닫힌다.
+  //
+  // 뒤로가기 계약(TRAVEL-MEMORY-PRODUCTION-V1): 열릴 때 history 항목을 하나
+  // 쌓는다 — 예전에는 항목 없이 popstate 만 들었는데, 그러면 휴대폰 뒤로가기가
+  // Focus 를 닫는 동시에 Story 페이지 자체를 떠났다(전체화면 지도와 같은 문제).
+  // ✕/Esc 는 그 항목을 되감아 같은 경로로 닫는다 — 스택이 깨끗하게 남는다.
+  const pushedRef = useRef(false);
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    try { window.history.pushState({ gkmStoryFocus: true }, ""); pushedRef.current = true; } catch { pushedRef.current = false; }
+    const close = () => {
+      if (pushedRef.current) { pushedRef.current = false; window.history.back(); return; }
+      onClose();
+    };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape")     onClose();
+      if (e.key === "Escape")     close();
       if (e.key === "ArrowLeft")  go(-1);
       if (e.key === "ArrowRight") go(1);
     };
-    const onPop = () => onClose();
+    const onPop = () => { pushedRef.current = false; onClose(); };
     window.addEventListener("keydown", onKey);
     window.addEventListener("popstate", onPop);
     return () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("popstate", onPop);
+      // 언마운트가 ✕/뒤로가기가 아닌 경로(부모 상태 변화)로 왔다면 항목을 되감는다
+      if (pushedRef.current) { pushedRef.current = false; try { window.history.back(); } catch { /* noop */ } }
     };
   }, [onClose, go]);
+
+  const requestClose = useCallback(() => {
+    if (pushedRef.current) { pushedRef.current = false; window.history.back(); return; }
+    onClose();
+  }, [onClose]);
 
   if (total === 0) return null;
   const current = slides[i]!;
@@ -137,7 +155,7 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
           </div>
           <div className="flex justify-between items-center w-full max-w-2xl mx-auto">
             <button
-              type="button" onClick={onClose} aria-label="close"
+              type="button" onClick={requestClose} aria-label="close"
               className="w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-lg gkm-focus"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden fill="none"
