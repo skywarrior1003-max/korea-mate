@@ -137,3 +137,12 @@ Owner 가 현재 Production 에서 관찰한 상태(원인 미확정 — 판정 
 7. My Trip weather 현재 실제 화면
 8. My Trip weather 가 정상 연결/표현되는지
 9. City Hub 와 My Trip weather 역할이 충돌하지 않는지
+
+---
+
+## 현재 상태의 authoritative summary (2026-09-08 이후)
+
+이 문서의 본선 ①~⑥ 은 CLOSED 된 **역사적 Work Order** 로 유지된다. 앞으로
+**현재 제품 상태/Acceptance 기준을 판단하는 authoritative summary 는**
+`docs/product/gokoreamate-current-product-acceptance-ssot-v1.md` 다
+(TASK-GOKOREAMATE-CURRENT-PRODUCT-ACCEPTANCE-SSOT-V1, 2026-09-08).
