@@ -3037,7 +3037,7 @@ function ItineraryResult() {
               // 공개 Story 와 같은 언어의 몰입형 표지. 사진이 하나도 없으면 표지를
               // 그리지 않는다 — 빈 이미지 상자를 만들지 않는다.
               const coverUrl = storyDays.flatMap(d => d.memories).flatMap(m => m.photos)[0]?.url ?? null;
-              const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), city].filter(Boolean).join(" · ");
+              const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), city.charAt(0).toUpperCase() + city.slice(1)].filter(Boolean).join(" · ");
               const storyTitle = tripTitle.trim() || `${days.length}-Day ${city.charAt(0).toUpperCase() + city.slice(1)} Trip`;
               const placeTotal = days.reduce((n, d) => n + d.places.length, 0);
               return (

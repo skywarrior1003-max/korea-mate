@@ -183,9 +183,13 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
           className="absolute inset-y-0 right-0 w-1/3 z-10 cursor-pointer disabled:cursor-default"
         />
 
-        {/* 아래 — 지역칩 · 장소명 · 인용 · SWIPE */}
+        {/* 아래 — 지역칩 · 장소명 · 인용 · SWIPE
+            pointer-events-none: 이 블록은 z-20 이라 그 아래 좌우 탭 버튼(z-10)을
+            가린다 — 메모가 길수록 화면 아래 절반의 탭이 죽는다(2026-09-08 실측).
+            읽기 전용 캡션이므로 터치를 통과시키고, 스크롤이 필요한 인용문만
+            pointer-events 를 되살린다. 스와이프는 루트 핸들러라 영향 없다. */}
         <div
-          className="relative z-20 w-full max-w-2xl mx-auto"
+          className="relative z-20 w-full max-w-2xl mx-auto pointer-events-none"
           style={{ paddingLeft: MARGIN_MOBILE, paddingRight: MARGIN_MOBILE, paddingBottom: 48 }}
           aria-live="polite"
         >
@@ -210,7 +214,7 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
             {/* 적은 글이 없으면 빈 제목 칸을 만들지 않는다 — Journal 과 같은 규칙 */}
             {hasMemo && (
             <h1
-              className="text-white leading-tight overflow-y-auto"
+              className="text-white leading-tight overflow-y-auto pointer-events-auto"
               /* 줄간격 1.25 — 시안이 leading-tight 를 얹어 48px×1.25 = 60px 로 렌더한다 */
               style={{ ...DISPLAY_MEMORY, lineHeight: 1.25, maxHeight: "45vh" }}
             >
