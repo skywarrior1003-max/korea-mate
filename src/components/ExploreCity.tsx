@@ -540,7 +540,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
              style={{ backgroundColor: "var(--gkm-action-tint)" }}>
           <div className="min-w-0">
             <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
-              {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("sharedOpenCta")}
+              {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("urlOpenShared")}
             </p>
             <p className="text-[11px] text-gray-500 truncate">
               {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}
@@ -821,7 +821,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                      style={{ backgroundColor: "var(--gkm-action-tint)" }}>
                   <div className="min-w-0">
                     <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
-                      {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("sharedOpenCta")}
+                      {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("urlOpenShared")}
                     </p>
                     <p className="text-[11px] text-gray-500 truncate">
                       {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}

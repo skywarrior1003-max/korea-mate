@@ -93,18 +93,27 @@ Golden Path 에서 실제로 폐관 이후 박물관/사찰 등이 일정에 배
 Golden Path 의 실제 위반 장소(석당박물관·용궁사)는 opening_hours NULL(UNKNOWN)이라
 계약상 계속 배치 가능 — 이들을 막으려면 별도 Owner 승인 데이터 태스크가 필요하다.
 
-### B. City Hub final visual — AUDIT REQUIRED
-Owner 판단: Home 의 warm/nostalgic/답답한 분위기가 City Hub 까지 이어진다.
-과거 Blue normalization 완료보고만으로 현재 visual acceptance 를 CLOSED 처리하지
-않는다. → §4.
+### B. City Hub final visual — CLOSED (2026-09-08, master 51c855e)
+DISCOVERY-EXPLORE-PRODUCTION-V1 로 디자인 SSOT
+(`docs/design/discovery-explore-final-v1.md`) Blue/Fresh 계약 구현:
+로컬 Fresh 팔레트(paper #F5F8FC) · 히어로 white-up 그라데이션 · blue eyebrow ·
+warm 잔재 치환 · navy Explore CTA. → §4.
+잔여 OWNER ATTENTION: **부산 Hero 사진 자산** — Hub 가 Home 과 같은
+`city-busan-hero.jpg`(warm 석양) 를 쓴다. treatment 는 밝게 교체했으나 밝은
+분위기의 승인 자산이 저장소에 없어(발명 금지) 사진 자체는 그대로다.
+밝은 부산 자산은 Owner 제공/승인 후 별도 태스크.
 
-### C. City Hub Weather — NOT CURRENTLY IMPLEMENTED
-2026-09-08 actual repo audit: City Hub 에 weather UI 없음. 최신 Owner 계약 → §3.
+### C. City Hub Weather — SUPERSEDED (재OPEN 금지)
+2026-09-08 actual repo audit 당시 "NOT CURRENTLY IMPLEMENTED / 최신 Owner 계약
+→ §3" 이었으나, **2026-09-09 Owner weather scope 결정으로 SUPERSEDED**:
+중기예보(My Trip Day 예보 칩, §3.5)만으로 충분하다. City Hub 현재기온 칩은
+구현하지 않으며, 단기/초단기 API 추가·KMA 활용신청·새 provider 도입을 이유로
+**이 항목을 다시 OPEN 으로 만들지 않는다.** → §3.2 SUPERSEDED 주석.
 
-### D. My Trip Weather — KEEP / STAGE A
-기능은 존재하나 실제 forecast/기온 연결 없음. `WeatherLinkChip` STAGE A —
-`날씨 보기` 표기, weather.go.kr 공통 홈 링크(도시별 아님). **삭제 금지.**
-연결 상태 audit/implementation 필요. → §3.
+### D. My Trip Weather — KEEP / STAGE B LIVE (2026-09-08, master 8ec30ad)
+공공데이터 KMA 중기예보(MidFcstInfoService) 로 My Trip Day 예보 칩 LIVE —
+5도시 regId, taMin/taMax + wf, 제공 창(+4~+10일) 밖은 정직하게 미표시.
+**삭제 금지 · 축소 금지.** 현재기온(초단기실황)은 Owner 결정으로 범위 밖. → §3.
 
 ### E. Living Map — AUDIT REQUIRED
 과거 final design/계약 존재. 현재 Production 의 실제 최종 구현 여부는 미확정.
@@ -138,7 +147,14 @@ TASK-GOKOREAMATE-WEATHER-PRODUCT-CONTRACT-RECORD-V1 실측:
   기온을 지어내지 않는 정직한 link-only 단계. 표기는 `날씨 보기`, 링크는
   weather.go.kr **공통 홈**(city-specific destination 아님).
 
-### 3.2 City Hub Weather — 최신 Owner 계약
+### 3.2 City Hub Weather — SUPERSEDED (원문 보존)
+
+> **SUPERSEDED — 2026-09-09 Owner weather scope 결정.** 아래 원문(당시 Owner
+> 계약)은 기록으로 보존하되 더 이상 요구사항이 아니다. Owner 최신 결정:
+> **"중기예보만으로 충분하다."** City Hub 현재기온 칩은 구현하지 않는다.
+> 단기예보/초단기실황 API 추가 금지 · KMA 활용신청 요구 금지 · 새 weather
+> provider 도입 금지 · My Trip Weather(§3.5, LIVE) 변경 금지. 가짜 현재온도
+> 표시는 어떤 경우에도 금지. **이 항목을 다시 OPEN 으로 만들지 않는다.**
 
 City Hub 에 작고 조용한 weather utility 를 제공한다. 표현 수준은 `☀️ 26°C` 정도.
 
@@ -170,9 +186,12 @@ weather 로 대체 금지 · City Hub 추가를 이유로 축소 금지.
 - City Hub Weather = 여행지를 **탐색**할 때 보는 도시 weather utility.
 - My Trip Weather = 사용자가 만든 **Trip/Day 문맥**에서 보는 날씨.
 
-현재 My Trip Weather 는 STAGE A / generic weather.go.kr link 상태다. 후속 audit
-에서 과거 승인 weather-before/after 디자인 + git history + 현재 코드 + Production
-을 비교해 원래 intended destination/data 연결을 확인한다.
+(갱신 2026-09-08) My Trip Weather 는 **STAGE B LIVE** — 공공데이터 KMA
+중기예보(MidFcstInfoService, Owner 확정 provider) 로 Day 예보 칩(최저/최고 +
+하늘상태 glyph) 이 Production 에 연결되었다(master 8ec30ad). 제공 창(발표 기준
++4~+10일) 밖 날짜는 지어내지 않고 미표시. 2026-09-09 Owner weather scope 결정:
+**여기까지가 weather 의 전부다** — 추가 확장(단기/초단기·현재기온·새 provider)
+금지, 이 기능 자체는 KEEP(삭제/축소 금지).
 
 ## 4. CITY HUB — 최신 visual 계약
 
@@ -183,12 +202,12 @@ weather 로 대체 금지 · City Hub 추가를 이유로 축소 금지.
   시원함 · 산뜻함 · **Blue family** · 밝고 깨끗한 surface · photography 유지 ·
   clear hierarchy · start/exploration energy.
 
-현재 Owner 관찰: Production City Hub 에 Home 의 warm/nostalgic background 느낌이
-너무 남아 있어 답답하다. → **VISUAL AUDIT REQUIRED.**
-단순히 CTA/버튼만 파랗게 만드는 것으로 완료 처리 금지.
-
-Audit 대상: first viewport · page background · hero treatment · card surfaces ·
-section hierarchy · blue usage · Home→City Hub 전환감 · 5도시 consistency.
+(갱신 2026-09-08) 위 계약은 DISCOVERY-EXPLORE-PRODUCTION-V1(master 51c855e) 로
+구현 완료 — page background Fresh #F5F8FC · 히어로 하단 white-up 그라데이션(어두운
+바닥 scrim 제거) · blue eyebrow 헤딩 · cool line/ink 토큰 치환 · navy Explore CTA ·
+5도시 동일 컴포넌트라 consistency 자동 확보. 상세 계약은
+`docs/design/discovery-explore-final-v1.md` §4 가 기준.
+잔여: 부산 Hero 사진 자산 교체(§2.B OWNER ATTENTION — 승인 자산 대기).
 
 ## 5. LIVING MAP — 최신 Owner 계약
 
@@ -582,20 +601,21 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Golden Path functional loop | PASS |
 | HC-2 engine | CLOSED (2026-09-08, c4c8ab4) |
 | Opening-hours data coverage | KNOWN GAP / NOT CURRENT PRIORITY |
-| City Hub final visual | OPEN |
-| City Hub Hero | OPEN |
-| City Hub Weather | OPEN |
-| My Trip Weather STAGE B | OPEN (KEEP — 삭제/대체 금지) |
-| Discovery Search consistency | OPEN |
-| Recommended Trip legacy route | **HIGH-PRIORITY DEFECT** |
-| Essentials preview diversity | OPEN |
-| Mobile Header/Nav | AUDIT REQUIRED |
-| Explore Map mobile viewport | OPEN |
-| Explore Map Bottom Sheet | OPEN |
-| Explore Full Map selection | **DEFECT** |
-| Explore current-location indicator | OPEN |
-| Explore recenter | OPEN |
-| Explore label collision | OPEN |
+| City Hub final visual | CLOSED (2026-09-08, 51c855e) — 부산 Hero 자산만 OWNER ATTENTION |
+| City Hub Hero | treatment CLOSED / 부산 밝은 자산 OWNER ATTENTION (§2.B) |
+| City Hub Weather | SUPERSEDED (2026-09-09 Owner weather scope — 재OPEN 금지, §3.2) |
+| My Trip Weather STAGE B | LIVE (8ec30ad, KMA 중기예보 — KEEP·확장 금지) |
+| Discovery Search consistency | CLOSED (2026-09-08, 51c855e — Explore 에 URL 문법 통일) |
+| Recommended Trip legacy route | NOT REPRODUCED (Sweep + 5도시 smoke 정상 — 변경 금지) |
+| Essentials preview diversity | CLOSED (2026-09-08, 51c855e) — luggage/eSIM 은 DATA LIMITATION(발명 금지) |
+| Mobile Header/Nav | CLOSED (2026-09-08, 51c855e — briefcase 제거·My Trips 언어 스위처) |
+| Explore Map mobile viewport | CLOSED (2026-09-08, 51c855e — compact 상단) |
+| Explore Map Bottom Sheet | CLOSED (2026-09-08, 51c855e — Peek/Half/Full) |
+| Explore Full Map selection | FIXED / CLOSED (2026-09-08, 51c855e) |
+| Explore Full Map back/history | FIXED / CLOSED (2026-09-08, 51c855e — back 은 Full Map 만 닫음) |
+| Explore current-location indicator | CLOSED (2026-09-08, 51c855e — blue pulse) |
+| Explore recenter | CLOSED (2026-09-08, 51c855e) |
+| Explore label collision | CLOSED best-effort (2026-09-08, 51c855e — 라벨 상한 5+선택) |
 | Living Map final | PARTIAL / OPEN |
 | Story visual fidelity | PARTIAL / OPEN |
 | Focus | NOT IMPLEMENTED / OPEN |
