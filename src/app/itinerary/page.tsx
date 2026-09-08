@@ -34,7 +34,7 @@ import CoverConsentDialog from "@/components/CoverConsentDialog";
 import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { placeToUnplacedCartEvent, isUnplaceable } from "@/lib/planner/unplace-core";
 import { pickL10n } from "@/lib/place-display-name";
-import WeatherLinkChip from "@/components/planner/WeatherLinkChip";
+import WeatherLinkChip, { type DayForecast } from "@/components/planner/WeatherLinkChip";
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import AiWritingAssist from "@/components/AiWritingAssist";
@@ -1331,6 +1331,31 @@ function ItineraryResult() {
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
   // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
   const [plannerDay,    setPlannerDay]    = useState(1);
+  // STAGE B — Day 별 중기예보(공공데이터 KMA). date → forecast. 제공 창(+4~+10일)
+  // 밖이거나 실패한 날짜는 그냥 없다 — 칩이 기존 링크 표기로 남는다(가짜 기온 금지).
+  const [dayForecasts, setDayForecasts] = useState<Record<string, DayForecast>>({});
+
+  useEffect(() => {
+    const slug = (city ?? "").toLowerCase().trim();
+    const dates = [...new Set(days.map(d => d.date).filter(Boolean))] as string[];
+    if (!slug || dates.length === 0) { setDayForecasts({}); return; }
+    let alive = true;
+    (async () => {
+      const out: Record<string, DayForecast> = {};
+      await Promise.all(dates.map(async (date) => {
+        try {
+          const r = await fetch(`/api/weather/mid?city=${encodeURIComponent(slug)}&date=${encodeURIComponent(date)}`);
+          if (!r.ok) return;
+          const j = await r.json() as { available?: boolean; taMin?: number; taMax?: number; icon?: DayForecast["icon"] };
+          if (j.available && typeof j.taMin === "number" && typeof j.taMax === "number" && j.icon) {
+            out[date] = { taMin: j.taMin, taMax: j.taMax, icon: j.icon };
+          }
+        } catch { /* 무해 실패 — 칩은 STAGE A 표기 유지 */ }
+      }));
+      if (alive) setDayForecasts(out);
+    })();
+    return () => { alive = false; };
+  }, [city, days]);
   const [visited,       setVisited]       = useState<Set<string>>(new Set()); // S2: 로컬 방문 체크 (DB 무변경)
   // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
   // 초기값은 첫 렌더의 tripCity(=paramCity와 동일)로 읽고, 재오픈 로드가 city 를
@@ -3081,6 +3106,7 @@ function ItineraryResult() {
               days={days.map(d => ({ dayNumber: d.dayNumber, dateLabel: formatDayChipDate(d.date, locale), placeCount: d.places.length }))}
               currentDay={clampDay(days.length, editDay + 1)}
               onSelectDay={(n) => { setEditDay(clampDay(days.length, n) - 1); setMoveOpenIdx(null); }}
+              forecast={dayForecasts[days[editDay]?.date ?? ""] ?? null}
               labels={{
                 dayOfTotal:    tPlanner("dayOfTotal", { n: editDay + 1, total: days.length }),
                 dayTabList:    tPlanner("dayTabList"),
@@ -3326,8 +3352,8 @@ function ItineraryResult() {
                   <h2 className="gkm-trip-headline text-xl font-bold text-ink leading-tight">{tPlanner("execToday")}</h2>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  {/* 날씨: 이 저장소에는 실제 예보 source(KMA 연동·API key)가 없다 — Planning 과 같은 기상청 링크 칩만. 가짜 기온 금지 */}
-                  <WeatherLinkChip label={tPlanner("weather")} ariaLabel={tPlanner("weatherAria")} />
+                  {/* STAGE B: 공공데이터 KMA 중기예보 — 이 Day 가 제공 창 안이면 실제 최저/최고. 밖이면 기존 링크 칩(가짜 기온 금지) */}
+                  <WeatherLinkChip label={tPlanner("weather")} ariaLabel={tPlanner("weatherAria")} forecast={dayForecasts[day.date ?? ""] ?? null} />
                   <button
                     type="button"
                     onClick={() => setExecEntry(null)}
@@ -3479,6 +3505,7 @@ function ItineraryResult() {
                 }))}
                 currentDay={currentDay}
                 onSelectDay={selectDay}
+                forecast={dayForecasts[days[currentDay - 1]?.date ?? ""] ?? null}
                 labels={{
                   dayOfTotal:    tPlanner("dayOfTotal", { n: currentDay, total: days.length }),
                   dayTabList:    tPlanner("dayTabList"),

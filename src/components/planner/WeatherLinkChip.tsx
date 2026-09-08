@@ -18,15 +18,42 @@
 
 const KMA_OFFICIAL_URL = "https://www.weather.go.kr/w/index.do";
 
+/** STAGE B — 중기예보(공공데이터 KMA) 일자별 값. 코어의 아이콘 어휘를 그대로 쓴다. */
+export interface DayForecast {
+  taMin: number;
+  taMax: number;
+  icon: "sun" | "cloud" | "overcast" | "rain" | "snow";
+}
+
 interface Props {
-  /** "날씨 보기" 등 locale 문구 */
+  /** "날씨 보기" 등 locale 문구 — forecast 없을 때(STAGE A)의 표기 */
   label: string;
   /** 외부 링크임을 알리는 접근성 문구 */
   ariaLabel: string;
+  /**
+   * STAGE B: 이 Day 의 중기예보. 있으면 "16 / 27°C" + 날씨 아이콘으로 표기한다.
+   * 없으면(제공 창 밖·API 실패) 기존 STAGE A 링크 표기 그대로 — 값을 지어내지 않는다.
+   */
+  forecast?: DayForecast | null;
   className?: string;
 }
 
-export default function WeatherLinkChip({ label, ariaLabel, className }: Props) {
+/** 예보 아이콘 — emoji 대신 stroke SVG(디자인 SSOT의 quiet 아이콘 규칙). */
+function WxGlyph({ icon }: { icon: DayForecast["icon"] }) {
+  const common = { width: 16, height: 16, viewBox: "0 0 24 24", fill: "none" as const, "aria-hidden": true,
+    stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (icon === "sun") return (
+    <svg {...common}><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7" /></svg>);
+  if (icon === "rain") return (
+    <svg {...common}><path d="M7 15h9.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 6.6 7.2 3.9 3.9 0 0 0 7 15z" /><path d="M8.5 18l-1 2.4M12.5 18l-1 2.4M16.5 18l-1 2.4" /></svg>);
+  if (icon === "snow") return (
+    <svg {...common}><path d="M7 14h9.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 6.6 6.2 3.9 3.9 0 0 0 7 14z" /><path d="M9 17.5v.01M12.5 19v.01M16 17.5v.01" strokeWidth="2.6" /></svg>);
+  // cloud · overcast — overcast 는 살짝 두꺼운 구름 한 겹 추가
+  return (
+    <svg {...common}><path d="M7 18h9.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 6.6 10.2 3.9 3.9 0 0 0 7 18z" />{icon === "overcast" ? <path d="M9 7.2a4.6 4.6 0 0 1 7.4 1.4" opacity=".6" /> : null}</svg>);
+}
+
+export default function WeatherLinkChip({ label, ariaLabel, forecast = null, className }: Props) {
   return (
     <a
       href={KMA_OFFICIAL_URL}
@@ -40,12 +67,22 @@ export default function WeatherLinkChip({ label, ariaLabel, className }: Props) 
       }
       style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}
     >
-      {/* 구름 — 실제 예보가 아니므로 특정 날씨를 뜻하지 않는 중립 아이콘 */}
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden
-           stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M7 18h9.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 6.6 10.2 3.9 3.9 0 0 0 7 18z" />
-      </svg>
-      <span className="whitespace-nowrap">{label}</span>
+      {forecast ? (
+        <>
+          {/* STAGE B — 그 날짜의 실제 중기예보(최저/최고). 공식 API 값 그대로다. */}
+          <WxGlyph icon={forecast.icon} />
+          <span className="whitespace-nowrap tabular-nums">{forecast.taMin} / {forecast.taMax}°C</span>
+        </>
+      ) : (
+        <>
+          {/* 구름 — 실제 예보가 아니므로 특정 날씨를 뜻하지 않는 중립 아이콘 */}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden
+               stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 18h9.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 6.6 10.2 3.9 3.9 0 0 0 7 18z" />
+          </svg>
+          <span className="whitespace-nowrap">{label}</span>
+        </>
+      )}
       {/* 외부 링크 표시 */}
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0 opacity-70"
            stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

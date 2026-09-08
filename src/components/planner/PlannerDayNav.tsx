@@ -11,9 +11,11 @@
 import { useEffect, useRef, useState } from "react";
 import { dayWindow, canStep, stepDay, swipeIntent } from "@/lib/planner/day-window-core";
 import DaySelectorDialog, { type DayOption } from "./DaySelectorDialog";
-import WeatherLinkChip from "./WeatherLinkChip";
+import WeatherLinkChip, { type DayForecast } from "./WeatherLinkChip";
 
 interface Props {
+  /** STAGE B — 현재 선택된 Day 의 중기예보(없으면 기존 링크 표기). */
+  forecast?: DayForecast | null;
   days: DayOption[];
   currentDay: number;
   onSelectDay: (dayNumber: number) => void;
@@ -31,7 +33,7 @@ interface Props {
   };
 }
 
-export default function PlannerDayNav({ days, currentDay, onSelectDay, labels }: Props) {
+export default function PlannerDayNav({ days, currentDay, onSelectDay, labels, forecast = null }: Props) {
   const total = days.length;
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -116,7 +118,7 @@ export default function PlannerDayNav({ days, currentDay, onSelectDay, labels }:
           </svg>
         </button>
 
-        <WeatherLinkChip label={labels.weather} ariaLabel={labels.weatherAria} />
+        <WeatherLinkChip label={labels.weather} ariaLabel={labels.weatherAria} forecast={forecast} />
       </div>
 
       {/* ── 날짜 3개 — 폭을 균등 분할해 전부 완전히 보이게 한다 ── */}
