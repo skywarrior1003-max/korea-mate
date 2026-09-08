@@ -86,8 +86,12 @@ Story → Share → Shared Story → + My Trip — 핵심 기능 루프를 실�
 
 아래를 CLOSED 로 추정하면 안 된다.
 
-### A. Planner Opening Hours HC-2 — OPEN
-Golden Path 에서 실제로 폐관 이후 박물관/사찰 등이 일정에 배치됨. → §9.
+### A. Planner Opening Hours HC-2 — CLOSED (2026-09-08, master c4c8ab4)
+Golden Path 에서 실제로 폐관 이후 박물관/사찰 등이 일정에 배치됨 → HC2-PRODUCTION-V1
+로 KNOWN structured hours 를 엔진 feasibility 에 실적용하고 Production QA PASS. → §9.
+잔여 사실(데이터): structured hours 는 busan 17·gyeongju 47·seoul 531 = 595곳이며,
+Golden Path 의 실제 위반 장소(석당박물관·용궁사)는 opening_hours NULL(UNKNOWN)이라
+계약상 계속 배치 가능 — 이들을 막으려면 별도 Owner 승인 데이터 태스크가 필요하다.
 
 ### B. City Hub final visual — AUDIT REQUIRED
 Owner 판단: Home 의 warm/nostalgic/답답한 분위기가 City Hub 까지 이어진다.
@@ -293,7 +297,7 @@ accept/use signal 같은 **비식별** 품질 신호 활용을 검토한다. 초
 `locale-specific owner-approved / high-acceptance example bank` 방식부터 검토
 가능. **private photo / private memo 를 몰래 training data 화하지 않는다.**
 
-## 9. PLANNER OPENING HOURS / HC-2 — OPEN
+## 9. PLANNER OPENING HOURS / HC-2 — CLOSED (2026-09-08)
 
 Golden Path 실측 문제: 폐관 시간 뒤에 박물관/사찰 등 일정 배치 발생.
 
@@ -307,6 +311,13 @@ closeout 재개.
 - UNKNOWN → 거짓으로 open 이라고 보장하지 않되, 현재 fallback 계약 유지.
 
 **HC-2 완료보고 전 전체 Launch Acceptance CLOSED 선언 금지.**
+
+완료 기록(2026-09-08, TASK-GOKOREAMATE-PLANNER-OPENING-HOURS-HC2-PRODUCTION-V1,
+master `c4c8ab4`): KNOWN {open,close} 를 후보·This Trip 픽에 부착해 엔진 후보
+루프(점수 산정 전 — AI 가중치가 못 이김)와 reorder 재계산에 적용, Fixed 는
+운영시간 밖이면 전용 4-locale 고지(fixedHoursTitle)로 분리. UNKNOWN/malformed
+는 추측 없이 기존 fallback. Busan PRIMARY 3 runs + 5도시 회귀 + Seoul KNOWN
+검증 전부 Production 실브라우저 PASS.
 
 ## 10. CURRENT APPROVED WORK SEQUENCE
 
@@ -374,7 +385,7 @@ closeout 재개.
 | + My Trip | LIVE / CLOSED |
 | Blog / Events / Essentials | LIVE / CLOSED |
 | Golden Path functional loop | PASS |
-| Planner Opening Hours HC-2 | OPEN |
+| Planner Opening Hours HC-2 | CLOSED (2026-09-08, c4c8ab4 — KNOWN 595곳 적용·UNKNOWN fallback 유지) |
 | City Hub final visual | AUDIT REQUIRED |
 | City Hub Weather | NOT CURRENTLY IMPLEMENTED / OWNER CONTRACT CONFIRMED |
 | My Trip Weather | KEEP / STAGE A / CONNECTION AUDIT REQUIRED |
