@@ -111,6 +111,10 @@ interface Props {
    * 없고 번호 마커가 이미 순서를 말하고 있어 클러스터가 방해만 된다.
    */
   clusterZoomLabels?: boolean;
+  /** Recenter 명령 — seq 가 바뀔 때마다 해당 좌표로 이동한다(DISCOVERY-EXPLORE-PRODUCTION-V1). */
+  centerCommand?: { lat: number; lng: number; zoom?: number; seq: number } | null;
+  /** 지도 빈 곳 탭 — Bottom Sheet 를 Peek/닫기로 되돌리는 용도. 마커 클릭에는 오지 않는다. */
+  onBackgroundClick?: () => void;
 }
 
 // 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
@@ -193,6 +197,8 @@ export default function NaverMap({
   hideInfoWindow,
   selectedKey,
   clusterZoomLabels,
+  centerCommand,
+  onBackgroundClick,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
@@ -316,11 +322,17 @@ export default function NaverMap({
       markersRef.current.push(marker);
     }
 
-    // 개별 장소 마커 (+ 충분히 확대됐으면 이름 pill)
+    // 개별 장소 마커 (+ 충분히 확대됐으면 이름 pill — 상한 5 + selected)
+    let labeledCount = 0;
     for (const spot of plan.singles) {
       const color = CATEGORY_COLOR[spot.category] ?? "#1a1a2e";
       const key = spotKey(spot);
-      const label = plan.showLabels ? labelText(spot.name) : null;
+      // 라벨 정책(디자인 SSOT): selected 는 항상, 그 외에는 상위 5개까지만 —
+      // Naver 기본 POI 라벨과 겹쳐 지도가 글자판이 되는 것을 막는다.
+      const isSel = selectedKeyRef.current !== null && spotKey(spot) === selectedKeyRef.current;
+      const label = plan.showLabels && (isSel || labeledCount < 5)
+        ? (labeledCount++, labelText(spot.name))
+        : null;
 
       const marker = new map.Marker({
         position: new map.LatLng(spot.lat, spot.lng),
@@ -387,6 +399,29 @@ export default function NaverMap({
     // 인증에 실패한 SDK 는 리스너 객체가 비어 있어 removeListener 안에서 null 을
     // 밟는다(실측: "Cannot read properties of null (reading 'isArray')"). 정리
     // 실패는 화면의 실패가 아니다 — 삼킨다.
+    return () => { try { if (l) map.Event.removeListener?.(l); } catch { /* SDK 미초기화 */ } };
+  }, [ready]);
+
+  // Recenter — seq 가 증가할 때마다 명령 좌표로 이동한다. 상태가 아니라 명령이라
+  // 같은 좌표라도 다시 누르면 다시 이동한다(사용자 기대와 일치).
+  const centerSeqRef = useRef(0);
+  useEffect(() => {
+    if (!ready || !centerCommand || centerCommand.seq === centerSeqRef.current) return;
+    centerSeqRef.current = centerCommand.seq;
+    const map = window.naver?.maps; const nmap = mapRef.current;
+    if (!map || !nmap) return;
+    nmap.setCenter(new map.LatLng(centerCommand.lat, centerCommand.lng));
+    if (typeof centerCommand.zoom === "number") nmap.setZoom(centerCommand.zoom);
+  }, [ready, centerCommand]);
+
+  // 지도 빈 곳 탭 → 부모에게 알린다(마커 클릭은 별도 리스너라 여기 오지 않는다).
+  const bgClickRef = useRef<(() => void) | undefined>(undefined);
+  useEffect(() => { bgClickRef.current = onBackgroundClick; }, [onBackgroundClick]);
+  useEffect(() => {
+    if (!ready) return;
+    const map = window.naver?.maps; const nmap = mapRef.current;
+    if (!map || !nmap) return;
+    const l = map.Event.addListener(nmap, "click", () => bgClickRef.current?.());
     return () => { try { if (l) map.Event.removeListener?.(l); } catch { /* SDK 미초기화 */ } };
   }, [ready]);
 
@@ -539,7 +574,13 @@ export default function NaverMap({
       position: new map.LatLng(userLocation.lat, userLocation.lng),
       map: nmap as unknown as Record<string, unknown>,
       icon: {
-        content: `<div style="width:16px;height:16px;background:#FF4A2D;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 4px rgba(249,115,22,0.25)"></div>`,
+        // 파란 점 + 절제된 pulse 링(레이더 스윕 금지). keyframes 는 마커 content 안에
+        // 함께 실어 전역 CSS 의존 없이 렌더된다.
+        content: `<div style="position:relative;width:16px;height:16px">`
+          + `<style>@keyframes gkmMePulse{0%{opacity:.65;transform:scale(.45)}70%{opacity:0;transform:scale(1.6)}100%{opacity:0}}</style>`
+          + `<span style="position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:rgba(0,65,201,.22);animation:gkmMePulse 2s ease-out infinite"></span>`
+          + `<span style="position:absolute;inset:0;border-radius:50%;background:#0041C9;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,65,201,.35),0 1px 5px rgba(0,20,70,.35)"></span>`
+          + `</div>`,
         anchor: new map.Point(8, 8),
       },
       zIndex: 100,

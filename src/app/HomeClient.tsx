@@ -77,17 +77,8 @@ export default function HomeClient() {
                 <circle cx="11" cy="11" r="7" /><path d="M20 20l-3.6-3.6" />
               </svg>
             </button>
-            <Link
-              href="/my-trips"
-              aria-label={tn("myTrips")}
-              className="gkm-focus w-11 h-11 inline-flex items-center justify-center rounded-full text-gray-700"
-            >
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden
-                   stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3.5" y="7.5" width="17" height="12.5" rx="2.4" />
-                <path d="M9 7.5V6a1.6 1.6 0 011.6-1.6h2.8A1.6 1.6 0 0115 6v1.5" />
-              </svg>
-            </Link>
+            {/* 상단 Trips 아이콘 제거(디자인 SSOT §5 헤더): 하단 BottomNav Trips 와
+                기능 중복이라 global nav 를 상단에서 반복하지 않는다. */}
           </div>
         </div>
       </header>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef, Suspense } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { displayPlaceName, displayPlaceText } from "@/lib/place-display-name";
@@ -11,6 +11,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventDetailModal from "@/components/EventDetailModal";
 import SpotCard from "@/components/SpotCard";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
+import { detectPastedUrl } from "@/lib/home-url-detect";
 import { haversineKm, isValidCoordinate } from "@/lib/geo";
 import { fetchCitySpots } from "@/lib/city-spots";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
@@ -110,6 +111,9 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
 function ExploreCityContent({ city }: { city: CityConfig }) {
   const locale = useLocale();
   const tE = useTranslations("explore");
+  const tQ = useTranslations("quiet");
+  const tP = useTranslations("picks");
+  const tPl = useTranslations("place");
   const tf = useTranslations("tripForm");
   const tN = useTranslations("nav");
 
@@ -151,6 +155,15 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError,   setLocationError]   = useState<string | null>(null);
   const [mapExpanded,     setMapExpanded]     = useState(false);
+  // Map 모드 검색 패널 — 기본 compact(한 줄), 탭하면 펼침(디자인 SSOT §2 compact↔expand)
+  const [searchExpanded,  setSearchExpanded]  = useState(false);
+  // Bottom Sheet 상태 — 마커 선택 시 Peek 로 시작(§3)
+  const [sheetState,      setSheetState]      = useState<"peek" | "half" | "full">("peek");
+  // Recenter 명령(§6) — seq 증가가 곧 명령이다
+  const [centerCmd,       setCenterCmd]       = useState<{ lat: number; lng: number; zoom?: number; seq: number } | null>(null);
+  const recenterSeqRef = useRef(0);
+  // Full map history(§5): pushState 로 넣고, UI 로 닫을 때는 back() 으로 정리한다
+  const fullMapPushedRef = useRef(false);
 
   // 모바일은 List ↔ Map 을 전환해 보여준다. 데스크톱은 기존 split 이
   // 둘 다 보여주므로 이 상태를 쓰지 않는다.
@@ -434,6 +447,59 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
   const mapPickedSpot = resolveSelection(filteredSpots, mapPickedKey);
 
+  // Home Search 와 같은 URL 문법(디자인 SSOT §1). URL 이면 장소검색으로 취급하지
+  // 않는다 — "0 results" 대신 기존 Import/공유 흐름으로 안내한다. 파서 복제 없음.
+  const pastedUrl = useMemo(() => detectPastedUrl(search), [search]);
+
+  // 마커를 바꾸면 시트는 Peek 부터 다시 시작한다(내용 교체 계약).
+  useEffect(() => { if (mapPickedKey) setSheetState("peek"); }, [mapPickedKey]);
+
+  // Full map ↔ history: 진입 시 state 를 쌓고, back/제스처는 full map 만 닫는다.
+  // 사이트 이탈 금지(Interaction Sweep IMPORTANT N1).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (mapExpanded && !fullMapPushedRef.current) {
+      window.history.pushState({ gkmFullMap: true }, "");
+      fullMapPushedRef.current = true;
+    }
+  }, [mapExpanded]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onPop = () => {
+      if (fullMapPushedRef.current) {
+        fullMapPushedRef.current = false;
+        setMapExpanded(false);
+      }
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  const closeFullMap = useCallback(() => {
+    if (fullMapPushedRef.current && typeof window !== "undefined") {
+      window.history.back(); // popstate 가 mapExpanded 를 내린다 — 스택이 깨끗하게 남는다
+    } else {
+      setMapExpanded(false);
+    }
+  }, []);
+
+  // Recenter(§6): 위치가 있으면 그리로, 없으면 Near Me 흐름으로 권한부터.
+  const handleRecenter = useCallback(() => {
+    if (userLocation) {
+      recenterSeqRef.current += 1;
+      setCenterCmd({ lat: userLocation.lat, lng: userLocation.lng, zoom: 14, seq: recenterSeqRef.current });
+    } else {
+      handleNearMe();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userLocation]);
+
+  // 지도 빈 곳 탭: Half/Full → Peek, Peek → 닫기(§3 dismiss 계약).
+  const handleMapBackground = useCallback(() => {
+    if (!mapPickedKey) return;
+    if (sheetState === "peek") setMapPickedKey(null);
+    else setSheetState("peek");
+  }, [mapPickedKey, sheetState]);
+
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
   const viewToggle = (
     <div
@@ -469,6 +535,24 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       {/* 시안 순서: 검색 → List/Map 토글 → 필터. 예전엔 토글이 검색 위에 있어
           "무엇을 찾을지" 보다 "어떻게 볼지" 를 먼저 묻고 있었다. */}
       <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} />
+      {pastedUrl && (
+        <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
+             style={{ backgroundColor: "var(--gkm-action-tint)" }}>
+          <div className="min-w-0">
+            <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
+              {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("sharedOpenCta")}
+            </p>
+            <p className="text-[11px] text-gray-500 truncate">
+              {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}
+            </p>
+          </div>
+          <Link
+            href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
+            className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
+            style={{ backgroundColor: "var(--gkm-action-primary)" }}
+          >→</Link>
+        </div>
+      )}
       <div className="mt-3">{viewToggle}</div>
       <div className="flex flex-wrap items-center gap-2 mt-1">
         {spotCategories.map(cat => (
@@ -513,7 +597,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           <button onClick={handleNearMe} className="ml-auto text-xs underline opacity-70 hover:opacity-100">{tE("turnOff")}</button>
         </div>
       )}
-      {search && (
+      {search && !pastedUrl && (
         <p className="mt-2 text-sm text-gray-500 font-semibold">
           {filteredSpots.length === 1
             ? tE("search.results", { count: filteredSpots.length, query: search })
@@ -539,6 +623,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         </div>
       ))}
     </div>
+  ) : filteredSpots.length === 0 && pastedUrl ? (
+    <div className="py-10" />
   ) : filteredSpots.length === 0 ? (
     <div className="text-center py-16">
       {spots.length === 0 ? (
@@ -618,6 +704,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               relayoutKey={mapExpanded ? 1 : 0}
               onSpotClick={handleMapSpotClick}
               selectedKey={mapPickedKey}
+              centerCommand={centerCmd}
+              onBackgroundClick={viewMode === "map" ? handleMapBackground : undefined}
               // Map 모드에선 하단 카드가 장소 정보를 맡는다. Naver 기본 말풍선까지
               // 뜨면 같은 내용이 두 곳에 겹쳐 지도를 더 가린다. List·데스크톱 split 은
               // 기존 상세 모달 흐름이라 말풍선을 그대로 둔다.
@@ -627,115 +715,262 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               // 클러스터 ↔ 개별 마커 + 이름 pill 로 갈라 그린다.
               clusterZoomLabels
             />
-            {/* 모바일 Map 모드에서는 이 버튼을 아래로 내린다.
-                위(top-3)에 두면 누를 수 없다 — 지도 열이 z-20 으로 stacking context 를
-                만들어서, 그 안의 z-50 은 형제인 컨트롤 패널(z-[34])을 이기지 못한다.
-                z 를 올려 패널을 덮는 대신 겹치지 않는 자리로 옮긴다: 패널은 위에서
-                최대 48vh, 이 버튼은 아래에서 BottomNav 위. 선택 카드가 떠 있을 때는
-                그 카드보다 한 층 더 위로 올려 서로 가리지 않게 한다.
-                전체화면일 때는 패널이 렌더되지 않으므로 원래대로 top-3.
-                데스크톱(lg+)은 split 뷰라 기존 동작을 그대로 되돌린다. */}
-            <button
-              onClick={() => setMapExpanded(e => !e)}
-              className={`absolute right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95 lg:top-3 lg:bottom-auto ${
-                mapExpanded
-                  ? "top-3"
-                  : mapPickedSpot
-                    ? "bottom-[calc(9.5rem+env(safe-area-inset-bottom))]"
-                    : "bottom-[calc(4.5rem+env(safe-area-inset-bottom))]"
-              }`}
-              style={{ backgroundColor: mapExpanded ? "var(--gkm-status-error)" : "var(--gkm-ink)", opacity: 0.92 }}
-              title={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
-              aria-label={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
-                   stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                {mapExpanded
-                  ? <><path d="M6 6l12 12M18 6L6 18" /></>
-                  : <><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></>}
-              </svg>
-              {mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
-            </button>
+            {/* ── Floating controls(디자인 SSOT §4): [Recenter][Full map] 스택.
+                Peek 이면 시트 위로 올라가고, Half/Full 이면 숨는다 — 서로 가리지 않는다. */}
+            {(sheetState === "peek" || !mapPickedSpot || viewMode !== "map") && (
+              <div className={"absolute right-3 z-50 flex flex-col gap-2.5 lg:bottom-auto lg:top-3 " +
+                ((viewMode === "map" && mapPickedSpot && !mapExpanded)
+                  ? "bottom-[calc(11.5rem+env(safe-area-inset-bottom))]"
+                  : "bottom-[calc(4.5rem+env(safe-area-inset-bottom))]")}>
+                <button
+                  onClick={handleRecenter}
+                  aria-label={tE("nearMe")}
+                  className="gkm-focus w-11 h-11 rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform"
+                  style={nearMeActive
+                    ? { backgroundColor: "var(--gkm-action-primary)", color: "#fff" }
+                    : { backgroundColor: "#fff", color: "var(--gkm-ink, #191C21)" }}
+                >
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="1.9" strokeLinecap="round">
+                    <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
+                    <path d="M12 2v3.2M12 18.8V22M2 12h3.2M18.8 12H22" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => (mapExpanded ? closeFullMap() : setMapExpanded(true))}
+                  className="gkm-focus h-11 px-3.5 rounded-full flex items-center gap-1.5 text-xs font-bold text-white shadow-lg active:scale-95 transition-transform"
+                  style={{ backgroundColor: mapExpanded ? "var(--gkm-status-error)" : "var(--gkm-ink)" }}
+                  title={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
+                  aria-label={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    {mapExpanded ? <><path d="M6 6l12 12M18 6L6 18" /></> : <><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></>}
+                  </svg>
+                  {mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* ── Cards column: below on mobile, left scrollable on desktop ── */}
         {!mapExpanded && (
-          /* Map 모드(모바일)에서는 이 열이 지도 위에 뜨는 컨트롤 패널이 된다.
-             controls 를 여기 두는 대신 따로 한 벌 더 렌더하면 검색 input 이
-             DOM 에 두 개 생겨 라벨·포커스가 중복된다. 그래서 열을 옮긴다.
-             pointer-events 는 패널에만 주어 그 옆 여백으로 지도를 잡을 수 있다. */
           <div className={viewMode === "map"
-            ? "fixed inset-x-0 top-16 z-[34] px-3 pt-3 pointer-events-none lg:pointer-events-auto lg:static lg:z-auto lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 lg:px-6 lg:py-6"
+            ? "lg:static lg:z-auto lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 lg:px-6 lg:py-6"
             : "flex-1 px-4 py-5 lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 lg:px-6 lg:py-6"
           }>
             <div className={viewMode === "map" ? "hidden lg:block" : ""}>{pageHeader}</div>
-            <div className={viewMode === "map"
-              ? "pointer-events-auto max-h-[48vh] overflow-y-auto rounded-2xl shadow-lg px-3 pt-2.5 pb-1 lg:max-h-none lg:overflow-visible lg:rounded-none lg:shadow-none lg:p-0 lg:bg-transparent"
-              : ""
-            } style={viewMode === "map" ? { backgroundColor: "rgba(255,255,255,0.96)", backdropFilter: "blur(8px)" } : undefined}>
-              {controls}
-            </div>
+            {/* 데스크톱 split 은 기존 전체 컨트롤 유지 */}
+            <div className={viewMode === "map" ? "hidden lg:block" : ""}>{controls}</div>
             <div className={viewMode === "map" ? "hidden lg:block" : ""}>
               {cardsGrid}
               <div className="h-8" /> {/* bottom spacing */}
             </div>
           </div>
         )}
+
+        {/* ── Map 모드 모바일 상단(디자인 SSOT §2): compact 한 줄 ↔ expanded 패널 ── */}
+        {!mapExpanded && viewMode === "map" && !searchExpanded && (
+          <div className="lg:hidden fixed inset-x-0 top-16 z-[34] px-3 pt-3 pointer-events-none">
+            <div className="flex gap-2 pointer-events-auto">
+              <button
+                onClick={() => setSearchExpanded(true)}
+                className="gkm-focus flex-1 h-[46px] bg-white rounded-full shadow-lg flex items-center gap-2.5 px-4 text-left"
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0 text-gray-400"
+                     stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg>
+                <span className={"text-[13px] font-semibold truncate " + (search ? "text-gray-800" : "text-gray-400")}>
+                  {search || tE("search.placeholder")}
+                </span>
+              </button>
+              <button
+                onClick={() => setSearchExpanded(true)}
+                aria-label={tE("viewToggle")}
+                className="gkm-focus relative w-[46px] h-[46px] bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700"
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden
+                     stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"><path d="M4 6h16M7 12h10M10 18h4" /></svg>
+                {(selectedCategory !== "all" || nearMeActive) && (
+                  <span className="absolute top-2 right-2 w-2 h-2 rounded-full" style={{ backgroundColor: "var(--gkm-action-primary)" }} />
+                )}
+              </button>
+            </div>
+            <div className="mt-2 inline-flex p-0.5 rounded-full bg-white/95 shadow pointer-events-auto">
+              {(["map", "list"] as const).map(m => (
+                <button key={m} onClick={() => setViewMode(m)} aria-pressed={viewMode === m}
+                  className="gkm-focus h-[30px] px-3.5 rounded-full text-[11.5px] font-bold"
+                  style={viewMode === m ? { backgroundColor: "var(--qh-navy, #001654)", color: "#fff" } : { color: "var(--gkm-text-sub)" }}>
+                  {m === "map" ? tE("viewMap") : tE("viewList")}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {!mapExpanded && viewMode === "map" && searchExpanded && (
+          <div className="lg:hidden fixed inset-0 top-16 z-[38]">
+            <button aria-hidden className="absolute inset-0 bg-[rgba(12,26,58,0.28)] cursor-default" onClick={() => setSearchExpanded(false)} />
+            <div className="absolute inset-x-0 top-0 bg-white rounded-b-2xl shadow-xl px-3 pt-3 pb-4 max-h-[70vh] overflow-y-auto">
+              <div className="flex items-center gap-2">
+                <div className="flex-1"><SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} /></div>
+                <button onClick={() => setSearchExpanded(false)}
+                  className="gkm-focus shrink-0 min-h-11 px-2.5 text-sm font-bold text-gray-500">{tE("turnOff")}</button>
+              </div>
+              {pastedUrl && (
+                <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
+                     style={{ backgroundColor: "var(--gkm-action-tint)" }}>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
+                      {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("sharedOpenCta")}
+                    </p>
+                    <p className="text-[11px] text-gray-500 truncate">
+                      {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}
+                    </p>
+                  </div>
+                  <Link
+                    href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
+                    className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
+                    style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                  >→</Link>
+                </div>
+              )}
+              <div className="flex flex-wrap items-center gap-2 mt-3">
+                {spotCategories.map(cat => (
+                  <button key={cat.value} onClick={() => setSelectedCategory(cat.value)}
+                    className="gkm-focus px-4 py-2 min-h-11 rounded-full text-sm font-bold transition-all border cursor-pointer"
+                    style={selectedCategory === cat.value
+                      ? { backgroundColor: "var(--qh-navy, #001654)", color: "#fff", borderColor: "var(--qh-navy, #001654)" }
+                      : { backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-text-sub)", borderColor: "transparent" }}
+                  >{cat.label}</button>
+                ))}
+                <button onClick={handleNearMe} disabled={locationLoading}
+                  className="gkm-focus px-4 py-2 min-h-11 rounded-full text-sm font-bold border cursor-pointer disabled:opacity-60"
+                  style={nearMeActive
+                    ? { backgroundColor: "var(--gkm-action-primary)", color: "white", borderColor: "var(--gkm-action-primary)" }
+                    : { backgroundColor: "var(--gkm-surface)", color: "var(--gkm-text-sub)", borderColor: "var(--gkm-line)" }}>
+                  {locationLoading ? tE("locating") : nearMeActive ? tE("nearMeActive") : tE("nearMe")}
+                </button>
+              </div>
+              {locationError && (
+                <div className="mt-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 font-semibold">{locationError}</div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* 지도 선택 장소 하단 카드 — BottomNav(3.5rem+safe-area) 위에 둔다.
-          마커를 바꿔 누르면 이 카드 내용만 갱신된다. */}
-      {viewMode === "map" && !mapExpanded && mapPickedSpot && (
-        <div className="lg:hidden fixed left-3 right-3 z-[45] bottom-[calc(4.25rem+env(safe-area-inset-bottom))]">
-          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex">
-            <div className="w-24 shrink-0 bg-gray-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={mapPickedSpot.image ?? "/images/placeholder-spot.svg"}
-                alt=""
-                className="w-full h-full object-cover"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/placeholder-spot.svg"; }}
-              />
-            </div>
-            <div className="flex-1 min-w-0 p-3">
-              <div className="flex items-start gap-2">
+      {/* ── Bottom Sheet(디자인 SSOT §3) — Peek/Half/Full. small/full map 이 같은
+          state·같은 컴포넌트를 쓴다(기존 !mapExpanded 카드 제외 결함의 수정점). */}
+      {viewMode === "map" && mapPickedSpot && (() => {
+        const ev = toEventItem(mapPickedSpot);
+        const placeId = parseCitySpotId(selectionKey(mapPickedSpot));
+        const heights = { peek: "auto", half: "min(390px, 52vh)", full: "calc(100vh - 10.5rem)" } as const;
+        const onHandleDrag = (startY: number) => {
+          const move = (e: PointerEvent) => {
+            const dy = e.clientY - startY;
+            if (dy < -46) { setSheetState(st => (st === "peek" ? "half" : "full")); cleanup(); }
+            else if (dy > 46) {
+              setSheetState(st => {
+                if (st === "full") return "half";
+                if (st === "half") return "peek";
+                setMapPickedKey(null); return "peek";
+              });
+              cleanup();
+            }
+          };
+          const cleanup = () => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); };
+          const up = () => cleanup();
+          window.addEventListener("pointermove", move);
+          window.addEventListener("pointerup", up);
+        };
+        return (
+          <div className="lg:hidden fixed left-0 right-0 z-[55] bottom-[calc(3.5rem+env(safe-area-inset-bottom))]">
+            <div
+              className="bg-white rounded-t-2xl shadow-[0_-8px_28px_rgba(10,30,80,0.16)] border-t border-gray-100 overflow-hidden flex flex-col"
+              style={{ height: heights[sheetState], maxHeight: "calc(100vh - 9rem)", transition: "height .22s ease" }}
+            >
+              <div
+                className="flex justify-center pt-2 pb-1 cursor-grab touch-none select-none"
+                onPointerDown={(e) => { e.preventDefault(); onHandleDrag(e.clientY); }}
+                role="button"
+                aria-label={tE("viewDetails")}
+                onClick={() => setSheetState(st => (st === "peek" ? "half" : st === "half" ? "full" : "half"))}
+              >
+                <span className="w-9 h-1 rounded-full bg-gray-200" />
+              </div>
+
+              {/* Peek 행 — 항상 표시 */}
+              <div className="flex gap-3 px-4 pb-3 items-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={mapPickedSpot.image ?? "/images/placeholder-spot.svg"}
+                  alt=""
+                  className={(sheetState === "peek" ? "w-14 h-14" : "w-16 h-16") + " rounded-xl object-cover bg-gray-100 shrink-0"}
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/placeholder-spot.svg"; }}
+                />
                 <div className="min-w-0 flex-1">
-                  <p className="font-black text-gray-900 text-sm leading-snug truncate">{mapPickedSpot.name}</p>
-                  <p className="text-[11px] text-gray-400 mt-0.5 truncate">
+                  <p className="font-black text-gray-900 text-[15px] leading-snug truncate">
+                    {displayPlaceName(mapPickedSpot.name, mapPickedSpot.nameL10n, locale)}
+                  </p>
+                  <p className="text-[11.5px] text-gray-400 mt-0.5 truncate">
                     {mapPickedSpot.district || tf(cityLabelKey(city))}
                   </p>
                 </div>
                 <button
                   onClick={() => setMapPickedKey(null)}
                   aria-label={tE("turnOff")}
-                  className="gkm-focus shrink-0 w-7 h-7 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center"
+                  className="gkm-focus shrink-0 w-8 h-8 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center"
                 >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden
-                       stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-                    <path d="M6 6l12 12M18 6L6 18" />
-                  </svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
                 </button>
               </div>
-              <div className="flex items-center gap-2 mt-2">
-                {/* 이 카드에 저장 버튼을 새로 만들지 않는다. 지도에서 마커를 누른
-                    직후는 "저기가 뭐지" 를 확인하는 순간이지 이번 여행에 넣을지
-                    결정하는 순간이 아니다. 저장은 리스트 카드나 상세에서 한다. */}
-                {/* 장소 전체 상세의 기준 화면은 /place/[id] 다. 단 상세 페이지는
-                    city_spots 로만 정적 생성되므로(dynamicParams:false), 다른 소스의
-                    장소는 route 로 보내면 404 다 — 그 때만 기존 미리보기 모달을 쓴다. */}
-                {(() => {
-                  const placeId = parseCitySpotId(selectionKey(mapPickedSpot));
-                  const cls = "gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-gray-600 border border-gray-200 inline-flex items-center";
-                  return placeId
-                    ? <Link href={`/place/${placeId}/`} className={cls}>{tE("viewDetails")}</Link>
-                    : <button onClick={() => setSelectedEvent(toEventItem(mapPickedSpot))} className={cls}>{tE("viewDetails")}</button>;
-                })()}
-              </div>
+
+              {/* Half/Full 본문 */}
+              {sheetState !== "peek" && (
+                <div className="px-4 pb-4 overflow-y-auto">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSaveSpot(mapPickedSpot)}
+                      className="gkm-focus flex-1 min-h-11 rounded-xl text-[13px] font-bold text-white flex items-center justify-center gap-1.5"
+                      style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden
+                           stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"><path d="M7 4h10v16l-5-3.5L7 20z" /></svg>
+                      {tP("save")}
+                    </button>
+                    {placeId
+                      ? <Link href={`/place/${placeId}/`} className="gkm-focus flex-1 min-h-11 rounded-xl text-[13px] font-bold flex items-center justify-center"
+                          style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}>{tE("viewDetails")}</Link>
+                      : <button onClick={() => setSelectedEvent(ev)} className="gkm-focus flex-1 min-h-11 rounded-xl text-[13px] font-bold flex items-center justify-center"
+                          style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}>{tE("viewDetails")}</button>}
+                  </div>
+                  {sheetState === "full" && mapPickedSpot.image && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={mapPickedSpot.image} alt="" className="mt-3 w-full h-44 rounded-xl object-cover bg-gray-100"
+                         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                  )}
+                  {(displayPlaceText(mapPickedSpot.description, mapPickedSpot.descriptionL10n, locale) ?? mapPickedSpot.description) && (
+                    <p className={"mt-3 text-[12.5px] leading-relaxed text-gray-500 " + (sheetState === "half" ? "line-clamp-3" : "")}>
+                      {displayPlaceText(mapPickedSpot.description, mapPickedSpot.descriptionL10n, locale) ?? mapPickedSpot.description}
+                    </p>
+                  )}
+                  <div className="flex gap-2 mt-3">
+                    {ev.naverMapUrl && (
+                      <a href={ev.naverMapUrl} target="_blank" rel="noopener noreferrer"
+                         className="gkm-focus min-h-10 px-3.5 rounded-xl text-xs font-bold text-gray-600 border border-gray-200 inline-flex items-center">{tPl("naverMaps")}</a>
+                    )}
+                    {ev.mapUrl && (
+                      <a href={ev.mapUrl} target="_blank" rel="noopener noreferrer"
+                         className="gkm-focus min-h-10 px-3.5 rounded-xl text-xs font-bold text-gray-600 border border-gray-200 inline-flex items-center">{tPl("googleMaps")}</a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {selectedEvent && (
         <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)}
@@ -796,17 +1031,8 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
               첫 화면을 눌러 검색·토글이 아래로 밀려 있었다. */}
           <div className="sm:hidden flex items-center gap-1">
             <LanguageSwitcher variant="icon" className="text-gray-700" />
-            <Link
-              href="/my-trips"
-              aria-label={tN("myTrips")}
-              className="gkm-focus w-11 h-11 inline-flex items-center justify-center rounded-full text-gray-700"
-            >
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden
-                   stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3.5" y="7.5" width="17" height="12.5" rx="2.4" />
-                <path d="M9 7.5V6a1.6 1.6 0 011.6-1.6h2.8A1.6 1.6 0 0115 6v1.5" />
-              </svg>
-            </Link>
+            {/* 상단 Trips 아이콘 제거(디자인 SSOT §5 헤더): 하단 BottomNav Trips 와
+                기능 중복이라 global nav 를 상단에서 반복하지 않는다. */}
           </div>
         </div>
       </header>

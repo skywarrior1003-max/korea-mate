@@ -24,6 +24,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
   apiFetchItinerariesByDevice,
   apiDeleteItinerary,
@@ -207,10 +208,13 @@ export default function MyTripsPage() {
           max-w-2xl(홈·More 가 쓰는 폭)로 가운데 모은다. 바깥 여백만 1280 셸. */}
       <main className="flex-1 w-full mx-auto max-w-2xl px-4 md:px-6 pt-8 md:pt-16" style={{ paddingBottom: SP.xl }}>
 
-        {/* ── 제목 ── */}
-        <div style={{ marginBottom: SP.lg }}>
-          <h1 className="md:hidden" style={{ ...HEADLINE_LG_MOBILE, color: C.primary }}>{tNav("myTrips")}</h1>
-          <h1 className="hidden md:block" style={{ ...HEADLINE_LG, color: C.primary }}>{tNav("myTrips")}</h1>
+        {/* ── 제목 + 언어(헤더 시스템 §5: 언어 접근을 route 마다 잃지 않는다) ── */}
+        <div className="flex items-start justify-between gap-3" style={{ marginBottom: SP.lg }}>
+          <div>
+            <h1 className="md:hidden" style={{ ...HEADLINE_LG_MOBILE, color: C.primary }}>{tNav("myTrips")}</h1>
+            <h1 className="hidden md:block" style={{ ...HEADLINE_LG, color: C.primary }}>{tNav("myTrips")}</h1>
+          </div>
+          <LanguageSwitcher variant="icon" className="mt-1 text-[#2C2520]" />
         </div>
 
         {/* ── 로딩 ── */}

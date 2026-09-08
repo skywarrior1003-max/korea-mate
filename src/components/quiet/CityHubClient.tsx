@@ -17,6 +17,14 @@ import { displayPlaceName } from "@/lib/place-display-name";
 import { cityVisual } from "@/lib/city-visual";
 import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
+import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
+
+// City Hub Fresh 토큰(디자인 SSOT discovery-explore-final-v1 §1) — Home 의 warm
+// --qh-* 를 바꾸지 않고 Hub 화면에만 cool 값을 입힌다.
+const HUB = {
+  paper: "#F5F8FC", ink: "#16233B", sub: "#4C5E7E",
+  faint: "#8DA0BF", line: "#DFE7F2", eyebrow: "#3D63C9",
+} as const;
 
 /** 추천 3: 카탈로그 순서(기존 fetch 의 id asc)에서 이미지 있는 행 우선 — 인기 주장 없음 */
 export function pickRecommended(spots: CitySpot[], n: number): CitySpot[] {
@@ -53,33 +61,34 @@ export default function CityHubClient({ slug }: { slug: string }) {
   })();
 
   return (
-    <div className="qh min-h-screen pb-20" style={{ backgroundColor: "var(--qh-paper)" }}>
+    <div className="qh min-h-screen pb-20" style={{ backgroundColor: HUB.paper, color: HUB.ink }}>
       {/* ── Hero — 절제된 1/4 화면, 관광 slogan 없음 ── */}
       <div className="relative h-[230px] md:h-[300px] overflow-hidden" style={{ backgroundColor: "#33566b" }}>
         {v && (
           <Image src={v.src} alt="" fill priority sizes="100vw" className="object-cover"
             style={{ objectPosition: v.objectPosition }} />
         )}
-        {/* RT-04: 상·하단 scrim */}
-        <div className="absolute inset-x-0 top-0 h-[64px]" style={{ background: "linear-gradient(180deg,rgba(8,10,12,.5),transparent)" }} />
-        <div className="absolute inset-x-0 bottom-0 h-[110px]" style={{ background: "linear-gradient(180deg,transparent,rgba(8,10,12,.72))" }} />
+        {/* Fresh treatment(디자인 SSOT §2 Hero): 다크 스크림 대신 white-up —
+            사진은 밝게 남고 하단이 paper 로 녹아 "여행 시작" 공기를 만든다. */}
+        <div className="absolute inset-x-0 top-0 h-[64px]" style={{ background: "linear-gradient(180deg,rgba(8,10,12,.28),transparent)" }} />
+        <div className="absolute inset-x-0 bottom-0 h-[130px]" style={{ background: `linear-gradient(180deg, transparent, ${HUB.paper}E6 78%, ${HUB.paper} 100%)` }} />
         <Link
           href="/"
-          className="absolute top-4 left-4 inline-flex items-center whitespace-nowrap text-white text-[14px] rounded-[4px] px-3.5 py-2.5 min-h-11 gkm-focus"
-          style={{ background: "rgba(10,10,8,.38)", backdropFilter: "blur(4px)" }}
+          className="absolute top-4 left-4 inline-flex items-center whitespace-nowrap text-[14px] rounded-full px-3.5 py-2.5 min-h-11 gkm-focus"
+          style={{ background: "rgba(255,255,255,.88)", color: HUB.ink, backdropFilter: "blur(6px)", boxShadow: "0 2px 8px rgba(10,30,80,.12)" }}
         >
           ← {t("backHome")}
         </Link>
         <div className="absolute left-0 right-0 bottom-0 max-w-3xl mx-auto px-5 md:px-6 pb-4">
-          <h1 className="text-white text-[27px] md:text-[36px] font-semibold leading-tight">{cityLabel}</h1>
-          <p className="mt-0.5 text-[12.5px] md:text-[13.5px] text-white/80">{desc}</p>
+          <h1 className="text-[28px] md:text-[36px] font-black leading-tight tracking-[-0.02em]" style={{ color: HUB.ink }}>{cityLabel}</h1>
+          <p className="mt-0.5 text-[12.5px] md:text-[13.5px] font-medium" style={{ color: HUB.sub }}>{desc}</p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-5 md:px-6 pt-5">
         {/* ── Recommended Trips ── */}
         <div className="flex items-baseline justify-between gap-3">
-          <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("recommendedTrips")}</h2>
+          <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedTrips")}</h2>
           {trips.length > 0 && (
             <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
@@ -87,16 +96,16 @@ export default function CityHubClient({ slug }: { slug: string }) {
           )}
         </div>
         {trips.length === 0 ? (
-          <p className="mt-3 text-[13px] text-[var(--qh-faint2)]">{t("tripsSoon", { city: cityLabel })}</p>
+          <p className="mt-3 text-[13px] text-[#7C8FB0]">{t("tripsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-1">
             {trips.map(trip => (
               <li key={trip.id}>
                 {/* 각 행은 해당 코스의 상세(코스 흐름·stop·장소 진입)로 간다 */}
-                <Link href={`/city/${slug}/trips/${trip.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                <Link href={`/city/${slug}/trips/${trip.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
-                    <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{tripDisplayTitle(trip, locale)}</span>
-                    <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
+                    <span className="block text-[15px] font-semibold text-[#16233B] truncate">{tripDisplayTitle(trip, locale)}</span>
+                    <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
                       {trip.days && Number.isInteger(trip.days) && trip.days >= 1
                         ? `${trip.days}d${trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}`
                         : trip.stops.length > 0 ? `${t("officialCourse")} · ${trip.stops.length} stops` : t("officialCourse")}
@@ -110,7 +119,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
 
         {/* ── Recommended Places ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
-          <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("recommendedPlaces")}</h2>
+          <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedPlaces")}</h2>
           <Link href={`/city/${slug}/places`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
             {t("viewAll")}
           </Link>
@@ -118,27 +127,27 @@ export default function CityHubClient({ slug }: { slug: string }) {
         <div className="mt-3 grid grid-cols-3 gap-3">
           {places.map(s => (
             <Link key={s.id} href={`/place/${s.id}/`} className="min-w-0 gkm-focus rounded-[4px]">
-              <span className="relative block aspect-square rounded-[4px] overflow-hidden bg-[var(--qh-line)]">
+              <span className="relative block aspect-square rounded-[4px] overflow-hidden bg-[#E5EDF7]">
                 {s.image ? (
                   <Image src={s.image} alt="" fill sizes="33vw" className="object-cover" unoptimized={s.image.startsWith("http")} />
                 ) : (
                   <img src="/images/placeholder-spot.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
                 )}
               </span>
-              <span className="block mt-1.5 text-[13px] font-medium text-[var(--qh-ink)] truncate">
+              <span className="block mt-1.5 text-[13px] font-medium text-[#16233B] truncate">
                 {displayPlaceName(s.name, s.nameL10n, locale)}
               </span>
-              <span className="block text-[11.5px] text-[var(--qh-faint2)] truncate">{s.district ?? ""}</span>
+              <span className="block text-[11.5px] text-[#7C8FB0] truncate">{s.district ?? ""}</span>
             </Link>
           ))}
           {spots === null && [0, 1, 2].map(i => (
-            <div key={i} className="aspect-square rounded-[4px] bg-[var(--qh-line)] animate-pulse" />
+            <div key={i} className="aspect-square rounded-[4px] bg-[#E5EDF7] animate-pulse" />
           ))}
         </div>
 
         {/* ── What's happening — 대표 2~3개 · 카드 → 내부 상세(외부 직행 없음) ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
-          <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("whatsHappening")}</h2>
+          <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("whatsHappening")}</h2>
           {events.length > 0 && (
             <Link href={`/city/${slug}/events`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
@@ -146,7 +155,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
           )}
         </div>
         {events.length === 0 ? (
-          <p className="mt-3 text-[13px] text-[var(--qh-faint2)]">{t("eventsSoon", { city: cityLabel })}</p>
+          <p className="mt-3 text-[13px] text-[#7C8FB0]">{t("eventsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-1">
             {events.slice(0, 3).map(ev => {
@@ -154,19 +163,19 @@ export default function CityHubClient({ slug }: { slug: string }) {
               const period = [ev.validFrom, ev.validTo].filter(Boolean).join(" – ");
               return (
                 <li key={ev.id}>
-                  <Link href={`/city/${slug}/events/${ev.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                  <Link href={`/city/${slug}/events/${ev.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
                     <span className="flex-1 min-w-0">
-                      <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">{name}</span>
-                      <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
+                      <span className="block text-[15px] font-semibold text-[#16233B] truncate">{name}</span>
+                      <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
                         {ev.status && (
-                          <span className="font-medium" style={{ color: ev.status === "ongoing" ? "var(--qh-blue)" : "var(--qh-faint)" }}>
+                          <span className="font-medium" style={{ color: ev.status === "ongoing" ? "var(--qh-blue)" : "#8DA0BF" }}>
                             {t(ev.status)}{" · "}
                           </span>
                         )}
                         {period}{ev.category ? ` · ${ev.category}` : ""}
                       </span>
                       {ev.whyNow && (
-                        <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
+                        <span className="block mt-0.5 text-[12.5px] leading-snug text-[#7C8FB0]"
                           style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                           {ev.whyNow}
                         </span>
@@ -182,7 +191,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
 
         {/* ── Travel Essentials — 대표 1~2개 · 카드 → 내부 상세 · 공식 링크는 상세 안 ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
-          <h2 className="flex-none whitespace-nowrap text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("travelEssentials")}</h2>
+          <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("travelEssentials")}</h2>
           {essentials.length > 0 && (
             <Link href={`/city/${slug}/essentials`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
@@ -190,18 +199,18 @@ export default function CityHubClient({ slug }: { slug: string }) {
           )}
         </div>
         <ul className="mt-1">
-          {essentials.slice(0, 2).map(es => {
+          {pickEssentialsPreview(essentials).map(es => {
             const summary = essentialSummary(es, locale);
             return (
               <li key={es.id}>
-                <Link href={`/city/${slug}/essentials/${es.id}`} className="flex items-start gap-3.5 py-2.5 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                <Link href={`/city/${slug}/essentials/${es.id}`} className="flex items-start gap-3.5 py-2.5 border-b border-[#DFE7F2] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
-                    <span className="block text-[14px] font-medium text-[var(--qh-ink)] leading-snug">{es.title}</span>
-                    <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)] truncate">
+                    <span className="block text-[14px] font-medium text-[#16233B] leading-snug">{es.title}</span>
+                    <span className="block mt-0.5 text-[11.5px] text-[#7C8FB0] truncate">
                       {es.category ?? ""}{es.provider ? ` · ${es.provider}` : ""}
                     </span>
                     {summary && (
-                      <span className="block mt-0.5 text-[12.5px] leading-snug text-[var(--qh-faint2)]"
+                      <span className="block mt-0.5 text-[12.5px] leading-snug text-[#7C8FB0]"
                         style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {summary}
                       </span>
@@ -221,10 +230,10 @@ export default function CityHubClient({ slug }: { slug: string }) {
           style={{ backgroundColor: "var(--qh-navy)" }}
         >
           <span>
-            <span className="block text-[15px] font-semibold" style={{ color: "var(--qh-paper)" }}>{t("exploreCity", { city: cityLabel })}</span>
-            <span className="block text-[12px]" style={{ color: "rgba(247,243,236,.6)" }}>{t("exploreSub")}</span>
+            <span className="block text-[15px] font-semibold" style={{ color: "#FFFFFF" }}>{t("exploreCity", { city: cityLabel })}</span>
+            <span className="block text-[12px]" style={{ color: "rgba(255,255,255,.65)" }}>{t("exploreSub")}</span>
           </span>
-          <span className="text-[17px]" style={{ color: "var(--qh-paper)" }}>→</span>
+          <span className="text-[17px]" style={{ color: "#FFFFFF" }}>→</span>
         </Link>
       </div>
     </div>
