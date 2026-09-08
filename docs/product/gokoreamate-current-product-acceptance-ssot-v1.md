@@ -319,7 +319,10 @@ master `c4c8ab4`): KNOWN {open,close} 를 후보·This Trip 픽에 부착해 엔
 는 추측 없이 기존 fallback. Busan PRIMARY 3 runs + 5도시 회귀 + Seoul KNOWN
 검증 전부 Production 실브라우저 PASS.
 
-## 10. CURRENT APPROVED WORK SEQUENCE
+## 10. CURRENT APPROVED WORK SEQUENCE — SUPERSEDED BY OWNER DECISION 2026-09-08
+
+(아래 원문은 기록으로 유지한다. **현재 유효한 순서는 본 문서 하단의
+"Current Remediation Work Sequence — 2026-09-08"** 다.)
 
 - **PHASE 1** — HC-2 상태 분리 및 완료. 다른 visual/product 작업과 섞지 않고
   그 task 만 완료/배포/보고.
@@ -371,7 +374,199 @@ master `c4c8ab4`): KNOWN {open,close} 를 후보·This Trip 픽에 부착해 엔
 18. 발견했다고 제품 의미를 마음대로 변경하지 않는다 — 중요한 문제/아이디어는
     **OWNER ATTENTION** 으로 보고.
 
-## 12. STATUS TABLE (2026-09-08)
+## Post-Audit Owner + GPT Findings — 2026-09-08
+
+2026-09-08 Visual/Product Audit(evidence ZIP)를 Owner와 GPT가 직접 보고 확정한
+발견·제품 의미·해결 방향의 기록이다. DOCUMENTATION ONLY —
+구현은 아래 Remediation Sequence 의 해당 PHASE 에서만 진행한다.
+
+### A. Discovery / City Hub
+
+1. **City Hub visual** — 현재 Home 의 warm/ivory/orange/nostalgic tone 이 City Hub
+   까지 이어짐(blue 는 CTA/nav 일부 수준). 계약: Home=warm/editorial/emotion,
+   City Hub=**Blue/Fresh/bright/travel-start feeling**. 단순 버튼 Blue 만으로 완료 금지.
+2. **City Hero** — 현재 Busan hero 가 Home 과 유사한 오래된/warm 이미지로 느껴짐.
+   방향: 각 도시는 즉시 도시 정체성이 느껴지는 밝고 대표적인 hero(부산은
+   광안대교/해안+도시 등 승인 가능한 대표 이미지 검토). 이미지는 임의 변경하지
+   않고 design phase 에서 확정.
+3. **City Hub Weather** — 현재 UI 없음. 계약: 이모지 아이콘+현재온도(`26°C`) 수준만,
+   GPS 금지·현재 탐색 중인 travel city 기준, 클릭 → city-specific weather
+   detail/source.
+4. **My Trip Weather** — KEEP. 현재 WeatherLinkChip/STAGE A/generic weather.go.kr.
+   삭제/대체 금지. 승인 디자인의 Day weather(`18°C 맑음` 칩)와 과거 구현을
+   audit/restore 대상으로 유지. **Owner 는 과거 별도/v1 환경에서 weather API 연결을
+   실제 확인한 기억이 있음 — 새 provider 선정보다 old implementation/v1 위치
+   조사가 우선.**
+5. **Recommended Trip CTA — HIGH-PRIORITY ROUTING DEFECT** (Owner 실발견):
+   Home → Region → Recommended Trip → "부산일정 만들기" 가 **폐기된 old orange
+   AI Scheduler 로 이동**. 방향: 현재 V2 Planner/current Trip contract 로 연결.
+   legacy scheduler 로의 user navigation 금지.
+6. **Search inconsistency** — Home Search 는 일반 검색+URL auto-detect/import,
+   City Hub Search 는 동일하게 보이나 URL Import 미동작. 방향: 검색 입력 문법 통일
+   — URL → 동일 detection/import, 일반 텍스트 → current city 우선 context 검색.
+   숨겨진 서로 다른 search behavior 금지.
+7. **Essentials Preview** — 현재 첫 2개가 모두 transport. 방향: 2개 preview 라면
+   category diversity 우선 — 실제 데이터가 있으면 transport 1 + luggage/baggage 1
+   우선 검토. eSIM 은 중요 utility 이나 향후 commercial context 와 함께 자연 배치
+   가능. 없는 데이터를 발명하지 않는다.
+
+### B. Explore Map — Owner Findings
+
+**Explore Map(=destination discovery)과 Living Map(=personal trip memory)을
+혼동하지 않는다.**
+
+1. **Mobile map viewport** — 상단 search/filter 영역이 지나치게 커 지도 가시영역
+   잠식. 방향: map mode 진입 시 compact/collapsible search/filter(필요 시 expand).
+   지도 자체가 primary.
+2. **Place selection card** — place card + top search 동시 점유로 지도가 매우
+   좁아짐. 방향: draggable **Bottom Sheet**(Peek → Half → Full) 검토, 지도
+   viewport 충분히 유지.
+3. **Action overlap** — 하단 정보카드가 `전체지도보기` 등 floating control 을 가림.
+   방향: selected-state 에 맞춰 controls reposition/hide. UI 상호 겹침 금지.
+4. **Full Map place selection — FUNCTIONAL DEFECT** (Owner 실발견): Full Map 에서
+   marker 를 눌러도 작은 지도에서 나타나는 place information card 가 나타나지 않음.
+   방향: small/full map 이 동일한 place-selection state·동일한 Bottom Sheet
+   contract 공유. Full Map 이 기능 축소판이면 안 됨.
+5. **Current location** — orange marker 로 구분은 되나 정적·시인성 낮음. 방향:
+   명확한 current-location marker + 절제된 pulse/ring.
+6. **Recenter** — 지도 이동 후 현재 위치 복귀 control 없음. 방향: floating
+   recenter/current-location 버튼 필수 검토. **Explore `내 주변`의 GPS 사용은
+   정상이며, Weather 의 city-based/no-GPS 계약과 혼동하지 않는다.**
+7. **Label collision** — 여러 place label 이 겹쳐 가독성 저하. 방향:
+   marker/photo/selection hierarchy 정리, collision/visibility 개선. 사진 marker
+   추가만으로 완료 판정하지 않는다.
+
+### C. Mobile Header / IA — AUDIT REQUIRED
+
+Owner finding: 모바일 각 page 상단에 Home/Explore/My Trip 계열 표시와 language
+control 이 존재하고 하단에 Bottom Nav 가 이미 있어 중복/불일치 느낌.
+방향 원칙: Mobile 은 **Bottom Nav = primary global navigation**, Top 은
+logo/back/page title/context action 중심. Desktop 은 header navigation 가능 —
+desktop 대응 header 를 mobile 에 그대로 중복 노출하지 않는다. 언어 전환
+위치/패턴도 route 별 일관성 확인. Interaction Sweep 에서 route 별 header 전수
+확인 후 최종 구현 범위 결정.
+
+### D. Living Map
+
+구현됨: Day tabs · Day 별 1부터 numbering · dotted visit flow.
+미완성: user photo marker · catalog photo fallback · Whole Trip · STOP sheet ·
+Directions · Add Photo · approved final interaction.
+
+Latest Owner contract: marker priority (1) user photo+number (2) catalog
+대표사진+number (3) number-only. photo shape — **circular crop 금지,
+사각형/원형태 유지**. numbering — **각 Day 1부터 reset, 누적 금지**.
+Whole Trip 필요. stop selection — place information + Directions + Add Photo.
+현재 Production 의 label overlap 도 함께 해결. Living Map 은 navigation app 이
+아니라 travel-memory visualization.
+
+### E. Story / Focus
+
+Story functional/data contract = PASS, visual fidelity = PARTIAL.
+Approved design 의 좋은 요소(photo-led rhythm · large photography · collage ·
+Day chapters · quote styling · journey summary · map/travel context ·
+end-of-trip emotional closure)를 **현재 Story contract 에 맞게** 복원/개선.
+old user-facing `Memory` terminology 는 되살리지 않는다. Story cover 는 orange
+gradient 가 photo-led 경험의 주인공이 되지 않도록 검토. privacy/public consent
+contract 유지.
+
+**Focus** — approved design 존재, Production NOT IMPLEMENTED. 정의:
+full-screen trip-moment viewer — segmented progress · k/N · DAY context ·
+full-bleed photo · place chip · short quote · swipe next moment. **구현 대상.**
+
+### F. Sharing (3 surfaces 분리 유지)
+
+**9:16** 현재 문제: huge orange/empty area · photography weak · 실제 user trip
+title 무시 · generic "{N} Days in {City}" · personality weak · template/poster
+feel. 방향: **photo protagonist + actual trip identity/title + concise trip
+line + quiet gokoreamate branding.** Living Map 억지 삽입 금지.
+
+**OG** 현재 문제: 임의 첫 catalog image(비대표 가능) · generic title ·
+홍보문 description("AI-generated... Plan yours free"). 방향: **shared trip
+자체가 주인공** — title 은 privacy contract 이 허용하는 실제 public trip title,
+description 은 짧고 안전한 trip 요약(days/places/city 또는 safe public memo),
+image 우선순위 = public/consented cover → 의도적으로 선정한 대표 catalog
+image → designed city fallback. 클릭 목적지 = 올바른 Shared Story. 광고 랜딩
+카드처럼 만들지 않는다.
+
+### G. AI Writing Quality
+
+Infrastructure/provider LIVE 이 quality CLOSED 를 의미하지 않는다. Audit 사실:
+title context 는 사실상 city+dates 뿐(장소/모먼트 부재), memo 는 상대적으로
+풍부, **draft 가 있으면 4개 locale 모두 품질이 실질 개선**. 근본 원인 =
+context poverty + 약한 style guidance (provider 가용성 아님).
+
+방향 — title context 에 안전하게 유용한 신호 포함: city · days · 대표 장소 ·
+category/moment 패턴 · public/safe moment context · 허용 범위의 photo-presence
+context · 사용자 draft/memo · distinctive trip pattern. 불필요한 private data
+전달 금지. Witty: generic travel-copy(웃음꽃·행복 가득·추억 가득·낭만·힐링·
+설렘·특별한 순간·잊지 못할 등) = FAIL. KO/EN/JA/ZH **locale-native 독립 작성**,
+번역식 humour 금지, meme/slang 은 맥락이 자연스러울 때만(강제 삽입 금지).
+Future: accepted/edit/regenerate 신호는 유용할 수 있으나 automatic training
+이라고 가정하지 않는다.
+
+### H. Opening Hours
+
+HC-2 engine CLOSED · KNOWN structured-hours 보호 active. 잔여 = NULL/UNKNOWN
+데이터 커버리지 갭. **데이터 재수집을 현재 remediation sequence 에 자동 삽입하지
+않는다** — Owner 별도 승인 시 high-value 대표 장소 중심으로만 검토.
+
+### I. Partner / Affiliate
+
+Owner 확인: 파트너사·다국어 정보 이미 준비됨. 현재 remediation 과 섞지 않는다.
+Timing: Visual/Product implementation → Production Acceptance 후
+Commercial/Affiliate E2E — 그때 추천1+대안1 표현 · placement/surface ·
+reason line · disclosure · 실제 deep-link 발급 · tracking parameter ·
+city/product landing · mobile click QA 를 함께 결정/검증한다.
+
+## Current Remediation Work Sequence — 2026-09-08 (Owner-approved)
+
+- **PHASE 1 — Documentation**: 이번 Owner+GPT findings 와 sequence 기록(본 태스크).
+- **PHASE 2 — Discovery/Explore Interaction Sweep**: Home → City Hub → Search →
+  Recommended Trip → Explore List → Explore Map → Full Map → Header/Nav.
+  방식: **first pass = 코드 읽기 전 blind Production 사용**, 모든 visible
+  interactive surface 실클릭, 지정 문제(A1~7 · B1~7 · C) 재현 + 지시서 밖 문제
+  자유 발견 → BLIND EXPLORATORY FINDINGS. 임의 수정 금지.
+- **PHASE 3 — Design/Product decisions**: A. Discovery(City Hub Blue/Fresh ·
+  Hero · compact Weather · Explore Map interaction) B. Sharing(9:16 ·
+  OG/link preview). 기존 approved Living Map/Story/Focus 는 latest Owner
+  contract 에 맞게 reuse.
+- **PHASE 4 — Discovery UX bundle**: City Hub visual · Hero · City Weather ·
+  Search unification · legacy Planner route fix · Essentials preview ·
+  Mobile header/nav.
+- **PHASE 5 — Explore Map bundle**: compact/collapsible controls · Bottom Sheet ·
+  full-map selection · current-location marker · recenter · control overlap ·
+  label collision.
+- **PHASE 6 — Travel Memory bundle**: Living Map final · Story visual fidelity ·
+  Focus.
+- **PHASE 7 — Sharing bundle**: 9:16 · OG/link preview.
+- **PHASE 8 — AI Writing quality**: richer safe context · locale-native guidance ·
+  generic-copy suppression · 실제 KO/EN/JA/ZH live QA.
+- **PHASE 9 — Production Visual/Product Acceptance**: Home → City Hub → Weather →
+  Search → Explore Map → Saved → Planner → My Trip → My Trip Weather →
+  Living Map → AI Writing → Story → Focus → 9:16 → Share URL → incognito →
+  + My Trip 직접 browser E2E.
+- **PHASE 10 — Commercial/Affiliate E2E.**
+- **PHASE 11 — AI/API Cost/Abuse Guard.**
+- **PHASE 12 — Pre-open removal + Final Release Readiness.**
+
+## QA Method — New Default (2026-09-08)
+
+앞으로 final product QA 는:
+
+1. **BLIND UX PASS** — 코드 먼저 읽지 않고 Production 을 사용자처럼 먼저 사용.
+2. **INTERACTIVE SURFACE SWEEP** — 버튼/card/link/More/map/search 전부 실클릭.
+3. **CONTRACT PASS** — approved design/latest Owner contract 와 비교.
+4. **TECHNICAL DIAGNOSIS** — 그 다음에야 code/git/history 분석.
+5. **OWNER + GPT VISUAL REVIEW** — 시각/제품 품질은 Fable PASS 보고만으로 종료 금지.
+6. **FIX** — product meaning 을 바꾸지 않는 결함만 자동 수정 가능.
+7. **PRODUCTION RE-QA.**
+
+원칙: **"기능이 동작한다" 와 "사용자가 만족할 제품이다" 를 별도로 평가**한다.
+발견했다고 제품 의미를 마음대로 바꾸지 않되, 좋은 아이디어/중요한 문제는
+지나치지 않고 반드시 OWNER ATTENTION 으로 적극 보고한다.
+
+
+## 12. STATUS TABLE (2026-09-08 post-audit update)
 
 | Surface / Item | Status |
 |---|---|
@@ -380,21 +575,34 @@ master `c4c8ab4`): KNOWN {open,close} 를 후보·This Trip 픽에 부착해 엔
 | External URL Import | LIVE / CLOSED |
 | My Trip core | LIVE / CLOSED |
 | Journey Guide | LIVE / CLOSED |
-| My Trip ↔ Story data contract | LIVE / CLOSED |
+| My Trip - Story data contract | LIVE / CLOSED |
 | Shared Story functional | LIVE / CLOSED |
 | + My Trip | LIVE / CLOSED |
-| Blog / Events / Essentials | LIVE / CLOSED |
+| Blog / Events / Essentials functional | LIVE / CLOSED |
 | Golden Path functional loop | PASS |
-| Planner Opening Hours HC-2 | CLOSED (2026-09-08, c4c8ab4 — KNOWN 595곳 적용·UNKNOWN fallback 유지) |
-| City Hub final visual | AUDIT REQUIRED |
-| City Hub Weather | NOT CURRENTLY IMPLEMENTED / OWNER CONTRACT CONFIRMED |
-| My Trip Weather | KEEP / STAGE A / CONNECTION AUDIT REQUIRED |
-| Living Map | AUDIT REQUIRED |
-| Story final visual fidelity | AUDIT REQUIRED |
-| 9:16 Share Image | VISUAL AUDIT REQUIRED |
-| Share Link Preview / OG | AUDIT REQUIRED |
+| HC-2 engine | CLOSED (2026-09-08, c4c8ab4) |
+| Opening-hours data coverage | KNOWN GAP / NOT CURRENT PRIORITY |
+| City Hub final visual | OPEN |
+| City Hub Hero | OPEN |
+| City Hub Weather | OPEN |
+| My Trip Weather STAGE B | OPEN (KEEP — 삭제/대체 금지) |
+| Discovery Search consistency | OPEN |
+| Recommended Trip legacy route | **HIGH-PRIORITY DEFECT** |
+| Essentials preview diversity | OPEN |
+| Mobile Header/Nav | AUDIT REQUIRED |
+| Explore Map mobile viewport | OPEN |
+| Explore Map Bottom Sheet | OPEN |
+| Explore Full Map selection | **DEFECT** |
+| Explore current-location indicator | OPEN |
+| Explore recenter | OPEN |
+| Explore label collision | OPEN |
+| Living Map final | PARTIAL / OPEN |
+| Story visual fidelity | PARTIAL / OPEN |
+| Focus | NOT IMPLEMENTED / OPEN |
+| 9:16 Share Image | WEAK / OPEN |
+| OG Share Preview | WEAK / OPEN |
 | AI Writing infrastructure | LIVE |
-| AI Writing witty quality | AUDIT / IMPROVEMENT REQUIRED |
-| Commercial / Affiliate E2E | NOT YET ACCEPTED / SEPARATE LATER TASK |
-| AI/API cost guard | OPEN |
-| Final Release Readiness | OPEN |
+| AI Writing quality | OPEN |
+| Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
+| AI/API cost guard | OPEN (PHASE 11) |
+| Final Release | OPEN (PHASE 12) |
