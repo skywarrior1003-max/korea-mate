@@ -193,6 +193,27 @@ export function fixedFitsHardBoundary(
   return e <= 24 * 60;
 }
 
+/**
+ * HC-2 — 고정 시각이 그 장소의 **알려진** 운영시간 안인가.
+ *
+ * KNOWN(구조화 {open, close})만 판정한다. 값이 없거나(UNKNOWN) 형식이 깨졌으면
+ * (HH:MM 아님·open>=close — 이 스키마가 표현 못 하는 야간영업 포함) 추측하지
+ * 않고 true 를 돌려준다: "영업중 보장" 이 아니라 "알려진 폐관 시간에 강제
+ * 배치하지 않는다" 가 이 함수의 전부다.
+ */
+export function fixedFitsOpeningHours(
+  fixed: CartFixed,
+  hours: { open: string; close: string } | null | undefined,
+): boolean {
+  if (!hours) return true;
+  const open  = timeToMinutes(hours.open);
+  const close = timeToMinutes(hours.close);
+  if (Number.isNaN(open) || Number.isNaN(close) || open >= close) return true; // malformed → safe UNKNOWN
+  const s = timeToMinutes(fixed.startTime);
+  if (Number.isNaN(s)) return false;
+  return s >= open && s + fixed.durationMinutes <= close;
+}
+
 /** 서로 시간이 겹치는 고정 일정 쌍이 있는가. 같은 날짜끼리만 본다. */
 export function hasFixedOverlap(list: readonly CartFixed[]): boolean {
   const byDate = new Map<string, { s: number; e: number }[]>();

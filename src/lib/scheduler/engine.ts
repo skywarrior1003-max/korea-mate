@@ -28,6 +28,7 @@ import type { DayQuality } from "./types.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
   hc1NoDuplicate,
+  hc2OperatingHours,
   hc3TravelFits,
   hc4StayFits,
   hc6WithinDayWindow,
@@ -395,6 +396,13 @@ function scheduleOnce(input: SchedulerInput, weights: ClusterWeights): Scheduler
             placeStart = later.start_minutes;
           }
         }
+
+        // ── HC-2: 알려진 운영시간 밖 배치 금지 ────────────────────────────────
+        // placeStart 가 최종 확정된 지점(식사 미루기 반영 후)에서 잰다.
+        // This Trip 픽(score 999)도 똑같이 걸린다 — 사용자가 골랐다고 폐관한
+        // 곳에 놓아 주는 것은 도와주는 게 아니다. AI 취향 가중치는 점수만
+        // 바꾸므로 이 필터를 이길 수 없다(Rule feasibility > AI preference).
+        if (hc2OperatingHours(c, placeStart, stayMin) !== null) continue;
 
         // ── HC-8: 다음 배치 항목까지 이동할 시간 ──────────────────────────────
         // 체류가 gap 을 꽉 채우면 다음 항목 시작 시각에 이동시간이 0 분이 된다.

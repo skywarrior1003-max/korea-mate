@@ -446,6 +446,8 @@
     "noteNearby": "在你选的地点附近补充了一些临近的地方。",
     "fixedOutTitle": "有些指定时间超出了当天的行程时间段，未能安排。",
     "fixedOutHint": "请在“精选”中调整日期或时间。",
+    "fixedHoursTitle": "有些指定时间超出了该地点的已知营业时间，未能安排。",
+    "fixedHoursHint": "请在“精选”中调整为营业时间内的时间。",
     "fallbackBanner": "目前无法使用个性化排序，已为你准备 gokoreamate 标准推荐行程。",
     "sharedNotice": "你正在查看共享行程。在这里所做的更改会同步到此链接。",
     "mapOrderHint": "虚线表示游览顺序。实际导航请打开地点并使用 Naver 或 Google 地图。",

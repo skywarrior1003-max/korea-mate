@@ -18,6 +18,7 @@
 import type { ScheduledItem, SchedulerInput, Coordinate } from "./types.ts";
 import { timeToMinutes, minutesToTime, haversineDistance } from "./utils.ts";
 import { estimateTravelMinutes } from "./travel-time-estimator.ts";
+import { hc2OperatingHours } from "./constraint-validator.ts";
 import { isFoodCategory, activeMealWindows, mealWindowAt, type MealWindow } from "./meal-opportunity.ts";
 
 export const REORDER_BRUTE_FORCE_MAX = 7;
@@ -133,6 +134,12 @@ export function reorderFlexibleSegments(placed: ScheduledItem[], input: Schedule
         if (start === null) return null;
         const end = start + n.item.stay_minutes;
         if (end > dayEnd) return null;                                              // HC-6
+        // HC-2: 재계산된 시각도 알려진 운영시간 안이어야 한다 — greedy 가 14시에
+        // 놓은 박물관을 이 pass 가 18:30 으로 옮기면 필터가 무의미해진다.
+        if (n.item.item_type === "place" && n.item.place_id) {
+          const cand = input.candidates.find(c => c.place_id === n.item.place_id);
+          if (cand && hc2OperatingHours(cand, start, n.item.stay_minutes) !== null) return null;
+        }
         rebuilt.push({ ...n.item, start_time: minutesToTime(start), end_time: minutesToTime(end), travel_minutes_from_prev: travel });
         t = end; prev = n.coord;
       }

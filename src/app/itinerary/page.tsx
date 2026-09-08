@@ -409,7 +409,7 @@ async function generateWithNewApi(
   tripPace?: TripPaceChoice,
   /** 도착 지점 종류(city-presets type). far-airport 판정에만 쓴다. */
   arrivalType?: string,
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; fixedOutOfHoursNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -433,6 +433,8 @@ async function generateWithNewApi(
 
   // 하루 시간 창 밖으로 지정된 고정 일정. 조용히 무시하지 않고 이름을 알린다.
   const fixedOutOfWindowNames: string[] = [];
+  // HC-2 — 고정 시각이 그 장소의 알려진 운영시간 밖. 별도 문구로 이유를 알린다.
+  const fixedOutOfHoursNames: string[] = [];
 
   // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
   const cartHints = cart
@@ -448,6 +450,9 @@ async function generateWithNewApi(
       duration_min:        item.recommendedDurationMinutes,
       preferred_time_slot: toPreferredTimeSlot(item.bestTimeSlot),
       name:                item.name,
+      // HC-2 — 알려진 구조화 운영시간. 픽/고정 모두 이 값으로만 판정하고,
+      // 없으면(UNKNOWN) 제약하지 않는다. raw 문자열은 이 경계를 넘지 않는다.
+      openingHours:        item.openingHours ?? null,
       // 고정 일정. preferred_time_slot 과 다른 축이다 — 저쪽은 취향, 이쪽은 사실.
       // plan API 로는 보내지 않고 이 루프 안에서 anchors 로만 바뀐다.
       fixed:               item.fixed ?? null,
@@ -635,6 +640,9 @@ async function generateWithNewApi(
     const todayAnchors   = anchorPlan.anchors;
     for (const h of anchorPlan.outOfBoundary) {
       fixedOutOfWindowNames.push(h.name ?? "");
+    }
+    for (const h of anchorPlan.outOfHours) {
+      fixedOutOfHoursNames.push(h.name ?? "");
     }
 
     // TASK-057-B2-2: Override NearMe search center to My Pick cluster centroid when safe.
@@ -945,7 +953,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime };
 }
 
 function getCategoryColor(category: string): string {
@@ -1449,6 +1457,8 @@ function ItineraryResult() {
    */
   const [needsReduction, setNeedsReduction] = useState<{ key: string; name: string }[]>([]);
   const [fixedOutOfWindow, setFixedOutOfWindow] = useState<string[]>([]);
+  // HC-2 — 고정 시각이 그 장소의 알려진 운영시간 밖. 위와 같은 계약, 다른 이유.
+  const [fixedOutOfHours, setFixedOutOfHours] = useState<string[]>([]);
   const [unplacedPicks, setUnplacedPicks] = useState<{ key: string; name: string; hasFixed: boolean }[]>([]);
   // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
   const [tripNotes,        setTripNotes]        = useState<string[]>([]);
@@ -1849,7 +1859,7 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace, paramArrivalType || undefined)
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, fixedOutOfHoursNames: outOfHours, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
               // 여행 전체가 끝난 뒤 한 번만 판정한다. 남은 곳이 있으면 이 결과를
               // 일정으로 확정하지 않는다 — setDays 를 하지 않으면 저장 effect 도
               // 시작되지 않는다.
@@ -1870,6 +1880,7 @@ function ItineraryResult() {
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               if (skipped.length > 0) setSkippedCartNames(skipped);
               if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
+              if (outOfHours.length > 0) setFixedOutOfHours(outOfHours);
               setUnplacedPicks(unplaced);
               const notes: string[] = [];
               if (deferred)     notes.push("noteDeferred");   // itin.noteDeferred — 렌더 시 t() 로 푼다
@@ -1905,7 +1916,7 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace, paramArrivalType || undefined)
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, fixedOutOfHoursNames: outOfHours, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
           const reduce = reduciblePicks(unplaced, outOfWindow);
           if (reduce.length > 0) {
             if (skipped.length > 0) setSkippedCartNames(skipped);
@@ -1924,6 +1935,7 @@ function ItineraryResult() {
           // SEOUL-PLANNER-FINAL-QA-V1: 이 콜백만 이 두 줄이 빠져 있어, 창 밖
           // 고정 일정이 알림 없이 조용히 사라졌다(위 1852 콜백과 동일해야 한다).
           if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
+          if (outOfHours.length > 0) setFixedOutOfHours(outOfHours);
           setUnplacedPicks(unplaced);
           const notes: string[] = [];
           if (deferred)     notes.push("noteDeferred");   // itin.noteDeferred — 렌더 시 t() 로 푼다
@@ -2741,6 +2753,24 @@ function ItineraryResult() {
           </ul>
           <p className="mt-2 text-xs text-orange-500">
             {t("fixedOutHint")}
+          </p>
+        </div>
+      )}
+
+      {/* HC-2 — 고정 시각이 그 장소의 알려진 운영시간 밖. 강제 배치도, 몰래 시간
+          변경도 하지 않았다는 사실을 이유와 함께 알린다. */}
+      {fixedOutOfHours.length > 0 && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
+          <p className="text-sm font-bold text-orange-700 mb-1">
+            {t("fixedHoursTitle")}
+          </p>
+          <ul className="mt-1.5 space-y-0.5">
+            {fixedOutOfHours.map(name => (
+              <li key={name} className="text-xs text-orange-600 font-medium">· {name}</li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-orange-500">
+            {t("fixedHoursHint")}
           </p>
         </div>
       )}

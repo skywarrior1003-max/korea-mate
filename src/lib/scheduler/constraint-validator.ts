@@ -29,12 +29,40 @@ export function hc1NoDuplicate(
   return null;
 }
 
-// HC-2: Operating hours (stub — opening_hours field not yet in DB per TASK-011 note)
-// Always passes until opening_hours is available.
+// HC-2: Operating hours (HC2-PRODUCTION-V1 — TASK-011 stub 해소)
+//
+// KNOWN(구조화 {open, close})만 본다. 방문 전체 구간 [start, start+stay] 이
+// 영업 창 안에 들어야 배치한다 — 폐관 18:00 에 17:30+60분 방문은 FAIL 이다.
+//
+// UNKNOWN 은 그대로 통과한다: NULL·raw-only 는 애초에 openingHours 로 오지
+// 않고, 형식이 깨진 값(HH:MM 아님·open>=close 등 이 스키마가 표현 못 하는
+// 야간영업 형태 포함)은 추측하지 않고 안전하게 UNKNOWN 취급한다.
+// "열려 있다고 보장" 하는 게 아니라 "알려진 폐관 시간에 놓지 않는다" 뿐이다.
+const HHMM = /^(\d{1,2}):(\d{2})$/;
+function hoursToMinutes(t: string): number | null {
+  const m = HHMM.exec(t.trim());
+  if (!m) return null;
+  const h = Number(m[1]), min = Number(m[2]);
+  if (h > 24 || min > 59) return null;
+  return h * 60 + min;
+}
+
 export function hc2OperatingHours(
-  _candidate: NearMeCandidate,
-  _proposedStartMinutes: number
+  candidate: Pick<NearMeCandidate, "place_id" | "openingHours">,
+  proposedStartMinutes: number,
+  stayMinutes: number
 ): ConflictError | null {
+  const hours = candidate.openingHours;
+  if (!hours) return null;                          // UNKNOWN → 기존 fallback 유지
+  const open  = hoursToMinutes(hours.open);
+  const close = hoursToMinutes(hours.close);
+  if (open === null || close === null || open >= close) return null; // malformed → safe UNKNOWN
+  if (proposedStartMinutes < open || proposedStartMinutes + stayMinutes > close) {
+    return {
+      code: "HC-2",
+      message: `Place ${candidate.place_id} visit ${proposedStartMinutes}+${stayMinutes}min is outside known hours ${hours.open}-${hours.close}.`,
+    };
+  }
   return null;
 }
 

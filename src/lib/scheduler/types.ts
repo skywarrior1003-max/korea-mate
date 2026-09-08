@@ -41,6 +41,13 @@ export interface NearMeCandidate {
   zone_id: ZoneId;
   score: number;
   stay_minutes_override?: number; // from route_template if set
+  /**
+   * HC-2 (구조화 운영시간). city_spots.opening_hours 의 structured 값만 온다 —
+   * raw 문자열은 표시 전용이라 이 계층에 오지 않는다(opening-hours.ts 계약).
+   * 없으면(UNKNOWN) 제약을 걸지 않는다 — "영업중 보장" 이 아니라 "알려진
+   * 폐관 시간에 놓지 않는다" 가 이 필드의 전부다.
+   */
+  openingHours?: { open: string; close: string } | null;
 }
 
 // ─── Scheduler Input ──────────────────────────────────────────────────────────

@@ -8,7 +8,7 @@
 // 빼 버리면 엔진이 그 장소의 위치를 모르게 되고, 지금의 fail-closed 규칙에
 // 걸려 그 앞뒤 시간이 통째로 비워진다.
 
-import { fixedEndTime, fixedFitsHardBoundary } from "./fixed-core.ts";
+import { fixedEndTime, fixedFitsHardBoundary, fixedFitsOpeningHours } from "./fixed-core.ts";
 import type { CartFixed } from "../cart.ts";
 
 /** 이 계층이 필요로 하는 것만. 화면의 CartItem 전체를 알 필요가 없다. */
@@ -17,6 +17,8 @@ export interface FixedHintLike {
   lat:      number;
   lng:      number;
   fixed?:   CartFixed | null;
+  /** HC-2 — 알려진 구조화 운영시간. 없으면 UNKNOWN 으로 취급해 제약하지 않는다. */
+  openingHours?: { open: string; close: string } | null;
 }
 
 export interface BuiltAnchor {
@@ -40,6 +42,14 @@ export interface DayAnchorPlan<T extends FixedHintLike> {
    * 정한 것을 09시에 놓아 주는 것은 도와주는 게 아니다.
    */
   outOfBoundary: T[];
+  /**
+   * HC-2 — 고정 시각이 그 장소의 **알려진 운영시간 밖**인 고정 일정.
+   *
+   * outOfBoundary 와 같은 취급이다: anchor 로 강제 배치하지 않고, 시간을 몰래
+   * 바꾸지도 않고, 오늘 일반 후보로도 내려보내지 않는다 — 사용자에게는 별도
+   * 문구로 "운영시간 밖" 이라는 이유를 알린다.
+   */
+  outOfHours: T[];
 }
 
 /**
@@ -60,6 +70,7 @@ export function planDayAnchors<T extends FixedHintLike>(
   const keep: T[] = [];
   const drop: T[] = [];
   const outOfBoundary: T[] = [];
+  const outOfHours: T[] = [];
 
   for (const h of hints) {
     const f = h.fixed;
@@ -69,6 +80,12 @@ export function planDayAnchors<T extends FixedHintLike>(
       // 배치할 수 없다는 사실만 알린다. 후보 풀에서도 빼서 다른 시각에
       // 슬그머니 놓이는 일을 막는다.
       outOfBoundary.push(h);
+      continue;
+    }
+    if (!fixedFitsOpeningHours(f, h.openingHours)) {
+      // HC-2: 알려진 폐관 시간에 강제 배치하지 않는다. 시간을 몰래 바꾸지도,
+      // 조용히 지우지도 않는다 — 이름을 별도 문구로 알린다.
+      outOfHours.push(h);
       continue;
     }
 
@@ -81,7 +98,7 @@ export function planDayAnchors<T extends FixedHintLike>(
     keep.push(h);
   }
 
-  return { anchors, keep, drop, outOfBoundary };
+  return { anchors, keep, drop, outOfBoundary, outOfHours };
 }
 
 /**
@@ -95,8 +112,8 @@ export function mergeDayHints<T extends FixedHintLike>(
   distanceFiltered: readonly T[],
   plan:             DayAnchorPlan<T>,
 ): T[] {
-  // 다른 날 고정 + 경계를 벗어난 고정. 둘 다 오늘 일반 후보가 되면 안 된다.
-  const dropped = new Set([...plan.drop, ...plan.outOfBoundary].map(h => h.place_id));
+  // 다른 날 고정 + 경계를 벗어난 고정 + 운영시간 밖 고정. 오늘 일반 후보가 되면 안 된다.
+  const dropped = new Set([...plan.drop, ...plan.outOfBoundary, ...plan.outOfHours].map(h => h.place_id));
   const out = distanceFiltered.filter(h => !dropped.has(h.place_id));
   const present = new Set(out.map(h => h.place_id));
   for (const h of plan.keep) {

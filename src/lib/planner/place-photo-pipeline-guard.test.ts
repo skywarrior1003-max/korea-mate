@@ -40,11 +40,13 @@ test("P2: PlaceDisplay 매핑이 image_url 을 image 로 전달하고 빈 값은
 });
 
 test("P3: 스케줄링 후보 select 는 image 를 모른다 — 일정 선택에 영향 불가", () => {
+  // HC2-PRODUCTION-V1: opening_hours 는 배치 가능성(feasibility) 값이라 후보
+  // select 에 들어간다. image 금지 의도는 그대로다 — 표시용 값은 여전히 없다.
   assert.ok(
-    planSrc.includes('.select("id, category, lat, lng, district, tags")'),
-    "후보 조회 select 가 기존 그대로여야 한다",
+    planSrc.includes('.select("id, category, lat, lng, district, tags, opening_hours")'),
+    "후보 조회 select 가 승인된 형태(HC-2 opening_hours 포함) 그대로여야 한다",
   );
-  const candidateSelect = planSrc.indexOf('.select("id, category, lat, lng, district, tags")');
+  const candidateSelect = planSrc.indexOf('.select("id, category, lat, lng, district, tags, opening_hours")');
   assert.ok(candidateSelect >= 0);
   assert.ok(
     !planSrc.slice(candidateSelect, candidateSelect + 60).includes("image"),
@@ -100,15 +102,27 @@ test("S2: image 없는 legacy place 와 섞여 있어도 유효하다 (하위 �
 
 // ── 공개/복사 경계 (Case B — 이번 TASK 에서 확장하지 않음) ────────────────────
 
-test("B1: 공개 serializer 는 place image 를 내보내지 않는다", () => {
+// (SHARED-STORY-RICH-EXPERIENCE-V1, Owner 승인) 공개 serializer 는 **canonical
+// city_spot 의 카탈로그 image 만** 화이트리스트로 내보낸다 — 공개 장소 페이지에
+// 이미 노출되는 공식 이미지다. 이 가드의 원래 의도(사용자 사진이 공개로 새는 것
+// 금지)는 그대로다: canonical 이 아닌 장소의 image 는 여전히 내보내지 않는다.
+test("B1: 공개 serializer 는 canonical 카탈로그 image 만 내보낸다", () => {
   const out = publicPlace(V2_DAYS.scheduled[0].places[0]);
-  assert.equal("image" in out, false, "공개 place 에 image 가 나가면 공개 계약 무단 확장이다");
+  assert.equal(out.image, "https://img.example/haeundae.jpg", "canonical image 는 공유 Story 뼈대용으로 승인됨");
   assert.equal(out.name, "Haeundae Beach");
+  // canonical 이 아니면(user_spot 가능성) image 는 절대 나가지 않는다
+  const nonCanonical = publicPlace({ name: "My Bench", source: "user_spot", image: "https://img.example/personal.jpg" });
+  assert.equal("image" in nonCanonical, false, "비 canonical place 의 image 유출은 privacy 위반이다");
 });
 
-test("B2: 공개 days 전체 직렬화에도 image 가 없다", () => {
-  const s = JSON.stringify(serializePublicDays(V2_DAYS));
-  assert.ok(!s.includes("img.example"), "공개 days 에 image 값이 새면 안 된다");
+test("B2: 공개 days 직렬화에 canonical 외 image 가 없다", () => {
+  const withUserSpot = { ...V2_DAYS, scheduled: [{ ...V2_DAYS.scheduled[0], places: [
+    ...V2_DAYS.scheduled[0].places,
+    { name: "My Bench", source: "user_spot", image: "https://img.example/personal.jpg" },
+  ] }] };
+  const s = JSON.stringify(serializePublicDays(withUserSpot));
+  assert.ok(s.includes("img.example/haeundae.jpg"), "canonical 카탈로그 image 는 나간다(승인 계약)");
+  assert.ok(!s.includes("img.example/personal.jpg"), "user_spot image 가 새면 안 된다");
 });
 
 test("B3: 복사본 days 에도 image 가 새지 않는다 (기존 복사 계약 유지)", () => {

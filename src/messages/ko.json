@@ -446,6 +446,8 @@
     "noteNearby": "고른 장소 주변의 가까운 곳을 함께 넣었어요.",
     "fixedOutTitle": "정한 시간이 그날 일정 시간대를 벗어나 넣지 못한 장소가 있어요.",
     "fixedOutHint": "픽에서 날짜나 시간을 조정해 주세요.",
+    "fixedHoursTitle": "정한 시간이 그 장소의 알려진 운영시간 밖이라 넣지 못한 장소가 있어요.",
+    "fixedHoursHint": "픽에서 운영시간 안의 시간으로 조정해 주세요.",
     "fallbackBanner": "지금은 맞춤 정렬을 쓸 수 없어 gokoreamate 기본 추천 일정으로 준비했어요.",
     "sharedNotice": "공유받은 일정을 보고 있어요. 여기서 바꾼 내용은 이 링크에 그대로 반영됩니다.",
     "mapOrderHint": "지도 위 점선은 방문 순서 연결이에요. 실제 길찾기는 장소를 눌러 Naver·Google 지도로 이동하세요.",

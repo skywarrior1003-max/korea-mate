@@ -34,6 +34,8 @@ export interface CartCoordHint {
   duration_min:         number;
   preferred_time_slot?: "morning" | "afternoon" | "evening";
   name?:                string;
+  /** HC-2 — 픽의 구조화 운영시간. UNKNOWN 은 null/생략 → 제약하지 않는다. */
+  openingHours?:        { open: string; close: string } | null;
   affiliate_url?:       string | null;
   affiliate_provider?:  string | null;
   booking_url?:         string | null;

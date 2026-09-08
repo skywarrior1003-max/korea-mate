@@ -57,6 +57,8 @@ export async function runTripPlan(input: TripPlanInput): Promise<TripPlanRespons
       zone_id:               zoneId,
       score:                 999,
       stay_minutes_override: hint.duration_min > 0 ? hint.duration_min : undefined,
+      // HC-2 — plan.ts(CF Function 판)와 같은 계약. UNKNOWN 은 null.
+      openingHours:          hint.openingHours ?? null,
     };
   });
 

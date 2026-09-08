@@ -29,6 +29,7 @@ import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affilia
 import { TRIP_FLOW_COMMERCE_ENABLED } from "../../../src/config/commerce-surfaces";
 import { validateProfile } from "../../../src/lib/scheduler/ai/personalization-profile";
 import { applyVisibility } from "../../../src/lib/city-spots-visibility";
+import { structuredOpeningHours } from "../../../src/lib/opening-hours";
 import { collectAllKeyset } from "../../../src/lib/city-spots-paging";
 
 // ── Inline types ──────────────────────────────────────────────────────────────
@@ -53,6 +54,8 @@ interface CartHint {
   duration_min:         number;
   preferred_time_slot?: "morning" | "afternoon" | "evening";
   name?:                string;
+  /** HC-2 — 픽의 구조화 운영시간(cart EventItem.openingHours 그대로). UNKNOWN 은 null/생략. */
+  openingHours?:        { open: string; close: string } | null;
   affiliate_url?:       string | null;
   affiliate_provider?:  string | null;
   booking_url?:         string | null;
@@ -133,10 +136,13 @@ async function runNearMeDirect(
     trip_pace?:        TripPaceChoice;
   },
   env: Record<string, string | undefined>,
-): Promise<{ results: any[]; nearMeCount: number }> {
+): Promise<{ results: any[]; nearMeCount: number; hoursById: Map<string, { open: string; close: string } | null> }> {
   const allCategories = (input.categories as any[]) ?? ALL_PLACE_CATEGORIES;
 
   let rawRows: NearMePlaceRow[] = [];
+  // HC-2: 후보별 구조화 운영시간. 공급 파이프라인(candidate-supply)은 좌표·점수만
+  // 다루므로 그쪽을 바꾸지 않고, 조회한 행에서 place_id 로 되찾아 붙인다.
+  const hoursById = new Map<string, { open: string; close: string } | null>();
   const supabaseUrl  = env.NEXT_PUBLIC_SUPABASE_URL ?? "";
   const supabaseAnon = env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
@@ -164,7 +170,7 @@ async function runNearMeDirect(
           const res = await applyVisibility(
             client
               .from("city_spots")
-              .select("id, category, lat, lng, district, tags")
+              .select("id, category, lat, lng, district, tags, opening_hours")
               .in("category", dbCategories)
               .not("lat", "is", null)
               .not("lng", "is", null)
@@ -184,14 +190,18 @@ async function runNearMeDirect(
 
       if (!error && Array.isArray(data)) {
         // P0 coordinate gate: 좌표가 "존재" 하는 것과 "쓸 수 있는" 것은 다르다 — 범위 밖·NaN·(0,0) 행은 후보에서 뺀다.
-        rawRows = (data as any[]).filter(row => isSchedulableCoordinate(row.lat, row.lng)).map(row => ({
-          place_id: String(row.id),
-          category: String(row.category),
-          lat:      row.lat as number,
-          lng:      row.lng as number,
-          district: row.district as string | null,
-          tags:     row.tags as string[] | null,
-        }));
+        rawRows = (data as any[]).filter(row => isSchedulableCoordinate(row.lat, row.lng)).map(row => {
+          // structured {open, close} 만 담는다 — raw 문자열은 표시 전용(opening-hours.ts 계약)
+          hoursById.set(String(row.id), structuredOpeningHours(row.opening_hours ?? null));
+          return {
+            place_id: String(row.id),
+            category: String(row.category),
+            lat:      row.lat as number,
+            lng:      row.lng as number,
+            district: row.district as string | null,
+            tags:     row.tags as string[] | null,
+          };
+        });
       }
     } catch {
       // fall through to mock
@@ -211,7 +221,7 @@ async function runNearMeDirect(
     exclude_place_ids: input.exclude_place_ids,
     trip_pace:         input.trip_pace,
   });
-  return { results, nearMeCount };
+  return { results, nearMeCount, hoursById };
 }
 
 // ── Place display map ─────────────────────────────────────────────────────────
@@ -403,7 +413,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     mergedPreferenceIds.length > 0 ? mergedPreferenceIds : undefined;
 
   const _tm1 = Date.now();
-  const { results: nearMeResults, nearMeCount } = await runNearMeDirect({
+  const { results: nearMeResults, nearMeCount, hoursById } = await runNearMeDirect({
     coordinate,
     timestamp,
     categories,
@@ -417,7 +427,9 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
 
   _tm.nearMe = Date.now() - _tm1;
   // 7. Adapt Near Me results to scheduler candidates
-  const baseCandidates = adaptToSchedulerCandidates(nearMeResults as any);
+  // HC-2: 조회 행의 구조화 운영시간을 place_id 로 되찾아 붙인다(UNKNOWN → null).
+  const baseCandidates = adaptToSchedulerCandidates(nearMeResults as any)
+    .map(c => ({ ...c, openingHours: hoursById.get(String(c.place_id)) ?? null }));
 
   // 8. Cart candidates (score=999, always placed first)
   // This Trip hint 도 같은 게이트 — 클라이언트가 이미 걸러 안내하지만(skippedCartNames), 서버는 신뢰하지 않는다.
@@ -432,6 +444,9 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
       zone_id:               zoneId,
       score:                 999,
       stay_minutes_override: hint.duration_min > 0 ? hint.duration_min : undefined,
+      // HC-2: This Trip 픽도 알려진 폐관 시간에는 놓지 않는다(§6). 값이 오면 그대로,
+      // 없으면 UNKNOWN(null) — 서버가 형식 검증은 hc2 쪽 safe-parse 에 맡긴다.
+      openingHours:          hint.openingHours ?? null,
     };
   });
 
