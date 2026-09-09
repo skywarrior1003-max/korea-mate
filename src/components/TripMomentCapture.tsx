@@ -18,6 +18,8 @@ interface Props {
   dayNumber:   number | null;
   /** AI 글쓰기 맥락용 도시명(여행의 city). 표시/저장에는 쓰지 않는다 */
   city?:       string | null;
+  /** AI 글쓰기 맥락용 여행 제목 — 메모의 어조 재료(저장에는 쓰지 않는다) */
+  tripTitle?:  string | null;
   /**
    * 일정 장소에서 시작한 순간 (TASK-TRIP-MOMENT-STOP-BINDING-V1).
    * 장소명은 미리 채워 두고, 공식 장소의 `city_spot_id` 는 화면에 보이지 않는
@@ -37,7 +39,7 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, tripTitle, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   // 기록 시각 미리보기도 UI locale 을 따른다 (Timeline 과 같은 결함 수정).
   const locale = useLocale();
@@ -372,6 +374,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
                   dayNumber,
                   hasPhoto: photoData !== null,
                   draft: memo.trim() || null,
+                  tripTitle: (tripTitle ?? "").trim() || null,
                 })}
                 onSuggestion={text => setMemo(text.slice(0, 300))}
               />

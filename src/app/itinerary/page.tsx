@@ -40,6 +40,7 @@ import WeatherLinkChip, { type DayForecast } from "@/components/planner/WeatherL
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import AiWritingAssist from "@/components/AiWritingAssist";
+import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo, setMomentPublic } from "@/lib/trip-moments";
@@ -2863,6 +2864,9 @@ function ItineraryResult() {
                   city,
                   dates: `${startDate} – ${endDate}`,
                   draft: titleInput.trim() || null,
+                  // 실제 일정에서 셈한 여행 패턴 — "이 여행에서만 나올 제목" 의 재료
+                  // (AI-WRITING-QUALITY-PRODUCTION-V1; 좌표·숙소명·내부 id 없음)
+                  tripFacts: deriveTripWritingFacts(days),
                 })}
                 onSuggestion={text => setTitleInput(text.slice(0, 60))}
               />
@@ -3999,6 +4003,7 @@ function ItineraryResult() {
           itineraryId={itinId}
           deviceId={getDeviceId()}
           city={city}
+          tripTitle={tripTitle}
           dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
           initialPlaceName={captureStop?.placeName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}

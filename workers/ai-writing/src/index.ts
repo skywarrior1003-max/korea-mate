@@ -66,6 +66,7 @@ interface ProviderOutcome {
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
   apiKey: string, prompt: string, target: "title" | "memo",
+  direction?: "calm" | "witty" | "warm",
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -77,7 +78,7 @@ async function callProvider(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt)),
+        body: JSON.stringify(buildProviderBody(prompt, direction)),
       },
     );
     clearTimeout(timer);
@@ -135,7 +136,7 @@ export default {
       };
       const prompt = buildWritingPrompt(fixed);
       const [outcome, colo] = await Promise.all([
-        callProvider(apiKey, prompt, fixed.target),
+        callProvider(apiKey, prompt, fixed.target, fixed.direction),
         executionColo(),
       ]);
       log({ kind: "canary", ai_status: outcome.ai_status, httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo, err: outcome.errSnippet });
@@ -194,7 +195,7 @@ export default {
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, buildWritingPrompt(body), body.target),
+      callProvider(apiKey, buildWritingPrompt(body), body.target, body.direction),
       executionColo(),
     ]);
     log({

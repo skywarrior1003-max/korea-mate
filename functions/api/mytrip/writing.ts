@@ -92,7 +92,7 @@ async function viaDirect(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt)),
+        body: JSON.stringify(buildProviderBody(prompt, body.direction)),
       },
     );
     clearTimeout(timer);

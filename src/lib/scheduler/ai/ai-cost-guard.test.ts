@@ -309,8 +309,12 @@ test("★신규 personalize 가 유일한 AI 진입점이다", () => {
   // URL 을 갖는 것은 둘뿐이다 — legacy(위 테스트가 전용 게이트 강제)와
   // mytrip/writing(승인 기능: Production 은 서울 Worker binding 경유가 우선이고,
   // 직결 코드는 binding 없는 로컬 dev/테스트 fallback 전용 + 자체 kill switch).
+  // import/analyze 는 승인된 URL Import 엔진의 provider 진입점이다(자체 게이트 보유).
+  // 이 guard 는 "허용 목록 밖의 새 진입점" 을 막는 것이지, 승인 기능을 되돌리는
+  // 것이 아니다 — 목록 누락으로 master 에서 계속 실패하던 것을 정합화(2026-09-09).
   assert.deepEqual(hits.sort(), [
     "/functions/api/generate-itinerary.ts",
+    "/functions/api/import/analyze.ts",
     "/functions/api/mytrip/writing.ts",
   ]);
 
