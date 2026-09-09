@@ -56,7 +56,13 @@ supabase/.temp/
 # Wrangler local dev artifacts (auto-regenerated on every wrangler dev/pages dev run)
 .wrangler/
 
-# TourAPI research outputs
+# TASK QA/evidence 작업 폴더 — 스크린샷·acceptance html·privacy scan 등.
+# 태스크 프로토콜상 tmp evidence 는 커밋 금지라 repo 에 tracked 파일이 0 임을
+# 확인하고 전체를 ignore 한다(SOURCE-CONTROL-HYGIENE-AUDIT-V1, 2026-09-09).
+# repo 에 남겨야 할 산출물은 docs/ 또는 data/ 로 옮겨 커밋한다.
+/tmp/
+
+# TourAPI research outputs (위 /tmp/ 에 포함되지만 역사적 명시 유지)
 tmp/tourapi-pilot/
 tmp/tourapi-nightly/
 
