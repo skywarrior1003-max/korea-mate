@@ -479,6 +479,9 @@ export default function SharedTripPage() {
             endDate={trip.end_date}
             dayCount={stats.dayCount}
             placeCount={stats.placeCount}
+            tripTitle={trip.trip_title}
+            /* 공개 사진 0 인 여행의 카드 이미지 — OG 와 같은 대표 카탈로그 규칙 */
+            fallbackPhotoSrc={representativeCoverUrl(apiStory)}
             /* 서버가 공개 여부·동의 판본·차단을 이미 다 보고 걸러 준 것만 들어간다 */
             moments={toStoryCardMoments(apiStory)}
             travelStyle={trip.travel_style ?? ""}

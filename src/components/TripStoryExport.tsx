@@ -11,9 +11,11 @@ import { useTranslations } from "next-intl";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
 // 390px 로 실측해 확정한 값(story-tokens)을 그대로 확대해 쓴다.
 import {
-  PRIMARY, ON_SURFACE, ON_PRIMARY_CONTAINER,
+  ON_SURFACE,
   MARGIN_MOBILE, STACK_MD, BASE,
 } from "@/components/story/story-tokens";
+// SHARING-VISUAL-PRODUCTION-V1 — 제목/이미지 fallback 규칙은 OG 와 같은 코어
+import { shareTitle, isActualTitle, cardTitleFontPx, cityShareFallback } from "@/lib/share/sharing-visual-core";
 
 /**
  * 이 카드가 그리는 것 전부.
@@ -44,6 +46,17 @@ interface Props {
   moments:     StoryCardMoment[];
   travelStyle: string;
   /**
+   * 사용자의 실제 Trip 제목(공개 payload 값). 있으면 카드의 primary title 이다 —
+   * "{N} Days in {City}" generic 으로 덮어쓰지 않는다(SHARING-VISUAL-PRODUCTION-V1).
+   */
+  tripTitle?:  string | null;
+  /**
+   * 공개 사진이 하나도 없을 때 쓸 대표 카탈로그 이미지(representativeCoverUrl).
+   * 외부 원본이라 CORS 를 허용하지 않으면 로드가 실패하고, 그때는 승인된
+   * 도시 자산 → designed fallback 순서로 내려간다. 임의 첫 장 아님.
+   */
+  fallbackPhotoSrc?: string | null;
+  /**
    * 공유될 정확한 주소. **필수다** — 예전에는 없으면 홈페이지로 떨어졌고,
    * 그래서 카드를 받은 사람이 그 여행을 볼 수 없었다. 값을 반드시 받게 해
    * 그 폴백이 다시 생기지 못하게 한다.
@@ -55,6 +68,13 @@ interface Props {
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    // 다른 출처 이미지는 CORS 로 받아야 canvas 가 오염되지 않는다(toDataURL).
+    // 상대 경로·같은 출처는 그대로 둔다. CORS 를 안 주는 호스트는 onerror 로
+    // 떨어지고, 호출부가 다음 fallback 으로 내려간다 — 깨진 카드보다 낫다.
+    try {
+      const abs = new URL(src, window.location.origin);
+      if (abs.origin !== window.location.origin) img.crossOrigin = "anonymous";
+    } catch { /* data URL 등 — 그대로 */ }
     img.onload  = () => resolve(img);
     img.onerror = reject;
     img.src = src;
@@ -119,6 +139,7 @@ function canShareFiles(file: File): boolean {
 
 export default function TripStoryExport({
   city, startDate, endDate, dayCount, placeCount, moments, travelStyle, shareUrl, onClose,
+  tripTitle, fallbackPhotoSrc,
 }: Props) {
   const t = useTranslations("story");
   const canvasRef               = useRef<HTMLCanvasElement>(null);
@@ -184,6 +205,16 @@ export default function TripStoryExport({
     }
     setPhotoError(false);
 
+    // 사용자 공개 사진이 하나도 없는 여행 — 이미지 우선순위 §3:
+    // 대표 카탈로그(외부 — CORS 실패 가능) → 승인 도시 자산(같은 출처).
+    // 여기서도 없으면 아래 designed fallback 바탕으로 내려간다.
+    if (imgs.length === 0) {
+      for (const cand of [fallbackPhotoSrc, cityShareFallback(city)]) {
+        if (!cand) continue;
+        try { imgs = [await loadImage(cand)]; break; } catch { /* 다음 후보 */ }
+      }
+    }
+
     // 바탕. 사진이 없으면 이 색이 그대로 카드가 된다.
     ctx.fillStyle = ON_SURFACE;
     ctx.fillRect(0, 0, W, H);
@@ -213,19 +244,29 @@ export default function TripStoryExport({
       drawCover(imgs[1]!, 0, top, half, H - top);
       drawCover(imgs[2]!, half, top, W - half, H - top);
     } else {
-      // 사진 없는 공개 Story — 시안의 사진 자리를 브랜드 색 그라디언트로 둔다
-      const g = ctx.createLinearGradient(0, 0, W, H);
-      g.addColorStop(0, "#2A1D1A");
-      g.addColorStop(1, PRIMARY);
+      // 이미지가 정말 하나도 없는 여행 — designed fallback. 예전의 orange 전면
+      // 그라디언트는 "광고 포스터" 인상이라(visual audit) 조용한 심야 잉크 톤 +
+      // 미세한 점 격자(승인 journal 의 map 자리 질감)로 바꾼다. 주인공은 제목이다.
+      const g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, "#14181D");
+      g.addColorStop(1, "#232A33");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "rgba(255,255,255,0.06)";
+      const pitch = px(20);
+      for (let gy = pitch; gy < H; gy += pitch) {
+        for (let gx = pitch; gx < W; gx += pitch) {
+          ctx.beginPath(); ctx.arc(gx, gy, px(1), 0, Math.PI * 2); ctx.fill();
+        }
+      }
     }
 
-    // 글자가 사진 위에서 읽히게 하는 유일한 장치. StoryCover 와 같은 정지색이다.
+    // 글자가 사진 위에서 읽히게 하는 최소 장치 — 사진이 주인공이라 예전(0.8/0.3)
+    // 보다 얇게 깐다. 제목 영역(하단)만 진하고 위로 빠르게 사라진다.
     const scrim = ctx.createLinearGradient(0, H, 0, 0);
-    scrim.addColorStop(0,    "rgba(0,0,0,0.8)");
-    scrim.addColorStop(0.42, "rgba(0,0,0,0.3)");
-    scrim.addColorStop(1,    "rgba(0,0,0,0)");
+    scrim.addColorStop(0,    "rgba(0,0,0,0.72)");
+    scrim.addColorStop(0.34, "rgba(0,0,0,0.22)");
+    scrim.addColorStop(0.6,  "rgba(0,0,0,0)");
     ctx.fillStyle = scrim;
     ctx.fillRect(0, 0, W, H);
 
@@ -323,14 +364,18 @@ export default function TripStoryExport({
       y = boxY - px(STACK_MD);
     }
 
-    // 제목 — "{N} Days in {City}". 시안의 큰 serif 제목 자리다.
+    // 제목 — **사용자의 실제 Trip title 이 최우선**(SHARING-VISUAL-PRODUCTION-V1).
+    // 없을 때만 locale 의 "{N} Days in {City}" fallback. 긴 제목은 generic 으로
+    // 바꾸지 않고 글자 크기·줄 수로 대응한다(코어 규칙 = OG 와 동일).
     const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
-    const titleFs = px(46);
+    const actual = isActualTitle(tripTitle);
+    const headline = actual
+      ? shareTitle(tripTitle, city, dayCount)
+      : t("cardHeadline", { n: dayCount, city: cityCap });
+    const tier = cardTitleFontPx(headline);
+    const titleFs = px(tier.fontPx);
     ctx.font = `700 ${titleFs}px ${serif}`;
-    // 카드에 그려지는 문장도 locale 이 만든다. 도시 이름은 데이터 값 그대로다 —
-    // 없는 번역 표를 지어내면 실제 장소와 다른 이름이 카드에 찍힌다.
-    const headline = t("cardHeadline", { n: dayCount, city: cityCap });
-    const titleLines = wrapText(ctx, headline, W - PAD * 2).slice(0, 3);
+    const titleLines = wrapText(ctx, headline, W - PAD * 2).slice(0, tier.maxLines);
     const titleLh = Math.round(titleFs * 1.2);
     // `y` 는 마지막 줄의 baseline 이다. 여러 줄이면 첫 줄은 그만큼 위에서 시작한다.
     const titleTop = y - (titleLines.length - 1) * titleLh;
@@ -343,11 +388,15 @@ export default function TripStoryExport({
     // 한자·가나는 글자 상자를 가득 채우므로 여유를 조금 더 둔다.
     y = titleTop - Math.round(titleFs * 0.98);
 
-    // eyebrow — 날짜와 장소 수. 셀 수 있는 값만 적는다.
+    // eyebrow — 도시(실제 제목일 때만 — fallback 제목엔 이미 도시가 있다)·날짜·
+    // 장소 수. 셀 수 있는 값만 적는다.
     ctx.font = `700 ${px(13)}px ${sans}`;
     ctx.fillStyle = "rgba(255,255,255,0.8)";
-    const eyebrow = [`${startDate} – ${endDate}`, t("cardPlaces", { n: placeCount })]
-      .join("  ·  ").toUpperCase();
+    const eyebrow = [
+      ...(actual ? [cityCap] : []),
+      `${startDate} – ${endDate}`,
+      t("cardPlaces", { n: placeCount }),
+    ].join("  ·  ").toUpperCase();
     // letterSpacing 은 canvas 2D 표준 속성이다(미지원 브라우저에서는 무시된다)
     ctx.letterSpacing = `${px(1.2)}px`;
     ctx.fillText(eyebrow, PAD, y);
@@ -355,7 +404,7 @@ export default function TripStoryExport({
 
     setRendering(false);
     setRendered(true);
-  }, [moments, city, startDate, endDate, dayCount, placeCount, t]);
+  }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, t]);
 
   // ── PNG 파일명 ────────────────────────────────────────────────────────────
   const pngFilename = `gokoreamate-${city.toLowerCase()}-${startDate}.png`;

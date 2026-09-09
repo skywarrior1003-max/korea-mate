@@ -46,7 +46,7 @@ import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMom
 import { runFirstPublish } from "@/lib/trip-moments/publish-reconcile-core";
 import type { MemoryPublicState, PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "@/lib/trip-moments/public-consent-core";
-import { toStoryCardMoments, publicStoryUrl, type ApiStory } from "@/lib/share/story-adapter";
+import { toStoryCardMoments, publicStoryUrl, representativeCoverUrl, type ApiStory } from "@/lib/share/story-adapter";
 import type { StoryCardMoment } from "@/components/TripStoryExport";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpotsByIds, matchCitySpot } from "@/lib/city-spots";
@@ -1638,6 +1638,8 @@ function ItineraryResult() {
   // 카드가 그리는 것은 **공개 Story 가 내보낸 것**뿐이다. 소유자 목록(`moments`)을
   // 그대로 넘기면 공개하지 않기로 한 사진·메모가 카드에 들어간다.
   const [storyCardMoments, setStoryCardMoments] = useState<StoryCardMoment[]>([]);
+  /** 9:16 카드의 대표 카탈로그 fallback — 공개 payload 에서 계산(OG 와 같은 규칙) */
+  const [storyCardFallback, setStoryCardFallback] = useState<string | null>(null);
   const [storyCardBusy, setStoryCardBusy] = useState(false);
   // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
@@ -2307,6 +2309,8 @@ function ItineraryResult() {
       if (!res.ok) return false;
       const api = (await res.json()) as ApiStory;
       setStoryCardMoments(toStoryCardMoments(api));
+      // 카드의 제목·대표 fallback 이미지도 공개 payload 값만 쓴다(9:16 = OG 규칙)
+      setStoryCardFallback(representativeCoverUrl(api));
       setStoryExportOpen(true);
       return true;
     } catch { return false; }
@@ -4024,6 +4028,8 @@ function ItineraryResult() {
           placeCount={days.reduce((s, d) => s + d.places.length, 0)}
           moments={storyCardMoments}
           travelStyle={travelStyle}
+          tripTitle={tripTitle}
+          fallbackPhotoSrc={storyCardFallback}
           shareUrl={publicStoryUrl(window.location.origin, itinId ?? "")}
           onClose={() => setStoryExportOpen(false)}
         />

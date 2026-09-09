@@ -159,12 +159,14 @@ const RENDER = CARD.slice(CARD.indexOf("const render = useCallback"), CARD.index
 
 test("P1 카드가 승인 토큰을 읽는다 — 색·여백을 새로 정하지 않는다", () => {
   assert.match(CARD, /from "@\/components\/story\/story-tokens"/);
-  for (const t of ["ON_SURFACE", "PRIMARY", "MARGIN_MOBILE", "STACK_MD"]) {
+  for (const t of ["ON_SURFACE", "MARGIN_MOBILE", "STACK_MD"]) {
     assert.ok(RENDER.includes(t), `토큰 미사용: ${t}`);
   }
-  // 그리는 자리에서 지어낸 색은 브랜드 그라디언트 한 쌍과 흰 글자뿐이다
+  // 그리는 자리에서 지어낸 색은 designed fallback 잉크 한 쌍과 흰 글자뿐이다.
+  // (SHARING-VISUAL-PRODUCTION-V1: 무사진 카드의 orange 전면 그라디언트
+  //  — #2a1d1a→PRIMARY — 는 "광고 포스터" 인상이라 조용한 잉크 톤으로 교체됐다.)
   const hexes = [...new Set([...RENDER.matchAll(/#[0-9a-fA-F]{6}/g)].map(m => m[0].toLowerCase()))].sort();
-  assert.deepEqual(hexes, ["#2a1d1a", "#ffffff"], `토큰 밖 색: ${hexes.join(", ")}`);
+  assert.deepEqual(hexes, ["#14181d", "#232a33", "#ffffff"], `토큰 밖 색: ${hexes.join(", ")}`);
 });
 
 test("P2 편집기 UI 를 만들지 않았다", () => {
