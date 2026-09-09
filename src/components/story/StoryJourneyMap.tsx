@@ -90,27 +90,35 @@ export default function StoryJourneyMap({ scene }: Props) {
               />
             )),
           )}
-          {/* 각 Day 의 출발점 라벨 — DAY 챕터와 같은 영어 디자인 언어 */}
-          {scene.days.map(d => {
-            const first = d.points[0];
-            if (!first) return null;
-            const [x, y] = first;
-            const above = y > 0.14;
-            return (
-              <text
-                key={`t${d.dayNumber}`}
-                x={sx(x)} y={sy(y) + (above ? -3.6 : 5.4)}
-                textAnchor="middle"
-                fontSize="3.1"
-                fontWeight="800"
-                letterSpacing="0.4"
-                fill={livingMapDayColor(d.dayNumber)}
-                stroke="#ffffff" strokeWidth="0.85" paintOrder="stroke"
-              >
-                {`DAY ${d.dayNumber}`}
-              </text>
-            );
-          })}
+          {/* 각 Day 의 출발점 라벨 — DAY 챕터와 같은 영어 디자인 언어.
+              출발점이 서로 가까우면(전날 마지막 근처에서 다음 날이 시작하는
+              보통 여행) 라벨을 위/아래로 갈라 겹치지 않게 한다. */}
+          {(() => {
+            const placed: { x: number; y: number; above: boolean }[] = [];
+            return scene.days.map(d => {
+              const first = d.points[0];
+              if (!first) return null;
+              const [x, y] = first;
+              let above = y > 0.14;
+              const near = placed.find(p => Math.abs(p.x - x) < 0.16 && Math.abs(p.y - y) < 0.1);
+              if (near) above = !near.above; // 이웃 라벨의 반대편으로
+              placed.push({ x, y, above });
+              return (
+                <text
+                  key={`t${d.dayNumber}`}
+                  x={sx(x)} y={sy(y) + (above ? -3.6 : 5.4)}
+                  textAnchor="middle"
+                  fontSize="3.1"
+                  fontWeight="800"
+                  letterSpacing="0.4"
+                  fill={livingMapDayColor(d.dayNumber)}
+                  stroke="#ffffff" strokeWidth="0.85" paintOrder="stroke"
+                >
+                  {`DAY ${d.dayNumber}`}
+                </text>
+              );
+            });
+          })()}
         </svg>
       </div>
 
