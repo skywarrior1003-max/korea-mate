@@ -153,9 +153,11 @@ og:image = 동의 개인 cover → 대표 카탈로그(공개 순간 가중) →
 5도시 designed fallback(jeonju 포함 — 과거 누락 해소) → 브랜드.
 비공개/미존재 = 브랜드 메타만. meta description·canonical 포함. → §7.3.
 
-### I. AI Writing quality — AUDIT / IMPROVEMENT REQUIRED
-Gemini LIVE = infrastructure PASS 일 뿐. writing quality, 특히 `유머와 재치, 센스`
-는 CLOSED 아님. 실제 실패 예: `부산 2박3일 웃음꽃피우다`. → §8.
+### I. AI Writing quality — IMPROVED (2026-09-09) / witty 는 CLOSED 아님
+Gemini LIVE = infrastructure PASS 일 뿐. 2026-09-09 품질 개편(ced1df5)으로
+context enrichment · locale-native · generic-copy 억제 · draft 보존이 구현·검증
+됐다(→ §8.7). 단 `유머와 재치, 센스`(witty)는 단발 생성 잔존 결함(~15%)이 있어
+**CLOSED 아님**. 실제 실패 예: `부산 2박3일 웃음꽃피우다`. → §8.
 
 ## 3. WEATHER — 최신 Owner 계약 + 실측 결과
 
@@ -338,6 +340,37 @@ AI candidate · final accepted wording · edit distance · regenerate ·
 accept/use signal 같은 **비식별** 품질 신호 활용을 검토한다. 초기에는
 `locale-specific owner-approved / high-acceptance example bank` 방식부터 검토
 가능. **private photo / private memo 를 몰래 training data 화하지 않는다.**
+
+### 8.7 구현·검증 기록 — 2026-09-09 (ced1df5 · Worker 재배포 포함)
+
+AI-WRITING-QUALITY-PRODUCTION-V1 로 prompt/context 만 개편(provider ·
+gemini-2.5-flash · Seoul Worker placement · retry 0 · timeout · 실패 무해 계약
+전부 무변경). 구현된 품질 계약:
+
+- **Context enrichment (privacy-safe)**: title 요청에 `tripFacts` —
+  일정에서 결정적으로 셈한 사실만(길이·stop 수·food/cafe 비중·상위 카테고리·
+  대표 장소명 최대 6, 숙소 제외). raw 좌표·device·내부 경로 전달 금지 유지.
+  memo 요청에 trip title 전달.
+- **Locale-native**: KO/EN/JA/ZH 독립 voice(§8.4) + locale isolation
+  (비KO 출력에 한글 0 · 고유명사 창작 번역/음차 금지 — context 표기 그대로
+  또는 일반명사).
+- **Generic-copy 억제**: 금지어 명시(웃음꽃·행복/추억/낭만/설렘 가득·힐링·
+  특별한 순간·잊지 못할·소중한 추억·행복한 시간·배꼽) + witty craft 지시
+  (관찰·반전·understatement, 직유/의인화 남발 금지).
+- **Fact discipline**: 사진 내용·식사/구매·동행·시간대/날씨·재방문 단정 금지,
+  no-draft 시 사건 발명 금지, 답 전 self-check(근거 없는 구체 주장 삭제).
+- **Draft 우선**: 사용자 draft 의 유머/관찰은 flatten 하지 않고 보존(§10 계약).
+- **생성 설정**: direction별 temperature(calm 0.6/witty 0.9/warm 0.75),
+  witty thinkingBudget 512(그 외 256) — 모델/provider 변경 아님.
+
+검증: 12 컨텍스트×3방향×4locale 실측 7라운드 + blind 리뷰 수렴, LIVE
+Production QA(전 호출 ai_status=live, witty title 재생성 5회 전부 상이·데이터
+근거·클리셰 0), UI e2e(실 트립 tripFacts 경유 확인). 결과 —
+**restrained/emotional/locale-native/generic 억제/draft 보존 = 검증 완료**,
+**witty = IMPROVED(단발 생성 ~15% 잔존 결함, flash+현 설정의 확률적 한계로
+판정) — CLOSED 로 선언하지 않는다.** 잔여 레버(모델 상향·thinking 추가 증액·
+2-candidate best-of(비용 2배)·§8.6 example bank/quality-signal)는 전부
+**Owner 결정 사항**이며 임의 적용 금지. §8.6 의 auto-learning 금지 계약 유지.
 
 ## 9. PLANNER OPENING HOURS / HC-2 — CLOSED (2026-09-08)
 
@@ -546,6 +579,11 @@ context · 사용자 draft/memo · distinctive trip pattern. 불필요한 privat
 Future: accepted/edit/regenerate 신호는 유용할 수 있으나 automatic training
 이라고 가정하지 않는다.
 
+**2026-09-09 갱신**: 위 방향은 ced1df5 로 구현·검증 완료(§8.7 — tripFacts
+context enrichment · locale-native voice/isolation · 금지어 · fact discipline ·
+draft 보존 · direction별 생성 설정). witty 만 IMPROVED 상태로 남긴다(단발 생성
+잔존 결함 — CLOSED 아님, 잔여 레버는 Owner 결정).
+
 ### H. Opening Hours
 
 HC-2 engine CLOSED · KNOWN structured-hours 보호 active. 잔여 = NULL/UNKNOWN
@@ -583,6 +621,7 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 - **PHASE 7 — Sharing bundle**: 9:16 · OG/link preview.
 - **PHASE 8 — AI Writing quality**: richer safe context · locale-native guidance ·
   generic-copy suppression · 실제 KO/EN/JA/ZH live QA.
+  → 2026-09-09 구현·배포 완료(ced1df5, §8.7) — witty 만 IMPROVED 로 유지.
 - **PHASE 9 — Production Visual/Product Acceptance**: Home → City Hub → Weather →
   Search → Explore Map → Saved → Planner → My Trip → My Trip Weather →
   Living Map → AI Writing → Story → Focus → 9:16 → Share URL → incognito →
@@ -648,7 +687,7 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | OG Share Preview | CLOSED (2026-09-09, 079770b — 실제 제목·사실 요약·대표 이미지 체인) |
 | Sharing Visual bundle (PHASE 7) | CLOSED (2026-09-09; hygiene 7afb5c9 master 반영) |
 | AI Writing infrastructure | LIVE |
-| AI Writing quality | OPEN |
+| AI Writing quality | IMPROVED (2026-09-09, ced1df5+Worker 재배포 — witty 는 CLOSED 아님, §8.7) |
 | Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
 | AI/API cost guard | OPEN (PHASE 11) |
 | Final Release | OPEN (PHASE 12) |
