@@ -139,12 +139,19 @@ LIVE: 분절 progress(여행 전체 기준)·k/N·DAY·지역 칩·큰 세리프
 (첫 이동 후 소멸)·좌우 탭/스와이프/키보드·**browser back 은 Focus 만 닫음**
 (pushState 계약). 캡션 pointer-events 통과로 하단 탭 결함 수정.
 
-### G. 9:16 Share Image — VISUAL ACCEPTANCE OPEN
-생성 기능은 있으나 Owner 판단 "약하다". → §7.2.
+### G. 9:16 Share Image — CLOSED (2026-09-09, SHARING-VISUAL-PRODUCTION-V1)
+사진 전면 + **실제 Trip title 우선**(generic 덮어쓰기 0) + 사용자 memo 인용 +
+조용한 wordmark. 이미지 우선순위: 공개 사용자 사진 → 대표 카탈로그
+(representativeCoverUrl, CORS 시도) → 승인 도시 자산 → designed 잉크 fallback
+(orange 포스터 제거). 긴 제목 CJK 폭 티어·말줄임, locale 사람 날짜(Intl),
+eyebrow 폭 fit. Blind quality "SNS 에 올리고 싶은가" = YES. → §7.2.
 
-### H. Share Link Preview / OG — AUDIT REQUIRED
-9:16 과 별개 surface. 현재 공유 URL preview 의 image/title/description/domain
-표현이 약한 것으로 Owner 관찰. → §7.3.
+### H. Share Link Preview / OG — CLOSED (2026-09-09, SHARING-VISUAL-PRODUCTION-V1)
+og/twitter title = **실제 Trip title**(없을 때만 "N-Day City Trip"),
+description = 사실 요약 "City · N days · M places · dates"(광고문 제거),
+og:image = 동의 개인 cover → 대표 카탈로그(공개 순간 가중) → tourism 자산 →
+5도시 designed fallback(jeonju 포함 — 과거 누락 해소) → 브랜드.
+비공개/미존재 = 브랜드 메타만. meta description·canonical 포함. → §7.3.
 
 ### I. AI Writing quality — AUDIT / IMPROVEMENT REQUIRED
 Gemini LIVE = infrastructure PASS 일 뿐. writing quality, 특히 `유머와 재치, 센스`
@@ -275,14 +282,14 @@ management controls 가 Story 보다 튀지 않는가.
 ### 7.1 Shared Story — Functional PASS
 공유 URL 클릭 후 gokoreamate 안에서 보는 실제 Trip/Story.
 
-### 7.2 9:16 Share Image — Visual Acceptance OPEN
-SNS 에 이미지 자체로 공유하는 자산. 기능은 존재하나 Owner visual acceptance OPEN.
+### 7.2 9:16 Share Image — CLOSED (2026-09-09 — §2.G 구현 내역)
+SNS 에 이미지 자체로 공유하는 자산. (원문 보존 — 아래는 당시 audit 항목.)
 Audit: photography dominance · crop · user/trip identity · title ·
 memo/personality · places/day context · template 느낌 여부 · **"SNS 에 실제
 올리고 싶은가".** Living Map 을 9:16 카드에 자동 삽입하는 것으로 문제를 해결하지
 않는다 — 두 surface 는 별개.
 
-### 7.3 Share Link Preview / OG — Audit required
+### 7.3 Share Link Preview / OG — CLOSED (2026-09-09 — §2.H 구현 내역)
 URL 을 Kakao/Messenger/X 등에 공유했을 때 나오는 preview. 검증: OG image ·
 OG title · description · domain · canonical · current public URL · correct
 Shared Story destination · city/trip-specific image/content · fallback.
@@ -637,8 +644,9 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Shared Story Map Context | CLOSED (2026-09-09, 7f54215 — large non-interactive Trip Map, 좌표/탐색 기능 0) |
 | Focus | CLOSED (2026-09-08 — trip-wide 뷰어, back 계약 포함) |
 | Travel Memory bundle (PHASE 6) | CLOSED (2026-09-08) |
-| 9:16 Share Image | WEAK / OPEN |
-| OG Share Preview | WEAK / OPEN |
+| 9:16 Share Image | CLOSED (2026-09-09, 079770b — 실제 제목·사진 주인공·광고 0) |
+| OG Share Preview | CLOSED (2026-09-09, 079770b — 실제 제목·사실 요약·대표 이미지 체인) |
+| Sharing Visual bundle (PHASE 7) | CLOSED (2026-09-09; hygiene 7afb5c9 master 반영) |
 | AI Writing infrastructure | LIVE |
 | AI Writing quality | OPEN |
 | Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
