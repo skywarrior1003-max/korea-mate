@@ -7,7 +7,7 @@
 import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
 import ShareIcon from "@/components/ui/ShareIcon";
 import { useRef, useCallback, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
 // 390px 로 실측해 확정한 값(story-tokens)을 그대로 확대해 쓴다.
 import {
@@ -142,6 +142,7 @@ export default function TripStoryExport({
   tripTitle, fallbackPhotoSrc,
 }: Props) {
   const t = useTranslations("story");
+  const locale = useLocale();
   const canvasRef               = useRef<HTMLCanvasElement>(null);
   const [rendering,  setRendering]  = useState(false);
   const [rendered,   setRendered]   = useState(false);
@@ -397,21 +398,37 @@ export default function TripStoryExport({
 
     // eyebrow — 도시(실제 제목일 때만 — fallback 제목엔 이미 도시가 있다)·날짜·
     // 장소 수. 셀 수 있는 값만 적는다.
-    ctx.font = `700 ${px(13)}px ${sans}`;
+    // 날짜는 ISO 원문 대신 locale 의 사람 표기(Intl — 번역 표를 지어내지 않는다).
+    // 연도는 우상단 코너가 이미 말하므로 반복하지 않는다(blind 재검 IMPORTANT).
+    const localeTag = { en: "en-US", ko: "ko-KR", ja: "ja-JP", zh: "zh-CN" }[locale] ?? "en-US";
+    const humanDate = (iso: string) => {
+      const d = new Date(`${iso}T00:00:00`);
+      return Number.isNaN(d.getTime())
+        ? iso
+        : new Intl.DateTimeFormat(localeTag, { month: "short", day: "numeric" }).format(d);
+    };
     ctx.fillStyle = "rgba(255,255,255,0.8)";
     const eyebrow = [
       ...(actual ? [cityCap] : []),
-      `${startDate} – ${endDate}`,
+      `${humanDate(startDate)} – ${humanDate(endDate)}`,
       t("cardPlaces", { n: placeCount }),
     ].join("  ·  ").toUpperCase();
-    // letterSpacing 은 canvas 2D 표준 속성이다(미지원 브라우저에서는 무시된다)
+    // 폭을 넘으면 글자 크기부터 줄인다 — 우측 여백을 침범하는 것은 레이아웃
+    // 깨짐으로 읽힌다(blind 재검 IMPORTANT). letterSpacing 은 canvas 표준 속성.
+    let eyeFs = 13;
     ctx.letterSpacing = `${px(1.2)}px`;
+    ctx.font = `700 ${px(eyeFs)}px ${sans}`;
+    while (eyeFs > 10 && ctx.measureText(eyebrow).width > W - PAD * 2) {
+      eyeFs -= 1;
+      ctx.font = `700 ${px(eyeFs)}px ${sans}`;
+    }
+    if (ctx.measureText(eyebrow).width > W - PAD * 2) ctx.letterSpacing = "0px";
     ctx.fillText(eyebrow, PAD, y);
     ctx.letterSpacing = "0px";
 
     setRendering(false);
     setRendered(true);
-  }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, t]);
+  }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, locale, t]);
 
   // ── PNG 파일명 ────────────────────────────────────────────────────────────
   const pngFilename = `gokoreamate-${city.toLowerCase()}-${startDate}.png`;
