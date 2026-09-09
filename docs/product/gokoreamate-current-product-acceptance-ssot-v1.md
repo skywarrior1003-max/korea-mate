@@ -125,7 +125,13 @@ Add Photo=기존 캡처)·이름 pill 상시 표시 제거·base 핀 회색 강�
 owner Story 에 몰입형 Cover + Journey Summary + map context(Living Map 읽기 전용
 Whole Trip) 추가, 공개 Story cover 우선순위(동의 지정 cover→공개 사진→대표성
 카탈로그 — 단순 첫 장 금지). 콜라주/인용 리듬·Day 챕터는 기존 승인 구현 유지.
-공개 summary 의 지도는 좌표 비노출 계약상 의도적으로 없음. → §6.
+(정정 2026-09-09, SHARED-STORY-MAP-CONTEXT-FIX-V1) "공개 Story 는 좌표 비노출
+때문에 지도 없음" 이라는 과거 판단은 Owner 결정으로 폐기됐다. **최신 계약:
+Shared Story 에는 large non-interactive Trip Map visual 을 포함한다. raw
+coordinates / exact location discovery / navigation 기능은 제공하지 않는다.**
+구현: 서버가 좌표를 상대 기하(0..1)로 투영해 소멸시킨 journeyMap 장면 —
+공개 카탈로그 stop 만, 숙소/user_spot 제외, pan/zoom/click/GPS/Directions 없음.
+Journal 과 Journey Summary 사이의 독립 챕터. → §6.
 
 ### F-2. Focus — CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1)
 memory_focus_view 계약의 풀스크린 trip-wide 모먼트 뷰어가 owner/공개 Story 양쪽
@@ -627,7 +633,8 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Explore recenter | CLOSED (2026-09-08, 51c855e) |
 | Explore label collision | CLOSED best-effort (2026-09-08, 51c855e — 라벨 상한 5+선택) |
 | Living Map final | CLOSED (2026-09-08, TRAVEL-MEMORY-PRODUCTION-V1) |
-| Story visual fidelity | CLOSED (2026-09-08 — 공개 summary 지도는 좌표 비노출 계약상 없음) |
+| Story visual fidelity | CLOSED (2026-09-08; 2026-09-09 Shared Map 장면으로 보강 유지) |
+| Shared Story Map Context | CLOSED (2026-09-09, 7f54215 — large non-interactive Trip Map, 좌표/탐색 기능 0) |
 | Focus | CLOSED (2026-09-08 — trip-wide 뷰어, back 계약 포함) |
 | Travel Memory bundle (PHASE 6) | CLOSED (2026-09-08) |
 | 9:16 Share Image | WEAK / OPEN |
