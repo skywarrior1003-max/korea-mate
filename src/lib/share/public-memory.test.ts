@@ -242,10 +242,13 @@ test("★Storage 는 계속 비공개다", () => {
   assert.doesNotMatch(core, /createSignedUrl|getPublicUrl|signedUrl/);
 });
 
-test("★공개 story 응답은 기존 필드를 그대로 두고 memories 만 더한다", () => {
+test("★공개 story 응답은 기존 필드 + memories + journeyMap 만 더한다", () => {
+  // journeyMap(SHARED-STORY-MAP-CONTEXT-FIX-V1, Owner 결정): 서버가 좌표를
+  // 상대 기하로 투영해 버린 비인터랙티브 지도 장면. raw days 는 여전히 안 나간다.
   const story = strip(read("functions", "api", "shared", "[id]", "story.ts"));
-  assert.match(story, /\{ \.\.\.itinerary, memories/);
+  assert.match(story, /\{ \.\.\.itinerary, journeyMap, memories/);
   assert.match(story, /serializePublicItinerary\(data\)/);
+  assert.match(story, /buildJourneyScene\(/);
   assert.match(story, /memories: \[\]/);
   assert.match(story, /\.eq\("is_public", true\)/);
 });

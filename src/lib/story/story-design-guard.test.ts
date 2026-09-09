@@ -149,9 +149,10 @@ test("★사진이 많으면 시안의 언어 안에서 +N 으로 접는다", ()
 // ── Focus ────────────────────────────────────────────────────────────────────
 test("★Focus 는 선형 progress 와 n / total 을 그대로 갖는다", () => {
   assert.match(FOCUS, /h-1 flex-1 bg-white\/30 rounded-full/);
-  // 구간 progress 는 지금 장소의 사진 수만큼 — 여행 전체를 넘겨도 "이 곳에 몇 장" 은 그대로 보인다
-  assert.match(FOCUS, /Array\.from\(\{ length: current\.photoCount \}, \(_, n\)/);
-  assert.match(FOCUS, /width: n <= current\.photoIndex \? "100%" : "0%"/);
+  // 구간 progress 는 여행 전체 기준(k/N 과 같은 기준) — 장소별 사진 수 기준은
+  // "장소당 1장" 인 보통 여행에서 항상 꽉 찬 무정보 바였다(2026-09-08 blind 재검).
+  assert.match(FOCUS, /Array\.from\(\{ length: total \}, \(_, n\)/);
+  assert.match(FOCUS, /width: n <= i \? "100%" : "0%"/);
   assert.match(FOCUS, /\{i \+ 1\} \/ \{total\}/);
   assert.match(FOCUS, /Swipe/);
 });

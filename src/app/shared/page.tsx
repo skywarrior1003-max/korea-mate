@@ -28,6 +28,8 @@ import StoryJournal from "@/components/story/StoryJournal";
 import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
 import { buildFocusSequence, findSlideIndex } from "@/lib/share/story-focus-core";
 import StorySummary from "@/components/story/StorySummary";
+import StoryJourneyMap from "@/components/story/StoryJourneyMap";
+import { parseJourneyScene } from "@/lib/share/journey-scene-core";
 import { PAGE_BG } from "@/components/story/story-tokens";
 import type { StoryMemory } from "@/components/story/story-types";
 import {
@@ -419,6 +421,14 @@ export default function SharedTripPage() {
           onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
           /* Save 는 아직 붙일 곳이 없다 — 넘기지 않으면 버튼이 그려지지 않는다 */
         />
+
+        {/* Trip Map 장면 (Owner 결정, SHARED-STORY-MAP-CONTEXT-FIX-V1) — 여행
+            전체를 한눈에 되돌아보는 큰 비인터랙티브 장면. 서버가 투영한 상대
+            기하만 받는다 — 좌표·주소·클릭 가능한 위치 payload 는 없다. */}
+        {(() => {
+          const scene = parseJourneyScene((trip as unknown as { journeyMap?: unknown }).journeyMap);
+          return scene ? <StoryJourneyMap scene={scene} /> : null;
+        })()}
 
         <StorySummary
           data={{

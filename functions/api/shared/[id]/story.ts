@@ -29,6 +29,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS } from "../../../../src/lib/share/public-story";
+import { buildJourneyScene } from "../../../../src/lib/share/journey-scene-core";
 import {
   serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS,
   isMemoryPublic, type InternalMemoryRow, type InternalPhotoRow,
@@ -94,6 +95,10 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const itinerary = serializePublicItinerary(data);
 
+  // Trip Map 장면 (SHARED-STORY-MAP-CONTEXT-FIX-V1, Owner 결정) — raw 좌표는
+  // 여기서 상대 기하로 투영되어 소멸한다. 응답에는 0..1 점들만 나간다.
+  const journeyMap = buildJourneyScene((data as { days?: unknown }).days);
+
   // ── 공개된 Memory ────────────────────────────────────────────────────────
   // 여기까지 왔다는 것은 여행이 공개라는 뜻이다(위에서 is_public 을 걸었다).
   // 그래도 Memory 쪽 조건은 따로 본다 — 여행 공개가 Memory 공개는 아니다.
@@ -106,13 +111,13 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   if (mErr) {
     // Memory 를 못 읽었다고 일정 전체를 막지 않는다 — 빈 목록으로 내보낸다.
     console.error("[shared story GET] memory read error:", mErr.code);
-    return json({ ...itinerary, memories: [] });
+    return json({ ...itinerary, journeyMap, memories: [] });
   }
 
   const rows = ((momentRows ?? []) as unknown as InternalMemoryRow[])
     .filter(r => isMemoryPublic(r, MEMORY_PUBLIC_CONSENT_VERSION));
 
-  if (rows.length === 0) return json({ ...itinerary, memories: [] });
+  if (rows.length === 0) return json({ ...itinerary, journeyMap, memories: [] });
 
   // 사진 순서는 소유자 화면과 같은 규칙을 쓴다 — 따로 만들지 않는다.
   const ids = rows.map(r => r.moment_id);
@@ -152,5 +157,5 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     validCitySpotIds,
   });
 
-  return json({ ...itinerary, memories });
+  return json({ ...itinerary, journeyMap, memories });
 }
