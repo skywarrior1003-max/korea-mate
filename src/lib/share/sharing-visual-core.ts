@@ -64,11 +64,16 @@ export function shareDescription(o: {
   return parts.filter(Boolean).join(" · ");
 }
 
-/** 9:16 제목 폰트(390px 기준 px) — 긴 실제 제목은 generic 교체가 아니라 크기로 대응한다. */
+/** 9:16 제목 폰트(390px 기준 px) — 긴 실제 제목은 generic 교체가 아니라 크기로 대응한다.
+ *  CJK 글자는 라틴보다 ~2배 넓어 글자 수 그대로 재면 일본어/한국어 긴 제목이
+ *  큰 폰트 티어에 잘못 들어가 잘린다(2026-09-09 실측) — 폭 가중치로 센다. */
 export function cardTitleFontPx(title: string): { fontPx: number; maxLines: number } {
-  const len = [...title].length;
-  if (len > 56) return { fontPx: 28, maxLines: 5 };
-  if (len > 32) return { fontPx: 36, maxLines: 4 };
+  let w = 0;
+  for (const ch of title) {
+    w += /[ᄀ-ᇿ⺀-鿿　-ヿ㄰-㆏가-힯豈-﫿＀-｠]/.test(ch) ? 1.9 : 1;
+  }
+  if (w > 56) return { fontPx: 28, maxLines: 5 };
+  if (w > 32) return { fontPx: 36, maxLines: 4 };
   return { fontPx: 46, maxLines: 3 };
 }
 

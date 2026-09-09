@@ -375,7 +375,14 @@ export default function TripStoryExport({
     const tier = cardTitleFontPx(headline);
     const titleFs = px(tier.fontPx);
     ctx.font = `700 ${titleFs}px ${serif}`;
-    const titleLines = wrapText(ctx, headline, W - PAD * 2).slice(0, tier.maxLines);
+    const allTitle = wrapText(ctx, headline, W - PAD * 2);
+    const titleLines = allTitle.slice(0, tier.maxLines);
+    // 줄 수 초과로 잘렸으면 말줄임 — 제목이 그냥 끊긴 것처럼 보이지 않게(메모와 같은 규칙)
+    if (allTitle.length > tier.maxLines && titleLines.length > 0) {
+      let last = titleLines[titleLines.length - 1]!;
+      while (last.length > 1 && ctx.measureText(`${last}…`).width > W - PAD * 2) last = last.slice(0, -1);
+      titleLines[titleLines.length - 1] = `${last}…`;
+    }
     const titleLh = Math.round(titleFs * 1.2);
     // `y` 는 마지막 줄의 baseline 이다. 여러 줄이면 첫 줄은 그만큼 위에서 시작한다.
     const titleTop = y - (titleLines.length - 1) * titleLh;

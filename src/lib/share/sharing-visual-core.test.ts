@@ -41,10 +41,14 @@ test("5도시 fallback 전부 존재 — jeonju 누락(과거 known issue) 재�
   assert.equal(Object.keys(CITY_SHARE_FALLBACK).length, 5);
 });
 
-test("긴 제목은 교체가 아니라 크기·줄수로 대응한다", () => {
+test("긴 제목은 교체가 아니라 크기·줄수로 대응한다 — CJK 는 폭 가중치로 센다", () => {
   assert.deepEqual(cardTitleFontPx("Short"), { fontPx: 46, maxLines: 3 });
   assert.equal(cardTitleFontPx("A".repeat(40)).fontPx, 36);
   assert.equal(cardTitleFontPx("あ".repeat(60)).fontPx, 28);
+  // 26자 일본어(실측 잘림 사례) — 글자수 그대로면 46px/3줄 티어에 들어가 잘렸다.
+  // 폭 가중치로는 36px/4줄 티어 → 잘리지 않는다.
+  assert.equal(cardTitleFontPx("海風と路地裏とおかわり三杯目の旅それでも足りない釜山").fontPx, 36);
+  assert.equal(cardTitleFontPx("바닷바람과 골목길").fontPx, 46);
 });
 
 test("days 셈법 — 배열·__v:2 모두, Story summary 와 같은 수", () => {
