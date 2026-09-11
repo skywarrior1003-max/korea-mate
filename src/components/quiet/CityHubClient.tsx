@@ -14,7 +14,7 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { displayPlaceName } from "@/lib/place-display-name";
-import { cityVisual } from "@/lib/city-visual";
+import { cityHubHeroVisual } from "@/lib/city-visual";
 import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
@@ -45,7 +45,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
   const desc = tLinks(`desc${slug.charAt(0).toUpperCase()}${slug.slice(1)}`);
-  const v = cityVisual(slug);
+  const v = cityHubHeroVisual(slug);
   const trips = getRecommendedTrips(slug).slice(0, 3);
   const events = getCityEvents(slug);
   const essentials = getTravelEssentials(slug);

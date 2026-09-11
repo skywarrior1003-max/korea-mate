@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { cityVisual, citiesWithVisual } from "./city-visual.ts";
+import { cityVisual, cityHubHeroVisual, citiesWithVisual } from "./city-visual.ts";
 
 const ROOT = process.cwd();
 
@@ -60,6 +60,24 @@ test("★layout shift 방지용 크기가 모두 있다", () => {
     assert.ok(v.w > 0 && v.h > 0, c);
     assert.match(v.objectPosition, /^\S+ \S+$/, `${c} objectPosition`);
   }
+});
+
+test("★Busan Hub Hero 는 Home 과 다른 Blue/Fresh 자산이다 (Owner 2026-09-11)", () => {
+  const hub = cityHubHeroVisual("busan")!;
+  assert.equal(hub.src, "/images/cities/city-busan-hub-hero-v2.webp");
+  assert.notEqual(hub.src, cityVisual("busan")!.src, "Home 커버와 같은 자산이면 교체 의미가 없다");
+  const p = join(ROOT, "public", hub.src.replace(/^\//, ""));
+  assert.ok(existsSync(p), "hub hero 파일 없음");
+  assert.ok(statSync(p).size < 400 * 1024, "hub hero 400KB 초과");
+  assert.ok(hub.w > 0 && hub.h > 0);
+});
+
+test("★Hub Hero override 는 부산뿐 — 다른 도시는 공용 비주얼 그대로", () => {
+  for (const c of ["seoul", "gyeongju", "jeju", "jeonju"]) {
+    assert.equal(cityHubHeroVisual(c)!.src, cityVisual(c)!.src, c);
+  }
+  assert.equal(cityHubHeroVisual("tokyo"), null);
+  assert.equal(cityHubHeroVisual(null), null);
 });
 
 test("★KTO 관광 자산과 분리돼 있다 — 프록시·외부 호스트를 쓰지 않는다", () => {

@@ -69,6 +69,30 @@ const CITY_VISUALS: Readonly<Record<string, CityVisual>> = Object.freeze({
   },
 });
 
+/**
+ * City Hub Hero 전용 override — Owner 결정(2026-09-11, BUSAN-HERO-REPLACEMENT):
+ * Home 은 warm 톤 자산을 유지하고, Busan City Hub 만 Blue/Fresh 톤의
+ * 광안리(광안대교+스카이라인) 자산으로 분리한다. Owner 가 로컬로 제공한
+ * 후보 2장 중 선택본이며, 다른 표면(Home cover·planner cover·OG·검색 썸네일)은
+ * 기존 cityVisual 을 그대로 쓴다 — 여기 넣지 말 것.
+ */
+const CITY_HUB_HERO_OVERRIDES: Readonly<Record<string, CityVisual>> = Object.freeze({
+  busan: {
+    // 광안대교·스카이라인 수평선이 세로 절반 부근 — 얕은 가로 crop 에서 다리가 살도록
+    src: "/images/cities/city-busan-hub-hero-v2.webp",
+    w: 1376, h: 768,
+    objectPosition: "center 45%",
+  },
+});
+
+/** City Hub Hero 용 — override 가 있으면 그것, 없으면 공용 대표 비주얼. */
+export function cityHubHeroVisual(slug: string | null | undefined): CityVisual | null {
+  if (typeof slug !== "string") return null;
+  const key = slug.trim().toLowerCase();
+  if (!key) return null;
+  return CITY_HUB_HERO_OVERRIDES[key] ?? cityVisual(key);
+}
+
 /** 대소문자·공백 차이를 흡수한다. 없는 도시는 null — 다른 도시 사진을 돌려주지 않는다. */
 export function cityVisual(slug: string | null | undefined): CityVisual | null {
   if (typeof slug !== "string") return null;
