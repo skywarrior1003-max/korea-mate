@@ -155,11 +155,12 @@ og:image = 동의 개인 cover → 대표 카탈로그(공개 순간 가중) →
 5도시 designed fallback(jeonju 포함 — 과거 누락 해소) → 브랜드.
 비공개/미존재 = 브랜드 메타만. meta description·canonical 포함. → §7.3.
 
-### I. AI Writing quality — IMPROVED (2026-09-09) / witty 는 CLOSED 아님
-Gemini LIVE = infrastructure PASS 일 뿐. 2026-09-09 품질 개편(ced1df5)으로
-context enrichment · locale-native · generic-copy 억제 · draft 보존이 구현·검증
-됐다(→ §8.7). 단 `유머와 재치, 센스`(witty)는 단발 생성 잔존 결함(~15%)이 있어
-**CLOSED 아님**. 실제 실패 예: `부산 2박3일 웃음꽃피우다`. → §8.
+### I. AI Writing quality — IMPROVED (2026-09-11 최신) / witty 는 CLOSED 아님
+Gemini LIVE = infrastructure PASS 일 뿐. 2026-09-09 품질 개편(ced1df5, §8.7)
++ 2026-09-11 witty 1024+1800 예산·parser guard 적용(58aaf43, §8.8)으로 품질은
+단계적으로 개선(blind GOOD 56→75%, LIVE 밋밋함 희소). 단 `유머와 재치, 센스`
+(witty)는 LIVE 잔존 결함 12.5%(ZH 어휘·한글 혼입·발명 계열)로 **CLOSED 아님**.
+실제 실패 예: `부산 2박3일 웃음꽃피우다`. → §8.
 
 ## 3. WEATHER — 최신 Owner 계약 + 실측 결과
 
@@ -373,6 +374,29 @@ Production QA(전 호출 ai_status=live, witty title 재생성 5회 전부 상�
 판정) — CLOSED 로 선언하지 않는다.** 잔여 레버(모델 상향·thinking 추가 증액·
 2-candidate best-of(비용 2배)·§8.6 example bank/quality-signal)는 전부
 **Owner 결정 사항**이며 임의 적용 금지. §8.6 의 auto-learning 금지 계약 유지.
+
+### 8.8 WITTY-CLOSURE 시도 기록 — 2026-09-11 (58aaf43 · Worker 4c2083d9)
+
+Owner 승인으로 canary 검증분만 Production 적용:
+
+- **witty 전용 생성 예산**: thinkingBudget 1024 + maxOutputTokens 1800 세트
+  (gemini-2.5-flash 는 thinking 토큰이 maxOutputTokens 에 포함 — 세트가
+  아니면 JSON 절단, canary 실측). calm/warm/기본 경로 무변경(LIVE 교차 확증:
+  calm 2.2~2.8s vs witty p50 5.3s). provider/model/Seoul placement 무변경.
+- **parser safety guard CLOSED**: extractSuggestion 이 파싱 실패 시 raw
+  provider text 를 승격하던 잠재 결함 제거 — malformed/truncated/unexpected
+  응답은 null(honest fallback), code-fence JSON 재시도만 유지. raw payload
+  사용자 노출 0 을 테스트로 고정.
+- **LIVE 48회 반복 QA**(witty 4컨텍스트×4locale×3회): 48/48 live ·
+  rawJSON/금지어/draft 유실 0 · latency p50 5.33s / max 6.89s(8s 내) ·
+  밋밋함 희소, food-heavy title 전부 데이터 근거형.
+- **판정: PARTIAL — witty 는 여전히 CLOSED 아님(IMPROVED 유지).**
+  meaningful BAD 6/48(12.5%) 반복: ① ZH 어휘 오류(국밥→国饭 1회) +
+  한글 혼입(国밥 ZH·JA 각 1회) ② 고유명사 발명 음차(ファンファン通り 1회)
+  ③ hasPhoto:false 인데 사진 행위 발명(JA 1회) ④ 사건 단정 경계선(KO 1회).
+  thin-context/locale 어휘 계열은 thinking 으로 해결되지 않음이 재확인 —
+  thinking 추가 증액으로 억지 해결 금지(Owner 지시). 잔여 레버는 §8.7 그대로
+  Owner 결정. 증거 tmp/gokoreamate-witty-closure-production-v1/.
 
 ## 9. PLANNER OPENING HOURS / HC-2 — CLOSED (2026-09-08)
 
@@ -689,7 +713,8 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | OG Share Preview | CLOSED (2026-09-09, 079770b — 실제 제목·사실 요약·대표 이미지 체인) |
 | Sharing Visual bundle (PHASE 7) | CLOSED (2026-09-09; hygiene 7afb5c9 master 반영) |
 | AI Writing infrastructure | LIVE |
-| AI Writing quality | IMPROVED (2026-09-09, ced1df5+Worker 재배포 — witty 는 CLOSED 아님, §8.7) |
+| AI Writing quality | IMPROVED (2026-09-11, 58aaf43 — witty 1024+1800+parser guard 적용, LIVE 잔존 BAD 12.5% → witty CLOSED 아님, §8.8) |
+| AI Writing parser safety guard | CLOSED (2026-09-11, 58aaf43 — raw payload 노출 0 계약) |
 | Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
 | AI/API cost guard | OPEN (PHASE 11) |
 | Final Release | OPEN (PHASE 12) |
