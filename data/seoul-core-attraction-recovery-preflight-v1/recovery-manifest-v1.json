@@ -1,0 +1,455 @@
+{
+  "preflight_task": "TASK-SEOUL-CORE-ATTRACTION-CANONICAL-RECOVERY-PREFLIGHT-V1",
+  "preflight_date": "2026-09-11",
+  "source_branch": "data/seoul-targeted-completion-v1",
+  "source_artifact": "data/seoul-source-audit/seoul-place-core-experience-detail-normalized-v1.jsonl",
+  "source_sha": "dd169d4630a096dc32104083bdfbdb86b8c92497",
+  "canonical_artifact": "data/seoul-final-release/seoul-canonical-places-v1.jsonl",
+  "canonical_sha": "ada33ad72bd044ac26ea3b2df9e68f9f12a0077b",
+  "canonical_count_at_preflight": 1838,
+  "canonical_active_at_preflight": 1837,
+  "input": {
+    "total_rows": 311,
+    "unique_cids": 311,
+    "duplicate_cids": 0
+  },
+  "duplicate_check": {
+    "cid_exact_in_canonical": 9,
+    "title_same_as_canonical": 1,
+    "new_canonical": 301,
+    "already_in_canonical_cids": [
+      "KOP001912",
+      "KOP011622",
+      "KOP029564",
+      "KOP029759",
+      "KOP030789",
+      "KOP031055",
+      "KOPgcblme",
+      "KOPn1ua1r",
+      "KOPojrz90"
+    ],
+    "title_same_cids": [
+      {
+        "cid": "KOPcztazx",
+        "title": "루이 비통 비저너리 저니 서울",
+        "canonical_ref": "seoul-KOPi1u9ze"
+      }
+    ],
+    "fuzzy_prefix4_count": 22,
+    "fuzzy_prefix4_note": "22 records share 4-char title prefix with canonical entry; most are DIFFERENT places (e.g. 남대문시장 vs 남대문시장 관광안내소). Manual review recommended before merge."
+  },
+  "service_classification": {
+    "SERVICE_ACTIVE": 264,
+    "AI_CONDITIONAL": 31,
+    "EXCLUDED": 16,
+    "REVIEW_REQUIRED": 0,
+    "by_selection_reason": {
+      "PLACE_CORE_CANDIDATE_A_NO_DETAIL": {
+        "total": 194,
+        "SERVICE_ACTIVE": 157,
+        "AI_CONDITIONAL": 24,
+        "EXCLUDED": 13
+      },
+      "EXPERIENCE_CANDIDATE_A_NO_DETAIL": {
+        "total": 107,
+        "SERVICE_ACTIVE": 99,
+        "AI_CONDITIONAL": 6,
+        "EXCLUDED": 2
+      },
+      "BLANKET_02_FIX_EDUCATION_RESTORED_TO_A": {
+        "total": 9,
+        "note": "All 9 are ALREADY_IN_CANONICAL (merged via different batch). 8 SERVICE_ACTIVE, 1 EXCLUDED (서울여성플라자 KOP029564).",
+        "ALREADY_IN_CANONICAL": 9
+      },
+      "TEMPLE_STAY_CANDIDATE_A_NO_DETAIL": {
+        "total": 1,
+        "AI_CONDITIONAL": 1,
+        "note": "KOP0pzgtj 국제선센터 템플스테이 - seasonal, classified AI_CONDITIONAL regardless of eligibility flags"
+      }
+    }
+  },
+  "recovery_summary": {
+    "total_recovery_eligible": 286,
+    "merge_candidates_service_active": 255,
+    "merge_candidates_ai_conditional": 31,
+    "skip_already_canonical": 9,
+    "skip_excluded_new": 15,
+    "review_required": 1
+  },
+  "readiness": {
+    "nav": {
+      "coord_present": 311,
+      "coord_total": 311,
+      "coord_pct": 100.0,
+      "coord_confidence": "ALL_HIGH",
+      "coord_source": "traffic.map_position_xy",
+      "addr_missing": 1,
+      "addr_missing_cids": [
+        "KOP015109 고궁을 찾다"
+      ],
+      "route_type_special": [
+        "KOP027112 초대길",
+        "KOP998h6q 용마산 스카이워크 전망대"
+      ],
+      "nav_ready_count": 311
+    },
+    "image": {
+      "main_img_present": 311,
+      "main_img_total": 311,
+      "main_img_pct": 100.0,
+      "visitseoul_official_count": 311,
+      "image_rights_status": "VISITSEOUL_OFFICIAL_311",
+      "display_ready_est": 311,
+      "related_images_total": 1396
+    },
+    "multilingual": {
+      "en_cid_present": 301,
+      "en_cid_missing": 10,
+      "ja_cid_present": 297,
+      "ja_cid_missing": 14,
+      "zh_cid_present": 300,
+      "zh_cid_missing": 11,
+      "title_text_materialized": 0,
+      "desc_text_materialized": 0,
+      "multilingual_fetch_required_before_merge": true,
+      "fetch_required_en_count": 301,
+      "fetch_required_ja_count": 297,
+      "fetch_required_zh_count": 300,
+      "en_cid_missing_records": [
+        "KOP001776",
+        "KOP003629",
+        "KOP009547",
+        "KOP59q6hd",
+        "KOP76fq4a",
+        "KOPa2rvwq",
+        "KOPlwvkl4",
+        "KOPuqpj4a",
+        "KOPw1zwwt",
+        "KOPx6grff"
+      ],
+      "ja_cid_missing_records": [
+        "KOP001776",
+        "KOP003629",
+        "KOP006007",
+        "KOP009547",
+        "KOP034359",
+        "KOP041926",
+        "KOP2ikgt3",
+        "KOP4b0nj3",
+        "KOP512i62",
+        "KOPa2rvwq",
+        "KOPlwvkl4",
+        "KOPpwo7rk",
+        "KOPuqpj4a",
+        "KOPw1zwwt"
+      ],
+      "zh_cid_missing_records": [
+        "KOP001776",
+        "KOP003629",
+        "KOP009547",
+        "KOP009631",
+        "KOP041926",
+        "KOP2ikgt3",
+        "KOP4b0nj3",
+        "KOP512i62",
+        "KOP76fq4a",
+        "KOPa2rvwq",
+        "KOPw1zwwt"
+      ]
+    }
+  },
+  "key_landmarks": {
+    "경복궁_KOP000072": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "창덕궁_KOP000295": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "창경궁_KOP000297": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "덕수궁_KOP002046": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "경희궁_KOP001159": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "종묘_KOP000507": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "국립민속박물관_KOP001644": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "국립중앙박물관_KOP000433": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "국립고궁박물관_KOP020550": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "N서울타워_KOP000036": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "북촌한옥마을_KOP000261": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "남산골한옥마을_KOP000276": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "광화문광장_KOP001899": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "청계천_KOP000034": {
+      "in_311": false,
+      "in_canonical": true,
+      "canonical_status": "ACTIVE",
+      "note": "Already in canonical (previous batch)"
+    },
+    "광장시장_KOP000286": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "남대문시장_KOP000085": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "서울한양도성_KOP000090": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "흥인지문_KOP001999": {
+      "in_311": true,
+      "svc_class": "SERVICE_ACTIVE",
+      "dupl_class": "NEW_CANONICAL",
+      "nav_ready": true,
+      "img_ready": true
+    },
+    "인사동_KOP001079": {
+      "in_311": false,
+      "in_canonical": false,
+      "note": "NOT_IN_311_NOT_IN_CANONICAL - separate investigation required"
+    },
+    "동대문역사문화공원_KOP000024": {
+      "in_311": false,
+      "in_canonical": false,
+      "note": "NOT_IN_311_NOT_IN_CANONICAL - separate investigation required"
+    }
+  },
+  "excluded_detail": [
+    {
+      "cid": "KOP000889",
+      "title": "정동길",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP002395",
+      "title": "세검정",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP011117",
+      "title": "북악스카이웨이 북악팔각정",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP019540",
+      "title": "위안부 '기억의 터'",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP028338",
+      "title": "ECC(Ewha Campus Complex)",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP029564",
+      "title": "서울여성플라자",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "ALREADY_IN_CANONICAL"
+    },
+    {
+      "cid": "KOP037158",
+      "title": "자하문터널",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP038858",
+      "title": "가을단풍길(월드컵로)",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP041095",
+      "title": "잠실대교",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP0cezb3",
+      "title": "성수 셀프 포토부스",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOP4b0nj3",
+      "title": "서울서초글램핑청계산장",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOPfitqa2",
+      "title": "삼성역 물품보관소",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOPldz98j",
+      "title": "경복궁 돌담길",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOPpwo7rk",
+      "title": "잠실역 물품보관소",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOPtdi6q6",
+      "title": "롯데월드타워 물품보관소",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    },
+    {
+      "cid": "KOPw1zwwt",
+      "title": "동대문디자인플라자 물품보관소",
+      "explore": "NO",
+      "ai": "NO",
+      "svc_reason": "EXPLORE_NO_AI_NO",
+      "dupl_class": "NEW_CANONICAL"
+    }
+  ],
+  "preflight_verdict": "GO_WITH_CONDITIONS",
+  "preflight_conditions": [
+    "MULTILINGUAL_FETCH_REQUIRED: 301 EN / 297 JA / 300 ZH CIDs present but zero text materialized. Targeted VisitSeoul multilingual fetch required before merge.",
+    "FUZZY_TITLE_REVIEW: 22 records share 4-char title prefix with canonical. Manual review recommended to confirm they are genuinely different places.",
+    "TITLE_SAME_REVIEW: 1 record (KOPcztazx '루이 비통 비저너리 저니 서울') shares exact title with canonical (seoul-KOPi1u9ze). Review event vs. place distinction before merge.",
+    "ROUTE_SPECIAL: 2 records (KOP027112, KOP998h6q) are PHYSICAL_PLACE_WITH_ROUTE_CONTENT. Point coordinate strategy vs. route display must be confirmed.",
+    "ADDR_MISSING: 1 record (KOP015109 '고궁을 찾다') has coord but no address. Verify coord accuracy before merge."
+  ],
+  "next_steps": [
+    "STEP_1: Targeted VisitSeoul multilingual text fetch (EN/JA/ZH) for 301/297/300 CIDs",
+    "STEP_2: Manual review of 22 fuzzy-title and 1 exact-title records",
+    "STEP_3: Route display strategy for KOP027112 / KOP998h6q",
+    "STEP_4: addr fill for KOP015109",
+    "STEP_5: Canonical merge execution (286 records: 255 SERVICE_ACTIVE + 31 AI_CONDITIONAL)",
+    "STEP_6: Post-merge canonical QA (expected total: 1837 + 286 = 2123 ACTIVE)"
+  ],
+  "prohibitions_observed": [
+    "seoul-canonical-places-v1.jsonl NOT modified",
+    "No canonical merge executed",
+    "No Main DB write",
+    "No Production DB write",
+    "No migration",
+    "No master merge/push",
+    "No 전체 재수집",
+    "No AI translation",
+    "No git add . or git add -A"
+  ]
+}

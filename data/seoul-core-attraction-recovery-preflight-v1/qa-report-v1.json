@@ -1,0 +1,113 @@
+{
+  "qa_task": "TASK-SEOUL-CORE-ATTRACTION-CANONICAL-RECOVERY-PREFLIGHT-V1",
+  "qa_date": "2026-09-11",
+  "qa_verdict": "PASS",
+  "total_checks": 13,
+  "pass_count": 13,
+  "fail_count": 0,
+  "checks": [
+    {
+      "check": "TOTAL_ROWS",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": ""
+    },
+    {
+      "check": "UNIQUE_CID",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": ""
+    },
+    {
+      "check": "NULL_CID",
+      "status": "PASS",
+      "result": 0,
+      "expected": 0,
+      "note": ""
+    },
+    {
+      "check": "COORD_PRESENT",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": ""
+    },
+    {
+      "check": "IMG_PRESENT",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": ""
+    },
+    {
+      "check": "ALL_SEARCHABLE",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": "All 311 have SEARCHABLE=YES"
+    },
+    {
+      "check": "REVIEW_REQUIRED_COUNT",
+      "status": "PASS",
+      "result": 0,
+      "expected": 0,
+      "note": ""
+    },
+    {
+      "check": "BLANKET_FIX_ALL_ALREADY_CANONICAL",
+      "status": "PASS",
+      "result": 9,
+      "expected": 9,
+      "note": "All 9 BLANKET_FIX records are ALREADY_IN_CANONICAL"
+    },
+    {
+      "check": "TEMPLE_STAY_AI_CONDITIONAL",
+      "status": "PASS",
+      "result": 1,
+      "expected": 1,
+      "note": ""
+    },
+    {
+      "check": "DUPLICATE_SUM",
+      "status": "PASS",
+      "result": 311,
+      "expected": 311,
+      "note": "ALREADY_CAN(9)+TITLE_SAME(1)+NEW(301)=311"
+    },
+    {
+      "check": "NEW_SVC_SUM",
+      "status": "PASS",
+      "result": 301,
+      "expected": 301,
+      "note": "NEW_ACTIVE(255)+NEW_AI_COND(31)+NEW_EXCLUDED(15)=301"
+    },
+    {
+      "check": "MULTILINGUAL_EN_MAX",
+      "status": "PASS",
+      "result": 301,
+      "expected": 301,
+      "note": "Max possible EN CID count"
+    },
+    {
+      "check": "MULTILINGUAL_TITLE_0",
+      "status": "PASS",
+      "result": 0,
+      "expected": 0,
+      "note": "0 multilingual text materialized (correct - fetch required)"
+    }
+  ],
+  "preflight_artifacts_generated": [
+    "recovery-classification-v1.jsonl (311 rows)",
+    "multilingual-readiness-v1.jsonl (311 rows)",
+    "media-nav-readiness-v1.jsonl (311 rows)",
+    "recovery-manifest-v1.json",
+    "qa-report-v1.json"
+  ],
+  "canonical_integrity": {
+    "seoul-canonical-places-v1.jsonl_modified": false,
+    "canonical_row_count_unchanged": true,
+    "no_canonical_merge_executed": true
+  }
+}
