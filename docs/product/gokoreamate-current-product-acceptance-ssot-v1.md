@@ -679,6 +679,15 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
   Search → Explore Map → Saved → Planner → My Trip → My Trip Weather →
   Living Map → AI Writing → Story → Focus → 9:16 → Share URL → incognito →
   + My Trip 직접 browser E2E.
+  → **2026-09-11 수행 완료(FINAL-VISUAL-PRODUCT-ACCEPTANCE-V1, 70a296c) —
+  판정 PASS**: 전체 Golden Journey 390×844 EN 실클릭 + desktop 1280 +
+  5도시 smoke + incognito/OG/9:16/+My Trip/privacy 전항 정상. in-task 수정
+  3건(검색 콜드로드 거짓 no-results → Searching 상태 · Coachmark 반투명
+  겹침 → 불투명 · 순간 Day 라벨을 일정 날짜로). moment ghost sync 는 제품
+  UI 삭제 경로에서 재현 안 됨(server/owner/fresh 3자 일치). Busan/Seoul/
+  Jeju/Gyeongju/Jeonju planner 전부 활성(c85ea17 Seoul Station default 로
+  의도 활성 확인). 잔여는 DATA TRACK(Events/Essentials 비KO l10n 부재 ·
+  jeju 추천 장소 이미지 권리 게이트) — 코드 결함 아님.
 - **PHASE 10 — Commercial/Affiliate E2E.**
 - **PHASE 11 — AI/API Cost/Abuse Guard.**
 - **PHASE 12 — Pre-open removal + Final Release Readiness.**
@@ -744,6 +753,7 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | AI Writing witty | **CLOSED** (2026-09-11, e48466a — §8.9; FAIL 기준 §8.2 영구 보존) |
 | AI Writing parser safety guard | CLOSED (2026-09-11, 58aaf43 — raw payload 노출 0 계약) |
 | Busan 5-city selector image | CLOSED (2026-09-11, e48466a — Hub Hero 와 도시 identity 동기화, 타 표면 유지) |
+| Production Visual/Product Acceptance (PHASE 9) | **PASS** (2026-09-11, 70a296c — Golden Journey 전항 정상, in-task fix 3) |
 | Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
 | AI/API cost guard | OPEN (PHASE 11) |
 | Final Release | OPEN (PHASE 12) |
