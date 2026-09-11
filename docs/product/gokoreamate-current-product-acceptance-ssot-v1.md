@@ -176,14 +176,30 @@ TASK-GOKOREAMATE-WEATHER-PRODUCT-CONTRACT-RECORD-V1 실측:
   기온을 지어내지 않는 정직한 link-only 단계. 표기는 `날씨 보기`, 링크는
   weather.go.kr **공통 홈**(city-specific destination 아님).
 
-### 3.2 City Hub Weather — SUPERSEDED (원문 보존)
+### 3.2 City Hub Weather — CLOSED (2026-09-11, 7115506 · Owner 최신 계약으로 구현)
 
-> **SUPERSEDED — 2026-09-08 Owner weather scope 결정.** 아래 원문(당시 Owner
-> 계약)은 기록으로 보존하되 더 이상 요구사항이 아니다. Owner 최신 결정:
-> **"중기예보만으로 충분하다."** City Hub 현재기온 칩은 구현하지 않는다.
-> 단기예보/초단기실황 API 추가 금지 · KMA 활용신청 요구 금지 · 새 weather
-> provider 도입 금지 · My Trip Weather(§3.5, LIVE) 변경 금지. 가짜 현재온도
-> 표시는 어떤 경우에도 금지. **이 항목을 다시 OPEN 으로 만들지 않는다.**
+> **해석 정정(2026-09-11 Owner 결정).** 과거 "SUPERSEDED/재OPEN 금지" 기록의
+> 정확한 의미는 "City Hub 현재기온을 위해 **임의 확장을 하지 않는다**"이지
+> "City Hub Weather 기능 자체가 영구 폐기"가 아니다. Owner 가 승인한 KMA
+> 단기예보 조회서비스(VilageFcstInfoService_2.0, 기존 KMA_API_KEY 재사용)로
+> **icon + current temperature 한 줄**을 제공한다. (2026-09-08 당시 문구는
+> 이력으로 이 블록 아래 원문 유지.)
+>
+> **구현(7115506)**: `/api/weather/now?city=` 서버 프록시 —
+> 초단기실황 getUltraSrtNcst(T1H, base HH00·10분 제공) + 초단기예보
+> getUltraSrtFcst(SKY/PTY, base HH30·45분 제공), 강수(PTY) 우선 결정적
+> 아이콘(☀️/☁️/🌧️/🌨️), 5도시 대표 nx/ny = 공식 별첨 엑셀(부산98/76·
+> 서울60/127·제주(제주시)53/38·경주100/91·전주(완산구)63/89), GPS 미사용,
+> s-maxage 600 캐시, 실패=available:false(가짜 온도 0 — 못 얻으면 숨김).
+> 클릭 = 기상청 공식 단기예보 페이지 새 탭(공식 city deep-link 부재 —
+> 임의 query 발명 금지). **최종 Weather contract**: City Hub=`☀️ 현재기온`
+> →KMA 단기예보 / My Trip=기존 KMA 중기예보(무접촉 가드) / 자체 weather
+> detail page 없음.
+
+> (이력 보존 — 2026-09-08 당시 기록) City Hub 현재기온 칩은 구현하지
+> 않는다. 단기예보/초단기실황 API 추가 금지 · 새 weather provider 도입
+> 금지 · My Trip Weather 변경 금지. 가짜 현재온도 표시는 어떤 경우에도
+> 금지(이 원칙은 지금도 유효).
 
 City Hub 에 작고 조용한 weather utility 를 제공한다. 표현 수준은 `☀️ 26°C` 정도.
 
@@ -727,7 +743,7 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Opening-hours data coverage | KNOWN GAP / NOT CURRENT PRIORITY |
 | City Hub final visual | CLOSED (2026-09-08, 51c855e; 부산 Hero 자산 2026-09-11 해소) |
 | City Hub Hero | CLOSED (2026-09-11, a5cd8b9 — Owner 선택 광안리 자산, Hub 전용 override §2.B) |
-| City Hub Weather | SUPERSEDED (2026-09-08 Owner weather scope — 재OPEN 금지, §3.2) |
+| City Hub Current Weather | **CLOSED** (2026-09-11, 7115506 — `☀️ 현재기온` 한 줄+KMA 단기예보 링크, §3.2) |
 | My Trip Weather STAGE B | LIVE (8ec30ad, KMA 중기예보 — KEEP·확장 금지) |
 | Discovery Search consistency | CLOSED (2026-09-08, 51c855e — Explore 에 URL 문법 통일) |
 | Recommended Trip legacy route | NOT REPRODUCED (Sweep + 5도시 smoke 정상 — 변경 금지) |
