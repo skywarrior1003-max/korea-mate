@@ -18,6 +18,13 @@ interface Props {
   onAddMemory:   (day?: number | null) => void;
   /** 이 일정의 Day 번호 목록. Day 별 기록 추가를 제안하는 데만 쓴다 */
   dayNumbers?:   number[];
+  /**
+   * Day 번호 → 여행 일정상의 날짜("YYYY-MM-DD"). 있으면 Day 묶음 라벨에
+   * **여행 Day 의 실제 날짜**를 쓴다 — 기록 업로드 시각을 쓰면 여행 전(사전
+   * 기록) 트립에서 "Day 1 · (오늘)" 처럼 일정 탭의 날짜와 모순된다
+   * (2026-09-11 acceptance 실측). 값이 없는 Day 는 기존대로 기록 시각.
+   */
+  dayDates?:     Record<number, string>;
   /** memo 수정 — 미전달 시 Edit 버튼을 노출하지 않는다 (공유·읽기 전용 화면 대비) */
   onEditMemo?:   (momentId: string, memo: string) => Promise<void>;
 
@@ -83,7 +90,7 @@ function groupByDay(moments: TripMoment[]): { day: number | null; items: TripMom
 }
 
 export default function TripMomentTimeline({
-  moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [], onPhotoError,
+  moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [], dayDates, onPhotoError,
   isPublic = false, currentCoverMomentId = null,
   onUseAsCover, onClearCover, coverBusy = false, onSetPublic,
 }: Props) {
@@ -195,10 +202,14 @@ export default function TripMomentTimeline({
     <div>
       {groups.map((group, gi) => {
       const isLastGroup = gi === groups.length - 1;
-      // 그 Day 의 마지막 기록 시각을 묶음 라벨로 쓴다 — 새로 만든 값이 아니다
-      const groupDate = group.items[0]
-        ? new Date(group.items[0].captured_at).toLocaleDateString(locale, { month: "short", day: "numeric" })
-        : "";
+      // Day 라벨 날짜: 일정상의 그 Day 날짜가 있으면 그것(일정 탭과 일치),
+      // 없으면 기존대로 그 Day 의 마지막 기록 시각 — 어느 쪽도 발명이 아니다.
+      const tripDate = group.day !== null ? dayDates?.[group.day] : undefined;
+      const groupDate = tripDate
+        ? new Date(`${tripDate}T00:00:00`).toLocaleDateString(locale, { month: "short", day: "numeric" })
+        : group.items[0]
+          ? new Date(group.items[0].captured_at).toLocaleDateString(locale, { month: "short", day: "numeric" })
+          : "";
 
       return (
         <div key={String(group.day)} className="flex gap-3 sm:gap-4">

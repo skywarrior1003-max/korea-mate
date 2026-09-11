@@ -230,7 +230,14 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
               </p>
             </div>
           )}
-          {showPanel && pastedUrl?.kind !== "external" && results.length === 0 && (
+          {/* 장소 인덱스 콜드로드 중에는 "No results" 를 단정하지 않는다 —
+              실측(2026-09-11): 첫 타이핑 후 ~1초 창에서 거짓 no-result 가 떴다. */}
+          {showPanel && pastedUrl?.kind !== "external" && results.length === 0 && spots === null && (
+            <div className="pt-5 pb-4">
+              <p className="text-[15px] font-medium text-[var(--qh-faint)]">{t("searchLoading")}</p>
+            </div>
+          )}
+          {showPanel && pastedUrl?.kind !== "external" && results.length === 0 && spots !== null && (
             <div className="pt-5 pb-2">
               <p className="text-[15px] font-semibold text-[var(--qh-ink)]">{t("noResults", { q: query.trim() })}</p>
               <p className="mt-1 text-[13px] text-[var(--qh-faint)]">{t("noResultsHint")}</p>

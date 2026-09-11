@@ -1347,6 +1347,7 @@
     "typePlace": "Place",
     "noResults": "No results for “{q}”",
     "noResultsHint": "Check the spelling, or try a city below.",
+    "searchLoading": "Searching…",
     "searchIdleHint": "Try a city, a trip, or a place — e.g. “Busan”",
     "tripsSoon": "Curated trips for {city} are on the way.",
     "coverCaption": "Stayed by the water longer than planned.",

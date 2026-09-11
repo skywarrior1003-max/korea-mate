@@ -1347,6 +1347,7 @@
     "typePlace": "장소",
     "noResults": "“{q}” 검색 결과가 없어요",
     "noResultsHint": "철자를 확인하거나 아래 도시에서 시작해 보세요.",
+    "searchLoading": "검색 중…",
     "searchIdleHint": "도시·여행·장소를 검색해 보세요 — 예: “부산”",
     "tripsSoon": "{city} 추천 여행 코스를 준비하고 있어요.",
     "coverCaption": "물가에서 생각보다 오래 머물렀다.",

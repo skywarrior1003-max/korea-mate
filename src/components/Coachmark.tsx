@@ -23,7 +23,9 @@ export default function Coachmark({ title, body, onDismiss, placement = "below" 
   return (
     <div
       role="status"
-      className={`${placement === "above" ? "mb-2" : "mt-2"} rounded-2xl border border-action/30 bg-action/5 px-4 py-3`}
+      // bg-action/5(반투명)는 sticky 위에서 뒤 콘텐츠가 비쳐 글이 겹쳐 보였다
+      // (2026-09-11 실측). 흰 바탕에 5% 를 섞은 것과 같은 불투명 색으로 고정.
+      className={`${placement === "above" ? "mb-2" : "mt-2"} rounded-2xl border border-action/30 bg-[#FFF6F4] px-4 py-3 shadow-sm`}
     >
       <p className="text-sm font-bold text-ink">{title}</p>
       <p className="mt-1 text-xs text-sub leading-relaxed">{body}</p>

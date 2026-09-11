@@ -3878,6 +3878,7 @@ function ItineraryResult() {
           onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
           onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}
           dayNumbers={days.map(d => d.dayNumber)}
+          dayDates={Object.fromEntries(days.map(d => [d.dayNumber, d.date]))}
           isPublic={isPublic}
           currentCoverMomentId={coverKind === "moment" ? coverMomentId : null}
           coverBusy={coverBusy}

@@ -1347,6 +1347,7 @@
     "typePlace": "場所",
     "noResults": "「{q}」の結果はありません",
     "noResultsHint": "つづりを確認するか、下の都市から始めてみてください。",
+    "searchLoading": "検索中…",
     "searchIdleHint": "都市・旅・場所を検索 — 例:「釜山」",
     "tripsSoon": "{city}のおすすめコースを準備中です。",
     "coverCaption": "水辺で、思ったより長く過ごした。",
