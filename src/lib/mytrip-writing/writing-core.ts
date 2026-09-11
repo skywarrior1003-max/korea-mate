@@ -181,7 +181,10 @@ export function buildWritingPrompt(req: WritingRequest): string {
   if (clip(c.category, 40)) facts.push(`place category: ${clip(c.category, 40)}`);
   if (typeof c.dayNumber === "number" && c.dayNumber >= 1) facts.push(`trip day: Day ${Math.floor(c.dayNumber)}`);
   if (clip(c.dates, 40)) facts.push(`trip dates: ${clip(c.dates, 40)}`);
-  if (c.hasPhoto) facts.push("the traveler took a photo at this moment — you cannot see it and do NOT know what is in it: never describe or guess its contents");
+  // hasPhoto 는 양방향 사실이다 (LOCALE-FACT-GROUNDING-V1 §7): 없음을 말하지
+  // 않으면 모델이 "찍었다" 를 그럴듯한 행동으로 창작한다(LIVE 실측).
+  if (c.hasPhoto) facts.push("photo available: YES — a photo exists but you CANNOT see it and do NOT know what is in it: never describe or guess its contents");
+  else if (req.target === "memo") facts.push("photo available: NO — the traveler did NOT take a photo here: never mention taking, holding, reviewing, or posing for photos/cameras");
   if (clip(c.tripTitle, 80) && req.target === "memo") facts.push(`trip title: ${clip(c.tripTitle, 80)}`);
   // 실제 일정에서 셈한 여행 패턴(deriveTripWritingFacts) — 특히 title 의 재료다
   for (const f of (c.tripFacts ?? []).slice(0, MAX_TRIP_FACTS)) {
@@ -213,8 +216,14 @@ export function buildWritingPrompt(req: WritingRequest): string {
     LOCALE_VOICE[req.locale],
     DIRECTION_BRIEF[req.direction],
     targetCraft,
-    `Known context (the ONLY facts you may use):`,
+    `ALLOWED FACTS (the ONLY facts that exist — everything else is UNKNOWN):`,
     ...facts.map(f => `- ${f}`),
+    `FACT RULES:
+- You may only state concrete events, actions, foods, and numbers that are supported by the ALLOWED FACTS or the traveler's draft.
+- Missing information means UNKNOWN — it is never permission to invent.
+- Provided place/business names are IMMUTABLE PROPER NOUNS: copy them character-for-character exactly as written above. Do not translate, transliterate, respell, localize, or invent another name for any place, shop, street, or business.
+- Korean food words from the facts/draft: keep the word exactly as written there, or use plain common vocabulary of the output language (e.g. "soup" / "スープ" / "汤") — NEVER coin a new translated word for a Korean dish.
+- State possibilities as possibilities: never assert that an event actually happened (getting lost, ending up somewhere, meeting someone) unless the facts/draft say it happened.`,
     draft
       ? [
           `The traveler already wrote this draft — polish it in the requested direction. Keep their meaning,`,
@@ -226,6 +235,7 @@ export function buildWritingPrompt(req: WritingRequest): string {
           `happened: NEVER make up specific dishes eaten, people met ("옆자리", companions, crowds reacting),`,
           `purchases, or actions. Stay at the level of the place itself and a quiet plausible reaction to it.`,
         ].join(" "),
+    `When the facts are thin, FACTUAL BEATS FUNNY: a less funny true line always wins over a funnier invented one — prefer a short dry understated observation over any joke that needs material not in the facts.`,
     `The three directions (calm/witty/warm) must be clearly distinguishable — never produce a line that could pass for another direction.`,
     `Hard rules:`,
     `- Do NOT invent facts, prices, history, rankings, weather, companions, meals, or events not in the context.`,
@@ -282,6 +292,38 @@ export function extractSuggestion(text: string, target: WritingTarget): string |
   const max = target === "title" ? MAX_TITLE_CHARS + 20 : MAX_MEMO_CHARS + 60;
   if (s.length > max) s = s.slice(0, max).trim();
   return s || null;
+}
+
+/**
+ * 좁은 결정적 출력 guard (LOCALE-FACT-GROUNDING-V1 §11) — 객관적으로 판별
+ * 가능한 두 가지만 잡는다. 자연어 전체를 검사하는 validator 가 아니다.
+ *
+ *  1) JA/ZH 출력의 한글 오염 — 단, source(draft·placeName·tripTitle·city·
+ *     tripFacts)에 실제로 있는 한글 글자는 허용한다(사용자가 쓴 한글을
+ *     regex 로 뭉개지 않는다 — §9).
+ *  2) hasPhoto=false 인데 사진 행동 서술 — draft 가 사진을 언급했으면 통과
+ *     (사용자 사실이 우선).
+ *
+ * 걸리면 null = 기존 honest fallback(200 + suggestion:null). 재시도 없음.
+ */
+const PHOTO_ACTION_RE = /사진|찍었|찍고|찍은|찍어|카메라|셀카|photo|camera|selfie|snapshot|写真|撮っ|撮り|撮る|シャッター|拍了|拍照|拍下|照片|合影|自拍|镜头/i;
+
+export function groundedSuggestionGuard(req: WritingRequest, suggestion: string | null): string | null {
+  if (suggestion === null) return null;
+  const c = req.context;
+  const sources = [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
+    .filter((v): v is string => typeof v === "string").join("\n");
+  if (req.locale === "ja" || req.locale === "zh") {
+    const allowed = new Set(sources.match(/[가-힣]/g) ?? []);
+    for (const ch of suggestion.match(/[가-힣]/g) ?? []) {
+      if (!allowed.has(ch)) return null; // source 에 없는 한글 = 오염
+    }
+  }
+  if (c.hasPhoto === false || c.hasPhoto === undefined) {
+    const draftMentionsPhoto = typeof c.draft === "string" && PHOTO_ACTION_RE.test(c.draft);
+    if (!draftMentionsPhoto && PHOTO_ACTION_RE.test(suggestion)) return null;
+  }
+  return suggestion;
 }
 
 /** 방향별 temperature — witty 는 재생성 다양성이 품질의 일부다(반복 regenerate 검수 계약). */

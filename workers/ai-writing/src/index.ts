@@ -22,7 +22,7 @@
 
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
-  MODEL, TIMEOUT_MS,
+  groundedSuggestionGuard, MODEL, TIMEOUT_MS,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 export interface Env {
@@ -198,12 +198,17 @@ export default {
       callProvider(apiKey, buildWritingPrompt(body), body.target, body.direction),
       executionColo(),
     ]);
+    // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.
+    // 걸리면 기존 honest fallback(200 + null). 재시도 없음.
+    const suggestion = groundedSuggestionGuard(body, outcome.suggestion);
+    const guarded = outcome.suggestion !== null && suggestion === null;
+    const ai_status = guarded ? "fallback_guard" : outcome.ai_status;
     log({
-      ok: outcome.suggestion !== null, ai_status: outcome.ai_status,
+      ok: suggestion !== null, ai_status,
       httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
       target: body.target, dir: body.direction, locale: body.locale,
-      outLen: outcome.suggestion?.length ?? 0, err: outcome.errSnippet,
+      outLen: suggestion?.length ?? 0, err: outcome.errSnippet, guarded,
     });
-    return reply(outcome.suggestion, outcome.ai_status);
+    return reply(suggestion, ai_status);
   },
 };

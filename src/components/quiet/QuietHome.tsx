@@ -19,7 +19,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
-import { cityVisual } from "@/lib/city-visual";
+import { cityVisual, cityHubHeroVisual } from "@/lib/city-visual";
 import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { QUIET_CITIES } from "./quiet-data";
 import QuietSearch from "./QuietSearch";
@@ -129,7 +129,9 @@ export default function QuietHome() {
           <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-4">{t("citiesLabel")}</h2>
           <div className="mt-3 flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-5 md:overflow-visible" style={{ scrollbarWidth: "none" }}>
             {QUIET_CITIES.map(c => {
-              const v = cityVisual(c.slug);
+              // 도시 진입 selector 는 City Hub Hero 와 도시 identity 를 맞춘다
+              // (Owner 2026-09-11 — busan 만 override, Home emotional cover 는 기존 유지).
+              const v = cityHubHeroVisual(c.slug);
               return (
                 <Link
                   key={c.slug}

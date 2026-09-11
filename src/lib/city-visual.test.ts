@@ -80,6 +80,12 @@ test("★Hub Hero override 는 부산뿐 — 다른 도시는 공용 비주얼 �
   assert.equal(cityHubHeroVisual(null), null);
 });
 
+test("★5-city selector 는 Hub Hero 와 동기화, Home emotional cover 는 기존 유지 (Owner 2026-09-11)", () => {
+  const home = readFileSync(join(ROOT, "src/components/quiet/QuietHome.tsx"), "utf8");
+  assert.match(home, /const v = cityHubHeroVisual\(c\.slug\)/, "도시 타일이 Hub Hero 와 동기화되지 않았다");
+  assert.match(home, /const COVER_IMG = cityVisual\("busan"\)/, "Home emotional cover 가 바뀌었다 — 기존 계약 위반");
+});
+
 test("★KTO 관광 자산과 분리돼 있다 — 프록시·외부 호스트를 쓰지 않는다", () => {
   for (const c of citiesWithVisual()) {
     const src = cityVisual(c)!.src;

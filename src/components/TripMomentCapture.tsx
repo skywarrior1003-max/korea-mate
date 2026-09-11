@@ -27,6 +27,13 @@ interface Props {
    * 예전과 같은 자유 순간이다 — 자유 입력은 그대로 남는다.
    */
   initialPlaceName?: string | null;
+  /**
+   * AI writing 컨텍스트 전용 requested-locale canonical 장소명
+   * (LOCALE-FACT-GROUNDING-V1 §3). 결합 순간에서만 의미가 있다 — 저장되는
+   * placeName/표시 prefill 은 기존 그대로이고, provider 로 가는 이름만 이 값이다.
+   * 자유 순간(사용자 입력 이름)은 사용자가 쓴 이름을 proper noun 그대로 보낸다(§4).
+   */
+  aiPlaceName?:      string | null;
   citySpotId?:       number | null;
   /** 일정 장소의 일반 열쇠(sourceKey 문법). 있으면 결합 순간이다 — 내 장소·행사도 여기로 묶인다. */
   stopKey?:          string | null;
@@ -39,7 +46,7 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, tripTitle, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, tripTitle, initialPlaceName, aiPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   // 기록 시각 미리보기도 UI locale 을 따른다 (Timeline 과 같은 결함 수정).
   const locale = useLocale();
@@ -369,7 +376,9 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
                 target="memo" dark
                 buildContext={() => ({
                   city: (city ?? "").trim() || "Korea",
-                  placeName: placeName || null,
+                  // 결합 순간 = DB canonical locale 이름(aiPlaceName), 자유 순간 =
+                  // 사용자 입력 이름 그대로 — AI 에게 번역/음차를 맡기지 않는다.
+                  placeName: (isBound ? (aiPlaceName ?? placeName) : placeName) || null,
                   category,
                   dayNumber,
                   hasPhoto: photoData !== null,

@@ -7,7 +7,7 @@ import { join } from "node:path";
 import {
   buildWritingPrompt, deriveTripWritingFacts, buildProviderBody,
   DIRECTION_TEMPERATURE, WRITING_DIRECTIONS, MAX_TRIP_FACTS,
-  extractSuggestion, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
+  extractSuggestion, groundedSuggestionGuard, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
   type WritingRequest,
 } from "./writing-core.ts";
 
@@ -145,13 +145,68 @@ test("parser guard — malformed/truncated payload 는 raw 노출 없이 null", 
   assert.equal(extractSuggestion("", "memo"), null);
 });
 
-test("배선 가드 — title 은 tripFacts, memo 는 tripTitle 을 실제로 보낸다·Worker 는 direction 온도 사용", () => {
+test("배선 가드 — title 은 locale 해석 tripFacts, memo 는 tripTitle·aiPlaceName 을 실제로 보낸다", () => {
   const page = readFileSync(join(process.cwd(), "src", "app", "itinerary", "page.tsx"), "utf8");
-  assert.match(page, /tripFacts: deriveTripWritingFacts\(days\)/);
+  // LOCALE-FACT-GROUNDING-V1: tripFacts 장소명은 requested-locale canonical 로 해석해 보낸다
+  assert.match(page, /tripFacts: deriveTripWritingFacts\(days\.map/);
+  assert.match(page, /name: localizedPlaceName\(p\.name\?\.trim\(\) \|\| "", l10nOf\(p\), locale\)/);
+  // 결합 순간 캡처 3경로 모두 aiPlaceName(locale 해석)을 싣는다
+  assert.equal((page.match(/aiPlaceName: localizedPlaceName\(/g) ?? []).length >= 2, true, "캡처 진입점 aiPlaceName 누락");
+  assert.match(page, /aiPlaceName=\{captureStop\?\.aiPlaceName \?\? null\}/);
   const cap = readFileSync(join(process.cwd(), "src", "components", "TripMomentCapture.tsx"), "utf8");
   assert.match(cap, /tripTitle: \(tripTitle \?\? ""\)\.trim\(\) \|\| null/);
+  assert.match(cap, /placeName: \(isBound \? \(aiPlaceName \?\? placeName\) : placeName\) \|\| null/);
   const worker = readFileSync(join(process.cwd(), "workers", "ai-writing", "src", "index.ts"), "utf8");
   assert.match(worker, /buildProviderBody\(prompt, direction\)/);
+  assert.match(worker, /groundedSuggestionGuard\(body, outcome\.suggestion\)/);
   const fn = readFileSync(join(process.cwd(), "functions", "api", "mytrip", "writing.ts"), "utf8");
   assert.match(fn, /buildProviderBody\(prompt, body\.direction\)/);
+  assert.match(fn, /groundedSuggestionGuard\(body, extracted\)/);
+});
+
+test("ALLOWED FACTS 구조 — 사실 영역과 FACT RULES·고유명사 불변·음식어 계약이 프롬프트에 있다", () => {
+  const p = buildWritingPrompt(req({ target: "memo", context: { city: "Busan", placeName: "海雲台", hasPhoto: false } }));
+  assert.match(p, /ALLOWED FACTS \(the ONLY facts that exist/);
+  assert.match(p, /FACT RULES:/);
+  assert.match(p, /Missing information means UNKNOWN/);
+  assert.match(p, /IMMUTABLE PROPER NOUNS/);
+  assert.match(p, /Do not translate, transliterate, respell, localize/);
+  assert.match(p, /NEVER coin a new translated word for a Korean dish/);
+  assert.match(p, /never assert that an event actually happened/);
+  assert.match(p, /FACTUAL BEATS FUNNY/);
+});
+
+test("hasPhoto 양방향 계약 — false 는 '찍지 않았다' 를 명시, true 는 내용 모름을 명시", () => {
+  const no = buildWritingPrompt(req({ target: "memo", context: { city: "Busan", placeName: "x", hasPhoto: false } }));
+  assert.match(no, /photo available: NO — the traveler did NOT take a photo/);
+  const yes = buildWritingPrompt(req({ target: "memo", context: { city: "Busan", placeName: "x", hasPhoto: true } }));
+  assert.match(yes, /photo available: YES/);
+  assert.match(yes, /never describe or guess its contents/);
+  // title 요청엔 photo 사실 자체가 없다(모먼트가 아니다)
+  const title = buildWritingPrompt(req({ target: "title", context: { city: "Busan" } }));
+  assert.ok(!title.includes("photo available: NO"));
+});
+
+test("groundedSuggestionGuard — 한글 오염/사진행동 발명만 좁게 잡는다", () => {
+  const base = req({ locale: "ja", target: "memo", context: { city: "Busan", placeName: "ハルメボックク", hasPhoto: false } });
+  // source 에 없는 한글 = 오염 → null
+  assert.equal(groundedSuggestionGuard(base, "国밥が三杯目。"), null);
+  // 정상 일본어는 통과
+  assert.equal(groundedSuggestionGuard(base, "クッパが三杯目。旅なのか。"), "クッパが三杯目。旅なのか。");
+  // 사용자 draft 의 한글은 허용(§9 — naive regex 로 뭉개지 않는다)
+  const withDraft = req({ locale: "ja", target: "memo", context: { city: "Busan", placeName: "x", hasPhoto: false, draft: "국밥이 세 그릇째" } });
+  assert.equal(groundedSuggestionGuard(withDraft, "「국밥」がもう三杯目。"), "「국밥」がもう三杯目。");
+  // hasPhoto:false + 사진 행동 = null (ja/en/ko/zh 공통)
+  assert.equal(groundedSuggestionGuard(base, "つい何枚も撮ってしまう。"), null);
+  const koNoPhoto = req({ locale: "ko", target: "memo", context: { city: "Seoul", placeName: "북촌", hasPhoto: false } });
+  assert.equal(groundedSuggestionGuard(koNoPhoto, "골목에서 사진을 찍었다."), null);
+  assert.equal(groundedSuggestionGuard(koNoPhoto, "골목이 조용했다."), "골목이 조용했다.");
+  // hasPhoto:true 면 사진 언급 허용
+  const koPhoto = req({ locale: "ko", target: "memo", context: { city: "Seoul", placeName: "북촌", hasPhoto: true } });
+  assert.equal(groundedSuggestionGuard(koPhoto, "사진 한 장 남겼다."), "사진 한 장 남겼다.");
+  // draft 가 사진을 말하면 hasPhoto:false 여도 통과(사용자 사실 우선)
+  const draftPhoto = req({ locale: "ko", target: "memo", context: { city: "Seoul", placeName: "북촌", hasPhoto: false, draft: "사진 40장 찍음" } });
+  assert.equal(groundedSuggestionGuard(draftPhoto, "같은 골목 사진만 40장."), "같은 골목 사진만 40장.");
+  // null 은 null
+  assert.equal(groundedSuggestionGuard(base, null), null);
 });

@@ -1312,7 +1312,11 @@ function ItineraryResult() {
   const handleMapAddPhoto = (dayNumber: number, stop: { placeName: string; citySpotId: number | null; stopKey: string | null }) => {
     if (mapFull) closeMapFull();
     setCaptureDay(dayNumber);
-    setCaptureStop(stop);
+    setCaptureStop({
+      ...stop,
+      // AI 컨텍스트 전용 locale 이름 — citySpotId 로 l10n 을 해석한다(저장 데이터 무변경).
+      aiPlaceName: localizedPlaceName(stop.placeName.trim(), l10nOf({ place_id: stop.citySpotId, name: stop.placeName }), locale) || null,
+    });
     setCaptureOpen(true);
   };
   /** Day 지도 접기/펼치기 — 시안의 Map 액션. 기본은 펼침(기존 동작 유지) */
@@ -1634,7 +1638,9 @@ function ItineraryResult() {
   const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
   // 일정 장소에서 시작한 Capture — 장소명 prefill + 공식 장소면 city_spot_id 관계.
   // 없으면(헤더·Day 완주 토스트 진입) 예전과 같은 자유 순간이다.
-  const [captureStop,     setCaptureStop]     = useState<{ placeName: string; citySpotId: number | null; stopKey: string | null } | null>(null);
+  // aiPlaceName: AI writing 컨텍스트 전용 requested-locale canonical 이름
+  // (LOCALE-FACT-GROUNDING-V1 §3 — 저장되는 placeName/표시 데이터는 건드리지 않는다).
+  const [captureStop,     setCaptureStop]     = useState<{ placeName: string; aiPlaceName: string | null; citySpotId: number | null; stopKey: string | null } | null>(null);
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   // 카드가 그리는 것은 **공개 Story 가 내보낸 것**뿐이다. 소유자 목록(`moments`)을
   // 그대로 넘기면 공개하지 않기로 한 사진·메모가 카드에 들어간다.
@@ -2865,8 +2871,16 @@ function ItineraryResult() {
                   dates: `${startDate} – ${endDate}`,
                   draft: titleInput.trim() || null,
                   // 실제 일정에서 셈한 여행 패턴 — "이 여행에서만 나올 제목" 의 재료
-                  // (AI-WRITING-QUALITY-PRODUCTION-V1; 좌표·숙소명·내부 id 없음)
-                  tripFacts: deriveTripWritingFacts(days),
+                  // (AI-WRITING-QUALITY-PRODUCTION-V1; 좌표·숙소명·내부 id 없음).
+                  // 장소명은 requested locale 의 canonical l10n 으로 해석해 보낸다 —
+                  // AI 에게 번역/음차를 맡기지 않는다 (LOCALE-FACT-GROUNDING-V1 §3).
+                  tripFacts: deriveTripWritingFacts(days.map(d => ({
+                    places: (d.places ?? []).map(p => ({
+                      name: localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale),
+                      category: p.category,
+                      isAccommodation: p.isAccommodation,
+                    })),
+                  }))),
                 })}
                 onSuggestion={text => setTitleInput(text.slice(0, 60))}
               />
@@ -3464,7 +3478,7 @@ function ItineraryResult() {
                               type="button"
                               onClick={() => {
                                 setCaptureDay(day.dayNumber);
-                                setCaptureStop({ placeName: p.name, citySpotId: stopCitySpotId(p), stopKey: stopKeyOf(p) });
+                                setCaptureStop({ placeName: p.name, aiPlaceName: localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale) || null, citySpotId: stopCitySpotId(p), stopKey: stopKeyOf(p) });
                                 setCaptureOpen(true);
                               }}
                               className="gkm-focus inline-flex items-center min-h-11 px-3.5 rounded-full border border-line bg-white text-xs font-bold text-ink"
@@ -3929,7 +3943,7 @@ function ItineraryResult() {
             return ((!shareId || isOwner) && itinId && stopKeyOf(place) !== null && (day !== null
               ? () => {
                   setCaptureDay(day);
-                  setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place), stopKey: stopKeyOf(place) });
+                  setCaptureStop({ placeName: place.name, aiPlaceName: localizedPlaceName(place.name?.trim() || "", l10nOf(place), locale) || null, citySpotId: stopCitySpotId(place), stopKey: stopKeyOf(place) });
                   setSelectedPlace(null); setSelectedPlaceDay(null);
                   setCaptureOpen(true);
                 }
@@ -4006,6 +4020,7 @@ function ItineraryResult() {
           tripTitle={tripTitle}
           dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
           initialPlaceName={captureStop?.placeName ?? null}
+          aiPlaceName={captureStop?.aiPlaceName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}
           stopKey={captureStop?.stopKey ?? null}
           onSave={handleMomentSave}

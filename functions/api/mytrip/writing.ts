@@ -20,7 +20,7 @@
 
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
-  MODEL, TIMEOUT_MS, type WritingRequest,
+  groundedSuggestionGuard, MODEL, TIMEOUT_MS, type WritingRequest,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 interface Env {
@@ -107,9 +107,11 @@ async function viaDirect(
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-    const suggestion = extractSuggestion(text, body.target);
-    log({ ok: suggestion !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: suggestion?.length ?? 0 });
-    return reply(suggestion, suggestion !== null ? "live" : "fallback_empty");
+    const extracted = extractSuggestion(text, body.target);
+    // 좁은 결정적 guard(§11) — 한글 오염/사진행동 발명만. 걸리면 honest fallback.
+    const suggestion = groundedSuggestionGuard(body, extracted);
+    log({ ok: suggestion !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: suggestion?.length ?? 0, guarded: extracted !== null && suggestion === null });
+    return reply(suggestion, suggestion !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty");
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
