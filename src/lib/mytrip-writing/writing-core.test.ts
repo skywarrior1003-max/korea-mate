@@ -7,6 +7,7 @@ import { join } from "node:path";
 import {
   buildWritingPrompt, deriveTripWritingFacts, buildProviderBody,
   DIRECTION_TEMPERATURE, WRITING_DIRECTIONS, MAX_TRIP_FACTS,
+  extractSuggestion, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
   type WritingRequest,
 } from "./writing-core.ts";
 
@@ -111,6 +112,37 @@ test("temperature — witty 는 재생성 다양성을 위해 더 높다", () =>
   assert.equal(b.generationConfig.temperature, DIRECTION_TEMPERATURE.witty);
   const d = buildProviderBody("p") as { generationConfig: { temperature: number } };
   assert.equal(d.generationConfig.temperature, 0.7);
+});
+
+test("witty 생성 예산 — 1024 thinking 은 maxOutputTokens 1800 과 세트(canary 실측 계약)", () => {
+  const w = buildProviderBody("p", "witty") as { generationConfig: { maxOutputTokens: number; thinkingConfig: { thinkingBudget: number } } };
+  assert.equal(w.generationConfig.thinkingConfig.thinkingBudget, WITTY_THINKING_BUDGET);
+  assert.equal(w.generationConfig.maxOutputTokens, WITTY_MAX_OUTPUT_TOKENS);
+  assert.equal(WITTY_THINKING_BUDGET, 1024);
+  assert.equal(WITTY_MAX_OUTPUT_TOKENS, 1800);
+  // thinking 토큰이 maxOutputTokens 에 포함되는 모델 특성 — 출력 여유가 실제로 남아야 한다
+  assert.ok(WITTY_MAX_OUTPUT_TOKENS - WITTY_THINKING_BUDGET >= 700, "witty 출력 여유 부족");
+  // calm/warm/기본은 기존 그대로
+  for (const d of ["calm", "warm"] as const) {
+    const b = buildProviderBody("p", d) as { generationConfig: { maxOutputTokens: number; thinkingConfig: { thinkingBudget: number } } };
+    assert.equal(b.generationConfig.maxOutputTokens, MAX_OUTPUT_TOKENS, d);
+    assert.equal(b.generationConfig.thinkingConfig.thinkingBudget, 256, d);
+  }
+});
+
+test("parser guard — malformed/truncated payload 는 raw 노출 없이 null", () => {
+  // 정상 계약
+  assert.equal(extractSuggestion('{"suggestion": "부산 3일, 아홉 끼"}', "title"), "부산 3일, 아홉 끼");
+  // code fence 에 싸인 JSON 은 여전히 파싱된다(기존 관용 유지)
+  assert.equal(extractSuggestion('```json\n{"suggestion": "ok"}\n```', "title"), "ok");
+  // 절단된 JSON(canary 1024/700 조합에서 실제 재현된 형태) — raw JSON 노출 0
+  assert.equal(extractSuggestion('{"suggestion": "부산 3일, 밥 먹', "title"), null);
+  // suggestion 이 문자열이 아니거나 없는 JSON
+  assert.equal(extractSuggestion('{"suggestion": 42}', "title"), null);
+  assert.equal(extractSuggestion("{}", "title"), null);
+  // JSON 이 아예 아닌 응답도 제안으로 승격하지 않는다(responseSchema 계약 위반 = 실패)
+  assert.equal(extractSuggestion("plain text answer", "memo"), null);
+  assert.equal(extractSuggestion("", "memo"), null);
 });
 
 test("배선 가드 — title 은 tripFacts, memo 는 tripTitle 을 실제로 보낸다·Worker 는 direction 온도 사용", () => {

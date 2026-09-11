@@ -257,17 +257,27 @@ export const RESPONSE_SCHEMA = {
   required: ["suggestion"],
 } as const;
 
-/** provider 응답에서 제안을 안전하게 꺼낸다 — 깨졌으면 null(저장 흐름은 무사하다) */
+/**
+ * provider 응답에서 제안을 안전하게 꺼낸다 — 깨졌으면 null(저장 흐름은 무사하다).
+ *
+ * PARSER SAFETY GUARD (WITTY-CLOSURE-PRODUCTION-V1): 예전에는 JSON 파싱이
+ * 실패하면 원문을 그대로 후보로 썼는데, 그러면 malformed/truncated payload
+ * (`{"suggestion": "부산…` 식 절단)가 사용자 화면에 raw JSON 으로 노출될 수
+ * 있다(2026-09-11 canary 에서 1024/700 조합으로 실제 재현). 계약: 파싱이
+ * 안 되는 응답은 제안이 아니라 실패다 — code fence 제거 후 재시도까지만 하고,
+ * 그래도 안 되면 null(기존 honest fallback 흐름 그대로).
+ */
 export function extractSuggestion(text: string, target: WritingTarget): string | null {
-  let s = "";
-  try {
-    const j = JSON.parse(text) as { suggestion?: unknown };
-    if (typeof j.suggestion === "string") s = j.suggestion;
-  } catch { s = text; }
-  s = s.trim()
-    .replace(/^```(?:json)?/i, "").replace(/```$/, "")
-    .replace(/^["'“」『]+|["'”」』]+$/g, "")
-    .trim();
+  const parse = (t: string): string | null => {
+    try {
+      const j = JSON.parse(t) as { suggestion?: unknown };
+      return typeof j.suggestion === "string" ? j.suggestion : null;
+    } catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  let s = raw.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
   if (!s) return null;
   const max = target === "title" ? MAX_TITLE_CHARS + 20 : MAX_MEMO_CHARS + 60;
   if (s.length > max) s = s.slice(0, max).trim();
@@ -279,19 +289,30 @@ export const DIRECTION_TEMPERATURE: Record<WritingDirection, number> = {
   calm: 0.6, witty: 0.9, warm: 0.75,
 };
 
+/**
+ * witty 전용 생성 예산 (WITTY-CLOSURE-PRODUCTION-V1, Owner 승인 canary 결과 적용).
+ * gemini-2.5-flash 는 thinking 토큰이 maxOutputTokens 에 **포함**된다 —
+ * 2026-09-11 canary 실측: 1024/700 조합은 23/32 가 JSON 절단. 그래서 두 값은
+ * 반드시 세트다. canary(blind): GOOD 56%→75% · FLAT 6→2 · 비용 +59% ·
+ * p50 3.4→5.1s(제품 timeout 8s 내). calm/warm 은 기존 그대로.
+ */
+export const WITTY_THINKING_BUDGET = 1024;
+export const WITTY_MAX_OUTPUT_TOKENS = 1800;
+
 export function buildProviderBody(prompt: string, direction?: WritingDirection): unknown {
+  const witty = direction === "witty";
   return {
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: {
-      maxOutputTokens: MAX_OUTPUT_TOKENS,
+      maxOutputTokens: witty ? WITTY_MAX_OUTPUT_TOKENS : MAX_OUTPUT_TOKENS,
       // 글맛이 필요한 작업 — profile(0.3)보다 높게, 폭주는 스키마로 잠근다
       temperature: direction ? DIRECTION_TEMPERATURE[direction] : 0.7,
       responseMimeType: "application/json",
       responseSchema: RESPONSE_SCHEMA,
-      // witty 만 소량의 thinking — "관찰→반전" 구성이 즉답으로는 자주 무너진다
-      // (blind 3라운드 실측, 특히 JA). 같은 모델·같은 provider 의 요청 옵션이며
-      // 호출은 버튼 클릭 시 1회뿐이라 비용 영향은 미미하다.
-      thinkingConfig: { thinkingBudget: direction === "witty" ? 512 : 256 },
+      // witty 만 thinking 증액 — "관찰→반전" 구성이 즉답으로는 자주 무너진다
+      // (blind 실측, 특히 JA·food-heavy title). 같은 모델·같은 provider 의
+      // 요청 옵션이며 호출은 버튼 클릭 시 1회뿐이다.
+      thinkingConfig: { thinkingBudget: witty ? WITTY_THINKING_BUDGET : 256 },
     },
   };
 }
