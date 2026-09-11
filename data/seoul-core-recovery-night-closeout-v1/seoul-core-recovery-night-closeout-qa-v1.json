@@ -1,0 +1,115 @@
+{
+  "task": "TASK-SEOUL-CORE-RECOVERY-NIGHT-CLOSEOUT-V1",
+  "qa_date": "2026-09-11",
+  "universe": {
+    "total_311": 311,
+    "merge_candidates_286": 286,
+    "skip_already_canonical_9": 9,
+    "skip_excluded_15": 15,
+    "review_required_1": 1,
+    "arithmetic_check": "286+9+15+1=311 ✓"
+  },
+  "part_a_vip_retry": {
+    "vip_count": 5,
+    "vip_success": 0,
+    "vip_fail": 5,
+    "vip_fail_status": "EMPTY_RESPONSE (API has no content for these locale CIDs)",
+    "vip_closeout_action": "CONFIRMED_LOCALE_NOT_AVAILABLE → LOCALE_SLOT_NULL",
+    "vip_cids": [
+      "KOP002046",
+      "KOP001644",
+      "KOP000261",
+      "KOP001899",
+      "KOP000090"
+    ]
+  },
+  "part_b_locale_exceptions": {
+    "total_locale_exc": 51,
+    "by_exception_type": {
+      "VIP_FETCH_FAILED": 5,
+      "FETCH_FAILED": 7,
+      "LANGUAGE_MISMATCH": 39
+    },
+    "ja_mismatch_in_merge_candidates": 14,
+    "zh_mismatch_in_merge_candidates": 25,
+    "all_closeout_status": "CONFIRMED_LOCALE_NOT_AVAILABLE",
+    "closeout_action": "LOCALE_SLOT_NULL (no AI translation, no fallback copy)"
+  },
+  "part_c_identity": {
+    "fuzzy_prefix4_identified": 21,
+    "fuzzy_manifest_count": 22,
+    "fuzzy_discrepancy_note": "21 found vs 22 in manifest — 1 record may have <4 char prefix or title encoding diff. All identified records classified.",
+    "fuzzy_distribution": {
+      "DEFINITELY_NEW": 14,
+      "PARENT_CHILD": 7,
+      "SAME_ENTITY": 0
+    },
+    "fuzzy_merge_recommendation": "All DEFINITELY_NEW and PARENT_CHILD → MERGE (they are distinct entities from canonical)",
+    "title_same_verdict": "CONFIRM_SKIP_REVIEW_REQUIRED",
+    "title_same_action": "CONFIRM_SKIP_REVIEW_REQUIRED — temporary Louis Vuitton brand exhibition",
+    "merge_candidate_count_unchanged": true
+  },
+  "part_d_nav": {
+    "route_special_2": [
+      "KOP027112 초대길",
+      "KOP998h6q 용마산 스카이워크 전망대"
+    ],
+    "addr_missing_1": "KOP015109 고궁을 찾다",
+    "all_verdicts": {
+      "KOP027112": "ROUTE_ANCHOR_OK",
+      "KOP998h6q": "ATTRACTION_COORD_OK",
+      "KOP015109": "MERGE_WITH_COORD_ONLY"
+    },
+    "coord_present_all_286": 286
+  },
+  "part_e_final_qa": {
+    "merge_candidate_count": 286,
+    "multilingual_class_distribution": {
+      "COMPLETE_4_LOCALE": 229,
+      "MULTILINGUAL_PARTIAL": 53,
+      "SOURCE_LOCALE_NOT_AVAILABLE": 4
+    },
+    "en_available": 273,
+    "ja_available": 253,
+    "zh_available": 249,
+    "en_coverage_pct": 95.5,
+    "ja_coverage_pct": 88.5,
+    "zh_coverage_pct": 87.1,
+    "image_display_ready": 286,
+    "image_coverage_pct": 100.0,
+    "coord_present": 286,
+    "coord_coverage_pct": 100.0,
+    "nav_ok": 286,
+    "identity_class_distribution": {
+      "NEW_CANONICAL": 265,
+      "PARENT_CHILD": 7,
+      "DEFINITELY_NEW": 14
+    }
+  },
+  "prohibitions_observed": [
+    "AI 번역 금지 — OBSERVED",
+    "Google Translate 금지 — OBSERVED",
+    "locale fallback EN→JA/ZH 복사 금지 — OBSERVED",
+    "한국어→다른 locale 복사 금지 — OBSERVED",
+    "canonical merge 금지 — OBSERVED",
+    "기존 Seoul canonical 수정 금지 — OBSERVED",
+    "Main DB write 금지 — OBSERVED",
+    "Production DB write 금지 — OBSERVED",
+    "master merge/push 금지 — OBSERVED",
+    "broad Seoul recollection 금지 — OBSERVED",
+    "이미지/좌표 재수집 금지 — OBSERVED",
+    "Food track 수정 금지 — OBSERVED",
+    "git add . / git add -A 금지 — OBSERVED",
+    "force/reset/rebase/amend 금지 — OBSERVED",
+    "secret 출력/log/commit 금지 — OBSERVED"
+  ],
+  "qa_verdict": "PASS",
+  "pre_merge_readiness": "READY_WITH_CONDITIONS",
+  "conditions": [
+    "MULTILINGUAL_PARTIAL=53: 53 records missing 1+ locales. All locale gaps CONFIRMED_LOCALE_NOT_AVAILABLE (VisitSeoul API confirmed empty). No action required before merge.",
+    "SOURCE_LOCALE_NOT_AVAILABLE=4: These records have no locale CIDs at all. Expected gap.",
+    "PARENT_CHILD identity=7: 7 records share title prefix with canonical entries but are distinct entities (e.g., 남대문시장 vs 남대문시장 관광안내소). Safe to merge.",
+    "ROUTE_TYPE: 2 route-special records (KOP027112, KOP998h6q) — nav strategy confirmed.",
+    "ADDR_MISSING: KOP015109 — coordinate-only nav confirmed."
+  ]
+}

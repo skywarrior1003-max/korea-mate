@@ -1,0 +1,103 @@
+{
+  "task": "TASK-SEOUL-CORE-RECOVERY-NIGHT-CLOSEOUT-V1",
+  "task_date": "2026-09-11",
+  "branch": "data/seoul-core-recovery-night-closeout-v1",
+  "base_commit": "9f0a4a3",
+  "base_task": "TASK-SEOUL-CORE-ATTRACTION-MULTILINGUAL-FETCH-V1",
+  "universe": {
+    "total_311": 311,
+    "merge_candidates_286": 286,
+    "new_canonical_301": 301,
+    "skip_already_canonical_9": 9,
+    "skip_excluded_15": 15,
+    "review_required_1": 1
+  },
+  "artifacts": {
+    "A_identity_closeout": "seoul-core-recovery-identity-closeout-v1.jsonl",
+    "B_locale_exception_closeout": "seoul-core-recovery-locale-exception-closeout-v1.jsonl",
+    "C_nav_exception_closeout": "seoul-core-recovery-nav-exception-closeout-v1.jsonl",
+    "D_final_merge_candidates": "seoul-core-recovery-final-merge-candidates-v1.jsonl",
+    "E_final_multilingual_handoff": "seoul-core-recovery-final-multilingual-handoff-v1.jsonl",
+    "F_final_image_handoff": "seoul-core-recovery-final-image-handoff-v1.jsonl",
+    "G_qa": "seoul-core-recovery-night-closeout-qa-v1.json",
+    "H_manifest": "seoul-core-recovery-night-closeout-manifest-v1.json"
+  },
+  "record_counts": {
+    "A_identity_closeout": 22,
+    "B_locale_exceptions": 51,
+    "C_nav_exceptions": 3,
+    "D_final_merge_candidates": 286,
+    "E_final_multilingual_handoff": 286,
+    "F_final_image_handoff": 286
+  },
+  "closeout_results": {
+    "part_a_vip_retry": {
+      "attempted": 5,
+      "success": 0,
+      "confirmed_not_available": 5,
+      "note": "All 5 VIP locale CIDs returned EMPTY_RESPONSE on retry — no native content on VisitSeoul"
+    },
+    "part_b_locale_exceptions": {
+      "fetch_failed_non_vip_retry": 7,
+      "fetch_failed_confirmed_not_available": 7,
+      "ja_language_mismatch": 14,
+      "zh_language_mismatch": 25,
+      "total_locale_exceptions": 51,
+      "resolution": "All CONFIRMED_LOCALE_NOT_AVAILABLE (no AI translation, no fallback)"
+    },
+    "part_c_identity": {
+      "fuzzy_analyzed": 21,
+      "fuzzy_definitely_new": 14,
+      "fuzzy_parent_child": 7,
+      "title_same_1": "KOPcztazx — CONFIRM_SKIP_REVIEW_REQUIRED (temp brand exhibition)",
+      "merge_candidate_count_change": 0
+    },
+    "part_d_nav": {
+      "route_special_resolved": 2,
+      "addr_missing_resolved": 1,
+      "all_286_have_coord": true
+    }
+  },
+  "multilingual_final_coverage": {
+    "COMPLETE_4_LOCALE": 229,
+    "MULTILINGUAL_PARTIAL": 53,
+    "SOURCE_LOCALE_NOT_AVAILABLE": 4,
+    "FETCH_FAILED": 0,
+    "en_available": 273,
+    "ja_available": 253,
+    "zh_available": 249,
+    "en_coverage_pct": 95.5,
+    "ja_coverage_pct": 88.5,
+    "zh_coverage_pct": 87.1
+  },
+  "pre_merge_readiness": "READY_WITH_CONDITIONS",
+  "next_step": "CANONICAL_MERGE_EXECUTION — merge 286 records (255 SERVICE_ACTIVE + 31 AI_CONDITIONAL) into seoul-canonical-places-v1.jsonl",
+  "expected_post_merge_canonical_count": 2123,
+  "pipeline_gate_proposal": {
+    "gate_G1": "IDENTITY_CONFIRMED: All 286 confirmed unique vs canonical (SAME_ENTITY=0)",
+    "gate_G2": "COORD_PRESENT: All 286 have coordinates",
+    "gate_G3": "IMG_PRESENT: All 286 have main image",
+    "gate_G4": "MULTILINGUAL_MIN_1_LOCALE: All COMPLETE_4_LOCALE records have full content; PARTIAL records have at minimum KO",
+    "gate_G5": "NO_AI_TRANSLATION: No AI or Google translated content",
+    "gate_G6": "NO_PROHIBITED_CONTENT: Prohibitions observed throughout",
+    "gate_status": "ALL_PASS"
+  },
+  "prohibitions_observed": [
+    "AI 번역 금지 — OBSERVED",
+    "Google Translate 금지 — OBSERVED",
+    "locale fallback EN→JA/ZH 복사 금지 — OBSERVED",
+    "한국어→다른 locale 복사 금지 — OBSERVED",
+    "canonical merge 금지 — OBSERVED",
+    "기존 Seoul canonical 수정 금지 — OBSERVED",
+    "Main DB write 금지 — OBSERVED",
+    "Production DB write 금지 — OBSERVED",
+    "master merge/push 금지 — OBSERVED",
+    "broad Seoul recollection 금지 — OBSERVED",
+    "이미지/좌표 재수집 금지 — OBSERVED",
+    "Food track 수정 금지 — OBSERVED",
+    "git add . / git add -A 금지 — OBSERVED",
+    "force/reset/rebase/amend 금지 — OBSERVED",
+    "secret 출력/log/commit 금지 — OBSERVED"
+  ],
+  "manifest_date": "2026-09-11"
+}
