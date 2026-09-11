@@ -155,12 +155,13 @@ og:image = 동의 개인 cover → 대표 카탈로그(공개 순간 가중) →
 5도시 designed fallback(jeonju 포함 — 과거 누락 해소) → 브랜드.
 비공개/미존재 = 브랜드 메타만. meta description·canonical 포함. → §7.3.
 
-### I. AI Writing quality — IMPROVED (2026-09-11 최신) / witty 는 CLOSED 아님
-Gemini LIVE = infrastructure PASS 일 뿐. 2026-09-09 품질 개편(ced1df5, §8.7)
-+ 2026-09-11 witty 1024+1800 예산·parser guard 적용(58aaf43, §8.8)으로 품질은
-단계적으로 개선(blind GOOD 56→75%, LIVE 밋밋함 희소). 단 `유머와 재치, 센스`
-(witty)는 LIVE 잔존 결함 12.5%(ZH 어휘·한글 혼입·발명 계열)로 **CLOSED 아님**.
-실제 실패 예: `부산 2박3일 웃음꽃피우다`. → §8.
+### I. AI Writing quality — CLOSED (2026-09-11, e48466a — locale fact grounding)
+3단 개선으로 종결: ① 품질 개편(ced1df5, §8.7) ② witty 1024+1800·parser
+guard(58aaf43, §8.8) ③ **locale fact grounding**(e48466a, §8.9 — DB 가 아는
+locale 사실은 DB 값 그대로, AI 는 그 안에서 문장만). LIVE 반복 72회에서
+한글 오염·발명 음차·国饭류 어휘 오류·사진행동 발명·fake event **전부 0** →
+**witty = CLOSED · AI Writing Quality bundle = CLOSED**. Owner FAIL 예
+`부산 2박3일 웃음꽃피우다` 계열 광고카피는 영구 FAIL 기준으로 보존. → §8.
 
 ## 3. WEATHER — 최신 Owner 계약 + 실측 결과
 
@@ -397,6 +398,32 @@ Owner 승인으로 canary 검증분만 Production 적용:
   thin-context/locale 어휘 계열은 thinking 으로 해결되지 않음이 재확인 —
   thinking 추가 증액으로 억지 해결 금지(Owner 지시). 잔여 레버는 §8.7 그대로
   Owner 결정. 증거 tmp/gokoreamate-witty-closure-production-v1/.
+
+### 8.9 LOCALE FACT GROUNDING — CLOSED (2026-09-11, e48466a · Worker 5392487a)
+
+§8.8 잔존 결함(한글 혼입·음차 발명·国饭·사진행동 발명·사건 단정)의 근본 원인을
+**첫 호출 입력**에서 제거. thinking/모델/2-candidate 무변경(1 action = 1 call 유지).
+
+- **Locale name grounding 계약**: 결합 캡처 3경로(타임라인·PlaceModal·Living
+  Map)가 `aiPlaceName` = requested-locale canonical(l10nOf→localizedPlaceName)
+  을 AI 컨텍스트에만 병렬 전달 — 저장 placeName/표시 데이터 무변경. title
+  tripFacts 장소명도 locale 해석. **fallback**: 해당 locale l10n 이 없으면
+  원문 이름 그대로(번역 창작 0), 자유 순간은 사용자 입력 이름 = proper noun.
+- **Allowed-facts writing 계약**: 프롬프트가 ALLOWED FACTS / FACT RULES 구조 —
+  "없는 정보 = UNKNOWN(발명 허가 아님)", 고유명사 IMMUTABLE(번역·음차·개명
+  금지), 한식 어휘 신조 번역 금지, 사건 단정 금지, thin-context 는
+  FACTUAL BEATS FUNNY.
+- **hasPhoto 사실 계약**: 양방향 명시 — false 면 "찍지 않았다"(사진행동 서술
+  금지), true 면 존재만 알고 내용 단정 금지.
+- **좁은 결정적 guard**: JA/ZH 출력의 source 밖 한글, hasPhoto:false 사진행동만
+  차단(사용자 draft 의 한글/사진 언급은 보존) → 걸리면 200+null honest
+  fallback(`fallback_guard`), 재시도 없음. LIVE 발동 2/72(2.8%), 오탐 0.
+- **검증**: LIVE 72회(4 locale×6 유형 반복 + JA/ZH 집중 24) — §14 전항 0.
+  DATA TRACE: DB name_l10n 보유 장소(서울시립미술관·원조할머니떡볶이집·
+  북촌돌하르방미술관)는 출력 표기 100% verbatim. 관찰(결함 아님): l10n 부재로
+  Latin 이름이 간 경우 표준 가타카나/한자 표기로 옮겨 적는 사례 있음(왜곡 0).
+- **판정: witty = CLOSED · AI Writing Quality bundle = CLOSED.** 향후 재개방
+  기준: 광고카피 계열(§8.2)·발명·오염이 사용자 노출 출력에서 재현되면 재OPEN.
 
 ## 9. PLANNER OPENING HOURS / HC-2 — CLOSED (2026-09-08)
 
@@ -713,8 +740,10 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | OG Share Preview | CLOSED (2026-09-09, 079770b — 실제 제목·사실 요약·대표 이미지 체인) |
 | Sharing Visual bundle (PHASE 7) | CLOSED (2026-09-09; hygiene 7afb5c9 master 반영) |
 | AI Writing infrastructure | LIVE |
-| AI Writing quality | IMPROVED (2026-09-11, 58aaf43 — witty 1024+1800+parser guard 적용, LIVE 잔존 BAD 12.5% → witty CLOSED 아님, §8.8) |
+| AI Writing quality | **CLOSED** (2026-09-11, e48466a — locale fact grounding, LIVE 72회 결함 0, §8.9) |
+| AI Writing witty | **CLOSED** (2026-09-11, e48466a — §8.9; FAIL 기준 §8.2 영구 보존) |
 | AI Writing parser safety guard | CLOSED (2026-09-11, 58aaf43 — raw payload 노출 0 계약) |
+| Busan 5-city selector image | CLOSED (2026-09-11, e48466a — Hub Hero 와 도시 identity 동기화, 타 표면 유지) |
 | Partner / Affiliate | PREPARED / ACCEPTANCE LATER (PHASE 10) |
 | AI/API cost guard | OPEN (PHASE 11) |
 | Final Release | OPEN (PHASE 12) |
