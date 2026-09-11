@@ -98,10 +98,12 @@ DISCOVERY-EXPLORE-PRODUCTION-V1 로 디자인 SSOT
 (`docs/design/discovery-explore-final-v1.md`) Blue/Fresh 계약 구현:
 로컬 Fresh 팔레트(paper #F5F8FC) · 히어로 white-up 그라데이션 · blue eyebrow ·
 warm 잔재 치환 · navy Explore CTA. → §4.
-잔여 OWNER ATTENTION: **부산 Hero 사진 자산** — Hub 가 Home 과 같은
-`city-busan-hero.jpg`(warm 석양) 를 쓴다. treatment 는 밝게 교체했으나 밝은
-분위기의 승인 자산이 저장소에 없어(발명 금지) 사진 자체는 그대로다.
-밝은 부산 자산은 Owner 제공/승인 후 별도 태스크.
+~~잔여 OWNER ATTENTION: 부산 Hero 사진 자산~~ → **RESOLVED (2026-09-11,
+a5cd8b9)**: Owner 가 로컬 후보 2장을 제공, 광각 광안리(광안대교+양측
+스카이라인·밝은 하늘) 선택 — `city-busan-hub-hero-v2.webp`.
+`cityHubHeroVisual()` override 로 **Busan Hub 만** 교체, Home cover ·
+planner cover · OG · 검색 썸네일은 기존 `city-busan-hero.jpg` 유지
+(Hub≠Home 이 Owner 의도). 럭셔리 호텔 데크 야경 후보는 어둡고 무거워 탈락.
 
 ### C. City Hub Weather — SUPERSEDED (재OPEN 금지)
 2026-09-08 actual repo audit 당시 "NOT CURRENTLY IMPLEMENTED / 최신 Owner 계약
@@ -232,7 +234,7 @@ weather 로 대체 금지 · City Hub 추가를 이유로 축소 금지.
 바닥 scrim 제거) · blue eyebrow 헤딩 · cool line/ink 토큰 치환 · navy Explore CTA ·
 5도시 동일 컴포넌트라 consistency 자동 확보. 상세 계약은
 `docs/design/discovery-explore-final-v1.md` §4 가 기준.
-잔여: 부산 Hero 사진 자산 교체(§2.B OWNER ATTENTION — 승인 자산 대기).
+잔여였던 부산 Hero 사진 자산은 2026-09-11 Owner 제공 자산으로 교체 완료(§2.B).
 
 ## 5. LIVING MAP — 최신 Owner 계약
 
@@ -663,8 +665,8 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | Golden Path functional loop | PASS |
 | HC-2 engine | CLOSED (2026-09-08, c4c8ab4) |
 | Opening-hours data coverage | KNOWN GAP / NOT CURRENT PRIORITY |
-| City Hub final visual | CLOSED (2026-09-08, 51c855e) — 부산 Hero 자산만 OWNER ATTENTION |
-| City Hub Hero | treatment CLOSED / 부산 밝은 자산 OWNER ATTENTION (§2.B) |
+| City Hub final visual | CLOSED (2026-09-08, 51c855e; 부산 Hero 자산 2026-09-11 해소) |
+| City Hub Hero | CLOSED (2026-09-11, a5cd8b9 — Owner 선택 광안리 자산, Hub 전용 override §2.B) |
 | City Hub Weather | SUPERSEDED (2026-09-08 Owner weather scope — 재OPEN 금지, §3.2) |
 | My Trip Weather STAGE B | LIVE (8ec30ad, KMA 중기예보 — KEEP·확장 금지) |
 | Discovery Search consistency | CLOSED (2026-09-08, 51c855e — Explore 에 URL 문법 통일) |
