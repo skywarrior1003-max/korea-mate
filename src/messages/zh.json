@@ -1348,6 +1348,7 @@
     "noResults": "没有找到“{q}”",
     "noResultsHint": "请检查拼写，或从下面的城市开始。",
     "searchLoading": "搜索中…",
+    "cityWeatherNow": "{city}当前天气 — 打开气象厅短期预报(新标签页)",
     "searchIdleHint": "搜索城市、行程或地点 — 例如“釜山”",
     "tripsSoon": "{city}的推荐行程正在准备中。",
     "coverCaption": "在水边待得比计划久。",

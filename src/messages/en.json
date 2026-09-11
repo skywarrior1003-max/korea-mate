@@ -1348,6 +1348,7 @@
     "noResults": "No results for “{q}”",
     "noResultsHint": "Check the spelling, or try a city below.",
     "searchLoading": "Searching…",
+    "cityWeatherNow": "Current weather in {city} — open the KMA short-term forecast (new tab)",
     "searchIdleHint": "Try a city, a trip, or a place — e.g. “Busan”",
     "tripsSoon": "Curated trips for {city} are on the way.",
     "coverCaption": "Stayed by the water longer than planned.",
