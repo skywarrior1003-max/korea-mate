@@ -1,0 +1,60 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-MULTILINGUAL-FETCH-V1",
+  "script_version": "v1.0.0",
+  "as_of": "2026-09-11",
+  "base_branch": "data/seoul-core-attraction-recovery-preflight-v1",
+  "new_branch": "data/seoul-core-attraction-multilingual-fetch-v1",
+  "source_preflight_dir": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-recovery-preflight-v1",
+  "output_dir": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1",
+  "recovery_universe_count": 311,
+  "merge_target_count": 286,
+  "locale_cid_coverage": {
+    "EN_CID_COUNT": 301,
+    "JA_CID_COUNT": 297,
+    "ZH_CID_COUNT": 300
+  },
+  "fetch_results": {
+    "EN_FETCH_SUCCESS_COUNT": 297,
+    "EN_TITLE_COUNT": 297,
+    "EN_DESCRIPTION_COUNT": 297,
+    "JA_FETCH_SUCCESS_COUNT": 274,
+    "JA_TITLE_COUNT": 289,
+    "JA_DESCRIPTION_COUNT": 289,
+    "ZH_FETCH_SUCCESS_COUNT": 270,
+    "ZH_TITLE_COUNT": 297,
+    "ZH_DESCRIPTION_COUNT": 297
+  },
+  "merge_target_classification": {
+    "COMPLETE_4_LOCALE": 229,
+    "MULTILINGUAL_PARTIAL": 41,
+    "SOURCE_LOCALE_NOT_AVAILABLE": 15,
+    "FETCH_FAILED": 1,
+    "PARSER_REVIEW": 0
+  },
+  "parser_qa": {
+    "PARSER_SAMPLE_PLACE_COUNT": 18,
+    "PARSER_SAMPLE_LOCALE_CHECK_COUNT": 54,
+    "PARSER_TITLE_PASS_COUNT": 49,
+    "PARSER_DESCRIPTION_PASS_COUNT": 49,
+    "PARSER_LANGUAGE_PASS_COUNT": 49,
+    "CROSS_ENTITY_CONTAMINATION_COUNT": 0
+  },
+  "prohibitions": {
+    "AI_TRANSLATION_USED": "NO",
+    "GOOGLE_TRANSLATE_USED": "NO",
+    "OFFICIAL_VISITSEOUL_ONLY": "YES",
+    "EXISTING_SEOUL_CANONICAL_CHANGED": 0,
+    "DB_CHANGED": 0,
+    "PRODUCTION_CHANGED": 0,
+    "MASTER_CHANGED": 0
+  },
+  "merge_readiness": "PARTIAL_BUT_MERGEABLE",
+  "artifacts": {
+    "raw": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-raw-v1.jsonl",
+    "normalized": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-normalized-v1.jsonl",
+    "handoff": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-handoff-v1.jsonl",
+    "coverage_qa": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-coverage-qa-v1.json",
+    "parser_qa": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-parser-sample-qa-v1.json",
+    "manifest": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\seoul-core-attraction-multilingual-fetch-v1\\seoul-core-attraction-multilingual-manifest-v1.json"
+  }
+}

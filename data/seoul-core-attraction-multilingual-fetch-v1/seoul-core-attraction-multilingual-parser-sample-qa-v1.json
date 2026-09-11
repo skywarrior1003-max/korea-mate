@@ -1,0 +1,707 @@
+{
+  "qa_date": "2026-09-11",
+  "sample_place_count": 18,
+  "total_locale_checks": 54,
+  "title_pass_count": 49,
+  "desc_pass_count": 49,
+  "lang_pass_count": 49,
+  "cross_entity_contamination_count": 0,
+  "title_pass_rate": "49/54",
+  "desc_pass_rate": "49/54",
+  "lang_pass_rate": "49/54",
+  "checks": [
+    {
+      "ko_cid": "KOP000072",
+      "place_name_expected": "경복궁",
+      "actual_title_ko": "경복궁",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Gyeongbokgung Palace",
+          "desc_length": 2546,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "キョンボックン(景福宮)",
+          "desc_length": 1424,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "景福宫",
+          "desc_length": 324,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000295",
+      "place_name_expected": "창덕궁",
+      "actual_title_ko": "창덕궁",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Changdeokgung Palace",
+          "desc_length": 902,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "チャンドックン(昌徳宮)",
+          "desc_length": 431,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "昌德宫",
+          "desc_length": 154,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000297",
+      "place_name_expected": "창경궁",
+      "actual_title_ko": "창경궁",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Changgyeonggung Palace",
+          "desc_length": 1368,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "チャンギョングン(昌慶宮)",
+          "desc_length": 316,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "昌庆宫",
+          "desc_length": 131,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP002046",
+      "place_name_expected": "덕수궁",
+      "actual_title_ko": "덕수궁",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Deoksugung Palace",
+          "desc_length": 1468,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "トクスグン(徳寿宮)",
+          "desc_length": 509,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "FETCH_FAILED",
+          "title": "",
+          "desc_length": 0,
+          "title_present": false,
+          "desc_present": false,
+          "language_verified": false,
+          "title_pass": false,
+          "desc_pass": false,
+          "lang_pass": false
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001159",
+      "place_name_expected": "경희궁",
+      "actual_title_ko": "경희궁",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Gyeonghuigung Palace",
+          "desc_length": 1124,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "キョンヒグン(慶熙宮)",
+          "desc_length": 389,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "庆熙宫",
+          "desc_length": 194,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001644",
+      "place_name_expected": "국립민속박물관",
+      "actual_title_ko": "국립민속박물관",
+      "locales": {
+        "en": {
+          "fetch_status": "FETCH_FAILED",
+          "title": "",
+          "desc_length": 0,
+          "title_present": false,
+          "desc_present": false,
+          "language_verified": false,
+          "title_pass": false,
+          "desc_pass": false,
+          "lang_pass": false
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "韓国国立民俗博物館",
+          "desc_length": 273,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "国立民俗博物馆",
+          "desc_length": 186,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000433",
+      "place_name_expected": "국립중앙박물관",
+      "actual_title_ko": "국립중앙박물관",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "The National Museum of Korea",
+          "desc_length": 957,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "国立中央博物館",
+          "desc_length": 234,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "国立中央博物馆",
+          "desc_length": 181,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP020550",
+      "place_name_expected": "국립고궁박물관",
+      "actual_title_ko": "국립고궁박물관",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "National Palace Museum of Korea",
+          "desc_length": 1125,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "国立古宮博物館",
+          "desc_length": 289,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "国立古宫博物馆",
+          "desc_length": 263,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000507",
+      "place_name_expected": "종묘",
+      "actual_title_ko": "종묘",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Jongmyo Shrine",
+          "desc_length": 1139,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "チョンミョ(宗廟)",
+          "desc_length": 315,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "宗庙",
+          "desc_length": 186,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000036",
+      "place_name_expected": "N서울타워",
+      "actual_title_ko": "남산서울타워",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Namsan Seoul Tower",
+          "desc_length": 1823,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "ナムサン(南山)Nソウルタワー",
+          "desc_length": 474,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "南山首尔塔",
+          "desc_length": 355,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000261",
+      "place_name_expected": "북촌한옥마을",
+      "actual_title_ko": "북촌한옥마을",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Bukchon Hanok Village",
+          "desc_length": 2028,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "FETCH_FAILED",
+          "title": "",
+          "desc_length": 0,
+          "title_present": false,
+          "desc_present": false,
+          "language_verified": false,
+          "title_pass": false,
+          "desc_pass": false,
+          "lang_pass": false
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "北村韩屋村",
+          "desc_length": 536,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001899",
+      "place_name_expected": "광화문광장",
+      "actual_title_ko": "광화문광장",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Gwanghwamun Square",
+          "desc_length": 1176,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "クァンファムン(光化門)広場",
+          "desc_length": 448,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "FETCH_FAILED",
+          "title": "",
+          "desc_length": 0,
+          "title_present": false,
+          "desc_present": false,
+          "language_verified": false,
+          "title_pass": false,
+          "desc_pass": false,
+          "lang_pass": false
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000286",
+      "place_name_expected": "광장시장",
+      "actual_title_ko": "광장시장",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Gwangjang Market",
+          "desc_length": 1466,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "クァンジャン(広蔵)市場",
+          "desc_length": 282,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "广藏市场",
+          "desc_length": 149,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000085",
+      "place_name_expected": "남대문시장",
+      "actual_title_ko": "남대문시장",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Namdaemun Market",
+          "desc_length": 2407,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "ナムデムン(南大門)市場",
+          "desc_length": 440,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "南大门市场",
+          "desc_length": 102,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP000090",
+      "place_name_expected": "서울한양도성",
+      "actual_title_ko": "서울 한양도성",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Hanyangdoseong (Seoul City Wall)",
+          "desc_length": 728,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "FETCH_FAILED",
+          "title": "",
+          "desc_length": 0,
+          "title_present": false,
+          "desc_present": false,
+          "language_verified": false,
+          "title_pass": false,
+          "desc_pass": false,
+          "lang_pass": false
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "首尔汉阳都城",
+          "desc_length": 109,
+          "title_present": true,
+          "desc_present": true,
+          "language_verified": true,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001183",
+      "place_name_expected": "락고재",
+      "sample_type": "experience_candidate",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Rakkojae",
+          "desc_length": 629,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "ラッコジェ(楽古斎)",
+          "desc_length": 163,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "乐古斋",
+          "desc_length": 120,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001422",
+      "place_name_expected": "서울 무형유산 교육전시장",
+      "sample_type": "experience_candidate",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Seoul Intangible Cultural Heritage Center",
+          "desc_length": 471,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "ソウル無形文化財教育展示場",
+          "desc_length": 127,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "首尔无形文化遗产教育展示场",
+          "desc_length": 136,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    },
+    {
+      "ko_cid": "KOP001459",
+      "place_name_expected": "리기태전통연공방",
+      "sample_type": "experience_candidate",
+      "locales": {
+        "en": {
+          "fetch_status": "OK",
+          "title": "Rhee Kitae Traditional Kite Workshop",
+          "desc_length": 399,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "ja": {
+          "fetch_status": "OK",
+          "title": "リ･ギテ伝統凧工房",
+          "desc_length": 111,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        },
+        "zh-CN": {
+          "fetch_status": "OK",
+          "title": "李吉泰传统风筝工坊",
+          "desc_length": 85,
+          "title_pass": true,
+          "desc_pass": true,
+          "lang_pass": true
+        }
+      }
+    }
+  ]
+}

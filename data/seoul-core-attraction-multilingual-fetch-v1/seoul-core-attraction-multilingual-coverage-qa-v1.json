@@ -1,0 +1,60 @@
+{
+  "qa_date": "2026-09-11",
+  "task": "TASK-SEOUL-CORE-ATTRACTION-MULTILINGUAL-FETCH-V1",
+  "universe_311": {
+    "en_cid_count": 301,
+    "ja_cid_count": 297,
+    "zh_cid_count": 300,
+    "en_cid_missing": 10,
+    "ja_cid_missing": 14,
+    "zh_cid_missing": 11
+  },
+  "fetch_results": {
+    "en": {
+      "attempted": 301,
+      "fetch_success": 297,
+      "title_present": 297,
+      "description_present": 297,
+      "fetch_fail": 4,
+      "status_breakdown": {
+        "OK": 297,
+        "FETCH_FAILED": 3,
+        "SOURCE_EMPTY": 1
+      }
+    },
+    "ja": {
+      "attempted": 297,
+      "fetch_success": 274,
+      "title_present": 289,
+      "description_present": 289,
+      "fetch_fail": 23,
+      "status_breakdown": {
+        "OK": 274,
+        "FETCH_FAILED": 7,
+        "LANGUAGE_MISMATCH": 15,
+        "SOURCE_EMPTY": 1
+      }
+    },
+    "zh-CN": {
+      "attempted": 300,
+      "fetch_success": 270,
+      "title_present": 297,
+      "description_present": 297,
+      "fetch_fail": 30,
+      "status_breakdown": {
+        "OK": 270,
+        "FETCH_FAILED": 2,
+        "LANGUAGE_MISMATCH": 27,
+        "SOURCE_EMPTY": 1
+      }
+    }
+  },
+  "merge_target_286": {
+    "handoff_rows": 286,
+    "COMPLETE_4_LOCALE": 229,
+    "MULTILINGUAL_PARTIAL": 41,
+    "SOURCE_LOCALE_NOT_AVAILABLE": 15,
+    "FETCH_FAILED": 1,
+    "PARSER_REVIEW": 0
+  }
+}
