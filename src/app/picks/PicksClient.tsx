@@ -750,6 +750,10 @@ function PicksContent() {
               도시·날짜가 정해지는 순간 TripDraft 가 되고 아래 TripSetupPanel 로 이어진다. */}
           {tab === "selected" && !draft && (
             <TripStarterCard
+              // defaultCity 는 mount 시 useState 초기값으로만 쓰인다 — pendingCity 가
+              // effect 에서 늦게 도착하면(?city= 승계·lastAddedTripCity) 반영이 안 됐다.
+              // key 로 재마운트해 초기값을 다시 읽게 한다(시작 전 입력 폼이라 안전).
+              key={viewCity ?? "no-city"}
               defaultCity={viewCity}
               title={t("starterTitle")}
               hint={t("buildNeedTrip")}
