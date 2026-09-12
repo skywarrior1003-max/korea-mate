@@ -1,0 +1,106 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-JA-ZH-HEXID-PROBE-V1",
+  "as_of": "2026-09-12",
+  "sources_probed": [
+    {
+      "source": "KTO_JpnService2",
+      "url_pattern": "https://apis.data.go.kr/B551011/JpnService2/detailCommon2?contentId={cid}",
+      "status": "HTTP_403",
+      "detail": "HTTP 403 for both KOR_TOUR_API_KEY and TOUR_API_KEY. No API key available this session.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "KTO_ChsService2",
+      "url_pattern": "https://apis.data.go.kr/B551011/ChsService2/detailCommon2?contentId={cid}",
+      "status": "HTTP_403",
+      "detail": "HTTP 403 confirmed in previous session. Not re-tested (no API key this session).",
+      "coverage": "0/15"
+    },
+    {
+      "source": "VisitKorea_JA_vcontsId",
+      "url_pattern": "https://japanese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId={id}",
+      "status": "EN_FALLBACK",
+      "detail": "Tested vcontsIds 92252, 78399, 111044. All return ENGLISH content (ld_name=EN, desc_ja=False). JA=False in all responses.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "VisitKorea_ZH_vcontsId",
+      "url_pattern": "https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId={id}",
+      "status": "EN_FALLBACK",
+      "detail": "Tested vcontsIds 92252, 78399, 111044. All return ENGLISH content. ZH Chinese characters present in page but from KO context, not native ZH descriptions.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "VisitKorea_JA_cid",
+      "url_pattern": "https://japanese.visitkorea.or.kr/jap/TO/TE_JA_3_1_1_1.jsp?cid={cid}",
+      "status": "EN_FALLBACK",
+      "detail": "Tested cids 264256, 268141, 264260, 264117, 264367, 1320354, 2669812, 2992224, 1696365. All return EN ld_name, desc_ja=False.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "VisitKorea_ZH_cid",
+      "url_pattern": "https://chinese.visitkorea.or.kr/chs/TO/TE_CHS_3_1_1_1.jsp?cid={cid}",
+      "status": "EN_FALLBACK",
+      "detail": "Tested cids 264256, 268141, 264260, 264117, 264367. All return EN ld_name, desc_zh_native=False.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "VisitGyeongju_VG_JA_ZH_attraction",
+      "url_pattern": "https://visitgyeongju.or.kr/{locale}/tour/view/{hexID}",
+      "status": "NO_ATTRACTION_PAGES",
+      "detail": "VG sitemap.xml (500 URLs) contains 0 tour/attraction pages. VG sections: cuisine(334), map(20), souvenir, tema. VG is primarily a food/dining portal. No attraction hexIDs accessible. /jp/ locale exists for navigation but content is JS-rendered SPA.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "Gyeongju_National_Museum_official",
+      "url_pattern": "http://gyeongju.museum.go.kr/{jpn|chn}/",
+      "status": "CONFIRMED",
+      "detail": "Museum has official JA page at /jpn/ (HTTP 200, JA=True, title=国立慶州博物館) and ZH page at /chn/ (HTTP 200, ZH=True, title=国立庆州博物馆). Content verified native JA/ZH.",
+      "coverage": "1/15 (GJ01-0009)"
+    },
+    {
+      "source": "UNESCO_WHC_JA_ZH",
+      "url_pattern": "https://whc.unesco.org/{locale}/list/736/",
+      "status": "PARTIAL",
+      "detail": "UNESCO list 736 (Seokguram Grotto and Bulguksa Temple). JA page has title 石窟庵と仏国寺 and brief JA description. ZH page has title 石窟庵和佛国寺 and substantial ZH description of Seokguram (147 chars).",
+      "coverage": "1/15 (GJ01-0127)"
+    },
+    {
+      "source": "gyeongju.go.kr_JA_ZH",
+      "url_pattern": "https://www.gyeongju.go.kr/japan/",
+      "status": "HTTP_500",
+      "detail": "gyeongju.go.kr/japan/ and /china/ return HTTP 500. Server error.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "KCHA_heritage.go.kr_JA_ZH",
+      "url_pattern": "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?langCode=ja&culNum={n}",
+      "status": "NO_CONTENT",
+      "detail": "KCHA detail pages with langCode=ja/zh return 2331 bytes (HTML shell only, KO content). JS-rendered SPA. langCode parameter does not return JA/ZH content.",
+      "coverage": "0/15"
+    },
+    {
+      "source": "bulguksa.or.kr",
+      "url_pattern": "http://www.bulguksa.or.kr",
+      "status": "KO_ONLY",
+      "detail": "bulguksa.or.kr (manages Seokguram) has KO-only website. No JA/ZH pages. HTTP 200 KO.",
+      "coverage": "0/15"
+    }
+  ],
+  "vg_structure_confirmed": {
+    "sitemap_total_urls": 500,
+    "cuisine_pages": 334,
+    "map_pages": 20,
+    "attraction_pages": 0,
+    "sitemap_locales_found": [
+      "kr",
+      "jp",
+      "zh",
+      "tw"
+    ],
+    "jp_locale_exists": true,
+    "jp_locale_cuisine_works": true,
+    "jp_locale_attraction_works": false,
+    "note": "VG website is primarily a food/cuisine portal. Attraction pages do not have individual hexIDs in the site. /jp/ prefix works for cuisine via /jp/cuisine/view/{hexID} but no attraction counterpart."
+  }
+}

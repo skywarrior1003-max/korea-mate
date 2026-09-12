@@ -1,0 +1,79 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-JA-ZH-HEXID-PROBE-V1",
+  "as_of": "2026-09-12",
+  "base_branch": "data/gyeongju-regional-15-multilingual-closeout-v1",
+  "base_sha": "a7420ef",
+  "new_branch": "data/gyeongju-regional-15-ja-zh-hexid-probe-v1",
+  "target_stops": 15,
+  "target_locale_slots": 30,
+  "ja_results": {
+    "official_native_complete": 1,
+    "official_title_only": 1,
+    "source_locale_not_available": 13,
+    "access_blocked": 0,
+    "identity_unresolved": 0
+  },
+  "zh_results": {
+    "official_native_complete": 2,
+    "official_title_only": 0,
+    "source_locale_not_available": 13,
+    "access_blocked": 0,
+    "identity_unresolved": 0
+  },
+  "new_native_content_recovered": [
+    {
+      "id": "gyeongju-GJ01-0009",
+      "locale": "ja",
+      "source": "gyeongju.museum.go.kr/jpn/"
+    },
+    {
+      "id": "gyeongju-GJ01-0009",
+      "locale": "zh-CN",
+      "source": "gyeongju.museum.go.kr/chn/"
+    },
+    {
+      "id": "gyeongju-GJ01-0127",
+      "locale": "zh-CN",
+      "source": "whc.unesco.org/zh/list/736/"
+    },
+    {
+      "id": "gyeongju-GJ01-0127",
+      "locale": "ja",
+      "status": "title_only",
+      "source": "whc.unesco.org/ja/list/736/"
+    }
+  ],
+  "new_native_content_recovered_count": 3,
+  "hexid_or_locale_route_discovered": true,
+  "hexid_route_note": "VG /jp/ prefix works for cuisine (confirmed from food pipeline). No VG attraction pages exist (0 hexIDs in sitemap). Museum official site has /jpn/ and /chn/ locale routes. UNESCO WHC has /ja/ and /zh/ locale routes.",
+  "regression_checks": {
+    "ko_data_changed": 0,
+    "en_data_changed": 0,
+    "image_data_changed": 0,
+    "coord_data_changed": 0,
+    "identity_changed": 0,
+    "food_105_changed": 0,
+    "db_changed": 0,
+    "production_changed": 0,
+    "master_changed": 0
+  },
+  "language_qa": {
+    "wrong_language_text_count": 0,
+    "en_fallback_as_ja_zh_count": 0,
+    "ko_fallback_as_ja_zh_count": 0,
+    "cross_entity_contamination_count": 0,
+    "ai_translation_used": false,
+    "google_translate_used": false
+  },
+  "unverified_slot_count": 0,
+  "verdict": "PASS",
+  "artifacts": [
+    "gyeongju-regional-15-ja-probe-v1.jsonl",
+    "gyeongju-regional-15-zh-probe-v1.jsonl",
+    "gyeongju-regional-15-ja-zh-handoff-v1.jsonl",
+    "gyeongju-regional-15-ja-zh-source-audit-v1.json",
+    "gyeongju-regional-15-ja-zh-language-qa-v1.json",
+    "gyeongju-regional-15-ja-zh-manifest-v1.json",
+    "gyeongju-regional-15-ja-zh-handoff-v1.md"
+  ]
+}

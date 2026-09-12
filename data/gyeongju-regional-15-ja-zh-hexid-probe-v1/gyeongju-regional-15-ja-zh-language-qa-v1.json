@@ -1,0 +1,61 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-JA-ZH-HEXID-PROBE-V1",
+  "as_of": "2026-09-12",
+  "verified_content_count": 4,
+  "wrong_language_text_count": 0,
+  "en_fallback_as_ja_zh_count": 0,
+  "ko_fallback_as_ja_zh_count": 0,
+  "cross_entity_contamination_count": 0,
+  "ai_translation_used": false,
+  "google_translate_used": false,
+  "results": [
+    {
+      "candidate_id": "gyeongju-GJ01-0009",
+      "locale": "ja",
+      "ja_status": "OFFICIAL_NATIVE_COMPLETE",
+      "ja_title": "国立慶州博物館",
+      "ja_desc_sample": "新羅千年の首都「慶州」に位置する国立慶州博物館は、新羅の文化遺産が一同に集結した韓国を代表する博物館です。",
+      "has_ja_chars": true,
+      "has_ko_fallback": false,
+      "is_en_fallback": false,
+      "entity_match_check": "OK",
+      "verdict": "PASS"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0127",
+      "locale": "ja",
+      "ja_status": "OFFICIAL_TITLE_ONLY",
+      "ja_title": "石窟庵と仏国寺",
+      "ja_desc_sample": "慶尚北道慶州市にある。創建は8世紀半ばで、仏国寺の現在の建物は再建されたもの。伽藍配置は仏教浄土を表すとされ、境内には国宝の白雲橋、青雲橋、多宝塔、釈迦塔などの石造物が多くある。吐含山の山上の石窟庵は",
+      "has_ja_chars": true,
+      "has_ko_fallback": false,
+      "is_en_fallback": false,
+      "entity_match_check": "OK",
+      "verdict": "PASS"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0009",
+      "locale": "zh-CN",
+      "zh_status": "OFFICIAL_NATIVE_COMPLETE",
+      "zh_title": "国立庆州博物馆",
+      "zh_desc_sample": "位于新罗千年首都庆州的国立庆州博物馆是可以纵观新罗文化遗产的韩国代表性博物馆。",
+      "has_zh_chars": true,
+      "has_ko_fallback": false,
+      "is_en_fallback": false,
+      "entity_match_check": "OK",
+      "verdict": "PASS"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0127",
+      "locale": "zh-CN",
+      "zh_status": "OFFICIAL_NATIVE_COMPLETE",
+      "zh_title": "石窟庵和佛国寺",
+      "zh_desc_sample": "石窟庵建于公元8世纪，位于吐含山的斜坡上，石窟庵内有一尊纪念佛像，该佛像以普密斯帕莎穆德拉姿势面朝着大海。佛像周围有各种神仙、菩萨和信徒的雕像，这些雕像惟妙惟肖，工艺细腻，采用了深浅浮雕的方式，堪称远",
+      "has_zh_chars": true,
+      "has_ko_fallback": false,
+      "is_en_fallback": false,
+      "entity_match_check": "OK",
+      "verdict": "PASS"
+    }
+  ]
+}
