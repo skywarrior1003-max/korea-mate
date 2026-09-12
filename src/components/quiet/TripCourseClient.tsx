@@ -14,11 +14,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { displayPlaceName } from "@/lib/place-display-name";
 import { cityVisual } from "@/lib/city-visual";
 import { getRecommendedTrips, tripDisplayTitle, type RecommendedTrip } from "@/data/regional/regional-recommendations";
+import { adoptCourseDays, type AdoptSpotFacts } from "@/lib/trip-plan/course-adopt-core";
+import { getDeviceId } from "@/lib/deviceId";
 import { loadCitySpots, quietCity } from "./quiet-data";
 
 /** 코스 대표 이미지 — 연결된 stop 중 카탈로그 사진이 있는 첫 장소. 지어내지 않는다. */
@@ -35,9 +38,16 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
+  const router = useRouter();
   const city = quietCity(slug);
   const [spots, setSpots] = useState<CitySpot[] | null>(null);
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  // 코스 채택(Owner 2026-09-12) — 날짜만 고르면 코스 순서 그대로 My Trip 이 된다.
+  const [adoptOpen, setAdoptOpen] = useState(false);
+  const [adoptStart, setAdoptStart] = useState("");
+  const [adoptEnd, setAdoptEnd] = useState("");
+  const [adoptBusy, setAdoptBusy] = useState(false);
+  const [adoptError, setAdoptError] = useState(false);
 
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
@@ -138,17 +148,86 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
           <p className="mt-5 text-[13px] leading-relaxed text-[var(--qh-faint2)]">{t("courseNoStops")}</p>
         )}
 
-        {/* ── CTA — 이 도시로 내 일정 시작(기존 /planner 경로 그대로) ── */}
+        {/* ── Primary CTA — 이 코스 그대로 내 일정으로 (Owner 2026-09-12, 업계형 코스=시드) ── */}
+        <div className="mt-7 rounded-[4px] overflow-hidden" style={{ backgroundColor: "var(--qh-navy)" }}>
+          <button
+            type="button"
+            onClick={() => { setAdoptOpen(v => !v); setAdoptError(false); }}
+            aria-expanded={adoptOpen}
+            className="w-full flex items-center justify-between px-4 py-3.5 gkm-focus text-left"
+          >
+            <span>
+              <span className="block text-[15px] font-semibold" style={{ color: "var(--qh-paper)" }}>{t("adoptCourse")}</span>
+              <span className="block text-[12px]" style={{ color: "rgba(247,243,236,.6)" }}>{t("adoptCourseSub", { count: trip.stops.length })}</span>
+            </span>
+            <span className="text-[17px]" style={{ color: "var(--qh-paper)" }} aria-hidden>{adoptOpen ? "▲" : "→"}</span>
+          </button>
+          {adoptOpen && (
+            <div className="px-4 pb-4 flex flex-col gap-2.5">
+              <div className="grid grid-cols-2 gap-2">
+                <label className="flex flex-col gap-1 text-[11px] font-bold" style={{ color: "rgba(247,243,236,.72)" }}>
+                  {t("adoptStart")}
+                  <input type="date" value={adoptStart} onChange={e => setAdoptStart(e.target.value)}
+                    className="gkm-focus rounded-[4px] px-2.5 py-2 text-[13px] bg-white text-[#16233B]" />
+                </label>
+                <label className="flex flex-col gap-1 text-[11px] font-bold" style={{ color: "rgba(247,243,236,.72)" }}>
+                  {t("adoptEnd")}
+                  <input type="date" value={adoptEnd} min={adoptStart || undefined} onChange={e => setAdoptEnd(e.target.value)}
+                    className="gkm-focus rounded-[4px] px-2.5 py-2 text-[13px] bg-white text-[#16233B]" />
+                </label>
+              </div>
+              <button
+                type="button"
+                disabled={adoptBusy || !adoptStart || !adoptEnd || adoptEnd < adoptStart}
+                onClick={async () => {
+                  // 코스 stop 순서 그대로 Day 배분 — 스케줄러 미경유, 시각 발명 0.
+                  const facts = new Map<number, AdoptSpotFacts>((spots ?? []).map(s => [Number(s.id), {
+                    id: s.id, name: s.name, category: s.category, district: s.district ?? null,
+                    lat: s.lat ?? null, lng: s.lng ?? null, image: s.image ?? null, mapUrl: s.mapUrl ?? null,
+                  }]));
+                  const days = adoptCourseDays(trip.stops, facts, adoptStart, adoptEnd);
+                  if (!days) { setAdoptError(true); return; }
+                  setAdoptBusy(true); setAdoptError(false);
+                  const id = crypto.randomUUID();
+                  try {
+                    const res = await fetch("/api/itinerary", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+                      body: JSON.stringify({
+                        id, city: cityLabel, start_date: adoptStart, end_date: adoptEnd,
+                        travelers: "1", travel_style: "",
+                        trip_title: tripDisplayTitle(trip, locale),
+                        days,
+                      }),
+                    });
+                    if (!res.ok) throw new Error(String(res.status));
+                    router.push(`/itinerary?id=${id}`);
+                  } catch {
+                    setAdoptBusy(false); setAdoptError(true);
+                  }
+                }}
+                className="gkm-focus min-h-11 rounded-[4px] text-[14px] font-bold disabled:opacity-40"
+                style={{ backgroundColor: "var(--qh-paper)", color: "#16233B" }}
+              >
+                {adoptBusy ? "…" : t("adoptGo")}
+              </button>
+              {adoptError && (
+                <p role="status" className="text-[12px]" style={{ color: "rgba(247,243,236,.8)" }}>{t("adoptError")}</p>
+              )}
+            </div>
+          )}
+        </div>
+        {/* ── Secondary — 코스 없이 이 도시에서 빈 일정 시작(This Trip 승계 경로) ── */}
         <Link
           href={`/planner?city=${slug}`}
-          className="mt-7 flex items-center justify-between rounded-[4px] px-4 py-3.5 gkm-focus"
-          style={{ backgroundColor: "var(--qh-navy)" }}
+          className="mt-3 flex items-center justify-between rounded-[4px] px-4 py-3 gkm-focus border"
+          style={{ borderColor: "var(--qh-line)", backgroundColor: "var(--qh-surface, #fff)" }}
         >
           <span>
-            <span className="block text-[15px] font-semibold" style={{ color: "var(--qh-paper)" }}>{t("planCity", { city: cityLabel })}</span>
-            <span className="block text-[12px]" style={{ color: "rgba(247,243,236,.6)" }}>{t("planCitySub")}</span>
+            <span className="block text-[14px] font-semibold" style={{ color: "var(--qh-ink)" }}>{t("planCity", { city: cityLabel })}</span>
+            <span className="block text-[12px]" style={{ color: "var(--qh-faint)" }}>{t("planCitySub")}</span>
           </span>
-          <span className="text-[17px]" style={{ color: "var(--qh-paper)" }}>→</span>
+          <span className="text-[15px]" style={{ color: "var(--qh-faint)" }} aria-hidden>→</span>
         </Link>
       </div>
     </div>
