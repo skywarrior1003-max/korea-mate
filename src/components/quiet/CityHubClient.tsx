@@ -18,6 +18,7 @@ import type { CitySpot } from "@/data/cities/types";
 import { displayPlaceName } from "@/lib/place-display-name";
 import { cityHubHeroVisual } from "@/lib/city-visual";
 import { KMA_SHORT_FORECAST_URL, formatNowTemp } from "@/lib/weather/city-now-core";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
@@ -98,23 +99,33 @@ export default function CityHubClient({ slug }: { slug: string }) {
         >
           ← {t("backHome")}
         </Link>
-        {/* 현재날씨 utility — 아이콘 1 + 기온 1 뿐(Owner 계약). 누르면 기상청
-            공식 단기예보 화면(새 탭). Hero 주인공은 도시 사진 — 뒤로가기 pill 과
-            같은 조용한 언어의 소형 pill 로만 둔다. 값을 못 얻으면 렌더 자체가 없다. */}
-        {nowWx && (
-          <a
-            href={KMA_SHORT_FORECAST_URL}
-            target="_blank" rel="noopener noreferrer"
-            aria-label={t("cityWeatherNow", { city: cityLabel })}
-            className="absolute top-4 right-4 inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-bold rounded-full px-3.5 py-2.5 min-h-11 gkm-focus"
-            style={{ background: "rgba(255,255,255,.88)", color: HUB.ink, backdropFilter: "blur(6px)", boxShadow: "0 2px 8px rgba(10,30,80,.12)" }}
-          >
-            {nowWx.icon && <span aria-hidden>{nowWx.icon}</span>}
-            <span>{formatNowTemp(nowWx.temp)}</span>
-          </a>
-        )}
+        {/* 우상단 = 언어(사이트 전역 관례 복원, Owner 2026-09-12) — 다른 화면
+            헤더의 글로브와 같은 자리·같은 의미. 유리 pill 은 ← Home 과 동일 언어. */}
+        <span
+          className="absolute top-4 right-4 inline-flex rounded-full gkm-focus"
+          style={{ background: "rgba(255,255,255,.88)", color: HUB.ink, backdropFilter: "blur(6px)", boxShadow: "0 2px 8px rgba(10,30,80,.12)" }}
+        >
+          <LanguageSwitcher variant="icon" />
+        </span>
         <div className="absolute left-0 right-0 bottom-0 max-w-3xl mx-auto px-5 md:px-6 pb-4">
-          <h1 className="text-[28px] md:text-[36px] font-black leading-tight tracking-[-0.02em]" style={{ color: HUB.ink }}>{cityLabel}</h1>
+          {/* 현재날씨 utility — 아이콘 1 + 기온 1 뿐(Owner 계약). 도시명과 같은
+              라인(도시의 현재 상태 = 도시 identity 정보 블록, Google Maps 문법).
+              누르면 기상청 공식 단기예보 새 탭. 값을 못 얻으면 렌더 자체가 없다. */}
+          <div className="flex items-end justify-between gap-3">
+            <h1 className="min-w-0 truncate text-[28px] md:text-[36px] font-black leading-tight tracking-[-0.02em]" style={{ color: HUB.ink }}>{cityLabel}</h1>
+            {nowWx && (
+              <a
+                href={KMA_SHORT_FORECAST_URL}
+                target="_blank" rel="noopener noreferrer"
+                aria-label={t("cityWeatherNow", { city: cityLabel })}
+                className="mb-1 flex-none inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-bold rounded-full px-3.5 py-2 min-h-11 gkm-focus"
+                style={{ background: "rgba(255,255,255,.88)", color: HUB.ink, backdropFilter: "blur(6px)", boxShadow: "0 2px 8px rgba(10,30,80,.12)" }}
+              >
+                {nowWx.icon && <span aria-hidden>{nowWx.icon}</span>}
+                <span>{formatNowTemp(nowWx.temp)}</span>
+              </a>
+            )}
+          </div>
           <p className="mt-0.5 text-[12.5px] md:text-[13.5px] font-medium" style={{ color: HUB.sub }}>{desc}</p>
         </div>
       </div>
