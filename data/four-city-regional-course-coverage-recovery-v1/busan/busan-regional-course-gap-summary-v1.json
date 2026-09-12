@@ -1,0 +1,38 @@
+{
+  "city": "busan",
+  "as_of": "2026-09-12",
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "course_count": 4,
+  "total_stop_occurrences": 43,
+  "stops_with_canonical_id": 21,
+  "stop_type_distribution": {
+    "MATCH_EXISTING": 21,
+    "COURSE_CONTEXT_ONLY": 22
+  },
+  "matched_to_canonical": 21,
+  "canonicalization_dropout": 0,
+  "course_context_only": 22,
+  "ambiguous": 0,
+  "gap_distribution": {
+    "MULTILINGUAL_JA_MISSING": 21,
+    "MULTILINGUAL_ZH_MISSING": 21
+  },
+  "runtime_ok_count": 0,
+  "runtime_ok_pct": 0.0,
+  "content_coverage": {
+    "image_ok": 21,
+    "image_missing": 0,
+    "desc_ko_ok": 21,
+    "desc_ko_missing": 0,
+    "en_ok": 21,
+    "en_missing": 0,
+    "ja_missing": 21,
+    "zh_missing": 21,
+    "coord_ok": 21,
+    "coord_missing": 0
+  },
+  "notes": [
+    "JA_MULTILINGUAL_MISSING=21 stops",
+    "ZH_MULTILINGUAL_MISSING=21 stops"
+  ]
+}

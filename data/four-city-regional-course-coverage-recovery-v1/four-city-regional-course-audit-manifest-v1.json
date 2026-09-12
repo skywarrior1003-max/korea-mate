@@ -1,0 +1,61 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-COVERAGE-AND-RECOVERY-V1",
+  "branch": "data/four-city-regional-course-coverage-recovery-v1",
+  "as_of": "2026-09-12",
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "artifacts": {
+    "per_city": {
+      "busan": [
+        "busan-regional-course-stop-audit-v1.jsonl",
+        "busan-regional-course-gap-summary-v1.json",
+        "busan-regional-course-stop-content-gaps-v1.jsonl",
+        "busan-regional-course-canonical-xref-v1.jsonl",
+        "busan-regional-course-recovery-actions-v1.jsonl",
+        "busan-regional-course-audit-summary-v1.md"
+      ],
+      "gyeongju": [
+        "gyeongju-regional-course-stop-audit-v1.jsonl",
+        "gyeongju-regional-course-gap-summary-v1.json",
+        "gyeongju-regional-course-stop-content-gaps-v1.jsonl",
+        "gyeongju-regional-course-canonical-xref-v1.jsonl",
+        "gyeongju-regional-course-recovery-actions-v1.jsonl",
+        "gyeongju-regional-course-audit-summary-v1.md"
+      ],
+      "jeju": [
+        "jeju-regional-course-stop-audit-v1.jsonl",
+        "jeju-regional-course-gap-summary-v1.json",
+        "jeju-regional-course-stop-content-gaps-v1.jsonl",
+        "jeju-regional-course-canonical-xref-v1.jsonl",
+        "jeju-regional-course-recovery-actions-v1.jsonl",
+        "jeju-regional-course-audit-summary-v1.md"
+      ],
+      "jeonju": [
+        "jeonju-regional-course-stop-audit-v1.jsonl",
+        "jeonju-regional-course-gap-summary-v1.json",
+        "jeonju-regional-course-stop-content-gaps-v1.jsonl",
+        "jeonju-regional-course-canonical-xref-v1.jsonl",
+        "jeonju-regional-course-recovery-actions-v1.jsonl",
+        "jeonju-regional-course-audit-summary-v1.md"
+      ]
+    },
+    "consolidated": [
+      "four-city-regional-course-coverage-matrix-v1.jsonl",
+      "four-city-regional-course-recovery-actions-v1.jsonl",
+      "four-city-regional-course-gap-consolidated-v1.json",
+      "four-city-regional-course-audit-manifest-v1.json",
+      "four-city-regional-course-main-handoff-v1.md"
+    ],
+    "docs": [
+      "docs/data-collection/four-city-data-completion-gates-from-seoul-v1.md"
+    ]
+  },
+  "grand_totals": {
+    "total_stops": 107,
+    "total_matched": 71,
+    "total_runtime_ok": 0,
+    "total_runtime_ok_pct": 0.0,
+    "total_dropout": 0,
+    "total_gap_stops": 71,
+    "total_recovery_actions": 253
+  }
+}

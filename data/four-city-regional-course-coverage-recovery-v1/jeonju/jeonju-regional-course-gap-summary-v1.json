@@ -1,0 +1,41 @@
+{
+  "city": "jeonju",
+  "as_of": "2026-09-12",
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "course_count": 5,
+  "total_stop_occurrences": 18,
+  "stops_with_canonical_id": 17,
+  "stop_type_distribution": {
+    "MATCH_EXISTING": 17,
+    "COURSE_CONTEXT_ONLY": 1
+  },
+  "matched_to_canonical": 17,
+  "canonicalization_dropout": 0,
+  "course_context_only": 1,
+  "ambiguous": 0,
+  "gap_distribution": {
+    "DESCRIPTION_MISSING": 17,
+    "MULTILINGUAL_EN_MISSING": 17,
+    "MULTILINGUAL_JA_MISSING": 17,
+    "MULTILINGUAL_ZH_MISSING": 17
+  },
+  "runtime_ok_count": 0,
+  "runtime_ok_pct": 0.0,
+  "content_coverage": {
+    "image_ok": 17,
+    "image_missing": 0,
+    "desc_ko_ok": 0,
+    "desc_ko_missing": 17,
+    "en_ok": 0,
+    "en_missing": 17,
+    "ja_missing": 17,
+    "zh_missing": 17,
+    "coord_ok": 17,
+    "coord_missing": 0
+  },
+  "notes": [
+    "JEONJU_NOTE: canonical has no description field — all description gaps are structural",
+    "JA_MULTILINGUAL_MISSING=17 stops",
+    "ZH_MULTILINGUAL_MISSING=17 stops"
+  ]
+}

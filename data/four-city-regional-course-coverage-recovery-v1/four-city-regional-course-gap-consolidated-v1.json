@@ -1,0 +1,187 @@
+{
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "as_of": "2026-09-12",
+  "cities": [
+    "busan",
+    "gyeongju",
+    "jeju",
+    "jeonju"
+  ],
+  "grand_totals": {
+    "total_stops": 107,
+    "total_matched": 71,
+    "total_runtime_ok": 0,
+    "total_runtime_ok_pct": 0.0,
+    "total_dropout": 0,
+    "total_gap_stops": 71,
+    "total_recovery_actions": 253
+  },
+  "per_city": {
+    "busan": {
+      "city": "busan",
+      "as_of": "2026-09-12",
+      "schema_version": "four-city-regional-course-coverage-v1",
+      "course_count": 4,
+      "total_stop_occurrences": 43,
+      "stops_with_canonical_id": 21,
+      "stop_type_distribution": {
+        "MATCH_EXISTING": 21,
+        "COURSE_CONTEXT_ONLY": 22
+      },
+      "matched_to_canonical": 21,
+      "canonicalization_dropout": 0,
+      "course_context_only": 22,
+      "ambiguous": 0,
+      "gap_distribution": {
+        "MULTILINGUAL_JA_MISSING": 21,
+        "MULTILINGUAL_ZH_MISSING": 21
+      },
+      "runtime_ok_count": 0,
+      "runtime_ok_pct": 0.0,
+      "content_coverage": {
+        "image_ok": 21,
+        "image_missing": 0,
+        "desc_ko_ok": 21,
+        "desc_ko_missing": 0,
+        "en_ok": 21,
+        "en_missing": 0,
+        "ja_missing": 21,
+        "zh_missing": 21,
+        "coord_ok": 21,
+        "coord_missing": 0
+      },
+      "notes": [
+        "JA_MULTILINGUAL_MISSING=21 stops",
+        "ZH_MULTILINGUAL_MISSING=21 stops"
+      ]
+    },
+    "gyeongju": {
+      "city": "gyeongju",
+      "as_of": "2026-09-12",
+      "schema_version": "four-city-regional-course-coverage-v1",
+      "course_count": 4,
+      "total_stop_occurrences": 31,
+      "stops_with_canonical_id": 24,
+      "stop_type_distribution": {
+        "MATCH_EXISTING": 24,
+        "COURSE_CONTEXT_ONLY": 7
+      },
+      "matched_to_canonical": 24,
+      "canonicalization_dropout": 0,
+      "course_context_only": 7,
+      "ambiguous": 0,
+      "gap_distribution": {
+        "IMAGE_MISSING": 23,
+        "DESCRIPTION_MISSING": 24,
+        "MULTILINGUAL_JA_MISSING": 24,
+        "MULTILINGUAL_ZH_MISSING": 24,
+        "COORD_MISSING": 17,
+        "MULTILINGUAL_EN_MISSING": 4
+      },
+      "runtime_ok_count": 0,
+      "runtime_ok_pct": 0.0,
+      "content_coverage": {
+        "image_ok": 1,
+        "image_missing": 23,
+        "desc_ko_ok": 0,
+        "desc_ko_missing": 24,
+        "en_ok": 20,
+        "en_missing": 4,
+        "ja_missing": 24,
+        "zh_missing": 24,
+        "coord_ok": 7,
+        "coord_missing": 17
+      },
+      "notes": [
+        "JA_MULTILINGUAL_MISSING=24 stops",
+        "ZH_MULTILINGUAL_MISSING=24 stops"
+      ]
+    },
+    "jeju": {
+      "city": "jeju",
+      "as_of": "2026-09-12",
+      "schema_version": "four-city-regional-course-coverage-v1",
+      "course_count": 5,
+      "total_stop_occurrences": 15,
+      "stops_with_canonical_id": 9,
+      "stop_type_distribution": {
+        "MATCH_EXISTING": 9,
+        "COURSE_CONTEXT_ONLY": 6
+      },
+      "matched_to_canonical": 9,
+      "canonicalization_dropout": 0,
+      "course_context_only": 6,
+      "ambiguous": 0,
+      "gap_distribution": {
+        "MULTILINGUAL_EN_MISSING": 9,
+        "MULTILINGUAL_JA_MISSING": 9,
+        "MULTILINGUAL_ZH_MISSING": 9
+      },
+      "runtime_ok_count": 0,
+      "runtime_ok_pct": 0.0,
+      "content_coverage": {
+        "image_ok": 9,
+        "image_missing": 0,
+        "desc_ko_ok": 9,
+        "desc_ko_missing": 0,
+        "en_ok": 0,
+        "en_missing": 9,
+        "ja_missing": 9,
+        "zh_missing": 9,
+        "coord_ok": 9,
+        "coord_missing": 0
+      },
+      "notes": [
+        "JA_MULTILINGUAL_MISSING=9 stops",
+        "ZH_MULTILINGUAL_MISSING=9 stops"
+      ]
+    },
+    "jeonju": {
+      "city": "jeonju",
+      "as_of": "2026-09-12",
+      "schema_version": "four-city-regional-course-coverage-v1",
+      "course_count": 5,
+      "total_stop_occurrences": 18,
+      "stops_with_canonical_id": 17,
+      "stop_type_distribution": {
+        "MATCH_EXISTING": 17,
+        "COURSE_CONTEXT_ONLY": 1
+      },
+      "matched_to_canonical": 17,
+      "canonicalization_dropout": 0,
+      "course_context_only": 1,
+      "ambiguous": 0,
+      "gap_distribution": {
+        "DESCRIPTION_MISSING": 17,
+        "MULTILINGUAL_EN_MISSING": 17,
+        "MULTILINGUAL_JA_MISSING": 17,
+        "MULTILINGUAL_ZH_MISSING": 17
+      },
+      "runtime_ok_count": 0,
+      "runtime_ok_pct": 0.0,
+      "content_coverage": {
+        "image_ok": 17,
+        "image_missing": 0,
+        "desc_ko_ok": 0,
+        "desc_ko_missing": 17,
+        "en_ok": 0,
+        "en_missing": 17,
+        "ja_missing": 17,
+        "zh_missing": 17,
+        "coord_ok": 17,
+        "coord_missing": 0
+      },
+      "notes": [
+        "JEONJU_NOTE: canonical has no description field — all description gaps are structural",
+        "JA_MULTILINGUAL_MISSING=17 stops",
+        "ZH_MULTILINGUAL_MISSING=17 stops"
+      ]
+    }
+  },
+  "structural_gaps": [
+    "JEONJU: canonical has no description field (structural, not individual dropout)",
+    "JEONJU/BUSAN/GYEONGJU: JA/ZH multilingual not in canonical (structural)",
+    "BUSAN: canonical has no JA/ZH — only EN from 6260000 API",
+    "GYEONGJU: canonical has limited EN coverage; no JA/ZH"
+  ]
+}

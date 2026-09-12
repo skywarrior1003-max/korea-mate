@@ -1,0 +1,39 @@
+{
+  "city": "jeju",
+  "as_of": "2026-09-12",
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "course_count": 5,
+  "total_stop_occurrences": 15,
+  "stops_with_canonical_id": 9,
+  "stop_type_distribution": {
+    "MATCH_EXISTING": 9,
+    "COURSE_CONTEXT_ONLY": 6
+  },
+  "matched_to_canonical": 9,
+  "canonicalization_dropout": 0,
+  "course_context_only": 6,
+  "ambiguous": 0,
+  "gap_distribution": {
+    "MULTILINGUAL_EN_MISSING": 9,
+    "MULTILINGUAL_JA_MISSING": 9,
+    "MULTILINGUAL_ZH_MISSING": 9
+  },
+  "runtime_ok_count": 0,
+  "runtime_ok_pct": 0.0,
+  "content_coverage": {
+    "image_ok": 9,
+    "image_missing": 0,
+    "desc_ko_ok": 9,
+    "desc_ko_missing": 0,
+    "en_ok": 0,
+    "en_missing": 9,
+    "ja_missing": 9,
+    "zh_missing": 9,
+    "coord_ok": 9,
+    "coord_missing": 0
+  },
+  "notes": [
+    "JA_MULTILINGUAL_MISSING=9 stops",
+    "ZH_MULTILINGUAL_MISSING=9 stops"
+  ]
+}

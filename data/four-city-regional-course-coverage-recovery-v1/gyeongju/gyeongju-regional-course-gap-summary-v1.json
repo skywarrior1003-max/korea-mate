@@ -1,0 +1,42 @@
+{
+  "city": "gyeongju",
+  "as_of": "2026-09-12",
+  "schema_version": "four-city-regional-course-coverage-v1",
+  "course_count": 4,
+  "total_stop_occurrences": 31,
+  "stops_with_canonical_id": 24,
+  "stop_type_distribution": {
+    "MATCH_EXISTING": 24,
+    "COURSE_CONTEXT_ONLY": 7
+  },
+  "matched_to_canonical": 24,
+  "canonicalization_dropout": 0,
+  "course_context_only": 7,
+  "ambiguous": 0,
+  "gap_distribution": {
+    "IMAGE_MISSING": 23,
+    "DESCRIPTION_MISSING": 24,
+    "MULTILINGUAL_JA_MISSING": 24,
+    "MULTILINGUAL_ZH_MISSING": 24,
+    "COORD_MISSING": 17,
+    "MULTILINGUAL_EN_MISSING": 4
+  },
+  "runtime_ok_count": 0,
+  "runtime_ok_pct": 0.0,
+  "content_coverage": {
+    "image_ok": 1,
+    "image_missing": 23,
+    "desc_ko_ok": 0,
+    "desc_ko_missing": 24,
+    "en_ok": 20,
+    "en_missing": 4,
+    "ja_missing": 24,
+    "zh_missing": 24,
+    "coord_ok": 7,
+    "coord_missing": 17
+  },
+  "notes": [
+    "JA_MULTILINGUAL_MISSING=24 stops",
+    "ZH_MULTILINGUAL_MISSING=24 stops"
+  ]
+}
