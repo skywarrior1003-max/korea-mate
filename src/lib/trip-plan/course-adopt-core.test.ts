@@ -35,7 +35,7 @@ test("★순서 보존 + 앞날 우선 균등 배분", () => {
   assert.equal(days[1]!.dayNumber, 2);
 });
 
-test("★연결 stop 만 카탈로그 사실 복사, 미연결은 이름뿐 — 발명 0", () => {
+test("★연결 stop 만 카탈로그 사실 복사, 미연결은 이름+빈 필드 — 발명 0", () => {
   const days = adoptCourseDays(stops, SPOTS, "2026-10-01", "2026-10-01")!;
   const [linked, unlinked, partial, missing] = [days[0]!.places[0]!, days[0]!.places[1]!, days[0]!.places[2]!, days[0]!.places[3]!];
   assert.equal(linked.place_id, "1");
@@ -43,18 +43,29 @@ test("★연결 stop 만 카탈로그 사실 복사, 미연결은 이름뿐 — 
   assert.equal(linked.category, "attraction");
   assert.equal(linked.lat, 35.158);
   assert.equal(linked.image, "/img/1.jpg");
-  assert.deepEqual(Object.keys(unlinked), ["name"], "미연결 stop 에 발명 필드");
+  // 미연결/카탈로그 밖 id — 이름 외에는 전부 빈 문자열(정보 없음), 매칭/발명 0
+  for (const p of [unlinked, missing]) {
+    assert.equal(p.source, undefined, "미연결에 source");
+    assert.equal(p.place_id, undefined, "미연결에 place_id");
+    assert.equal(p.category, "");
+    assert.equal(p.location, "");
+    assert.equal(p.lat, undefined);
+    assert.equal(p.image, undefined);
+  }
   assert.equal(partial.place_id, "2");
   assert.equal(partial.lat, undefined, "좌표 없는 spot 에 좌표 발명");
-  assert.deepEqual(Object.keys(missing), ["name"], "카탈로그 밖 id 를 임의 매칭");
 });
 
-test("★시각/소요시간을 지어내지 않는다 — time/duration/slot 키 자체가 없다", () => {
+test("★시각/소요시간을 지어내지 않는다 — 빈 문자열(시계·슬롯 미표시), timeSource/slot 없음", () => {
   const days = adoptCourseDays(stops, SPOTS, "2026-10-01", "2026-10-02")!;
   for (const d of days) for (const p of d.places) {
-    for (const banned of ["time", "duration", "slot", "tips", "timeSource"]) {
-      assert.ok(!(banned in p), `${p.name} 에 ${banned}`);
-    }
+    // My Trip Place 계약상 필수 문자열 — 값은 비워 정직하게(크래시 방지, 2026-09-12 실측)
+    assert.equal(p.time, "");
+    assert.equal(p.duration, "");
+    assert.equal(p.tips, "");
+    assert.equal(typeof p.location, "string");
+    assert.equal(typeof p.googleMapsUrl, "string");
+    for (const banned of ["slot", "timeSource"]) assert.ok(!(banned in p), `${p.name} 에 ${banned}`);
   }
 });
 

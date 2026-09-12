@@ -30,16 +30,25 @@ export interface AdoptSpotFacts {
   mapUrl?: string | null;
 }
 
+/**
+ * My Trip 화면의 Place 계약은 location/time/duration/tips/googleMapsUrl 을
+ * 필수 문자열로 다룬다(생략 시 p.location.toLowerCase() 류에서 크래시 —
+ * 2026-09-12 LIVE 실측). 모르는 값은 **빈 문자열**로 정직하게 둔다:
+ * 빈 값은 "정보 없음"이지 발명이 아니고, 화면 규칙상 시계/슬롯도 안 그린다.
+ */
 export interface AdoptedPlace {
   name: string;
+  category: string;
+  location: string;
+  time: string;
+  duration: string;
+  tips: string;
+  googleMapsUrl: string;
   source?: "city_spot";
   place_id?: string;
-  category?: string;
-  location?: string;
   lat?: number;
   lng?: number;
   image?: string;
-  googleMapsUrl?: string;
 }
 
 export interface AdoptedDay {
@@ -87,17 +96,18 @@ export function adoptCourseDays(
     const take = base + (d < extra ? 1 : 0);
     const places: AdoptedPlace[] = usable.slice(cursor, cursor + take).map(s => {
       const spot = typeof s.spotId === "number" ? spotsById.get(s.spotId) : undefined;
-      if (!spot) return { name: s.name.trim() }; // 미연결 — 이름만, 발명 0
       const p: AdoptedPlace = {
-        name: spot.name || s.name.trim(),
-        source: "city_spot",
-        place_id: String(spot.id),
+        name: (spot?.name || s.name).trim(),
+        category: spot?.category ?? "",
+        location: spot?.district ?? "",
+        time: "", duration: "", tips: "", googleMapsUrl: spot?.mapUrl ?? "",
       };
-      if (spot.category) p.category = spot.category;
-      if (spot.district) p.location = spot.district;
-      if (typeof spot.lat === "number" && typeof spot.lng === "number") { p.lat = spot.lat; p.lng = spot.lng; }
-      if (spot.image) p.image = spot.image;
-      if (spot.mapUrl) p.googleMapsUrl = spot.mapUrl;
+      if (spot) {
+        p.source = "city_spot";
+        p.place_id = String(spot.id);
+        if (typeof spot.lat === "number" && typeof spot.lng === "number") { p.lat = spot.lat; p.lng = spot.lng; }
+        if (spot.image) p.image = spot.image;
+      }
       return p;
     });
     cursor += take;
