@@ -1,0 +1,44 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-OFFICIAL-WEB-LOCALE-RECOVERY-V1",
+  "manifest_version": "v2",
+  "created_date": "2026-09-12",
+  "base_manifest": "data/seoul-core-recovery-night-closeout-v1/seoul-core-recovery-night-closeout-manifest-v1.json",
+  "output_branch": "data/seoul-core-attraction-official-web-locale-recovery-v1",
+  "correction_principle": "API EMPTY_RESPONSE != OFFICIAL LOCALE SOURCE NOT AVAILABLE; API LANGUAGE_MISMATCH != OFFICIAL LOCALE SOURCE NOT AVAILABLE",
+  "universe": {
+    "merge_candidates_286": 286,
+    "locale_exception_pairs_examined": 51,
+    "pairs_recovered_official_web": 51,
+    "pairs_true_not_available": 0
+  },
+  "artifacts": {
+    "A_locale_web_recovery_raw": "seoul-core-attraction-locale-web-recovery-raw-v1.jsonl",
+    "B_locale_web_recovered": "seoul-core-attraction-locale-web-recovered-v1.jsonl",
+    "C_final_multilingual_handoff_v2": "seoul-core-recovery-final-multilingual-handoff-v2.jsonl",
+    "D_locale_exception_closeout_v2": "seoul-core-attraction-locale-exception-closeout-v2.jsonl",
+    "E_coverage_qa_v2": "seoul-core-attraction-locale-recovery-coverage-qa-v2.json",
+    "F_manifest_v2": "seoul-core-attraction-locale-recovery-manifest-v2.json"
+  },
+  "coverage_after_recovery": {
+    "en": "276/286 (96.5%)",
+    "ja": "274/286 (95.8%)",
+    "zh": "276/286 (96.5%)",
+    "COMPLETE_4_LOCALE": "270/286 (94.4%)"
+  },
+  "recovery_source": "VisitSeoul official locale web (english/japanese/chinese.visitseoul.net)",
+  "url_patterns_used": [
+    "https://[locale].visitseoul.net/attractions/[slug]_/[numeric-id]",
+    "https://[locale].visitseoul.net/attractions/[slug]/[locale-cid]",
+    "https://[locale].visitseoul.net/attractions/x/[locale-cid]"
+  ],
+  "prohibitions": [
+    "canonical merge 금지",
+    "AI 번역 금지",
+    "Google Translate 금지",
+    "영어→일본어/중국어 fallback 복사 금지",
+    "한국어 fallback 복사 금지",
+    "unofficial content 사용 금지",
+    "Main/Production DB write 금지"
+  ],
+  "pre_merge_readiness": "READY - 286 merge candidates, locale recovery complete"
+}

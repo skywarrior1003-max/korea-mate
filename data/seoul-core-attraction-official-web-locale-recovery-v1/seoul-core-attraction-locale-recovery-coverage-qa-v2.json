@@ -1,0 +1,75 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-OFFICIAL-WEB-LOCALE-RECOVERY-V1",
+  "qa_date": "2026-09-12",
+  "base_branch": "data/seoul-core-recovery-night-closeout-v1",
+  "output_branch": "data/seoul-core-attraction-official-web-locale-recovery-v1",
+  "source_exception_pairs": 51,
+  "recovery_summary": {
+    "OFFICIAL_WEB_RECOVERED": 51,
+    "SOURCE_LOCALE_NOT_AVAILABLE": 0,
+    "OFFICIAL_WEB_PARSE_BLOCKED": 0,
+    "recovery_rate": "51/51 (100.0%)"
+  },
+  "recovery_by_exception_type": {
+    "VIP_FETCH_FAILED": {
+      "total": 5,
+      "recovered": 5
+    },
+    "FETCH_FAILED": {
+      "total": 7,
+      "recovered": 7
+    },
+    "LANGUAGE_MISMATCH": {
+      "total": 39,
+      "recovered": 39
+    }
+  },
+  "vip_recovery": {
+    "total_vip": 5,
+    "vip_recovered": 5,
+    "vip_status": "ALL_VIP_RECOVERED"
+  },
+  "correction_principle": "API EMPTY_RESPONSE != OFFICIAL LOCALE SOURCE NOT AVAILABLE; API LANGUAGE_MISMATCH != OFFICIAL LOCALE SOURCE NOT AVAILABLE",
+  "coverage_delta": {
+    "en_v1": 273,
+    "en_v2": 276,
+    "en_delta": 3,
+    "ja_v1": 253,
+    "ja_v2": 274,
+    "ja_delta": 21,
+    "zh_v1": 249,
+    "zh_v2": 276,
+    "zh_delta": 27
+  },
+  "multilingual_class_delta": {
+    "COMPLETE_4_LOCALE_v1": 229,
+    "COMPLETE_4_LOCALE_v2": 270,
+    "COMPLETE_4_LOCALE_gain": 41
+  },
+  "handoff_totals_v2": {
+    "total_rows": 286,
+    "en_ok": 276,
+    "ja_ok": 274,
+    "zh_ok": 276,
+    "en_pct": 96.5,
+    "ja_pct": 95.8,
+    "zh_pct": 96.5,
+    "complete_4_locale": 270
+  },
+  "prohibitions_check": {
+    "no_ai_translation": true,
+    "no_google_translate": true,
+    "no_en_ja_zh_fallback_copy": true,
+    "no_ko_fallback_copy": true,
+    "no_canonical_merge": true,
+    "no_unofficial_content": true,
+    "all_sources_visitseoul_official": true
+  },
+  "qa_verdict": "PASS",
+  "notes": [
+    "All 51 pairs confirmed OFFICIAL_WEB_RECOVERED from VisitSeoul official locale subdomains",
+    "V1 closeout incorrectly classified these as CONFIRMED_LOCALE_NOT_AVAILABLE based on API behavior only",
+    "API EMPTY_RESPONSE / LANGUAGE_MISMATCH does not mean locale content is unavailable on official web",
+    "Source URLs provided for all 51 pairs; re-fetch recommended for pairs with desc_verified_present=true but empty description"
+  ]
+}
