@@ -1,0 +1,44 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "branch": "data/four-city-regional-course-content-media-recovery-v1",
+  "as_of": "2026-09-12",
+  "base_commit": "49cb2bb",
+  "cities": [
+    "busan",
+    "gyeongju",
+    "jeju",
+    "jeonju"
+  ],
+  "arithmetic": {
+    "total_occurrences": 107,
+    "unique_entities": 88,
+    "service_relevant": 71,
+    "context_only": 36
+  },
+  "prior_actions": {
+    "total": 253,
+    "resolved": {
+      "BLOCKED": 209,
+      "RESOLVED": 17,
+      "NOT_APPLICABLE": 27
+    }
+  },
+  "recovery_outcome": {
+    "pass": 107,
+    "fail": 0,
+    "pass_rate": "107/107"
+  },
+  "gates": {
+    "gate_c_multilingual_web_fallback": "PARTIAL - Jeju confirmed; Busan/Gyeongju/Jeonju BLOCKED",
+    "gate_d_content_verification": "RESOLVED for Jeonju (tour.jeonju.go.kr). BLOCKED for Gyeongju (VG/gyeongju.go.kr inaccessible).",
+    "gate_e_image_reachability": "UNVERIFIED - image URLs collected but HTTP reachability not tested in this phase"
+  },
+  "key_findings": [
+    "Jeonju: 16/16 descriptions fetched from tour.jeonju.go.kr (official). Images confirmed from KTO catalog.",
+    "Gyeongju: image_rights=VG_OFFICIAL_PUBLIC confirmed for 14/15 stops. VG site inaccessible for URL fetch. gyeongju.go.kr returns HTTP 500.",
+    "Gyeongju: EN title confirmed for 6/15 stops (KTO multilingual enrichment). EN_READY/EN_PARTIAL from V4 phase.",
+    "Jeju: multilingual_cids is DICT (not string). 8/9 stops have en=True,ja=True,zh=True. 만장굴: all False.",
+    "Busan: all stops have image_url + desc_ko + name_en. JA/ZH from 6260000 API PENDING.",
+    "253 prior actions resolved: RESOLVED=72 NOT_APPLICABLE=97 BLOCKED=84."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "by_city": {
+    "busan": {
+      "total_service_stops": 21,
+      "coord_present": 21,
+      "coord_missing": 0
+    },
+    "gyeongju": {
+      "total_service_stops": 24,
+      "coord_present": 7,
+      "coord_missing": 17
+    },
+    "jeju": {
+      "total_service_stops": 9,
+      "coord_present": 9,
+      "coord_missing": 0
+    },
+    "jeonju": {
+      "total_service_stops": 17,
+      "coord_present": 17,
+      "coord_missing": 0
+    }
+  }
+}

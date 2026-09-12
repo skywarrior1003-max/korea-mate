@@ -1,0 +1,78 @@
+{
+  "city": "jeju",
+  "gate": "E",
+  "gate_description": "Image URL HTTP reachability verification",
+  "as_of": "2026-09-12",
+  "total_service_stops": 9,
+  "stops": [
+    {
+      "canonical_id": "jeju-CNTS_000000000018409",
+      "name_ko": "외돌개 (출발점)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202110/26/a434d9b2-a595-485f-89d6-1423bd989912.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CNTS_000000000019973",
+      "name_ko": "영실탐방안내소 (출발점)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202110/26/616ce943-7b6c-45c9-afdd-3958fda0530d.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500349",
+      "name_ko": "성산일출봉 (UNESCO 세계자연유산)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500343",
+      "name_ko": "섭지코지 (옵션)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/6efa0dd8-7e17-47b9-8265-caf514b7ccef.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500182",
+      "name_ko": "만장굴 (UNESCO 거문오름 용암동굴계)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202608/12/71968712-4e81-415a-bc16-703f03a8937b.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500270",
+      "name_ko": "비자림 (천연기념물 제374호)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/908a37e8-918e-46a8-bc2e-e7569eba8a8d.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500281",
+      "name_ko": "사려니숲길",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500466",
+      "name_ko": "용눈이오름",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/22/5c9c469a-8832-4ca2-b866-d95889652311.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "jeju-CNTS_000000000022519",
+      "name_ko": "우도봉 (등반)",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ab689af2-5482-4aed-8741-2f17349c8296.webp",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    }
+  ],
+  "summary": {
+    "reachable": 0,
+    "blocked_no_url": 0,
+    "unverified": 9,
+    "pass_rate": "0/9"
+  }
+}

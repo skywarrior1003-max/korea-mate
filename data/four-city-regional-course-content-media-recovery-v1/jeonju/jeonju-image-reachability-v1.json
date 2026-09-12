@@ -1,0 +1,134 @@
+{
+  "city": "jeonju",
+  "gate": "E",
+  "gate_description": "Image URL HTTP reachability verification",
+  "as_of": "2026-09-12",
+  "total_service_stops": 17,
+  "stops": [
+    {
+      "canonical_id": "OFF-10115",
+      "name_ko": "경기전",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/177942516570092.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9752",
+      "name_ko": "전동성당",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176351924731021.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9746",
+      "name_ko": "풍남문",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/풍남문1.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-16109",
+      "name_ko": "전주한옥마을",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176353987471558.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-16086",
+      "name_ko": "청연루·남천교",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345386124259.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9774",
+      "name_ko": "전주천",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176344738297700.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9741",
+      "name_ko": "한벽당",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176351686598294.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9742",
+      "name_ko": "오목대·이목대",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/175317831898777.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-16087",
+      "name_ko": "조경단",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345477549647.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-16084",
+      "name_ko": "남부시장·청년몰",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345024453672.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9796",
+      "name_ko": "전주전통술박물관",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/173742826125182.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9780",
+      "name_ko": "전주한지박물관",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/173742841604995.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-16085",
+      "name_ko": "남부시장 한옥마을 야시장",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345145441142.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9772",
+      "name_ko": "덕진공원",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/177847702126840.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9751",
+      "name_ko": "전주향교",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176353196556840.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-13964",
+      "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/172351329982410.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "OFF-9741",
+      "name_ko": "한벽당",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176351686598294.jpg",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    }
+  ],
+  "summary": {
+    "reachable": 0,
+    "blocked_no_url": 0,
+    "unverified": 17,
+    "pass_rate": "0/17"
+  }
+}

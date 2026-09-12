@@ -1,0 +1,38 @@
+{
+  "city": "jeju",
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "stop_counts": {
+    "total_occurrences": 15,
+    "service_relevant": 9,
+    "context_only": 6
+  },
+  "recovery_status_counts": {
+    "EXISTING_SERVICE_READY": 8,
+    "COURSE_CONTEXT_READY": 6,
+    "EXISTING_RECOVERED": 1
+  },
+  "pass_count": 15,
+  "fail_count": 0,
+  "pass_rate": "15/15",
+  "prior_actions_resolved": {
+    "NOT_APPLICABLE": 27
+  },
+  "content_recovery": {
+    "desc_ko_recovered": 9,
+    "image_url_present": 9,
+    "image_rights_confirmed": 9,
+    "en_title_recovered": 8,
+    "ja_recovered": 8,
+    "zh_recovered": 8,
+    "coord_present": 9
+  },
+  "blocks_summary": [
+    "만장굴: multilingual_cids={'en':False,'ja':False,'zh':False} - multilingual collection required."
+  ],
+  "gate_e_summary": {
+    "image_url_present": 9,
+    "image_rights_confirmed": 9,
+    "gate_e_verified": 0
+  }
+}

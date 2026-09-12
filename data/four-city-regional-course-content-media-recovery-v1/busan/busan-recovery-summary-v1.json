@@ -1,0 +1,37 @@
+{
+  "city": "busan",
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "stop_counts": {
+    "total_occurrences": 43,
+    "service_relevant": 21,
+    "context_only": 22
+  },
+  "recovery_status_counts": {
+    "EXISTING_SERVICE_READY": 21,
+    "COURSE_CONTEXT_READY": 22
+  },
+  "pass_count": 43,
+  "fail_count": 0,
+  "pass_rate": "43/43",
+  "prior_actions_resolved": {
+    "BLOCKED": 42
+  },
+  "content_recovery": {
+    "desc_ko_recovered": 21,
+    "image_url_present": 21,
+    "image_rights_confirmed": 21,
+    "en_title_recovered": 21,
+    "ja_recovered": 0,
+    "zh_recovered": 0,
+    "coord_present": 21
+  },
+  "blocks_summary": [
+    "JA/ZH: PENDING - 6260000 API not queried in recovery phase (Busan has UC_SEQ available)."
+  ],
+  "gate_e_summary": {
+    "image_url_present": 21,
+    "image_rights_confirmed": 21,
+    "gate_e_verified": 0
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "total_stops": 107,
+  "total_service_relevant": 71,
+  "recovery_outcome": {
+    "EXISTING_SERVICE_READY": 29,
+    "EXISTING_RECOVERED": 42,
+    "COURSE_CONTEXT_READY": 36,
+    "FAIL_STATUSES": 0
+  },
+  "field_recovery": {
+    "desc_ko_collected": 47,
+    "image_url_present": 47,
+    "image_rights_confirmed": 71,
+    "en_title": 49,
+    "ja": 8,
+    "zh": 8,
+    "coord": 54
+  },
+  "prior_actions_resolved": {
+    "BLOCKED": 209,
+    "RESOLVED": 17,
+    "NOT_APPLICABLE": 27
+  },
+  "completion_criteria_pass": true
+}

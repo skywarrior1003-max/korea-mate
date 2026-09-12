@@ -1,0 +1,62 @@
+{
+  "busan": {
+    "total_occurrences": 43,
+    "service_relevant": 21,
+    "context_only": 22,
+    "existing_service_ready": 21,
+    "existing_recovered": 0,
+    "course_context_ready": 22,
+    "desc_ko_recovered": 21,
+    "image_url_present": 21,
+    "image_rights_confirmed": 21,
+    "en_ready": 21,
+    "ja_ready": 0,
+    "zh_ready": 0,
+    "coord_ready": 21
+  },
+  "gyeongju": {
+    "total_occurrences": 31,
+    "service_relevant": 24,
+    "context_only": 7,
+    "existing_service_ready": 0,
+    "existing_recovered": 24,
+    "course_context_ready": 7,
+    "desc_ko_recovered": 0,
+    "image_url_present": 0,
+    "image_rights_confirmed": 24,
+    "en_ready": 20,
+    "ja_ready": 0,
+    "zh_ready": 0,
+    "coord_ready": 7
+  },
+  "jeju": {
+    "total_occurrences": 15,
+    "service_relevant": 9,
+    "context_only": 6,
+    "existing_service_ready": 8,
+    "existing_recovered": 1,
+    "course_context_ready": 6,
+    "desc_ko_recovered": 9,
+    "image_url_present": 9,
+    "image_rights_confirmed": 9,
+    "en_ready": 8,
+    "ja_ready": 8,
+    "zh_ready": 8,
+    "coord_ready": 9
+  },
+  "jeonju": {
+    "total_occurrences": 18,
+    "service_relevant": 17,
+    "context_only": 1,
+    "existing_service_ready": 0,
+    "existing_recovered": 17,
+    "course_context_ready": 1,
+    "desc_ko_recovered": 17,
+    "image_url_present": 17,
+    "image_rights_confirmed": 17,
+    "en_ready": 0,
+    "ja_ready": 0,
+    "zh_ready": 0,
+    "coord_ready": 17
+  }
+}

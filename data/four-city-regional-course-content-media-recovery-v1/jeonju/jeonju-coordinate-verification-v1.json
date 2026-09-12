@@ -1,0 +1,148 @@
+{
+  "city": "jeonju",
+  "gate": "D_coord",
+  "as_of": "2026-09-12",
+  "stops": [
+    {
+      "canonical_id": "OFF-10115",
+      "name_ko": "경기전",
+      "has_coord": true,
+      "lat": "35.8155190040042",
+      "lng": "127.150120200252",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9752",
+      "name_ko": "전동성당",
+      "has_coord": true,
+      "lat": "35.8135729565669",
+      "lng": "127.148924842748",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9746",
+      "name_ko": "풍남문",
+      "has_coord": true,
+      "lat": "35.8135083736315",
+      "lng": "127.147579004786",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-16109",
+      "name_ko": "전주한옥마을",
+      "has_coord": true,
+      "lat": "35.8141267914806",
+      "lng": "127.148989390149",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-16086",
+      "name_ko": "청연루·남천교",
+      "has_coord": true,
+      "lat": "35.8093637744893",
+      "lng": "127.153103737401",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9774",
+      "name_ko": "전주천",
+      "has_coord": true,
+      "lat": "35.8235426246417",
+      "lng": "127.131608613341",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9741",
+      "name_ko": "한벽당",
+      "has_coord": true,
+      "lat": "35.8118873194206",
+      "lng": "127.160824334509",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9742",
+      "name_ko": "오목대·이목대",
+      "has_coord": true,
+      "lat": "35.8144023799226",
+      "lng": "127.154570677765",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-16087",
+      "name_ko": "조경단",
+      "has_coord": true,
+      "lat": "35.8533365342008",
+      "lng": "127.13601085137",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-16084",
+      "name_ko": "남부시장·청년몰",
+      "has_coord": true,
+      "lat": "35.8127859743493",
+      "lng": "127.147537060132",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9796",
+      "name_ko": "전주전통술박물관",
+      "has_coord": true,
+      "lat": "35.8168503561188",
+      "lng": "127.153466669733",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9780",
+      "name_ko": "전주한지박물관",
+      "has_coord": true,
+      "lat": "35.8451292757724",
+      "lng": "127.096704591247",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-16085",
+      "name_ko": "남부시장 한옥마을 야시장",
+      "has_coord": true,
+      "lat": "35.8127859743493",
+      "lng": "127.147537060132",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9772",
+      "name_ko": "덕진공원",
+      "has_coord": true,
+      "lat": "35.8474947551604",
+      "lng": "127.121031157474",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9751",
+      "name_ko": "전주향교",
+      "has_coord": true,
+      "lat": "35.8121775980175",
+      "lng": "127.157226663648",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-13964",
+      "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+      "has_coord": true,
+      "lat": "35.8089973514691",
+      "lng": "127.145904926726",
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "OFF-9741",
+      "name_ko": "한벽당",
+      "has_coord": true,
+      "lat": "35.8118873194206",
+      "lng": "127.160824334509",
+      "coord_note": ""
+    }
+  ],
+  "summary": {
+    "coord_present": 17,
+    "coord_missing": 0,
+    "total": 17
+  }
+}

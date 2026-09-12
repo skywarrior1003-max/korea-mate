@@ -1,0 +1,84 @@
+{
+  "city": "jeju",
+  "gate": "D_coord",
+  "as_of": "2026-09-12",
+  "stops": [
+    {
+      "canonical_id": "jeju-CNTS_000000000018409",
+      "name_ko": "외돌개 (출발점)",
+      "has_coord": true,
+      "lat": 33.240063,
+      "lng": 126.54573,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CNTS_000000000019973",
+      "name_ko": "영실탐방안내소 (출발점)",
+      "has_coord": true,
+      "lat": 33.3402,
+      "lng": 126.47921,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500349",
+      "name_ko": "성산일출봉 (UNESCO 세계자연유산)",
+      "has_coord": true,
+      "lat": 33.462147,
+      "lng": 126.936424,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500343",
+      "name_ko": "섭지코지 (옵션)",
+      "has_coord": true,
+      "lat": 33.4236948,
+      "lng": 126.9296022,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500182",
+      "name_ko": "만장굴 (UNESCO 거문오름 용암동굴계)",
+      "has_coord": true,
+      "lat": 33.5548185,
+      "lng": 126.7969015,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500270",
+      "name_ko": "비자림 (천연기념물 제374호)",
+      "has_coord": true,
+      "lat": 33.491318,
+      "lng": 126.811386,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500281",
+      "name_ko": "사려니숲길",
+      "has_coord": true,
+      "lat": 33.4180631,
+      "lng": 126.6534847,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CONT_000000000500466",
+      "name_ko": "용눈이오름",
+      "has_coord": true,
+      "lat": 33.45993,
+      "lng": 126.831635,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "jeju-CNTS_000000000022519",
+      "name_ko": "우도봉 (등반)",
+      "has_coord": true,
+      "lat": 33.5043,
+      "lng": 126.95405,
+      "coord_note": ""
+    }
+  ],
+  "summary": {
+    "coord_present": 9,
+    "coord_missing": 0,
+    "total": 9
+  }
+}

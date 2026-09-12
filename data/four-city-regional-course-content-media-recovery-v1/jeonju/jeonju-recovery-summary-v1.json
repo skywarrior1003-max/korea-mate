@@ -1,0 +1,38 @@
+{
+  "city": "jeonju",
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "stop_counts": {
+    "total_occurrences": 18,
+    "service_relevant": 17,
+    "context_only": 1
+  },
+  "recovery_status_counts": {
+    "EXISTING_RECOVERED": 17,
+    "COURSE_CONTEXT_READY": 1
+  },
+  "pass_count": 18,
+  "fail_count": 0,
+  "pass_rate": "18/18",
+  "prior_actions_resolved": {
+    "RESOLVED": 17,
+    "BLOCKED": 51
+  },
+  "content_recovery": {
+    "desc_ko_recovered": 17,
+    "image_url_present": 17,
+    "image_rights_confirmed": 17,
+    "en_title_recovered": 0,
+    "ja_recovered": 0,
+    "zh_recovered": 0,
+    "coord_present": 17
+  },
+  "blocks_summary": [
+    "EN/JA/ZH: NOT_COLLECTED for course stops in this phase."
+  ],
+  "gate_e_summary": {
+    "image_url_present": 17,
+    "image_rights_confirmed": 17,
+    "gate_e_verified": 0
+  }
+}

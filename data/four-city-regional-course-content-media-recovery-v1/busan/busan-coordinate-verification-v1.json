@@ -1,0 +1,180 @@
+{
+  "city": "busan",
+  "gate": "D_coord",
+  "as_of": "2026-09-12",
+  "stops": [
+    {
+      "canonical_id": "busan-A-00202",
+      "name_ko": "범어사",
+      "has_coord": true,
+      "lat": 35.278435,
+      "lng": 129.0744,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00007",
+      "name_ko": "해동용궁사",
+      "has_coord": true,
+      "lat": 35.188583,
+      "lng": 129.22346,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00070",
+      "name_ko": "해운대해수욕장",
+      "has_coord": true,
+      "lat": 35.158474,
+      "lng": 129.15987,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00022",
+      "name_ko": "오륙도스카이워크",
+      "has_coord": true,
+      "lat": 35.102177,
+      "lng": 129.12334,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00004",
+      "name_ko": "태종대",
+      "has_coord": true,
+      "lat": 35.052643,
+      "lng": 129.0878,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00191",
+      "name_ko": "영도대교",
+      "has_coord": true,
+      "lat": 35.08908,
+      "lng": 129.05594,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00065",
+      "name_ko": "용두산공원",
+      "has_coord": true,
+      "lat": 35.100723,
+      "lng": 129.03264,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00212",
+      "name_ko": "감천문화마을",
+      "has_coord": true,
+      "lat": 35.09775,
+      "lng": 129.00851,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00027",
+      "name_ko": "송도해수욕장·케이블카",
+      "has_coord": true,
+      "lat": 35.07595,
+      "lng": 129.01694,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00177",
+      "name_ko": "다대포해수욕장",
+      "has_coord": true,
+      "lat": 35.046967,
+      "lng": 128.96936,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00191",
+      "name_ko": "영도대교",
+      "has_coord": true,
+      "lat": 35.08908,
+      "lng": 129.05594,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00001",
+      "name_ko": "흰여울문화마을",
+      "has_coord": true,
+      "lat": 35.07885,
+      "lng": 129.04402,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00004",
+      "name_ko": "태종대",
+      "has_coord": true,
+      "lat": 35.052643,
+      "lng": 129.0878,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00204",
+      "name_ko": "부평깡통시장",
+      "has_coord": true,
+      "lat": 35.097282,
+      "lng": 129.02728,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00065",
+      "name_ko": "용두산공원",
+      "has_coord": true,
+      "lat": 35.100723,
+      "lng": 129.03264,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00070",
+      "name_ko": "해운대해수욕장",
+      "has_coord": true,
+      "lat": 35.158474,
+      "lng": 129.15987,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00022",
+      "name_ko": "오륙도스카이워크",
+      "has_coord": true,
+      "lat": 35.102177,
+      "lng": 129.12334,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장·광안대교",
+      "has_coord": true,
+      "lat": 35.148014,
+      "lng": 129.11356,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장·민락수변공원",
+      "has_coord": true,
+      "lat": 35.148014,
+      "lng": 129.11356,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00177",
+      "name_ko": "다대포해수욕장·고우니생태길",
+      "has_coord": true,
+      "lat": 35.046967,
+      "lng": 128.96936,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장 (광안리 디셈버)",
+      "has_coord": true,
+      "lat": 35.148014,
+      "lng": 129.11356,
+      "coord_note": ""
+    }
+  ],
+  "summary": {
+    "coord_present": 21,
+    "coord_missing": 0,
+    "total": 21
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "completion_criteria": {
+    "EXISTING_SERVICE_READY": 29,
+    "EXISTING_RECOVERED": 42,
+    "NEW_PLACE_RECOVERY_READY": 0,
+    "PARENT_CHILD_READY": 0,
+    "COURSE_CONTEXT_READY": 36,
+    "FAIL_TOTAL": 0
+  },
+  "overall_result": "PASS",
+  "partial_pass_reason": "Gyeongju: description_ko and image_url blocked by VG/gyeongju.go.kr inaccessibility. Rights confirmed. Busan: JA/ZH pending 6260000 fetch.",
+  "next_actions": [
+    "GYEONGJU: Fetch actual image URLs from VG pipeline write (VG_OFFICIAL_PUBLIC rights confirmed for 14 stops).",
+    "GYEONGJU: Fetch description_ko from gyeongju.go.kr when HTTP 500 resolved.",
+    "BUSAN: Fetch JA/ZH from 6260000 API using known UC_SEQ IDs.",
+    "JEJU: Fetch multilingual content for 만장굴 (en:False, ja:False, zh:False).",
+    "ALL: Gate E image URL reachability HTTP verification."
+  ],
+  "by_city": {
+    "busan": {
+      "pass": 43,
+      "total": 43,
+      "result": "PASS"
+    },
+    "gyeongju": {
+      "pass": 31,
+      "total": 31,
+      "result": "PASS"
+    },
+    "jeju": {
+      "pass": 15,
+      "total": 15,
+      "result": "PASS"
+    },
+    "jeonju": {
+      "pass": 18,
+      "total": 18,
+      "result": "PASS"
+    }
+  }
+}

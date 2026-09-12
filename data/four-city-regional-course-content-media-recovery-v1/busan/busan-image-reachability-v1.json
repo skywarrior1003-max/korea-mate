@@ -1,0 +1,162 @@
+{
+  "city": "busan",
+  "gate": "E",
+  "gate_description": "Image URL HTTP reachability verification",
+  "as_of": "2026-09-12",
+  "total_service_stops": 21,
+  "stops": [
+    {
+      "canonical_id": "busan-A-00202",
+      "name_ko": "범어사",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250317141712864_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00007",
+      "name_ko": "해동용궁사",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222190823385_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00070",
+      "name_ko": "해운대해수욕장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153530528_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00022",
+      "name_ko": "오륙도스카이워크",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191225164921130_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00004",
+      "name_ko": "태종대",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222180829962_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00191",
+      "name_ko": "영도대교",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241219102705213_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00065",
+      "name_ko": "용두산공원",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229145728609_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00212",
+      "name_ko": "감천문화마을",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20260311171309981_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00027",
+      "name_ko": "송도해수욕장·케이블카",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191225175459392_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00177",
+      "name_ko": "다대포해수욕장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241031180127634_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00191",
+      "name_ko": "영도대교",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241219102705213_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00001",
+      "name_ko": "흰여울문화마을",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222164810529_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00004",
+      "name_ko": "태종대",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222180829962_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00204",
+      "name_ko": "부평깡통시장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250728122343276_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00065",
+      "name_ko": "용두산공원",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229145728609_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00070",
+      "name_ko": "해운대해수욕장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153530528_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00022",
+      "name_ko": "오륙도스카이워크",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191225164921130_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장·광안대교",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241126144851008_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장·민락수변공원",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241126144851008_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00177",
+      "name_ko": "다대포해수욕장·고우니생태길",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241031180127634_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    },
+    {
+      "canonical_id": "busan-A-00185",
+      "name_ko": "광안리해수욕장 (광안리 디셈버)",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241126144851008_ttiel",
+      "gate_e_status": "UNVERIFIED",
+      "note": "Image URL present, reachability not HTTP-verified"
+    }
+  ],
+  "summary": {
+    "reachable": 0,
+    "blocked_no_url": 0,
+    "unverified": 21,
+    "pass_rate": "0/21"
+  }
+}

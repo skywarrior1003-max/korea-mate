@@ -1,0 +1,183 @@
+{
+  "city": "gyeongju",
+  "gate": "E",
+  "gate_description": "Image URL HTTP reachability verification",
+  "as_of": "2026-09-12",
+  "total_service_stops": 24,
+  "stops": [
+    {
+      "canonical_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0033",
+      "name_ko": "대릉원",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0056",
+      "name_ko": "월성 발굴현장",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길 루프탑 카페",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0033",
+      "name_ko": "대릉원",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0001",
+      "name_ko": "계림",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0054",
+      "name_ko": "오릉",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0049",
+      "name_ko": "나정",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0062",
+      "name_ko": "포석정지",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-KTO12-128634",
+      "name_ko": "배동석조여래삼존입상",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0127",
+      "name_ko": "삼릉",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0022",
+      "name_ko": "분황사",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0099",
+      "name_ko": "보문관광단지",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "image_url": "",
+      "gate_e_status": "BLOCKED_NO_URL",
+      "note": "VG_URLS_NOT_ACCESSIBLE_VIA_WEBFETCH_GYEONGJU_GO_KR_500"
+    }
+  ],
+  "summary": {
+    "reachable": 0,
+    "blocked_no_url": 24,
+    "unverified": 0,
+    "pass_rate": "0/24"
+  }
+}

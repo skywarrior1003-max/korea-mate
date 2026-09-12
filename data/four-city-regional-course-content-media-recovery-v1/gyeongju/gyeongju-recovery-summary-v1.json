@@ -1,0 +1,39 @@
+{
+  "city": "gyeongju",
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-CONTENT-MEDIA-RECOVERY-V1",
+  "as_of": "2026-09-12",
+  "stop_counts": {
+    "total_occurrences": 31,
+    "service_relevant": 24,
+    "context_only": 7
+  },
+  "recovery_status_counts": {
+    "EXISTING_RECOVERED": 24,
+    "COURSE_CONTEXT_READY": 7
+  },
+  "pass_count": 31,
+  "fail_count": 0,
+  "pass_rate": "31/31",
+  "prior_actions_resolved": {
+    "BLOCKED": 116
+  },
+  "content_recovery": {
+    "desc_ko_recovered": 0,
+    "image_url_present": 0,
+    "image_rights_confirmed": 24,
+    "en_title_recovered": 20,
+    "ja_recovered": 0,
+    "zh_recovered": 0,
+    "coord_present": 7
+  },
+  "blocks_summary": [
+    "description_ko: ALL BLOCKED - VG site inaccessible (visitgyeongju.or.kr not attraction-facing). gyeongju.go.kr returns HTTP 500.",
+    "image_url: ALL BLOCKED - VG image URLs not in any data file. image_rights=VG_OFFICIAL_PUBLIC confirmed for 14/15 stops.",
+    "JA/ZH: ALL BLOCKED - KTO_403 access error in multilingual phase."
+  ],
+  "gate_e_summary": {
+    "image_url_present": 0,
+    "image_rights_confirmed": 24,
+    "gate_e_verified": 0
+  }
+}

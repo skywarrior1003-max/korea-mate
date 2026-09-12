@@ -1,0 +1,204 @@
+{
+  "city": "gyeongju",
+  "gate": "D_coord",
+  "as_of": "2026-09-12",
+  "stops": [
+    {
+      "canonical_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "has_coord": true,
+      "lat": 35.835632661,
+      "lng": 129.2153813923,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "has_coord": true,
+      "lat": 35.8344078599,
+      "lng": 129.2185894795,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0033",
+      "name_ko": "대릉원",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0056",
+      "name_ko": "월성 발굴현장",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길 루프탑 카페",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0033",
+      "name_ko": "대릉원",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "has_coord": true,
+      "lat": 35.8344078599,
+      "lng": 129.2185894795,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0001",
+      "name_ko": "계림",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "has_coord": true,
+      "lat": 35.835632661,
+      "lng": 129.2153813923,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0014",
+      "name_ko": "월정교",
+      "has_coord": true,
+      "lat": 35.835632661,
+      "lng": 129.2153813923,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0054",
+      "name_ko": "오릉",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0049",
+      "name_ko": "나정",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0062",
+      "name_ko": "포석정지",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-KTO12-128634",
+      "name_ko": "배동석조여래삼존입상",
+      "has_coord": true,
+      "lat": 35.7974424048,
+      "lng": 129.2089274882,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0127",
+      "name_ko": "삼릉",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "has_coord": true,
+      "lat": 35.8344078599,
+      "lng": 129.2185894795,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0022",
+      "name_ko": "분황사",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0099",
+      "name_ko": "보문관광단지",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    },
+    {
+      "canonical_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "has_coord": false,
+      "lat": null,
+      "lng": null,
+      "coord_note": ""
+    }
+  ],
+  "summary": {
+    "coord_present": 7,
+    "coord_missing": 17,
+    "total": 24
+  }
+}
