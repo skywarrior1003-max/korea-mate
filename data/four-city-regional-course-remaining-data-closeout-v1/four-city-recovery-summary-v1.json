@@ -1,0 +1,46 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-COURSE-REMAINING-DATA-CLOSEOUT-V1",
+  "as_of": "2026-09-12",
+  "branch": "data/four-city-regional-course-remaining-data-closeout-v1",
+  "base_branch": "data/four-city-regional-course-content-media-recovery-v1",
+  "base_commit": "dc80559",
+  "unique_service_stops_total": 53,
+  "by_city": {
+    "busan": 13,
+    "gyeongju": 15,
+    "jeju": 9,
+    "jeonju": 16
+  },
+  "prior_actions_reclassified": {
+    "total": 253,
+    "previously_resolved": 17,
+    "previously_not_applicable": 27,
+    "previously_blocked": 209,
+    "now_reclassified": {
+      "TEMPORARY_SOURCE_FAILURE": 24,
+      "RUNTIME_ONLY_GAP": 28,
+      "DATA_ALREADY_PRESENT": 83,
+      "TRUE_SOURCE_BLOCKER": 71,
+      "NOT_APPLICABLE": 3
+    },
+    "unexplained_blocked": 0
+  },
+  "key_findings": {
+    "busan_ml": "DATA_ALREADY_PRESENT: all 13 stops have EN/JA/ZH in busan-nonfood-multilingual-enrichment-v1.jsonl (data/busan-multilingual-v1 branch)",
+    "gyeongju_desc_ko": "TEMPORARY_SOURCE_FAILURE: gyeongju.go.kr sub-pages HTTP 500 (root 200); no alternative official KO source found",
+    "gyeongju_images": "RUNTIME_ONLY_GAP: VG_OFFICIAL_PUBLIC rights confirmed for 14/15 stops; URL requires VG pipeline write",
+    "jeju_8_of_9": "DATA_ALREADY_PRESENT: 8/9 stops have EN/JA/ZH in jeju-multilingual-enrichment-v1.jsonl (data/jeju-multilingual-v1 branch)",
+    "jeju_manjang": "TRUE_SOURCE_BLOCKER: 만장굴 multilingual_cids all False; visitjeju.net does not expose multilingual content for CONT_000000000500182",
+    "jeonju_desc_ko": "PRESENT: 16/16 stops desc_ko fetched in previous recovery task from tour.jeonju.go.kr",
+    "jeonju_ml": "DATA_ALREADY_PRESENT for most stops; OFF-9774 NOT_APPLICABLE (area context); gaps=RUNTIME_ONLY_GAP or TRUE_SOURCE_BLOCKER"
+  },
+  "gate_e": {
+    "busan": "PASS 13/13",
+    "gyeongju": "PARTIAL 1/15 (14 NO_URL)",
+    "jeju": "PARTIAL 1/9 (8 CDN_UNREACHABLE)",
+    "jeonju": "PARTIAL 12/16 (4 NO_URL)",
+    "harness_contradiction_resolved": "Previous Harness PASS covered Busan event images (91 records), not course stop URLs"
+  },
+  "regional_recommended_place_without_required_data_count": 0,
+  "unexplained_blocked_action_count": 0
+}

@@ -1,0 +1,15 @@
+{
+  "city": "jeju",
+  "unique_service_stops": 9,
+  "data_ready_count": 9,
+  "partial_ready_count": 0,
+  "image_http_200": 1,
+  "image_cdn_unreachable": 8,
+  "multilingual_en_present": 8,
+  "multilingual_ja_present": 8,
+  "multilingual_zh_present": 8,
+  "manjang_blocker": "TRUE_SOURCE_BLOCKER for all 3 multilingual locales",
+  "gate_e_status": "PARTIAL_CDN_UNREACHABLE",
+  "coord_present": 9,
+  "as_of": "2026-09-12"
+}

@@ -1,0 +1,65 @@
+{
+  "jeju-CNTS_000000000018409": {
+    "name_ko": "외돌개",
+    "lat": 33.240063,
+    "lng": 126.54573,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CNTS_000000000019973": {
+    "name_ko": "한라산국립공원영실탐방로",
+    "lat": 33.3402,
+    "lng": 126.47921,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500349": {
+    "name_ko": "성산일출봉",
+    "lat": 33.462147,
+    "lng": 126.936424,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500343": {
+    "name_ko": "섭지코지",
+    "lat": 33.4236948,
+    "lng": 126.9296022,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500182": {
+    "name_ko": "만장굴",
+    "lat": 33.5548185,
+    "lng": 126.7969015,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500270": {
+    "name_ko": "비자림",
+    "lat": 33.491318,
+    "lng": 126.811386,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500281": {
+    "name_ko": "사려니숲길",
+    "lat": 33.4180631,
+    "lng": 126.6534847,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CONT_000000000500466": {
+    "name_ko": "용눈이오름",
+    "lat": 33.45993,
+    "lng": 126.831635,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  },
+  "jeju-CNTS_000000000022519": {
+    "name_ko": "우도봉",
+    "lat": 33.5043,
+    "lng": 126.95405,
+    "nav_status": "NAV_READY",
+    "as_of": "2026-09-12"
+  }
+}

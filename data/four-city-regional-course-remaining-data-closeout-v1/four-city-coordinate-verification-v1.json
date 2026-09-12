@@ -1,0 +1,447 @@
+{
+  "busan": {
+    "busan-A-00202": {
+      "name_ko": "범어사",
+      "coord_valid": true,
+      "lat": 35.278435,
+      "lng": 129.0744,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00007": {
+      "name_ko": "해동용궁사",
+      "coord_valid": true,
+      "lat": 35.188583,
+      "lng": 129.22346,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00070": {
+      "name_ko": "해운대해수욕장",
+      "coord_valid": true,
+      "lat": 35.158474,
+      "lng": 129.15987,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00022": {
+      "name_ko": "오륙도스카이워크",
+      "coord_valid": true,
+      "lat": 35.102177,
+      "lng": 129.12334,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00004": {
+      "name_ko": "태종대",
+      "coord_valid": true,
+      "lat": 35.052643,
+      "lng": 129.0878,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00191": {
+      "name_ko": "영도대교",
+      "coord_valid": true,
+      "lat": 35.08908,
+      "lng": 129.05594,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00065": {
+      "name_ko": "용두산공원",
+      "coord_valid": true,
+      "lat": 35.100723,
+      "lng": 129.03264,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00212": {
+      "name_ko": "감천문화마을",
+      "coord_valid": true,
+      "lat": 35.09775,
+      "lng": 129.00851,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00027": {
+      "name_ko": "송도해수욕장·케이블카",
+      "coord_valid": true,
+      "lat": 35.07595,
+      "lng": 129.01694,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00177": {
+      "name_ko": "다대포해수욕장",
+      "coord_valid": true,
+      "lat": 35.046967,
+      "lng": 128.96936,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00001": {
+      "name_ko": "흰여울문화마을",
+      "coord_valid": true,
+      "lat": 35.07885,
+      "lng": 129.04402,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00204": {
+      "name_ko": "부평깡통시장",
+      "coord_valid": true,
+      "lat": 35.097282,
+      "lng": 129.02728,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00185": {
+      "name_ko": "광안리해수욕장·광안대교",
+      "coord_valid": true,
+      "lat": 35.148014,
+      "lng": 129.11356,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    }
+  },
+  "gyeongju": {
+    "gyeongju-GJ01-0009": {
+      "name_ko": "국립경주박물관",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0014": {
+      "name_ko": "대릉원",
+      "coord_status": "PRESENT",
+      "lat": 35.835632661,
+      "lng": 129.2153813923,
+      "nav_status": "NAV_READY",
+      "blocker_note": null,
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0036": {
+      "name_ko": "첨성대",
+      "coord_status": "PRESENT",
+      "lat": 35.8344078599,
+      "lng": 129.2185894795,
+      "nav_status": "NAV_READY",
+      "blocker_note": null,
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0033": {
+      "name_ko": "월정교",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0017": {
+      "name_ko": "동궁과 월지",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0056": {
+      "name_ko": "오릉",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0042": {
+      "name_ko": "황리단길",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0001": {
+      "name_ko": "경주 계림",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0054": {
+      "name_ko": "삼릉",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0049": {
+      "name_ko": "나정",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0062": {
+      "name_ko": "포석정",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-KTO12-128634": {
+      "name_ko": "경주 배동 삼릉",
+      "coord_status": "PRESENT",
+      "lat": 35.7974424048,
+      "lng": 129.2089274882,
+      "nav_status": "NAV_READY",
+      "blocker_note": null,
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0127": {
+      "name_ko": "석굴암",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0022": {
+      "name_ko": "분황사",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0099": {
+      "name_ko": "보문 물레방아 광장",
+      "coord_status": "TRUE_SOURCE_BLOCKER",
+      "lat": null,
+      "lng": null,
+      "nav_status": "NAV_GAP",
+      "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+      "as_of": "2026-09-12"
+    }
+  },
+  "jeju": {
+    "jeju-CNTS_000000000018409": {
+      "name_ko": "외돌개",
+      "lat": 33.240063,
+      "lng": 126.54573,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CNTS_000000000019973": {
+      "name_ko": "한라산국립공원영실탐방로",
+      "lat": 33.3402,
+      "lng": 126.47921,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500349": {
+      "name_ko": "성산일출봉",
+      "lat": 33.462147,
+      "lng": 126.936424,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500343": {
+      "name_ko": "섭지코지",
+      "lat": 33.4236948,
+      "lng": 126.9296022,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500182": {
+      "name_ko": "만장굴",
+      "lat": 33.5548185,
+      "lng": 126.7969015,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500270": {
+      "name_ko": "비자림",
+      "lat": 33.491318,
+      "lng": 126.811386,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500281": {
+      "name_ko": "사려니숲길",
+      "lat": 33.4180631,
+      "lng": 126.6534847,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500466": {
+      "name_ko": "용눈이오름",
+      "lat": 33.45993,
+      "lng": 126.831635,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CNTS_000000000022519": {
+      "name_ko": "우도봉",
+      "lat": 33.5043,
+      "lng": 126.95405,
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    }
+  },
+  "jeonju": {
+    "OFF-10115": {
+      "name_ko": "경기전",
+      "has_coord": true,
+      "lat": "35.8155190040042",
+      "lng": "127.150120200252",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9752": {
+      "name_ko": "전동성당",
+      "has_coord": true,
+      "lat": "35.8135729565669",
+      "lng": "127.148924842748",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9746": {
+      "name_ko": "풍남문",
+      "has_coord": true,
+      "lat": "35.8135083736315",
+      "lng": "127.147579004786",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16109": {
+      "name_ko": "전주한옥마을",
+      "has_coord": true,
+      "lat": "35.8141267914806",
+      "lng": "127.148989390149",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16086": {
+      "name_ko": "청연루·남천교",
+      "has_coord": true,
+      "lat": "35.8093637744893",
+      "lng": "127.153103737401",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9774": {
+      "name_ko": "전주천",
+      "has_coord": true,
+      "lat": "35.8235426246417",
+      "lng": "127.131608613341",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9741": {
+      "name_ko": "한벽당",
+      "has_coord": true,
+      "lat": "35.8118873194206",
+      "lng": "127.160824334509",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9742": {
+      "name_ko": "오목대·이목대",
+      "has_coord": true,
+      "lat": "35.8144023799226",
+      "lng": "127.154570677765",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16087": {
+      "name_ko": "조경단",
+      "has_coord": true,
+      "lat": "35.8533365342008",
+      "lng": "127.13601085137",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16084": {
+      "name_ko": "남부시장·청년몰",
+      "has_coord": true,
+      "lat": "35.8127859743493",
+      "lng": "127.147537060132",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9796": {
+      "name_ko": "전주전통술박물관",
+      "has_coord": true,
+      "lat": "35.8168503561188",
+      "lng": "127.153466669733",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9780": {
+      "name_ko": "전주한지박물관",
+      "has_coord": true,
+      "lat": "35.8451292757724",
+      "lng": "127.096704591247",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16085": {
+      "name_ko": "남부시장 한옥마을 야시장",
+      "has_coord": true,
+      "lat": "35.8127859743493",
+      "lng": "127.147537060132",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9772": {
+      "name_ko": "덕진공원",
+      "has_coord": true,
+      "lat": "35.8474947551604",
+      "lng": "127.121031157474",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9751": {
+      "name_ko": "전주향교",
+      "has_coord": true,
+      "lat": "35.8121775980175",
+      "lng": "127.157226663648",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    },
+    "OFF-13964": {
+      "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+      "has_coord": true,
+      "lat": "35.8089973514691",
+      "lng": "127.145904926726",
+      "nav_status": "NAV_READY",
+      "as_of": "2026-09-12"
+    }
+  },
+  "summary": {
+    "busan_nav_ready": 13,
+    "gyeongju_nav_ready": 3,
+    "jeju_nav_ready": 9,
+    "jeonju_nav_ready": 16
+  },
+  "as_of": "2026-09-12"
+}

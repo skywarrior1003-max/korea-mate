@@ -1,0 +1,114 @@
+{
+  "OFF-10115": {
+    "name_ko": "경기전",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/11/3537111_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9752": {
+    "name_ko": "전동성당",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/39/3589839_image2_1.png",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9746": {
+    "name_ko": "풍남문",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-16109": {
+    "name_ko": "전주한옥마을",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/39/3589839_image2_1.png",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-16086": {
+    "name_ko": "청연루·남천교",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/34/3066534_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9774": {
+    "name_ko": "전주천",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9741": {
+    "name_ko": "한벽당",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/88/2945288_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9742": {
+    "name_ko": "오목대·이목대",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/46/3533046_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-16087": {
+    "name_ko": "조경단",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "as_of": "2026-09-12"
+  },
+  "OFF-16084": {
+    "name_ko": "남부시장·청년몰",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9796": {
+    "name_ko": "전주전통술박물관",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/89/3065489_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9780": {
+    "name_ko": "전주한지박물관",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "as_of": "2026-09-12"
+  },
+  "OFF-16085": {
+    "name_ko": "남부시장 한옥마을 야시장",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9772": {
+    "name_ko": "덕진공원",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "as_of": "2026-09-12"
+  },
+  "OFF-9751": {
+    "name_ko": "전주향교",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/36/3537036_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  },
+  "OFF-13964": {
+    "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/10/3562110_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "as_of": "2026-09-12"
+  }
+}

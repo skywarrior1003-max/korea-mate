@@ -1,0 +1,152 @@
+{
+  "gyeongju-GJ01-0009": {
+    "name_ko": "국립경주박물관",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0014": {
+    "name_ko": "대릉원",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0036": {
+    "name_ko": "첨성대",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0033": {
+    "name_ko": "월정교",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0017": {
+    "name_ko": "동궁과 월지",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0056": {
+    "name_ko": "오릉",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0042": {
+    "name_ko": "황리단길",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0001": {
+    "name_ko": "경주 계림",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0054": {
+    "name_ko": "삼릉",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0049": {
+    "name_ko": "나정",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0062": {
+    "name_ko": "포석정",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-KTO12-128634": {
+    "name_ko": "경주 배동 삼릉",
+    "image_url": "http://tong.visitkorea.or.kr/cms/resource/96/3575896_image2_1.jpg",
+    "http_status": 200,
+    "gate_e_result": "HTTP_200",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "Type1",
+    "image_gap_class": "PRESENT",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0127": {
+    "name_ko": "석굴암",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0022": {
+    "name_ko": "분황사",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0099": {
+    "name_ko": "보문 물레방아 광장",
+    "image_url": "",
+    "http_status": null,
+    "gate_e_result": "NO_URL",
+    "vg_image_confirmed": true,
+    "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+    "image_gap_class": "RUNTIME_ONLY_GAP",
+    "as_of": "2026-09-12"
+  }
+}

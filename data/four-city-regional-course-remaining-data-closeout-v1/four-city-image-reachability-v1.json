@@ -1,0 +1,446 @@
+{
+  "busan": {
+    "busan-A-00202": {
+      "name_ko": "범어사",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250317141712864_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00007": {
+      "name_ko": "해동용궁사",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222190823385_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00070": {
+      "name_ko": "해운대해수욕장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153530528_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00022": {
+      "name_ko": "오륙도스카이워크",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191225164921130_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00004": {
+      "name_ko": "태종대",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222180829962_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00191": {
+      "name_ko": "영도대교",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241219102705213_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00065": {
+      "name_ko": "용두산공원",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191229145728609_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00212": {
+      "name_ko": "감천문화마을",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20260311171309981_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00027": {
+      "name_ko": "송도해수욕장·케이블카",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191225175459392_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00177": {
+      "name_ko": "다대포해수욕장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241031180127634_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00001": {
+      "name_ko": "흰여울문화마을",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20191222164810529_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00204": {
+      "name_ko": "부평깡통시장",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250728122343276_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "busan-A-00185": {
+      "name_ko": "광안리해수욕장·광안대교",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20241126144851008_ttiel",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    }
+  },
+  "gyeongju": {
+    "gyeongju-GJ01-0009": {
+      "name_ko": "국립경주박물관",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0014": {
+      "name_ko": "대릉원",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0036": {
+      "name_ko": "첨성대",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0033": {
+      "name_ko": "월정교",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0017": {
+      "name_ko": "동궁과 월지",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0056": {
+      "name_ko": "오릉",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0042": {
+      "name_ko": "황리단길",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0001": {
+      "name_ko": "경주 계림",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0054": {
+      "name_ko": "삼릉",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0049": {
+      "name_ko": "나정",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0062": {
+      "name_ko": "포석정",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-KTO12-128634": {
+      "name_ko": "경주 배동 삼릉",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/96/3575896_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "Type1",
+      "image_gap_class": "PRESENT",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0127": {
+      "name_ko": "석굴암",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0022": {
+      "name_ko": "분황사",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    },
+    "gyeongju-GJ01-0099": {
+      "name_ko": "보문 물레방아 광장",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "vg_image_confirmed": true,
+      "vg_image_rights": "VG_OFFICIAL_PUBLIC",
+      "image_gap_class": "RUNTIME_ONLY_GAP",
+      "as_of": "2026-09-12"
+    }
+  },
+  "jeju": {
+    "jeju-CNTS_000000000018409": {
+      "name_ko": "외돌개",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202110/26/a434d9b2-a595-485f-89d6-1423bd989912.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CNTS_000000000019973": {
+      "name_ko": "한라산국립공원영실탐방로",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202110/26/616ce943-7b6c-45c9-afdd-3958fda0530d.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500349": {
+      "name_ko": "성산일출봉",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500343": {
+      "name_ko": "섭지코지",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/6efa0dd8-7e17-47b9-8265-caf514b7ccef.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500182": {
+      "name_ko": "만장굴",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202608/12/71968712-4e81-415a-bc16-703f03a8937b.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500270": {
+      "name_ko": "비자림",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/908a37e8-918e-46a8-bc2e-e7569eba8a8d.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500281": {
+      "name_ko": "사려니숲길",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CONT_000000000500466": {
+      "name_ko": "용눈이오름",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/22/5c9c469a-8832-4ca2-b866-d95889652311.webp",
+      "http_status": 0,
+      "gate_e_result": "CDN_UNREACHABLE",
+      "cdn_note": "api.cdn.visitjeju.net CDN returns connection error in automated testing; likely anti-bot protection",
+      "as_of": "2026-09-12"
+    },
+    "jeju-CNTS_000000000022519": {
+      "name_ko": "우도봉",
+      "image_url": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ab689af2-5482-4aed-8741-2f17349c8296.webp",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "cdn_note": null,
+      "as_of": "2026-09-12"
+    }
+  },
+  "jeonju": {
+    "OFF-10115": {
+      "name_ko": "경기전",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/11/3537111_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9752": {
+      "name_ko": "전동성당",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/39/3589839_image2_1.png",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9746": {
+      "name_ko": "풍남문",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16109": {
+      "name_ko": "전주한옥마을",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/39/3589839_image2_1.png",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16086": {
+      "name_ko": "청연루·남천교",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/34/3066534_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9774": {
+      "name_ko": "전주천",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9741": {
+      "name_ko": "한벽당",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/88/2945288_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9742": {
+      "name_ko": "오목대·이목대",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/46/3533046_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16087": {
+      "name_ko": "조경단",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16084": {
+      "name_ko": "남부시장·청년몰",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9796": {
+      "name_ko": "전주전통술박물관",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/89/3065489_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9780": {
+      "name_ko": "전주한지박물관",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "as_of": "2026-09-12"
+    },
+    "OFF-16085": {
+      "name_ko": "남부시장 한옥마을 야시장",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9772": {
+      "name_ko": "덕진공원",
+      "image_url": "",
+      "http_status": null,
+      "gate_e_result": "NO_URL",
+      "as_of": "2026-09-12"
+    },
+    "OFF-9751": {
+      "name_ko": "전주향교",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/36/3537036_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    },
+    "OFF-13964": {
+      "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/10/3562110_image2_1.jpg",
+      "http_status": 200,
+      "gate_e_result": "HTTP_200",
+      "as_of": "2026-09-12"
+    }
+  },
+  "gate_e_summary": {
+    "busan_http_200": 13,
+    "gyeongju_http_200": 1,
+    "gyeongju_no_url": 14,
+    "jeju_http_200": 1,
+    "jeju_cdn_unreachable": 8,
+    "jeonju_http_200": 12,
+    "jeonju_no_url": 4,
+    "harness_contradiction_note": "Previous recovery task Harness 8/8 PASS referred to Busan event images (91 records) from busan-nonfood-canonical, NOT course stop image URLs. Gate E for course stop images is UNVERIFIED in the previous artifact and is now first verified here. Busan: PASS_ALL. Gyeongju/Jeonju: PARTIAL. Jeju: CDN_UNREACHABLE."
+  },
+  "as_of": "2026-09-12"
+}

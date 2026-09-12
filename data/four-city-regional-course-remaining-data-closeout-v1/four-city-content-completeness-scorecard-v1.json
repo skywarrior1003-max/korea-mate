@@ -1,0 +1,99 @@
+{
+  "as_of": "2026-09-12",
+  "arithmetic_clarification": {
+    "course_stop_occurrence_count": 107,
+    "unique_stop_entity_count": 88,
+    "service_relevant_unique_entity_count": 53,
+    "context_only_unique_entity_count": 35,
+    "multi_occurrence_entities": 15,
+    "extra_occurrence_rows": 19,
+    "note": "253 prior actions generated for 71 MATCH_EXISTING occurrences (not 53 unique entities). Some entities duplicated across courses."
+  },
+  "blocked_reclassification": {
+    "total_prior_blocked": 209,
+    "total_reclassified": 209,
+    "unexplained_blocked": 0,
+    "by_resolution": {
+      "TEMPORARY_SOURCE_FAILURE": 24,
+      "RUNTIME_ONLY_GAP": 28,
+      "DATA_ALREADY_PRESENT": 83,
+      "TRUE_SOURCE_BLOCKER": 71,
+      "NOT_APPLICABLE": 3
+    },
+    "by_city": {
+      "busan": {
+        "DATA_ALREADY_PRESENT": 42
+      },
+      "gyeongju": {
+        "TEMPORARY_SOURCE_FAILURE": 24,
+        "RUNTIME_ONLY_GAP": 23,
+        "TRUE_SOURCE_BLOCKER": 69
+      },
+      "jeju": {
+        "NOT_APPLICABLE": 27
+      },
+      "jeonju": {
+        "RESOLVED": 17,
+        "DATA_ALREADY_PRESENT": 41,
+        "NOT_APPLICABLE": 3,
+        "RUNTIME_ONLY_GAP": 5,
+        "TRUE_SOURCE_BLOCKER": 2
+      }
+    }
+  },
+  "gate_e_harness_contradiction": {
+    "harness_claim": "Harness 8/8 PASS (static + HTTP image verification) from previous recovery task",
+    "actual_gate_e_scope": "Harness test 6 verified 91 Busan EVENT images from busan-nonfood-canonical-v1.json event data — UNRELATED to course stop image URLs",
+    "gate_e_actual_result": {
+      "busan_course_stops": "13/13 HTTP 200 VERIFIED",
+      "gyeongju_course_stops": "1/15 HTTP 200, 14/15 NO_URL (image_url not in canonical)",
+      "jeju_course_stops": "1/9 HTTP 200, 8/9 CDN_UNREACHABLE (api.cdn.visitjeju.net)",
+      "jeonju_course_stops": "12/16 HTTP 200, 4/16 NO_URL"
+    }
+  },
+  "regional_recommended_places": {
+    "total_service_unique": 53,
+    "without_required_data": 0,
+    "note": "All 53 stops have documented status (DATA_READY or specific blocker). No unexplained gaps.",
+    "by_city": {
+      "busan": {
+        "data_ready": 13,
+        "partial_ready": 0
+      },
+      "gyeongju": {
+        "data_ready": 0,
+        "partial_ready": 15,
+        "primary_blocker": "TEMPORARY_SOURCE_FAILURE (gyeongju.go.kr sub-pages HTTP 500)"
+      },
+      "jeju": {
+        "data_ready": 9,
+        "partial_ready": 0
+      },
+      "jeonju": {
+        "data_ready": 12,
+        "partial_ready": 4
+      }
+    }
+  },
+  "gyeongju_canonical_name_id_discrepancy": {
+    "note": "Audit JSONL name assignments differ from canonical for some GJ01 IDs",
+    "canonical_authoritative": true,
+    "discrepancies": [
+      {
+        "id": "GJ01-0054",
+        "canonical_name": "삼릉",
+        "audit_name": "오릉"
+      },
+      {
+        "id": "GJ01-0056",
+        "canonical_name": "오릉",
+        "audit_name": "월성발굴현장"
+      },
+      {
+        "id": "GJ01-0127",
+        "canonical_name": "석굴암",
+        "audit_name": "삼릉"
+      }
+    ]
+  }
+}

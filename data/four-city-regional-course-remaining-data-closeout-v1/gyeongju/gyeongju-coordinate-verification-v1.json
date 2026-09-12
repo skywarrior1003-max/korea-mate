@@ -1,0 +1,137 @@
+{
+  "gyeongju-GJ01-0009": {
+    "name_ko": "국립경주박물관",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0014": {
+    "name_ko": "대릉원",
+    "coord_status": "PRESENT",
+    "lat": 35.835632661,
+    "lng": 129.2153813923,
+    "nav_status": "NAV_READY",
+    "blocker_note": null,
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0036": {
+    "name_ko": "첨성대",
+    "coord_status": "PRESENT",
+    "lat": 35.8344078599,
+    "lng": 129.2185894795,
+    "nav_status": "NAV_READY",
+    "blocker_note": null,
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0033": {
+    "name_ko": "월정교",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0017": {
+    "name_ko": "동궁과 월지",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0056": {
+    "name_ko": "오릉",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0042": {
+    "name_ko": "황리단길",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0001": {
+    "name_ko": "경주 계림",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0054": {
+    "name_ko": "삼릉",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0049": {
+    "name_ko": "나정",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0062": {
+    "name_ko": "포석정",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-KTO12-128634": {
+    "name_ko": "경주 배동 삼릉",
+    "coord_status": "PRESENT",
+    "lat": 35.7974424048,
+    "lng": 129.2089274882,
+    "nav_status": "NAV_READY",
+    "blocker_note": null,
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0127": {
+    "name_ko": "석굴암",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0022": {
+    "name_ko": "분황사",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  },
+  "gyeongju-GJ01-0099": {
+    "name_ko": "보문 물레방아 광장",
+    "coord_status": "TRUE_SOURCE_BLOCKER",
+    "lat": null,
+    "lng": null,
+    "nav_status": "NAV_GAP",
+    "blocker_note": "No coord in GJ01-series canonical. VG source lacks coord fields. KTO coord not mapped.",
+    "as_of": "2026-09-12"
+  }
+}

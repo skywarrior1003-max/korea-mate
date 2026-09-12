@@ -1,0 +1,48 @@
+{"canonical_id": "OFF-10115", "name_ko": "경기전", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Gyeonggijeon Shrine", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-10115", "name_ko": "경기전", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "慶基殿", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-10115", "name_ko": "경기전", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "庆基殿", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9752", "name_ko": "전동성당", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeondong Catholic Cathedral", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9752", "name_ko": "전동성당", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "殿洞カトリック教会", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9752", "name_ko": "전동성당", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "殿洞聖堂", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9746", "name_ko": "풍남문", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Pungnammun Gate", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9746", "name_ko": "풍남문", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "豊南門", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9746", "name_ko": "풍남문", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "丰南门", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16109", "name_ko": "전주한옥마을", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeonju Hanok Village", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16109", "name_ko": "전주한옥마을", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "全州韓屋村", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16109", "name_ko": "전주한옥마을", "city": "jeonju", "locale": "zh-CN", "status": "RUNTIME_ONLY_GAP", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16086", "name_ko": "청연루·남천교", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Cheongyeonru & Namcheongyo", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16086", "name_ko": "청연루·남천교", "city": "jeonju", "locale": "ja", "status": "RUNTIME_ONLY_GAP", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16086", "name_ko": "청연루·남천교", "city": "jeonju", "locale": "zh-CN", "status": "RUNTIME_ONLY_GAP", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9774", "name_ko": "전주천", "city": "jeonju", "locale": "en", "status": "NOT_APPLICABLE", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9774", "name_ko": "전주천", "city": "jeonju", "locale": "ja", "status": "NOT_APPLICABLE", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9774", "name_ko": "전주천", "city": "jeonju", "locale": "zh-CN", "status": "NOT_APPLICABLE", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9741", "name_ko": "한벽당", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Hanbyeokdang Pavilion", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9741", "name_ko": "한벽당", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "寒碧堂", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9741", "name_ko": "한벽당", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "寒碧堂", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9742", "name_ko": "오목대·이목대", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeonjucheon Stream", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9742", "name_ko": "오목대·이목대", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "梧木台と梨木台", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9742", "name_ko": "오목대·이목대", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "全州川", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16087", "name_ko": "조경단", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jogyeongdan Shrine", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16087", "name_ko": "조경단", "city": "jeonju", "locale": "ja", "status": "TRUE_SOURCE_BLOCKER", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16087", "name_ko": "조경단", "city": "jeonju", "locale": "zh-CN", "status": "TRUE_SOURCE_BLOCKER", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16084", "name_ko": "남부시장·청년몰", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Nambu Market & Youth Mall", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16084", "name_ko": "남부시장·청년몰", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "南部市場・青年モール", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16084", "name_ko": "남부시장·청년몰", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "南部市场·青年商城", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9796", "name_ko": "전주전통술박물관", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeonju Traditional Liquor Museum", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9796", "name_ko": "전주전통술박물관", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "全州伝統酒博物館", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9796", "name_ko": "전주전통술박물관", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "全州传统酒博物馆", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9780", "name_ko": "전주한지박물관", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeonju Hanji Museum", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9780", "name_ko": "전주한지박물관", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "全州韓紙博物館", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9780", "name_ko": "전주한지박물관", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "全州韩纸博物馆", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16085", "name_ko": "남부시장 한옥마을 야시장", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Nambu Market Hanok Village Night Market", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16085", "name_ko": "남부시장 한옥마을 야시장", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "南部市場 韓屋村 夜市", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-16085", "name_ko": "남부시장 한옥마을 야시장", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "南部市场·韩屋村夜市", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9772", "name_ko": "덕진공원", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Deokjin Park", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9772", "name_ko": "덕진공원", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "徳津公園（トクチンコンウォン）", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9772", "name_ko": "덕진공원", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "德津公园", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9751", "name_ko": "전주향교", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Jeonjuhyanggyo Local Confucian School", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9751", "name_ko": "전주향교", "city": "jeonju", "locale": "ja", "status": "DATA_ALREADY_PRESENT", "title": "全州郷校", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-9751", "name_ko": "전주향교", "city": "jeonju", "locale": "zh-CN", "status": "DATA_ALREADY_PRESENT", "title": "全州乡校", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-13964", "name_ko": "완산꽃동산(완산칠봉꽃동산)", "city": "jeonju", "locale": "en", "status": "DATA_ALREADY_PRESENT", "title": "Wansanchilbong Peak (Wansan Park)", "branch": "data/jeonju-multilingual-v1", "as_of": "2026-09-12"}
+{"canonical_id": "OFF-13964", "name_ko": "완산꽃동산(완산칠봉꽃동산)", "city": "jeonju", "locale": "ja", "status": "RUNTIME_ONLY_GAP", "title": "", "branch": null, "as_of": "2026-09-12"}
+{"canonical_id": "OFF-13964", "name_ko": "완산꽃동산(완산칠봉꽃동산)", "city": "jeonju", "locale": "zh-CN", "status": "RUNTIME_ONLY_GAP", "title": "", "branch": null, "as_of": "2026-09-12"}

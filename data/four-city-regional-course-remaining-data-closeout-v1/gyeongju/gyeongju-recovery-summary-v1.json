@@ -1,0 +1,15 @@
+{
+  "city": "gyeongju",
+  "unique_service_stops": 15,
+  "data_ready_count": 0,
+  "partial_ready_count": 15,
+  "desc_ko_status": "TEMPORARY_SOURCE_FAILURE_ALL_15",
+  "image_status": "RUNTIME_ONLY_GAP_14_VG_CONFIRMED",
+  "image_http_200": 1,
+  "coord_present": 3,
+  "multilingual_en_present": 6,
+  "multilingual_ja_zh": "TRUE_SOURCE_BLOCKER_ALL",
+  "blocked_actions_reclassified": 116,
+  "gate_e_status": "PARTIAL_1_OF_15",
+  "as_of": "2026-09-12"
+}

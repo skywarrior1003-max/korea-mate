@@ -1,0 +1,13 @@
+{
+  "city": "busan",
+  "unique_service_stops": 13,
+  "data_ready_count": 13,
+  "image_http_200": 13,
+  "multilingual_en_present": 13,
+  "multilingual_ja_present": 13,
+  "multilingual_zh_present": 13,
+  "coord_valid": 13,
+  "blocked_actions_reclassified": 42,
+  "gate_e_status": "PASS_ALL",
+  "as_of": "2026-09-12"
+}

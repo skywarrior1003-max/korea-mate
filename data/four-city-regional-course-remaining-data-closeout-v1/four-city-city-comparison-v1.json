@@ -1,0 +1,53 @@
+{
+  "as_of": "2026-09-12",
+  "cities": {
+    "busan": {
+      "unique_service_stops": 13,
+      "data_ready": 13,
+      "gate_e_pass": 13,
+      "ml_en": 13,
+      "ml_ja": 13,
+      "ml_zh": 13,
+      "desc_ko": 13,
+      "image_url": 13,
+      "coord": 13,
+      "overall_status": "STRONG"
+    },
+    "gyeongju": {
+      "unique_service_stops": 15,
+      "data_ready": 0,
+      "gate_e_pass": 1,
+      "ml_en": 6,
+      "ml_ja": 0,
+      "ml_zh": 0,
+      "desc_ko": 0,
+      "image_url": 1,
+      "coord": 3,
+      "overall_status": "BLOCKED_TEMPORARY_SOURCE_FAILURE"
+    },
+    "jeju": {
+      "unique_service_stops": 9,
+      "data_ready": 9,
+      "gate_e_pass": 1,
+      "ml_en": 8,
+      "ml_ja": 8,
+      "ml_zh": 8,
+      "desc_ko": 9,
+      "image_url": 9,
+      "coord": 9,
+      "overall_status": "STRONG_EXCEPT_MANJANG_ML"
+    },
+    "jeonju": {
+      "unique_service_stops": 16,
+      "data_ready": 12,
+      "gate_e_pass": 12,
+      "ml_en": 15,
+      "ml_ja": 12,
+      "ml_zh": 11,
+      "desc_ko": 16,
+      "image_url": 12,
+      "coord": 16,
+      "overall_status": "GOOD_IMAGE_GAPS_FOR_4"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "city": "jeonju",
+  "unique_service_stops": 16,
+  "data_ready_count": 12,
+  "partial_ready_count": 4,
+  "desc_ko_status": "PRESENT_ALL_16_FROM_PREVIOUS_RECOVERY",
+  "image_http_200": 12,
+  "image_no_url": 4,
+  "coord_present": 16,
+  "multilingual_en_present": 15,
+  "multilingual_ja_present": 12,
+  "multilingual_zh_present": 11,
+  "blocked_actions_reclassified": 51,
+  "gate_e_status": "PARTIAL_12_OF_16",
+  "as_of": "2026-09-12"
+}
