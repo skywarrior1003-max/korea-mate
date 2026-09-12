@@ -1,0 +1,86 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-CANONICAL-MERGE-V1",
+  "merge_date": "2026-09-12",
+  "branch": "data/seoul-core-attraction-canonical-merge-v1",
+  "schema_version": "seoul-canonical-places-v1",
+  "inputs": {
+    "existing_canonical": {
+      "path": "data/seoul-final-release/seoul-canonical-places-v1.jsonl",
+      "rows": 1838,
+      "access": "READ_ONLY"
+    },
+    "candidates": {
+      "path": "data/seoul-core-recovery-night-closeout-v1/seoul-core-recovery-final-merge-candidates-v1.jsonl",
+      "rows": 286
+    },
+    "images": {
+      "path": "data/seoul-core-recovery-night-closeout-v1/seoul-core-recovery-final-image-handoff-v1.jsonl",
+      "rows": 286
+    },
+    "multilingual": {
+      "path": "data/seoul-core-attraction-partial-locale-final-closeout-v1/seoul-core-recovery-final-multilingual-handoff-v3.jsonl",
+      "rows": 286
+    },
+    "core_experience_detail": {
+      "path": "data/seoul-source-audit/seoul-place-core-experience-detail-normalized-v1.jsonl",
+      "rows": 311,
+      "note": "Covers all 311 recovery universe CIDs"
+    }
+  },
+  "outputs": {
+    "A": {
+      "file": "seoul-canonical-places-v2.jsonl",
+      "rows": 2124,
+      "role": "Full Seoul canonical v2 — artifact-level SSOT"
+    },
+    "B": {
+      "file": "seoul-service-active-v2.jsonl",
+      "rows": 2123,
+      "role": "Service-active subset (ACTIVE+AI_CONDITIONAL)"
+    },
+    "C": {
+      "file": "seoul-core-attraction-canonical-merge-source-relation-v1.jsonl",
+      "rows": 286,
+      "role": "Source relation for 286 new records"
+    },
+    "D": {
+      "file": "seoul-core-attraction-canonical-merge-image-handoff-v1.jsonl",
+      "rows": 286,
+      "role": "Image handoff for 286 new records"
+    },
+    "E": {
+      "file": "seoul-core-attraction-canonical-merge-multilingual-handoff-v1.jsonl",
+      "rows": 286,
+      "role": "Multilingual V3 handoff for 286 new records"
+    },
+    "F": {
+      "file": "seoul-core-attraction-canonical-merge-qa-v1.json",
+      "role": "QA report"
+    },
+    "G": {
+      "file": "seoul-core-attraction-canonical-merge-manifest-v1.json",
+      "role": "This manifest"
+    },
+    "H": {
+      "file": "seoul-core-attraction-canonical-merge-main-intake-handoff-v1.md",
+      "role": "Main intake handoff document"
+    }
+  },
+  "recovery_lineage": {
+    "universe": 311,
+    "existing_canonical_exact": 9,
+    "new_merged": 286,
+    "excluded": 16,
+    "arithmetic": "9+286+16=311",
+    "UNACCOUNTED_RECOVERY_RECORDS": 0
+  },
+  "absolute_prohibitions": {
+    "canonical_destructive_overwrite": "FORBIDDEN — new v2 file created, v1 untouched at data/seoul-final-release/",
+    "main_db_write": "FORBIDDEN — artifact-level only",
+    "production_db_write": "FORBIDDEN",
+    "ai_translation": "FORBIDDEN — all locale text from VisitSeoul official web",
+    "image_recollection": "FORBIDDEN — images from existing handoff",
+    "coordinate_recollection": "FORBIDDEN — coords from existing batch2/candidates"
+  },
+  "qa_gate": "PASS"
+}

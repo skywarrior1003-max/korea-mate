@@ -1,0 +1,97 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-CANONICAL-MERGE-V1",
+  "merge_date": "2026-09-12",
+  "overall_qa_gate": "PASS",
+  "input_counts": {
+    "existing_canonical": 1838,
+    "candidates": 286,
+    "images": 286,
+    "multilingual": 286,
+    "core_experience_detail": 311
+  },
+  "join_validation": {
+    "IDENTITY_JOIN_286": "PASS",
+    "IMAGE_JOIN_286": "PASS",
+    "COORD_JOIN_286": "PASS",
+    "MULTILINGUAL_JOIN_286": "PASS"
+  },
+  "duplicate_guard": {
+    "DUPLICATE_GUARD": "PASS",
+    "overlap_cid_count": 0
+  },
+  "qa_results": {
+    "ARITHMETIC": {
+      "total": 2124,
+      "expected_total": 2124,
+      "combined_active": 2092,
+      "combined_ai_conditional": 31,
+      "existing_active": 1837,
+      "service_active_total": 2123,
+      "PASS": true
+    },
+    "REGRESSION_1838": {
+      "checked_rows": 1838,
+      "fail_count": 0,
+      "PASS": true
+    },
+    "DUPLICATE_CANDIDATE_ID": {
+      "count": 0,
+      "PASS": true
+    },
+    "DUPLICATE_SOURCE_CID": {
+      "count": 0,
+      "PASS": true
+    },
+    "VIP_LANDMARK_CHECK": {
+      "total_checked": 18,
+      "found": 18,
+      "missing": 0,
+      "missing_list": [],
+      "found_list": [
+        "KOP000036:남산서울타워",
+        "KOP000072:경복궁",
+        "KOP000085:남대문시장",
+        "KOP000034:청계천",
+        "KOP000217:롯데백화점 본점",
+        "KOP000305:세종문화회관",
+        "?:덕수궁",
+        "?:창덕궁",
+        "~:인사동",
+        "?:북촌한옥마을",
+        "~:동대문디자인플라자",
+        "?:광화문광장",
+        "?:국립중앙박물관",
+        "~:롯데월드",
+        "~:한강공원",
+        "~:서울숲",
+        "~:홍대",
+        "~:이태원"
+      ],
+      "PASS": true
+    },
+    "RECOVERY_LINEAGE": {
+      "universe": 311,
+      "existing_canonical_exact": 9,
+      "new_merged": 286,
+      "excluded": 16,
+      "sum": 311,
+      "UNACCOUNTED_RECOVERY_RECORDS": 0,
+      "PASS": true
+    },
+    "NEW_ROWS_SCHEMA_VERSION": {
+      "fail_count": 0,
+      "PASS": true
+    },
+    "NEW_ROWS_SERVICE_STATUS": {
+      "active": 255,
+      "ai_conditional": 31,
+      "PASS": true
+    },
+    "NEW_ROWS_COORD_PRESENT": {
+      "null_count": 0,
+      "PASS": true
+    }
+  },
+  "service_active_file_rows": 2123,
+  "combined_rows": 2124
+}
