@@ -1,0 +1,85 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-PARTIAL-LOCALE-FINAL-CLOSEOUT-V1",
+  "qa_version": "v3",
+  "qa_date": "2026-09-12",
+  "qa_verdict": "PASS",
+  "total_places": 286,
+  "multilingual_class_distribution": {
+    "COMPLETE_4_LOCALE": 272,
+    "KO_ONLY": 5,
+    "PARTIAL_2_LOCALE": 3,
+    "PARTIAL_1_LOCALE": 6
+  },
+  "content_based_complete": 272,
+  "content_based_partial": 14,
+  "locale_coverage": {
+    "en": {
+      "complete": 277,
+      "total": 286,
+      "pct": 96.9
+    },
+    "ja": {
+      "complete": 275,
+      "total": 286,
+      "pct": 96.2
+    },
+    "zh": {
+      "complete": 276,
+      "total": 286,
+      "pct": 96.5
+    }
+  },
+  "v2_to_v3_delta": {
+    "slots_newly_recovered": 17,
+    "places_newly_complete": 16,
+    "remaining_partial_places": 14,
+    "source_locale_not_available_slots": 27
+  },
+  "vip_regression": {
+    "vip_checks": 5,
+    "vip_pass": 5,
+    "vip_status": "ALL_VIP_PASS",
+    "vip_detail": [
+      {
+        "cid": "KOP002046",
+        "locale": "zh",
+        "name": "덕수궁"
+      },
+      {
+        "cid": "KOP001644",
+        "locale": "en",
+        "name": "국립민속박물관"
+      },
+      {
+        "cid": "KOP000261",
+        "locale": "ja",
+        "name": "북촌한옥마을"
+      },
+      {
+        "cid": "KOP001899",
+        "locale": "zh",
+        "name": "광화문광장"
+      },
+      {
+        "cid": "KOP000090",
+        "locale": "ja",
+        "name": "서울한양도성"
+      }
+    ]
+  },
+  "reconciliation_32_vs_47": {
+    "v2_fetch_status_missing": 32,
+    "v2_content_check_missing": 47,
+    "difference_explanation": "15 slots had fetch_status=OFFICIAL_WEB_RECOVERED but empty content (13 TITLE_ONLY + 2 DESC_ONLY). V2 fetch-status metric counted these as complete.",
+    "v3_content_check_missing": 30,
+    "v3_missing_place_locale_slots": 30
+  },
+  "prohibitions_check": {
+    "no_ai_translation": true,
+    "no_unofficial_content": true,
+    "no_other_locale_copy": true,
+    "no_canonical_merge": true,
+    "no_main_db_write": true,
+    "wrong_language_text_in_runtime_handoff": 0
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "task": "TASK-SEOUL-CORE-ATTRACTION-PARTIAL-LOCALE-FINAL-CLOSEOUT-V1",
+  "manifest_version": "v3",
+  "generated_date": "2026-09-12",
+  "branch": "data/seoul-core-attraction-partial-locale-final-closeout-v1",
+  "base_branch": "data/seoul-core-attraction-official-web-locale-recovery-v1",
+  "base_commit": "2abd4dc",
+  "universe": {
+    "total_places": 286,
+    "complete_4_locale_content_based": 272,
+    "partial_places_remaining": 14,
+    "source_locale_not_available_slots": 27,
+    "newly_recovered_slots_v3": 17
+  },
+  "artifacts": [
+    {
+      "id": "A",
+      "filename": "seoul-core-recovery-final-multilingual-handoff-v3.jsonl",
+      "description": "286-row V3 multilingual handoff. SSOT for all locale content.",
+      "rows": 286
+    },
+    {
+      "id": "B",
+      "filename": "seoul-core-attraction-partial-locale-closeout-v1.jsonl",
+      "description": "Closeout for 14 remaining partial places. All SOURCE_LOCALE_NOT_AVAILABLE.",
+      "rows": 14
+    },
+    {
+      "id": "C",
+      "filename": "seoul-core-attraction-multilingual-coverage-qa-v3.json",
+      "description": "QA report for V3 handoff. VIP regression + coverage delta."
+    },
+    {
+      "id": "D",
+      "filename": "seoul-core-attraction-multilingual-manifest-v3.json",
+      "description": "This manifest."
+    }
+  ],
+  "v2_to_v3_summary": {
+    "v2_complete_content_based": 256,
+    "v3_complete_content_based": 272,
+    "delta": 16,
+    "newly_recovered_detail": [
+      "KOP001414 [en]",
+      "KOP001538 [ja]",
+      "KOP001824 [ja]",
+      "KOP001831 [ja]",
+      "KOP001899 [zh]",
+      "KOP001965 [en]",
+      "KOP009746 [zh]",
+      "KOP010289 [ja]",
+      "KOP010883 [ja]",
+      "KOP010883 [zh]",
+      "KOP011369 [zh]",
+      "KOP011840 [ja]",
+      "KOP015847 [zh]",
+      "KOP034359 [ja]",
+      "KOP0chi2z [ja]",
+      "KOPowtoyc [zh]",
+      "KOPx6grff [en]"
+    ],
+    "source_not_available_detail": [
+      "KOP001776 [en]",
+      "KOP001776 [ja]",
+      "KOP001776 [zh]",
+      "KOP003629 [en]",
+      "KOP003629 [ja]",
+      "KOP003629 [zh]",
+      "KOP006007 [ja]",
+      "KOP009547 [en]",
+      "KOP009547 [ja]",
+      "KOP009547 [zh]",
+      "KOP009631 [zh]",
+      "KOP041926 [ja]",
+      "KOP041926 [zh]",
+      "KOP2ikgt3 [ja]",
+      "KOP2ikgt3 [zh]",
+      "KOP512i62 [ja]",
+      "KOP512i62 [zh]",
+      "KOP59q6hd [en]",
+      "KOP76fq4a [en]",
+      "KOP76fq4a [zh]",
+      "KOPa2rvwq [en]",
+      "KOPa2rvwq [ja]",
+      "KOPa2rvwq [zh]",
+      "KOPlwvkl4 [en]",
+      "KOPlwvkl4 [ja]",
+      "KOPuqpj4a [en]",
+      "KOPuqpj4a [ja]"
+    ]
+  },
+  "vip_status": "ALL_VIP_COMPLETE_V3"
+}
