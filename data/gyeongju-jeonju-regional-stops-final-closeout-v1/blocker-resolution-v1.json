@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-09-12",
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "base_task": "TASK-FOUR-CITY-REGIONAL-COURSE-REMAINING-DATA-CLOSEOUT-V1",
+  "base_branch": "data/four-city-regional-course-remaining-data-closeout-v1",
+  "description": "Reclassification of blockers that were resolved by examining canonical branch data and image masters",
+  "gyeongju_reclassifications": [
+    {
+      "dimension": "desc_ko",
+      "prev_classification": "TEMPORARY_SOURCE_FAILURE",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH",
+      "affected_stops": 14,
+      "resolution": "gyeongju-canonical-places-v1.jsonl in origin/data/gyeongju-targeted-completion-v1 has desc_ko for 14/15 stops from gyeongju.go.kr",
+      "note": "Previous task checked gyeongju.go.kr sub-pages directly (HTTP 500); did not check canonical places file which already captured the data"
+    },
+    {
+      "dimension": "desc_ko",
+      "prev_classification": "TEMPORARY_SOURCE_FAILURE",
+      "new_classification": "DATA_OBTAINED_KTO_API",
+      "affected_stops": 1,
+      "affected_cid": "gyeongju-KTO12-128634",
+      "resolution": "KTO KorService2 API (detailCommon2, contentId=128634) returned 554-char Korean description",
+      "source": "KTO KorService2, provider=국가유산청"
+    },
+    {
+      "dimension": "image_url",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH",
+      "affected_stops": 14,
+      "resolution": "gyeongju-canonical-places-v1.jsonl has gyeongju.go.kr image URLs for 14/15 GJ01 stops; all HTTP 200 verified",
+      "note": "Previous task correctly identified VG_OFFICIAL_PUBLIC rights but incorrectly classified as RUNTIME_ONLY_GAP; URLs are already in canonical file"
+    },
+    {
+      "dimension": "image_url",
+      "prev_classification": "DATA_ALREADY_PRESENT",
+      "new_classification": "DATA_ALREADY_PRESENT",
+      "affected_stops": 1,
+      "affected_cid": "gyeongju-KTO12-128634",
+      "resolution": "KTO CDN image already in canonical, HTTP 200 confirmed"
+    },
+    {
+      "dimension": "coords",
+      "prev_classification": "TRUE_SOURCE_BLOCKER",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH",
+      "affected_stops": 12,
+      "resolution": "gyeongju-canonical-places-v1.jsonl has lat/lng for all 15 stops; coord sources include VWORLD_ROAD, VWORLD_JIBUN, KTO_CONTENTID",
+      "note": "Previous task found only 3/15 with coords in a different context; canonical branch has all 15"
+    }
+  ],
+  "jeonju_reclassifications": [
+    {
+      "dimension": "image_url",
+      "prev_classification": "BLOCKED_NO_IMAGE",
+      "new_classification": "DATA_IN_IMAGE_MASTER",
+      "affected_stops": 4,
+      "resolution": "jeonju-images-master-v2.jsonl in origin/data/jeonju-final-closeout-prep-v2 has tour.jeonju.go.kr image URLs for all 4 stops; matched by page_url dataSid",
+      "image_rights": "VISITJEONJU_OFFICIAL"
+    }
+  ],
+  "standalone_classification": {
+    "OFF-16087": "STANDALONE",
+    "OFF-9772": "STANDALONE",
+    "OFF-9774": "STANDALONE (AREA_CONTEXT applies to multilingual only, not to course stop standalone status)",
+    "OFF-9780": "STANDALONE"
+  }
+}

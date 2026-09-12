@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-09-12",
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "pass_condition": "REGIONAL_RECOMMENDED_STANDALONE_PLACE_WITHOUT_REQUIRED_DATA_COUNT=0",
+  "pass_result": true,
+  "summary": {
+    "REGIONAL_RECOMMENDED_STANDALONE_PLACE_WITHOUT_REQUIRED_DATA_COUNT": 0,
+    "gyeongju_total": 15,
+    "gyeongju_complete": 15,
+    "jeonju_4_total": 4,
+    "jeonju_4_complete": 4,
+    "total_service_relevant": 53,
+    "total_with_required_data": 53
+  },
+  "gyeongju_qa": {
+    "desc_ko_present": 15,
+    "desc_ko_missing": 0,
+    "image_http_200": 15,
+    "image_missing": 0,
+    "coord_present": 15,
+    "coord_missing": 0,
+    "en_multilingual_present": 6,
+    "ja_zh_status": "TRUE_SOURCE_BLOCKER_UNCHANGED"
+  },
+  "jeonju_qa": {
+    "standalone_confirmed": 4,
+    "area_context": 0,
+    "desc_ko_present": 4,
+    "image_http_200": 4,
+    "image_missing": 0,
+    "coord_present": 4,
+    "note_OFF_9774": "AREA_CONTEXT classification is multilingual-only; OFF-9774 is still a standalone course stop"
+  },
+  "gate_e_image_verification": {
+    "gyeongju_15_image_urls": "15/15 HTTP 200 (gyeongju.go.kr × 14 + KTO CDN × 1)",
+    "jeonju_4_image_urls": "4/4 HTTP 200 (tour.jeonju.go.kr × 4)"
+  },
+  "absolute_prohibitions_compliance": {
+    "production_db_write": false,
+    "main_db_write": false,
+    "migration": false,
+    "master_main_merge": false,
+    "ai_translation": false,
+    "unofficial_content": false,
+    "broad_recollection": false,
+    "git_add_all": false,
+    "force_reset_rebase": false,
+    "ui_code_modification": false,
+    "all_compliant": true
+  }
+}

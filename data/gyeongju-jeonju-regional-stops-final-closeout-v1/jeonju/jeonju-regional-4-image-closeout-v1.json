@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-09-12",
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "source_branch": "origin/data/jeonju-final-closeout-prep-v2",
+  "source_file": "data/main-intake/five-city-reflection-recovery-v1/jeonju-images-master-v2.jsonl",
+  "lookup_method": "page_url dataSid match",
+  "verification_method": "urllib.request HTTP GET",
+  "image_rights_policy": "VISITJEONJU_OFFICIAL — tour.jeonju.go.kr official images",
+  "summary": {
+    "total": 4,
+    "standalone": 4,
+    "area_context": 0,
+    "image_found": 4,
+    "http_200": 4,
+    "http_error": 0
+  },
+  "stops": [
+    {
+      "candidate_id": "OFF-16087",
+      "name_ko": "조경단",
+      "standalone_classification": "STANDALONE",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345477549647.jpg",
+      "image_http_status": "HTTP_200",
+      "image_rights": "VISITJEONJU_OFFICIAL",
+      "image_page_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101000000000&dataSid=16087",
+      "city_spot_id_in_master": 917,
+      "prev_status": "NO_IMAGE_FOUND"
+    },
+    {
+      "candidate_id": "OFF-9772",
+      "name_ko": "덕진공원",
+      "standalone_classification": "STANDALONE",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/177847702126840.jpg",
+      "image_http_status": "HTTP_200",
+      "image_rights": "VISITJEONJU_OFFICIAL",
+      "image_page_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101006003000&dataSid=9772",
+      "city_spot_id_in_master": 1098,
+      "prev_status": "NO_IMAGE_FOUND"
+    },
+    {
+      "candidate_id": "OFF-9774",
+      "name_ko": "전주천",
+      "standalone_classification": "STANDALONE",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176344738297700.jpg",
+      "image_http_status": "HTTP_200",
+      "image_rights": "VISITJEONJU_OFFICIAL",
+      "image_page_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101006002000&dataSid=9774",
+      "city_spot_id_in_master": 1126,
+      "prev_status": "NO_IMAGE_FOUND"
+    },
+    {
+      "candidate_id": "OFF-9780",
+      "name_ko": "전주한지박물관",
+      "standalone_classification": "STANDALONE",
+      "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/173742841604995.jpg",
+      "image_http_status": "HTTP_200",
+      "image_rights": "VISITJEONJU_OFFICIAL",
+      "image_page_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101010000000&dataSid=9780",
+      "city_spot_id_in_master": 1125,
+      "prev_status": "NO_IMAGE_FOUND"
+    }
+  ]
+}

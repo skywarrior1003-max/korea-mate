@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-09-12",
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "source_branch": "origin/data/gyeongju-targeted-completion-v1",
+  "source_file": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+  "summary": {
+    "total": 15,
+    "coord_present": 15,
+    "coord_missing": 0,
+    "prev_coord_missing": 12,
+    "reclassification": "Coords confirmed DATA_ALREADY_IN_CANONICAL_BRANCH for all 15 (previously marked 12 as missing)"
+  },
+  "stops": [
+    {
+      "candidate_id": "gyeongju-GJ01-0001",
+      "name_ko": "경주 계림",
+      "lat": 35.82479459424549,
+      "lng": 129.2135416536711,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "lat": 35.82943099388545,
+      "lng": 129.22868207702777,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0014",
+      "name_ko": "대릉원",
+      "lat": 35.835632661,
+      "lng": 129.2153813923,
+      "coord_source": "",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "lat": 35.83479382906926,
+      "lng": 129.22657021855622,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0022",
+      "name_ko": "분황사",
+      "lat": 35.84114065745356,
+      "lng": 129.23389538895833,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0033",
+      "name_ko": "월정교",
+      "lat": 35.828871174806395,
+      "lng": 129.22040548054605,
+      "coord_source": "VWORLD_JIBUN",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "lat": 35.8344078599,
+      "lng": 129.2185894795,
+      "coord_source": "",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길",
+      "lat": 35.837387896785145,
+      "lng": 129.20994563156796,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0049",
+      "name_ko": "나정",
+      "lat": 35.815962100711886,
+      "lng": 129.21269760194684,
+      "coord_source": "VWORLD_JIBUN",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0054",
+      "name_ko": "삼릉",
+      "lat": 35.79697829719133,
+      "lng": 129.2100223121497,
+      "coord_source": "VWORLD_JIBUN",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0056",
+      "name_ko": "오릉",
+      "lat": 35.823415324659706,
+      "lng": 129.20895750551915,
+      "coord_source": "VWORLD_JIBUN",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0062",
+      "name_ko": "포석정",
+      "lat": 35.80705723893508,
+      "lng": 129.21306729678207,
+      "coord_source": "VWORLD_JIBUN",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0099",
+      "name_ko": "보문 물레방아 광장",
+      "lat": 35.85145667582853,
+      "lng": 129.2734859985884,
+      "coord_source": "VWORLD_ROAD",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0127",
+      "name_ko": "석굴암",
+      "lat": 35.7881,
+      "lng": 129.3572,
+      "coord_source": "KTO_CONTENTID_125440_OFFICIAL",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-KTO12-128634",
+      "name_ko": "경주 배동 삼릉",
+      "lat": 35.7974424048,
+      "lng": 129.2089274882,
+      "coord_source": "",
+      "coord_status": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "branch": "data/gyeongju-jeonju-regional-stops-final-closeout-v1",
+  "base_branch": "data/four-city-regional-course-remaining-data-closeout-v1",
+  "base_commit": "8da597c",
+  "generated_at": "2026-09-12",
+  "status": "COMPLETE",
+  "pass_condition_met": true,
+  "REGIONAL_RECOMMENDED_STANDALONE_PLACE_WITHOUT_REQUIRED_DATA_COUNT": 0,
+  "artifacts": [
+    {
+      "id": "A",
+      "file": "gyeongju/gyeongju-regional-15-final-closeout-v1.jsonl",
+      "rows": 15,
+      "description": "Per-stop complete status for all 15 Gyeongju course stops"
+    },
+    {
+      "id": "B",
+      "file": "gyeongju/gyeongju-regional-15-image-closeout-v1.json",
+      "description": "Image URL + HTTP verification for 15 Gyeongju stops"
+    },
+    {
+      "id": "C",
+      "file": "gyeongju/gyeongju-regional-15-multilingual-closeout-v1.jsonl",
+      "rows": 45,
+      "description": "Multilingual status per stop × 3 locales"
+    },
+    {
+      "id": "D",
+      "file": "gyeongju/gyeongju-regional-15-nav-closeout-v1.json",
+      "description": "Coordinate data for all 15 Gyeongju stops"
+    },
+    {
+      "id": "E",
+      "file": "jeonju/jeonju-regional-4-final-closeout-v1.jsonl",
+      "rows": 4,
+      "description": "Per-stop complete status for 4 Jeonju image-gap stops"
+    },
+    {
+      "id": "F",
+      "file": "jeonju/jeonju-regional-4-image-closeout-v1.json",
+      "description": "Image URL + HTTP verification for 4 Jeonju stops"
+    },
+    {
+      "id": "G",
+      "file": "blocker-resolution-v1.json",
+      "description": "Reclassification of prior BLOCKED/TEMPORARY_SOURCE_FAILURE/RUNTIME_ONLY_GAP actions"
+    },
+    {
+      "id": "H",
+      "file": "qa-report-v1.json",
+      "description": "QA report + pass condition verification"
+    },
+    {
+      "id": "I",
+      "file": "closeout-manifest-v1.json",
+      "description": "This manifest"
+    },
+    {
+      "id": "J",
+      "file": "closeout-handoff-v1.md",
+      "description": "Main handoff document"
+    }
+  ],
+  "data_sources_used": [
+    "origin/data/gyeongju-targeted-completion-v1:data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+    "origin/data/gyeongju-multilingual-v1:data/gyeongju-multilingual-v1/gyeongju-attraction-multilingual-enrichment-v1.jsonl",
+    "origin/data/jeonju-final-closeout-prep-v2:data/main-intake/five-city-reflection-recovery-v1/jeonju-images-master-v2.jsonl",
+    "KTO KorService2 API (detailCommon2, contentId=128634) for KTO12-128634 desc_ko"
+  ]
+}

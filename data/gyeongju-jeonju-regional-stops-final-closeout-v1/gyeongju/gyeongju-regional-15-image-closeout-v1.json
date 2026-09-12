@@ -1,0 +1,165 @@
+{
+  "generated_at": "2026-09-12",
+  "task": "TASK-GYEONGJU-JEONJU-REGIONAL-RECOMMENDED-STOPS-FINAL-DATA-CLOSEOUT-V1",
+  "source_branch": "origin/data/gyeongju-targeted-completion-v1",
+  "source_file": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+  "verification_method": "urllib.request HTTP GET",
+  "summary": {
+    "total": 15,
+    "http_200": 15,
+    "no_url": 0,
+    "error": 0
+  },
+  "stops": [
+    {
+      "candidate_id": "gyeongju-GJ01-0001",
+      "name_ko": "경주 계림",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20230714/44B01D320402476A94055E7C1B0B0C59.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0009",
+      "name_ko": "국립경주박물관",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/993320EACA134DC08E92F1334742ABF9.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0014",
+      "name_ko": "대릉원",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200317/8895315709E349B58265C80B06CC42E8.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0017",
+      "name_ko": "동궁과 월지",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/9370955557CC4DA48BAA73BD4F75526A.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0022",
+      "name_ko": "분황사",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/158557B5A66444E5AC70D98EB306223C.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0033",
+      "name_ko": "월정교",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/7B2082F410284F07B0982F143557FEFD.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0036",
+      "name_ko": "첨성대",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/6C6D79E125724E088BD9985A8663CBF9.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0042",
+      "name_ko": "황리단길",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/F5DADBA4F4374AA8A21778E70B8CF116.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0049",
+      "name_ko": "나정",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200630/75C82E3B6F674B8CBE83EC792F2EC028.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0054",
+      "name_ko": "삼릉",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200630/975B7B0592D040A4B9E1B5467BEC6BB2.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0056",
+      "name_ko": "오릉",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200630/15B10BA4F78B424582CD599D800F9CDF.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0062",
+      "name_ko": "포석정",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200630/B154A8B8B6264B52B7B0E048FBA69B1D.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0099",
+      "name_ko": "보문 물레방아 광장",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200116/FB2B5F1067CD49159D3E142C812AE4AD.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0127",
+      "name_ko": "석굴암",
+      "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200626/118F9E4548034621938977744E7FBDE3.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "VG_GYEONGJU_GO_KR",
+      "image_rights": "VG_OFFICIAL_PUBLIC",
+      "prev_classification": "RUNTIME_ONLY_GAP",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    },
+    {
+      "candidate_id": "gyeongju-KTO12-128634",
+      "name_ko": "경주 배동 삼릉",
+      "image_url": "http://tong.visitkorea.or.kr/cms/resource/96/3575896_image2_1.jpg",
+      "image_http_status": "HTTP_200",
+      "image_source": "KTO_CDN",
+      "image_rights": "Type1",
+      "prev_classification": "DATA_ALREADY_PRESENT",
+      "new_classification": "DATA_ALREADY_IN_CANONICAL_BRANCH"
+    }
+  ]
+}
