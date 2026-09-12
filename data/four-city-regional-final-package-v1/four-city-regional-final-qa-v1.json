@@ -1,0 +1,61 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-FINAL-PACKAGE-AND-MAIN-HANDOFF-V1",
+  "as_of": "2026-09-12",
+  "verdict": "PASS",
+  "total_service_stops": 53,
+  "checks": {
+    "duplicate_canonical_id": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "missing_ko_title": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "missing_ko_description": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "missing_official_image": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "missing_nav": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "invalid_locale_status": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "missing_runtime_action": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "stale_blocker_leaked": {
+      "count": 0,
+      "pass": true,
+      "detail": []
+    },
+    "required_data_missing": {
+      "count": 0,
+      "pass": true
+    },
+    "unaccounted_service_stops": {
+      "count": 0,
+      "pass": true
+    },
+    "course_stop_referential_integrity": {
+      "pass": true,
+      "detail": "All 53 service stops have canonical_id and source_type"
+    }
+  },
+  "all_checks_pass": true
+}

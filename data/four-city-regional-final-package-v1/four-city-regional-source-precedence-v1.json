@@ -1,0 +1,91 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-FINAL-PACKAGE-AND-MAIN-HANDOFF-V1",
+  "as_of": "2026-09-12",
+  "rule": "When same field has data from multiple artifacts, apply this precedence order:",
+  "precedence_order": [
+    {
+      "rank": 1,
+      "source_type": "FINAL_TARGETED_CLOSEOUT",
+      "description": "Most recent city-specific closeout task result",
+      "examples": [
+        "gyeongju-jeonju-regional-stops-final-closeout-v1",
+        "jeonju-final-closeout-prep-v2"
+      ]
+    },
+    {
+      "rank": 2,
+      "source_type": "LATEST_CITY_CANONICAL",
+      "description": "Actual canonical SSOT in latest completion branch",
+      "examples": [
+        "gyeongju-targeted-completion-v1",
+        "jeonju-targeted-completion-v1"
+      ]
+    },
+    {
+      "rank": 3,
+      "source_type": "MULTILINGUAL_SIDECAR",
+      "description": "Verified supplemental multilingual data",
+      "examples": [
+        "gyeongju-regional-15-ja-zh-hexid-probe-v1",
+        "gyeongju-regional-15-multilingual-closeout-v1"
+      ]
+    },
+    {
+      "rank": 4,
+      "source_type": "CONTENT_MEDIA_RECOVERY",
+      "description": "Prior recovery artifact (latest data if above not available)",
+      "examples": [
+        "four-city-regional-course-content-media-recovery-v1"
+      ]
+    },
+    {
+      "rank": 5,
+      "source_type": "AUDIT_ARTIFACT",
+      "description": "Classification/history reference only — NOT final value source",
+      "examples": [
+        "four-city-regional-course-coverage-recovery-v1 (coverage matrix)"
+      ]
+    }
+  ],
+  "NOT_IN_CURRENT_PATH_!=_NOT_IN_PROJECT": true,
+  "data_not_found_gate": {
+    "rule": "Before declaring DATA_NOT_FOUND or SOURCE_BLOCKER, verify ALL of:",
+    "checklist": [
+      "1. Current working artifact",
+      "2. Latest final canonical (origin/<city>-targeted-completion-v1)",
+      "3. All relevant remote data branches",
+      "4. Image/multilingual/nav sidecars",
+      "5. Prior recovery artifacts"
+    ]
+  },
+  "superseded_statuses": [
+    {
+      "old_status": "MISSING_TEMPORARY_SOURCE_FAILURE",
+      "artifact": "four-city-content-recovery-matrix-v1.jsonl (gyeongju)",
+      "new_status": "DATA_ALREADY_IN_CANONICAL_BRANCH",
+      "superseded_by": "gyeongju-regional-15-final-closeout-v1.jsonl",
+      "entity_count": 14
+    },
+    {
+      "old_status": "RUNTIME_ONLY_GAP (image)",
+      "artifact": "four-city-content-recovery-matrix-v1.jsonl (gyeongju)",
+      "new_status": "IMAGE_HTTP_CONFIRMED (official gyeongju.go.kr)",
+      "superseded_by": "gyeongju-regional-15-final-closeout-v1.jsonl",
+      "entity_count": 14
+    },
+    {
+      "old_status": "PARTIAL_READY_IMAGE_GAP (NO_IMAGE_FOUND)",
+      "artifact": "jeonju-stop-final-status-v1.jsonl",
+      "new_status": "IMAGE_HTTP_CONFIRMED (tour.jeonju.go.kr)",
+      "superseded_by": "jeonju-regional-4-image-closeout-v1.json",
+      "entity_count": 4
+    },
+    {
+      "old_status": "TRUE_SOURCE_BLOCKER (JA/ZH gyeongju)",
+      "artifact": "gyeongju-regional-15-final-closeout-v1.jsonl",
+      "new_status": "OFFICIAL_NATIVE_COMPLETE (2 stops) / OFFICIAL_TITLE_ONLY (1 stop)",
+      "superseded_by": "gyeongju-regional-15-ja-zh-hexid-probe-v1",
+      "entity_count": 3
+    }
+  ]
+}

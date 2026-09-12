@@ -1,0 +1,162 @@
+{
+  "task": "TASK-FOUR-CITY-REGIONAL-FINAL-PACKAGE-AND-MAIN-HANDOFF-V1",
+  "as_of": "2026-09-12",
+  "branch": "data/four-city-regional-final-package-v1",
+  "base_branch": "data/gyeongju-regional-15-ja-zh-hexid-probe-v1",
+  "base_sha": "10dac24",
+  "source_branches": {
+    "primary_audit": {
+      "branch": "data/four-city-regional-course-coverage-recovery-v1",
+      "sha": "49cb2bb"
+    },
+    "content_media_recovery": {
+      "branch": "data/four-city-regional-course-content-media-recovery-v1",
+      "sha": "dc80559"
+    },
+    "remaining_data_closeout": {
+      "branch": "data/four-city-regional-course-remaining-data-closeout-v1",
+      "sha": "8da597c"
+    },
+    "gyeongju_jeonju_final": {
+      "branch": "data/gyeongju-jeonju-regional-stops-final-closeout-v1",
+      "sha": "1f727be"
+    },
+    "gyeongju_multilingual_closeout": {
+      "branch": "data/gyeongju-regional-15-multilingual-closeout-v1",
+      "sha": "a7420ef"
+    },
+    "gyeongju_ja_zh_probe": {
+      "branch": "data/gyeongju-regional-15-ja-zh-hexid-probe-v1",
+      "sha": "10dac24"
+    }
+  },
+  "universe": {
+    "total_courses": 18,
+    "total_stop_occurrences": 107,
+    "service_relevant_occurrences": 71,
+    "course_context_occurrences": 36,
+    "unique_service_stops": 53,
+    "unique_context_stops_estimated": 35,
+    "unique_entities_total": 88
+  },
+  "by_city": {
+    "busan": {
+      "course_count": 4,
+      "stop_occurrences": 21,
+      "context_occurrences": 22,
+      "unique_service_stops": 13,
+      "ko_description_ready": 13,
+      "image_ready": 13,
+      "nav_ready": 13,
+      "en_complete": 13,
+      "ja_complete": 13,
+      "zh_complete": 13,
+      "ja_sna": 0,
+      "zh_sna": 0,
+      "data_intake": 0,
+      "runtime_mapping_repair": 13,
+      "no_action": 0,
+      "true_required_data_blocker": 0
+    },
+    "gyeongju": {
+      "course_count": 4,
+      "stop_occurrences": 24,
+      "context_occurrences": 7,
+      "unique_service_stops": 15,
+      "ko_description_ready": 15,
+      "image_ready": 15,
+      "nav_ready": 15,
+      "en_complete": 14,
+      "ja_complete": 1,
+      "zh_complete": 2,
+      "ja_sna": 13,
+      "zh_sna": 13,
+      "data_intake": 15,
+      "runtime_mapping_repair": 0,
+      "no_action": 0,
+      "true_required_data_blocker": 0
+    },
+    "jeju": {
+      "course_count": 5,
+      "stop_occurrences": 9,
+      "context_occurrences": 6,
+      "unique_service_stops": 9,
+      "ko_description_ready": 9,
+      "image_ready": 9,
+      "nav_ready": 9,
+      "en_complete": 8,
+      "ja_complete": 8,
+      "zh_complete": 8,
+      "ja_sna": 1,
+      "zh_sna": 1,
+      "data_intake": 1,
+      "runtime_mapping_repair": 0,
+      "no_action": 8,
+      "true_required_data_blocker": 0
+    },
+    "jeonju": {
+      "course_count": 5,
+      "stop_occurrences": 17,
+      "context_occurrences": 1,
+      "unique_service_stops": 16,
+      "ko_description_ready": 16,
+      "image_ready": 16,
+      "nav_ready": 16,
+      "en_complete": 15,
+      "ja_complete": 12,
+      "zh_complete": 11,
+      "ja_sna": 1,
+      "zh_sna": 1,
+      "data_intake": 4,
+      "runtime_mapping_repair": 3,
+      "no_action": 9,
+      "true_required_data_blocker": 0
+    }
+  },
+  "consolidated": {
+    "ko_description_ready": 53,
+    "image_ready": 53,
+    "nav_ready": 53,
+    "en_complete": 50,
+    "ja_complete": 34,
+    "zh_complete": 34,
+    "ja_title_only": 1,
+    "source_locale_not_available_ja_slots": 15,
+    "source_locale_not_available_zh_slots": 15,
+    "data_ready": 53,
+    "data_ready_runtime_gap": 0,
+    "true_required_data_blocker": 0,
+    "unaccounted_service_stops": 0,
+    "data_intake_actions": 20,
+    "runtime_mapping_repair_actions": 16,
+    "no_action": 17,
+    "new_canonical_required": 0,
+    "stale_superseded_status_leak": 0
+  },
+  "language_qa": {
+    "ai_translation_used": false,
+    "google_translate_used": false,
+    "wrong_language_text_count": 0
+  },
+  "regression": {
+    "city_canonical_changed": 0,
+    "db_changed": 0,
+    "production_changed": 0,
+    "master_changed": 0,
+    "master_merged": 0
+  },
+  "verdict": "PASS",
+  "artifacts": [
+    "four-city-regional-courses-final-v1.jsonl",
+    "four-city-regional-service-stops-final-v1.jsonl",
+    "four-city-regional-course-context-final-v1.jsonl",
+    "four-city-regional-multilingual-final-v1.jsonl",
+    "four-city-regional-images-final-v1.jsonl",
+    "four-city-regional-nav-final-v1.jsonl",
+    "four-city-regional-runtime-actions-final-v1.jsonl",
+    "four-city-regional-source-precedence-v1.json",
+    "four-city-regional-final-qa-v1.json",
+    "four-city-regional-final-manifest-v1.json",
+    "four-city-regional-main-handoff-v1.md"
+  ]
+}
