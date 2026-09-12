@@ -1,0 +1,36 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-MULTILINGUAL-CLOSEOUT-V1",
+  "as_of": "2026-09-12",
+  "total_course_stops": 15,
+  "en": {
+    "confirmed": 14,
+    "source_not_available": 1,
+    "fetch_failed": 0,
+    "total": 15,
+    "coverage_pct": 93.3
+  },
+  "ja": {
+    "confirmed": 0,
+    "source_not_available": 15,
+    "total": 15,
+    "coverage_pct": 0.0,
+    "blocker": "KTO_JpnService2_HTTP403 + VG_HEXID_NOT_BUILT"
+  },
+  "zh": {
+    "confirmed": 0,
+    "source_not_available": 15,
+    "total": 15,
+    "coverage_pct": 0.0,
+    "blocker": "KTO_ChsService2_HTTP403 + VG_HEXID_NOT_BUILT"
+  },
+  "api_status": {
+    "KTO_EngService2": "WORKS",
+    "KTO_JpnService2": "HTTP_403",
+    "KTO_ChsService2": "HTTP_403",
+    "VK_EN_vcontsId": "WORKS",
+    "VK_JA_vcontsId": "ENGLISH_FALLBACK",
+    "VK_ZH_vcontsId": "ENGLISH_FALLBACK",
+    "VG_JA_attraction": "HEXID_NOT_BUILT",
+    "VG_ZH_attraction": "HEXID_NOT_BUILT"
+  }
+}

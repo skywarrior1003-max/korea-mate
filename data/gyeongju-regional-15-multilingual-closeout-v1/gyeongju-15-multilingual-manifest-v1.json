@@ -1,0 +1,59 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-MULTILINGUAL-CLOSEOUT-V1",
+  "branch": "data/gyeongju-regional-15-multilingual-closeout-v1",
+  "base": "data/gyeongju-jeonju-regional-stops-final-closeout-v1 @ 1f727be",
+  "as_of": "2026-09-12",
+  "artifacts": [
+    {
+      "id": "A",
+      "file": "gyeongju-15-en-multilingual-v1.jsonl",
+      "rows": 15,
+      "desc": "EN multilingual data for all 15 course stops"
+    },
+    {
+      "id": "B",
+      "file": "gyeongju-15-ja-multilingual-v1.jsonl",
+      "rows": 15,
+      "desc": "JA multilingual status for all 15 course stops"
+    },
+    {
+      "id": "C",
+      "file": "gyeongju-15-zh-multilingual-v1.jsonl",
+      "rows": 15,
+      "desc": "ZH multilingual status for all 15 course stops"
+    },
+    {
+      "id": "D",
+      "file": "gyeongju-15-source-audit-v1.jsonl",
+      "rows": 15,
+      "desc": "Per-stop source audit for all locales"
+    },
+    {
+      "id": "E",
+      "file": "gyeongju-15-multilingual-gap-v1.jsonl",
+      "rows": 31,
+      "desc": "All gaps and blockers by stop+locale"
+    },
+    {
+      "id": "F",
+      "file": "gyeongju-15-multilingual-coverage-v1.json",
+      "desc": "Coverage summary"
+    },
+    {
+      "id": "G",
+      "file": "gyeongju-15-multilingual-scorecard-v1.json",
+      "desc": "Scorecard and regression checks"
+    },
+    {
+      "id": "H",
+      "file": "gyeongju-15-multilingual-manifest-v1.json",
+      "desc": "This manifest"
+    },
+    {
+      "id": "I",
+      "file": "gyeongju-15-multilingual-handoff-v1.md",
+      "desc": "Main handoff document"
+    }
+  ],
+  "pass": true
+}

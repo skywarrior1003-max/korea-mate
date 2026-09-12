@@ -1,0 +1,42 @@
+{
+  "task": "TASK-GYEONGJU-REGIONAL-15-MULTILINGUAL-CLOSEOUT-V1",
+  "as_of": "2026-09-12",
+  "pass_criteria": {
+    "all_15_status_clear": true,
+    "max_official_native_collected": true,
+    "wrong_language_text_zero": true
+  },
+  "metrics": {
+    "EN_CONFIRMED": 14,
+    "EN_SOURCE_NOT_AVAILABLE": 1,
+    "EN_FETCH_FAILED": 0,
+    "JA_CONFIRMED": 0,
+    "JA_SOURCE_NOT_AVAILABLE": 15,
+    "ZH_CONFIRMED": 0,
+    "ZH_SOURCE_NOT_AVAILABLE": 15,
+    "WRONG_LANGUAGE_TEXT": 0,
+    "AI_TRANSLATION_USED": 0,
+    "GOOGLE_TRANSLATE_USED": 0
+  },
+  "regression_checks": {
+    "KO_DATA_CHANGED": 0,
+    "IMAGE_DATA_CHANGED": 0,
+    "COORD_DATA_CHANGED": 0,
+    "IDENTITY_CHANGED": 0,
+    "FOOD_105_CHANGED": 0
+  },
+  "verdict": "PASS",
+  "notes": [
+    "EN: 14/15 confirmed from official KTO EngService2 API or VisitKorea EN website (vcontsId).",
+    "EN GJ01-0014 entity overlap: KTO registered as 천마총(대릉원); description primarily covers 대릉원 complex. Accepted.",
+    "EN GJ01-0099 (보문 물레방아 광장): No dedicated official EN description. SOURCE_NOT_AVAILABLE.",
+    "JA: 0/15. KTO JpnService2 HTTP 403. VisitKorea JA fallback to English. VG JA hexID pipeline not built for attractions.",
+    "ZH: 0/15. KTO ChsService2 HTTP 403. VisitKorea ZH fallback to English. VG ZH hexID pipeline not built for attractions.",
+    "No AI translation or Google Translate used. All content is from official sources or classified SOURCE_NOT_AVAILABLE."
+  ],
+  "next_actions": [
+    "Build VG attraction hexID pipeline to unlock JA/ZH from visitgyeongju.or.kr/ja/ and /zh-cn/",
+    "Request KTO JpnService2/ChsService2 API key re-issue or permission upgrade",
+    "GJ01-0099: Check if 보문 물레방아 광장 gets dedicated page in future VG or KTO content"
+  ]
+}
