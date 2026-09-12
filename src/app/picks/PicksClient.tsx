@@ -247,8 +247,11 @@ function PicksContent() {
     setTripDays(tripDraftDates(d));
     setTripCity(d?.city ?? null);
     if (!d) {
-      // 여행이 없어도, 지난번에 담아 둔 도시가 있으면 그 목록을 이어서 보여 준다.
-      setPendingCity(lastAddedTripCity());
+      // /planner 승계 진입(?city=) — 시작 카드의 도시를 그 도시로 미리 고른다
+      // (스케줄러 일원화, Owner 2026-09-12). 없으면 지난번에 담아 둔 도시.
+      const paramCity = new URLSearchParams(window.location.search).get("city");
+      const known = paramCity && STARTER_CITIES.find(c => c.toLowerCase() === paramCity.trim().toLowerCase());
+      setPendingCity(known || lastAddedTripCity());
     }
   }, []);
   useEffect(() => {

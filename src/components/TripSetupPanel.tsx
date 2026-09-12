@@ -17,6 +17,9 @@ import { useTranslations } from "next-intl";
 import DatePicker from "./DatePicker";
 import StayFieldsSection from "./StayFields";
 import { cityPresetOptions } from "@/data/city-presets";
+
+// This Trip 이 지원하는 5도시 — TripStarterCard 와 같은 canonical 표기
+const SETUP_CITIES = ["Busan", "Seoul", "Jeju", "Gyeongju", "Jeonju"];
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
 import {
   EMPTY_STAY_FIELDS, stayFieldsFrom, stayModeFrom,
@@ -26,6 +29,12 @@ import { TRIP_PACE_CHOICES, type TripPaceChoice } from "@/lib/trip-pace/pace-cor
 import type { TripDraft, TripStayDetail } from "@/lib/trip-draft/trip-draft-core";
 
 export interface TripSetupPatch {
+  /**
+   * 여행 도시 변경 (Owner 2026-09-12 — This Trip 에서 도시가 잠겨 있던 설계
+   * 공백 해소). 도시를 바꾸면 도착/출발/숙소 선택은 이전 도시의 preset 이라
+   * 함께 초기화된다 — 장소 목록은 도시별로 분리 저장되어 있어 그대로 안전하다.
+   */
+  city?:           string;
   startDate?:      string;
   endDate?:        string;
   travelers?:      string;
@@ -73,6 +82,7 @@ function Section({
 
 export default function TripSetupPanel({ draft, onChange }: TripSetupPanelProps) {
   const t     = useTranslations("tripSetup");
+  const tCityName = useTranslations("tripForm");
   const tPace = useTranslations("pace");
 
   const [openDates,  setOpenDates]  = useState(false);
@@ -121,6 +131,23 @@ export default function TripSetupPanel({ draft, onChange }: TripSetupPanelProps)
 
       {openDates && (
         <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="trip-city" className="text-xs font-bold text-sub">{t("city")}</label>
+            <select
+              id="trip-city"
+              value={SETUP_CITIES.find(c => c.toLowerCase() === city.toLowerCase()) ?? city}
+              onChange={e => onChange({
+                city: e.target.value,
+                // 도착/출발/숙소는 이전 도시의 preset — 새 도시에선 무의미하므로 비운다
+                startLocation: null, arrivalTime: null,
+                departurePlace: null, departureTime: null,
+                stayArea: null, stay: null,
+              })}
+              className={FIELD}
+            >
+              {SETUP_CITIES.map(c => <option key={c} value={c}>{tCityName(`city_${c}`)}</option>)}
+            </select>
+          </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col gap-1.5">
               <span className="text-xs font-bold text-sub">{t("startDate")}</span>

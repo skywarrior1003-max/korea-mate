@@ -1274,6 +1274,7 @@
     "activeDesc": "歩きと屋外の時間を多めに"
   },
   "tripSetup": {
+    "city": "都市",
     "edit": "編集",
     "notSet": "未設定",
     "startDate": "出発日",

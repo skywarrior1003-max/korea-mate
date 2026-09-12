@@ -1274,6 +1274,7 @@
     "activeDesc": "更多步行与户外时间"
   },
   "tripSetup": {
+    "city": "城市",
     "edit": "编辑",
     "notSet": "未设置",
     "startDate": "出发日",

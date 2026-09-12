@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import PlannerClient from "./PlannerClient";
+import PlannerRedirect from "./PlannerRedirect";
 
-// PLANNER-SPOTS-SEPARATION-V1: AI 플래너의 정상 진입 route.
-// 예전에는 Home 안의 #planner 섹션이었다 — 기존 route 중에는 생성 전 입력
-// 폼을 수용할 곳이 없어(/itinerary 는 생성 결과 화면, /my-trips 는 목록)
-// 최소 신규 route 로 분리했다. 이름은 repo 전반의 기존 어휘(planner
-// messages namespace · lib/planner · components/planner)를 따른다.
+// 스케줄러 일원화 (Owner 2026-09-12): 여행 만들기 진입은 This Trip(Picks) 하나다.
+// /planner 는 기존 링크(CTA·클론 딥링크·legacy #planner 승계)의 의미를 보존한 채
+// /picks 로 보내는 승계 route 로만 남는다. V1 폼(PlannerClient)은 route 에서
+// 내려갔다 — 파일은 가드 테스트 참조용으로 유지.
 export const metadata: Metadata = {
   alternates: {
-    canonical: "https://gokoreamate.com/planner/",
+    canonical: "https://gokoreamate.com/picks/",
   },
 };
 
 export default function PlannerPage() {
-  return <PlannerClient />;
+  return <PlannerRedirect />;
 }

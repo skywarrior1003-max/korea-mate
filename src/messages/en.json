@@ -1274,6 +1274,7 @@
     "activeDesc": "More walking and time outdoors"
   },
   "tripSetup": {
+    "city": "City",
     "edit": "Edit",
     "notSet": "Not set",
     "startDate": "Start",
