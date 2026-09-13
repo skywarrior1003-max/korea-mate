@@ -1357,6 +1357,7 @@
     "adoptError": "일정을 만들지 못했어요. 다시 시도해 주세요.",
         "partnerStayCta": "{city} 숙소 찾아보기",
     "partnerSponsored": "제휴 링크 — 예약 시 수수료를 받을 수 있어요. 예약은 파트너 사이트에서 진행돼요.",
+    "partnerAlt": "{partner}에서도 보기",
     "cityWeatherNow": "{city} 현재 날씨 — 기상청 단기예보 열기(새 탭)",
     "searchIdleHint": "도시·여행·장소를 검색해 보세요 — 예: “부산”",
     "tripsSoon": "{city} 추천 여행 코스를 준비하고 있어요.",

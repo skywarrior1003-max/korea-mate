@@ -56,8 +56,15 @@ export function buildAgodaCitySearch(citySlug: string, locale: PartnerLocale): s
 const TRIP_HOSTS: Partial<Record<PartnerLocale, string>> = {
   ko: "kr.trip.com", en: "www.trip.com", ja: "jp.trip.com",
 };
-/** Owner 원본 URL 의 경로 세그먼트 그대로 — 추측 금지 */
+/**
+ * 경로 세그먼트 — Owner 원본(경주·전주) + 공식 Trip.com 페이지 실측으로 확보해
+ * 착지 교차검증(200·도시명·Alliance 잔존)한 부산/서울/제주 (2026-09-13).
+ * 추측으로 만든 값은 없다.
+ */
 const TRIP_HOTEL_PATHS: Partial<Record<string, string>> = {
+  busan: "busan-hotels-list-253",
+  seoul: "seoul-hotels-list-274",
+  jeju: "jeju-hotels-list-737",
   gyeongju: "gyeongju-hotels-list-3675",
   jeonju: "jeonju-si-hotels-list-61380",
 };
@@ -125,21 +132,33 @@ export interface PartnerOffer {
   href: string;
 }
 
-export function stayOfferFor(citySlug: string, locale: PartnerLocale): PartnerOffer | null {
+/**
+ * stay 후보 — Owner 정책 순서: Agoda → Trip.com.
+ * [0]=추천, [1]=대안(있을 때만). 검증된 조합만 배열에 들어간다.
+ *  · Agoda: 도시 ID 확보분(부산)만, 4locale.
+ *  · Trip.com: 5도시 경로 확보, locale 은 검증 도메인(en/ja/ko)만 —
+ *    zh 는 hk.trip.com 이 번체(zh-HK)라 간체 UI 와 불일치, 미지원 유지.
+ */
+export function stayOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
   const slug = citySlug.toLowerCase();
+  const out: PartnerOffer[] = [];
   const agoda = buildAgodaCitySearch(slug, locale);
-  if (agoda) return { partner: "agoda", purpose: "stay", href: agoda };
+  if (agoda) out.push({ partner: "agoda", purpose: "stay", href: agoda });
   const trip = buildTripcomHotels(slug, locale);
-  if (trip) return { partner: "tripcom", purpose: "stay", href: trip };
-  return null;
+  if (trip) out.push({ partner: "tripcom", purpose: "stay", href: trip });
+  return out.slice(0, 2); // 추천 1 + 대안 최대 1
+}
+
+/** @deprecated 추천만 필요할 때 — stayOffersFor 의 첫 항목 */
+export function stayOfferFor(citySlug: string, locale: PartnerLocale): PartnerOffer | null {
+  return stayOffersFor(citySlug, locale)[0] ?? null;
 }
 
 /**
- * 표면 공통 진입점. 지금은 검증된 목적이 stay 뿐이라 stay 만 돌려준다 —
- * esim/transport/activity 는 착지 검증 전이므로 어떤 조합도 만들지 않는다.
- * (추천/대안 구조: 현재 도시별 유효 파트너가 정확히 1개라 추천 1개만 존재.)
+ * 표면 공통 진입점. 지금은 검증된 목적이 stay 뿐이다 —
+ * esim/transport/activity 는 착지 검증 전이므로 어떤 조합도 만들지 않는다
+ * (Klook·KKday 는 Owner 실기기 확인표 이후 활성).
  */
 export function offersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
-  const stay = stayOfferFor(citySlug, locale);
-  return stay ? [stay] : [];
+  return stayOffersFor(citySlug, locale);
 }

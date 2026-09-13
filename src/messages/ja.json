@@ -1357,6 +1357,7 @@
     "adoptError": "旅程を作成できませんでした。もう一度お試しください。",
         "partnerStayCta": "{city}の宿泊先を探す",
     "partnerSponsored": "アフィリエイトリンク — 手数料を受け取る場合があります。予約はパートナーサイトで行われます。",
+    "partnerAlt": "{partner}でも見る",
     "cityWeatherNow": "{city}の現在の天気 — 気象庁の短期予報を開く(新しいタブ)",
     "searchIdleHint": "都市・旅・場所を検索 — 例:「釜山」",
     "tripsSoon": "{city}のおすすめコースを準備中です。",

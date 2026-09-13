@@ -35,7 +35,8 @@ export default function PartnerOfferRow({
   const locale = (SUPPORTED.includes(rawLocale) ? rawLocale : "en") as PartnerLocale;
   const offers = offersFor(citySlug, locale).filter(o => !isLegacyAffiliateUrl(o.href));
   if (offers.length === 0) return null;
-  const offer = offers[0]!; // 현재 검증 매트릭스상 도시별 1개 — 추천 1
+  const offer = offers[0]!;      // 추천 1
+  const alt = offers[1] ?? null; // 검증된 대안이 있을 때만(최대 1)
 
   return (
     <div className={`flex items-center justify-between gap-3 rounded-[4px] border px-4 py-3 ${className}`}
@@ -56,9 +57,28 @@ export default function PartnerOfferRow({
             {t("partnerStayCta", { city: cityLabel })} · {PARTNER_NAMES[offer.partner]} →
           </span>
         </AffiliateLink>
-        {/* 사용자 눈에 읽히는 제휴 고지 — 항상 링크와 함께 */}
+        {/* 사용자 눈에 읽히는 제휴 고지 — 항상 링크와 함께. 대안은 같은 줄의
+            조용한 보조 링크(추천과 시각 위계 구분). */}
         <span className="block mt-0.5 text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
           {t("partnerSponsored")}
+          {alt && (
+            <>
+              {" · "}
+              <AffiliateLink
+                href={alt.href}
+                provider={alt.partner}
+                title={`stay-${citySlug}`}
+                city={citySlug}
+                kind="affiliate"
+                surface={surface}
+                purpose={alt.purpose}
+                locale={locale}
+                className="gkm-focus underline underline-offset-2"
+              >
+                {t("partnerAlt", { partner: PARTNER_NAMES[alt.partner] })}
+              </AffiliateLink>
+            </>
+          )}
         </span>
       </span>
     </div>
