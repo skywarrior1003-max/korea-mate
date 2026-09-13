@@ -1355,6 +1355,8 @@
     "adoptEnd": "结束日期",
     "adoptGo": "创建行程",
     "adoptError": "未能创建行程，请重试。",
+        "partnerStayCta": "查找{city}的住宿",
+    "partnerSponsored": "联盟链接 — 我们可能获得佣金。预订在合作伙伴网站完成。",
     "cityWeatherNow": "{city}当前天气 — 打开气象厅短期预报(新标签页)",
     "searchIdleHint": "搜索城市、行程或地点 — 例如“釜山”",
     "tripsSoon": "{city}的推荐行程正在准备中。",

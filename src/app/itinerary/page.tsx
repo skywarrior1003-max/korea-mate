@@ -39,6 +39,7 @@ import { pickL10n } from "@/lib/place-display-name";
 import WeatherLinkChip, { type DayForecast } from "@/components/planner/WeatherLinkChip";
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
+import PartnerOfferRow from "@/components/PartnerOfferRow";
 import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
@@ -3850,6 +3851,15 @@ function ItineraryResult() {
               </a>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* ── PHASE 10: 여행 준비 보조 1줄 (my-trip-prep, Owner 승인 표면) ──
+            본인 소유 + 미래 여행에서만. 일정 데이터·스케줄러와 분리된 표시
+            전용 — 검증된 도시가 아니면 렌더 자체가 없다. */}
+      {!shareId && !isPastTrip && (
+        <div className="mb-8">
+          <PartnerOfferRow surface="my-trip-prep" citySlug={city.toLowerCase()} cityLabel={city} />
         </div>
       )}
 

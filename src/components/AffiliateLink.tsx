@@ -17,6 +17,13 @@ interface AffiliateLinkProps {
   kind: LinkKind;
   children: React.ReactNode;
   className?: string;
+  /**
+   * PHASE 10 최소 추적 문맥(선택 — 기존 호출부 불변). 개인정보·좌표·메모는
+   * 어떤 경우에도 싣지 않는다. surface 는 commerce-surfaces 식별자 문자열.
+   */
+  surface?: string;
+  purpose?: string;
+  locale?: string;
 }
 
 export default function AffiliateLink({
@@ -27,6 +34,9 @@ export default function AffiliateLink({
   kind,
   children,
   className,
+  surface,
+  purpose,
+  locale,
 }: AffiliateLinkProps) {
   const isAffiliate = kind === "affiliate";
   return (
@@ -37,7 +47,12 @@ export default function AffiliateLink({
       rel={isAffiliate ? "noopener noreferrer sponsored" : "noopener noreferrer"}
       className={className}
       onClick={isAffiliate
-        ? () => trackEvent("affiliate_click", { provider, title, city })
+        ? () => trackEvent("affiliate_click", {
+            provider, title, city,
+            ...(surface ? { surface } : {}),
+            ...(purpose ? { purpose } : {}),
+            ...(locale ? { locale } : {}),
+          })
         : undefined}
     >
       {children}

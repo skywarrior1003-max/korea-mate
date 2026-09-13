@@ -19,6 +19,7 @@ import { displayPlaceName } from "@/lib/place-display-name";
 import { cityHubHeroVisual } from "@/lib/city-visual";
 import { KMA_SHORT_FORECAST_URL, formatNowTemp } from "@/lib/weather/city-now-core";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import PartnerOfferRow from "@/components/PartnerOfferRow";
 import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
@@ -267,6 +268,10 @@ export default function CityHubClient({ slug }: { slug: string }) {
             );
           })}
         </ul>
+
+        {/* ── PHASE 10: 조용한 예약 보조 1줄 (Essentials 끝) — 검증된 도시만
+            렌더되고, 없으면 이 줄 자체가 없다. Hero/콘텐츠 위계 무접촉. ── */}
+        <PartnerOfferRow surface="city-hub-essentials" citySlug={slug} cityLabel={cityLabel} className="mt-6" />
 
         {/* ── Explore — 흐름의 끝, 스코프 유지 handoff (확정 Blue: navy CTA) ── */}
         <Link

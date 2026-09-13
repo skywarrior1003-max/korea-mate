@@ -46,7 +46,14 @@ export const POST_PLAN_COMMERCE_ENABLED = false;
 /** 편집 콘텐츠 표면 식별자 — 새 표면은 여기에 추가하기 전까지 자동 비활성 */
 export type EditorialAffiliateSurface =
   | "city-landing"      // 도시 소개·준비물 안내 페이지
-  | "blog";             // 편집 블로그 아티클
+  | "blog"              // 편집 블로그 아티클
+  // PHASE 10 (Owner 명시 승인 2026-09-13, readiness v2 문서 기반) — 두 표면 모두
+  // 가시적 제휴 고지 + rel=sponsored + 새 탭 + 사용자 클릭 시에만 이동을 갖추고,
+  // 링크는 partner-links 의 검증 매트릭스에서만 나온다(구세대 유입 불가).
+  | "city-hub-essentials" // City Hub Travel Essentials 하단의 조용한 예약 보조 1줄
+  | "my-trip-prep";       // My Trip(본인·미래 여행)의 여행 준비 보조 1줄 —
+                          //   일정 데이터·스케줄러와 분리된 표시 전용 영역이라
+                          //   §14-1-B 의 분리 조건을 충족한 상태로 C 방식 등록.
 
 /**
  * 현재 운영 승인된 표면.
@@ -56,7 +63,13 @@ export type EditorialAffiliateSurface =
  *                    고지 보강 전까지 승인 목록에 넣지 않는다.
  *   shared-itinerary — 공유 일정은 §14-1-A Trip-Flow 대상이다.
  */
-const APPROVED_EDITORIAL_SURFACES: readonly string[] = ["city-landing", "blog"];
+const APPROVED_EDITORIAL_SURFACES: readonly string[] = [
+  "city-landing", "blog",
+  // PHASE 10 활성(Owner 승인 2026-09-13). TRIP_FLOW/POST_PLAN 전역 게이트는
+  // 그대로 false — 이 두 표면 승인이 구세대 표면(공항 배너·eSIM 배너·카트
+  // Book 버튼)을 열지 않는다는 것이 §14-1 구조의 핵심이다.
+  "city-hub-essentials", "my-trip-prep",
+];
 
 /**
  * 편집 콘텐츠 제휴를 이 표면에서 렌더해도 되는가.
