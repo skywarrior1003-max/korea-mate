@@ -246,3 +246,28 @@ Agoda 신규 도시 ID 는 자동화가 전면 봇차단이라 확보 불가 —
   장소(23건 계열)가 사용자의 일정에 들어가는 영향은 별개로 미해결**이다
   (Data Track 데이터 수정 대기 — regional JSON 무변경 확인 2026-09-13).
   영향 코스의 임시 채택 제한/노출 배지 여부는 Owner 판단사항으로 남긴다.
+
+### 9.5 (v4 — CLOSEOUT-V3 결과, 2026-09-13)
+- **KKday activity LIVE**: 일반(headed) 브라우저 검증 — 도시 목적지
+  /{locale}/destination/kr-{city} 가 5도시×en/ja/ko/**zh-cn(간체 실존)** 200,
+  locale 정확·cid/ud 잔존 → activity 활성(도시별 KKday 단독, ud2=<city>activity).
+  Klook 확인 시 추천 Klook→대안 KKday 로 재배열 예정.
+- **C 보완 완료**: 숙박 전 활성 조합(도시×locale)이 직접 착지 근거 확보 —
+  gyeongju en/ja·jeonju ko·seoul ja·jeju en 추가 실측으로 공통커버 잔여 0.
+- **ZH 숙박 4도시**: trip.com 공식 locale 목록에 간체 없음(재확인 — hk/tw=번체,
+  본토는 별도 서비스), Agoda 는 headed 200 에서도 cityId 미노출 → 남은 경로는
+  Owner 대시보드 생성뿐(§9.6). 번체를 간체로 보고하지 않는다.
+- Klook: /korea-rail/·/en-US/korea-bus/ 착지 페이지는 headed 200 확인(정상
+  카테고리). 차단 요소는 착지가 아니라 **제휴 생성 규칙(aff_adid)** 뿐.
+
+### 9.6 잔여 Owner 확인표 (v4 — 축소판, 각 1회)
+| # | 행동(⑤) | 붙여넣을 일반 URL | 활성 범위(⑥) |
+|---|---|---|---|
+| 1 | Klook 대시보드 링크 변환기에 우측 URL 을 넣어 생성된 제휴 링크 원문 전달 | https://www.klook.com/ko/wifi-sim-card/?country_id=13 | 통신/eSIM × 5도시 공통 × (생성 locale) — 버튼 "Korea eSIM·SIM" |
+| 2 | 〃 | https://www.klook.com/korea-rail/ | 교통(기차) × 5도시 공통 |
+| 3 | 〃 | https://www.klook.com/en-US/korea-bus/ | 교통(버스) × 5도시 공통 |
+| 4 | 〃 (도시 1건 예: 서울 검색) — aff_adid 가 부산 원본(1427383)과 같은지 회신 | https://www.klook.com/ko/search/result/?query=%EC%84%9C%EC%9A%B8 | 같음=도시검색 규칙 일반화(activity 추천 Klook 승격) / 다름=목적지별 생성 요청 |
+| 5 | Agoda 대시보드 partnersearch 링크 4건 생성(도시만 변경) 전달 | (대시보드 내 도시 선택) | stay zh 4도시 + 해당 도시 추천 Agoda 승격(Trip 은 대안으로) |
+
+파트너 실적 반영·구매 귀속·Booking 인증은 운영/외부 대기(§8) — 구현 마감을
+막지 않는다.
