@@ -768,6 +768,6 @@ city/product landing · mobile click QA 를 함께 결정/검증한다.
 | AI Writing parser safety guard | CLOSED (2026-09-11, 58aaf43 — raw payload 노출 0 계약) |
 | Busan 5-city selector image | CLOSED (2026-09-11, e48466a — Hub Hero 와 도시 identity 동기화, 타 표면 유지) |
 | Production Visual/Product Acceptance (PHASE 9) | **PASS** (2026-09-11, 70a296c — Golden Journey 전항 정상, in-task fix 3) |
-| Partner / Affiliate (PHASE 10) | **PARTIAL LIVE** (2026-09-13, 6846f80 — stay: 부산=Agoda 4locale·경주/전주=Trip.com en/ja/ko, 표면 2종·가시 고지·클릭추적 LIVE 검증. Klook/KKday·기타 목적=OFF(착지 미확인)·Booking 보류. 구세대 게이트 불변 차단. 파트너 실적 반영·구매 귀속은 별도 대기) |
+| Partner / Affiliate (PHASE 10) | **PARTIAL LIVE v2** (2026-09-13, 4494de4 — stay 5도시: 부산=Agoda 추천+Trip 대안, 4도시=Trip 단독 en/ja/ko·zh는 부산만. Klook/KKday·통신/교통/액티비티=OFF(Owner 실기기 확인표 readiness §9.2 대기)·Booking 보류. 구세대 차단 불변. 실적·귀속 별도 대기) |
 | AI/API cost guard | OPEN (PHASE 11) |
 | Final Release | OPEN (PHASE 12) |

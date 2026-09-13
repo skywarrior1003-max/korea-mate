@@ -189,3 +189,60 @@ CID 부착 방식은 전용 화면에 안내됨[Owner 확인], Airalo 제외·Bo
   방지). 영향 코스의 임시 비노출/배지 등 제한은 Data Track 수정 일정에 따라
   Owner 가 결정 — 이번 작업에서 임의 수정하지 않았다.
 - 이 문서 자체도 커밋하지 않았다(작업 계약) — 채택 시 커밋 지시 필요.
+
+---
+
+## 9. (v3 — 2026-09-13, COMPLETION-V2) 확장 결과·확인표·커버리지
+
+### 9.1 활성 매트릭스 v2 (stay)
+| 도시 | 추천 | 대안 | locale | 근거 |
+|---|---|---|---|---|
+| 부산 | Agoda(17172) | Trip.com(253) | en/ja/ko (+zh 는 Agoda 만) | Owner 원본+공식 실측, 착지 검증 |
+| 서울 | Trip.com(274) | — | en/ja/ko | 공식 페이지 실측 목록 ID, 착지 200·Alliance 잔존 |
+| 제주 | Trip.com(737) | — | en/ja/ko | 동일 |
+| 경주 | Trip.com(3675) | — | en/ja/ko | Owner 원본 |
+| 전주 | Trip.com(61380) | — | en/ja/ko | Owner 원본 |
+
+zh(간체): hk.trip.com 은 번체(zh-HK 실측)라 간체 UI 와 불일치 → Trip zh 미지원.
+따라서 zh 숙박은 Agoda 확보 도시(부산)만. 서울/제주/경주/전주 zh = OFF(사유 위).
+Agoda 신규 도시 ID 는 자동화가 전면 봇차단이라 확보 불가 — Owner 확인표 §9.2.
+
+### 9.2 Owner 확인표 (한 번에 — 실기기 브라우저에서 각 링크 클릭 확인)
+| # | 파트너 | 적용 도시·언어 | 목적 | 버튼 문구(예) | 클릭할 실제 링크 | 정상일 때 보여야 할 것 | 확인 요청 |
+|---|---|---|---|---|---|---|---|
+| 1 | Klook | 전국(우선 en/ko) | eSIM·유심·WiFi | "Korea eSIM & SIM — Klook" | https://affiliate.klook.com/redirect?aid=123610&aff_adid=1427383&k_site=https%3A%2F%2Fwww.klook.com%2Fko%2Fwifi-sim-card%2F%3Fcountry_id%3D13 | Klook 한국 유심/eSIM 카테고리 페이지 | 정상 착지 여부 + 상단에 로그인 계정 기준 제휴 인식(가능하면 대시보드 클릭 1 반영) |
+| 2 | Klook | 전국(en) | 기차(도시 간) | "Korea Rail Pass — Klook" | https://affiliate.klook.com/redirect?aid=123610&aff_adid=1427383&k_site=https%3A%2F%2Fwww.klook.com%2Fkorea-rail%2F | Klook 한국 기차 페이지 | 동일 |
+| 3 | Klook | 전국(en) | 고속버스 | "Intercity Bus — Klook" | https://affiliate.klook.com/redirect?aid=123610&aff_adid=1427383&k_site=https%3A%2F%2Fwww.klook.com%2Fen-US%2Fkorea-bus%2F | Klook 한국 버스 페이지 | 동일 |
+| 4 | Klook | 도시별(우선 부산 ko) | 액티비티·패스·티켓 | "부산 액티비티 더 보기 — Klook" | (Owner 원본 부산 검색 링크 §1 그대로) | 부산 검색 결과 | **aff_adid 1427383 이 목적지 달라도 유효한지**가 핵심 — 대시보드에서 다른 목적지 1건 생성해 값 변동 여부 확인 |
+| 5 | KKday | 전국(en) | 액티비티(한국) | "Korea activities — KKday" | https://www.kkday.com/en/country/south-korea?cid=26267&ud1=gokoreamate&ud2=koreaactivity | KKday 한국 국가 페이지 | 정상 착지 여부(봇차단이 실기기에도 뜨는지) |
+| 6 | Agoda | 서울/제주/경주/전주 | 숙박 | (기존 문구) | Owner 대시보드에서 partnersearch 링크 4건 생성(도시만 변경) | 해당 도시 호텔 검색 | **도시 ID 4개 확보**(자동화 전면 차단으로 저희가 얻을 수 없음) |
+
+적용 범위: #1~3 확인 시 해당 목적을 전국 공통 링크로 5도시 표면에서 재사용
+(도시별 전수 수집 없음). #4 확인 시 Klook 도시 검색을 activity 로 활성.
+#5 확인 시 KKday 를 activity 대안으로 승격. #6 수신 시 Agoda 를 해당 도시
+추천으로 승격(Trip.com 은 대안으로 이동). 미확인 항목은 계속 OFF.
+
+### 9.3 기존 QA 근거 대조 (도시×언어, 표면 무관 — URL 은 표면 간 동일)
+| 조합 | 직접 외부 착지 | 공통 테스트 커버 |
+|---|---|---|
+| busan en/ja/zh | Preview+LIVE 직접 | — |
+| busan ko | raw fetch(§1.5) + **v2 LIVE 직접(이번)** | 빌더 테스트 |
+| gyeongju ko / jeonju en | Preview+LIVE 직접 | — |
+| gyeongju en·ja / jeonju ko | (동일 도메인·규격) | 빌더+매트릭스 테스트 |
+| jeonju ja | **v2 LIVE 직접(이번)** | — |
+| seoul en·ko / jeju ja | **v2 Preview 직접 + LIVE(이번)** | — |
+| seoul ja / jeju en·ko | 동일 도메인 규격 | 빌더+매트릭스 테스트 |
+| busan 대안 Trip(en) | **v2 Preview 직접** | 매트릭스 테스트 |
+표면 2종(hub/my-trip)은 같은 offersFor 출력을 렌더 — my-trip 은 row/href 검증
+(외부 중복 클릭 생략, §5 계약).
+
+### 9.4 정정 2건
+- **trip_sub1 실값**: 직전 보고의 "gkm_hotel_경주/전주" 는 설명용 한글 표기였다.
+  실제 전송값은 영문 slug — `gkm_hotel_gyeongju` · `gkm_hotel_jeonju` (신규
+  도시도 `gkm_hotel_busan` / `gkm_hotel_seoul` / `gkm_hotel_jeju`).
+  코드·테스트로 고정, 착지 URL 에서 실측.
+- **코스 오연결 영향 표현**: "코스 상세 제휴 OFF 로 출시 영향 해결" 은 부정확.
+  OFF 는 코스 화면 내 제휴 노출만 격리한다. **코스→My Trip 채택 시 오연결
+  장소(23건 계열)가 사용자의 일정에 들어가는 영향은 별개로 미해결**이다
+  (Data Track 데이터 수정 대기 — regional JSON 무변경 확인 2026-09-13).
+  영향 코스의 임시 채택 제한/노출 배지 여부는 Owner 판단사항으로 남긴다.
