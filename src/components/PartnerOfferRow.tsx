@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from "next-intl";
 import AffiliateLink from "@/components/AffiliateLink";
 import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
 import {
-  offersFor, isLegacyAffiliateUrl, PARTNER_NAMES, type PartnerLocale,
+  offersByPurpose, isLegacyAffiliateUrl, PARTNER_NAMES, type PartnerLocale,
 } from "@/config/partner-links";
 
 const SUPPORTED: readonly string[] = ["en", "ko", "ja", "zh"];
@@ -33,53 +33,61 @@ export default function PartnerOfferRow({
   const rawLocale = useLocale();
   if (!isEditorialAffiliateEnabled(surface)) return null;
   const locale = (SUPPORTED.includes(rawLocale) ? rawLocale : "en") as PartnerLocale;
-  const offers = offersFor(citySlug, locale).filter(o => !isLegacyAffiliateUrl(o.href));
-  if (offers.length === 0) return null;
-  const offer = offers[0]!;      // 추천 1
-  const alt = offers[1] ?? null; // 검증된 대안이 있을 때만(최대 1)
+  const by = offersByPurpose(citySlug, locale);
+  const clean = (arr: typeof by.stay) => arr.filter(o => !isLegacyAffiliateUrl(o.href));
+  // 목적별 줄: [cta i18n 키, 추천, 대안]. 검증된 목적만 줄이 생긴다.
+  const rows = ([
+    ["partnerStayCta", clean(by.stay)],
+    ["partnerActivityCta", clean(by.activity)],
+  ] as const).filter(([, offers]) => offers.length > 0);
+  if (rows.length === 0) return null;
 
   return (
-    <div className={`flex items-center justify-between gap-3 rounded-[4px] border px-4 py-3 ${className}`}
+    <div className={`rounded-[4px] border px-4 py-3 flex flex-col gap-2 ${className}`}
       style={{ borderColor: "var(--qh-line, #DFE7F2)", backgroundColor: "var(--qh-surface, #fff)" }}>
-      <span className="min-w-0">
-        <AffiliateLink
-          href={offer.href}
-          provider={offer.partner}
-          title={`stay-${citySlug}`}
-          city={citySlug}
-          kind="affiliate"
-          surface={surface}
-          purpose={offer.purpose}
-          locale={locale}
-          className="gkm-focus block text-[14px] font-semibold truncate"
-        >
-          <span style={{ color: "var(--qh-ink, #16233B)" }}>
-            {t("partnerStayCta", { city: cityLabel })} · {PARTNER_NAMES[offer.partner]} →
+      {rows.map(([ctaKey, offers]) => {
+        const offer = offers[0]!;      // 추천 1
+        const alt = offers[1] ?? null; // 검증된 대안 최대 1
+        return (
+          <span key={ctaKey} className="min-w-0 block">
+            <AffiliateLink
+              href={offer.href}
+              provider={offer.partner}
+              title={`${offer.purpose}-${citySlug}`}
+              city={citySlug}
+              kind="affiliate"
+              surface={surface}
+              purpose={offer.purpose}
+              locale={locale}
+              className="gkm-focus block text-[14px] font-semibold truncate"
+            >
+              <span style={{ color: "var(--qh-ink, #16233B)" }}>
+                {t(ctaKey, { city: cityLabel })} · {PARTNER_NAMES[offer.partner]} →
+              </span>
+            </AffiliateLink>
+            {alt && (
+              <span className="block mt-0.5 text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
+                <AffiliateLink
+                  href={alt.href}
+                  provider={alt.partner}
+                  title={`${alt.purpose}-${citySlug}`}
+                  city={citySlug}
+                  kind="affiliate"
+                  surface={surface}
+                  purpose={alt.purpose}
+                  locale={locale}
+                  className="gkm-focus underline underline-offset-2"
+                >
+                  {t("partnerAlt", { partner: PARTNER_NAMES[alt.partner] })}
+                </AffiliateLink>
+              </span>
+            )}
           </span>
-        </AffiliateLink>
-        {/* 사용자 눈에 읽히는 제휴 고지 — 항상 링크와 함께. 대안은 같은 줄의
-            조용한 보조 링크(추천과 시각 위계 구분). */}
-        <span className="block mt-0.5 text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
-          {t("partnerSponsored")}
-          {alt && (
-            <>
-              {" · "}
-              <AffiliateLink
-                href={alt.href}
-                provider={alt.partner}
-                title={`stay-${citySlug}`}
-                city={citySlug}
-                kind="affiliate"
-                surface={surface}
-                purpose={alt.purpose}
-                locale={locale}
-                className="gkm-focus underline underline-offset-2"
-              >
-                {t("partnerAlt", { partner: PARTNER_NAMES[alt.partner] })}
-              </AffiliateLink>
-            </>
-          )}
-        </span>
+        );
+      })}
+      {/* 사용자 눈에 읽히는 제휴 고지 — 이 박스 전체가 제휴 영역임을 항상 명시 */}
+      <span className="block text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
+        {t("partnerSponsored")}
       </span>
     </div>
   );

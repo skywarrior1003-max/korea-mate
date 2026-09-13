@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   buildAgodaCitySearch, buildTripcomHotels, buildKlookCitySearch, buildKkday,
-  offersFor, stayOfferFor, stayOffersFor, isLegacyAffiliateUrl,
+  offersFor, stayOfferFor, stayOffersFor, activityOffersFor, offersByPurpose, isLegacyAffiliateUrl,
   AGODA_CID, TRIP_ALLIANCE_ID, TRIP_SID, TRIP_SUB3, KLOOK_AID, KLOOK_AFF_ADID, KKDAY_CID,
   type PartnerLocale,
 } from "./partner-links.ts";
@@ -89,11 +89,30 @@ test("★활성 매트릭스 v2 — stay: 부산=Agoda추천+Trip대안(en/ja/ko
     assert.equal(stayOffersFor(c, "zh").length, 0, `${c}/zh 숨김`);
   }
   assert.equal(stayOffersFor("tokyo", "en").length, 0);
-  // esim/transport/activity 는 여전히 어떤 도시·언어에서도 활성 0 (Klook·KKday 착지 미확인)
+  // esim/transport 는 여전히 어떤 도시·언어에서도 활성 0 (Klook 생성 규칙 미확보)
   for (const l of LOCALES) for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
     const purposes = new Set(offersFor(c, l).map(o => o.purpose));
-    for (const p of ["esim", "transport", "activity"]) assert.ok(!purposes.has(p as never), `${c}/${l}/${p}`);
+    for (const p of ["esim", "transport"]) assert.ok(!purposes.has(p as never), `${c}/${l}/${p}`);
   }
+});
+
+test("★activity v3 — KKday 도시 목적지 5도시×4locale(zh=간체 zh-cn), Klook 없인 단독 제공", () => {
+  for (const l of LOCALES) for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
+    const offers = activityOffersFor(c, l);
+    assert.equal(offers.length, 1, `${c}/${l}`);
+    assert.equal(offers[0]!.partner, "kkday");
+    const u = new URL(offers[0]!.href);
+    assert.equal(u.searchParams.get("cid"), KKDAY_CID);
+    assert.equal(u.searchParams.get("ud1"), "gokoreamate");
+    assert.equal(u.searchParams.get("ud2"), `${c}activity`, "ud2 영숫자 도시 태그");
+    assert.match(u.pathname, new RegExp(`^/(en|ja|ko|zh-cn)/destination/kr-${c}$`));
+  }
+  assert.equal(new URL(activityOffersFor("busan", "zh")[0]!.href).pathname, "/zh-cn/destination/kr-busan", "zh 는 간체 경로");
+  assert.equal(activityOffersFor("tokyo", "en").length, 0);
+  // offersByPurpose 표면 계약 — stay 다음 activity 순서
+  const by = offersByPurpose("busan", "en");
+  assert.equal(by.stay[0]!.partner, "agoda");
+  assert.equal(by.activity[0]!.partner, "kkday");
 });
 
 test("★구세대 차단 — 활성 전 조합의 URL 에 41763/단축링크 0 + 감지기 동작", () => {
@@ -102,7 +121,10 @@ test("★구세대 차단 — 활성 전 조합의 URL 에 41763/단축링크 0 
   for (const l of LOCALES) for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
     for (const o of offersFor(c, l)) {
       assert.ok(!isLegacyAffiliateUrl(o.href), `${c}/${l}: ${o.href}`);
-      assert.ok(o.href.includes(AGODA_CID) || o.href.includes(TRIP_ALLIANCE_ID), "승인 ID 미포함");
+      assert.ok(
+        o.href.includes(AGODA_CID) || o.href.includes(TRIP_ALLIANCE_ID) || o.href.includes(`cid=${KKDAY_CID}`),
+        "승인 ID 미포함",
+      );
     }
   }
 });

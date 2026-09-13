@@ -98,8 +98,26 @@ export function buildKlookCitySearch(query: string, locale: PartnerLocale): stri
   return u.toString();
 }
 
-// ── KKday — cid 부착 규격 (활성 0: 착지가 봇 방어로 미확인) ──
+// ── KKday — cid 부착 규격 (Owner 전용 링크 화면의 공식 안내 근거) ──
+// v3(2026-09-13): 일반 브라우저(headed) 검증 — 도시 목적지
+// `/{locale}/destination/kr-{city}` 가 5도시 × en/ja/ko/zh-cn 에서 200 착지,
+// locale·도시 정확, cid/ud 잔존. zh-cn(간체) 경로 실존 — zh 사용자 공백 해소.
 const UD_ALNUM = /^[a-z0-9]+$/i;
+
+const KKDAY_LOCALE_SEG: Record<PartnerLocale, string> = {
+  en: "en", ja: "ja", ko: "ko", zh: "zh-cn",
+};
+/** headed 검증 완료 도시(도시 축 en 전수 + locale 축 busan/seoul) — 추측 아님 */
+const KKDAY_CITY_SLUGS: Partial<Record<string, string>> = {
+  busan: "kr-busan", seoul: "kr-seoul", jeju: "kr-jeju",
+  gyeongju: "kr-gyeongju", jeonju: "kr-jeonju",
+};
+
+export function buildKkdayCityActivity(citySlug: string, locale: PartnerLocale): string | null {
+  const dest = KKDAY_CITY_SLUGS[citySlug.toLowerCase()];
+  if (!dest) return null;
+  return buildKkday(`/${KKDAY_LOCALE_SEG[locale]}/destination/${dest}`, `${citySlug.toLowerCase()}activity`);
+}
 
 export function buildKkday(pathname: string, ud2: string): string | null {
   // ud 태그는 영숫자만 — "test" 는 시험용이라 운영 조립을 거부한다.
@@ -155,10 +173,29 @@ export function stayOfferFor(citySlug: string, locale: PartnerLocale): PartnerOf
 }
 
 /**
- * 표면 공통 진입점. 지금은 검증된 목적이 stay 뿐이다 —
- * esim/transport/activity 는 착지 검증 전이므로 어떤 조합도 만들지 않는다
- * (Klook·KKday 는 Owner 실기기 확인표 이후 활성).
+ * activity 후보 — Owner 정책 순서 Klook → KKday.
+ * Klook 은 제휴 링크 생성 규칙(aff_adid) 미확보로 아직 후보에 못 들어간다 —
+ * "두 파트너 모두 준비돼야 활성" 조건을 만들지 않으므로, 검증된 KKday 를
+ * 단독 제공한다(Klook 확인 시 추천으로 승격, KKday 는 대안으로 이동).
  */
+export function activityOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
+  const kkday = buildKkdayCityActivity(citySlug, locale);
+  return kkday ? [{ partner: "kkday", purpose: "activity", href: kkday }] : [];
+}
+
+/**
+ * 표면 공통 진입점 — 목적 순서대로 각 목적의 [추천, 대안?] 을 평탄화해
+ * 돌려준다. esim/transport 는 착지·생성 규칙 검증 전이라 어떤 조합도 없다
+ * (Klook 카테고리는 Owner 생성 링크 확인표 대기).
+ */
+export function offersByPurpose(citySlug: string, locale: PartnerLocale): Record<"stay" | "activity", PartnerOffer[]> {
+  return {
+    stay: stayOffersFor(citySlug, locale),
+    activity: activityOffersFor(citySlug, locale),
+  };
+}
+
 export function offersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
-  return stayOffersFor(citySlug, locale);
+  const by = offersByPurpose(citySlug, locale);
+  return [...by.stay, ...by.activity];
 }
