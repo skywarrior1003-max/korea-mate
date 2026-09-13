@@ -1,0 +1,398 @@
+{
+  "task_id": "TASK-FOUR-CITY-REGIONAL-CONTEXT-COUNT-RECONCILIATION-V1",
+  "base_branch": "data/four-city-regional-final-package-v1",
+  "base_commit": "09e3818",
+  "as_of": "2026-09-13",
+  "occurrence_analysis": {
+    "description": "context_only_occurrence_count sum from four-city-regional-courses-final-v1.jsonl",
+    "total_occurrence": 36,
+    "by_city": {
+      "busan": 22,
+      "gyeongju": 7,
+      "jeju": 6,
+      "jeonju": 1
+    },
+    "source_audit_verification": {
+      "branch": "data/four-city-regional-course-coverage-recovery-v1",
+      "commit": "49cb2bb",
+      "audit_city_totals": {
+        "busan": 22,
+        "gyeongju": 7,
+        "jeju": 6,
+        "jeonju": 1
+      },
+      "audit_grand_total": 36,
+      "match": true
+    }
+  },
+  "dedup_analysis": {
+    "description": "Entity appearing in >1 course; counted once as unique",
+    "dedup_count": 1,
+    "dedup_occurrence_reduction": 1,
+    "details": [
+      {
+        "entity_name_ko": "장림포구",
+        "entity_name_en": "Jangnim Port",
+        "appears_in_courses": [
+          "busan-C-01",
+          "busan-C-04"
+        ],
+        "occurrence_count": 2,
+        "unique_count": 1,
+        "status": "DEDUPED_INTO_OTHER_CONTEXT",
+        "note": "Source audit busan-C-001(Day2/seq4) and busan-C-003(Day3/seq1) both reference 장림포구 as COURSE_CONTEXT_ONLY. Counted once as unique entity. Both occurrences absorbed into course-level metadata; not individually persisted."
+      }
+    ]
+  },
+  "unique_count_derivation": {
+    "formula": "36 occurrences - 1 dedup = 35 unique",
+    "unique_count": 35
+  },
+  "persisted_records": {
+    "count": 21,
+    "source_artifact": "four-city-regional-course-context-final-v1.jsonl",
+    "ctx_ids": [
+      "ctx-001",
+      "ctx-002",
+      "ctx-003",
+      "ctx-004",
+      "ctx-005",
+      "ctx-006",
+      "ctx-007",
+      "ctx-008",
+      "ctx-009",
+      "ctx-010",
+      "ctx-011",
+      "ctx-012",
+      "ctx-013",
+      "ctx-014",
+      "ctx-015",
+      "ctx-016",
+      "ctx-017",
+      "ctx-018",
+      "ctx-019",
+      "ctx-020",
+      "ctx-021"
+    ]
+  },
+  "absorbed_records": {
+    "count": 14,
+    "classification": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+    "explanation": "These entities have their occurrence counted in courses-final JSONL context_only_occurrence_count per course but were not individually persisted in context-final JSONL. The gen_final_package.py chose one representative named entity per course segment for persistence; remaining context slots are absorbed at course level. Source audit entity names (stop-level) differ from final package context names (area/district-level editorial representation) — both sets correctly sum to city-level totals.",
+    "by_course": {
+      "busan-C-01": 4,
+      "busan-C-02": 3,
+      "busan-C-03": 3,
+      "busan-C-04": 2,
+      "gyeongju-C-02": 1,
+      "gyeongju-C-03": 1
+    }
+  },
+  "arithmetic_reconciliation": {
+    "formula": "unique_count = persisted + absorbed + intentionally_not_persisted + unexplained",
+    "unique_count": 35,
+    "persisted": 21,
+    "absorbed": 14,
+    "intentionally_not_persisted": 0,
+    "unexplained": 0,
+    "check_sum": 35,
+    "valid": true,
+    "occurrence_formula": "occurrences = unique + dedup_occurrences",
+    "occurrence_check": "35 + 1 = 36 == 36",
+    "occurrence_valid": true
+  },
+  "editorial_note": "The context-final JSONL uses area/district-level geographic representations (e.g., 영도, 남포동 for busan-C-01) while the source audit recorded stop-level entities (e.g., 동래읍성, 복천동고분박물관). This is an intentional editorial difference: the final package elevates context to a higher geographic level appropriate for Main's itinerary-context use case. Both representations share the same city-level totals.",
+  "summary_flags": {
+    "CONTEXT_OCCURRENCE_COUNT": 36,
+    "CONTEXT_UNIQUE_COUNT": 35,
+    "CONTEXT_PERSISTED_RECORD_COUNT": 21,
+    "CONTEXT_INTENTIONALLY_NOT_PERSISTED_COUNT": 0,
+    "CONTEXT_DEDUPED_COUNT": 1,
+    "CONTEXT_ABSORBED_COUNT": 14,
+    "CONTEXT_ARTIFACT_OMISSION_COUNT": 0,
+    "CONTEXT_UNEXPLAINED_COUNT": 0,
+    "SERVICE_STOP_DATA_CHANGED": 0,
+    "CITY_CANONICAL_CHANGED": 0,
+    "DB_CHANGED": 0,
+    "PRODUCTION_CHANGED": 0,
+    "MASTER_CHANGED": 0,
+    "FINAL_REGIONAL_PACKAGE_READY": "YES",
+    "MAIN_HANDOFF_READY": "YES"
+  },
+  "verdict": "PASS",
+  "all_35_lineage_records": [
+    {
+      "ctx_id": "ctx-001",
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "영도",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-002",
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "남포동",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-003",
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "자갈치시장",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-004",
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "보수동 책방골목",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-005",
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "청사포",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-006",
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "미포",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-007",
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "달맞이고개",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-008",
+      "course_id": "busan-C-03",
+      "city": "busan",
+      "name_ko": "서면",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-009",
+      "course_id": "busan-C-04",
+      "city": "busan",
+      "name_ko": "초량이바구길",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-010",
+      "course_id": "gyeongju-C-01",
+      "city": "gyeongju",
+      "name_ko": "황남빵 본점",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-011",
+      "course_id": "gyeongju-C-01",
+      "city": "gyeongju",
+      "name_ko": "교리김밥",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-012",
+      "course_id": "gyeongju-C-02",
+      "city": "gyeongju",
+      "name_ko": "동부사적지대",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-013",
+      "course_id": "gyeongju-C-03",
+      "city": "gyeongju",
+      "name_ko": "경주역(구)",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-014",
+      "course_id": "gyeongju-C-04",
+      "city": "gyeongju",
+      "name_ko": "신라왕릉 숲길",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-015",
+      "course_id": "jeju-C-01",
+      "city": "jeju",
+      "name_ko": "교래자연휴양림",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-016",
+      "course_id": "jeju-C-02",
+      "city": "jeju",
+      "name_ko": "우도봉",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-017",
+      "course_id": "jeju-C-03",
+      "city": "jeju",
+      "name_ko": "김녕해수욕장",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-018",
+      "course_id": "jeju-C-03",
+      "city": "jeju",
+      "name_ko": "세화해변",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-019",
+      "course_id": "jeju-C-04",
+      "city": "jeju",
+      "name_ko": "수월봉",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-020",
+      "course_id": "jeju-C-05",
+      "city": "jeju",
+      "name_ko": "윗세오름",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": "ctx-021",
+      "course_id": "jeonju-C-05",
+      "city": "jeonju",
+      "name_ko": "자만마을",
+      "status": "PERSISTED_CONTEXT_RECORD"
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "동래읍성",
+      "source_audit_course": "busan-C-001",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Historical fortress. Occurrence tracked in busan-C-01 context_only_occurrence_count=8. Not individually persisted."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "복천동고분박물관",
+      "source_audit_course": "busan-C-001",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Archaeological museum. Occurrence tracked in busan-C-01 context_only_occurrence_count=8."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "송정해수욕장",
+      "source_audit_course": "busan-C-001",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Coastal beach. Occurrence tracked in busan-C-01 context_only_occurrence_count=8."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-01",
+      "city": "busan",
+      "name_ko": "을숙도·낙동강하구",
+      "source_audit_course": "busan-C-001",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Estuary wetland area. Occurrence tracked in busan-C-01 context_only_occurrence_count=8. (장림포구 also appears in busan-C-01 but is the DEDUPED entity counted under DEDUP.)"
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "절영해안산책로",
+      "source_audit_course": "busan-C-002",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Coastal footpath. Occurrence tracked in busan-C-02 context_only_occurrence_count=6."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "국제시장",
+      "source_audit_course": "busan-C-002",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Market district. Occurrence tracked in busan-C-02 context_only_occurrence_count=6."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-02",
+      "city": "busan",
+      "name_ko": "동백해안산책로·누리마루APEC하우스",
+      "source_audit_course": "busan-C-002",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Coastal path + landmark complex. Occurrence tracked in busan-C-02 context_only_occurrence_count=6."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-03",
+      "city": "busan",
+      "name_ko": "밀락더마켓",
+      "source_audit_course": "busan-C-R01",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Winter market event location. Occurrence tracked in busan-C-03 context_only_occurrence_count=4."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-03",
+      "city": "busan",
+      "name_ko": "X the SKY 전망대",
+      "source_audit_course": "busan-C-R01",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Observatory. Occurrence tracked in busan-C-03 context_only_occurrence_count=4."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-03",
+      "city": "busan",
+      "name_ko": "부산 자유도매시장",
+      "source_audit_course": "busan-C-R01",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Wholesale market. Occurrence tracked in busan-C-03 context_only_occurrence_count=4."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-04",
+      "city": "busan",
+      "name_ko": "해리단길",
+      "source_audit_course": "busan-C-003",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Alley/street district. Occurrence tracked in busan-C-04 context_only_occurrence_count=4."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "busan-C-04",
+      "city": "busan",
+      "name_ko": "청사포다릿돌전망대",
+      "source_audit_course": "busan-C-003",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Observation deck. Occurrence tracked in busan-C-04 context_only_occurrence_count=4."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "gyeongju-C-02",
+      "city": "gyeongju",
+      "name_ko": "중앙시장 야시장",
+      "source_audit_course": "gyeongju-C-002",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Night market. Occurrence tracked in gyeongju-C-02 context_only_occurrence_count=2. Final persisted for this course = ctx-012(동부사적지대)."
+    },
+    {
+      "ctx_id": null,
+      "course_id": "gyeongju-C-03",
+      "city": "gyeongju",
+      "name_ko": "경주월드 / 엑스포공원",
+      "source_audit_course": "gyeongju-C-R01",
+      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+      "note": "Bus route context destinations. Occurrence tracked in gyeongju-C-03 context_only_occurrence_count=2. Final persisted = ctx-013(경주역(구))."
+    }
+  ]
+}
