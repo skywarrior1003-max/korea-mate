@@ -1,0 +1,859 @@
+{
+  "task_id": "TASK-FOUR-CITY-REGIONAL-CONTEXT-LINEAGE-ONE-TO-ONE-QA-V1",
+  "base_branch": "data/four-city-regional-final-package-v1",
+  "base_commit": "09e3818",
+  "as_of": "2026-09-13",
+  "section_1_occurrence_layer": {
+    "description": "36 total context occurrence slots from four-city-regional-courses-final-v1.jsonl",
+    "total_occurrence_count": 36,
+    "by_city": {
+      "busan": 22,
+      "gyeongju": 7,
+      "jeju": 6,
+      "jeonju": 1
+    },
+    "by_course": {
+      "busan-C-01": 8,
+      "busan-C-02": 6,
+      "busan-C-03": 4,
+      "busan-C-04": 4,
+      "gyeongju-C-01": 2,
+      "gyeongju-C-02": 2,
+      "gyeongju-C-03": 2,
+      "gyeongju-C-04": 1,
+      "jeju-C-01": 1,
+      "jeju-C-02": 1,
+      "jeju-C-03": 2,
+      "jeju-C-04": 1,
+      "jeju-C-05": 1,
+      "jeonju-C-05": 1
+    },
+    "dedup_note": "장림포구 appears in 2 courses (busan-C-01 + busan-C-04) → 2 occurrences, 1 unique entity. Dedup reduces 36→35 unique."
+  },
+  "section_2_dedup_analysis": {
+    "description": "장림포구 appears in 2 source-audit courses → 1 unique entity (dedup reduces 36→35)",
+    "entity_ko": "장림포구",
+    "entity_en": "Jangnim Port",
+    "appears_in_courses": [
+      "busan-C-01",
+      "busan-C-04"
+    ],
+    "source_audit_courses": [
+      "busan-C-001 (Day3/seq4)",
+      "busan-C-003 (Day3/seq1)"
+    ],
+    "occurrence_count": 2,
+    "unique_count": 1,
+    "final_disposition": "DEDUPED_AND_ABSORBED",
+    "canonical_course": "busan-C-01",
+    "dedup_occurrence_course": "busan-C-04",
+    "resolution": "장림포구 IS one of the 35 unique entities. Canonical slot = busan-C-01 absorbed slot 4 (DEDUPED_AND_ABSORBED). The busan-C-04 occurrence is the dedup occurrence (not a new unique). Not individually persisted in context-final JSONL. CORRECTION: Previous reconciliation placed 장림포구 in a separate dedup bucket without a disposition in all_35_lineage_records, and listed 을숙도·낙동강하구 in busan-C-01 slot 4. This is now corrected."
+  },
+  "section_3_unique_entity_universe": {
+    "description": "35 unique context entities (36 occurrences - 1 dedup = 35 unique)",
+    "total_unique_count": 35,
+    "persisted_count": 21,
+    "absorbed_count": 14,
+    "other_explained_count": 0,
+    "arithmetic": "35 = 21 PERSISTED + 14 ABSORBED + 0 OTHER",
+    "arithmetic_valid": true,
+    "de_scoped_entities": [
+      {
+        "entity_ko": "을숙도·낙동강하구",
+        "entity_en": "Eulseukdo Island / Nakdong River Estuary",
+        "source_audit_course": "busan-C-001",
+        "source_audit_seq": "Day3/seq5",
+        "reason": "Source audit busan-C-001 has 5 COURSE_CONTEXT_ONLY items: 동래읍성/복천동고분박물관/송정해수욕장/장림포구/을숙도·낙동강하구. Final package busan-C-01 allocates 4 non-persisted context slots. Since 장림포구 is DEDUPED_AND_ABSORBED (occupying slot 4), 을숙도·낙동강하구 is outside the 35-unique context universe. City-level total (22 busan context occurrences) is preserved by the final package.",
+        "universe_membership": "OUTSIDE_35_UNIQUE_CONTEXT_UNIVERSE",
+        "in_previous_reconciliation_bug": "Previous reconciliation incorrectly listed 을숙도·낙동강하구 in busan-C-01 absorbed slot 4 (displacing 장림포구). This is now corrected."
+      }
+    ]
+  },
+  "section_4_one_to_one_lineage": {
+    "description": "Each of the 35 unique entities with exactly one final disposition, destination, and lineage evidence",
+    "total_count": 35,
+    "all_35_lineage_records": [
+      {
+        "unique_entity_id": "ctx-001",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "영도",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-001",
+        "lineage_source": "Final package editorial: area/district. Source audit: 부산C-001 stop-level entities (동래읍성 etc.) elevated to area representation.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-002",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "남포동",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-002",
+        "lineage_source": "Final package editorial: area/district.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-003",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "자갈치시장",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-003",
+        "lineage_source": "Final package editorial: stop-level market.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-004",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "보수동 책방골목",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-004",
+        "lineage_source": "Final package editorial: area/street.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-005",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "청사포",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-005",
+        "lineage_source": "Final package editorial: coastal village.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-006",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "미포",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-006",
+        "lineage_source": "Final package editorial: coastal village.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-007",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "달맞이고개",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-007",
+        "lineage_source": "Final package editorial: hill/drive route.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-008",
+        "city": "busan",
+        "course_id": "busan-C-03",
+        "name_ko": "서면",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-008",
+        "lineage_source": "Final package editorial: area/district (winter shopping context). Audit course: busan-C-R01.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-009",
+        "city": "busan",
+        "course_id": "busan-C-04",
+        "name_ko": "초량이바구길",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-009",
+        "lineage_source": "Final package editorial: area/alley street. Audit course: busan-C-003.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-010",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-01",
+        "name_ko": "황남빵 본점",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-010",
+        "lineage_source": "Stop-level food landmark.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-011",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-01",
+        "name_ko": "교리김밥",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-011",
+        "lineage_source": "Stop-level food landmark.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-012",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-02",
+        "name_ko": "동부사적지대",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-012",
+        "lineage_source": "Area/zone: historic district.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-013",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-03",
+        "name_ko": "경주역(구)",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-013",
+        "lineage_source": "Stop-level: old Gyeongju station bus context.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-014",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-04",
+        "name_ko": "신라왕릉 숲길",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-014",
+        "lineage_source": "Area/trail: royal tomb forest path.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-015",
+        "city": "jeju",
+        "course_id": "jeju-C-01",
+        "name_ko": "교래자연휴양림",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-015",
+        "lineage_source": "Forest recreation area near Salyeoni course.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-016",
+        "city": "jeju",
+        "course_id": "jeju-C-02",
+        "name_ko": "우도봉",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-016",
+        "lineage_source": "Peak within Udo Island.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-017",
+        "city": "jeju",
+        "course_id": "jeju-C-03",
+        "name_ko": "김녕해수욕장",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-017",
+        "lineage_source": "Coastal beach, UNESCO Geopark route.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-018",
+        "city": "jeju",
+        "course_id": "jeju-C-03",
+        "name_ko": "세화해변",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-018",
+        "lineage_source": "Coastal beach, east Jeju route.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-019",
+        "city": "jeju",
+        "course_id": "jeju-C-04",
+        "name_ko": "수월봉",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-019",
+        "lineage_source": "Oreum (volcanic tuff cone), Olle Trail 12.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-020",
+        "city": "jeju",
+        "course_id": "jeju-C-05",
+        "name_ko": "윗세오름",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-020",
+        "lineage_source": "Mid-Hallasan waypoint.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "ctx-021",
+        "city": "jeonju",
+        "course_id": "jeonju-C-05",
+        "name_ko": "자만마을",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "PERSISTED_CONTEXT_RECORD",
+        "destination_artifact": "four-city-regional-course-context-final-v1.jsonl",
+        "destination_key": "ctx-021",
+        "lineage_source": "Mural village near Jeonjucheon stream.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-01-slot1",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "동래읍성",
+        "name_en": "Dongnae Eupseong Fortress",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-01.context_only_occurrence_count=8",
+        "lineage_source": "Historical fortress. Counted in busan-C-01 context_only_occurrence_count=8.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-01-slot2",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "복천동고분박물관",
+        "name_en": "Bokcheon Museum",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-01.context_only_occurrence_count=8",
+        "lineage_source": "Archaeological museum. Counted in busan-C-01 context_only_occurrence_count=8.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-01-slot3",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "송정해수욕장",
+        "name_en": "Songjeong Beach",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-01.context_only_occurrence_count=8",
+        "lineage_source": "Coastal beach. Counted in busan-C-01 context_only_occurrence_count=8.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-01-slot4",
+        "city": "busan",
+        "course_id": "busan-C-01",
+        "name_ko": "장림포구",
+        "name_en": "Jangnim Port",
+        "occurrence_count_in_source": 2,
+        "unique_count": 1,
+        "final_disposition": "DEDUPED_AND_ABSORBED",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-01.context_only_occurrence_count=8 (canonical) + busan-C-04.context_only_occurrence_count=4 (dedup occurrence)",
+        "lineage_source": "CORRECTION FROM PREVIOUS RECONCILIATION: previously placed 장림포구 in dedup_analysis as a separate entity without a disposition in all_35_lineage_records. 을숙도·낙동강하구 was incorrectly occupying this slot. 장림포구 IS one of the 35 unique entities. Its 2 source-audit occurrences (busan-C-001/Day3/seq4 and busan-C-003/Day3/seq1) both map to the final package. Canonical count = busan-C-01. The busan-C-04 occurrence is the dedup occurrence that reduces 36→35 total unique entities.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        },
+        "canonical_course": "busan-C-01",
+        "dedup_course": "busan-C-04",
+        "correction_note": "CORRECTION FROM PREVIOUS RECONCILIATION: previously placed 장림포구 in dedup_analysis as a separate entity without a disposition in all_35_lineage_records. 을숙도·낙동강하구 was incorrectly occupying this slot. 장림포구 IS one of the 35 unique entities. Its 2 source-audit occurrences (busan-C-001/Day3/seq4 and busan-C-003/Day3/seq1) both map to the final package. Canonical count = busan-C-01. The busan-C-04 occurrence is the dedup occurrence that reduces 36→35 total unique entities."
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-02-slot1",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "절영해안산책로",
+        "name_en": "Jeoryeong Coastal Walking Path",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-02.context_only_occurrence_count=6",
+        "lineage_source": "Coastal footpath. Counted in busan-C-02 context_only_occurrence_count=6.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-02-slot2",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "국제시장",
+        "name_en": "Gukje (International) Market",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-02.context_only_occurrence_count=6",
+        "lineage_source": "Market district. Counted in busan-C-02 context_only_occurrence_count=6.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-02-slot3",
+        "city": "busan",
+        "course_id": "busan-C-02",
+        "name_ko": "동백해안산책로·누리마루APEC하우스",
+        "name_en": "Dongbaek Coastal Path & Nurimaru APEC House",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-02.context_only_occurrence_count=6",
+        "lineage_source": "Coastal path + landmark. Counted in busan-C-02 context_only_occurrence_count=6.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-03-slot1",
+        "city": "busan",
+        "course_id": "busan-C-03",
+        "name_ko": "밀락더마켓",
+        "name_en": "Millak Luche Festa",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-03.context_only_occurrence_count=4",
+        "lineage_source": "Winter market event. Counted in busan-C-03 context_only_occurrence_count=4.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-03-slot2",
+        "city": "busan",
+        "course_id": "busan-C-03",
+        "name_ko": "X the SKY 전망대",
+        "name_en": "X the SKY Observatory (LCT Tower)",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-03.context_only_occurrence_count=4",
+        "lineage_source": "Observatory. Counted in busan-C-03 context_only_occurrence_count=4.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-03-slot3",
+        "city": "busan",
+        "course_id": "busan-C-03",
+        "name_ko": "부산 자유도매시장",
+        "name_en": "Busan Jayou Wholesale Market",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-03.context_only_occurrence_count=4",
+        "lineage_source": "Wholesale market. Counted in busan-C-03 context_only_occurrence_count=4.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-04-slot1",
+        "city": "busan",
+        "course_id": "busan-C-04",
+        "name_ko": "해리단길",
+        "name_en": "Haeridan-gil",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-04.context_only_occurrence_count=4",
+        "lineage_source": "Alley/street district. Counted in busan-C-04 context_only_occurrence_count=4.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-busan-C-04-slot2",
+        "city": "busan",
+        "course_id": "busan-C-04",
+        "name_ko": "청사포다릿돌전망대",
+        "name_en": "Cheongsapo Darittol Observation Deck",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "busan-C-04.context_only_occurrence_count=4",
+        "lineage_source": "Observation deck. Counted in busan-C-04 context_only_occurrence_count=4.",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-gyeongju-C-02-slot1",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-02",
+        "name_ko": "중앙시장 야시장",
+        "name_en": "Jungang Market Night Market",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "gyeongju-C-02.context_only_occurrence_count=2",
+        "lineage_source": "Night market. Counted in gyeongju-C-02 context_only_occurrence_count=2. Persisted = ctx-012(동부사적지대).",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      },
+      {
+        "unique_entity_id": "absorbed-gyeongju-C-03-slot1",
+        "city": "gyeongju",
+        "course_id": "gyeongju-C-03",
+        "name_ko": "경주월드 / 엑스포공원",
+        "name_en": "Gyeongju World / Expo Park",
+        "occurrence_count_in_source": 1,
+        "unique_count": 1,
+        "final_disposition": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
+        "destination_artifact": "four-city-regional-courses-final-v1.jsonl",
+        "destination_key": "gyeongju-C-03.context_only_occurrence_count=2",
+        "lineage_source": "Bus route context destinations. Counted in gyeongju-C-03 context_only_occurrence_count=2. Persisted = ctx-013(경주역(구)).",
+        "pass_checks": {
+          "has_disposition": true,
+          "unique_disposition": true,
+          "has_destination": true
+        }
+      }
+    ]
+  },
+  "section_5_slot_verification": {
+    "description": "Per-course: persisted + absorbed_unique + deduped_and_absorbed + dedup_occurrence = course total",
+    "by_course": {
+      "busan-C-01": {
+        "persisted": 4,
+        "absorbed_unique": 3,
+        "deduped_and_absorbed": 1,
+        "dedup_occurrence": 0,
+        "total": 8,
+        "course_occurrence": 8,
+        "match": true
+      },
+      "busan-C-02": {
+        "persisted": 3,
+        "absorbed_unique": 3,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 6,
+        "course_occurrence": 6,
+        "match": true
+      },
+      "busan-C-03": {
+        "persisted": 1,
+        "absorbed_unique": 3,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 4,
+        "course_occurrence": 4,
+        "match": true
+      },
+      "busan-C-04": {
+        "persisted": 1,
+        "absorbed_unique": 2,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 1,
+        "total": 4,
+        "course_occurrence": 4,
+        "match": true,
+        "dedup_occurrence_note": "1 slot = 장림포구 dedup occurrence (canonical=busan-C-01, not a new unique entity)"
+      },
+      "gyeongju-C-01": {
+        "persisted": 2,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 2,
+        "course_occurrence": 2,
+        "match": true
+      },
+      "gyeongju-C-02": {
+        "persisted": 1,
+        "absorbed_unique": 1,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 2,
+        "course_occurrence": 2,
+        "match": true
+      },
+      "gyeongju-C-03": {
+        "persisted": 1,
+        "absorbed_unique": 1,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 2,
+        "course_occurrence": 2,
+        "match": true
+      },
+      "gyeongju-C-04": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      },
+      "jeju-C-01": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      },
+      "jeju-C-02": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      },
+      "jeju-C-03": {
+        "persisted": 2,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 2,
+        "course_occurrence": 2,
+        "match": true
+      },
+      "jeju-C-04": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      },
+      "jeju-C-05": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      },
+      "jeonju-C-05": {
+        "persisted": 1,
+        "absorbed_unique": 0,
+        "deduped_and_absorbed": 0,
+        "dedup_occurrence": 0,
+        "total": 1,
+        "course_occurrence": 1,
+        "match": true
+      }
+    },
+    "all_match": true
+  },
+  "section_6_editorial_note": {
+    "note": "Context-final JSONL uses area/district-level geographic representations (e.g., 영도, 남포동) while source audit recorded stop-level entities (e.g., 동래읍성, 복천동고분박물관). This is an intentional editorial difference: the final package elevates context to a higher geographic level appropriate for Main's itinerary-context use case. City-level totals match (busan=22, gyeongju=7, jeju=6, jeonju=1 = 36 total)."
+  },
+  "summary_flags": {
+    "UNIQUE_WITHOUT_DISPOSITION_COUNT": 0,
+    "UNIQUE_WITH_MULTIPLE_DISPOSITION_COUNT": 0,
+    "PERSISTED_WITHOUT_SOURCE_LINEAGE_COUNT": 0,
+    "UNEXPLAINED_CONTEXT_COUNT": 0,
+    "PERSISTED_DISPOSITION_COUNT": 21,
+    "ABSORBED_DISPOSITION_COUNT": 14,
+    "OTHER_EXPLAINED_DISPOSITION_COUNT": 0,
+    "TOTAL_UNIQUE_COUNT": 35,
+    "ARITHMETIC_CHECK": "21 + 14 + 0 = 35",
+    "ARITHMETIC_VALID": true,
+    "OCCURRENCE_CHECK": "35 unique + 1 dedup_occurrence = 36 total occurrences",
+    "OCCURRENCE_VALID": true,
+    "JANGRIM_FINAL_DISPOSITION": "DEDUPED_AND_ABSORBED",
+    "EULSUKDO_UNIVERSE_MEMBERSHIP": "OUTSIDE_35_UNIQUE_CONTEXT_UNIVERSE",
+    "QA_VERDICT": "PASS",
+    "DB_CHANGED": 0,
+    "PRODUCTION_CHANGED": 0,
+    "MASTER_CHANGED": 0
+  },
+  "corrections_from_previous_reconciliation": {
+    "task_ref": "TASK-FOUR-CITY-REGIONAL-CONTEXT-COUNT-RECONCILIATION-V1",
+    "commit": "e659ad7",
+    "error_found": "Previous reconciliation placed 장림포구 in dedup_analysis.details[0] with status DEDUPED_INTO_OTHER_CONTEXT, separately from the 21 persisted + 14 absorbed groups. all_35_lineage_records listed 을숙도·낙동강하구 in busan-C-01 slot 4. This left 장림포구 without a final disposition in the 35-entity universe, effectively implying 36 entities (21+14+1) for a 35-unique universe.",
+    "corrections_applied": [
+      "four-city-regional-context-count-reconciliation-v1.json: busan-C-01 absorbed slot 4 changed from 을숙도·낙동강하구 to 장림포구 (DEDUPED_AND_ABSORBED)",
+      "four-city-regional-context-count-reconciliation-v1.json: dedup_analysis note updated to reference DEDUPED_AND_ABSORBED disposition",
+      "four-city-regional-context-count-reconciliation-v1.json: all_35_lineage_records updated to include 장림포구 with status DEDUPED_AND_ABSORBED",
+      "four-city-regional-context-count-reconciliation-v1.json: de_scoped_entities section added to document 을숙도·낙동강하구 exclusion"
+    ],
+    "arithmetic_before": "21 persisted + 14 absorbed (without 장림포구) + 1 dedup_bucket = 36 entries for 35 unique (ERROR)",
+    "arithmetic_after": "21 persisted + 14 absorbed (WITH 장림포구 as DEDUPED_AND_ABSORBED) = 35 unique (CORRECT)"
+  }
+}

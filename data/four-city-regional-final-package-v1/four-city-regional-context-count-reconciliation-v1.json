@@ -39,8 +39,9 @@
         ],
         "occurrence_count": 2,
         "unique_count": 1,
-        "status": "DEDUPED_INTO_OTHER_CONTEXT",
-        "note": "Source audit busan-C-001(Day2/seq4) and busan-C-003(Day3/seq1) both reference 장림포구 as COURSE_CONTEXT_ONLY. Counted once as unique entity. Both occurrences absorbed into course-level metadata; not individually persisted."
+        "status": "DEDUPED_AND_ABSORBED",
+        "note": "Source audit busan-C-001(Day3/seq4) and busan-C-003(Day3/seq1) both reference 장림포구 as COURSE_CONTEXT_ONLY. Counted once as unique entity. Final disposition = DEDUPED_AND_ABSORBED: canonical slot = busan-C-01 absorbed slot 4; dedup occurrence = busan-C-04 slot 3. Not individually persisted in context-final JSONL.",
+        "canonical_course": "busan-C-01"
       }
     ]
   },
@@ -299,10 +300,13 @@
       "ctx_id": null,
       "course_id": "busan-C-01",
       "city": "busan",
-      "name_ko": "을숙도·낙동강하구",
+      "name_ko": "장림포구",
+      "name_en": "Jangnim Port",
       "source_audit_course": "busan-C-001",
-      "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
-      "note": "Estuary wetland area. Occurrence tracked in busan-C-01 context_only_occurrence_count=8. (장림포구 also appears in busan-C-01 but is the DEDUPED entity counted under DEDUP.)"
+      "canonical_course": "busan-C-01",
+      "dedup_course": "busan-C-04",
+      "status": "DEDUPED_AND_ABSORBED",
+      "note": "CORRECTED (previously 을숙도·낙동강하구 occupied this slot in error). 장림포구 appears in 2 source-audit courses (busan-C-001 Day3/seq4 and busan-C-003 Day3/seq1). Canonical unique entity slot = busan-C-01 absorbed slot 4. The busan-C-04 occurrence is the dedup occurrence that reduces 36→35 unique. Not individually persisted in context-final JSONL. 을숙도·낙동강하구 is de-scoped (5th item in source audit, outside 35-unique universe)."
     },
     {
       "ctx_id": null,
@@ -394,5 +398,25 @@
       "status": "ABSORBED_INTO_COURSE_LEVEL_METADATA",
       "note": "Bus route context destinations. Occurrence tracked in gyeongju-C-03 context_only_occurrence_count=2. Final persisted = ctx-013(경주역(구))."
     }
-  ]
+  ],
+  "de_scoped_entities": [
+    {
+      "entity_ko": "을숙도·낙동강하구",
+      "entity_en": "Eulseukdo Island / Nakdong River Estuary",
+      "source_audit_course": "busan-C-001",
+      "source_audit_seq": "Day3/seq5",
+      "universe_membership": "OUTSIDE_35_UNIQUE_CONTEXT_UNIVERSE",
+      "reason": "Source audit busan-C-001 has 5 COURSE_CONTEXT_ONLY items; final package busan-C-01 allocates only 4 non-persisted slots. 장림포구 occupies slot 4 (DEDUPED_AND_ABSORBED). 을숙도·낙동강하구 is excluded from the 35-unique context universe. City-level busan total (22 occurrences) is preserved."
+    }
+  ],
+  "correction_log": {
+    "task_ref": "TASK-FOUR-CITY-REGIONAL-CONTEXT-LINEAGE-ONE-TO-ONE-QA-V1",
+    "as_of": "2026-09-13",
+    "errors_corrected": [
+      "all_35_lineage_records[busan-C-01 slot4]: 을숙도·낙동강하구 → 장림포구 (DEDUPED_AND_ABSORBED)",
+      "dedup_analysis.details[0].status: DEDUPED_INTO_OTHER_CONTEXT → DEDUPED_AND_ABSORBED",
+      "de_scoped_entities section added to document 을숙도·낙동강하구 exclusion"
+    ],
+    "arithmetic_unchanged": "35 = 21 persisted + 14 absorbed (arithmetic was correct; entity IDENTITY was wrong)"
+  }
 }
