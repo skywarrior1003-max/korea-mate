@@ -105,12 +105,10 @@ a5cd8b9)**: Owner 가 로컬 후보 2장을 제공, 광각 광안리(광안대�
 planner cover · OG · 검색 썸네일은 기존 `city-busan-hero.jpg` 유지
 (Hub≠Home 이 Owner 의도). 럭셔리 호텔 데크 야경 후보는 어둡고 무거워 탈락.
 
-### C. City Hub Weather — SUPERSEDED (재OPEN 금지)
-2026-09-08 actual repo audit 당시 "NOT CURRENTLY IMPLEMENTED / 최신 Owner 계약
-→ §3" 이었으나, **2026-09-08 Owner weather scope 결정으로 SUPERSEDED**:
-중기예보(My Trip Day 예보 칩, §3.5)만으로 충분하다. City Hub 현재기온 칩은
-구현하지 않으며, 단기/초단기 API 추가·KMA 활용신청·새 provider 도입을 이유로
-**이 항목을 다시 OPEN 으로 만들지 않는다.** → §3.2 SUPERSEDED 주석.
+### C. City Hub Weather — CLOSED (2026-09-11, 7115506 — §3.2 최신 계약)
+(정정 2026-09-13: 아래 2026-09-08 SUPERSEDED 문구는 §3.2 의 2026-09-11 Owner
+해석 정정으로 대체됨 — "임의 확장 금지 ≠ 기능 폐기". 현재 상태: `☀️ 현재기온`
+한 줄 + KMA 공식 단기예보 링크, KMA_API_KEY 재사용, 가짜 온도 0. 상세 §3.2.)
 
 ### D. My Trip Weather — KEEP / STAGE B LIVE (2026-09-08, master 8ec30ad)
 공공데이터 KMA 중기예보(MidFcstInfoService) 로 My Trip Day 예보 칩 LIVE —
