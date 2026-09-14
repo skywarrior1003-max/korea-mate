@@ -433,3 +433,61 @@ READ-ONLY. 노출 전수 = **regional 22 + 경주 legacy 54 = 76 코스** · 연
 ### 15.5 Production 적용 순서(승인 후)
 
 ① content-recovery precheck(카운트 0 확인·before snapshot 저장) → apply 1회(sha f79ccbad…) → readback(img 5/5·ko 16/16·en 3/3) → ② master FF(연결 복구 커밋) → 배포 → ③ LIVE 재QA(복구 이미지 실로딩·ko 본문 표시·EN 427/778/1319·채택 E2E) → QA 데이터 정리.
+
+## 16. 복구 마감 (RECOMMENDED-ITINERARY-CONTENT-RECOVERY-CLOSEOUT-V2, 2026-09-14)
+
+### 16.1 1633 정합 확정 + 보고 집계 정정 (패치 무변경)
+
+- **1633 = 부산 해리단길**(KTO contentid 2783306, 주소 부산 해운대구 우동 — KTO·Main 주소·좌표·명칭 3중 정합 실측). 패치 sha f79ccbad… 의 1633 ko 본문은 **정확**(부산 해운대 도시철도역 배후 본문) — DB·SQL 무변경.
+- 정정 대상은 **직전 완료보고의 도시 분류 집계 문구**: "전주 ko 12/14" 로 1633 을 전주 집계에 포함한 오기. 확정 구성 — **KO 16행 = 전주 14(729·736·742·744·763·765·778·917·1088·1089·1098·1109·1125·1126) + 경주 1(672) + 부산 1(1633)**.
+- §14.1 정정: 감사 보고의 "미연결 36 occurrence" 는 서울 3코스 10 occurrence 를 (연결 0 코스라 표에서 0/0 처리하며) 미연결 합계에서 누락한 집계 — **확정 46 occurrence**(§16.3). 감사의 화면 판정 자체는 유효.
+
+### 16.2 이미지 22/48 판정 (28·1319 외 — §14 의 "일부 누락" 잔여 확인)
+
+- 복구 대상으로 확정된 5행(28·1319·40·1360·1273)은 KTO firstimage 확보(§15.1). 그 외 연결 spot 중 이미지 부재 2행 재확인: **22 국제시장·48 절영해안산책로 — KTO firstimage·detailImage2 모두 0건 실측 → KTO 경로로는 부재 확정**.
+- 대체 후보 visitbusan.net 은 검색/목록 접근 장애(요청 차단·스크립트 렌더)로 게시물 특정 불가 — **"부재 단정" 아님, "확인 불가(접근 장애)"로 구분** 기록. 후속 = Owner 브라우저 경유 확인 또는 보조컴퓨터 트랙.
+
+### 16.3 미연결 46 occurrence 확정 분류 (26+2+8+7+3)
+
+집계: **연결 복구 26**(§15.2, IDENTITY_LINK_RECOVERY_V1 가드 고정) · **비공개 행 보류 2**(이기대 7/29·청사포다릿돌 39) · **실장소·행 부재 후보 8** · **맥락형 7** · **근거 부족 3**. §15.2 대비 정련: **부산역은 원 라벨(RELATION_OR_AREA_ONLY·교통 결절) 존중으로 맥락형**에 확정(비공개 행 81 존재 사실만 병기 — 보류 아님), 삼정타워도 맥락형(단 KTO 3014436 실장소 등재 — insert 준비물 보유, 연결 여부는 Owner 판단).
+
+| 도시 | 코스 | # | stop | 라벨 | 확정 분류 |
+|---|---|---|---|---|---|
+| busan | C-002 | 12 | 이기대해안산책로 | TRUE_NEW_PLACE_CANDIDATE | 비공개 행(7/29) 보류 — 공개는 Final 권한 |
+| busan | C-003 | 7 | 청사포다릿돌전망대 | TRUE_NEW_PLACE_CANDIDATE | 비공개 행(39) 보류 |
+| busan | C-003 | 1 | 부산역 | RELATION_OR_AREA_ONLY | 맥락형(교통 결절) — 비공개 행 81 존재 병기 |
+| busan | C-003 | 2 | 삼정타워 | RELATION_OR_AREA_ONLY | 맥락형(집합 지점) — KTO 3014436 insert 준비물 보유 |
+| busan | C-R01 | 1 | 밀락더마켓 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 2862152, insert안 |
+| seoul | C-001 | 1 | 경복궁 (광화문) | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 126508, insert안 |
+| seoul | C-001 | 2 | 근정전·향원정 일원 | RELATION_OR_AREA_ONLY | 맥락형(경복궁 경내 동선) |
+| seoul | C-001 | 3 | 국립민속박물관 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 2608977(복합 표제 verbatim), insert안 |
+| seoul | C-002 | 1 | 안국역 인근 집합 | RELATION_OR_AREA_ONLY | 맥락형(집합 지점) |
+| seoul | C-002 | 2 | 북촌한옥마을 (가회동 일원) | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 126537, insert안 |
+| seoul | C-002 | 3 | 창덕궁 방면 (창덕궁길) | RELATION_OR_AREA_ONLY | 맥락형(이동 방면) — 창덕궁 본체 KTO 미검출(내부 시설만) 병기 |
+| seoul | C-002 | 4 | 인사동 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 264353, insert안 |
+| seoul | C-003 | 1 | 국립중앙박물관 야외 공원·연못 | RELATION_OR_AREA_ONLY | 맥락형(경내 동선 — 내부 stop 과 동일 시설) |
+| seoul | C-003 | 2 | 국립중앙박물관 내부 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 129703, insert안 |
+| seoul | C-003 | 3 | 이촌한강공원 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 970636, insert안 |
+| jeju | C-001 | 2 | 서귀포 해안선 (구간) | RELATION_OR_AREA_ONLY | 맥락형(구간 표현) |
+| jeju | C-R02 | 2 | 서빈백사해수욕장 | RELATION_OR_AREA_ONLY | 행 부재 후보 — KTO 598558, insert안 |
+| gyeongju | C-R01 | 1 | 터미널 | RELATION_OR_AREA_ONLY | 근거 부족(경주고속버스터미널 추정 — KTO 미등재·행 부재) |
+| gyeongju | C-R01 | 2 | 경주역 | RELATION_OR_AREA_ONLY | 근거 부족(신경주역 추정·구 경주역 폐역 — KTO 미등재·행 부재) |
+| jeonju | C-003 | 2 | 전주비빔밥 거리 (풍남동) | RELATION_OR_AREA_ONLY | 근거 부족(행 부재·KTO 미등재 — 공식 본문·좌표 부재) |
+
+(복구 26 occurrence 의 개별 대응은 §11 최종 대응표·§15.2 명세와 가드 테스트 스냅숏이 SSOT — 중복 나열 생략.)
+
+### 16.4 신규 장소 insert안 (13곳 판정 → 9행 준비 · 실행 금지)
+
+- 파일: `data/main-intake/four-city-regional-v1/candidate-place-inserts-v1.sql` — **sha256 `e4f278ad64fb4d0727605231b858eacb39301421dac75d6a5e9cf867498d61c6`** + `candidate-place-inserts-master-v1.jsonl`(contentid·주소·본문 길이·코스 stop 대응).
+- **9행**(KTO 이름·본문·좌표·이미지 verbatim): 경복궁 126508(749-probe 에서 판명된 자료 전용) · 국립민속박물관 2608977(KTO 복합 표제 그대로) · 북촌한옥마을 126537 · 인사동 264353(초기 후보 오기 → 실측 교정) · 국립중앙박물관 129703 · 이촌한강공원 970636 · 서빈백사 598558 · 밀락더마켓 2862152 · 삼정타워 3014436(연결 여부 Owner 판단 전제 준비물).
+- 안전 설계: **is_published=false 로만 삽입**(공개는 별도 게이트/Owner) · **id 하드코딩 0 — 실행 시점 `max(id)+row_number` 발급** · `external_id 'kto:<contentid>'` 존재 시 삽입 0(중복 가드) · BEGIN/COMMIT + RETURNING.
+- **근거 부족으로 insert 제외 3**: 전주비빔밥거리·경주 고속버스터미널·경주역(§16.3) · 창덕궁 본체는 KTO 미검출로 후보 성립 불가(13번째 항목) — 발명 금지 원칙대로 보류.
+
+### 16.5 격리 실적용 검증 (Production 접근 0 — READ-ONLY 시드만)
+
+**환경**: embedded PostgreSQL 17.2(127.0.0.1:55432, 스키마 city_spots/itineraries/trip_moments*) + PostgREST 12.2.3(:3111) + REST 프록시(:54321, /rest/v1 매핑) + 실제 `functions/api/itinerary*.ts` 핸들러 실행 미니 앱서버(:8899) + **iso env 정적 빌드 out/**(NEXT_PUBLIC_SUPABASE_URL=127.0.0.1 — 646 페이지·place 420 생성). 시드 = Production READ-ONLY(경주 published 399행 + 패치 대상·부산 코스 spot 51행).
+
+- **① DB 단독(iso-verify)**: precheck 0/0/0 → **apply 1회 = img 5·ko 16·en 3 정확 적용** → 컨트롤 행 무변경·기존 en(917) 보존·1633=해리단길 본문·427 EN 실측 → **재실행 idempotent**(전행 해시 동일) → **값조건 rollback 완전 복귀**(기존 키 보존 확인). 전항 PASS.
+- **② 풀스택 E2E(Playwright, 13/13 PASS)**: 코스 상세 복구 링크 표시(gyeongju-C-R01 507·504·528 / busan-C-003 **1633·40** / busan-C-R01 43·1273) + 미연결 stop 이름만 유지(터미널·밀락더마켓) · **/place/672 ko 패치 본문 표시** · **/place/427 EN 제목·본문 표시** · /place/1319 패치 이미지 실로딩(KTO CDN) · 홈→목록→상세 경로 · 제휴 링크 보존(aid=123610) · **실채택 E2E: 채택 → POST /api/itinerary 저장(7 places, 코스 순서 유지·첫 장소 국립경주박물관) → GET 재확인 → 재열람 화면 장소명 렌더 → DELETE 200 → GET 404 — QA 여행 격리 DB 정리 완료(잔존 0)**.
+- **환경 한계(검증 방식 구분)**: Naver 지도 SDK 는 127.0.0.1 미등록 도메인에서 SDK 내부 오류(maps.js setMap — 스택 실측)로 렌더를 깨뜨림 — 재열람 렌더 검증은 SDK 로드 차단(지도 미가용 가드 경로)으로 수행. 지도 포함 재열람은 LIVE 재QA 항목(§15.5 ③)으로 유지. UI 코드 변경 0(이번 태스크 산출물 = 데이터·SQL·문서·테스트·격리 도구만).
+- 증빙: scratchpad iso-shot-*.png 8매(코스 2도시·place 3·채택·재열람).
