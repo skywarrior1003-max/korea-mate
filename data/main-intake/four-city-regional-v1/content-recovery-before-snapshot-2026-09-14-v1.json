@@ -1,0 +1,341 @@
+[
+ {
+  "id": 28,
+  "city": "busan",
+  "name": "Oryukdo Skywalk",
+  "image_url": null,
+  "name_l10n": {
+   "en": "Oryukdo Skywalk",
+   "ja": "五六島スカイウォーク",
+   "ko": "오륙도 스카이워크",
+   "zh": "五六岛天空步道"
+  },
+  "desc_l10n": {
+   "en": "Oryukdo Skywalk is a 15 m glass-floored viewing walkway set on a 35 m sea cliff facing the Oryukdo islets in Nam-gu, Busan. You look straight down at the waves and rocks and get a close view of the islets and the open sea. It sits beside the start of the Igidae–Oryukdo section of the Galmaet-gil trail, but you can visit the skywalk on its own without hiking. Free admission, 09:00–18:00 (until 19:00 in June–September); closed in snow, rain or strong wind.",
+   "ja": "五六島スカイウォークは、釜山・南区の五六島に面した高さ35mの海岸絶壁の上に設けられた、長さ15mのガラス床の展望通路です。足元の波と岩を見下ろし、五六島と南海の景色を間近に楽しめます。イギデ〜五六島区間のカルメッキル(散策路)の起点の隣にありますが、トレッキングをしなくてもスカイウォークだけを訪れることができます。入場無料、09:00〜18:00(6〜9月は19:00まで)、雪・雨・強風時は開放が制限されます。",
+   "ko": "오륙도 스카이워크는 부산 남구 오륙도 앞 35m 해안 절벽 위에 놓인 15m 길이의 유리 바닥 전망 시설입니다. 발아래로 파도와 바위를 내려다보고 오륙도와 남해 경관을 가까이서 볼 수 있습니다. 이기대·오륙도 구간 갈맷길의 출발점 옆에 있지만 트레킹 없이 스카이워크만 따로 방문할 수 있습니다. 이용료 무료, 09:00–18:00(6–9월 19:00까지), 눈·비·강풍 때는 개방이 제한됩니다.",
+   "zh": "五六岛天空步道位于釜山南区五六岛前方35米高的海岸悬崖上，是一条长15米的玻璃地面观景步道。可以俯瞰脚下的海浪和岩石，近距离欣赏五六岛与南海风光。它紧邻二妓台—五六岛段“Galmaet-gil”海岸步道的起点，但无需徒步也可以单独游览天空步道。免费入场，09:00–18:00（6–9月至19:00），下雪、下雨或强风时限制开放。"
+  },
+  "updated_at": "2026-09-01T10:06:24.233294+00:00"
+ },
+ {
+  "id": 40,
+  "city": "busan",
+  "name": "Haeundae Blueline Park",
+  "image_url": null,
+  "name_l10n": {
+   "en": "Haeundae Blueline Park",
+   "ko": "해운대 그린레일웨이 (미포~송정 구간)"
+  },
+  "desc_l10n": {
+   "en": "Haeundae Blueline Park is an eco-friendly redevelopment of the former railroad facilities of the Donghae Nambu Line, a 4.8-kilometer-long stretch from Haeundae’s Mipo to Cheongsapo to Songjeong. It forms a part of the new core of the Haeundae Tourism Special Zone, an international tourist region in Busan that operates the Haeundae Beach Train and Haeundae Sky Capsule along Haeundae’s spectacular coastal scenery. Haeundae Blueline Park consists of Haeundae Beach Train, a sightseeing train that serves as both a transportation option and a tourist train that runs round-trip from Mipo to Songjeong via Cheongsapo along the beautiful coastal scenery of East Busan; and Haeundae Sky Capsule, a romantic four-seater automatic capsule train that runs a 2-kilometer rail from 7 to 10 meters above sea level, along the coast from Mipo to Cheongsapo.",
+   "ko": "해운대 그린레일웨이는 동해남부선 옛 철도시설을 친환경적으로 재개발하여 수려한 해안 절경을 감상하며 산책할 수 있는 도심 산책로이다. 해운대 미포~청사포~송정 구간은 4.8㎞ 거리로 수려한 해안 절경을 따라 양방향으로 걸을 수 있으며 산책로 방향에 따라 광안대교, 달맞이, 마린시티 등 대표 관광지를 한눈에 담을 수 있는 명소이다. 산책로 구간 내 대표적 관광지로는 2017년 개장한 청사포 다릿돌 전망대, 2022년 1월 개장한 바다소리 갤러리가 있으며 미포~송정 구간은 2020년 10월에 개장한 해운대해변열차와 스카이 캡슐이 운행되는 구간으로 해운대 관광특구의 핵심 시설이 밀집된 구간이다."
+  },
+  "updated_at": "2026-07-30T06:47:55.244035+00:00"
+ },
+ {
+  "id": 427,
+  "city": "gyeongju",
+  "name": "경주 월성",
+  "image_url": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/5C0BDECC3C194164B77CB7115606F0C8.jpg",
+  "name_l10n": {
+   "ko": "경주 월성"
+  },
+  "desc_l10n": {
+   "ko": "월성은 신라의 비밀을 고스란히 품고 있는 천년 왕궁이다. 월성은 신라왕들의 주된 생활공간이었다. 월성〔月城〕이라는 이름의 유래는 모양이 반달처럼 생긴 것에서 유래되었다고 전해진다. 월성에 대한 기록은 '삼국사기'나 '삼국유사'등의 역사서에 자주 등장하는데, 파사왕22년〔101〕에 금성 동남쪽에 성을 쌓아 월성 또는 재성〔在城〕이라 불렀다. 이때부터 신라의 궁성 역할을 담당하게 된 월성은 이후 신라가 멸망할 때까지 왕궁으로서 제 기능을 수행하였다. 월성에는 여러 개의 문과 연못, 그리고 만파식적을 보관했던 보물창고인 천존고도 있었으나 지금은 옛 모습들을 찾을 수 없다. 월성의 옛 모습을 밝히고자 국립경주문화재연구소는 2014년 12월부터 월성 내부를 A-D까지 4개 지구, 월성 바깥쪽의 해자지구로 나누어 발굴조사를 진행하고 있다. A지구에서는 월성의 서쪽 성벽에 대한 조사가 이루어지고 있으며, 성벽에서는 성벽을 쌓을 당시 인신공희〔人身供犧〕 제사를 지냈던 것으로 생각되는 인골2구가 발견되었다. 중앙 건물지를 발굴하고 있는 C지구에서 통일신라시대 후기 건물터 17동이 확인되었고, 다량의 기와와 실무에 사용된 것으로 보이는 벼루 등이 출토되었다. 적의 침입을 막기 위해 성 주위를 둘러서 판 못인 해자에서는 동물의 뼈와 식물의 씨앗 등이 확인되어 신라시대 당시의 환경을 짐작할 수 있게 되었다. 이외에도 토우 및 목간 등 다양한 유물이 출토되었다."
+  },
+  "updated_at": "2026-09-05T06:34:05.012383+00:00"
+ },
+ {
+  "id": 672,
+  "city": "gyeongju",
+  "name": "경주 배동 석조여래삼존입상",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/62/3405862_image2_1.jpg",
+  "name_l10n": {
+   "ko": "경주 배동 석조여래삼존입상"
+  },
+  "desc_l10n": null,
+  "updated_at": "2026-08-08T09:41:12.100318+00:00"
+ },
+ {
+  "id": 729,
+  "city": "jeonju",
+  "name": "Gyeonggijeon Shrine",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/11/3537111_image2_1.jpg",
+  "name_l10n": {
+   "en": "Gyeonggijeon Shrine",
+   "ja": "慶基殿",
+   "ko": "경기전",
+   "zh": "庆基殿"
+  },
+  "desc_l10n": {
+   "en": "Preserving 500 Years of the Joseon Dynasty",
+   "ja": "慶基殿は1991年1月9日に史跡第339号に指定された。1410年（太宗11年）、王は全州・慶州・平壌に太祖李成桂の御真を安置し祭祀を行う殿閣を建て、「御容殿」と呼んだ。朝鮮王朝の発祥地とされる全州に建てられた太祖の真殿であり、「慶基殿」という名称は世宗の時代に付けられたものである。建物は壬辰倭乱の際に焼失し、1614年（光海君6年）に再建された。保護面積は49,590㎡である。慶基殿の境域は正殿と肇慶廟に分かれている。正殿は太祖李成桂の御真を安置した場所で、正面3間、側面3間の規模を持つ。地台石・面石・甲石を備えた基壇の上に建てられた多包系形式の切妻造建築であり、その前面中央には1間規模の基壇を突出させ、その上に添閣を設けて拝礼空間としている。その形は王陵の丁字閣に似ている。この添閣基壇の三面にはレンガ敷きの通路が連結されている。肇慶廟は正殿の北側に位置している。太祖の22代祖であり全州李氏の始祖である新羅の司空公・李翰夫婦の位牌を安置するため、1771年（英祖47年）に建立されたものである。現存する肇慶廟図を見ると、現在は失われた典祀庁・東斎・西斎・守僕房・祭器庫などの付属建物や別",
+   "zh": "庆基殿于1991年1月9日被指定为史迹第339号。1410年（太宗11年），朝廷在全州、庆州、平壤建立供奉太祖李成桂御容并举行祭祀的殿宇，称为“御容殿”。位于全州的这一殿宇因被视为朝鲜王朝的发祥地，在世宗时期被命名为“庆基殿”。建筑在壬辰倭乱中被毁，于1614年（光海君6年）重建。保护面积为49,590㎡。庆基殿整体分为正殿与肇庆庙。正殿是供奉太祖御容的建筑，规模为正面三间、侧面三间。其建筑形式为建于带有地台石、面石和甲石的基坛上的多包式结构屋顶建筑。正面中央突出一间规模的基坛，并在其上设置附阁，用作祭礼空间，其形制类似于王陵中的丁字阁。该附阁基坛三面均铺设砖道相连。肇庆庙位于正殿北侧，是为供奉太祖第22代祖、全州李氏始祖新罗司空公李翰夫妇神位而于1771年（英祖47年）建成。从现存的肇庆庙图可知，当时此处曾有典祀厅、东斋、西斋、守仆房、祭器库等附属建筑以及别殿，构成规模宏大的祭祀区域。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 736,
+  "city": "jeonju",
+  "name": "Wansanchilbong Peak (Wansan Park)",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/10/3562110_image2_1.jpg",
+  "name_l10n": {
+   "en": "Wansanchilbong Peak (Wansan Park)",
+   "ko": "완산꽃동산(완산칠봉꽃동산)"
+  },
+  "desc_l10n": {
+   "en": "The Pinnacle of Spring, Time Stood Still Under the Flower Shade"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 742,
+  "city": "jeonju",
+  "name": "Nambu Market & Youth Mall",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+  "name_l10n": {
+   "en": "Nambu Market & Youth Mall",
+   "ja": "南部市場・青年モール",
+   "ko": "남부시장·청년몰",
+   "zh": "南部市场·青年商城"
+  },
+  "desc_l10n": {
+   "en": "Where Tradition Takes Root and Creativity Blossoms",
+   "ja": "1905年に開設された南部市場は、全州を代表する伝統市場で、長い歳月の中で商人や住民の暮らしが深く染み込んだ場所です。路地には親しみのある挨拶や店先の明かりが並び、乾物、野菜、生活雑貨、全州の特産品など、多彩な品々が軒を連ねています。",
+   "zh": "南部市场于1905年开业，是全州历史最悠久、最具代表性的传统市场之一。这里承载着商贩与居民世代相传的生活气息。巷道里充满亲切的问候声，摊位灯光温暖，多种商品从干货、蔬菜、生活用品到全州特产琳琅满目。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 744,
+  "city": "jeonju",
+  "name": "Cheongyeonru & Namcheongyo",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/34/3066534_image2_1.jpg",
+  "name_l10n": {
+   "en": "Cheongyeonru & Namcheongyo",
+   "ko": "청연루·남천교"
+  },
+  "desc_l10n": {
+   "en": "A Scenic Pavilion Overlooking the Flow of Jeonjucheon Stream"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 763,
+  "city": "jeonju",
+  "name": "Hanbyeokdang Pavilion",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/88/2945288_image2_1.jpg",
+  "name_l10n": {
+   "en": "Hanbyeokdang Pavilion",
+   "ja": "寒碧堂",
+   "ko": "한벽당",
+   "zh": "寒碧堂"
+  },
+  "desc_l10n": {
+   "en": "A Pavilion Where Nature and Refined Elegance Meet",
+   "ja": "詩人・崔承範は「寒碧清煙」に込められた士大夫の風流と、そのかすかな余韻を詠んだ。寒碧堂は勝岩山の麓、鉢山の断崖付近にある断崖を削って建てられた楼閣で、屏風のような岩の下に佇む小さな亭が寒碧堂である。かつては岩にぶつかって立ち上る霧を「寒碧清煙」と呼び、全州八景の一つに数えられていた。\r\n寒碧堂には約5坪ほどの広々とした板の間があり、垂木や軒下には多くの詩人や文人たちが題詠した詩が残されている。これらは志を同じくする友と語り合い、風流を楽しんだ空間であったことを想像させる。勝岩山の麓の断崖に建てられた、全州・玉流洞峠のそばにある寒碧堂は、かつて儒生たちが風流を楽しんだ場所であり、近くのカクシバウやソバンバウでは子どもたちが魚を捕ったり水遊びをしたりする場所として知られていた。\r\nしかし、夏の集中豪雨の際には急激に水位が上昇し、危険な体験をした記憶を持つ全州市民も少なくない。",
+   "zh": "诗人崔承范曾吟咏“寒碧清烟”中所蕴含的士人风雅与那份悠远的情怀。寒碧堂建于胜岩山山脚、钵山前端的悬崖之上，是削壁而建的楼阁，在如屏风般的岩石下方坐落着一座小巧雅致的亭子，即寒碧堂。过去，人们将撞击岩石而升腾的水雾称为“寒碧清烟”，并将其列为全州八景之一。 寒碧堂拥有约16平方米宽敞的木质地板，椽木与屋檐下环绕着许多文人墨客题咏的诗作，这些诗句让人联想到当年志同道合之人聚集于此畅谈风雅的场景。寒碧堂位于胜岩山山脚的悬崖之上，靠近全州玉流洞岭，自古以来便是儒生们吟诗作乐、享受风流之地，而附近的“新娘岩”“新郎岩”则是孩子们捕鱼、戏水的地方。 然而在夏季暴雨时，水位会骤然上涨，这样惊险的记忆也深深留在许多全州人的心中。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 765,
+  "city": "jeonju",
+  "name": "Pungnammun Gate",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/35/3428535_image2_1.jpg",
+  "name_l10n": {
+   "en": "Pungnammun Gate",
+   "ja": "豊南門",
+   "ko": "풍남문",
+   "zh": "丰南门"
+  },
+  "desc_l10n": {
+   "en": "Treasure of Jeonju that I want to brag about",
+   "ja": "邑城とは地方行政の中心となる町を囲んだ城を意味し、豊南門は朝鮮時代に全羅監営が置かれていた全州城の南門である。もともと全州城には東西南北に四つの門があったが、現在は豊南門のみが残っている。 築城年代は正確には不明だが、高麗末にはすでに存在していたと推定される。1597年（宣祖30年）の丁酉再乱で半分以上が破壊された後、1731年（英祖10年）に大規模に再建され、このとき南門は明見楼と呼ばれた。その後1767年（英祖43年）に焼失し、観察使洪楽仁によって再建され、豊南門と名付けられた。 豊南門の名称は、中国漢王朝の創始者劉邦の出生地である豊沛に由来する。朝鮮王朝の発祥地とされる全州を豊沛に例えて豊沛郷と呼び、その南門という意味で豊南門と名付けられた。",
+   "zh": "邑城是指围绕地方行政中心城邑修建的城池，丰南门是朝鲜时代环绕设有全罗监营的全州城的南门。原本全州城在东、西、南、北四个方向均设有城门，如今仅剩丰南门保存至今。 全州城的建造年代虽无法确切确认，但推测在高丽末期已经建成。1597年（宣祖30年）丁酉再乱后城池被毁过半，1731年（英祖10年）进行大规模修复，当时南门被称为明见楼。此后1767年（英祖43年）焚毁，由观察使洪乐仁重建并命名为丰南门。 “丰南门”之名源于中国汉朝开国皇帝刘邦的出生地丰沛。将作为朝鲜王朝发源地的全州比作丰沛，称为“丰沛乡”，因此南门被命名为丰南门。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 778,
+  "city": "jeonju",
+  "name": "오목대와 이목대",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/46/3533046_image2_1.jpg",
+  "name_l10n": {
+   "ko": "오목대와 이목대"
+  },
+  "desc_l10n": null,
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 917,
+  "city": "jeonju",
+  "name": "Jogyeongdan Shrine",
+  "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176345477549647.jpg",
+  "name_l10n": {
+   "en": "Jogyeongdan Shrine",
+   "ko": "조경단"
+  },
+  "desc_l10n": {
+   "en": "A Shrine Garden That Preserves the Roots of Jeonju"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1088,
+  "city": "jeonju",
+  "name": "Jeonjuhyanggyo Local Confucian School",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/36/3537036_image2_1.jpg",
+  "name_l10n": {
+   "en": "Jeonjuhyanggyo Local Confucian School",
+   "ja": "全州郷校",
+   "ko": "전주향교",
+   "zh": "全州乡校"
+  },
+  "desc_l10n": {
+   "en": "A Center of Local Education in the Joseon Dynasty",
+   "ja": "全州韓屋村の東側に位置する全州郷校は、高麗末に創建され、朝鮮時代を経て現在まで続く伝統的な教育機関である。現在は全北特別自治道の有形文化遺産に指定されている。孔子の位牌を祀る大成殿と、学問を学んだ明倫堂が当時の姿のまま残っており、朝鮮時代の郷校建築の精髄を示している。瓦屋根や紅い門、古木に囲まれた庭は、都市の中でも静かな学びの気配を感じさせる。韓屋村に近く、ドラマや映画の撮影地としても知られ、全州の美しい情緒を代表する空間である。",
+   "zh": "位于全州韩屋村东侧的全州乡校，创建于高丽末期，是延续至今的传统教育机构。现被指定为全北特别自治道有形文化遗产。这里保留了供奉孔子牌位的大成殿和用于学习的明伦堂，完整呈现了朝鲜时代乡校建筑的精髓。青瓦屋顶、红色大门以及被古树环绕的庭院，在城市之中依然传递着传统学问的气息。由于毗邻韩屋村，这里也成为韩剧、电影和综艺节目的热门拍摄地，是展现全州之美的重要空间。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1089,
+  "city": "jeonju",
+  "name": "Jeondong Catholic Cathedral",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/39/3589839_image2_1.png",
+  "name_l10n": {
+   "en": "Jeondong Catholic Cathedral",
+   "ja": "殿洞カトリック教会",
+   "ko": "전동성당",
+   "zh": "殿洞聖堂"
+  },
+  "desc_l10n": {
+   "en": "The First Romanesque Architecture in the Honam Region",
+   "ja": "韓屋村の入口に位置する全洞聖堂は、素朴で落ち着いた姿を持つ聖堂である。1791年の辛亥迫害の際、尹持忠（パウロ）と権尚然（ヤコブ）が殉教した韓国初のカトリック殉教地であり、湖南地方布教の発祥地でもある。 殉教から100年後の1891年にこの地に本堂が設けられ、1908年に初代主任司祭ボドゥネ神父が殉教100周年を記念して建築を開始した。設計は明洞聖堂を手がけたプワネル神父によるもので、1914年に完成し、着工から献堂まで23年を要した。",
+   "zh": "全洞天主教堂位于韩屋村入口处，是一座外观朴素而典雅的教堂。这里是韩国最早的天主教殉教地，1791年辛亥迫害时期，尹持忠（保禄）与权尚然（雅各伯）在此殉教，同时也是湖南地区传教的发源地。\r\n殉教100年后的1891年在此建立本堂，1908年由首任主任司祭博杜内神父主持开工，并由设计首尔明洞圣堂的普瓦内尔神父设计，1914年完工，历时23年。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1098,
+  "city": "jeonju",
+  "name": "Deokjin Park",
+  "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/177847702126840.jpg",
+  "name_l10n": {
+   "en": "Deokjin Park",
+   "ja": "徳津公園（トクチンコンウォン）",
+   "ko": "덕진공원",
+   "zh": "德津公园"
+  },
+  "desc_l10n": {
+   "en": "A Romantic Place That Brings Back Memories",
+   "ja": "全州市内中心に位置する徳津公園は、市民にとってそれぞれの思い出が刻まれた場所である。特に広大な徳津湖では、毎年7月初旬になると一面に蓮の花が咲き誇り、全国から観光客や写真家が訪れる。全州八景のひとつである「徳津採蓮」とともに、公園の約3分の2を占める徳津湖で行われる音楽噴水ショーも見どころのひとつである。さまざまな魅力にあふれた徳津公園は、全州市民の思い出とロマンが詰まった場所である。蓮の香りに包まれた園内には、申石亭、金海江、李哲均、白楊村などの詩碑が並び、地域文学を築いた文人たちを偲ぶ「全州文学の聖地」としての役割も果たしている。",
+   "zh": "位于全州市中心的德津公园，是许多市民珍藏回忆的地方。园内广阔的德津湖每年7月初荷花盛开，吸引来自全国的游客和摄影爱好者前来观赏。作为全州八景之一的“德津采莲”，以及在占据公园三分之二面积的德津湖上演的音乐喷泉，都是不可错过的景观。德津公园以丰富的景观和深厚的记忆，承载着全州市民的浪漫与情感 公园内弥漫着荷花的清香，并设有申石亭、金海江、李哲均、白杨村等诗人的纪念碑，成为缅怀当地文学先驱的“全州文学圣地”。经过大规模整修后，公园于1998年重新开放，呈现出类似传统乡村景观的布局，同时设有亭台、菖蒲湿地、人工瀑布和木桥等设施。端午节期间，这里还有女性用菖蒲水洗发祈求健康的传统习俗。此外，园内还设有儿童宪章纪念物、全琫准将军雕像以及市民画廊等文化空间，为游客展现全州独特的文化气息。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1109,
+  "city": "jeonju",
+  "name": "Jeonju Traditional Liquor Museum",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/89/3065489_image2_1.jpg",
+  "name_l10n": {
+   "en": "Jeonju Traditional Liquor Museum",
+   "ja": "全州伝統酒博物館",
+   "ko": "전주전통술박물관",
+   "zh": "全州传统酒博物馆"
+  },
+  "desc_l10n": {
+   "en": "Continuing the tradition of traditional liquor",
+   "ja": "全州伝統酒博物館は、家ごとに酒を作って祭祀も行い、家を訪問したお客さんに丁寧にもてなした伝統家醸酒の脈を受け継いで現代に再現しようと2002年全州韓屋村に開館した。 まさに「風流」と呼ばれるほど丁寧で上品だった朝鮮の加陽酒文化は日帝の酒税法により脈が切れることになった。",
+   "zh": "全州传统酒博物馆为了延续每家每户都酿酒、祭祀、款待来访顾客的传统家酿酒传统，并在现代再现，于2002年在全州韩屋村开馆。"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1125,
+  "city": "jeonju",
+  "name": "Jeonju Hanji Museum",
+  "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/173742841604995.jpg",
+  "name_l10n": {
+   "en": "Jeonju Hanji Museum",
+   "ja": "全州韓紙博物館",
+   "ko": "전주한지박물관",
+   "zh": "全州韩纸博物馆"
+  },
+  "desc_l10n": {
+   "en": "Hanji, who's been shining for a thousand years",
+   "ja": "文明の伝播と文化の伝授者としていつも私たちのそばに共にする紙、特に長い歳月、私たちの民族の暮らしの中で共に生きてきた韓紙は、ゆりかごから墓場まで生死を共にしたと言っても過言ではない。",
+   "zh": "作为文明的传播和文化的传授者，无论何时都陪伴在我们身边的纸张，特别是长久以来一直生活在我们民族的生活中的韩纸，"
+  },
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1126,
+  "city": "jeonju",
+  "name": "전주천",
+  "image_url": "https://tour.jeonju.go.kr/upload_data/board_data/BBS_0000003/176344738297700.jpg",
+  "name_l10n": {
+   "ko": "전주천"
+  },
+  "desc_l10n": null,
+  "updated_at": "2026-09-06T02:16:39.090354+00:00"
+ },
+ {
+  "id": 1273,
+  "city": "busan",
+  "name": "부산 자유도매시장",
+  "image_url": null,
+  "name_l10n": {
+   "ko": "부산 자유도매시장"
+  },
+  "desc_l10n": {
+   "ko": "부산의 중심지인 범일동에 위치한 자유시장은 재래 도매시장으로서 주 고객은 서민층 시민과 경상 남북도 지방의 소상인들이다. 일반 소비자들에게도 도매가격으로 상품을 판매하고 있어 누구나 저렴한 가격에 필요한 상품을 구입할 수 있다. 시장 건물은 지하 1층 지상 5층의 10,000여 평 건물에 크고 작은 매장 1,000여 점포가 있다. 1층에 밀집한 신발 매장은 부산에서는 첫 손에 꼽힐 만큼의 규모이며 자유시장 신발도매는 전국에 널리 알려진 사실이다. 2층 매장은 남녀 의류 전 품목과 생활 한복, 혼수 이불, 양말 등 기타 잡화를 도매하는 광범위한 매장이다. 3층은 생화, 조화, 난, 화환, 꽃바구니, 기타 생활 장식품 매장이며 특히 화훼 상가는 시중가보다 훨씬 저렴하게 구입할 수 있다. 그 외에도 그릇, 전자·전기제품 등 일상생활에 필요한 생활용품을 항상 도매가로 손님을 맞이하고 있다. 자유시장을 찾아주는 고객들의 편의를 제공하기 위하여 지하주차장 서편주차장, 옥상 주차장의 규모는 손님들이 항상 주차할 수 있으며 지하에는 새마을금고와 식당가가 영업을 하고 있다."
+  },
+  "updated_at": "2026-08-23T03:53:06.339081+00:00"
+ },
+ {
+  "id": 1319,
+  "city": "busan",
+  "name": "부평깡통시장",
+  "image_url": null,
+  "name_l10n": {
+   "ko": "부평깡통시장"
+  },
+  "desc_l10n": {
+   "ko": "부산 부평깡통시장은 6·25 후 미군이 진주하면서 군용 물자와 함께 온갖 상품들이 밀수입되었는데 특히 과일, 생선 등 갖가지 통조림이 많이 수입되어 시장의 이름이 깡통시장이 되었다고 한다. 또한 '도떼기 시장'이라고도 했는데 그 당시 이곳을 토애 전국의 주요 시장으로 수입 물건들이 공급되었다고 한다. 워낙 시장 규모가 크고 외국 물건 등 없는 물건이 없다고 해서 도떼기 시장이 국제 시장으로 불리게 되었는데, 현재는 다양하고 많은 제품의 수입이 허가되면서 시장이 다소 위축되기는 했지만 아직도 그 명성과 저력은 여전히 느낄 수 있는 명소이다. 지금은 양주, 의류, 장식품, 액세서리, 패션 잡화와 미니 카세트 등 일부 외제 전자제품도 취급하고 있다. 110m가량 이어지는 시장거리에는 11개의 향토 향토음식 매대와 일본, 필리핀 등 6개의 다문화 먹을거리 매대, 13 새의 의류, 액세서리, 매대가 설치되어 있다. 부평깡통시장 입구와 시장 내 사거리에서는 하루 2차례 마술과 기타 공연 등 다양한 볼거리도 제공되며 시장 옆으로는 화려한 LED조명이 반겨준다. ◎ 한류의 매력을 만나는 여행 정보 - 예능 한국, 부산의 문화를 느낄 수 있는 ‘부평깡통시장’은 뉴진스의 리얼리티 예능 프로그램 ‘뉴진스코드 IN 부산’을 통해 소개된 적이 있는 곳이다. 이곳은 여러 나라의 음식부터 물품을 찾아볼 수 있는 다국적 시장이다. 부산 여행을 계획 중이라면 한국의 옛 문화와 음식, 전통을 체험할 수 있는 ‘부평깡통시장’을 들러 볼 것을 추천한다."
+  },
+  "updated_at": "2026-08-23T03:53:06.339081+00:00"
+ },
+ {
+  "id": 1360,
+  "city": "busan",
+  "name": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+  "image_url": null,
+  "name_l10n": {
+   "en": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+   "ko": "해안누리길 몰운대길"
+  },
+  "desc_l10n": {
+   "en": "Morundae-gil Trail, starting from Noeuljeong Pavilion and covering the coast of Morundae Peninsula, is a perfect location to watch the sunset. Memorable attractions along the trail include the point where the Nakdonggang River flows into the southern sea, walking through a coastal pine forest, and the views of many small islands dotting the sea.",
+   "ko": "해안누리길 몰운대길은 다대포 노을정에서 시작되어 몰운대로 이어지는 낙조가 아름답기로 이름난 길이다. 낙동강이 남해 바다와 만나는 현장을 눈으로 확인해 볼 수 있으며 해송숲에서 은은하게 퍼져 나오는 솔향기에 취하고 사방에 흩어진 작은 섬들과 남해의 경관을 감상할 수 있는 비순환형 코스이다. 갈맷길4~3코스 중 일부코스로 몰운대유원지, 화손대, 공수마을, 몰운대성당 앞 전망대가 관광포인트이다."
+  },
+  "updated_at": "2026-08-23T03:53:06.585004+00:00"
+ },
+ {
+  "id": 1633,
+  "city": "busan",
+  "name": "A Special Journey in Haeridan-gil street, 'Pretty Whale Gift Shop'",
+  "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250929183544348",
+  "name_l10n": {
+   "en": "A Special Journey in Haeridan-gil street, 'Pretty Whale Gift Shop'",
+   "ko": "바다처럼"
+  },
+  "desc_l10n": {
+   "en": "Pretty Whale Gift Shop is a charming boutique created by remodeling a house in Haeridan-gil, Haeundae. The shop specializes in handmade accessories and souvenirs inspired by the sea and whales of Busan, including mother-of-pearl seashell crafts."
+  },
+  "updated_at": "2026-09-06T02:57:33.258484+00:00"
+ }
+]
