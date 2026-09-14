@@ -1,5 +1,5 @@
 -- gyeongju-regional-l10n precheck v1 (READ-ONLY)
--- 목적: 대상 14행(en 14 · ja/zh 는 그중 432·530)의 identity 브리지·현재 키 상태·CHECK 제약 확인.
+-- 목적: 대상 14행(en 제목 14 · ja/zh·EN 본문은 그중 432·530)의 identity 브리지·현재 키 상태·CHECK 제약 확인.
 -- 기대: bridge_ok = 14, en_missing = 14, 변경 대상 외 0.
 SELECT conname, pg_get_constraintdef(oid) AS def FROM pg_constraint
  WHERE conrelid = 'city_spots'::regclass AND contype = 'c';

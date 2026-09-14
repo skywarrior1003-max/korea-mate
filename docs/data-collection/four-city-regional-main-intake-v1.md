@@ -47,7 +47,7 @@ Main `regional-trips-v1.json` 4도시 stop 총합 = **107** = 패키지 total oc
 |---|---|---|---|---|---|
 | gyeongju en_title ×14 | city_spots.name_l10n.en (425,432,436,439,444,454,457,462,468,473,475,481,530,665) | 없음(ko만) | visitkorea/VG 계보 verbatim | **DATA_INTAKE(SQL 준비, 미적용)** | 키 부재 시에만 추가·no-overwrite |
 | gyeongju ja/zh (432·530) | name_l10n.ja/zh + desc_l10n.ja/zh | 없음 | 박물관 공식(jpn/chn)·UNESCO 공식 | **DATA_INTAKE(SQL 준비, 미적용)** | 동일 |
-| gyeongju en description | desc_l10n.en | 없음 | **패키지 en 행에 중국어 혼입 확인** | 제외(HOLD-결함보고) | 오염 데이터 미수령 |
+| gyeongju en description | desc_l10n.en | 없음 | **패키지 en 행에 중국어 혼입 확인** | 패키지분 미수령. **432·530 만 공식 원문 직접 확인으로 확보**(museum /eng/·UNESCO en — §10.3), 나머지 12행 TITLE_ONLY | 오염 데이터 미수령·공식 verbatim 만 |
 | gyeongju desc_ko / image / NAV | description·image_url·lat/lng | Final·공식이미지 889 반영 완료 | gyeongju.go.kr 재수집본 | CURRENT_MAIN_NEWER_OR_MORE_SPECIFIC | 역덮어쓰기 금지 준수 |
 | busan JA/ZH 13 | (런타임) | l10n 실재+렌더 정상(LIVE) | RUNTIME_MAPPING_REPAIR 주장 | **ALREADY_FIXED**(stale 분류) | 변경 0 |
 | jeonju image 4 | image_url | 동일 URL 기반영 | 복구 이미지 | **ALREADY_FIXED** | 변경 0 |
@@ -94,9 +94,9 @@ Main `regional-trips-v1.json` 4도시 stop 총합 = **107** = 패키지 total oc
 ## 7. Production 적용 계획 (Owner 별도 승인 후)
 
 1. `data/main-intake/four-city-regional-v1/gyeongju-regional-l10n-precheck-v1.sql` 실행(READ-ONLY) — 브리지 16/16·en_has 0 확인, before 스냅숏 보존.
-2. `gyeongju-regional-l10n-apply-v1.sql` 정확 1회(sha256 `b7dd38cd28b8df4a8769a4ce3a898d26ace7e52aeb39aedb06fc953bf0cc637a`).
-   키 부재 시에만 추가·no-overwrite·트랜잭션 내 검증 게이트(en 14·ja 2·zh 2 아니면 전체 롤백)·재실행 시 0행.
-3. `…readback-v1.sql` — en 14/14·ja/zh 2/2·타행 무영향.
+2. `gyeongju-regional-l10n-apply-v1.sql` 정확 1회(sha256 `dd4a5f6ce01e98c4febb7cb9996dc308586b849607bb5af849b4f5f73bc440be` — v2 재생성: 432/530 EN 본문 추가로 sha 변경, 구 `b7dd38cd…` 는 SUPERSEDED — DO NOT APPLY).
+   키 부재 시에만 추가·no-overwrite·트랜잭션 내 검증 게이트(en 14·ja 2·zh 2·en_desc 2 아니면 전체 롤백)·재실행 시 0행.
+3. `…readback-v1.sql` — en 14/14·ja/zh 2/2·desc en 2/2·타행 무영향.
 4. **복구**: master jsonl 의 값과 일치할 때만 `name_l10n - 'en'` 류 키 제거(값 조건 포함) — before 스냅숏이 1차 복구 자료.
 5. 이후 SSG rebuild 1회(코스 화면은 라이브 fetch 라 rebuild 없이도 반영되지만 /place 텍스트 표면 일관성용).
 6. linkage 수정(JSON)은 master 반영·배포로만 전파 — DB 무관. 기존 사용자 저장 여행(snapshot)은 **수정하지 않음**:
@@ -158,6 +158,8 @@ Main `regional-trips-v1.json` 4도시 stop 총합 = **107** = 패키지 total oc
 
 ### 10.3 SQL 패치 상태
 
-경주 l10n 패치(§7)는 **필드 범위 무변경**(name_l10n en 14 + 432/530 ja/zh + desc_l10n 432 ja/zh·530 zh) —
-apply sha256 `b7dd38cd…` 동일, **미적용 유지**. V2 재분류: EN 은 **TITLE_ONLY**(공식 제목만, description 없음 —
-화면은 제목 EN + 본문 ko fallback 으로 표시될 것임을 명시). 좌표 패치는 만들지 않음(§10.1 판정).
+경주 l10n 패치(§7): name_l10n en 14 + 432/530 ja/zh + desc_l10n 432 ja/zh·530 zh — **미적용 유지**.
+EN 재분류: **12행 = TITLE_ONLY**(공식 제목만 — 화면은 제목 EN + 본문 ko fallback),
+**432·530 = EN 본문 포함**(Owner 지시 2026-09-14: 해당 행 공식 원문 재확인 —
+432 = gyeongju.museum.go.kr/eng/ 공식 소개문, 530 = whc.unesco.org/en/list/736/ 공식 설명[CC-BY-SA IGO], 직접 fetch 로 실측·verbatim).
+패치 v2 재생성 — apply sha256 `dd4a5f6c…`(§7), 구 sha `b7dd38cd…` SUPERSEDED. 좌표 패치는 만들지 않음(§10.1 판정).

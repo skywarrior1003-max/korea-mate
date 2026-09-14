@@ -1,9 +1,12 @@
 -- gyeongju-regional-l10n apply v1
 -- 성격: 키 부재 시에만 추가(no-overwrite) · idempotent(재실행 시 0행) · 삭제/치환 0.
--- 대상: 경주 regional 15 stop 의 city_spots 14행 EN 제목 + 432/530 JA·ZH(공식 native).
+-- 대상: 경주 regional 15 stop 의 city_spots 14행 EN 제목 + 432/530 JA·ZH(공식 native)
+--        + 432/530 EN 본문(v2 — 공식 원문 직접 확인: gyeongju.museum.go.kr/eng/ ·
+--        whc.unesco.org/en/list/736/ [CC-BY-SA IGO]).
 -- 원천: data/four-city-regional-final-package-v1 @ 0c3a45e (en_title verbatim ·
 --        432 ja/zh = gyeongju.museum.go.kr · 530 = UNESCO 공식 다국어 페이지).
--- 주의: 패키지 en 행의 description 은 중국어 혼입이 확인되어 의도적으로 제외했다.
+-- 주의: 패키지 en 행의 description 은 중국어 혼입이 확인되어 미수령 — 432/530 EN 본문은
+--        패키지가 아니라 2026-09-14 공식 원문 재확인분이다. 나머지 12행 EN 은 TITLE_ONLY.
 -- 복구: 각 키는 아래 값과 일치할 때 name_l10n - '<key>' 로 제거 가능(master jsonl 참조).
 BEGIN;
 
@@ -18,6 +21,9 @@ UPDATE city_spots SET name_l10n = coalesce(name_l10n,'{}'::jsonb) || jsonb_build
 
 UPDATE city_spots SET name_l10n = coalesce(name_l10n,'{}'::jsonb) || jsonb_build_object('zh','国立庆州博物馆'), updated_at = now()
  WHERE id = 432 AND city = 'gyeongju' AND NOT coalesce(name_l10n,'{}'::jsonb) ? 'zh';
+
+UPDATE city_spots SET desc_l10n = coalesce(desc_l10n,'{}'::jsonb) || jsonb_build_object('en','The Gyeongju National Museum, located in Gyeongju, the millennial capital of Silla, is one of the most prominent museums in Korea that sheds light on the cultural heritage of Silla.'), updated_at = now()
+ WHERE id = 432 AND city = 'gyeongju' AND NOT coalesce(desc_l10n,'{}'::jsonb) ? 'en';
 
 UPDATE city_spots SET desc_l10n = coalesce(desc_l10n,'{}'::jsonb) || jsonb_build_object('ja','新羅千年の首都「慶州」に位置する国立慶州博物館は、新羅の文化遺産が一同に集結した韓国を代表する博物館です。'), updated_at = now()
  WHERE id = 432 AND city = 'gyeongju' AND NOT coalesce(desc_l10n,'{}'::jsonb) ? 'ja';
@@ -64,6 +70,9 @@ UPDATE city_spots SET name_l10n = coalesce(name_l10n,'{}'::jsonb) || jsonb_build
 UPDATE city_spots SET name_l10n = coalesce(name_l10n,'{}'::jsonb) || jsonb_build_object('zh','石窟庵和佛国寺'), updated_at = now()
  WHERE id = 530 AND city = 'gyeongju' AND NOT coalesce(name_l10n,'{}'::jsonb) ? 'zh';
 
+UPDATE city_spots SET desc_l10n = coalesce(desc_l10n,'{}'::jsonb) || jsonb_build_object('en','Established in the 8th century on the slopes of Mount Toham, the Seokguram Grotto contains a monumental statue of the Buddha looking at the sea in the bhumisparsha mudra position. With the surrounding portrayals of gods, Bodhisattvas and disciples, all realistically and delicately sculpted in high and low relief, it is considered a masterpiece of Buddhist art in the Far East. The Temple of Bulguksa (built in 774) and the Seokguram Grotto form a religious architectural complex of exceptional significance.'), updated_at = now()
+ WHERE id = 530 AND city = 'gyeongju' AND NOT coalesce(desc_l10n,'{}'::jsonb) ? 'en';
+
 UPDATE city_spots SET desc_l10n = coalesce(desc_l10n,'{}'::jsonb) || jsonb_build_object('zh','石窟庵建于公元8世纪，位于吐含山的斜坡上，石窟庵内有一尊纪念佛像，该佛像以普密斯帕莎穆德拉姿势面朝着大海。佛像周围有各种神仙、菩萨及弟子的雕像，雕刻细腻写实，是远东地区佛教艺术的杰作。'), updated_at = now()
  WHERE id = 530 AND city = 'gyeongju' AND NOT coalesce(desc_l10n,'{}'::jsonb) ? 'zh';
 
@@ -72,7 +81,7 @@ UPDATE city_spots SET name_l10n = coalesce(name_l10n,'{}'::jsonb) || jsonb_build
 
 -- 검증 게이트 — 기대 상태가 아니면 전체 롤백
 DO $$
-DECLARE en_cnt int; ja_cnt int; zh_cnt int;
+DECLARE en_cnt int; ja_cnt int; zh_cnt int; en_desc_cnt int;
 BEGIN
   SELECT count(*) INTO en_cnt FROM city_spots
    WHERE id IN (425,432,436,439,444,454,457,462,468,473,475,481,530,665) AND coalesce(name_l10n,'{}'::jsonb) ? 'en';
@@ -80,8 +89,10 @@ BEGIN
    WHERE id IN (432,530) AND coalesce(name_l10n,'{}'::jsonb) ? 'ja';
   SELECT count(*) INTO zh_cnt FROM city_spots
    WHERE id IN (432,530) AND coalesce(name_l10n,'{}'::jsonb) ? 'zh';
-  IF en_cnt <> 14 OR ja_cnt <> 2 OR zh_cnt <> 2 THEN
-    RAISE EXCEPTION 'gyeongju l10n apply verification failed: en=% ja=% zh=%', en_cnt, ja_cnt, zh_cnt;
+  SELECT count(*) INTO en_desc_cnt FROM city_spots
+   WHERE id IN (432,530) AND coalesce(desc_l10n,'{}'::jsonb) ? 'en';
+  IF en_cnt <> 14 OR ja_cnt <> 2 OR zh_cnt <> 2 OR en_desc_cnt <> 2 THEN
+    RAISE EXCEPTION 'gyeongju l10n apply verification failed: en=% ja=% zh=% en_desc=%', en_cnt, ja_cnt, zh_cnt, en_desc_cnt;
   END IF;
 END $$;
 
