@@ -395,3 +395,41 @@ READ-ONLY. 노출 전수 = **regional 22 + 경주 legacy 54 = 76 코스** · 연
 - 직접 LIVE(모바일 ko): 목록 5 페이지 전수(카드 76·이미지 실패 0), regional 22 상세 전수(<img> 실로딩·placeholder 판별), legacy 54 상세 전수(렌더), 연결 장소 54 상세 전수(히어로 실로딩·설명 표시), 홈(캐러셀 스와이프 포함), 언어 표본 7(ko 외 en/ja/zh 코스 상세 — busan en/ja/zh·gyeongju en/ja·jeju en·jeonju zh·seoul en).
 - 데이터·공통 코드: 언어별 l10n 커버리지 전수(DB)·fallback 규칙(pickL10n)·데스크톱은 공통 렌더 경로(코스·장소 페이지 반응형 단일 구현) — 별도 데스크톱 전수 화면 확인은 미수행(미검증 범위로 구분).
 - 이번 감사의 수정·배포·DB 변경 0. 숨김·삭제 0.
+
+## 15. 콘텐츠 복구 (RECOMMENDED-ITINERARY-CONTENT-RECOVERY-V1, 2026-09-14)
+
+### 15.1 복구 패치 content-recovery-v1 (준비 완료 · Production 미적용)
+
+- 파일: `data/main-intake/four-city-regional-v1/content-recovery-{precheck,apply,readback,rollback}-v1.sql` + `content-recovery-master-v1.jsonl`
+- **apply sha256 `f79ccbad9111a2283edf359291423decec81b700e2cd4f1cbd69579ce9846204`** — UPDATE 27문:
+  이미지 5행(28 오륙도스카이워크·1319 부평깡통시장·40 블루라인파크·1360 몰운대길·1273 자유도매시장 — `image_url IS NULL` 일 때만) ·
+  **ko 본문 16행**(672·729·736·742·744·763·765·778·917·1088·1089·1098·1109·1125·**1126 전주천**·1633 — 키 부재 시에만) ·
+  EN 3행(427 경주 월성·778 오목대·1319 — name+desc, KTO EN title/overview verbatim).
+- 원천: **KTO TourAPI**(Kor/EngService detailCommon — 공공데이터포털 활용키, 기존 KTO_OFFICIAL 계보와 동일 제공 경로; contentid·주소를 master jsonl 에 기록. 도메인 라벨이 아니라 '공사 제공 API 데이터 + 출처 표기 관례'가 이용 근거 — 별도 계약 아님을 기록).
+- **identity 대조**: 전 대상 KTO 좌표↔Main 좌표 ≤0.6km(1126 전주천 3.8km 는 선형 하천 — KTO 항목이 하천 전반 소개라 desc 만 채택, 좌표 무변경).
+- **1126 NOT_APPLICABLE 재판정**: 패키지 NA 는 visitjeonju 다국어 부재 맥락 — KTO 국문 '전주천'(contentid 3056623) 공식 설명 실존 → ko desc 복구 대상으로 승격(범위 상이 문제 없음: 하천 전반 소개).
+- **미확보(대상 밖 — 완료 위장 없음)**: 749 전주한옥마을 ko 본문(KTO 검색 미검출 — 126508 probe 는 경복궁으로 판명·불채택. ko 원문 후보는 visitjeonju 제2유형 → HOLD 트랙) · 743 남부야시장 ko(KTO 부재) · 22 국제시장·48 절영 이미지(KTO firstimage 없음) · 778/1319 JA·ZH(KTO 언어 서비스 미검출; visitjeonju ja 는 제2유형 HOLD).
+- rollback: 이미지=값조건 NULL 복귀(원값 NULL 실측), 텍스트=값조건 키 제거(rollback-v1.sql — 실행 금지 골격, 실제 실행 시 master 원문 조건으로 확정). Production 적용 전 재검사: precheck 카운트 전부 0 + before snapshot 저장.
+
+### 15.2 미연결 분류·연결 복구 (46 occurrence / 45 unique — 서울 10 포함)
+
+- **연결 복구 26 occurrence / 25 unique** (`linkage: IDENTITY_LINK_RECOVERY_V1`, 명칭+공식 주소·좌표 실측 — 가드 테스트 고정):
+  부산 17(동래읍성 58·복천동고분박물관 993·송정해수욕장 17·장림포구 980×2·을숙도 65·절영해안산책로 48·국제시장 22·부산아쿠아리움 1645·누리마루 38·전포카페거리 54·호천마을 985·해리단길 1633·블루라인 40·몰운대길 1360·X the SKY 43·자유도매시장 1273) ·
+  제주 4(법환포구 1690·월평포구 1684·영실기암 1810·윗세오름 1698) · 경주 5(중앙시장 야시장 455·플레이스씨 1617·경주월드 507·엑스포대공원 504·**불국사 528**).
+- **Main 행은 있으나 unpublished(발견 게이트) — 연결 보류·별도 결정**: 이기대(7/29)·청사포다릿돌전망대(39)·부산역(81). 공개 여부는 Final 권한 — 임의 publish 0.
+- **실장소·Main 행 부재(신규 행 후보 — insert 준비는 별도 결정)**: 서울 7(경복궁·국립민속박물관·북촌한옥마을·창덕궁·인사동·국립중앙박물관·이촌한강공원 — 서울 카탈로그에 본체 부재 실측) · 삼정타워 · 밀락더마켓 · 서빈백사(우도) · 전주비빔밥거리 · 경주 고속버스터미널·경주역.
+- **맥락형 유지(장소 ID 부여 안 함)**: 서귀포 해안선(구간) · 안국역 인근 집합 · 창덕궁 방면 표현 · 근정전·향원정 일원(경복궁 내부 동선) · 국립중앙박물관 야외/내부 중 야외(경내 동선) — 원 라벨(RELATION_OR_AREA_ONLY 등) 존중.
+
+### 15.3 legacy 54코스 판정
+
+- **의도 구성 근거**: curated-trips.json 스키마 자체가 stops=개수(장소 목록 없음), P0-4(10d4ccd)에서 편집형 fallback 으로 승인 배포 — 구현 사실·승인 근거 모두 확인.
+- **자료 누락 확인**: 원본 `gyeongju-official-course-place-links-final-v1.jsonl` 에 **18개 legacy 코스의 stop 132행 실존**(candidate GJ01-* 등) — 전달 계층에서 미사용. **복구안 준비물**: `gyeongju-legacy-course-stops-resolved-v1.jsonl`(city_spot_sources 브리지로 **107/132행 numeric id 해석**, 73/73 canonical). 나머지 36 코스는 원본에도 링크 없음(NON_PLACE/NEW_PLACE 등 분류 잔존).
+- **별도 결정 항목**: 이 18코스에 stops 를 배선할지(match_status EXACT/HIGH 만 채택 등 정책 포함) — 화면에 stop 타임라인이 새로 생기는 변화라 Owner 결정 후 구현.
+
+### 15.4 격리 QA (2026-09-14, 로컬 serve — DB 패치 미적용 상태 기준)
+
+복구 연결 표시·링크(58/65/22/1645/1633/1690/1684/528/507/504 등) 전부 PASS · 깨진 이미지 0(제주 CDN 지연은 18s 내 로딩) · 미연결 유지 항목 확인 · 홈→목록 경로 유지 · 제휴 sponsored 5 유지 · UI diff = 데이터·테스트·문서만(런타임 코드 0). 이미지 5행·본문은 DB 미적용이라 격리 화면에선 기존 상태(placeholder 등) — **적용 후 LIVE 재QA 항목**. 채택·저장·재열람은 QA 여행 생성 금지 제약으로 adopt-core 계약+가드 스냅숏 검증으로 갈음(실채택 E2E 는 적용 승인 후 항목).
+
+### 15.5 Production 적용 순서(승인 후)
+
+① content-recovery precheck(카운트 0 확인·before snapshot 저장) → apply 1회(sha f79ccbad…) → readback(img 5/5·ko 16/16·en 3/3) → ② master FF(연결 복구 커밋) → 배포 → ③ LIVE 재QA(복구 이미지 실로딩·ko 본문 표시·EN 427/778/1319·채택 E2E) → QA 데이터 정리.

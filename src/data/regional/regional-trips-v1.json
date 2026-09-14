@@ -24,14 +24,14 @@
     {
      "name": "동래읍성",
      "nameEn": "Dongnae Eupseong Fortress",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 58,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "복천동고분박물관",
      "nameEn": "Bokcheon Museum",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 993,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "해동용궁사",
@@ -42,8 +42,8 @@
     {
      "name": "송정해수욕장",
      "nameEn": "Songjeong Beach",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 17,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "해운대해수욕장",
@@ -96,14 +96,14 @@
     {
      "name": "장림포구",
      "nameEn": "Jangnim Port",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 980,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "을숙도·낙동강하구",
      "nameEn": "Eulseukdo Island / Nakdong River Estuary",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 65,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     }
    ],
    "source": {
@@ -137,8 +137,8 @@
     {
      "name": "절영해안산책로",
      "nameEn": "Jeoryeong Coastal Walking Path",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 48,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "태종대",
@@ -149,8 +149,8 @@
     {
      "name": "국제시장",
      "nameEn": "Gukje (International) Market",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 22,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "부평깡통시장",
@@ -173,14 +173,14 @@
     {
      "name": "부산아쿠아리움",
      "nameEn": "Busan Aquarium",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 1645,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "동백해안산책로·누리마루APEC하우스",
      "nameEn": "Dongbaek Coastal Path & Nurimaru APEC House",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 38,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "오륙도스카이워크",
@@ -232,26 +232,26 @@
     {
      "name": "전포카페거리",
      "nameEn": "Jeonpo Café Street",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 54,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "호천마을",
      "nameEn": "Hocheon Village",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 985,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "해리단길",
      "nameEn": "Haeridan-gil",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 1633,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "해운대해변열차·스카이캡슐",
      "nameEn": "Haeundae Beach Train / Sky Capsule",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 40,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "청사포다릿돌전망대",
@@ -268,14 +268,14 @@
     {
      "name": "장림포구",
      "nameEn": "Jangnim Port",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 980,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "몰운대해안데크길",
      "nameEn": "Molundae Coastal Deck Trail",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 1360,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "다대포해수욕장·고우니생태길",
@@ -309,14 +309,14 @@
     {
      "name": "X the SKY 전망대",
      "nameEn": "X the SKY Observatory (LCT Landmark Tower 98-100F)",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 43,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "부산 자유도매시장",
      "nameEn": "Busan Jayou Wholesale Market",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 1273,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "광안리해수욕장 (광안리 디셈버)",
@@ -494,14 +494,14 @@
     {
      "name": "법환포구",
      "nameEn": "Beophwan Port",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 1690,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "월평 포구 (종착점)",
      "nameEn": "Wollang Port (end)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 1684,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     }
    ],
    "source": {
@@ -531,14 +531,14 @@
     {
      "name": "영실기암 (병풍바위·오백나한)",
      "nameEn": "Yeongsil Rocks (Byeongpung Bawi / Obaek Nahan)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 1810,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "윗세오름 대피소 (종착·회귀점)",
      "nameEn": "Witseoreum Shelter (turnaround point)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 1698,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     }
    ],
    "source": {
@@ -759,8 +759,8 @@
     {
      "name": "중앙시장 야시장",
      "nameEn": "Jungang Market Night Market",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 455,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     }
    ],
    "source": {
@@ -818,8 +818,8 @@
     {
      "name": "플레이스씨",
      "nameEn": "Place C (cultural complex)",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 1617,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     }
    ],
    "source": {
@@ -871,20 +871,20 @@
     {
      "name": "경주월드",
      "nameEn": "Gyeongju World",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 507,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "엑스포공원",
      "nameEn": "Expo Park",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 504,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "불국사",
      "nameEn": "Bulguksa Temple",
-     "spotId": null,
-     "linkage": "UNCERTAIN"
+     "spotId": 528,
+     "linkage": "IDENTITY_LINK_RECOVERY_V1"
     },
     {
      "name": "국립경주박물관",

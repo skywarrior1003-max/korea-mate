@@ -235,3 +235,25 @@ test("부산·전주 identity 수리 스냅숏 — 본체 행 연결 복귀 금�
   // 전주: 오목대·이목대 — 정확 명칭 행(778). 764 는 이름(전주천)·좌표(오목대) 불일치 twin 의심(보고)
   assert.equal(stop("jeonju-C-002", 2).spotId, 778, "오목대·이목대=778");
 });
+
+// ── CONTENT-RECOVERY-V1: 미연결 stop 연결 복구 고정 ─────────────────────────
+//
+// 근거: 명칭+공식 주소·좌표 identity 실측(intake 문서 §15). 이름 유사도 단독 매칭 0.
+test("연결 복구 스냅숏 — 26 occurrence(부산17·제주4·경주5), 복귀 금지", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const stop = (tripId: string, i: number) => trips.get(tripId)!.stops[i]!;
+  const expect: Array<[string, number, number]> = [
+    ["busan-C-001", 1, 58], ["busan-C-001", 2, 993], ["busan-C-001", 4, 17], ["busan-C-001", 13, 980], ["busan-C-001", 14, 65],
+    ["busan-C-002", 2, 48], ["busan-C-002", 4, 22], ["busan-C-002", 8, 1645], ["busan-C-002", 9, 38],
+    ["busan-C-003", 2, 54], ["busan-C-003", 3, 985], ["busan-C-003", 4, 1633], ["busan-C-003", 5, 40], ["busan-C-003", 8, 980], ["busan-C-003", 9, 1360],
+    ["busan-C-R01", 1, 43], ["busan-C-R01", 2, 1273],
+    ["jeju-C-001", 2, 1690], ["jeju-C-001", 3, 1684], ["jeju-C-002", 1, 1810], ["jeju-C-002", 2, 1698],
+    ["gyeongju-C-002", 6, 455], ["gyeongju-C-003", 6, 1617],
+    ["gyeongju-C-R01", 5, 507], ["gyeongju-C-R01", 6, 504], ["gyeongju-C-R01", 7, 528],
+  ];
+  for (const [tid, i, id] of expect) assert.equal(stop(tid, i).spotId, id, `${tid}#${i + 1}`);
+  // 의도적 미연결 유지(대응 행 부재/unpublished/맥락형) — 억지 연결 금지
+  for (const [tid, i] of [["busan-C-002", 11], ["busan-C-003", 0], ["busan-C-003", 1], ["busan-C-003", 6], ["busan-C-R01", 0]] as const) {
+    assert.equal(stop(tid, i).spotId, null, `${tid}#${i + 1} 미연결 유지`);
+  }
+});
