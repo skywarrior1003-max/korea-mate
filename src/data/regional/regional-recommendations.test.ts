@@ -181,3 +181,29 @@ test("추천 장소: canonical 연결 id 는 published 해석본만, 순서 보�
   }
   assert.ok(any > 0, "canonical 연결 장소 존재");
 });
+
+// ── FOUR-CITY-REGIONAL-DATA-INTAKE-V1: 경주 linkage 수리 고정 ────────────────
+//
+// 근거: 패키지 canonical(0c3a45e) × Main city_spot_sources.source_key 정확 브리지
+// (월정교=454 · 대릉원=436 · 오릉=475 · 삼릉=473, 2026-09-14 READ-ONLY 실측).
+// 스왑/밀림이 되돌아오면 코스 화면이 다른 장소의 이름·사진을 다시 보여주게 된다.
+test("경주 linkage 수리 스냅숏 — 스왑 복귀 금지(identity 브리지 근거)", () => {
+  const byId = new Map(getRecommendedTrips("gyeongju").map(t => [t.id, t]));
+  const stop = (tripId: string, i: number) => byId.get(tripId)!.stops[i]!;
+  // 월정교 ↔ 대릉원 스왑 해소
+  assert.equal(stop("gyeongju-C-001", 1).spotId, 454, "C-001 월정교=454");
+  assert.equal(stop("gyeongju-C-001", 3).spotId, 436, "C-001 대릉원=436");
+  assert.equal(stop("gyeongju-C-002", 1).spotId, 436, "C-002 대릉원=436");
+  assert.equal(stop("gyeongju-C-002", 4).spotId, 454, "C-002 월정교=454");
+  assert.equal(stop("gyeongju-C-003", 0).spotId, 454, "C-003 월정교=454");
+  // 오프셋 해소
+  assert.equal(stop("gyeongju-C-003", 1).spotId, 475, "C-003 오릉=475");
+  assert.equal(stop("gyeongju-C-003", 5).spotId, 473, "C-003 삼릉=473");
+  // 월성 발굴현장: canonical 부재 — 오연결(오릉 행) 제거, 이름만 표시
+  assert.equal(stop("gyeongju-C-001", 5).spotId, null, "C-001 월성 발굴현장 unlink");
+  // 정합 확인 유지분(브리지 일치): 계림·첨성대·나정·포석정·분황사·동궁·박물관·보문
+  assert.equal(stop("gyeongju-C-002", 3).spotId, 425);
+  assert.equal(stop("gyeongju-C-001", 2).spotId, 457);
+  assert.equal(stop("gyeongju-C-003", 2).spotId, 468);
+  assert.equal(stop("gyeongju-C-003", 3).spotId, 481);
+});

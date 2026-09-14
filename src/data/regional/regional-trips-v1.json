@@ -670,7 +670,7 @@
     {
      "name": "월정교",
      "nameEn": "Woljeong Bridge",
-     "spotId": 436,
+     "spotId": 454,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
@@ -682,7 +682,7 @@
     {
      "name": "대릉원",
      "nameEn": "Daereungwon Royal Tomb Complex",
-     "spotId": 454,
+     "spotId": 436,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
@@ -694,8 +694,8 @@
     {
      "name": "월성 발굴현장",
      "nameEn": "Wolseong Excavation Site",
-     "spotId": 475,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": null,
+     "linkage": "MISLINK_REMOVED_NO_CANONICAL_V1"
     },
     {
      "name": "황리단길",
@@ -729,7 +729,7 @@
     {
      "name": "대릉원",
      "nameEn": "Daereungwon Royal Tomb Complex",
-     "spotId": 454,
+     "spotId": 436,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
@@ -747,7 +747,7 @@
     {
      "name": "월정교",
      "nameEn": "Woljeong Bridge (night illumination)",
-     "spotId": 436,
+     "spotId": 454,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
@@ -782,13 +782,13 @@
     {
      "name": "월정교",
      "nameEn": "Woljeong Bridge (start)",
-     "spotId": 436,
+     "spotId": 454,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
      "name": "오릉",
      "nameEn": "Oryeong (Five Royal Tombs)",
-     "spotId": 473,
+     "spotId": 475,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
@@ -812,7 +812,7 @@
     {
      "name": "삼릉",
      "nameEn": "Samneung (Three Royal Tombs)",
-     "spotId": 530,
+     "spotId": 473,
      "linkage": "EXACT_CANONICAL_LINK"
     },
     {
