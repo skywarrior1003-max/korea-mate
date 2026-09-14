@@ -33,9 +33,18 @@ export const PARTNER_NAMES: Record<PartnerId, string> = {
 const AGODA_HL: Record<PartnerLocale, string> = {
   en: "en-us", ko: "ko-kr", ja: "ja-jp", zh: "zh-cn",
 };
-/** 공식 별도 확보 전까지 검증된 도시 ID 만 — 추측 금지 */
+/**
+ * 검증된 도시 ID 만 — 추측 금지.
+ * busan: Owner 원본. 나머지 4곳(2026-09-14): Agoda 자체 자동완성 API
+ * (GetUnifiedSuggestResult, CityId 필드)에서 추출 — busan=17172 일치로 소스
+ * 교차검증 — 후 partnersearch 착지 실측(200 + 해당 도시 호텔 목록 + hl 정상).
+ */
 const AGODA_CITY_IDS: Partial<Record<string, string>> = {
   busan: "17172",
+  seoul: "14690",
+  jeju: "16901",
+  gyeongju: "17179",
+  jeonju: "17831",
 };
 
 export function buildAgodaCitySearch(citySlug: string, locale: PartnerLocale): string | null {
@@ -187,8 +196,8 @@ export function isLegacyAffiliateUrl(url: string): boolean {
 
 // ── 활성 매트릭스 — 검증 통과 조합만 ────────────────────────────────────────
 //
-// 실브라우저 착지 검증 통과분(v2~v4):
-//   stay: 부산=Agoda(4locale)+Trip 대안(en/ja/ko) · 4도시=Trip 단독(en/ja/ko)
+// 실브라우저 착지 검증 통과분(v2~v5):
+//   stay: 5도시=Agoda 추천(4locale, zh 포함)+Trip.com 대안(en/ja/ko — zh 규격 미확인)
 //   activity: Klook 검색(4locale) 추천 + KKday 도시 목적지(4locale) 대안 — 5도시
 //   esim: Klook(4locale) · rail/bus: Klook(en/ja/zh — ko 는 경로 부재)
 // 하나만 유효하면 하나만 노출하고, 없으면 그 영역은 렌더하지 않는다.
@@ -202,8 +211,8 @@ export interface PartnerOffer {
 /**
  * stay 후보 — Owner 정책 순서: Agoda → Trip.com.
  * [0]=추천, [1]=대안(있을 때만). 검증된 조합만 배열에 들어간다.
- *  · Agoda: 도시 ID 확보분(부산)만, 4locale.
- *  · Trip.com: 5도시 경로 확보, locale 은 검증 도메인(en/ja/ko)만 —
+ *  · Agoda: 5도시 ID 확보(v5) — 추천, 4locale(zh 포함).
+ *  · Trip.com: 5도시 경로 확보 — 대안, locale 은 검증 도메인(en/ja/ko)만 —
  *    zh 는 hk.trip.com 이 번체(zh-HK)라 간체 UI 와 불일치, 미지원 유지.
  */
 export function stayOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {

@@ -297,3 +297,22 @@ Agoda 신규 도시 ID 는 자동화가 전면 봇차단이라 확보 불가 —
   반영·⑤구매 귀속은 운영 대기. 검색어(query)는 ID 가 아닌 자유 검색어로,
   비검증 도시×locale 표기는 Klook 자체 표기(ソウル·首尔 등) 관측+표준 지명
   번역 — 결과 0 건 위험은 낮으나 운영 중 관찰 대상.
+
+### 9.8 (v6 — Agoda 도시 ID 확보, 2026-09-14 — §9.6 전항 해소)
+
+- **§9.6-5(마지막 잔여 항목) 해소**: Owner 가 Agoda Partners 대시보드 접근을
+  제공했고, 조사 결과 대시보드 수작업 없이도 **Agoda 자체 자동완성 API**
+  (`/api/cronos/search/GetUnifiedSuggestResult`, 공개 홈 검색창이 호출)의
+  `CityId` 필드에서 도시 ID 를 추출 가능 — busan=17172 가 Owner 원본과
+  일치하여 소스 신뢰성 교차검증됨.
+- **확보 ID(전부 partnersearch 착지 실측: 200 + 해당 도시 호텔 목록 + hl 정상,
+  대조군 busan 포함 6/6)**: seoul=14690 · jeju=16901 · gyeongju=17179(Gyeongju-si)
+  · jeonju=17831(Jeonju-si).
+- **활성 반영**: stay 5도시 전부 **Agoda 추천(4locale, zh 포함) + Trip.com
+  대안(en/ja/ko)**. zh 숙박 4도시 공백 해소(Agoda 단독). Trip zh(간체)는 여전히
+  규격 미확인 — 대안 없음 유지.
+- 이로써 §9.6 Owner 확인표는 **전항 종결**. PHASE 10 잔여는 운영 대기 항목
+  (④실적 반영·⑤구매 귀속·Booking 인증)뿐이다.
+- 참고: Agoda 대시보드에 "Payment Delay Notice: this month's commission
+  payments are delayed, expected by Mid August" 배너 관측(2026-09-14) — 실적
+  ④단계 확인 시점에 참고.

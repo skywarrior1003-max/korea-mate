@@ -14,7 +14,7 @@ import {
 
 const LOCALES: PartnerLocale[] = ["en", "ko", "ja", "zh"];
 
-test("★Agoda — Owner 원본과 파라미터 동일(부산), 4언어 hl, 미확보 도시는 null", () => {
+test("★Agoda — Owner 원본과 파라미터 동일(부산), 4언어 hl, v5 도시 ID 5건, 미확보 null", () => {
   const u = new URL(buildAgodaCitySearch("busan", "en")!);
   assert.equal(u.host + u.pathname, "www.agoda.com/partners/partnersearch.aspx");
   assert.equal(u.searchParams.get("pcs"), "1");
@@ -24,9 +24,12 @@ test("★Agoda — Owner 원본과 파라미터 동일(부산), 4언어 hl, 미�
   assert.equal(new URL(buildAgodaCitySearch("Busan", "ja")!).searchParams.get("hl"), "ja-jp");
   assert.equal(new URL(buildAgodaCitySearch("busan", "ko")!).searchParams.get("hl"), "ko-kr");
   assert.equal(new URL(buildAgodaCitySearch("busan", "zh")!).searchParams.get("hl"), "zh-cn");
-  for (const c of ["seoul", "jeju", "gyeongju", "jeonju", "tokyo"]) {
-    assert.equal(buildAgodaCitySearch(c, "en"), null, `${c}: 도시 ID 추측 금지`);
-  }
+  // v5(2026-09-14): Agoda 자동완성 API 추출 + partnersearch 착지 실측 교차검증
+  assert.equal(new URL(buildAgodaCitySearch("seoul", "en")!).searchParams.get("city"), "14690");
+  assert.equal(new URL(buildAgodaCitySearch("jeju", "en")!).searchParams.get("city"), "16901");
+  assert.equal(new URL(buildAgodaCitySearch("gyeongju", "en")!).searchParams.get("city"), "17179");
+  assert.equal(new URL(buildAgodaCitySearch("jeonju", "en")!).searchParams.get("city"), "17831");
+  assert.equal(buildAgodaCitySearch("tokyo", "en"), null, "미확보 도시 추측 금지");
 });
 
 test("★Trip.com — Owner 원본과 동일(경주·전주), 검증 도메인만, zh/미확보 도시 null", () => {
@@ -88,28 +91,21 @@ test("★KKday — cid/ud 규격, ud2 는 영숫자만·test 거부", () => {
   assert.equal(buildKkday("/en", "busan-activity"), null, "영숫자 외 거부");
 });
 
-test("★활성 매트릭스 v2 — stay: 부산=Agoda추천+Trip대안(en/ja/ko)·zh는 Agoda만, 4도시=Trip 단독(en/ja/ko), zh 4도시 숨김", () => {
-  // 부산: 추천 Agoda(4locale) + 검증된 대안 Trip.com(en/ja/ko)
-  for (const l of LOCALES) assert.equal(stayOffersFor("busan", l)[0]?.partner, "agoda", `busan/${l} 추천`);
-  for (const l of ["en", "ko", "ja"] as const) {
-    assert.equal(stayOffersFor("busan", l)[1]?.partner, "tripcom", `busan/${l} 대안`);
-    assert.match(stayOffersFor("busan", l)[1]!.href, /busan-hotels-list-253/);
+test("★활성 매트릭스 v5 — stay: 5도시=Agoda 추천(4locale)+Trip 대안(en/ja/ko), zh=Agoda 단독", () => {
+  for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
+    // 추천 Agoda(4locale, zh 포함)
+    for (const l of LOCALES) assert.equal(stayOffersFor(c, l)[0]?.partner, "agoda", `${c}/${l} 추천`);
+    // 대안 Trip.com(검증 도메인 en/ja/ko)
+    for (const l of ["en", "ko", "ja"] as const) {
+      assert.equal(stayOffersFor(c, l)[1]?.partner, "tripcom", `${c}/${l} 대안`);
+      assert.equal(stayOffersFor(c, l).length, 2);
+    }
+    // zh: Trip 간체 규격 미확인 — Agoda 단독
+    assert.equal(stayOffersFor(c, "zh").length, 1, `${c}/zh Agoda 단독`);
   }
-  assert.equal(stayOffersFor("busan", "zh").length, 1, "zh 는 Trip 간체 미확보 — 대안 없음");
-  // 서울/제주: Trip.com 단독(신규 검증 253/274/737 계열)
-  for (const l of ["en", "ko", "ja"] as const) {
-    assert.equal(stayOffersFor("seoul", l)[0]?.partner, "tripcom");
-    assert.match(stayOffersFor("seoul", l)[0]!.href, /seoul-hotels-list-274/);
-    assert.equal(stayOffersFor("jeju", l)[0]?.partner, "tripcom");
-    assert.match(stayOffersFor("jeju", l)[0]!.href, /jeju-hotels-list-737/);
-    assert.equal(stayOffersFor("gyeongju", l)[0]?.partner, "tripcom");
-    assert.equal(stayOffersFor("jeonju", l)[0]?.partner, "tripcom");
-    assert.equal(stayOffersFor("seoul", l).length, 1, "대안 없음(하나면 하나만)");
-  }
-  // zh: Agoda 확보 도시(부산)만 — 나머지는 숨김(hk.trip=번체라 간체 UI 와 불일치)
-  for (const c of ["seoul", "jeju", "gyeongju", "jeonju"]) {
-    assert.equal(stayOffersFor(c, "zh").length, 0, `${c}/zh 숨김`);
-  }
+  assert.match(stayOffersFor("busan", "en")[1]!.href, /busan-hotels-list-253/);
+  assert.match(stayOffersFor("seoul", "en")[1]!.href, /seoul-hotels-list-274/);
+  assert.match(stayOffersFor("jeju", "ja")[1]!.href, /jeju-hotels-list-737/);
   assert.equal(stayOffersFor("tokyo", "en").length, 0);
 });
 
