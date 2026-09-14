@@ -303,8 +303,8 @@
     {
      "name": "밀락더마켓",
      "nameEn": "Millak Luche Festa (Millak Waterfront Park illumination)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 1332,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "X the SKY 전망대",
@@ -640,8 +640,8 @@
     {
      "name": "서빈백사해수욕장 (홍조단괴해빈)",
      "nameEn": "Seobinbaeksa Beach (coral sand beach)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 2797,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     }
    ],
    "source": {

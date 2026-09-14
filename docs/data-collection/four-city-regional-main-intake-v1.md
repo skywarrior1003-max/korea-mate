@@ -491,3 +491,55 @@ READ-ONLY. 노출 전수 = **regional 22 + 경주 legacy 54 = 76 코스** · 연
 - **② 풀스택 E2E(Playwright, 13/13 PASS)**: 코스 상세 복구 링크 표시(gyeongju-C-R01 507·504·528 / busan-C-003 **1633·40** / busan-C-R01 43·1273) + 미연결 stop 이름만 유지(터미널·밀락더마켓) · **/place/672 ko 패치 본문 표시** · **/place/427 EN 제목·본문 표시** · /place/1319 패치 이미지 실로딩(KTO CDN) · 홈→목록→상세 경로 · 제휴 링크 보존(aid=123610) · **실채택 E2E: 채택 → POST /api/itinerary 저장(7 places, 코스 순서 유지·첫 장소 국립경주박물관) → GET 재확인 → 재열람 화면 장소명 렌더 → DELETE 200 → GET 404 — QA 여행 격리 DB 정리 완료(잔존 0)**.
 - **환경 한계(검증 방식 구분)**: Naver 지도 SDK 는 127.0.0.1 미등록 도메인에서 SDK 내부 오류(maps.js setMap — 스택 실측)로 렌더를 깨뜨림 — 재열람 렌더 검증은 SDK 로드 차단(지도 미가용 가드 경로)으로 수행. 지도 포함 재열람은 LIVE 재QA 항목(§15.5 ③)으로 유지. UI 코드 변경 0(이번 태스크 산출물 = 데이터·SQL·문서·테스트·격리 도구만).
 - 증빙: scratchpad iso-shot-*.png 8매(코스 2도시·place 3·채택·재열람).
+
+## 17. 잔여 데이터 마감 (RECOMMENDED-ITINERARY-REMAINING-DATA-CLOSEOUT-V1, 2026-09-14 · Production 73c46b5)
+
+전제: 복구분(f79ccbad)은 Production 73c46b5 로 릴리스 완료(§16 + PRODUCTION-RELEASE-V1). 이번은 잔여 데이터만 — Production write·배포 0.
+
+### 17.1 22 국제시장·48 절영 이미지 — 원천 전수 확인 결과
+
+확인한 기존 자료·경로(동일 조회 반복 없음 — 새 경로만):
+- **브리지 contentid 직접 조회**(검색 아님): 22=KTO 132191/705873 · 48=KTO 252561/3002402 — detailCommon2 firstimage·detailImage2 **모두 0건**(주소 정합 실측 — identity 정확).
+- **기존 수집 원장**: busan-integrated-candidates(1,767건) image "none" · **이미지 권리 감사(1,642행) no_image** · visitbusan 웹 수집(1,510행) — 국제시장 게시물(uc_seq=399)은 수집 시에도 `missing_required_fields=image_url`(정적 HTML 에 이미지 없음 — JS 렌더), 절영은 **항목 자체 부재**.
+- **부산 공공 AttractionService 라이브 재조회**(213건, TOUR_API_KEY 승인 확인): 두 장소 항목 부재. **ShoppingService 는 키 미등록 403 — 접근 장애(활용신청 필요), 부재 단정 아님.**
+- **VisitBusan 게시물 브라우저 렌더**(Playwright): **국제시장 399 게시물에서 공식 사진 18장 실존 확인**(uploadImgs, 대표 1200×545 — 실로딩 검증). 절영은 통합검색·목록에서 미검출. 영도구청 tour 사이트 3페이지 — 전용 소개 게시물 미검출(관광안내도 언급뿐).
+
+판정:
+- **22 국제시장**: 공식 사진 실존(visitbusan 게시물 399, URL 기록·로딩 실증·주소 20m 정합) — 단 **이용 근거 미확정**: 게시물에 공공누리 미표시, API 경로(ShoppingService)는 키 미등록. Production 의 visitbusan 이미지 450행은 **공공 API(AttractionService) 경유** 계보 — 웹 게시물 직채는 다른 경로라 채택 보류. **Owner 액션 1건으로 해소 가능: data.go.kr 부산 ShoppingService 활용신청(무료) 또는 visitbusan 이용조건 확인** → 확보 즉시 이미지 delta 1행.
+- **48 절영해안산책로**: 확인한 공식 원천(KTO 2경로·부산 공공 API·visitbusan 수집/검색·영도구청 3페이지) 전부에서 전용 사진 미검출 — **"확인한 원천 내 미제공"**(원본 없음 단정 아님). 후속 = 영도구청 문화관광 심층/부산관광공사 문의(Owner).
+
+### 17.2 743 남부야시장 KO·미확보 다국어
+
+- **743**: 브리지에 visitjeonju 게시물 **16085** 실존 — 제목 실측 "**남부시장 한옥마을 야시장**" = **야시장 전용 게시물(범위 정합 — 남부시장 전체 아님)**. KO 원문 특정 완료. 단 visitjeonju = **공공누리 제2유형 → 이용허락 확인 트랙(§13.2) 합류**. 749(한옥마을)와 같은 트랙이지만 사유 구분: 749=이용조건 문제 확인됨 / 743=KTO 미확보 + 원문은 이번에 특정·이용조건 대기.
+- **1319 부평깡통시장 JA/ZH**: KTO 미검출(기존 기록 유지). visitbusan 게시물 **uc_seq=400**("부산 먹방의 성지 부평깡통시장" — 전용 게시물, 수집 시 language_available=true) — 다국어판 존재 표식. **이용 근거 확인 트랙(17.1 과 동일)** 후 정확 URL 특정.
+- **778 오목대 JA/ZH**: KTO 미검출(기존) — visitjeonju 경로는 제2유형 확인 후 조사 항목.
+- 749 KO·기존 JA/ZH 보류·511 EN: 기존 상태 그대로(재조사 0, 번역 대체 0, 대리 문의 0).
+
+### 17.3 신규 insert안 — 중복 실사로 v2 정정 (9행 → 7행 + 기존 ID 연결 2)
+
+**중복 실사(Production READ-ONLY·비공개 포함)**: external_id 충돌 0 · 좌표 ±500m + 이름 전역 검사에서 **기존 행 2건 발견**:
+- **밀락더마켓 = 기존 행 1332**(공개, "A market full of trends —Millac the Market"/ko "트렌디함 물씬, 밀락더마켓", 수영구 민락수변로17번길 56, KTO 2862152 와 **10m**) → insert 제외, **기존 ID 연결**로 이관.
+- **서빈백사해수욕장 = 기존 행 2797 산호해수욕장**(공개, 우도면 연평리, KTO 598558 과 **64m** — 동일 해변 병기명, ko/en/ja/zh 보유) → 동일 이관.
+
+**insert v2**: `candidate-place-inserts-v2.sql` — **sha256 `1930484aea0f5eab3b283de40b0ea3dab3b42f3a7cab85affd7744258ec68e82`**, **7행**(경복궁 126508·국립민속박물관 2608977·북촌한옥마을 126537·인사동 264353·국립중앙박물관 129703·이촌한강공원 970636·삼정타워 3014436) + master v2 jsonl. v1(e4f278ad…)은 **SUPERSEDED**(파일 머리 표기). 후보 8건↔행 대응: 행부재 8 중 6(서울)=insert 유지 · 밀락더마켓·서빈백사=기존 ID 연결로 전환 · +삼정타워(맥락형·준비물)=7행째(연결 여부 Owner 판단).
+
+**기존 ID 연결 2건 적용(feature)**: regional-trips-v1.json — busan-C-R01#1 밀락더마켓→**1332**, jeju-C-R02#2 서빈백사→**2797** (`IDENTITY_LINK_RECOVERY_V2`), 가드 테스트 17/17 고정. **관찰(수정 없음)**: busan-C-R01#1 의 패키지 nameEn 은 "Millak Luche Festa (illumination)" — ko 명(밀락더마켓)·기확정 분류(실장소)·좌표 10m 로 시설 identity 채택, nameEn 불일치는 패키지 결함 관찰로 병기. **이 연결은 master 미반영 — 다음 릴리스 승인 시 노출.**
+
+**격리 검증(임시 공개 전환 포함 — Production 무관)**: iso PG 에서 v2 실행 → **7행 발급(1646~1652, max+row_number — 하드코딩 0)·source↔ID 대응표 산출** → **재실행 0행(중복 가드)** → 비공개 상태 published 필터 미노출 → 공개 전환 후 img/ko/geo 전행 완비 → **iso 빌드 + UI 8/8 PASS**(신규 경복궁·삼정타워 상세 진입+이미지 실로딩 940px, 밀락 1332·서빈백사 2797 코스 링크+상세 진입, busan-C-003 부산역·삼정타워 미연결 유지).
+
+**운영 반영 시 필요한 단계(구분 — insert 만으로 공백 해소 아님)**: ① Production insert(비공개) → ② Owner 공개 결정 → ③ 코스 연결 커밋(external_id 로 발급 id 조회) → ④ **SSG 재빌드·배포**(dynamicParams=false — 재빌드 전에는 /place/<신규id> 페이지 미생성).
+
+### 17.4 비공개 행 7/29/39/81 — 사유 확정
+
+legacy-retirement crosswalk(714행) 실측: **4행 전부 `FINAL_RETIRED / RETIRE_FROM_DISCOVERY`** — Final busan 우주에 동일 entity 부재(명시 artifact+주소·이름·좌표 대조) → 의도적 discovery 퇴출. **비공개 ≠ 오류.** 4행 모두 이미지가 unsplash placeholder(카탈로그 공식 이미지 정책 위반 소지)라는 품질 문제 병존.
+
+장소별 Owner 결정 프레임(일괄 아님):
+- **이기대(7·29 — 같은 장소의 legacy 이중 후보)**: 재공개+연결 시 busan-C-002#12 링크 노출. 단 Final authoritative 예외 승인 필요 + placeholder 이미지·본문 품질 문제로 **재공개 비권장** — 대안 = KTO 신규 후보 확인 후 insert 트랙(후속 수집).
+- **청사포다릿돌전망대(39)**: 동일 구조(busan-C-003#7). 재공개보다 신규 후보 트랙 적합.
+- **부산역(81)**: 코스 stop 은 **맥락형 확정(§16.3)** — 연결 대상 아님 → **결정 불필요**(재공개 실익 없음).
+- 연결 준비 패치는 위 구조상 **만들지 않음**(재공개=Final 규칙 예외라 Owner 선결정 필요 — 결정 시 최소 패치는 즉시 구성 가능: is_published 전환+연결+이미지 교체 3요소).
+
+### 17.5 이번 산출물·검증
+
+- 파일: candidate-place-inserts-**v2**.sql(1930484a…)+master v2 · v1 SUPERSEDED 표기 · regional-trips-v1.json 연결 2 · 가드 테스트 17/17 · 본 문서 §17.
+- 격리: insert DB 검증 + iso 빌드 UI 8/8(위) · teardown 후 정상 재빌드 완료. Production DB write 0·QA 여행 0·배포 0·master push 0.

@@ -1,8 +1,9 @@
--- **SUPERSEDED (2026-09-14, REMAINING-DATA-CLOSEOUT-V1)** — candidate-place-inserts-v2.sql 로 대체. 실행 금지 유지.
--- 사유: 중복 실사에서 밀락더마켓=기존 행 1332(공개)·서빈백사=기존 행 2797 산호해수욕장(공개) 판명 — 이 파일로 insert 하면 중복 행 생성.
--- candidate-place-inserts v1 — 실행 금지(Owner 승인 후 격리/운영 각각 정확 1회)
--- 성격: 신규 장소 9행 — **is_published=false 로만 삽입**(공개는 별도 게이트/Owner).
--- id: 실행 시점 max(id)+row_number 발급(하드코딩 0) · 중복 가드: 동일 city+external_id 존재 시 삽입 0.
+-- candidate-place-inserts v2 — 실행 금지(Owner 승인 후 격리/운영 각각 정확 1회)
+-- v1(sha e4f278ad64fb4d0727605231b858eacb39301421dac75d6a5e9cf867498d61c6)은 SUPERSEDED:
+--   중복 실사에서 밀락더마켓=기존 행 1332(공개·10m)·서빈백사=기존 행 2797 산호해수욕장(공개·64m) 판명 → insert 제외,
+--   두 곳은 기존 ID 코스 연결안(IDENTITY_LINK_RECOVERY_V2)으로 이관.
+-- 성격: 신규 장소 7행 — **is_published=false 로만 삽입**(공개는 별도 게이트/Owner).
+-- id: 실행 시점 max(id)+row_number 발급(하드코딩 0) · 중복 가드: 동일 external_id 존재 시 삽입 0.
 -- 원천: KTO TourAPI(contentid — master jsonl), 이름·본문·이미지·좌표 verbatim.
 BEGIN;
 
@@ -39,8 +40,6 @@ WITH src (city, name, category, address, lat, lng, image_url, name_l10n, desc_l1
 
 ◎ 한류의 매력을 만나는 여행 정보 - 드라마 
 드라마 에서 서해(박신혜 분)가 아빠와의 추억을 떠올리며 슬픔에 잠긴 공원이다. 부지가 넓어 산책, 피크닉, 문화활동 등 다양한 여가 활동을 즐길 수 있다.'), 'tourapi', 'kto:970636', false),
-  ('jeju', '우도산호해변 홍조단괴 서빈백사', 'attraction', '제주특별자치도 제주시 우도면 우도해안길 252', 33.5026812286, 126.9437532672, 'http://tong.visitkorea.or.kr/cms/resource/74/3011874_image2_1.jpg', jsonb_build_object('ko','우도산호해변 홍조단괴 서빈백사'), jsonb_build_object('ko','우도 산호해변은 에메랄드빛으로 부서지는 햇살 아래 하얗다 못해 푸른빛이 감돌며, 우도 서쪽의 하얀 모래해변이라 하여 서빈백사로 불린다. 수심에 따라 바다 빛깔이 달라 남태평양이나 지중해의 어느 바다와 비교해도 손색이 없다. 여름에는 해수욕장으로, 봄, 가을에는 사진 찍기 좋은 곳으로 인기가 많으며, 인근에는 우도 땅콩을 넣은 아이스크림, 수제버거 등 식당과 아기자기한 카페들이 많이 들어서 있다. 이곳의 모래는 해양 조류 중 하나인 홍조가 해안으로 쓸려와 퇴적된 것으로, 이러한 해변을 홍조단괴 산호해변으로도 불린다. 홍조단괴란 홍조류가 생리과정에서 탄산칼슘을 축적하여 돌처럼 단단하게 굳어져 버린 상태를 말한다. 홍조단괴로 이루어진 해변은 세계에서도 몇 곳 없어 학술적으로도 희소가치를 지닌다.'), 'tourapi', 'kto:598558', false),
-  ('busan', '밀락더마켓', 'attraction', '부산광역시 수영구 민락수변로17번길 56', 35.1542200827, 129.1270373527, 'https://tong.visitkorea.or.kr/cms/resource/36/3495536_image2_1.jpg', jsonb_build_object('ko','밀락더마켓'), jsonb_build_object('ko','부산 수영구에 위치한 밀락더마켓은 보리에에서 운영하는 복합문화공간이다. 양옆에 에스컬레이터와 엘리베이터가 있어 편리하게 이용할 수 있으며, 들어서서 보이는 벽면의 그래피티들이 인상적인 포토존을 형성하고 있다. 차별화된 열린 광장형의 체험공간을 지향하는 이곳은 로컬과 문화를 연결하는 새로운 라이프스타일의 공간이며, 누구나 주인공이 될 수 있는 꿈의 무대 버스킹스퀘어와 부산바다를 느낄 수 있는 오션뷰스탠드, 수준 높은 국내외 외식브랜드를 경험할 수 있는 F&B존 등으로 공간이 구성되어 있다. 입점한 브랜드에 따라 팝업 스토어로 기간을 정해놓고 운영 중인 곳도 있기에 방문하고 싶었던 브랜드가 있다면 미리 확인해 보고 방문하면 좋을 듯하다.'), 'tourapi', 'kto:2862152', false),
   ('busan', '삼정타워', 'attraction', '부산광역시 부산진구 중앙대로 672 (부전동)', 35.15300621921821, 129.05960635251864, 'https://tong.visitkorea.or.kr/cms/resource/31/3014331_image2_1.JPG', jsonb_build_object('ko','삼정타워'), jsonb_build_object('ko','쇼핑공간으로 자리 잡고 있는 삼정타워지만 쇼핑 그 이상의 경험을 목표로 쇼핑공간, 문화공간, 체험공간이 공존하는 복합 쇼핑몰로 다양한 취향과 스타일이 공존하는 공간으로 자리 잡은 곳이다. 삼정타워 5층은 부산지역 곳곳에 숨어 있는 지역 맛집들을 한 곳에 모아 놓은 곳이며 다양한 간식거리가 눈앞에 펼쳐져 있는 푸드트럭 존은 간편한 테이크아웃부터 프리미엄 디저트까지 다양한 메뉴와 브랜드를 경험할 수 있는 공간이다. 7층에 위치한 맘앤키즈존은 엄마와 아빠는 여유롭게, 아이들은 행복하게 즐길 수 있는 공간으로, 어른들의 뷰티 공간과 아이들의 다양한 즐길 거리가 공존하는 곳이다. 그 밖에 라운지, 포토존, 런닝맨 놀이동산 엔터테인먼트 등 다양한 체험 놀이 공간이 있는 종합문화쇼핑 공간이다.'), 'tourapi', 'kto:3014436', false)
 ), numbered AS (
  SELECT s.*, (SELECT COALESCE(MAX(id),0) FROM city_spots) + row_number() OVER () AS new_id FROM src s
@@ -52,5 +51,5 @@ SELECT new_id, city, name, category, address, lat, lng, image_url, name_l10n, de
 RETURNING id, city, name, external_id;
 
 COMMIT;
--- 코스 연결안: RETURNING id 를 받아 regional-trips-v1.json 의 해당 stop(master jsonl course_stop)에
--- IDENTITY_LINK_RECOVERY_V2 로 연결하는 후속 커밋을 만든다(공개 전이면 코스 화면은 발견 게이트에 따름 — 확인 필요 항목).
+-- 운영 반영 시 필요 단계(구분): ① insert(비공개) → ② Owner 공개 결정(is_published) → ③ 코스 연결 커밋(external_id 로 발급 id 조회)
+--   → ④ SSG 재빌드·배포(dynamicParams=false 라 재빌드 전에는 /place/<신규id> 상세 페이지 미생성) — insert 만으로 공백 해소 아님.

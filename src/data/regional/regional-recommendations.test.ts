@@ -253,7 +253,20 @@ test("연결 복구 스냅숏 — 26 occurrence(부산17·제주4·경주5), 복
   ];
   for (const [tid, i, id] of expect) assert.equal(stop(tid, i).spotId, id, `${tid}#${i + 1}`);
   // 의도적 미연결 유지(대응 행 부재/unpublished/맥락형) — 억지 연결 금지
-  for (const [tid, i] of [["busan-C-002", 11], ["busan-C-003", 0], ["busan-C-003", 1], ["busan-C-003", 6], ["busan-C-R01", 0]] as const) {
+  for (const [tid, i] of [["busan-C-002", 11], ["busan-C-003", 0], ["busan-C-003", 1], ["busan-C-003", 6]] as const) {
     assert.equal(stop(tid, i).spotId, null, `${tid}#${i + 1} 미연결 유지`);
   }
+});
+
+// ── REMAINING-DATA-CLOSEOUT-V1: 기존 행 재발견 연결 고정 ─────────────────────
+//
+// 중복 실사에서 "행 부재 후보"로 분류했던 2곳이 기존 공개 행으로 실존 판명(intake 문서 §17):
+// 밀락더마켓=1332(KTO 2862152 와 10m)·서빈백사해수욕장=2797 산호해수욕장(KTO 598558 과 64m, 동일 해변 병기명).
+test("연결 복구 V2 스냅숏 — 기존 행 재발견 2건, 복귀 금지", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const stop = (tripId: string, i: number) => trips.get(tripId)!.stops[i]!;
+  assert.equal(stop("busan-C-R01", 0).spotId, 1332, "밀락더마켓=1332");
+  assert.equal(stop("busan-C-R01", 0).linkage, "IDENTITY_LINK_RECOVERY_V2");
+  assert.equal(stop("jeju-C-R02", 1).spotId, 2797, "서빈백사=2797 산호해수욕장");
+  assert.equal(stop("jeju-C-R02", 1).linkage, "IDENTITY_LINK_RECOVERY_V2");
 });
