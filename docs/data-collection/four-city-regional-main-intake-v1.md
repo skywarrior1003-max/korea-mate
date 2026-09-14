@@ -335,3 +335,63 @@ Owner 결정: 데이터 마감 후 별도 논의. 이번에 파트너 박스·Ex
 ### 13.6 기존 사용자 snapshot
 
 기존 저장 여행의 오연결 snapshot 은 이번에도 무수정 — 미해결 항목으로 유지(§7-6 보존 사유 동일). 전수조사·일괄 복구·재저장 0.
+
+## 14. 콘텐츠 완전성 감사 (RECOMMENDED-ITINERARY-CONTENT-AUDIT-V1, 2026-09-14 · Production 170630a)
+
+READ-ONLY. 노출 전수 = **regional 22 + 경주 legacy 54 = 76 코스** · 연결 장소 unique **54**(코스 간 중복 spot 은 1회 집계, 노출 위치별 표시는 별도 확인). 홈 하단 Picks = busan/seoul/jeju 첫 코스 3장(클릭 → 도시 코스 목록).
+
+### 14.1 판정 요약
+
+- **A(지역 이미지)**: 일부 누락 — LIVE 깨짐 0, 누락 2 spot(28 오륙도스카이워크·1319 부평깡통시장 = 3 occurrence placeholder 표시). 미연결 36 occurrence 의 placeholder 는 설계(이름만). 서울 3코스 카드 커버는 연결 이미지 부재로 도시비주얼 fallback(설계 fallback — 깨짐 아님).
+- **B(홈)**: 이미지 전부 정상(5도시 캐러셀 5/5 — 화면 밖 2장은 lazy 정상 동작으로 스와이프 시 로딩 실증 · Picks 3장 정상). **카드 설명은 표시 영역 없음(설계)** — 데이터 부재와 구분. 클릭 경로 정상.
+- **설명(지역)**: ko 설명 없음 3 spot(672·778·1126 — LIVE 는 설명 블록 생략, 깨짐 아님) + **전주 연결 14 spot 은 ko 화면 설명이 영문**(description=KTO EN 편집문·desc_l10n.ko 부재 — /place/749 LIVE 실증).
+- 언어(연결 54 기준): 실본문 en 47 · ja 33 · zh 32, 나머지는 원문 fallback(단 전주는 원문 name/description 자체가 영문이라 ja/zh fallback 도 영문 표시 — zh 전주 코스 LIVE 표본 실증).
+
+### 14.2 regional 22 코스표 (카드 커버 / 코스 설명 / stop 이미지 / stop ko설명 / LIVE)
+
+| 도시 | 코스 | 카드 커버 | 코스 설명 | stop 이미지(연결) | stop ko설명(연결) | LIVE |
+|---|---|---|---|---|---|---|
+| busan | busan-C-001 | 장소사진 | theme O | 9/10 | 10/10 | 깨짐 0 |
+| busan | busan-C-002 | 장소사진 | theme O | 6/8 | 8/8 | 깨짐 0 |
+| busan | busan-C-003 | 장소사진 | theme O | 2/2 | 2/2 | 깨짐 0 |
+| busan | busan-C-R01 | 장소사진 | theme O | 1/1 | 1/1 | 깨짐 0 |
+| seoul | seoul-C-001 | 장소사진 | theme O | 1/1 | 1/1 | 깨짐 0 |
+| seoul | seoul-C-002 | 도시비주얼(fallback) | theme O | 0/0 | 0/0 | 깨짐 0 |
+| seoul | seoul-C-003 | 도시비주얼(fallback) | theme O | 0/0 | 0/0 | 깨짐 0 |
+| seoul | seoul-C-R01 | 도시비주얼(fallback) | theme O | 0/0 | 0/0 | 깨짐 0 |
+| jeju | jeju-C-001 | 장소사진 | theme O | 1/1 | 1/1 | 깨짐 0 |
+| jeju | jeju-C-002 | 장소사진 | theme O | 1/1 | 1/1 | 깨짐 0 |
+| jeju | jeju-C-003 | 장소사진 | theme O | 4/4 | 4/4 | 깨짐 0 |
+| jeju | jeju-C-R01 | 장소사진 | theme O | 2/2 | 2/2 | 깨짐 0 |
+| jeju | jeju-C-R02 | 장소사진 | theme O | 1/1 | 1/1 | 깨짐 0 |
+| gyeongju | gyeongju-C-001 | 장소사진 | theme O | 7/7 | 7/7 | 깨짐 0 |
+| gyeongju | gyeongju-C-002 | 장소사진 | theme O | 6/6 | 6/6 | 깨짐 0 |
+| gyeongju | gyeongju-C-003 | 장소사진 | theme O | 6/6 | 5/6 | 깨짐 0 |
+| gyeongju | gyeongju-C-R01 | 장소사진 | theme O | 5/5 | 5/5 | 깨짐 0 |
+| jeonju | jeonju-C-001 | 장소사진 | theme O | 5/5 | 5/5 | 깨짐 0 |
+| jeonju | jeonju-C-002 | 장소사진 | theme O | 4/4 | 2/4 | 깨짐 0 |
+| jeonju | jeonju-C-003 | 장소사진 | theme O | 4/4 | 4/4 | 깨짐 0 |
+| jeonju | jeonju-C-R01 | 장소사진 | theme O | 2/2 | 2/2 | 깨짐 0 |
+| jeonju | jeonju-C-R02 | 장소사진 | theme O | 2/2 | 2/2 | 깨짐 0 |
+
+- 코스 상세의 stop 별 '설명' 표시 영역은 없음(이름·district 만 — 설계). 설명은 ③ 장소 상세에서 표시.
+- legacy 54(경주): stops 0 = 설계(P0-4 편집형 fallback copy). LIVE 54/54 제목·본문 렌더 정상, theme 보유 16/54, 카드 이미지 영역 없음(설계).
+
+### 14.3 문제 항목 (화면→일정→장소→필드→원인→필요 수정)
+
+1. 부산 코스 상세·장소 상세 → busan-C-001 #7·C-002 #11 → **28 Oryukdo Skywalk** → image_url 없음 → V2 재연결로 구세대 행 사용(그 행에 이미지 미수집) → 공식 이미지 delta 확보(§10.1 C-B02 기록과 연동).
+2. 부산 C-002 #6 → **1319 부평깡통시장** → image_url·en/ja/zh l10n 없음 → 동일(구세대 행) → 공식 이미지+다국어 delta.
+3. 경주 C-003 #5 → **672 배동 석조여래삼존입상** → ko 설명 없음 → V2 재연결 행이 설명 미보유 → 경주 Final/공식 원문에서 ko 설명 확보(후속·정확 항목 기록).
+4. 전주 C-002 #3 → **778 오목대와 이목대** → ko 설명 없음 + en/ja/zh 없음 → 재연결 행 미보유. ko 원문 후보 = visitjeonju 게시물(**KOGL 제2유형 — 이용조건 확인과 연계**).
+5. 전주 C-002 #1 → **1126 전주천** → ko 설명 없음 → 패키지 NOT_APPLICABLE(알려진 상태 유지).
+6. 전주 연결 14 spot(729·736·742·743·744·749·763·765·917·1088·1089·1098·1109·1125) → **ko 표면 설명=영문** → 수집 계보가 KTO EN 편집문을 description 에 저장, ko 본문 미수집 → ko 본문 원본 후보 = visitjeonju ko 게시물(제2유형 대상) — **Owner 이용조건 확인(§13.2)과 동일 트랙**.
+7. 경주 **427 경주 월성** → EN 없음(코스 EN 화면에서 ko 표시) → V2 재연결 행이 l10n 패치 14행 대상 밖(패키지에 월성 canonical 부재) → KTO EngService2 '경주 월성' EN 확보 후속 후보. **511 EN 은 §13.1 원문 미제공 유지.**
+8. 관찰: 제주 place 히어로(visitjeju CDN)는 첫 3~4초 내 미로딩 빈발, 12~20초 내 전부 로딩(10/10 재검 OK) — 깨짐 아님, 체감 지연 관찰만.
+
+증빙: scratchpad shot-busan-c001.png(스카이워크 placeholder)·shot-place-1319.png·shot-place-749-ko.png(ko 영문 설명)·shot-gyeongju-c001.png(정상 대표).
+
+### 14.4 검증 방법 구분
+
+- 직접 LIVE(모바일 ko): 목록 5 페이지 전수(카드 76·이미지 실패 0), regional 22 상세 전수(<img> 실로딩·placeholder 판별), legacy 54 상세 전수(렌더), 연결 장소 54 상세 전수(히어로 실로딩·설명 표시), 홈(캐러셀 스와이프 포함), 언어 표본 7(ko 외 en/ja/zh 코스 상세 — busan en/ja/zh·gyeongju en/ja·jeju en·jeonju zh·seoul en).
+- 데이터·공통 코드: 언어별 l10n 커버리지 전수(DB)·fallback 규칙(pickL10n)·데스크톱은 공통 렌더 경로(코스·장소 페이지 반응형 단일 구현) — 별도 데스크톱 전수 화면 확인은 미수행(미검증 범위로 구분).
+- 이번 감사의 수정·배포·DB 변경 0. 숨김·삭제 0.
