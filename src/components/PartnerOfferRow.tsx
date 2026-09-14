@@ -36,9 +36,13 @@ export default function PartnerOfferRow({
   const by = offersByPurpose(citySlug, locale);
   const clean = (arr: typeof by.stay) => arr.filter(o => !isLegacyAffiliateUrl(o.href));
   // 목적별 줄: [cta i18n 키, 추천, 대안]. 검증된 목적만 줄이 생긴다.
+  // esim/rail/bus 는 한국 전역 카테고리 — 문구도 도시가 아니라 범위를 말한다.
   const rows = ([
     ["partnerStayCta", clean(by.stay)],
     ["partnerActivityCta", clean(by.activity)],
+    ["partnerEsimCta", clean(by.esim)],
+    ["partnerRailCta", clean(by.rail)],
+    ["partnerBusCta", clean(by.bus)],
   ] as const).filter(([, offers]) => offers.length > 0);
   if (rows.length === 0) return null;
 

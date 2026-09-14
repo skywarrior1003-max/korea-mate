@@ -271,3 +271,29 @@ Agoda 신규 도시 ID 는 자동화가 전면 봇차단이라 확보 불가 —
 
 파트너 실적 반영·구매 귀속·Booking 인증은 운영/외부 대기(§8) — 구현 마감을
 막지 않는다.
+
+### 9.7 (v5 — KLOOK-DIRECT-AID-CLOSEOUT-V4 결과, 2026-09-14)
+
+- **§9.6 1~4행 폐기**: Klook 공식 안내(Owner 대시보드) — www.klook.com URL 끝에
+  `?aid=123610` 직접 부착이 공식 규격. 링크 변환기 생성 요청·aff_adid 는 불요,
+  s.klook.com 단축링크는 추적 불가라 금지. §9.6 은 **5행(Agoda 도시 ID)만 유효**.
+- **검증 방법**: Owner 로그인 크롬(실브라우저)에서 착지 확인. 첫 진입 시 Klook
+  사람 확인(슬라이더)이 떴고 **Owner 가 직접 1회 통과**(자동 우회 없음 — 반복
+  자동화 검증으로 현 IP 가 의심 상태였던 것이 원인, 경로 불량 아님). 이후 전
+  조합 정상. 전 조합에서 aid 잔존 + Klook 이 `utm_medium=affiliate-alwayson`
+  utm 을 스스로 덧붙임 = aid 를 제휴로 인식하는 직접 증거.
+- **검증 확정표(착지①·파라미터②)**:
+  - eSIM `/{ko|en-US|ja|zh-CN}/wifi-sim-card/?dest_id=1010&aid=123610` — 4/4
+    정상. dest_id=1010 = **대한민국**(검색창 프리필+전 상품 한국 유심/WiFi).
+  - 도시검색 `/{seg}/search/result/?query=…&aid=123610` — locale 축 4/4(부산
+    ko·en·ja·zh) + 도시 축 en(Busan 999+·Seoul 999+·Jeonju 126건) 정상.
+  - 기차 `korea-rail/` — base(en)·ja·zh-CN 정상(2026-09-13 headed), **/ko/ 404
+    (경로 부재)**. 버스 `korea-bus/` — en-US·ja·zh-CN 정상, /ko/ 404.
+- **활성 반영(코드·테스트 고정)**: activity=Klook 검색 추천+KKday 대안(5도시×
+  4locale) · esim=Klook 4locale(도시 무관, 승인 5도시 표면에서만) ·
+  rail/bus=Klook en/ja/zh(**ko 는 경로 부재로 렌더 0 — base 링크 대체 발명 안
+  함**). 구세대 redirect+aff_adid 빌더 제거, 재생성 금지 테스트 고정.
+- **판정 분리 유지**: 위는 ①착지·②파라미터 전달까지. ④파트너 대시보드 실적
+  반영·⑤구매 귀속은 운영 대기. 검색어(query)는 ID 가 아닌 자유 검색어로,
+  비검증 도시×locale 표기는 Klook 자체 표기(ソウル·首尔 등) 관측+표준 지명
+  번역 — 결과 0 건 위험은 낮으나 운영 중 관찰 대상.

@@ -8,23 +8,21 @@
 //  · 조립은 전부 URL/URLSearchParams API — 문자열 이어붙이기로 인코딩을
 //    깨뜨리지 않는다. Klook k_site 는 "완성된 목적지 URL 을 통째로 한 번
 //    인코딩" 구조(원본 실측)라 URLSearchParams 가 그 한 번을 담당한다.
-//  · 구세대 자산(aid=41763 · affiliate.klook.com/sl/*)은 이 모듈이 절대
-//    생성하지 않으며, 활성 매트릭스 전체에 대해 테스트로 차단을 고정한다.
-//  · 활성(ACTIVE) = Preview/실브라우저 착지 검증을 통과한 조합만. Klook·KKday
-//    는 빌더까지만 두고 활성 0 — 자동화 접근이 봇 방어(403)로 막혀 착지를
-//    직접 확인하지 못했다(§7: 확인 막힌 조합은 OFF 유지, 우회 금지).
+//  · 구세대 자산(aid=41763 · affiliate.klook.com/sl/* · redirect+aff_adid)은
+//    이 모듈이 절대 생성하지 않으며, 활성 매트릭스 전체에 대해 테스트로
+//    차단을 고정한다. Klook 은 V4(2026-09-14)부터 직접 `?aid=` 부착이 공식.
+//  · 활성(ACTIVE) = 실브라우저 착지 검증을 통과한 조합만. 확인 막힌 조합은
+//    OFF 유지, 우회 금지(§7).
 
 export const AGODA_CID = "1972243";
 export const TRIP_ALLIANCE_ID = "9901788";
 export const TRIP_SID = "327852582";
 export const TRIP_SUB3 = "D19787273";
 export const KLOOK_AID = "123610";
-/** Owner 생성 링크의 값 그대로 — 범용 재사용이 공식 확인되기 전까지 이 값만 쓴다 */
-export const KLOOK_AFF_ADID = "1427383";
 export const KKDAY_CID = "26267";
 
 export type PartnerId = "agoda" | "tripcom" | "klook" | "kkday";
-export type PartnerPurpose = "stay" | "esim" | "transport" | "activity";
+export type PartnerPurpose = "stay" | "esim" | "rail" | "bus" | "activity";
 export type PartnerLocale = "en" | "ko" | "ja" | "zh";
 
 export const PARTNER_NAMES: Record<PartnerId, string> = {
@@ -81,21 +79,71 @@ export function buildTripcomHotels(citySlug: string, locale: PartnerLocale): str
   return u.toString();
 }
 
-// ── Klook — redirect 규격 (활성 0: 착지가 봇 방어로 미확인 — 실기기 확인 후) ──
-/** 검증된 locale 경로 세그먼트만(원본 /ko/). 그 외 미확인 → null. */
-const KLOOK_LOCALE_SEG: Partial<Record<PartnerLocale, string>> = { ko: "ko" };
+// ── Klook — 직접 AID 부착 규격 (Owner 대시보드 공식 안내, 2026-09-14 V4) ──
+// 공식: www.klook.com URL 끝에 `?aid=123610` 을 직접 붙인다. redirect/aff_adid/
+// 단축링크(s.klook.com)는 쓰지 않는다. 착지 검증은 Owner 로그인 크롬(실브라우저,
+// 사람 확인 1회 통과)에서 수행 — 전 조합에서 aid 잔존 + Klook 이 스스로
+// `utm_medium=affiliate-alwayson` 을 덧붙여 제휴 링크로 인식함을 확인했다.
+//
+// 검증 결과(2026-09-14):
+//  · eSIM  /{ko|en-US|ja|zh-CN}/wifi-sim-card/?dest_id=1010  → 4/4 정상.
+//    dest_id=1010 = 대한민국(검색창 프리필 + 전 상품 한국 유심/WiFi 로 확인).
+//  · 검색  /{seg}/search/result/?query=…                      → 4/4 정상
+//    (부산 ko/en/ja/zh + 도시축 Busan/Seoul/Jeonju 관측, 126~999+건).
+//  · 기차  korea-rail/  → base(en)/ja/zh-CN 정상, /ko/ 는 404(경로 부재) → ko 없음.
+//  · 버스  korea-bus/   → en-US/ja/zh-CN 정상, /ko/ 는 404 → ko 없음.
+const KLOOK_SEG: Record<PartnerLocale, string> = {
+  en: "en-US", ko: "ko", ja: "ja", zh: "zh-CN",
+};
 
-export function buildKlookCitySearch(query: string, locale: PartnerLocale): string | null {
-  const seg = KLOOK_LOCALE_SEG[locale];
-  if (!seg || !query.trim()) return null;
-  const dest = new URL(`https://www.klook.com/${seg}/search/result/`);
-  dest.searchParams.set("query", query.trim());
-  dest.searchParams.set("search_scope", "main_search");
-  const u = new URL("https://affiliate.klook.com/redirect");
+function klookUrl(path: string): string {
+  const u = new URL(`https://www.klook.com${path}`);
   u.searchParams.set("aid", KLOOK_AID);
-  u.searchParams.set("aff_adid", KLOOK_AFF_ADID);
-  u.searchParams.set("k_site", dest.toString()); // URLSearchParams 가 1회 인코딩
   return u.toString();
+}
+
+/** 한국 전역 eSIM/유심 카테고리 — 도시 무관, 4개 locale 전부 착지 검증 완료. */
+export function buildKlookEsim(locale: PartnerLocale): string {
+  return klookUrl(`/${KLOOK_SEG[locale]}/wifi-sim-card/?dest_id=1010`);
+}
+
+/**
+ * 도시 검색어 — ID 가 아니라 자유 검색어. 라우트는 locale 축으로 검증됐고,
+ * 표기는 Klook 페이지 자체 표기(ソウル·首尔 등) 관측 + 표준 지명 번역.
+ */
+const KLOOK_CITY_QUERY: Partial<Record<string, Record<PartnerLocale, string>>> = {
+  busan: { en: "Busan", ko: "부산", ja: "釜山", zh: "釜山" },
+  seoul: { en: "Seoul", ko: "서울", ja: "ソウル", zh: "首尔" },
+  jeju: { en: "Jeju", ko: "제주", ja: "済州", zh: "济州" },
+  gyeongju: { en: "Gyeongju", ko: "경주", ja: "慶州", zh: "庆州" },
+  jeonju: { en: "Jeonju", ko: "전주", ja: "全州", zh: "全州" },
+};
+
+export function buildKlookCitySearch(citySlug: string, locale: PartnerLocale): string | null {
+  const query = KLOOK_CITY_QUERY[citySlug.toLowerCase()]?.[locale];
+  if (!query) return null;
+  const u = new URL(`https://www.klook.com/${KLOOK_SEG[locale]}/search/result/`);
+  u.searchParams.set("query", query);
+  u.searchParams.set("aid", KLOOK_AID);
+  return u.toString();
+}
+
+/** 기차 카테고리 — en 은 base 경로만 검증됨(/en-US/ 미검증), /ko/ 는 404 라 없음. */
+const KLOOK_RAIL_PATHS: Partial<Record<PartnerLocale, string>> = {
+  en: "/korea-rail/", ja: "/ja/korea-rail/", zh: "/zh-CN/korea-rail/",
+};
+export function buildKlookRail(locale: PartnerLocale): string | null {
+  const path = KLOOK_RAIL_PATHS[locale];
+  return path ? klookUrl(path) : null;
+}
+
+/** 시외버스 카테고리 — /ko/ 는 404 라 없음. */
+const KLOOK_BUS_PATHS: Partial<Record<PartnerLocale, string>> = {
+  en: "/en-US/korea-bus/", ja: "/ja/korea-bus/", zh: "/zh-CN/korea-bus/",
+};
+export function buildKlookBus(locale: PartnerLocale): string | null {
+  const path = KLOOK_BUS_PATHS[locale];
+  return path ? klookUrl(path) : null;
 }
 
 // ── KKday — cid 부착 규격 (Owner 전용 링크 화면의 공식 안내 근거) ──
@@ -139,9 +187,10 @@ export function isLegacyAffiliateUrl(url: string): boolean {
 
 // ── 활성 매트릭스 — 검증 통과 조합만 ────────────────────────────────────────
 //
-// Preview/브라우저 착지 검증(§1.5 + 이번 Preview) 통과분:
-//   숙박: 부산=Agoda(en/ja/ko/zh) · 경주/전주=Trip.com(en/ja/ko — zh 규격 미확인)
-// esim/transport/activity: Klook·KKday 착지 미확인 → 활성 0 (빌더만 존재).
+// 실브라우저 착지 검증 통과분(v2~v4):
+//   stay: 부산=Agoda(4locale)+Trip 대안(en/ja/ko) · 4도시=Trip 단독(en/ja/ko)
+//   activity: Klook 검색(4locale) 추천 + KKday 도시 목적지(4locale) 대안 — 5도시
+//   esim: Klook(4locale) · rail/bus: Klook(en/ja/zh — ko 는 경로 부재)
 // 하나만 유효하면 하나만 노출하고, 없으면 그 영역은 렌더하지 않는다.
 
 export interface PartnerOffer {
@@ -173,29 +222,55 @@ export function stayOfferFor(citySlug: string, locale: PartnerLocale): PartnerOf
 }
 
 /**
- * activity 후보 — Owner 정책 순서 Klook → KKday.
- * Klook 은 제휴 링크 생성 규칙(aff_adid) 미확보로 아직 후보에 못 들어간다 —
- * "두 파트너 모두 준비돼야 활성" 조건을 만들지 않으므로, 검증된 KKday 를
- * 단독 제공한다(Klook 확인 시 추천으로 승격, KKday 는 대안으로 이동).
+ * activity 후보 — Owner 정책 순서 Klook → KKday (V4: Klook 직접 AID 검증 완료로
+ * 추천 승격, KKday 는 검증된 대안으로 이동). Klook 이 없는 조합(미확보 도시)은
+ * KKday 단독, 둘 다 없으면 렌더 없음.
  */
 export function activityOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
+  const out: PartnerOffer[] = [];
+  const klook = buildKlookCitySearch(citySlug, locale);
+  if (klook) out.push({ partner: "klook", purpose: "activity", href: klook });
   const kkday = buildKkdayCityActivity(citySlug, locale);
-  return kkday ? [{ partner: "kkday", purpose: "activity", href: kkday }] : [];
+  if (kkday) out.push({ partner: "kkday", purpose: "activity", href: kkday });
+  return out.slice(0, 2);
+}
+
+/** esim — Klook 단독(4 locale 검증). 5도시 승인 도시에서만 노출한다. */
+export function esimOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
+  if (!KKDAY_CITY_SLUGS[citySlug.toLowerCase()]) return []; // 승인 5도시 밖 렌더 0
+  return [{ partner: "klook", purpose: "esim", href: buildKlookEsim(locale) }];
+}
+
+/** rail/bus — Klook 단독. 검증된 locale(en/ja/zh)만, ko 는 경로 부재로 없음. */
+export function railOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
+  if (!KKDAY_CITY_SLUGS[citySlug.toLowerCase()]) return [];
+  const href = buildKlookRail(locale);
+  return href ? [{ partner: "klook", purpose: "rail", href }] : [];
+}
+
+export function busOffersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
+  if (!KKDAY_CITY_SLUGS[citySlug.toLowerCase()]) return [];
+  const href = buildKlookBus(locale);
+  return href ? [{ partner: "klook", purpose: "bus", href }] : [];
 }
 
 /**
- * 표면 공통 진입점 — 목적 순서대로 각 목적의 [추천, 대안?] 을 평탄화해
- * 돌려준다. esim/transport 는 착지·생성 규칙 검증 전이라 어떤 조합도 없다
- * (Klook 카테고리는 Owner 생성 링크 확인표 대기).
+ * 표면 공통 진입점 — 목적 순서대로 각 목적의 [추천, 대안?] 을 돌려준다.
+ * 검증 안 된 조합은 배열이 비고, 빈 목적은 화면에서 줄 자체가 없다.
  */
-export function offersByPurpose(citySlug: string, locale: PartnerLocale): Record<"stay" | "activity", PartnerOffer[]> {
+export function offersByPurpose(
+  citySlug: string, locale: PartnerLocale,
+): Record<"stay" | "activity" | "esim" | "rail" | "bus", PartnerOffer[]> {
   return {
     stay: stayOffersFor(citySlug, locale),
     activity: activityOffersFor(citySlug, locale),
+    esim: esimOffersFor(citySlug, locale),
+    rail: railOffersFor(citySlug, locale),
+    bus: busOffersFor(citySlug, locale),
   };
 }
 
 export function offersFor(citySlug: string, locale: PartnerLocale): PartnerOffer[] {
   const by = offersByPurpose(citySlug, locale);
-  return [...by.stay, ...by.activity];
+  return [...by.stay, ...by.activity, ...by.esim, ...by.rail, ...by.bus];
 }

@@ -5,8 +5,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   buildAgodaCitySearch, buildTripcomHotels, buildKlookCitySearch, buildKkday,
-  offersFor, stayOfferFor, stayOffersFor, activityOffersFor, offersByPurpose, isLegacyAffiliateUrl,
-  AGODA_CID, TRIP_ALLIANCE_ID, TRIP_SID, TRIP_SUB3, KLOOK_AID, KLOOK_AFF_ADID, KKDAY_CID,
+  buildKlookEsim, buildKlookRail, buildKlookBus,
+  offersFor, stayOfferFor, stayOffersFor, activityOffersFor,
+  esimOffersFor, railOffersFor, busOffersFor, offersByPurpose, isLegacyAffiliateUrl,
+  AGODA_CID, TRIP_ALLIANCE_ID, TRIP_SID, TRIP_SUB3, KLOOK_AID, KKDAY_CID,
   type PartnerLocale,
 } from "./partner-links.ts";
 
@@ -46,15 +48,35 @@ test("★Trip.com — Owner 원본과 동일(경주·전주), 검증 도메인�
   assert.equal(buildTripcomHotels("tokyo", "ko"), null, "미확보 도시 추측 금지");
 });
 
-test("★Klook — k_site 1회 인코딩·원본 파라미터, 검증 locale(ko)만, 활성 매트릭스 밖", () => {
-  const url = buildKlookCitySearch("부산", "ko")!;
-  const u = new URL(url);
-  assert.equal(u.searchParams.get("aid"), KLOOK_AID);
-  assert.equal(u.searchParams.get("aff_adid"), KLOOK_AFF_ADID);
-  const dest = new URL(u.searchParams.get("k_site")!); // URLSearchParams 가 디코딩 1회
-  assert.equal(dest.host + dest.pathname, "www.klook.com/ko/search/result/");
-  assert.equal(dest.searchParams.get("query"), "부산");
-  assert.equal(buildKlookCitySearch("부산", "en"), null, "미검증 locale 추측 금지");
+test("★Klook V4 — 직접 aid 부착(공식), redirect/aff_adid 0, 검증 경로·locale 만", () => {
+  // eSIM: 4 locale 전부 검증(2026-09-14 실브라우저) — dest_id=1010=대한민국
+  for (const [l, seg] of [["en", "en-US"], ["ko", "ko"], ["ja", "ja"], ["zh", "zh-CN"]] as const) {
+    const u = new URL(buildKlookEsim(l));
+    assert.equal(u.host + u.pathname, `www.klook.com/${seg}/wifi-sim-card/`);
+    assert.equal(u.searchParams.get("dest_id"), "1010");
+    assert.equal(u.searchParams.get("aid"), KLOOK_AID);
+  }
+  // 도시 검색: 라우트 locale 축 검증, 검색어는 locale 표기
+  const s = new URL(buildKlookCitySearch("busan", "ko")!);
+  assert.equal(s.host + s.pathname, "www.klook.com/ko/search/result/");
+  assert.equal(s.searchParams.get("query"), "부산");
+  assert.equal(s.searchParams.get("aid"), KLOOK_AID);
+  assert.equal(new URL(buildKlookCitySearch("seoul", "zh")!).pathname, "/zh-CN/search/result/");
+  assert.equal(buildKlookCitySearch("tokyo", "en"), null, "미확보 도시 추측 금지");
+  // rail: en 은 base 경로만 검증, ko 는 404(경로 부재) → null
+  assert.equal(new URL(buildKlookRail("en")!).pathname, "/korea-rail/");
+  assert.equal(new URL(buildKlookRail("ja")!).pathname, "/ja/korea-rail/");
+  assert.equal(new URL(buildKlookRail("zh")!).pathname, "/zh-CN/korea-rail/");
+  assert.equal(buildKlookRail("ko"), null, "/ko/ 404 — 발명 금지");
+  // bus: en-US 검증, ko 404 → null
+  assert.equal(new URL(buildKlookBus("en")!).pathname, "/en-US/korea-bus/");
+  assert.equal(buildKlookBus("ko"), null);
+  // 구세대 규격(redirect·aff_adid·단축링크)은 어떤 빌더도 생성하지 않는다
+  for (const href of [buildKlookEsim("en"), buildKlookCitySearch("busan", "en")!, buildKlookRail("en")!, buildKlookBus("en")!]) {
+    assert.ok(!href.includes("affiliate.klook.com"), "redirect 부활 금지");
+    assert.ok(!href.includes("aff_adid"), "aff_adid 불요(공식)");
+    assert.ok(!href.includes("s.klook.com"), "단축링크는 추적 불가");
+  }
 });
 
 test("★KKday — cid/ud 규격, ud2 는 영숫자만·test 거부", () => {
@@ -89,30 +111,53 @@ test("★활성 매트릭스 v2 — stay: 부산=Agoda추천+Trip대안(en/ja/ko
     assert.equal(stayOffersFor(c, "zh").length, 0, `${c}/zh 숨김`);
   }
   assert.equal(stayOffersFor("tokyo", "en").length, 0);
-  // esim/transport 는 여전히 어떤 도시·언어에서도 활성 0 (Klook 생성 규칙 미확보)
-  for (const l of LOCALES) for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
-    const purposes = new Set(offersFor(c, l).map(o => o.purpose));
-    for (const p of ["esim", "transport"]) assert.ok(!purposes.has(p as never), `${c}/${l}/${p}`);
-  }
 });
 
-test("★activity v3 — KKday 도시 목적지 5도시×4locale(zh=간체 zh-cn), Klook 없인 단독 제공", () => {
+test("★esim/rail/bus v4 — Klook 직접 aid, esim 4locale·rail/bus 는 en/ja/zh 만(ko 경로 부재)", () => {
+  for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
+    for (const l of LOCALES) {
+      const esim = esimOffersFor(c, l);
+      assert.equal(esim.length, 1, `${c}/${l} esim`);
+      assert.equal(esim[0]!.partner, "klook");
+      assert.match(esim[0]!.href, /wifi-sim-card\/\?dest_id=1010&aid=123610/);
+    }
+    for (const l of ["en", "ja", "zh"] as const) {
+      assert.equal(railOffersFor(c, l).length, 1, `${c}/${l} rail`);
+      assert.equal(busOffersFor(c, l).length, 1, `${c}/${l} bus`);
+    }
+    assert.equal(railOffersFor(c, "ko").length, 0, `${c}/ko rail 렌더 0`);
+    assert.equal(busOffersFor(c, "ko").length, 0, `${c}/ko bus 렌더 0`);
+  }
+  // 승인 5도시 밖에서는 전역 카테고리도 렌더하지 않는다
+  assert.equal(esimOffersFor("tokyo", "en").length, 0);
+  assert.equal(railOffersFor("tokyo", "en").length, 0);
+});
+
+test("★activity v4 — Klook 검색 추천 + KKday 도시 목적지 대안, 5도시×4locale", () => {
   for (const l of LOCALES) for (const c of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
     const offers = activityOffersFor(c, l);
-    assert.equal(offers.length, 1, `${c}/${l}`);
-    assert.equal(offers[0]!.partner, "kkday");
-    const u = new URL(offers[0]!.href);
+    assert.equal(offers.length, 2, `${c}/${l}: 추천+대안`);
+    assert.equal(offers[0]!.partner, "klook", `${c}/${l} 추천=Klook(Owner 정책 순서)`);
+    const k = new URL(offers[0]!.href);
+    assert.match(k.pathname, /^\/(en-US|ko|ja|zh-CN)\/search\/result\/$/);
+    assert.equal(k.searchParams.get("aid"), KLOOK_AID);
+    assert.ok(k.searchParams.get("query"), "도시 검색어 필수");
+    assert.equal(offers[1]!.partner, "kkday", `${c}/${l} 대안=KKday`);
+    const u = new URL(offers[1]!.href);
     assert.equal(u.searchParams.get("cid"), KKDAY_CID);
     assert.equal(u.searchParams.get("ud1"), "gokoreamate");
     assert.equal(u.searchParams.get("ud2"), `${c}activity`, "ud2 영숫자 도시 태그");
     assert.match(u.pathname, new RegExp(`^/(en|ja|ko|zh-cn)/destination/kr-${c}$`));
   }
-  assert.equal(new URL(activityOffersFor("busan", "zh")[0]!.href).pathname, "/zh-cn/destination/kr-busan", "zh 는 간체 경로");
+  assert.equal(new URL(activityOffersFor("busan", "zh")[1]!.href).pathname, "/zh-cn/destination/kr-busan", "zh 는 간체 경로");
   assert.equal(activityOffersFor("tokyo", "en").length, 0);
-  // offersByPurpose 표면 계약 — stay 다음 activity 순서
+  // offersByPurpose 표면 계약 — stay → activity → esim → rail → bus 순서
   const by = offersByPurpose("busan", "en");
   assert.equal(by.stay[0]!.partner, "agoda");
-  assert.equal(by.activity[0]!.partner, "kkday");
+  assert.equal(by.activity[0]!.partner, "klook");
+  assert.equal(by.esim[0]!.partner, "klook");
+  assert.equal(by.rail[0]!.partner, "klook");
+  assert.equal(by.bus[0]!.partner, "klook");
 });
 
 test("★구세대 차단 — 활성 전 조합의 URL 에 41763/단축링크 0 + 감지기 동작", () => {
@@ -122,7 +167,8 @@ test("★구세대 차단 — 활성 전 조합의 URL 에 41763/단축링크 0 
     for (const o of offersFor(c, l)) {
       assert.ok(!isLegacyAffiliateUrl(o.href), `${c}/${l}: ${o.href}`);
       assert.ok(
-        o.href.includes(AGODA_CID) || o.href.includes(TRIP_ALLIANCE_ID) || o.href.includes(`cid=${KKDAY_CID}`),
+        o.href.includes(AGODA_CID) || o.href.includes(TRIP_ALLIANCE_ID)
+          || o.href.includes(`cid=${KKDAY_CID}`) || o.href.includes(`aid=${KLOOK_AID}`),
         "승인 ID 미포함",
       );
     }
