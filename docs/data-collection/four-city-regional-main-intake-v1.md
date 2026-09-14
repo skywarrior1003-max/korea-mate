@@ -274,3 +274,64 @@ name_l10n en 14 + **desc_l10n en 14**(상류 수집 원본 `gyeongju-15-en-multi
 | V3 | 로컬 | 코드·런타임 무변경(SQL/문서/delta artifact 만) | 가드 테스트·tsc 재확인 | — |
 
 **QA 판정 구분(§8)**: ① feature 실 API 채택·저장·순서 = **직접 실측 PASS** ② 격리(dev) 재열람 = Naver 지도 도메인 인증 제약으로 화면 미검증(환경 한계) ③ LIVE 재열람 렌더 = **기존 배포 코드**에서 동일 계약 payload 로 PASS ④ 수정본 전체의 Production E2E 는 **배포 후 LIVE 재QA 항목**(미수행) — ①~③을 합쳐 Production E2E PASS 로 표기하지 않는다.
+
+### 12.1 QA 원장 갱신 (FINAL-CLOSEOUT-V1, 2026-09-14)
+
+- RELEASE-V1 LIVE QA: 생성 4건(50d9558d·671ca195·8b61713f·7b7b399e) 중 3건은 소유자 API 로 즉시 삭제, **잔존 1건(50d9558d-6776-4afa-ade7-8ff2aef0f60b)은 Owner 지정 단건 정리로 삭제 완료** —
+  READ-ONLY 사전 확인(경주·'경주 시내권 핵심 바이블'·10/02~04·is_public=false·copy_of null·view 0·생성시각=1차 QA 런 일치, trip_moments 0·copy 참조 0) → 정확 ID 단건 DELETE 204 → readback 부재.
+  **QA 여행 잔존 = 0.** 일반 사용자 여행 접촉 0.
+
+## 13. 최종 마감 (MAIN-REGIONAL-DATA-FINAL-CLOSEOUT-V1, 2026-09-14)
+
+### 13.1 경주 GJ01-0099 EN — 원문 미제공 확정(미해결 유지)
+
+- 대상 확정: GJ01-0099 = **city_spots 511 '보문 물레방아 광장'**(city_spot_sources 정확 브리지·LIVE ko fallback 확인 대상과 동일).
+- 확인 경로: ① 패키지 en SOURCE_NOT_AVAILABLE ② 상류 수집 원본(gyeongju-15-en-multilingual-v1.jsonl, KTO EngService2/visitkorea 경로) en_status SOURCE_NOT_AVAILABLE·source_url 공란 ③ 원천(경주문화관광 gyeongju.go.kr/tour)의 English/日本語/中文 링크는 **구글 번역 위젯**(translation-links·기계번역)으로 공식 편집 EN 원문 아님 — 사용 금지 원칙 준수.
+- 판정: **원문 미제공**(접근 장애·수집 누락 아님). EN 제목·본문 발명 0, KO fallback 을 복구로 표기하지 않음. 장소·기존 자료 보존. **미해결로 유지.**
+
+### 13.2 전주 — 보류 범위와 기존 서비스 영향 (건별)
+
+| Main ID | 장소 | 신규 보류 필드(패키지 sha 783df233… — 적용 금지 유지) | 기존 서비스 사용 자료의 실측 출처 | 이용근거 확인 필요(기존 사용) |
+|---|---|---|---|---|
+| 749 | 전주한옥마을 (jeonju:OFF-16109) | zh 제목·본문 (cnh dataSid=16152) | 이미지=KTO 공식(tong.visitkorea, rights KTO_OFFICIAL) · en 제목/본문=KTO 계열 편집문 · **ja 제목/본문=visitjeonju /jpn 게시물 원문과 문두 일치 실측(dataSid 16147)** | **ja 제목·본문 1건**(제2유형 게시물 계열) |
+| 744 | 청연루·남천교 (OFF-16086) | ja(16146)·zh(16151) 제목·본문 | 이미지=KTO 공식 · en=KTO 계열 · ja/zh 기존 사용 없음 | 없음 |
+| 736 | 완산꽃동산 (OFF-13964) | ja(13966)·zh(13967) 제목·본문 | 이미지=KTO 공식 · en=KTO 계열 · ja/zh 기존 사용 없음 | 없음 |
+
+- 이 3곳의 기존 이미지·EN 텍스트는 **제2유형 게시물 계열이 아님**(KTO 공식) — 같은 도시라는 이유로 동일 조건 분류하지 않음.
+- 별도 클래스(광역 전수 아님·기확인분만): tour.jeonju.go.kr 게시물(BBS_0000003) 이미지를 사용하는 기존 행들 — 실측 확인분 917(조경단)·1098(덕진공원)·1125(한지박물관)·1126(전주천) — 도 동일 게시물 계열로 **이용 근거 확인 필요** 클래스. 그 외 행의 출처는 **불명(미조사)** 로 남긴다(광역 조사 금지 준수).
+- 표시 구분: 전주 신규 JA/ZH = **수집 완료·적용 HOLD** / 위 기존 사용 필드 = **이용 근거 확인 필요**(서비스 변경·삭제·숨김 0).
+
+**Owner 문의 정리(한곳)** — 문의 대상: 전주시 문화관광 포털(tour.jeonju.go.kr, 대표 063-222-1000·사이트 하단 '저작권정책' 경로).
+문의 범위: ① 게시물 5건 — jpn 16146(청연루)/13966(완산)/16147(한옥마을), cnh 16151(청연루)/16152(한옥마을)/13967(완산) 및 ko 원게시물 계열 — 의 **본문 텍스트**를 상업적 웹서비스(제휴 수익 포함 여행 안내, 출처 표기·요청 시 삭제 운영)에서 인용·표시 가능한지 ② 동일 조건이 기존 사용분(위 표의 ja 1건·게시물 이미지 4건)에 적용되는지 ③ 허용 시 표기 조건. (문의 발송은 Owner — 대리 발송 안 함.)
+
+### 13.3 경주 적용 건수 정정 (직전 '33 필드'는 오기)
+
+실제 적용본(sha 196fe6fc…) 실측: **UPDATE 35문 = 언어 키 35개 추가**
+(name_l10n: en 14·ja 2·zh 2 = 18 / desc_l10n: en 14·ja 1·zh 2 = 17) · **대상 14행** · **DB 컬럼 2종**(행×컬럼 셀 28).
+readback(en 14/14·desc en 14/14·ja 2·zh 2·범위 밖 0)과 정합 — DB 값 변경 없음, 보고 수치만 정정.
+
+### 13.4 checksum·복구 자료 위치 (전체 SHA-256)
+
+| 파일 | 상태 | sha256 |
+|---|---|---|
+| data/main-intake/four-city-regional-v1/gyeongju-regional-l10n-apply-v1.sql | **적용 완료(2026-09-14, 정확 1회 — 재실행 금지)** | 196fe6fcae1374ec4b25a3c384854dfe426b2fab0c117ce27a437b56c0c108f1 |
+| data/main-intake/four-city-regional-v1/jeonju-regional-l10n-apply-v1.sql | 보류(HOLD — 자동 적용 금지) | 783df233acfbf2166c60dae778e8acce2a0371b5b3a30755a427087d9908dea9 |
+| data/main-intake/four-city-regional-v1/gyeongju-regional-l10n-rollback-v1.sql | 준비(실행 금지 — Owner 지시 시 1회) | a0d2b29f18cbd8a3ee7d96a55546fa2538fa85ac6b4ebbcd37031ab2e99a9b3e |
+| data/main-intake/four-city-regional-v1/gyeongju-l10n-before-snapshot-2026-09-14-v1.json | 적용 직전 원본 14행(영속 보관) | (JSON 자료 — 대상 키 전부 부재 검증 완료) |
+
+경주 구버전 apply(b7dd38cd… / dd4a5f6c…)는 SUPERSEDED 유지. 축약 sha 표기는 항상 '…' 로 축약임을 명시한다.
+
+**DB rollback 실행 조건**: Owner 지시 시에만 — rollback-v1.sql 은 각 키가 apply 가 넣은 값과 정확히 일치할 때만 제거(값조건 35문)하므로 이후 다른 갱신을 덮지 않는다. 실행 후 대상 키 부재 readback + SSG rebuild 1회.
+
+**코드 rollback(실행 지침 아님 — 기록)**: 배포분(5f3b083→170630a)은 5커밋 — 96ebad4·b1358e4(런타임: regional-trips-v1.json linkage 수리 + 가드 테스트) / b5300b4·c9e8782·170630a(SQL·문서 artifact — 런타임 무관).
+화면 linkage 만 되돌리려면 `git revert b1358e4` → `git revert 96ebad4` 순(최신부터), 가드 테스트가 함께 revert 되는지 확인. **충돌 발생 시 중단하고 보고**(수동 해소 금지). **이 지침은 170630a 가 최신일 때만 유효 — 이후 Production 변경이 쌓이면 그대로 적용 불가.** DB(l10n)와 독립이므로 코드만 되돌려도 DB 값은 남는다(표시 무해 — 코스/장소 화면은 있는 키만 사용).
+
+### 13.5 지역 화면 — 후속 논의 항목(이번 작업 범위 밖, 기록만)
+
+Owner 결정: 데이터 마감 후 별도 논의. 이번에 파트너 박스·Explore CTA·검색·날씨·언어 전환·섹션 순서 **무변경**(A/B/C/D 제안 어느 것도 미승인).
+① 파트너 박스: 9/13 신규 삽입(1줄) → 9/14 최대 5줄(en/ja/zh)로 확대된 경위 — 위치는 '여행 편의정보'와 Explore CTA 사이.
+② 확인 필요(후속): 기존 승인 디자인(stitch \*_final 계열)에서 Explore/검색 진입이 상단 배치였는지 대조.
+
+### 13.6 기존 사용자 snapshot
+
+기존 저장 여행의 오연결 snapshot 은 이번에도 무수정 — 미해결 항목으로 유지(§7-6 보존 사유 동일). 전수조사·일괄 복구·재저장 0.
