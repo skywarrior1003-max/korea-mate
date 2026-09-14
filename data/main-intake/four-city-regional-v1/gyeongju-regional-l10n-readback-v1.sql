@@ -1,5 +1,5 @@
 -- gyeongju-regional-l10n readback v1 (READ-ONLY)
--- 기대: en 14/14 · ja 2(432,530) · zh 2(432,530) · desc en 2(432,530) · desc ja 1(432) · desc zh 2(432,530)
+-- 기대: en 14/14 · ja 2(432,530) · zh 2(432,530) · desc en 14/14 · desc ja 1(432) · desc zh 2(432,530)
 SELECT id, name,
        name_l10n->>'en' AS en, name_l10n->>'ja' AS ja, name_l10n->>'zh' AS zh,
        (desc_l10n ? 'en') AS has_desc_en, (desc_l10n ? 'ja') AS has_desc_ja, (desc_l10n ? 'zh') AS has_desc_zh
