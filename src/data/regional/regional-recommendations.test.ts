@@ -199,11 +199,39 @@ test("경주 linkage 수리 스냅숏 — 스왑 복귀 금지(identity 브리�
   // 오프셋 해소
   assert.equal(stop("gyeongju-C-003", 1).spotId, 475, "C-003 오릉=475");
   assert.equal(stop("gyeongju-C-003", 5).spotId, 473, "C-003 삼릉=473");
-  // 월성 발굴현장: canonical 부재 — 오연결(오릉 행) 제거, 이름만 표시
-  assert.equal(stop("gyeongju-C-001", 5).spotId, null, "C-001 월성 발굴현장 unlink");
+  // V2: 월성 발굴현장 — 경주 월성(427) 실존 확인으로 unlink 를 재연결로 승격
+  assert.equal(stop("gyeongju-C-001", 5).spotId, 427, "C-001 월성=427");
+  // V2: 배동석조여래삼존입상 — 정확 명칭 행(672) 실존 확인(665 배동 삼릉과 별개 실체)
+  assert.equal(stop("gyeongju-C-003", 4).spotId, 672, "C-003 삼존입상=672");
   // 정합 확인 유지분(브리지 일치): 계림·첨성대·나정·포석정·분황사·동궁·박물관·보문
   assert.equal(stop("gyeongju-C-002", 3).spotId, 425);
   assert.equal(stop("gyeongju-C-001", 2).spotId, 457);
   assert.equal(stop("gyeongju-C-003", 2).spotId, 468);
   assert.equal(stop("gyeongju-C-003", 3).spotId, 481);
+});
+
+// ── SECONDARY-CONFLICT-RESOLUTION-V2: 부산·전주 identity 수리 고정 ───────────
+//
+// 근거: 공식 주소·좌표·정체성 실측(docs/data-collection/four-city-regional-main-intake-v1.md §10).
+// 원칙 — 코스 stop 은 '관광지 본체' 행에 연결한다(내부 시설·인접 별개 시설 행 금지).
+test("부산·전주 identity 수리 스냅숏 — 본체 행 연결 복귀 금지", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const stop = (tripId: string, i: number) => trips.get(tripId)!.stops[i]!;
+  // 부산: 본체 행(구 연결은 내부시설/인접 별개 행이었다)
+  assert.equal(stop("busan-C-001", 0).spotId, 26, "범어사=사찰 본체(박물관 1073 아님)");
+  assert.equal(stop("busan-C-001", 6).spotId, 28, "오륙도스카이워크=28(섬 961 아님)");
+  assert.equal(stop("busan-C-002", 10).spotId, 28);
+  assert.equal(stop("busan-C-001", 8).spotId, 990, "영도대교=990(해돋이전망대 950 아님)");
+  assert.equal(stop("busan-C-002", 0).spotId, 990);
+  assert.equal(stop("busan-C-001", 10).spotId, 2, "감천문화마을=마을 본체(어린왕자 1081 아님)");
+  assert.equal(stop("busan-C-001", 12).spotId, 19, "다대포해수욕장=19(바다누리길 1054 아님)");
+  assert.equal(stop("busan-C-003", 10).spotId, 19);
+  assert.equal(stop("busan-C-002", 5).spotId, 1319, "부평깡통시장=1319(남포지하상가 954 아님)");
+  assert.equal(stop("busan-C-002", 12).spotId, 16, "광안리=16(공연장 1061 아님)");
+  assert.equal(stop("busan-C-003", 7).spotId, 16);
+  assert.equal(stop("busan-C-R01", 3).spotId, 16);
+  // 송도는 963 이 해수욕장 본체 기사 — 의심 해소·유지
+  assert.equal(stop("busan-C-001", 11).spotId, 963, "송도=963 유지");
+  // 전주: 오목대·이목대 — 정확 명칭 행(778). 764 는 이름(전주천)·좌표(오목대) 불일치 twin 의심(보고)
+  assert.equal(stop("jeonju-C-002", 2).spotId, 778, "오목대·이목대=778");
 });

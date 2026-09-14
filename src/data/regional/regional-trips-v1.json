@@ -18,8 +18,8 @@
     {
      "name": "범어사",
      "nameEn": "Beomeosa Temple",
-     "spotId": 1073,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 26,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "동래읍성",
@@ -54,8 +54,8 @@
     {
      "name": "오륙도스카이워크",
      "nameEn": "Oryukdo Skypark",
-     "spotId": 961,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 28,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "태종대",
@@ -66,8 +66,8 @@
     {
      "name": "영도대교",
      "nameEn": "Yeongdo Bridge",
-     "spotId": 950,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 990,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "용두산공원",
@@ -78,8 +78,8 @@
     {
      "name": "감천문화마을",
      "nameEn": "Gamcheon Culture Village",
-     "spotId": 1081,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 2,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "송도해수욕장·케이블카",
@@ -90,8 +90,8 @@
     {
      "name": "다대포해수욕장",
      "nameEn": "Dadaepo Beach",
-     "spotId": 1054,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 19,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "장림포구",
@@ -125,8 +125,8 @@
     {
      "name": "영도대교",
      "nameEn": "Yeongdo Bridge",
-     "spotId": 950,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 990,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "흰여울문화마을",
@@ -155,8 +155,8 @@
     {
      "name": "부평깡통시장",
      "nameEn": "Bupyeong Kkangtong Market",
-     "spotId": 954,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 1319,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "용두산공원",
@@ -185,8 +185,8 @@
     {
      "name": "오륙도스카이워크",
      "nameEn": "Oryukdo Skypark",
-     "spotId": 961,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 28,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "이기대해안산책로",
@@ -197,8 +197,8 @@
     {
      "name": "광안리해수욕장·광안대교",
      "nameEn": "Gwangalli Beach & Gwangandaegyo Bridge",
-     "spotId": 1061,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 16,
+     "linkage": "IDENTITY_REPAIR_V2"
     }
    ],
    "source": {
@@ -262,8 +262,8 @@
     {
      "name": "광안리해수욕장·민락수변공원",
      "nameEn": "Gwangalli Beach & Millak Waterfront Park",
-     "spotId": 1061,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 16,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "장림포구",
@@ -280,8 +280,8 @@
     {
      "name": "다대포해수욕장·고우니생태길",
      "nameEn": "Dadaepo Beach & Gouni Ecological Trail",
-     "spotId": 1054,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 19,
+     "linkage": "IDENTITY_REPAIR_V2"
     }
    ],
    "source": {
@@ -321,8 +321,8 @@
     {
      "name": "광안리해수욕장 (광안리 디셈버)",
      "nameEn": "Gwangalli Beach — Gwangalli December",
-     "spotId": 1061,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 16,
+     "linkage": "IDENTITY_REPAIR_V2"
     }
    ],
    "source": {
@@ -694,8 +694,8 @@
     {
      "name": "월성 발굴현장",
      "nameEn": "Wolseong Excavation Site",
-     "spotId": null,
-     "linkage": "MISLINK_REMOVED_NO_CANONICAL_V1"
+     "spotId": 427,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "황리단길",
@@ -806,8 +806,8 @@
     {
      "name": "배동석조여래삼존입상",
      "nameEn": "Baedong Stone Buddha Triad",
-     "spotId": 665,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 672,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "삼릉",
@@ -977,8 +977,8 @@
     {
      "name": "오목대·이목대",
      "nameEn": "Omokdae & Imokdae Pavilions",
-     "spotId": 764,
-     "linkage": "EXACT_CANONICAL_LINK"
+     "spotId": 778,
+     "linkage": "IDENTITY_REPAIR_V2"
     },
     {
      "name": "조경단",
