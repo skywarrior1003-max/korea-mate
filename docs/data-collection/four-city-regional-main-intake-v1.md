@@ -543,3 +543,46 @@ legacy-retirement crosswalk(714행) 실측: **4행 전부 `FINAL_RETIRED / RETIR
 
 - 파일: candidate-place-inserts-**v2**.sql(1930484a…)+master v2 · v1 SUPERSEDED 표기 · regional-trips-v1.json 연결 2 · 가드 테스트 17/17 · 본 문서 §17.
 - 격리: insert DB 검증 + iso 빌드 UI 8/8(위) · teardown 후 정상 재빌드 완료. Production DB write 0·QA 여행 0·배포 0·master push 0.
+
+## 18. 기존 공개 연결 릴리스 + 공개 판단 준비 (EXISTING-PLACE-LINK-RELEASE-AND-PUBLICATION-READINESS-V1, 2026-09-14)
+
+### 18.1 A — 연결 2건 릴리스 (완료)
+
+- master FF 73c46b5→**3bd1048**(force 0) · Cloudflare 배포 **d1ec0a26** · runtime diff = regional-trips-v1.json 연결 2 + 가드 테스트뿐(그 외 data/·docs/ 기록물 — SQL 코드 참조 0 재확인) · iso 잔재 0.
+- **LIVE 6/6 PASS**(QA 여행 생성 0): busan-C-R01#1 밀락더마켓→/place/1332(표시명 = 카탈로그 ko "트렌디함 물씬, 밀락더마켓" — 계약), jeju-C-R02#2→/place/2797(표시명 "산호해수욕장"), 두 상세 이미지 실로딩(1332=visitbusan 공공 API 계보 이미지)·본문 표시, busan-C-003 부산역·삼정타워 맥락형(이름만) 보존, 지역 허브 경로·제휴 보존. DB write 0·화면 구성 변경 0.
+
+### 18.2 B — 신규 7행 장소별 공개 판단표 (insert v2 = 1930484a…, 실행 금지 유지)
+
+공통: 원천 KTO TourAPI(공공 — 기존 KTO_OFFICIAL 계보), 이름·주소·좌표·본문·이미지 verbatim, 기존 Main 행 부재 근거 = external_id 충돌 0 + 좌표 ±500m·이름 전역(비공개 포함) 실사(§17.3), 언어 = **KO 실본문만**(EN/JA/ZH 미수집 → fallback 표시), 이미지 = KTO firstimage 실존(격리 UI 에서 경복궁·삼정타워 실로딩 940px 실증).
+
+| # | 장소(KTO 표제 verbatim) | 도시 | contentid | 코스 stop(원 라벨) | 본문 | 주소 | 준비 상태 |
+|---|---|---|---|---|---|---|---|
+| 1 | 경복궁 | seoul | 126508 | seoul-C-001#1 (RELATION) | ko 1,264자 | 종로구 사직로 161 | **공개 준비 완료** |
+| 2 | 국립민속박물관과 국립민속박물관 어린이박물관 | seoul | 2608977 | seoul-C-001#3 (RELATION) | ko 595자 | 종로구 삼청로 37 | **완료**(복합 표제 — 표시명 축약은 별도 결정) |
+| 3 | 북촌한옥마을 | seoul | 126537 | seoul-C-002#2 (RELATION) | ko 1,146자 | 종로구 계동길 37 | **완료**(기존 3239 는 '안내센터' — 별개 시설 확인) |
+| 4 | 인사동 | seoul | 264353 | seoul-C-002#4 (RELATION) | ko 800자 | 종로구 인사동길 62 | **완료** |
+| 5 | 국립중앙박물관 | seoul | 129703 | seoul-C-003#2 (RELATION) | ko 336자 | 용산구 서빙고로 137 | **완료** |
+| 6 | 이촌한강공원 | seoul | 970636 | seoul-C-003#3 (RELATION) | ko 369자 | 용산구 이촌로72길 62 | **완료** |
+| 7 | 삼정타워 | busan | 3014436 | busan-C-003#2 (RELATION — 맥락형) | ko 385자 | 부산진구 중앙대로 672 | insert 준비 완료 — **연결 여부는 Owner 판단**(코스 stop 은 집합 지점 표현) |
+
+**운영 절차(각 단계 검증·복구 포함)**: ① Production insert = v2 sql 1회(가드: external_id 존재 시 0행; 복구 = external_id 'kto:%' 7행 DELETE — 참조 생기기 전 단계라 안전) → ② **발급 ID 확인** = `SELECT id, external_id FROM city_spots WHERE external_id IN ('kto:126508',…)` (격리 발급 1646~1652 는 **Production 하드코딩 금지** — external_id 대응만 사용) → ③ Owner 공개 결정 후 `is_published=true`(값조건: false→true; 복구 = 역전환) → ④ 코스 연결 커밋 = ②의 id 를 regional-trips-v1.json 에 IDENTITY_LINK_RECOVERY_V2 로(가드 테스트 갱신·복구 = revert) → ⑤ **SSG 재빌드·배포**(재빌드 전 /place/<신규id> 미생성 — dynamicParams=false) → ⑥ LIVE 확인(상세 진입·이미지·코스 링크). 격리에서 ①②③⑤⑥ 상당 전 과정 검증 완료(§17.3).
+
+### 18.3 C — retired 장소: 과거 처리의 실제 근거와 복구 준비
+
+crosswalk(2026-09-01, 714행) 실측 — **중복·identity 오류가 아니라 "Final 수집 범위 부재"가 4행 공통 근거**:
+- **7 Igidae Coastal Walk**: 2026-08 릴리스 당시 **OWNER_OVERRIDE_KEEP_PUBLISHED**("Owner 확정 유지")였으나 09-01 retirement 에서 Final 우주 부재로 퇴출(기록: "historical override not reinterpreted as publish approval"). **참조: itineraries 51·user_spots 2.**
+- **29 Igidae Coastal Trail**: 동일(당시 기록 "이기대 2행 중 하나" — **7과 같은 시설의 이중 행**로 처리됨). 참조 17.
+- **39 청사포 다릿돌전망대**: LEGACY_ONLY_VALID — "canonical 없음(A-00055 청사포·미포는 어촌 면적 페이지)" = 전용 canonical 수집 공백. 참조 12.
+- **81 부산역**: "도착 anchor, canonical 없음" — 코스 stop 은 맥락형 확정(§16.3) → **연결·재공개 불필요, 현 이름·순서 유지 확인**.
+
+**복구 준비(신규 중복 생성 0 — 기존 ID 재사용)**: KTO 에 정확 동명 항목 실존 — 이기대해안산책로 **3008212**(본문 403자·detailImage 7장), 청사포 다릿돌전망대 **2607943**(본문 374자·detailImage 3장). §17.4 의 "KTO 신규 트랙" 판단은 **철회** — 기존 행 복구가 참조 보존상 우월.
+- 패치: `retired-place-minimal-restore-v1.sql` **sha256 `dc7035770add0d8b9699be82b222cf9cddae10f96ec5fa9872ba3511ab3c1b74`** + master jsonl — 7·39 에 ko 이름/본문(KTO verbatim)+placeholder 이미지 교체(값조건: 현 unsplash URL 앵커)+is_published 전환(조건부). **29 는 비공개 유지**(이중 행 — 병합·삭제·ID 재부여 0). 좌표는 기존 유지(KTO 좌표 대조만 기록: 7↔3008212 약 370m·39↔2607943 약 480m — 산책로/구간 특성).
+- 격리 검증 PASS: ko_name/본문/KTO 이미지 교체/공개 전환/published 필터 포함 2/2/재실행 idempotent — id 불변이라 기존 사용자 참조(51+2·12) 보존.
+- **남은 결정(장소별)**: ⓐ 7 재공개+busan-C-002#12 연결 — Final authoritative 예외 승인 필요(과거 Owner 유지 지시가 있었던 행) ⓑ 39 재공개+busan-C-003#7 연결 — 동일 ⓒ 29 는 계속 비공개(추가 결정 불요, 7 복구 시 코스는 7 사용).
+
+### 18.4 D — 외부 확인 항목 상태(정확 구분)
+
+- **22 국제시장**: 공식 사진 18장 **실존 확인 완료**(visitbusan 게시물 399) — 원본 부재 아님, **이용 근거 확인 대기**. Owner 직접 행동: ① data.go.kr 에서 **부산광역시 쇼핑 정보 서비스(ShoppingService, 6260000)** 활용신청(현 키 403=미등록) — 승인 후에도 **해당 레코드 존재·이미지 필드·이용조건을 별도 확인**(신청=확보 아님) 또는 ② visitbusan.net 콘텐츠 이용조건 문의. 확보 즉시 이미지 delta 1행(경로 §17.1).
+- **1319 부평깡통시장 JA/ZH**: 게시물 400 다국어 **존재 표식**(수집 시 language_available=true)까지 확인 — 실제 제목·본문 미확보(정확 URL 은 언어별 menuCd 상이로 미특정). 이용 근거 트랙과 함께 진행.
+- **48 절영**: 확인 원천(KTO 2경로·부산 공공 API 213건·visitbusan 수집/검색·영도구청 3페이지) 미제공 — 남은 경로 = 영도구청 문화관광 심층·부산관광공사 문의(Owner). 동일 실패 조회 반복 금지 유지.
+- 전주 제2유형(743·749 ko·ja/zh)·511 EN·기존 snapshot·legacy 배선: 미해결/결정 대기 유지 — 이번 완료 수치에 불포함.
