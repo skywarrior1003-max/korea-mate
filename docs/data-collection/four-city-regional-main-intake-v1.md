@@ -700,3 +700,18 @@ KO 부산 채택→**POST city="busan"** 실측 · 본인 재열람 my-trip-prep
 
 ### 22.4 함정 기록
 PostgREST 스키마 캐시: 세션 내 ALTER 후 NOTIFY reload 가 레이스로 미반영될 수 있음(insert PGRST204) — **재기동이 확실**. 커밋 메시지 here-string 안 큰따옴표 금지(pathspec 파괴 — 재발).
+
+## 23. Production Copy E2E + Invalid ID 마감 (PRODUCTION-COPY-E2E-AND-INVALID-ID-CLOSEOUT-V1, 2026-09-17)
+
+**runtime 변경 0 · 배포 0 · master=Production `115254a`·`bc61830f` 그대로.**
+
+### 23.1 Invalid ID 원인 판정 — 분류 A(QA 스크립트), 제품 결함(C) 배제 실증
+- 근거: "Invalid ID" 는 [id].ts 의 **params.id UUID 형식 검사**(존재 무관). 유효 UUID 로는 이 오류가 나올 수 없음을 대조 실증 — fake UUID 단독/정밀 재현(리스너·페이지·동일 리터럴 포함) 3회 전부 404 또는 "Invalid days structure"(형식 통과). 동일 세션의 정상 UI 흐름(채택·GET·DELETE)도 전부 정상 → 제품 API·Copy handler 결함 아님.
+- 따라서 실패 실행의 PUT/PATCH path id 는 UUID 가 아니었음이 논리 확정(직접 로그 부재로 구체 기전은 후보 기록: request 리스너의 `JSON.parse(postData).id` 무가드 덮어쓰기 등 스크립트 내부 값 오염 경로). **재발 방지(이번 스크립트에 내장·실전 검증)**: 전 API 요청 URL/method 로깅 · id UUID 사전검증 후에만 사용 · ledger 파일로 생성 1회 제한(미정리 잔존 시 재생성 중단) · 실패 시 즉시 정리 후 중단 · 에러 응답 전문 수집.
+
+### 23.2 Production Copy E2E — 우선 경로(legacy label) 성공, 14/14
+원본 1(64a10063…, 정상 UI 채택 → city=busan → **정상 소유자 PUT 로 city='부산'** readback → PATCH 공개) → **실제 /api/itinerary/copy**(타 device) → 복사본 1(41b723e1…): **city="busan"**(부산→canonical) · copy_of=원본 · 11 places 순서(부산역 첫·해리단길 5018 포함) · **원본 무변경(city='부산'·11 유지)**. 화면: 복사본 본인 My Trip — 장소·순서·지도 로드·ko 도시명 '부산'·raw slug/혼합 문구 0·여행 준비 표시(추천1+대안≤1·고지·Agoda cid/city tracking 보존)·타인 보기 숨김. 정리: 복사본→원본 순 소유자 DELETE·GET 404·**잔존 0**·식별정보 파기.
+
+### 23.3 판정 구분 갱신
+- Production canonical Copy: **PASS**(복사본 busan) · **Production legacy-label Copy: PASS**(이번 §23.2 — §22.3 의 '격리 완결' 표기를 상회 충족) · 격리 legacy-label Copy: PASS(6/6, §22.3) · 화면 확인: 복사본 ko 직접(§23.2).
+- 직전 실행의 PUT 400 이 이번 동일 페이로드에서 200 — 시점 차이는 스크립트 개선(요청 로깅·인자 전달 방식·rec.days 를 node 측 전달)과 함께 재현 소멸, 원인 분류 A 유지.
