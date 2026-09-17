@@ -307,11 +307,15 @@ test("신규·복구 연결 스냅숏 — 서울 6곳·해리단길·이기대·
 // 낙산 야간 코스(seoul-C-R01) — STO 공식 원문(KON000645 도보코스)의 방문 순서 복구.
 // 창작 0: 흥인지문→한양도성박물관→이화마을→낙산공원→혜화문. 카탈로그 본체 부재라
 // 전부 name-only(TRUE_NEW_PLACE_CANDIDATE) — 임의 매칭 금지.
-test("seoul-C-R01 낙산 stops 원문 복구 스냅숏", () => {
+test("seoul-C-R01 낙산 stops 원문 복구 스냅숏 — 운영 발급 3 연결 + name-only 2", () => {
   const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
   const stops = trips.get("seoul-C-R01")!.stops;
   assert.equal(stops.length, 5);
   assert.deepEqual(stops.map(s => s.name), ["흥인지문 (동대문)", "한양도성박물관", "이화마을", "낙산공원", "혜화문"]);
-  for (const s of stops) { assert.equal(s.spotId, null); assert.equal(s.linkage, "TRUE_NEW_PLACE_CANDIDATE"); }
+  // 운영 발급 ID(external_id readback 확정: kto:126514/1939691/129501) — 격리 ID 아님
+  assert.deepEqual(stops.map(s => s.spotId), [5025, 5026, null, 5027, null]);
+  assert.equal(stops[0]!.linkage, "IDENTITY_LINK_RECOVERY_V2");
+  assert.equal(stops[2]!.linkage, "TRUE_NEW_PLACE_CANDIDATE", "이화마을 name-only 유지(공식 원문 미확보 — 발명 금지)");
+  assert.equal(stops[4]!.linkage, "TRUE_NEW_PLACE_CANDIDATE", "혜화문 name-only 유지");
   assert.equal(stops[0]!.nameEn, "Dongdaemun (Heunginjimun Gate)", "EN 은 STO EN 페이지 verbatim 만");
 });

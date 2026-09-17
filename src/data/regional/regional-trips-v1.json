@@ -465,14 +465,14 @@
     {
      "name": "흥인지문 (동대문)",
      "nameEn": "Dongdaemun (Heunginjimun Gate)",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 5025,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "한양도성박물관",
      "nameEn": null,
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 5026,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "이화마을",
@@ -483,8 +483,8 @@
     {
      "name": "낙산공원",
      "nameEn": null,
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 5027,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "혜화문",
