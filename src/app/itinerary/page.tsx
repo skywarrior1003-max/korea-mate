@@ -31,6 +31,7 @@ import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPublic, apiHelpfulStatus, apiHelpfulVote } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
+import { resolveCitySlug, cityLabelKey } from "@/data/cities/resolve";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
 import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
@@ -167,10 +168,14 @@ interface Day {
  * user_spot · events · planner 내부 키 · mock 은 여기서 걸러진다. 링크를 만들어
  * 두고 404 를 보여주는 것보다 링크가 없는 편이 낫다.
  */
-function citySpotHref(place: Place): string | null {
+function citySpotHref(place: Place, catalog: ReadonlyArray<CitySpot>): string | null {
   if (place.source !== "city_spot") return null;
   const id = place.place_id ?? "";
   if (!/^\d+$/.test(id)) return null;
+  // UNPUBLISHED-PLACE-GATE-V1: /place/[id] 는 이제 공개(published) 행만 생성된다.
+  // 현재 public catalog(hydration=discovery)에서 확인된 id 만 링크한다 —
+  // 비공개·retired stop 은 snapshot name-only 로 남는다(404 링크를 만들지 않는다).
+  if (!catalog.some(s => String(s.id) === id)) return null;
   return `/place/${id}/`;
 }
 
@@ -313,7 +318,8 @@ function buildDateRange(startDate: string, endDate: string): string[] {
 function resolveCoordinate(city: string, cart: CartItem[]): { lat: number; lng: number } {
   const cartCoord = cart.find(i => typeof i.lat === "number" && typeof i.lng === "number");
   if (cartCoord) return { lat: cartCoord.lat!, lng: cartCoord.lng! };
-  return CITY_CENTER_COORDS[city.toLowerCase()] ?? DEFAULT_COORD;
+  // canonical 판정 통일 — 과거 locale 라벨 저장값("부산" 등)도 도시 중심을 찾는다. 실패 fallback 은 기존 그대로.
+  return CITY_CENTER_COORDS[resolveCitySlug(city) ?? city.toLowerCase()] ?? DEFAULT_COORD;
 }
 
 // ── 여행 속도 ───────────────────────────────────────────────────────────────
@@ -1283,6 +1289,12 @@ function ItineraryResult() {
   // 들어온 값 — 이고, "Seoul" fallback 이 그것을 이기면 안 된다. id 가 없는
   // 새 일정 생성 경로는 지금까지처럼 URL/draft/기본값(paramCity)을 쓴다.
   const tripCity = shareId ? city : paramCity;
+  // ── canonical city (MYTRIP-CITY-CANONICALIZATION-V1) ──
+  // 기능 판정(제휴 gate·좌표·날씨 slug)은 canonical slug 로만, 화면 표시는
+  // locale 라벨로 — 저장 원본(과거 locale 라벨 포함)은 손대지 않는다.
+  const citySlugCanonical = resolveCitySlug(city);
+  const tCityLabel = useTranslations("tripForm");
+  const cityDisplay = citySlugCanonical ? tCityLabel(cityLabelKey(citySlugCanonical)) : city;
   const [startDate,   setStartDate]   = useState(paramStartDate);
   const [endDate,     setEndDate]     = useState(paramEndDate);
   const [travelers,   setTravelers]   = useState(paramTravelers);
@@ -1352,7 +1364,8 @@ function ItineraryResult() {
   const [dayForecasts, setDayForecasts] = useState<Record<string, DayForecast>>({});
 
   useEffect(() => {
-    const slug = (city ?? "").toLowerCase().trim();
+    // canonical 판정 통일 — locale 라벨 저장값도 날씨 slug 를 얻는다. 미확정이면 기존처럼 조용히 없음.
+    const slug = resolveCitySlug(city) ?? "";
     const dates = [...new Set(days.map(d => d.date).filter(Boolean))] as string[];
     if (!slug || dates.length === 0) { setDayForecasts({}); return; }
     let alive = true;
@@ -2009,7 +2022,7 @@ function ItineraryResult() {
     if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
 
     const snapId          = itinId;
-    const snapCity        = city;
+    const snapCity        = resolveCitySlug(city) ?? city; // 신규 저장은 canonical slug — 미확정 값은 원본 유지(강제 변환 금지)
     const snapStartDate   = startDate;
     const snapEndDate     = endDate;
     const snapTravelers   = travelers;
@@ -2119,7 +2132,8 @@ function ItineraryResult() {
   useEffect(() => {
     let cancelled = false;
     // 키가 비면 빈 조회(네트워크 0)로 상태를 비운다 — effect 안의 동기 setState 를 피한다
-    fetchCitySpotsByIds(city && hydrationKey ? hydrationKey.split(",") : []).then(rows => { if (!cancelled) setCitySpots(rows); });
+    // discovery: 비공개 행 데이터는 공개 클라이언트로 내리지 않는다 — 미매칭 stop 은 snapshot name-only.
+    fetchCitySpotsByIds(city && hydrationKey ? hydrationKey.split(",") : [], "discovery").then(rows => { if (!cancelled) setCitySpots(rows); });
     return () => { cancelled = true; };
   }, [city, hydrationKey]);
 
@@ -2140,7 +2154,7 @@ function ItineraryResult() {
   useEffect(() => {
     document.title = tripTitle
       ? `${tripTitle} — gokoreamate`
-      : `My ${city} Trip — gokoreamate`;
+      : `My ${cityDisplay} Trip — gokoreamate`;
   }, [tripTitle, city]);
 
   // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
@@ -2837,14 +2851,14 @@ function ItineraryResult() {
           우선순위·보안 게이트는 cover-source-core 에 있다. 여기서는 값만 넘긴다. */}
       <PlannerCoverHeader
         cover={{ coverKind, coverMomentId, itineraryId: itinId, isPublic, city }}
-        title={tripTitle || `My ${city} Trip`}
+        title={tripTitle || `My ${cityDisplay} Trip`}
         dateLine={`${startDate} — ${endDate} · ${parseInt(travelers) > 1 ? t("travelerMany", { n: travelers }) : t("travelerOne", { n: travelers })}`}
         imageAlt={tPlanner("coverAlt", { city })}
         canEditTitle={(!shareId || isOwner) && !!itinId}
         editLabel={tPlanner("editTitle")}
         onEditDates={(!shareId || isOwner) && itinId ? openDateEdit : null}
         editDatesLabel={tPlanner("editDates")}
-        onEditTitle={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
+        onEditTitle={() => { setTitleInput(tripTitle || `My ${cityDisplay} Trip`); setEditingTitle(true); }}
         editing={editingTitle}
         editSlot={
           <span className="block">
@@ -2859,7 +2873,7 @@ function ItineraryResult() {
               }}
               aria-label={tPlanner("editTitle")}
               className="gkm-focus w-full text-[26px] sm:text-4xl font-black text-[#131b2e] bg-white/95 rounded-2xl px-4 py-2"
-              placeholder={`My ${city} Trip`}
+              placeholder={`My ${cityDisplay} Trip`}
               maxLength={60}
             />
             {/* My Trip 제목 AI 3방향 — 제안은 input 으로 들어가고 Enter/저장으로 확정한다.
@@ -3860,9 +3874,11 @@ function ItineraryResult() {
             (2026-09-17 Owner) 판별은 shareId 유무가 아니라 isOwner —
             owner-only GET 성공 시에만 true 이므로 본인 ?id 재열람은 표시,
             타인 공유·복사 전 Preview 는 숨김이 그대로 유지된다. */}
-      {isOwner && !isPastTrip && (
+      {isOwner && !isPastTrip && citySlugCanonical && (
         <div className="mb-8">
-          <PartnerOfferRow surface="my-trip-prep" citySlug={city.toLowerCase()} cityLabel={city} />
+          {/* canonical slug 판정 성공 시에만 — 과거 locale 라벨 저장값(예: "부산")도
+              runtime resolver 로 통과한다. 미확정 도시는 조용히 숨김(잘못된 링크 금지). */}
+          <PartnerOfferRow surface="my-trip-prep" citySlug={citySlugCanonical} cityLabel={cityDisplay} />
         </div>
       )}
 
@@ -3944,7 +3960,7 @@ function ItineraryResult() {
           city={city}
           citySpots={citySpots}
           onClose={() => { setSelectedPlace(null); setSelectedPlaceDay(null); }}
-          detailHref={citySpotHref(selectedPlace)}
+          detailHref={citySpotHref(selectedPlace, citySpots)}
           detailLabel={tPlanner("placeDetail")}
           visited={selectedPlaceDay !== null && visited.has(visitedPlaceKey(selectedPlaceDay, selectedPlace))}
           visitedLabel={t("visited")}
@@ -4072,7 +4088,7 @@ function ItineraryResult() {
       {/* S3: 공개 전 Publish Preview — 명시적 확인 후에만 is_public 전환 */}
       {publishPreviewOpen && (
         <PublishPreviewModal
-          title={tripTitle || `My ${city} Trip`}
+          title={tripTitle || `My ${cityDisplay} Trip`}
           city={city}
           startDate={startDate}
           endDate={endDate}

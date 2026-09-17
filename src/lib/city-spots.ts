@@ -202,12 +202,20 @@ export async function fetchCitySpots(city: string, scope: VisibilityScope = "dis
  * R1 §7 — reference 조회: 일정이 실제로 참조하는 place_id 만 읽는다(도시 전량 스캔 금지).
  * 숨긴 legacy 도 그대로 해석되도록 visibility 필터는 없다(reference scope). ID 는 chunk 로 나눠 URL 길이를 제한한다.
  */
-export async function fetchCitySpotsByIds(ids: ReadonlyArray<string | number | null | undefined>): Promise<CitySpot[]> {
+export async function fetchCitySpotsByIds(
+  ids: ReadonlyArray<string | number | null | undefined>,
+  // UNPUBLISHED-PLACE-GATE-V1: 공개 클라이언트 hydration 은 discovery 로 좁힐 수 있다 —
+  // 비공개 행 데이터를 내려보내지 않고, 미매칭 stop 은 snapshot name-only 로 남는다.
+  scope: VisibilityScope = "reference",
+): Promise<CitySpot[]> {
   const numeric = uniqueNumericIds(ids);
   if (numeric.length === 0) return [];
   const out: CitySpot[] = [];
   for (const part of chunk(numeric, ID_LOOKUP_CHUNK)) {
-    const { data, error } = await supabase.from("city_spots").select(EXPLORE_SELECT).in("id", part).order("id");
+    const { data, error } = await applyVisibility(
+      supabase.from("city_spots").select(EXPLORE_SELECT).in("id", part).order("id"),
+      scope,
+    );
     if (error) { console.error("[city-spots] byIds fetch error:", error.message); continue; }
     out.push(...((data ?? []) as unknown as PublicCitySpotRow[]).map(rowToPublicCitySpot));
   }

@@ -31,8 +31,11 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  // Gate B: reference — 숨긴 legacy 도 페이지를 만든다(사용자 Saved/My Trip/Story 링크 보존). sitemap 만 discovery.
-  const ids = await fetchPublicSpotIds("reference");
+  // UNPUBLISHED-PLACE-GATE-V1 (Owner 2026-09-17): is_published=false 는 직접 URL 에서도
+  // 공개하지 않는다 — discovery 만 생성(dynamicParams=false 라 나머지는 404).
+  // Gate B 의 reference 생성("숨긴 행도 페이지 유지")은 이 결정으로 대체된다.
+  // 기존 여행의 비공개 stop 은 snapshot name-only + 링크 비활성(itinerary 쪽 계약)으로 보존.
+  const ids = await fetchPublicSpotIds("discovery");
   return ids.map(id => ({ id: String(id) }));
 }
 

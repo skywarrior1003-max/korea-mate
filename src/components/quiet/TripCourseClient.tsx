@@ -206,7 +206,9 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
                       method: "POST",
                       headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
                       body: JSON.stringify({
-                        id, city: cityLabel, start_date: adoptStart, end_date: adoptEnd,
+                        // city 는 canonical slug 로 저장한다(표시는 locale 라벨 몫 —
+                        // MYTRIP-CITY-CANONICALIZATION-V1). slug 는 이 화면의 라우트 파라미터 그대로.
+                        id, city: slug, start_date: adoptStart, end_date: adoptEnd,
                         travelers: "1", travel_style: "",
                         trip_title: tripDisplayTitle(trip, locale),
                         days,

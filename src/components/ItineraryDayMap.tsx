@@ -92,7 +92,7 @@ export default function ItineraryDayMap({
   const hydrationKey = useMemo(() => uniqueNumericIds(days.flatMap(d => d.places.map(p => p.place_id))).join(","), [days]);
   useEffect(() => {
     let cancelled = false;
-    fetchCitySpotsByIds(hydrationKey ? hydrationKey.split(",") : [])
+    fetchCitySpotsByIds(hydrationKey ? hydrationKey.split(",") : [], "discovery")
       .then(rows => { if (!cancelled) setCitySpots(dedupeByCanonical(rows)); })
       .catch(() => { /* base 레이어 없이도 trip 레이어는 동작 */ });
     return () => { cancelled = true; };
