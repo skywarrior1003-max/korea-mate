@@ -33,6 +33,11 @@ const PLANS = {
   haeridan: [
     { trip: "busan-C-003", stopName: "해리단길", external_id: "kto:2783306", linkage: "IDENTITY_LINK_RECOVERY_V2" },
   ],
+  naksan: [
+    { trip: "seoul-C-R01", stopName: "흥인지문 (동대문)", external_id: "kto:126514", linkage: "IDENTITY_LINK_RECOVERY_V2" },
+    { trip: "seoul-C-R01", stopName: "한양도성박물관", external_id: "kto:1939691", linkage: "IDENTITY_LINK_RECOVERY_V2" },
+    { trip: "seoul-C-R01", stopName: "낙산공원", external_id: "kto:129501", linkage: "IDENTITY_LINK_RECOVERY_V2" },
+  ],
   retired: [
     { trip: "busan-C-002", stopName: "이기대해안산책로", fixedId: 7, linkage: "IDENTITY_LINK_RECOVERY_V2" },
     { trip: "busan-C-003", stopName: "청사포다릿돌전망대", fixedId: 39, linkage: "IDENTITY_LINK_RECOVERY_V2" },

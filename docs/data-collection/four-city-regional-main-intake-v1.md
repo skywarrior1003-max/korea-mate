@@ -715,3 +715,31 @@ PostgREST 스키마 캐시: 세션 내 ALTER 후 NOTIFY reload 가 레이스로 
 ### 23.3 판정 구분 갱신
 - Production canonical Copy: **PASS**(복사본 busan) · **Production legacy-label Copy: PASS**(이번 §23.2 — §22.3 의 '격리 완결' 표기를 상회 충족) · 격리 legacy-label Copy: PASS(6/6, §22.3) · 화면 확인: 복사본 ko 직접(§23.2).
 - 직전 실행의 PUT 400 이 이번 동일 페이로드에서 200 — 시점 차이는 스크립트 개선(요청 로깅·인자 전달 방식·rec.days 를 node 측 전달)과 함께 재현 소멸, 원인 분류 A 유지.
+
+## 24. 공식 원천 잔여 콘텐츠 복구 준비 (OFFICIAL-SOURCE-REMAINING-CONTENT-RECOVERY-V1, 2026-09-17)
+
+Owner 정책 반영: 공식 관광 원천은 명시적 제한(공공누리 제2/4유형·상업금지·재사용금지·제3자 저작권 명시)이 있는 게시물만 제외하고 출처 기록 후 사용. **Production DB write 0·master push 0·배포 0.**
+
+### 24.1 낙산 5 stop — 3 연결 준비 + 2 name-only
+- 전수 대조(이름·별칭 5종·좌표±300m·bridge·external_id): 기존 행 0 — 근접 행은 전부 식당·카페.
+- **insert안 3행** `naksan-three-inserts-v1.sql` sha `75538ab382569c0cbc7558a139a3743481888ecefb5acfd07955b847815b2d32`: 흥인지문(kto:126514)·한양도성박물관(kto:1939691)·낙산공원(kto:129501) — KTO verbatim(ko 본문 611/426/941자·대표 이미지·주소·좌표), 비공개·실행시점 id·중복 가드. 연결 도구에 `--plan naksan` 추가(external_id 기반).
+- **name-only 잔존 2**: 이화마을·혜화문 — KTO(별칭 5종 검색 0)·STO 코스 페이지(개별 소개 없음 — '한양도성' 총론뿐)·VisitSeoul 검색 시도에서 공식 설명·이미지 미확보 → 발명 없이 유지.
+- stop→ID 대응: #1 흥인지문→kto:126514 · #2 박물관→kto:1939691 · #3 이화마을→name-only · #4 낙산공원→kto:129501 · #5 혜화문→name-only.
+
+### 24.2 이미지
+- **22 국제시장 — 확보**: VisitBusan 게시물 399(공식) 18장 중 대표 1180×680 선택 — **국제시장 대형 간판 정면(동일성 시각 확인)**, 정적 uploadImgs URL(만료형 아님·다운로드 실측). 게시물 내 이용조건 표시 **명시 없음(실측)** — Owner 정책으로 사용, '제1유형/허가 완료' 허위 표기 없음. 패치 `gukje-market-image-v1.sql` sha `0a04e72c46cb915600021350ab75f8adcdb99895d76ba8f6c63e61e75b2dd58f`(IS NULL 가드·검증 DO·값조건 rollback 주석). before snapshot = official-source-before-snapshot-2026-09-17-v1.json(22 image NULL 실측).
+- **48 절영 — 미확보 유지**: 신규 경로 영도구청 tour 심층(관광명소 추천코스/테마/걷기코스 메뉴 전수) — 절영은 **코스 구성 텍스트로만 존재, 전용 소개·이미지 게시 없음**(공식 페이지 있음·이미지 없음으로 기록). 유사 장소 대체·AI 생성 0, placeholder 유지.
+
+### 24.3 다국어
+- **1319 JA/ZH — 접근 방식 한계로 URL 미특정**: 언어판 uc_seq 추정 URL 전 조합 RFC 오류·언어 사이트 메뉴가 JS 렌더라 자동 목록 진입 실패·기존 수집 산출물(language-links)은 KTO 계열만. 부재 아님 — 수집기 표식(language_available=true) 유지, 원문 미확보 상태로 기록.
+- **743·749 KO / 778 JA·ZH — 명시적 제2유형 HOLD 확정(게시물 단위 실측)**: visitjeonju 16085(남부시장 한옥마을 야시장)·16109(전주한옥마을) 게시물에 "공공누리 제2유형: 출처표시+상업적이용금지" **명시** → Owner 기준으로도 제외 대상. KTO 대체 기존 기록(미검출) 재사용 — 자료 삭제 0·fallback 유지.
+- **511 EN**: 재조사 없이 기존 판정(공식 편집 EN 원문 미제공) 유지 — 자동 번역·재작성 미수행.
+
+### 24.4 격리 검증(10/12 + 채택 재검 확정)
+iso 적용(재실행 0·idempotent)→공개 전환→임시 연결→빌드→QA: 낙산 3 링크+2 name-only+순서 · 상세 3곳 ko 본문+KTO 이미지 실로딩 · **22 상세·코스 썸네일 VisitBusan 이미지 실로딩(1180px)** · 회귀(Hub·prep 접힘·1633 매장 유지) · **채택(1박) 5 stop 순서·linked 3/name-only 2 저장·autosave PUT 후 보존·정리 404**. 검증 산출 관찰 1건: **당일(start=end) 채택에서 GET places 0 관찰 2회**(1박은 정상) — 재현 조건 기록, 원인 미규명(코스 채택·플래너 공용 경로 후보) — 별도 확인 항목. 격리 QA 여행 전부 정리(잔존 0), JSON 임시 링크 원복(가드 20/20).
+
+### 24.5 Production 적용 준비 판정
+- **READY**: 22 이미지(0a04e72c) · 낙산 3 insert+연결(75538ab3, --plan naksan).
+- **PARTIAL**: 낙산 코스(3/5 — 이화마을·혜화문 원문 확보 시까지 name-only).
+- **HOLD(명시 제한)**: 743·749 KO·778 JA/ZH(제2유형 게시물 명시 — 실측).
+- **미확보(원본 접근/제공)**: 48 이미지 · 1319 JA/ZH(URL 특정) · 511 EN(원문 미제공).
