@@ -679,3 +679,24 @@ KO 부산 채택→**POST city="busan"** 실측 · 본인 재열람 my-trip-prep
 
 ### 21.4 잔여
 비공개 게이트로 기존 여행의 비공개 stop 은 name-only(스냅숏 보존·수정 0) — 재공개는 장소별 Owner 결정 그대로. copy 핸들러 canonical 저장은 후속 후보(현재 승계+runtime 호환). 데스크톱 ja/zh·전 도시 조합은 공통 코드 검증 범위.
+
+## 22. Trip city 계약 최종 마감 (TRIP-CITY-CONTRACT-FINAL-CLOSEOUT-V1, 2026-09-17)
+
+**master=Production 1bb6dbd → `115254a`(FF) · Cloudflare `bc61830f`. 기존 itinerary UPDATE 0 · DB migration 0.**
+(경위 기록: FF 과정에서 커밋 메시지 here-string 큰따옴표로 1차 커밋 실패 → 중간에 26ca923(문서만)이 master 로 먼저 FF/배포(b49fcddb)됐고, 즉시 115254a 재커밋·FF·재배포로 정합 — force 0.)
+
+### 22.1 Production city 값 READ-ONLY 감사(86행 전수 — city 컬럼만 조회)
+`"Busan"` 80 · `"busan"` 4 · `"seoul"` 1 · `"서울"` 1 — **unknown/null/empty 0 · 전값 resolver 성공**. legacy alias 추가 0(존재 근거 없음 — bare Jeju/제주 미검출 → 미수용 유지). 사용자 ID·제목·본문 미조회, UPDATE 0.
+
+### 22.2 shared identity(코드 계약)
+- **`src/data/cities/identity.ts`** — slug 5+4locale 표시명 20+exact resolver, import 의존 0(클라·Functions 공용). `cities/index.ts` 는 slug 재수출, `resolve.ts` 는 위임(=클라 resolver 에서 messages 292KB 의존 제거). 가드: tripForm.city_* ↔ identity 표시명 동기 테스트.
+- **Functions copy.ts**: `city: resolveCitySlug(source.city) ?? source.city`. 번들 1,255,969 → **1,257,449B(+1,480B)** — 한도 내.
+- **자동 제목**: `itin.autoTripTitle` 4locale — ko `{city} 여행`·en `My {city} Trip`(Owner 예시)·ja `{city} の旅`·zh `{city} 行程`(기존 trending.tripTitleCity 문체 재사용 — 발명 0). `My ${city} Trip` 혼합 리터럴 5곳 전부 formatter 로 대체, 사용자 입력 제목 항상 우선. 테스트 9/9(20조합 slug 누출·혼합 판정 포함).
+
+### 22.3 검증
+- **격리 Copy 계약 6/6**(실제 copy.ts 를 iso 스택에서 실행): 부산/Busan/釜山(ja·zh 동일 표기)/busan → 복사본 `busan` · **Tokyo(unknown) → 원본 그대로**(강제 변환 0) · copy_of·places 순서 보존 · 원본 city 무변경 · iso 정리 0.
+- **LIVE(QA 여행 — 원본 생성 2회·전부 소유자 삭제·Copy 0·잔존 0)**: KO 채택 POST **city="busan"** 실측 2회 · 타인 열람 my-trip-prep 숨김 · 비공개 /place 404·공개 200 유지. LIVE Copy/fixture 검증은 fixture PUT/PATCH 가 QA 컨텍스트에서만 400("Invalid ID" — 동일 코드·동일 페이로드 단독 재현은 404 정상, 원인 미규명)으로 미완 → **Copy 계약은 격리 6/6 로 완결**하고 LIVE 재시도는 QA 한도 준수를 위해 중단(정직 구분).
+- **자동 제목 화면**: 소스·번들·테스트 검증 완료, `My 부산 Trip` 리터럴 잔존 0. 화면 노출 경로(제목 없는 저장 여행 fallback)는 QA 한도 내 미재현 — **직접 화면 미검증(공통 코드 검증)**으로 구분. /itinerary 무저장 화면의 기본 docTitle 은 기존 정적 메타 그대로(변경 전과 동일 — 회귀 아님).
+
+### 22.4 함정 기록
+PostgREST 스키마 캐시: 세션 내 ALTER 후 NOTIFY reload 가 레이스로 미반영될 수 있음(insert PGRST204) — **재기동이 확실**. 커밋 메시지 here-string 안 큰따옴표 금지(pathspec 파괴 — 재발).
