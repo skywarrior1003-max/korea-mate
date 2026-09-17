@@ -65,7 +65,8 @@
     "addedToPicks": "Added",
     "mapNoSpots": "No places with map locations match this filter.",
     "fullScreen": "Full screen",
-    "exitFullScreen": "Exit"
+    "exitFullScreen": "Exit",
+    "loadingSpots": "Loading places…"
   },
   "badges": {
     "soloOk": "Solo OK",

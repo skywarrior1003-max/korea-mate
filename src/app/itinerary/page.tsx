@@ -3856,8 +3856,11 @@ function ItineraryResult() {
 
       {/* ── PHASE 10: 여행 준비 보조 1줄 (my-trip-prep, Owner 승인 표면) ──
             본인 소유 + 미래 여행에서만. 일정 데이터·스케줄러와 분리된 표시
-            전용 — 검증된 도시가 아니면 렌더 자체가 없다. */}
-      {!shareId && !isPastTrip && (
+            전용 — 검증된 도시가 아니면 렌더 자체가 없다.
+            (2026-09-17 Owner) 판별은 shareId 유무가 아니라 isOwner —
+            owner-only GET 성공 시에만 true 이므로 본인 ?id 재열람은 표시,
+            타인 공유·복사 전 Preview 는 숨김이 그대로 유지된다. */}
+      {isOwner && !isPastTrip && (
         <div className="mb-8">
           <PartnerOfferRow surface="my-trip-prep" citySlug={city.toLowerCase()} cityLabel={city} />
         </div>

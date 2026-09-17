@@ -603,9 +603,12 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       )}
       {search && !pastedUrl && (
         <p className="mt-2 text-sm text-gray-500 font-semibold">
-          {filteredSpots.length === 1
-            ? tE("search.results", { count: filteredSpots.length, query: search })
-            : tE("search.resultsPlural", { count: filteredSpots.length, query: search })}
+          {/* 로딩 중 "0개" 오표시 방지 — 실제 계산 완료 후에만 결과 수를 말한다 */}
+          {spotsLoading
+            ? tE("loadingSpots")
+            : filteredSpots.length === 1
+              ? tE("search.results", { count: filteredSpots.length, query: search })
+              : tE("search.resultsPlural", { count: filteredSpots.length, query: search })}
         </p>
       )}
     </div>
@@ -665,10 +668,15 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const pageHeader = (
     <div className="flex items-center justify-between gap-4 mb-5">
       <p className="text-gray-500 text-sm">
-        {filteredSpots.length === 1
-          ? tE("spotCount", { count: filteredSpots.length })
-          : tE("spotCountPlural", { count: filteredSpots.length })}
-        {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
+        {/* 데이터 로딩이 끝나기 전에는 개수를 말하지 않는다 — "0개 장소" 오표시 방지 */}
+        {spotsLoading
+          ? tE("loadingSpots")
+          : <>
+              {filteredSpots.length === 1
+                ? tE("spotCount", { count: filteredSpots.length })
+                : tE("spotCountPlural", { count: filteredSpots.length })}
+              {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
+            </>}
       </p>
       <Link href="/" className="gkm-focus shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-gray-500 border border-gray-200 px-3 min-h-11 rounded-xl hover:border-gray-400 transition-colors">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden

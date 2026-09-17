@@ -65,7 +65,8 @@
     "addedToPicks": "追加済み",
     "mapNoSpots": "この絞り込みで地図に表示できる場所はありません。",
     "fullScreen": "全画面",
-    "exitFullScreen": "閉じる"
+    "exitFullScreen": "閉じる",
+    "loadingSpots": "スポットを読み込み中…"
   },
   "badges": {
     "soloOk": "一人旅OK",

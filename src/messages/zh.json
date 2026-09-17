@@ -65,7 +65,8 @@
     "addedToPicks": "已加入",
     "mapNoSpots": "当前筛选下没有可在地图上显示的地点。",
     "fullScreen": "全屏",
-    "exitFullScreen": "关闭"
+    "exitFullScreen": "关闭",
+    "loadingSpots": "正在加载地点…"
   },
   "badges": {
     "soloOk": "单人友好",

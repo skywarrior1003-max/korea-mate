@@ -191,8 +191,8 @@
     {
      "name": "이기대해안산책로",
      "nameEn": "Igidae Coastal Walking Path",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 7,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "광안리해수욕장·광안대교",
@@ -244,8 +244,8 @@
     {
      "name": "해리단길",
      "nameEn": "Haeridan-gil",
-     "spotId": null,
-     "linkage": "IDENTITY_LINK_RETRACTED_V1"
+     "spotId": 5018,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "해운대해변열차·스카이캡슐",
@@ -256,8 +256,8 @@
     {
      "name": "청사포다릿돌전망대",
      "nameEn": "Cheongsapo Darittol Observation Deck",
-     "spotId": null,
-     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+     "spotId": 39,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "광안리해수욕장·민락수변공원",
@@ -344,8 +344,8 @@
     {
      "name": "경복궁 (광화문)",
      "nameEn": "Gyeongbokgung Palace (Gwanghwamun Gate)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5019,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "근정전·향원정 일원",
@@ -356,8 +356,8 @@
     {
      "name": "국립민속박물관",
      "nameEn": "National Folk Museum of Korea",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5020,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "광화문광장 해치마당",
@@ -392,8 +392,8 @@
     {
      "name": "북촌한옥마을 (가회동 일원)",
      "nameEn": "Bukchon Hanok Village (Gahoe-dong)",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5021,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "창덕궁 방면 (창덕궁길)",
@@ -404,8 +404,8 @@
     {
      "name": "인사동",
      "nameEn": "Insadong",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5022,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     }
    ],
    "source": {
@@ -434,14 +434,14 @@
     {
      "name": "국립중앙박물관 내부",
      "nameEn": "National Museum of Korea — Interior",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5023,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     },
     {
      "name": "이촌한강공원",
      "nameEn": "Ichon Hangang Park",
-     "spotId": null,
-     "linkage": "RELATION_OR_AREA_ONLY"
+     "spotId": 5024,
+     "linkage": "IDENTITY_LINK_RECOVERY_V2"
     }
    ],
    "source": {

@@ -253,8 +253,9 @@ test("연결 복구 스냅숏 — 26 occurrence(부산17·제주4·경주5), 복
     ["gyeongju-C-R01", 5, 507], ["gyeongju-C-R01", 6, 504], ["gyeongju-C-R01", 7, 528],
   ];
   for (const [tid, i, id] of expect) assert.equal(stop(tid, i).spotId, id, `${tid}#${i + 1}`);
-  // 의도적 미연결 유지(대응 행 부재/unpublished/맥락형) — 억지 연결 금지
-  for (const [tid, i] of [["busan-C-002", 11], ["busan-C-003", 0], ["busan-C-003", 1], ["busan-C-003", 6]] as const) {
+  // 의도적 미연결 유지(맥락형 — 부산역·삼정타워) — 억지 연결 금지
+  // (이기대 C-002#12 → 7 · 청사포 C-003#7 → 39 는 PRODUCTION-RELEASE-V1 에서 복구 연결)
+  for (const [tid, i] of [["busan-C-003", 0], ["busan-C-003", 1]] as const) {
     assert.equal(stop(tid, i).spotId, null, `${tid}#${i + 1} 미연결 유지`);
   }
 });
@@ -275,13 +276,32 @@ test("연결 복구 V2 스냅숏 — 기존 행 재발견 2건, 복귀 금지", 
 // ── DISCOVERY-COMMERCE-AND-CONTENT-REPAIR-V1 (2026-09-17) ────────────────────
 //
 // 1633 은 해리단길 '거리'가 아니라 거리 내 기프트샵 '바다처럼'(visitbusan VB-2581)으로
-// 판명 — 코스 연결을 철회한다. 매장 행 자체는 보존(카탈로그 무접촉 — 데이터 패치는 별도).
-test("1633 오연결 철회 — 해리단길 stop 은 미연결 유지, 재연결 금지", () => {
+// 판명 — 1633 재연결을 금지하고, 거리 본체(KTO 2783306 → 운영 발급 5018)로 연결한다.
+test("1633 오연결 철회 — 해리단길 stop 은 거리 본체(5018)로, 1633 재연결 금지", () => {
   const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
   const s = trips.get("busan-C-003")!.stops[4]!;
   assert.equal(s.name, "해리단길");
-  assert.equal(s.spotId, null, "1633(바다처럼) 재연결 금지 — 거리 본체는 신규 insert 트랙");
-  assert.equal(s.linkage, "IDENTITY_LINK_RETRACTED_V1");
+  assert.notEqual(s.spotId, 1633, "1633(바다처럼) 재연결 금지");
+  assert.equal(s.spotId, 5018, "거리 본체 = 운영 발급 5018(kto:2783306)");
+  assert.equal(s.linkage, "IDENTITY_LINK_RECOVERY_V2");
+});
+
+// ── PRODUCTION-RELEASE-V1 (2026-09-17): 운영 발급 ID 연결 스냅숏 ────────────
+// external_id readback 으로 확정한 운영 ID(5018~5024)·기존 ID(7·39) — 격리 ID 아님.
+test("신규·복구 연결 스냅숏 — 서울 6곳·해리단길·이기대·청사포", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const g = (tid: string, name: string) => trips.get(tid)!.stops.find(s => s.name === name)!;
+  const expect: Array<[string, string, number]> = [
+    ["seoul-C-001", "경복궁 (광화문)", 5019], ["seoul-C-001", "국립민속박물관", 5020],
+    ["seoul-C-002", "북촌한옥마을 (가회동 일원)", 5021], ["seoul-C-002", "인사동", 5022],
+    ["seoul-C-003", "국립중앙박물관 내부", 5023], ["seoul-C-003", "이촌한강공원", 5024],
+    ["busan-C-002", "이기대해안산책로", 7], ["busan-C-003", "청사포다릿돌전망대", 39],
+  ];
+  for (const [tid, name, id] of expect) {
+    const s = g(tid, name);
+    assert.equal(s.spotId, id, `${tid} ${name}`);
+    assert.equal(s.linkage, "IDENTITY_LINK_RECOVERY_V2");
+  }
 });
 
 // 낙산 야간 코스(seoul-C-R01) — STO 공식 원문(KON000645 도보코스)의 방문 순서 복구.

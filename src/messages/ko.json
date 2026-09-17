@@ -65,7 +65,8 @@
     "addedToPicks": "담김",
     "mapNoSpots": "이 필터에는 지도에 표시할 수 있는 장소가 없어요.",
     "fullScreen": "전체 화면",
-    "exitFullScreen": "닫기"
+    "exitFullScreen": "닫기",
+    "loadingSpots": "장소 불러오는 중…"
   },
   "badges": {
     "soloOk": "혼자 OK",
