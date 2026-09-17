@@ -19,6 +19,7 @@ import {
   optStr,
 } from "../../../src/lib/itinerary-validate";
 import { buildCopiedItinerary } from "../../../src/lib/share/copied-itinerary";
+import { resolveCitySlug } from "../../../src/data/cities/identity";
 import { isModerationHidden } from "../../../src/lib/moderation/story-moderation-core";
 
 interface Env {
@@ -87,7 +88,9 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const row: Record<string, unknown> = {
     id:           newId,
     device_id:    deviceId,
-    city:         source.city,
+    // 지원 5도시는 canonical slug 로 저장한다(표시명·과거 라벨 원본 → slug).
+    // 해석 불가 값은 원본 유지 — 임의 도시로 바꾸지 않는다(TRIP-CITY-CONTRACT-FINAL-CLOSEOUT-V1).
+    city:         resolveCitySlug(source.city) ?? source.city,
     start_date:   source.start_date,
     end_date:     source.end_date,
     travelers:    source.travelers,

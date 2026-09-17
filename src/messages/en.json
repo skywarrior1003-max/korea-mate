@@ -455,7 +455,8 @@
     "syncSaving": "Saving…",
     "syncSaved": "Saved",
     "syncFailed": "Save failed",
-    "wholeTrip": "Whole Trip"
+    "wholeTrip": "Whole Trip",
+    "autoTripTitle": "My {city} Trip"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

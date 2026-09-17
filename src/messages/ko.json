@@ -455,7 +455,8 @@
     "syncSaving": "저장 중…",
     "syncSaved": "저장됨",
     "syncFailed": "저장 실패",
-    "wholeTrip": "전체 여행"
+    "wholeTrip": "전체 여행",
+    "autoTripTitle": "{city} 여행"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

@@ -1295,6 +1295,10 @@ function ItineraryResult() {
   const citySlugCanonical = resolveCitySlug(city);
   const tCityLabel = useTranslations("tripForm");
   const cityDisplay = citySlugCanonical ? tCityLabel(cityLabelKey(citySlugCanonical)) : city;
+  // 자동 기본 제목 — locale 완성 문구(문자열 이어붙임으로 혼합 언어를 만들지 않는다).
+  // 사용자가 직접 입력한 tripTitle 이 있으면 언제나 그것이 우선한다(아래 fallback 자리만 사용).
+  const tAutoTitle = useTranslations("itin");
+  const autoTripTitle = tAutoTitle("autoTripTitle", { city: cityDisplay });
   const [startDate,   setStartDate]   = useState(paramStartDate);
   const [endDate,     setEndDate]     = useState(paramEndDate);
   const [travelers,   setTravelers]   = useState(paramTravelers);
@@ -2154,8 +2158,8 @@ function ItineraryResult() {
   useEffect(() => {
     document.title = tripTitle
       ? `${tripTitle} — gokoreamate`
-      : `My ${cityDisplay} Trip — gokoreamate`;
-  }, [tripTitle, city]);
+      : `${autoTripTitle} — gokoreamate`;
+  }, [tripTitle, city, autoTripTitle]);
 
   // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
   useEffect(() => {
@@ -2851,14 +2855,14 @@ function ItineraryResult() {
           우선순위·보안 게이트는 cover-source-core 에 있다. 여기서는 값만 넘긴다. */}
       <PlannerCoverHeader
         cover={{ coverKind, coverMomentId, itineraryId: itinId, isPublic, city }}
-        title={tripTitle || `My ${cityDisplay} Trip`}
+        title={tripTitle || autoTripTitle}
         dateLine={`${startDate} — ${endDate} · ${parseInt(travelers) > 1 ? t("travelerMany", { n: travelers }) : t("travelerOne", { n: travelers })}`}
         imageAlt={tPlanner("coverAlt", { city })}
         canEditTitle={(!shareId || isOwner) && !!itinId}
         editLabel={tPlanner("editTitle")}
         onEditDates={(!shareId || isOwner) && itinId ? openDateEdit : null}
         editDatesLabel={tPlanner("editDates")}
-        onEditTitle={() => { setTitleInput(tripTitle || `My ${cityDisplay} Trip`); setEditingTitle(true); }}
+        onEditTitle={() => { setTitleInput(tripTitle || autoTripTitle); setEditingTitle(true); }}
         editing={editingTitle}
         editSlot={
           <span className="block">
@@ -2873,7 +2877,7 @@ function ItineraryResult() {
               }}
               aria-label={tPlanner("editTitle")}
               className="gkm-focus w-full text-[26px] sm:text-4xl font-black text-[#131b2e] bg-white/95 rounded-2xl px-4 py-2"
-              placeholder={`My ${cityDisplay} Trip`}
+              placeholder={autoTripTitle}
               maxLength={60}
             />
             {/* My Trip 제목 AI 3방향 — 제안은 input 으로 들어가고 Enter/저장으로 확정한다.
@@ -4088,7 +4092,7 @@ function ItineraryResult() {
       {/* S3: 공개 전 Publish Preview — 명시적 확인 후에만 is_public 전환 */}
       {publishPreviewOpen && (
         <PublishPreviewModal
-          title={tripTitle || `My ${cityDisplay} Trip`}
+          title={tripTitle || autoTripTitle}
           city={city}
           startDate={startDate}
           endDate={endDate}

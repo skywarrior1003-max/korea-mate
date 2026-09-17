@@ -13,8 +13,9 @@ export const CITY_CONFIGS: Record<string, CityConfig> = {
   jeonju:   jeonjuConfig,
 };
 
-export const CITY_SLUGS = ["busan", "seoul", "jeju", "gyeongju", "jeonju"] as const;
-export type CitySlug = typeof CITY_SLUGS[number];
+// slug SSOT 는 경량 identity 모듈로 이동(Functions 공유) — 여기서는 재수출만.
+export { CITY_SLUGS } from "./identity.ts";
+export type { CitySlug } from "./identity.ts";
 
 /**
  * 이 도시 이름을 화면에 찍을 때 쓰는 번역 키. 네임스페이스는 `tripForm` 이다.
