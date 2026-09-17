@@ -743,3 +743,20 @@ iso 적용(재실행 0·idempotent)→공개 전환→임시 연결→빌드→Q
 - **PARTIAL**: 낙산 코스(3/5 — 이화마을·혜화문 원문 확보 시까지 name-only).
 - **HOLD(명시 제한)**: 743·749 KO·778 JA/ZH(제2유형 게시물 명시 — 실측).
 - **미확보(원본 접근/제공)**: 48 이미지 · 1319 JA/ZH(URL 특정) · 511 EN(원문 미제공).
+
+## 25. 당일 채택 판정 + 국제시장·낙산 릴리스 (SAME-DAY-COURSE-ADOPTION-FIX-AND-CONTENT-RELEASE-V1, 2026-09-17)
+
+**master=Production 115254a → `fbc221d`(FF) · Cloudflare `70a7ee82`.**
+
+### 25.1 당일 저장 0 — 원인 확정: QA 파서 결함(제품 결함 아님·코드 무수정)
+정밀 재현: 당일×(전부 name-only / linked 3)·1박 — **POST·PUT payload와 GET 원시 days 전부 places 실존**(payload 로깅+raw 덤프 3연속 포함). §24 관찰의 검사식이 `days?.scheduled ?? []`로 **배열 폴백 누락** — 채택 직후 days는 배열 형태(autosave 래핑 전)라 0으로 오독. 동일 파서를 쓴 실행만 0, 폴백 있는 실행은 전부 정상 — 간헐로 보였던 것은 파서 차이. **당일 계약(§3) 기충족 실증**: dayCount(start=end)=1·5 stop 순서·linked 3/name-only 2·1박 회귀 정상. 빈 일정 직접 생성 계약 무변경.
+
+### 25.2 Production 적용(sha 핀·readback — 재실행 금지)
+- 22 국제시장: `0a04e72c…` 적용 — precheck NULL→readback visitbusan 대표 URL.
+- 낙산 3행: `75538ab3…` — **5025 흥인지문·5026 한양도성박물관·5027 낙산공원**(external_id readback, 비공개 단계 anon 미노출·재실행 0 확인 후 공개). 발급표 = `naksan-issued-ids-2026-09-17-v1.json`. 코스 연결 = 운영 ID(도구 --plan naksan), 이화마을·혜화문 name-only 유지, 가드 20/20 스냅숏 갱신.
+
+### 25.3 LIVE QA 10/10
+낙산 코스 3링크+2 name-only·상세 3곳 ko 본문+이미지·22 상세(1180px)/코스 썸네일 실사진·0-stop CTA 없음·Hub 검색/prep 회귀·**당일 채택 QA 1건: 1일·5 stop·linked 3·순서(흥인지문→혜화문)·재열람(지도 SDK+name-only '지도에 표시되지 않음')·DELETE→404 잔존 0**. 홈 화면 무변경(이번 커밋에 홈 파일 무접촉). 일반 사용자 데이터 0.
+
+### 25.4 잔여(불변)
+48 이미지·1319 JA/ZH·743/749 KO·778 JA/ZH(제2유형 HOLD)·511 EN·낙산 name-only 2곳 numeric·legacy 배선·기존 snapshot. 홈 개선은 Owner 이미지 방향 질문(§10 목록) 후 별도 승인.
