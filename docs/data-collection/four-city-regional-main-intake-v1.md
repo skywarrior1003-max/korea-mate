@@ -626,3 +626,36 @@ Owner 합의 범위의 feature 구현+패치 준비+격리 실적용+QA. **Produ
 ### 19.5 잔여(변경 없음 — 완료 수치 불포함)
 
 미연결 occurrence 집계: 직전 18 → **이번 커밋 상태 24**(+1 해리단길 철회, +5 낙산 신규 name-only) → **패치·연결 전부 적용 시 15** = 맥락형 7 + 근거부족 3 + 낙산 행부재 후보 5 (−1 해리단길 신규 행 연결, −1 이기대 7, −1 청사포 39, −6 서울). 이미지 실확보 대기: 22(이용 근거 확인)·48(원본 접근 필요) — placeholder 표현 제거와 실사진 확보를 구분 유지. 외부 HOLD 불변: 전주 제2유형(743·749 ko·ja/zh)·1319/778 ja·zh·511 EN.
+
+## 20. 발견·커머스·콘텐츠 릴리스 (DISCOVERY-COMMERCE-AND-CONTENT-PRODUCTION-RELEASE-V1, 2026-09-17)
+
+**master=Production 3bd1048 → `b1f5ef4`(FF) · Cloudflare `59c6ddbb` · gokoreamate.com 콘텐츠 실증.**
+
+### 20.1 이번 릴리스 DB 적용(전체 sha 핀·readback 확정 — 재실행 금지)
+
+| 패치(경로: data/main-intake/four-city-regional-v1/) | 전체 SHA-256 | 결과 |
+|---|---|---|
+| 1633-mislink-repair-v1.sql | 280eda28eb89bd5eb79eee7200c1a143fe7d580ccc4ace707cf2472e185b46a7 | 1633 desc_l10n.ko 1키 제거(값조건 일치 precheck)·매장 원상 readback |
+| haeridan-street-insert-v1.sql | 753f3101bb50bdd45f0a36498519058e812a2ab873e72f18c130c507b6fc6b09 | **5018** 발급(비공개→공개), 재실행 0 |
+| seoul-six-inserts-v1.sql | 7ff187c6a0b3f4b27d28d14c8d22db0ac2922148d5cdd3ad98bbecf6ec18e814 | **5019~5024** 발급(경복궁·민속박물관·북촌·인사동·중박·이촌 — external_id readback), 재실행 0 |
+| retired-place-minimal-restore-v1.sql | dc7035770add0d8b9699be82b222cf9cddae10f96ec5fa9872ba3511ab3c1b74 | 7·39 ko/이미지 복구+공개, 29 비공개 유지 |
+
+발급 대응표 = `discovery-repair-issued-ids-2026-09-17-v1.json` · before snapshot = `discovery-repair-before-snapshot-2026-09-17-v1.json`(1633·7·29·39·81 전필드+bridge). 하드코딩 0 — 연결은 external_id readback ID.
+
+### 20.2 코드(b1f5ef4)
+
+Explore 로딩 중 "0개 장소" 오표시 제거(4 locale "불러오는 중…") · my-trip-prep 게이트 shareId→**isOwner**(owner-only GET 성공 기준 — 본인 ?id 재열람 표시, 타인 공유 숨김) · regional JSON 연결 9(5018·5019~5024·7·39) · 가드 20/20.
+
+### 20.3 LIVE 검증(모바일 390 직접 25/25 + 데스크톱·EN 보충 4/4)
+
+검색(5도시 pill·REST 지연 주입으로 로딩 문구 실측·실개수 1,843·실0건 정상·포커스·뒤로가기) · 여행 준비(기본 sponsored 0·추천1+대안1·교체·접힘·ko 기차/버스 숨김·en 노출·Agoda cid/city 파라미터 보존) · 콘텐츠(1633=바다처럼 원상·C-003→5018·신규7+복구2 이미지 naturalWidth/본문 9/9·서울 6 링크·이기대7·청사포39·낙산 5 name-only·0-stop CTA 없음·29 Explore 미노출) · 채택 QA 1건(11 stop 순서·지도 SDK 로드·name-only "지도에 표시되지 않음" 구분·DELETE→404·잔존 0).
+
+### 20.4 판정 구분·관찰
+
+- **my-trip-prep LIVE E2E 미완**: isOwner 게이트는 코드·격리 근거로 확인. LIVE 실증은 QA 여행 1건 한도 내 ko 채택분에서 sponsored 0 — 원인은 게이트가 아니라 **채택 저장 city가 locale 라벨("부산")이라 slug 매핑 미통과(기존 잠재 이슈 — 6846f80부터, en 채택 city="Busan"만 통과)**. "제휴 E2E 전체 완료" 아님 — city 저장값 slug 정규화는 별도 결정 항목.
+- /place/<비공개 id> 직접 URL 페이지 존재(예: 29)는 **기존 빌드 동작**(이전에도 5,005페이지=공개+비공개 전량) — 이번 변경 아님, Explore 목록 미노출은 유지. 별도 확인 항목으로 병기.
+- ja/zh 화면 문구는 번들 키 커밋으로 확인(직접 화면 미검증 — 미검증 표기).
+
+### 20.5 Rollback(단계별·실행 조건)
+
+① 1633: 재주입은 Owner 명시 지시 시에만(오연결 정정 취지) — 값 = before snapshot desc_l10n. ② 신규 7행: **공개 해제 우선**(`is_published=false WHERE external_id IN (…) AND is_published`) — DELETE 는 참조 0 확인 후 Owner 지시 시에만. ③ 7/39: 이번 복구값 일치 조건으로 image=unsplash 원값(snapshot)·ko 키 제거·is_published=false 복원. ④ 연결/UI: b1f5ef4 revert 커밋 → 재빌드·배포. **순서 = 코드 revert·배포 먼저(참조 제거) → DB 공개 해제 → 값 복원.** Cloudflare 직전 정상 = d1ec0a26(3bd1048).
