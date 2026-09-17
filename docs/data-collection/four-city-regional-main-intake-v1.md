@@ -586,3 +586,43 @@ crosswalk(2026-09-01, 714행) 실측 — **중복·identity 오류가 아니라 
 - **1319 부평깡통시장 JA/ZH**: 게시물 400 다국어 **존재 표식**(수집 시 language_available=true)까지 확인 — 실제 제목·본문 미확보(정확 URL 은 언어별 menuCd 상이로 미특정). 이용 근거 트랙과 함께 진행.
 - **48 절영**: 확인 원천(KTO 2경로·부산 공공 API 213건·visitbusan 수집/검색·영도구청 3페이지) 미제공 — 남은 경로 = 영도구청 문화관광 심층·부산관광공사 문의(Owner). 동일 실패 조회 반복 금지 유지.
 - 전주 제2유형(743·749 ko·ja/zh)·511 EN·기존 snapshot·legacy 배선: 미해결/결정 대기 유지 — 이번 완료 수치에 불포함.
+
+## 19. 발견·커머스·콘텐츠 수리 (DISCOVERY-COMMERCE-AND-CONTENT-REPAIR-V1, 2026-09-17 · Production 3bd1048 무변경)
+
+Owner 합의 범위의 feature 구현+패치 준비+격리 실적용+QA. **Production DB write 0·배포 0·master 무변경** — 적용은 별도 승인.
+
+### 19.1 구현(feature 1a8f591)
+
+- **검색 진입**: 5도시 Hub 공통 — 도시 소개 아래·추천여행 위 검색 pill("{city}에서 장소 찾기") → `/explore/{slug}?focus=search`(기존 Explore 검색 문법·`?q=` 계약 재사용, SearchBar autoFocus만 추가 — 새 검색 체계 0). §8-4의 "Hub 검색 미신설" 결정은 본 Owner 결정으로 변경(진입점 1개 한정). 검색·탐색이 제휴보다 먼저 발견되는 구성 성립.
+- **제휴 목적 선택형**(city-hub-essentials): 기본=목적 칩만(검증 조합만 생성·파트너 기본 강조 0·sponsored 링크 0) → 선택 시 해당 목적 추천1+대안≤1+가시 고지 → 전환/접기. my-trip-prep 표면은 기존 스택 유지. 링크 굵기 semibold→medium·보조 문구 대비 rgba(.5)→(.62) 상향. 기존 게이트·빌더·고지·tracking 재사용, 날짜·개별 상품 미도입, Place Detail 비활성 유지.
+- **0-stop 가드**: 채택 CTA 를 stops>0 에서만 렌더(+adoptCourseDays 빈 배열 null 이중 방어). name-only stop 과 0-stop 코스 구분 유지 — 유효 코스 채택 불가화 0, 코스 자료 삭제 0.
+- **맥락형 표시**: 미연결 stop 은 placeholder 썸네일 카드 대신 이름만의 컴팩트 행(라벨·순서·데이터 보존 — 표현만 구분). 실장소의 이미지 placeholder(연결 spot)는 유지 — 확보/미확보 구분 보존.
+- **1633 철회**: busan-C-003#5 → null, `IDENTITY_LINK_RETRACTED_V1`. **낙산 복구**: seoul-C-R01 stops 5개 — STO 공식 KON000645 "도보코스" 원문 순서(흥인지문→한양도성박물관→이화마을→낙산공원→혜화문, 만남 동대문역 7번 출구·2~3시간). 상류 normalized 패키지도 stops=[](is_reserve)였음 — 조립 누락 아닌 원문 미수집분을 공식 페이지에서 보강. EN 은 STO EN 페이지 verbatim(흥인지문)만, 나머지 발명 0. 가드 19/19.
+
+### 19.2 DB 패치(실행 금지 — Owner 승인 후)
+
+| 패치 | sha256 | 내용 |
+|---|---|---|
+| 1633-mislink-repair-v1.sql | `280eda28eb89bd5eb79eee7200c1a143fe7d580ccc4ace707cf2472e185b46a7` | 주입 desc_l10n.ko 만 값조건 제거(내장 검증 DO) — 매장 name·"바다처럼"·사진·주소·EN·source 무접촉. before 원상={en} |
+| haeridan-street-insert-v1.sql | `753f3101bb50bdd45f0a36498519058e812a2ab873e72f18c130c507b6fc6b09` | 거리 본체 1행(KTO 2783306 verbatim: 주소 우동 510-7·좌표·본문 304자·대표+상세10 이미지) — 비공개 insert·id 실행시점·중복가드. 카탈로그 전수(이름·비공개·근접)에서 거리 본체 부재 실측 |
+| seoul-six-inserts-v1.sql | `7ff187c6a0b3f4b27d28d14c8d22db0ac2922148d5cdd3ad98bbecf6ec18e814` | v2 의 적용 단위 분리 — 서울 6곳만(삼정타워 제외·맥락형 유지, v2 파일에 분리 표기) |
+| retired-place-minimal-restore-v1.sql | `dc703577…`(기존 — 재검토 후 재사용, 수정 0) | 7 이기대·39 청사포 ko 이름/본문+placeholder 교체+조건부 공개 · 29 비공개 유지 |
+
+- 코스 연결 도구: `scripts/main-intake/apply-new-place-links-v1.mjs` — external_id/고정 ID→발급 ID 조회 후 JSON 연결(비공개 행 연결 거부 가드 — **격리 발급 숫자 하드코딩 0**).
+- Final 재퇴출 방지: `five-city-core-v3/audits/owner-restore-exceptions-v1.jsonl` — 7(과거 OWNER_OVERRIDE 계보·참조 51+2)·39(참조 12) 유지 근거, 29 비공개 확정. 전역 공개 정책 신설 없음.
+
+### 19.3 격리 실적용+QA (전 패치 실제 적용 — 샘플 주입 0)
+
+- DB: 재시드(Production 현재 상태 READ) → 1633 repair(ko 제거·바다처럼/EN 보존) → 해리단길 insert(발급·재실행 0) → seoul-six(6행 발급·재실행 0) → 7/39 복구(공개·이미지 교체) → 격리 공개 전환 7행 → 연결 도구로 9 stop 연결(격리 ID) → iso 빌드.
+- **UI/기능 QA 26/27 PASS**(모바일 390 기준 + en/ko locale 축, 데스크톱·ja/zh 는 공통 코드 검증으로 구분): 1633 매장/거리 분리 표시 · 서울 6곳 링크+상세(경복궁 이미지 실로딩·ko 본문·EN fallback 구분) · 7/39 링크+KTO 이미지(unsplash 아님) · 낙산 5 stop name-only(placeholder 0)+CTA "5개 장소" · **0-stop 코스 CTA 미노출** · 검색 pill→Explore 포커스→도시 검색(경복궁 결과)→뒤로가기 복귀 · 제휴 기본 접힘(sponsored 0)/선택 1목적/전환/접기/ko 에 기차·버스 칩 없음/en 에 있음 · 정상 채택 11 stop 순서 저장(해리단길=카탈로그명)→재열람→정리(잔존 0).
+- **직접 빈 days POST = 201 수용(실측)** — API days:[] 허용은 planner "빈 일정 시작" 계약과 공유되어 API 강제 거부는 이번 범위에서 보류(회귀 위험), **코스 채택 경로는 UI+core 이중 가드로 차단 완료**. QA 생성분 즉시 정리.
+- **H3 판정**: 재열람(?id) 화면의 my-trip-prep 비노출은 `shareId=searchParams.get("id")` 게이트의 **기존 동작**(6846f80 이후 동일 — ?id 접근 전부 share 취급) — 이번 변경과 무관·회귀 아님. my-trip-prep 스택 렌더는 컴포넌트 분기 보존으로 확인. (관찰: 본인 ?id 재열람에서도 비노출되는 설계는 Owner 확인 후보로 병기.)
+- 환경 한계(기지): Naver SDK 127.0.0.1 crash — QA 는 SDK 차단으로 수행, 지도 포함 확인은 LIVE/Preview 몫.
+
+### 19.4 Production 적용 순서(승인 후) · rollback
+
+① 1633-mislink-repair(280eda28) → ② haeridan insert+공개 → ③ seoul-six insert+공개 → ④ 7/39 restore(dc703577) → ⑤ `apply-new-place-links-v1.mjs`(운영 발급 ID — plan all) 커밋 → ⑥ master FF+재빌드·배포 → ⑦ LIVE 확인(§19.3 매트릭스 상당+지도 포함 재열람). rollback: 코드=169 이전 커밋 revert·배포 / DB=값조건(1633 재주입은 Owner 명시 지시 시에만·insert 는 external_id DELETE·7/39 는 스냅숏 값 복귀·공개 역전환). 배포 후 검증 실패 시 이번 변경 범위만 되돌린다.
+
+### 19.5 잔여(변경 없음 — 완료 수치 불포함)
+
+미연결 occurrence 집계: 직전 18 → **이번 커밋 상태 24**(+1 해리단길 철회, +5 낙산 신규 name-only) → **패치·연결 전부 적용 시 15** = 맥락형 7 + 근거부족 3 + 낙산 행부재 후보 5 (−1 해리단길 신규 행 연결, −1 이기대 7, −1 청사포 39, −6 서울). 이미지 실확보 대기: 22(이용 근거 확인)·48(원본 접근 필요) — placeholder 표현 제거와 실사진 확보를 구분 유지. 외부 HOLD 불변: 전주 제2유형(743·749 ko·ja/zh)·1319/778 ja·zh·511 EN.
