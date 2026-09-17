@@ -85,7 +85,7 @@ export function toEventItem(spot: CitySpot): EventItem {
 
 // ── Search bar ───────────────────────────────────────────────────────────────
 
-function SearchBar({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) {
+function SearchBar({ value, onChange, placeholder, autoFocus = false }: { value: string; onChange: (v: string) => void; placeholder: string; autoFocus?: boolean }) {
   return (
     <div className="relative w-full">
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.1" strokeLinecap="round"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg></span>
@@ -94,6 +94,7 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
+        autoFocus={autoFocus}
         className="w-full pl-12 pr-11 py-3.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
       />
       {value && (
@@ -535,7 +536,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     <div className="mb-4">
       {/* 시안 순서: 검색 → List/Map 토글 → 필터. 예전엔 토글이 검색 위에 있어
           "무엇을 찾을지" 보다 "어떻게 볼지" 를 먼저 묻고 있었다. */}
-      <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} />
+      {/* Hub 검색 진입(?focus=search)으로 들어오면 입력을 바로 받을 수 있게 포커스 —
+          가짜 결과는 없다(입력 전에는 기존 목록 그대로). */}
+      <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} autoFocus={searchParams.get("focus") === "search"} />
       {pastedUrl && (
         <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
              style={{ backgroundColor: "var(--gkm-action-tint)" }}>

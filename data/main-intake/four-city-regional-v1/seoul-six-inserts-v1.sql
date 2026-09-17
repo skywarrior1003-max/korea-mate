@@ -1,12 +1,7 @@
--- **적용 단위 분리(2026-09-17, DISCOVERY-COMMERCE-AND-CONTENT-REPAIR-V1)**: 실행은 이 파일이 아니라
---   seoul-six-inserts-v1.sql(서울 6곳)로 한다. 삼정타워 행은 준비 기록으로만 유지(코스 stop 맥락형 — 등록·공개 안 함).
--- candidate-place-inserts v2 — 실행 금지(Owner 승인 후 격리/운영 각각 정확 1회)
--- v1(sha e4f278ad64fb4d0727605231b858eacb39301421dac75d6a5e9cf867498d61c6)은 SUPERSEDED:
---   중복 실사에서 밀락더마켓=기존 행 1332(공개·10m)·서빈백사=기존 행 2797 산호해수욕장(공개·64m) 판명 → insert 제외,
---   두 곳은 기존 ID 코스 연결안(IDENTITY_LINK_RECOVERY_V2)으로 이관.
--- 성격: 신규 장소 7행 — **is_published=false 로만 삽입**(공개는 별도 게이트/Owner).
--- id: 실행 시점 max(id)+row_number 발급(하드코딩 0) · 중복 가드: 동일 external_id 존재 시 삽입 0.
--- 원천: KTO TourAPI(contentid — master jsonl), 이름·본문·이미지·좌표 verbatim.
+-- seoul-six-inserts v1 — 실행 금지(Owner 승인 후 격리/운영 각각 정확 1회)
+-- candidate-place-inserts-v2(1930484a…)의 적용 단위 분리: 서울 6곳만.
+-- 삼정타워(busan, kto:3014436)는 이번 적용안에서 제외 — 코스 stop 맥락형 유지, 신규 등록·공개하지 않음(v2 의 해당 행은 준비 기록으로만 남김).
+-- 규칙 동일: is_published=false 전용 · 실행시점 id 발급 · external_id 중복 가드.
 BEGIN;
 
 WITH src (city, name, category, address, lat, lng, image_url, name_l10n, desc_l10n, source_type, external_id, is_published) AS (
@@ -41,8 +36,7 @@ WITH src (city, name, category, address, lat, lng, image_url, name_l10n, desc_l1
   ('seoul', '이촌한강공원', 'attraction', '서울특별시 용산구 이촌로72길 62 (이촌동)', 37.51782055627669, 126.97085116144625, 'https://tong.visitkorea.or.kr/cms/resource/15/2531015_image2_1.jpg', jsonb_build_object('ko','이촌한강공원'), jsonb_build_object('ko','이촌한강공원은 금호동의 중랑천교와 이촌동의 원효대교 사이 강변 북단에 위치해 있다. 가을이 되면 호안가 주변을 따라 갈대와 억새, 코스모스가 피어나 시민들의 산책과 조깅코스로 자주 이용된다. 청소년을 위한 청소년광장과 X-게임장, 국제규모의 인라인스케이트장, 농구장, 테니스장, 게이트볼장 등의 운동경기장 등이 여가 및 레포츠 공간으로 유용하게 활용되고 있다. 또한 한강도하체험장이 생겨 개인, 직장, 학교 등 단체생활의 팀워크훈련장으로 이용되고 있다.
 
 ◎ 한류의 매력을 만나는 여행 정보 - 드라마 
-드라마 에서 서해(박신혜 분)가 아빠와의 추억을 떠올리며 슬픔에 잠긴 공원이다. 부지가 넓어 산책, 피크닉, 문화활동 등 다양한 여가 활동을 즐길 수 있다.'), 'tourapi', 'kto:970636', false),
-  ('busan', '삼정타워', 'attraction', '부산광역시 부산진구 중앙대로 672 (부전동)', 35.15300621921821, 129.05960635251864, 'https://tong.visitkorea.or.kr/cms/resource/31/3014331_image2_1.JPG', jsonb_build_object('ko','삼정타워'), jsonb_build_object('ko','쇼핑공간으로 자리 잡고 있는 삼정타워지만 쇼핑 그 이상의 경험을 목표로 쇼핑공간, 문화공간, 체험공간이 공존하는 복합 쇼핑몰로 다양한 취향과 스타일이 공존하는 공간으로 자리 잡은 곳이다. 삼정타워 5층은 부산지역 곳곳에 숨어 있는 지역 맛집들을 한 곳에 모아 놓은 곳이며 다양한 간식거리가 눈앞에 펼쳐져 있는 푸드트럭 존은 간편한 테이크아웃부터 프리미엄 디저트까지 다양한 메뉴와 브랜드를 경험할 수 있는 공간이다. 7층에 위치한 맘앤키즈존은 엄마와 아빠는 여유롭게, 아이들은 행복하게 즐길 수 있는 공간으로, 어른들의 뷰티 공간과 아이들의 다양한 즐길 거리가 공존하는 곳이다. 그 밖에 라운지, 포토존, 런닝맨 놀이동산 엔터테인먼트 등 다양한 체험 놀이 공간이 있는 종합문화쇼핑 공간이다.'), 'tourapi', 'kto:3014436', false)
+드라마 에서 서해(박신혜 분)가 아빠와의 추억을 떠올리며 슬픔에 잠긴 공원이다. 부지가 넓어 산책, 피크닉, 문화활동 등 다양한 여가 활동을 즐길 수 있다.'), 'tourapi', 'kto:970636', false)
 ), numbered AS (
  SELECT s.*, (SELECT COALESCE(MAX(id),0) FROM city_spots) + row_number() OVER () AS new_id FROM src s
 )
@@ -53,5 +47,4 @@ SELECT new_id, city, name, category, address, lat, lng, image_url, name_l10n, de
 RETURNING id, city, name, external_id;
 
 COMMIT;
--- 운영 반영 시 필요 단계(구분): ① insert(비공개) → ② Owner 공개 결정(is_published) → ③ 코스 연결 커밋(external_id 로 발급 id 조회)
---   → ④ SSG 재빌드·배포(dynamicParams=false 라 재빌드 전에는 /place/<신규id> 상세 페이지 미생성) — insert 만으로 공백 해소 아님.
+-- 운영 단계: ① insert(비공개) → ② 발급 ID 확인(external_id) → ③ Owner 공개 → ④ 코스 연결 커밋(apply-new-place-links) → ⑤ 재빌드 → ⑥ LIVE 확인.

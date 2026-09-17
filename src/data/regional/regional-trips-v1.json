@@ -244,8 +244,8 @@
     {
      "name": "해리단길",
      "nameEn": "Haeridan-gil",
-     "spotId": 1633,
-     "linkage": "IDENTITY_LINK_RECOVERY_V1"
+     "spotId": null,
+     "linkage": "IDENTITY_LINK_RETRACTED_V1"
     },
     {
      "name": "해운대해변열차·스카이캡슐",
@@ -461,7 +461,38 @@
    "theme": "성곽·야경·낭만",
    "durationLabel": "약 2시간",
    "days": null,
-   "stops": [],
+   "stops": [
+    {
+     "name": "흥인지문 (동대문)",
+     "nameEn": "Dongdaemun (Heunginjimun Gate)",
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "한양도성박물관",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "이화마을",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "낙산공원",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    },
+    {
+     "name": "혜화문",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": "TRUE_NEW_PLACE_CANDIDATE"
+    }
+   ],
    "source": {
     "provider": "서울관광재단 (STO)",
     "source_url": "https://english.visitseoul.net/walking-tour",

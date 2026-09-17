@@ -1,17 +1,22 @@
 "use client";
 
-// PHASE 10 — 조용한 예약 보조 1줄 (Owner 승인 표면 전용, 2026-09-13)
+// PHASE 10 — 조용한 예약 보조 (Owner 승인 표면 전용, 2026-09-13)
+// 2026-09-17 (Owner 합의) city-hub-essentials 는 "목적 선택형 여행 준비"로 변경:
+//  · 기본 상태 = 목적 선택 항목만 조용히 제공(링크 스택을 펼쳐 놓지 않음,
+//    특정 파트너를 기본 강조하지 않음).
+//  · 선택 후 = 그 목적의 검증된 추천 1 + 대안 ≤1 만 표시(다른 목적과 동시 노출 0),
+//    다시 접거나 다른 목적으로 전환 가능.
+//  · 미검증 목적·언어 조합은 선택 항목 자체가 생기지 않는다(빈 항목 0).
+// my-trip-prep 는 기존 스택 렌더 유지(기존 기능 보존 — 회귀만 확인).
 //
-// 계약:
-//  · isCommerceAllowedOnSurface 를 통과한 표면에서만 anchor 를 생성한다.
-//  · 링크는 partner-links 활성 매트릭스에서만 온다 — 검증 안 된 조합은
-//    이 컴포넌트가 null 을 그려서(렌더 자체 없음) 숨겨진다. 깨진 버튼 0.
-//  · 가시적 제휴 고지(문구)를 항상 함께 그린다 — rel=sponsored 는 고지를
-//    대체하지 않는다(§14-1-B 조건).
-//  · 도시 검색 착지는 "숙소 찾아보기"처럼 범위를 정직하게 말한다 — 특정
-//    상품 예약처럼 위장하지 않는다.
+// 불변 계약:
+//  · isCommerceAllowedOnSurface 통과 표면에서만 anchor 생성.
+//  · 링크는 partner-links 활성 매트릭스에서만 — 검증 안 된 조합은 렌더 0. 깨진 버튼 0.
+//  · 가시적 제휴 고지 + rel=sponsored 병행(§14-1-B).
+//  · 문구는 범위를 정직하게(도시 검색/전국 상품) — 날짜·개별 상품 맞춤 위장 금지.
 //  · 구세대 링크가 섞이면 그리지 않는다(마지막 방어선).
 
+import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import AffiliateLink from "@/components/AffiliateLink";
 import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
@@ -20,6 +25,14 @@ import {
 } from "@/config/partner-links";
 
 const SUPPORTED: readonly string[] = ["en", "ko", "ja", "zh"];
+// 목적 순서 고정 — [선택칩 라벨 키, 노출 CTA 키(기존 정직 문구 재사용)]
+const PURPOSES = [
+  ["stay", "prepStay", "partnerStayCta"],
+  ["activity", "prepActivity", "partnerActivityCta"],
+  ["esim", "prepEsim", "partnerEsimCta"],
+  ["rail", "prepRail", "partnerRailCta"],
+  ["bus", "prepBus", "partnerBusCta"],
+] as const;
 
 export default function PartnerOfferRow({
   surface, citySlug, cityLabel, className = "",
@@ -31,68 +44,88 @@ export default function PartnerOfferRow({
 }) {
   const t = useTranslations("quiet");
   const rawLocale = useLocale();
+  const [picked, setPicked] = useState<string | null>(null);
   if (!isEditorialAffiliateEnabled(surface)) return null;
   const locale = (SUPPORTED.includes(rawLocale) ? rawLocale : "en") as PartnerLocale;
   const by = offersByPurpose(citySlug, locale);
   const clean = (arr: typeof by.stay) => arr.filter(o => !isLegacyAffiliateUrl(o.href));
-  // 목적별 줄: [cta i18n 키, 추천, 대안]. 검증된 목적만 줄이 생긴다.
-  // esim/rail/bus 는 한국 전역 카테고리 — 문구도 도시가 아니라 범위를 말한다.
-  const rows = ([
-    ["partnerStayCta", clean(by.stay)],
-    ["partnerActivityCta", clean(by.activity)],
-    ["partnerEsimCta", clean(by.esim)],
-    ["partnerRailCta", clean(by.rail)],
-    ["partnerBusCta", clean(by.bus)],
-  ] as const).filter(([, offers]) => offers.length > 0);
-  if (rows.length === 0) return null;
+  const available = PURPOSES
+    .map(([key, chipKey, ctaKey]) => ({ key, chipKey, ctaKey, offers: clean(by[key]) }))
+    .filter(p => p.offers.length > 0);
+  if (available.length === 0) return null;
 
-  return (
-    <div className={`rounded-[4px] border px-4 py-3 flex flex-col gap-2 ${className}`}
-      style={{ borderColor: "var(--qh-line, #DFE7F2)", backgroundColor: "var(--qh-surface, #fff)" }}>
-      {rows.map(([ctaKey, offers]) => {
-        const offer = offers[0]!;      // 추천 1
-        const alt = offers[1] ?? null; // 검증된 대안 최대 1
-        return (
-          <span key={ctaKey} className="min-w-0 block">
+  // 노출 링크 1묶음(추천 1 + 대안 ≤1) — 두 표면이 같은 마크업을 쓴다.
+  const offerBlock = (ctaKey: string, offers: typeof by.stay) => {
+    const offer = offers[0]!;
+    const alt = offers[1] ?? null;
+    return (
+      <span className="min-w-0 block">
+        <AffiliateLink
+          href={offer.href} provider={offer.partner} title={`${offer.purpose}-${citySlug}`}
+          city={citySlug} kind="affiliate" surface={surface} purpose={offer.purpose} locale={locale}
+          className="gkm-focus block text-[14px] font-medium truncate"
+        >
+          {/* 사용자 목적이 앞, 파트너명은 보조 */}
+          <span style={{ color: "var(--qh-ink, #16233B)" }}>{t(ctaKey, { city: cityLabel })}</span>
+          <span style={{ color: "rgba(33,29,23,.62)" }}> · {PARTNER_NAMES[offer.partner]} →</span>
+        </AffiliateLink>
+        {alt && (
+          <span className="block mt-0.5 text-[12px]" style={{ color: "rgba(33,29,23,.62)" }}>
             <AffiliateLink
-              href={offer.href}
-              provider={offer.partner}
-              title={`${offer.purpose}-${citySlug}`}
-              city={citySlug}
-              kind="affiliate"
-              surface={surface}
-              purpose={offer.purpose}
-              locale={locale}
-              className="gkm-focus block text-[14px] font-semibold truncate"
+              href={alt.href} provider={alt.partner} title={`${alt.purpose}-${citySlug}`}
+              city={citySlug} kind="affiliate" surface={surface} purpose={alt.purpose} locale={locale}
+              className="gkm-focus underline underline-offset-2"
             >
-              <span style={{ color: "var(--qh-ink, #16233B)" }}>
-                {t(ctaKey, { city: cityLabel })} · {PARTNER_NAMES[offer.partner]} →
-              </span>
+              {t("partnerAlt", { partner: PARTNER_NAMES[alt.partner] })}
             </AffiliateLink>
-            {alt && (
-              <span className="block mt-0.5 text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
-                <AffiliateLink
-                  href={alt.href}
-                  provider={alt.partner}
-                  title={`${alt.purpose}-${citySlug}`}
-                  city={citySlug}
-                  kind="affiliate"
-                  surface={surface}
-                  purpose={alt.purpose}
-                  locale={locale}
-                  className="gkm-focus underline underline-offset-2"
-                >
-                  {t("partnerAlt", { partner: PARTNER_NAMES[alt.partner] })}
-                </AffiliateLink>
-              </span>
-            )}
           </span>
-        );
-      })}
-      {/* 사용자 눈에 읽히는 제휴 고지 — 이 박스 전체가 제휴 영역임을 항상 명시 */}
-      <span className="block text-[11px]" style={{ color: "var(--qh-faint, #8DA0BF)" }}>
-        {t("partnerSponsored")}
+        )}
       </span>
+    );
+  };
+
+  if (surface === "my-trip-prep") {
+    // 기존 동작 보존: 검증된 목적을 세로로(변경 없음 — 회귀 방지)
+    return (
+      <div className={`rounded-[4px] border px-4 py-3 flex flex-col gap-2 ${className}`}
+        style={{ borderColor: "var(--qh-line, #DFE7F2)", backgroundColor: "var(--qh-surface, #fff)" }}>
+        {available.map(p => <span key={p.key}>{offerBlock(p.ctaKey, p.offers)}</span>)}
+        <span className="block text-[11.5px]" style={{ color: "rgba(33,29,23,.62)" }}>{t("partnerSponsored")}</span>
+      </div>
+    );
+  }
+
+  // city-hub-essentials: 목적 선택형
+  const active = available.find(p => p.key === picked) ?? null;
+  return (
+    <div className={`rounded-[4px] border px-4 py-3 ${className}`}
+      style={{ borderColor: "var(--qh-line, #DFE7F2)", backgroundColor: "var(--qh-surface, #fff)" }}>
+      <span className="block text-[13px] font-semibold" style={{ color: "var(--qh-ink, #16233B)" }}>{t("tripPrepTitle")}</span>
+      <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label={t("tripPrepTitle")}>
+        {available.map(p => {
+          const on = picked === p.key;
+          return (
+            <button
+              key={p.key}
+              type="button"
+              aria-pressed={on}
+              onClick={() => setPicked(on ? null : p.key)}
+              className="gkm-focus rounded-full border px-3 py-1.5 min-h-9 text-[12.5px] font-medium"
+              style={on
+                ? { borderColor: "var(--qh-navy, #001654)", backgroundColor: "var(--qh-navy, #001654)", color: "#fff" }
+                : { borderColor: "var(--qh-line, #DFE7F2)", backgroundColor: "transparent", color: "rgba(33,29,23,.72)" }}
+            >
+              {t(p.chipKey)}
+            </button>
+          );
+        })}
+      </div>
+      {active && (
+        <div className="mt-3">
+          {offerBlock(active.ctaKey, active.offers)}
+          <span className="block mt-1.5 text-[11.5px]" style={{ color: "rgba(33,29,23,.62)" }}>{t("partnerSponsored")}</span>
+        </div>
+      )}
     </div>
   );
 }

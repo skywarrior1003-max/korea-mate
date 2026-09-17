@@ -245,7 +245,8 @@ test("연결 복구 스냅숏 — 26 occurrence(부산17·제주4·경주5), 복
   const expect: Array<[string, number, number]> = [
     ["busan-C-001", 1, 58], ["busan-C-001", 2, 993], ["busan-C-001", 4, 17], ["busan-C-001", 13, 980], ["busan-C-001", 14, 65],
     ["busan-C-002", 2, 48], ["busan-C-002", 4, 22], ["busan-C-002", 8, 1645], ["busan-C-002", 9, 38],
-    ["busan-C-003", 2, 54], ["busan-C-003", 3, 985], ["busan-C-003", 4, 1633], ["busan-C-003", 5, 40], ["busan-C-003", 8, 980], ["busan-C-003", 9, 1360],
+    // #5(해리단길)의 1633 연결은 오연결로 판명(1633=기프트샵 '바다처럼') — RETRACTED, 아래 별도 테스트
+    ["busan-C-003", 2, 54], ["busan-C-003", 3, 985], ["busan-C-003", 5, 40], ["busan-C-003", 8, 980], ["busan-C-003", 9, 1360],
     ["busan-C-R01", 1, 43], ["busan-C-R01", 2, 1273],
     ["jeju-C-001", 2, 1690], ["jeju-C-001", 3, 1684], ["jeju-C-002", 1, 1810], ["jeju-C-002", 2, 1698],
     ["gyeongju-C-002", 6, 455], ["gyeongju-C-003", 6, 1617],
@@ -269,4 +270,28 @@ test("연결 복구 V2 스냅숏 — 기존 행 재발견 2건, 복귀 금지", 
   assert.equal(stop("busan-C-R01", 0).linkage, "IDENTITY_LINK_RECOVERY_V2");
   assert.equal(stop("jeju-C-R02", 1).spotId, 2797, "서빈백사=2797 산호해수욕장");
   assert.equal(stop("jeju-C-R02", 1).linkage, "IDENTITY_LINK_RECOVERY_V2");
+});
+
+// ── DISCOVERY-COMMERCE-AND-CONTENT-REPAIR-V1 (2026-09-17) ────────────────────
+//
+// 1633 은 해리단길 '거리'가 아니라 거리 내 기프트샵 '바다처럼'(visitbusan VB-2581)으로
+// 판명 — 코스 연결을 철회한다. 매장 행 자체는 보존(카탈로그 무접촉 — 데이터 패치는 별도).
+test("1633 오연결 철회 — 해리단길 stop 은 미연결 유지, 재연결 금지", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const s = trips.get("busan-C-003")!.stops[4]!;
+  assert.equal(s.name, "해리단길");
+  assert.equal(s.spotId, null, "1633(바다처럼) 재연결 금지 — 거리 본체는 신규 insert 트랙");
+  assert.equal(s.linkage, "IDENTITY_LINK_RETRACTED_V1");
+});
+
+// 낙산 야간 코스(seoul-C-R01) — STO 공식 원문(KON000645 도보코스)의 방문 순서 복구.
+// 창작 0: 흥인지문→한양도성박물관→이화마을→낙산공원→혜화문. 카탈로그 본체 부재라
+// 전부 name-only(TRUE_NEW_PLACE_CANDIDATE) — 임의 매칭 금지.
+test("seoul-C-R01 낙산 stops 원문 복구 스냅숏", () => {
+  const trips = new Map(getAllRecommendedTrips().map(t => [t.id, t]));
+  const stops = trips.get("seoul-C-R01")!.stops;
+  assert.equal(stops.length, 5);
+  assert.deepEqual(stops.map(s => s.name), ["흥인지문 (동대문)", "한양도성박물관", "이화마을", "낙산공원", "혜화문"]);
+  for (const s of stops) { assert.equal(s.spotId, null); assert.equal(s.linkage, "TRUE_NEW_PLACE_CANDIDATE"); }
+  assert.equal(stops[0]!.nameEn, "Dongdaemun (Heunginjimun Gate)", "EN 은 STO EN 페이지 verbatim 만");
 });

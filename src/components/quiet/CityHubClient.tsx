@@ -132,8 +132,21 @@ export default function CityHubClient({ slug }: { slug: string }) {
       </div>
 
       <div className="max-w-3xl mx-auto px-5 md:px-6 pt-5">
+        {/* ── 검색 진입 (Owner 2026-09-17 — discovery-explore-final-v1 §3 의 "Hub 검색
+             input 미신설" 결정을 진입점 1개 허용으로 변경). 입력은 여기서 받지 않고
+             Explore 의 기존 검색으로 도시 스코프 그대로 넘긴다 — 새 검색 체계 0. ── */}
+        <Link
+          href={`/explore/${slug}?focus=search`}
+          className="flex items-center gap-3 rounded-full border px-4 py-3 min-h-11 gkm-focus"
+          style={{ borderColor: HUB.line, backgroundColor: "#fff" }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden stroke={HUB.sub} strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+          <span className="min-w-0 flex-1 truncate text-[14px] font-medium" style={{ color: HUB.sub }}>{t("hubSearchCta", { city: cityLabel })}</span>
+          <span className="flex-none text-[13px]" style={{ color: HUB.faint }} aria-hidden>→</span>
+        </Link>
+
         {/* ── Recommended Trips ── */}
-        <div className="flex items-baseline justify-between gap-3">
+        <div className="mt-6 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedTrips")}</h2>
           {trips.length > 0 && (
             <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>

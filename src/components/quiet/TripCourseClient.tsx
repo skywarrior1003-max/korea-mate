@@ -111,10 +111,13 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
               const name = spot
                 ? displayPlaceName(spot.name, spot.nameL10n, locale)
                 : (locale !== "ko" && stop.nameEn ? stop.nameEn : (stop.name ?? ""));
-              const body = (
+              // 연결된 장소만 사진 카드로 그린다. 미연결 stop(집합·이동 구간·행 부재)은
+              // "사진이 빠진 장소"처럼 보이는 placeholder 대신 이름만의 컴팩트 행 —
+              // 원 이름·순서·라벨 데이터는 그대로 보존한다(표현만 구분).
+              const body = spot ? (
                 <span className="flex items-center gap-3.5 min-w-0 flex-1">
                   <span className="relative flex-none w-[64px] h-[64px] rounded-[4px] overflow-hidden bg-[var(--qh-line)]">
-                    {spot?.image ? (
+                    {spot.image ? (
                       <img src={spot.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
                       <img src="/images/placeholder-spot.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
@@ -122,9 +125,15 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-[15px] font-semibold text-[var(--qh-ink)] leading-snug">{name}</span>
-                    {spot?.district && <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)] truncate">{spot.district}</span>}
+                    {spot.district && <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)] truncate">{spot.district}</span>}
                   </span>
-                  {spot && <span className="flex-none text-[13px] text-[var(--qh-faint)]" aria-hidden>→</span>}
+                  <span className="flex-none text-[13px] text-[var(--qh-faint)]" aria-hidden>→</span>
+                </span>
+              ) : (
+                <span className="flex items-center min-w-0 flex-1">
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[14px] font-medium leading-snug" style={{ color: "rgba(33,29,23,.72)" }}>{name}</span>
+                  </span>
                 </span>
               );
               return (
@@ -148,7 +157,10 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
           <p className="mt-5 text-[13px] leading-relaxed text-[var(--qh-faint2)]">{t("courseNoStops")}</p>
         )}
 
-        {/* ── Primary CTA — 이 코스 그대로 내 일정으로 (Owner 2026-09-12, 업계형 코스=시드) ── */}
+        {/* ── Primary CTA — 이 코스 그대로 내 일정으로 (Owner 2026-09-12, 업계형 코스=시드)
+             stop 이 하나도 없는 코스(상세 준비 중)는 채택 대상이 아니다 — CTA 자체를 그리지 않는다.
+             (adoptCourseDays 도 빈 배열이면 null 을 돌려주는 이중 방어) ── */}
+        {trip.stops.length > 0 && (
         <div className="mt-7 rounded-[4px] overflow-hidden" style={{ backgroundColor: "var(--qh-navy)" }}>
           <button
             type="button"
@@ -217,6 +229,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
             </div>
           )}
         </div>
+        )}
         {/* ── Secondary — 코스 없이 이 도시에서 빈 일정 시작(This Trip 승계 경로) ── */}
         <Link
           href={`/planner?city=${slug}`}
