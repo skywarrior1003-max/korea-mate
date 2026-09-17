@@ -659,3 +659,23 @@ Explore 로딩 중 "0개 장소" 오표시 제거(4 locale "불러오는 중…"
 ### 20.5 Rollback(단계별·실행 조건)
 
 ① 1633: 재주입은 Owner 명시 지시 시에만(오연결 정정 취지) — 값 = before snapshot desc_l10n. ② 신규 7행: **공개 해제 우선**(`is_published=false WHERE external_id IN (…) AND is_published`) — DELETE 는 참조 0 확인 후 Owner 지시 시에만. ③ 7/39: 이번 복구값 일치 조건으로 image=unsplash 원값(snapshot)·ko 키 제거·is_published=false 복원. ④ 연결/UI: b1f5ef4 revert 커밋 → 재빌드·배포. **순서 = 코드 revert·배포 먼저(참조 제거) → DB 공개 해제 → 값 복원.** Cloudflare 직전 정상 = d1ec0a26(3bd1048).
+
+## 21. My Trip city canonical + 비공개 place 게이트 (MYTRIP-CITY-CANONICALIZATION-AND-UNPUBLISHED-PLACE-GATE-V1, 2026-09-17)
+
+**master=Production b1f5ef4 → `1bb6dbd`(FF) · Cloudflare `d51f07e8` · Preview `preview-city-canon-place-gat`(09780b4d). DB write 0 · 기존 itinerary UPDATE 0.**
+
+### 21.1 city 계약
+- SSOT: `src/data/cities/index.ts`(CITY_SLUGS) + 기존 tripForm.city_* locale 라벨(4개 언어) — **resolver `src/data/cities/resolve.ts`가 라벨을 역파생**(중복 도시 목록 신설 0). trim+라틴 소문자 후 완전 일치만, unknown→null(기본 도시 대체 금지). 별칭 = slug+4locale 라벨 20개뿐(bare "Jeju/제주" 실사용 근거 미발견 → 미수용). 테스트 6/6(`resolve.test.ts`).
+- 쓰기: 코스 채택 city=slug · itinerary autosave `resolveCitySlug(city) ?? city`(미확정 원본 유지). 서버 copy 핸들러는 원본 승계 유지(runtime resolver가 커버 — Functions 번들에 4locale 메시지 292KB 유입 회피, 재저장 시 canonical 수렴).
+- 읽기/소비: my-trip-prep 게이트=resolved slug(실패 시 조용히 숨김) · 지도 중심·날씨 slug=resolver · 표시 `My {city} Trip`/og title=locale 라벨(slug 원문 미노출).
+
+### 21.2 비공개 place 게이트
+- `/place/[id]` generateStaticParams reference→**discovery**(Gate B의 reference 생성 계약을 Owner 결정으로 대체) — dynamicParams=false 라 비공개=404. 빌드 place 5,012→**4,644**.
+- 공개 클라이언트 hydration(fetchCitySpotsByIds — itinerary·DayMap) scope 인자 추가 후 discovery — 비공개 행 데이터 미전송, 미매칭 stop=snapshot name-only. citySpotHref 는 public catalog 실존 id 만 링크(404 링크 생성 0).
+- LIVE: 29/81/286/999999=404(초기 29·286 200 은 엣지 전파 지연 — 수분 후 404·cf-cache DYNAMIC·no-store 로 stale 캐시 없음 확인) · 7/39/5018/1633/672=200 · sitemap 비공개 미포함.
+
+### 21.3 LIVE QA(QA 여행 1건 — c6bb02ed…, 삭제 완료·잔존 0)
+KO 부산 채택→**POST city="busan"** 실측 · 본인 재열람 my-trip-prep 표시(도시 문구 "부산"=라벨, slug 노출 0) · **owner PUT 로 city="부산" fixture**→재열람 prep 유지+지도 로드(라벨 레코드 runtime 인식) · 타인 컨텍스트 열람 prep 숨김 · DELETE→404. **JA/ZH 직접 화면(§12 이행)**: ja 부산·zh 서울 Hub 모바일 390 — pill·도시명·여행 준비 접힘/칩/선택(추천1+대안≤1)·전국 표기·Explore 로딩 문구(読み込み中/正在加载·0 오표시 없음). 회귀: Home·낙산 name-only·0-stop CTA 없음·page errors 0.
+
+### 21.4 잔여
+비공개 게이트로 기존 여행의 비공개 stop 은 name-only(스냅숏 보존·수정 0) — 재공개는 장소별 Owner 결정 그대로. copy 핸들러 canonical 저장은 후속 후보(현재 승계+runtime 호환). 데스크톱 ja/zh·전 도시 조합은 공통 코드 검증 범위.
