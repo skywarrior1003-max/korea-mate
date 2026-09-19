@@ -13,6 +13,7 @@
 import tripsRaw from "./regional-trips-v1.json" with { type: "json" };
 import placesRaw from "./regional-places-v1.json" with { type: "json" };
 import essentialsRaw from "./regional-essentials-v1.json" with { type: "json" };
+import legacyStopsRaw from "./gyeongju-legacy-stops-v1.json" with { type: "json" };
 import { curatedTripsForCity } from "../curated-trips.ts";
 
 export interface RegionalTripStop {
@@ -60,6 +61,14 @@ const REGIONAL_TRIPS: RecommendedTrip[] = (tripsRaw as unknown as TripsFile).tri
   .map(t => ({ ...t, origin: "regional-official" as const }));
 const REGIONAL_PLACES: RecommendedPlace[] = (placesRaw as unknown as PlacesFile).places;
 
+// 경주 legacy 코스의 원본 stop 배선(GYEONGJU-LEGACY-COURSE-STOPS-PREVIEW-V1).
+// 원본 course-place-links 실측이 있는 16개 코스만 — 순서 그대로, LINKED 만 spotId.
+// name-only(HOLD 포함)는 spotId=null 로 이름·순서를 보존한다(임의 매칭 금지).
+interface LegacyStopsFile { courses: Record<string, { title: string | undefined; stops: RegionalTripStop[] }> }
+const GYEONGJU_LEGACY_STOPS: Record<string, RegionalTripStop[]> = Object.fromEntries(
+  Object.entries((legacyStopsRaw as unknown as LegacyStopsFile).courses).map(([id, c]) => [id, c.stops]),
+);
+
 /** locale 에 맞는 코스 제목 — 번역을 창작하지 않는다(title_en 없으면 원제) */
 export function tripDisplayTitle(trip: RecommendedTrip, locale: string): string {
   if (locale !== "ko" && trip.titleEn) return trip.titleEn;
@@ -81,7 +90,7 @@ export function getRecommendedTrips(city: string): RecommendedTrip[] {
       id: t.id, city: "gyeongju",
       title: t.title, titleEn: null,
       theme: t.theme, durationLabel: null,
-      days: t.days, stops: [],
+      days: t.days, stops: GYEONGJU_LEGACY_STOPS[t.id] ?? [],
       source: { provider: "Gyeongju official travel content", category: t.category },
       origin: "gyeongju-official" as const,
     }));

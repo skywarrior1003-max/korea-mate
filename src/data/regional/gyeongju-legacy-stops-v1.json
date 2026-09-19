@@ -1,0 +1,793 @@
+{
+ "note": "GYEONGJU-LEGACY-COURSE-STOPS-PREVIEW-V1 — 원본 course-place-links 순서 그대로. LINKED 만 spotId, 나머지 name-only.",
+ "courses": {
+  "6d2dfd6d4e94a0": {
+   "title": "팔방미인 보문관광단지 여행",
+   "stops": [
+    {
+     "name": "경주동궁원",
+     "nameEn": null,
+     "spotId": 502,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "보문호 육해공 액티비티",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문정",
+     "nameEn": null,
+     "spotId": 513,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "한국대중음악박물관",
+     "nameEn": null,
+     "spotId": 523,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주세계문화엑스포공원",
+     "nameEn": null,
+     "spotId": 504,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "보문호반길 아침산책",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주월드",
+     "nameEn": null,
+     "spotId": 507,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "8634d5b04154fc": {
+   "title": "경주의 유네스코 세계문화유산을 찾아서",
+   "stops": [
+    {
+     "name": "불국사",
+     "nameEn": null,
+     "spotId": 528,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "석굴암",
+     "nameEn": null,
+     "spotId": 530,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "신라역사과학관",
+     "nameEn": null,
+     "spotId": 531,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주역사유적지구 황룡사 지구",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주역사유적지구 월성 지구",
+     "nameEn": null,
+     "spotId": 427,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주 역사유적지구 대릉원지구",
+     "nameEn": null,
+     "spotId": 436,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "양동마을",
+     "nameEn": null,
+     "spotId": 546,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "옥산서원",
+     "nameEn": null,
+     "spotId": 548,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "26dc1a68d89d91": {
+   "title": "신라 이후의 천년 경주 '조선시대의 경주'",
+   "stops": [
+    {
+     "name": "경주최부자댁",
+     "nameEn": null,
+     "spotId": 429,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주향교",
+     "nameEn": null,
+     "spotId": 430,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "석빙고",
+     "nameEn": null,
+     "spotId": 661,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주읍성",
+     "nameEn": null,
+     "spotId": 428,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "양동마을",
+     "nameEn": null,
+     "spotId": 546,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "옥산서원",
+     "nameEn": null,
+     "spotId": 548,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "독락당",
+     "nameEn": null,
+     "spotId": 539,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "62459c196210d2": {
+   "title": "유휴(you 休)! 경주 바다에 머물다",
+   "stops": [
+    {
+     "name": "감은사지",
+     "nameEn": null,
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "문무대왕릉",
+     "nameEn": null,
+     "spotId": 493,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "읍천항",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "양남주상절리 파도소리길& 전망대",
+     "nameEn": null,
+     "spotId": 488,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주 동해안풀빌라",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "송대말등대 일출",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포항, 감포해국길 산책",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "전촌항",
+     "nameEn": null,
+     "spotId": 499,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "9e63b9e88c7484": {
+   "title": "예인의 도시 경주, 미술·문학기행",
+   "stops": [
+    {
+     "name": "박목월 생가",
+     "nameEn": null,
+     "spotId": 541,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "문정헌",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "우양미술관",
+     "nameEn": null,
+     "spotId": 519,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "솔거미술관",
+     "nameEn": null,
+     "spotId": 517,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "민속공예촌",
+     "nameEn": null,
+     "spotId": 527,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "동리목월문학관",
+     "nameEn": null,
+     "spotId": 526,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "9b2d66c1682879": {
+   "title": "반려견과 함께하는 경주여행",
+   "stops": [
+    {
+     "name": "첨성대",
+     "nameEn": null,
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주읍성",
+     "nameEn": null,
+     "spotId": 428,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "황성공원",
+     "nameEn": null,
+     "spotId": 554,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "신라왕경숲",
+     "nameEn": null,
+     "spotId": 452,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "반려견 동반 식당",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "반려견 동반 펜션",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문호반길",
+     "nameEn": null,
+     "spotId": 514,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주세계문화엑스포공원",
+     "nameEn": null,
+     "spotId": 504,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "81f7239c56b927": {
+   "title": "고분의 도시 경주, 개성있는 왕릉찾기",
+   "stops": [
+    {
+     "name": "쪽샘유적발굴관",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "대릉원 미추왕릉",
+     "nameEn": null,
+     "spotId": 438,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "오릉",
+     "nameEn": null,
+     "spotId": 475,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "삼릉",
+     "nameEn": null,
+     "spotId": 473,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "무열왕릉",
+     "nameEn": null,
+     "spotId": 540,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "진평왕릉",
+     "nameEn": null,
+     "spotId": 520,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "탈해왕릉",
+     "nameEn": null,
+     "spotId": 458,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "흥덕왕릉",
+     "nameEn": null,
+     "spotId": 555,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "2fde29376fca2e": {
+   "title": "동남산 구석구석",
+   "stops": [
+    {
+     "name": "월정교",
+     "nameEn": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "남산 불곡 마애여래좌상",
+     "nameEn": null,
+     "spotId": 469,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "남산 탑곡 마애불상군",
+     "nameEn": null,
+     "spotId": 470,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경북천년숲정원",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "헌강왕릉, 정강왕릉",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "통일전",
+     "nameEn": null,
+     "spotId": 479,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "서출지",
+     "nameEn": null,
+     "spotId": 474,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "남산동 동서삼층석탑",
+     "nameEn": null,
+     "spotId": 675,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "87b7d6be431eef": {
+   "title": "느린 걸음으로 '보문호둘레길' 걷기",
+   "stops": [
+    {
+     "name": "경주동궁원",
+     "nameEn": null,
+     "spotId": 502,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "물너울공원과 물너울교",
+     "nameEn": null,
+     "spotId": 510,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "보문콜로세움",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주세계자동차박물관",
+     "nameEn": null,
+     "spotId": 506,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "보문호반광장",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문정",
+     "nameEn": null,
+     "spotId": 513,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "호반1교",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "물향내쉼터",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "물너울교",
+     "nameEn": null,
+     "spotId": 510,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "부록. 보문호 전망 카페3선",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "7ca104af2a43d8": {
+   "title": "소금강산 트레킹",
+   "stops": [
+    {
+     "name": "탈해왕릉",
+     "nameEn": null,
+     "spotId": 458,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "굴불사지석불상",
+     "nameEn": null,
+     "spotId": 701,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "백률사",
+     "nameEn": null,
+     "spotId": 442,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "소금강산 정상",
+     "nameEn": null,
+     "spotId": 448,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "동천동마애삼존불좌상",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "용강동고분",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "황성공원",
+     "nameEn": null,
+     "spotId": 554,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "1db6f2f1c75c66": {
+   "title": "감포 바다 느리게 걷기",
+   "stops": [
+    {
+     "name": "송대말등대",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포항",
+     "nameEn": null,
+     "spotId": 669,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "감포해국길",
+     "nameEn": null,
+     "spotId": 484,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "거마장 마을",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "전촌 용굴",
+     "nameEn": null,
+     "spotId": 497,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "전촌항",
+     "nameEn": null,
+     "spotId": 499,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "전촌 솔밭해변",
+     "nameEn": null,
+     "spotId": 498,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "나정 고운모래해변",
+     "nameEn": null,
+     "spotId": 492,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  },
+  "3bd3edd4276e0f": {
+   "title": "삼릉가는 길",
+   "stops": [
+    {
+     "name": "월정교",
+     "nameEn": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "오릉",
+     "nameEn": null,
+     "spotId": 475,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "나정",
+     "nameEn": null,
+     "spotId": 666,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "포석정지",
+     "nameEn": null,
+     "spotId": 662,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "배리석불입상",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "삼릉",
+     "nameEn": null,
+     "spotId": 473,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "플레이스씨",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "d96db695f6d542": {
+   "title": "서악동 자전거여행",
+   "stops": [
+    {
+     "name": "흥무로",
+     "nameEn": null,
+     "spotId": 557,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "경주김유신묘",
+     "nameEn": null,
+     "spotId": 660,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "흥무공원",
+     "nameEn": null,
+     "spotId": 556,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "서악서원",
+     "nameEn": null,
+     "spotId": 543,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "무열왕릉",
+     "nameEn": null,
+     "spotId": 540,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "서악동3층석탑",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "79870661da2f6c": {
+   "title": "선덕여왕의 발자취를 찾아",
+   "stops": [
+    {
+     "name": "첨성대",
+     "nameEn": null,
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "능지탑지",
+     "nameEn": null,
+     "spotId": 435,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "선덕여왕릉",
+     "nameEn": null,
+     "spotId": 446,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "황복사지3층석탑",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "진평왕릉",
+     "nameEn": null,
+     "spotId": 520,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "분황사",
+     "nameEn": null,
+     "spotId": 444,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "황룡사지, 황룡사역사문화관",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "665f6a1495f352": {
+   "title": "황룡사 마루길 자전거 여행",
+   "stops": [
+    {
+     "name": "분황사",
+     "nameEn": null,
+     "spotId": 444,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "황룡사지, 황룡사역사문화관",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "국립경주박물관",
+     "nameEn": null,
+     "spotId": 432,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "월정교",
+     "nameEn": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "오릉",
+     "nameEn": null,
+     "spotId": 475,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "황리단길",
+     "nameEn": null,
+     "spotId": 462,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    },
+    {
+     "name": "쪽샘고분공원",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "080c8957f0431a": {
+   "title": "펌프트랙 타Go! 보문호도 즐기Go!",
+   "stops": [
+    {
+     "name": "경주시 자전거 공원",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "종오정",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "코스믹 리조트",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문호반광장",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "관광역사공원",
+     "nameEn": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 동궁원",
+     "nameEn": null,
+     "spotId": 502,
+     "linkage": "GYEONGJU_LEGACY_STOPS_V1"
+    }
+   ]
+  }
+ }
+}
