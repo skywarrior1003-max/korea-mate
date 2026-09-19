@@ -22,7 +22,8 @@
 
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
-  groundedSuggestionGuard, MODEL, TIMEOUT_MS,
+  groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
+  MODEL, TIMEOUT_MS, type MomentSuggestion,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 export interface Env {
@@ -36,7 +37,8 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-const reply = (suggestion: string | null, ai_status: string) => json({ suggestion, ai_status });
+const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null) =>
+  json({ suggestion, moment, ai_status });
 
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "ai-writing-worker", ...fields }));
@@ -57,6 +59,7 @@ async function keysMatch(provided: string, expected: string): Promise<boolean> {
 
 interface ProviderOutcome {
   suggestion: string | null;
+  moment: MomentSuggestion | null;
   ai_status: string;
   httpStatus: number | null;
   latencyMs: number;
@@ -65,7 +68,7 @@ interface ProviderOutcome {
 
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
-  apiKey: string, prompt: string, target: "title" | "memo",
+  apiKey: string, prompt: string, target: "title" | "memo" | "moment",
   direction?: "calm" | "witty" | "warm",
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
@@ -78,7 +81,7 @@ async function callProvider(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt, direction)),
+        body: JSON.stringify(buildProviderBody(prompt, direction, target)),
       },
     );
     clearTimeout(timer);
@@ -86,13 +89,21 @@ async function callProvider(
     if (!res.ok) {
       let errSnippet = "";
       try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
-      return { suggestion: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
+      return { suggestion: null, moment: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    if (target === "moment") {
+      const moment = extractMomentSuggestion(text);
+      return {
+        suggestion: null, moment,
+        ai_status: moment !== null ? "live" : "fallback_empty",
+        httpStatus: res.status, latencyMs, errSnippet: "",
+      };
+    }
     const suggestion = extractSuggestion(text, target);
     return {
-      suggestion,
+      suggestion, moment: null,
       ai_status: suggestion !== null ? "live" : "fallback_empty",
       httpStatus: res.status, latencyMs, errSnippet: "",
     };
@@ -100,7 +111,7 @@ async function callProvider(
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
     return {
-      suggestion: null,
+      suggestion: null, moment: null,
       ai_status: isAbort ? "fallback_timeout" : "fallback_error",
       httpStatus: null, latencyMs: Date.now() - started, errSnippet: "",
     };
@@ -200,6 +211,18 @@ export default {
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.
     // 걸리면 기존 honest fallback(200 + null). 재시도 없음.
+    if (body.target === "moment") {
+      const moment = groundedMomentGuard(body, outcome.moment);
+      const guarded = outcome.moment !== null && moment === null;
+      const ai_status = guarded ? "fallback_guard" : outcome.ai_status;
+      log({
+        ok: moment !== null, ai_status,
+        httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
+        target: body.target, dir: body.direction, locale: body.locale,
+        outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), err: outcome.errSnippet, guarded,
+      });
+      return reply(null, ai_status, moment);
+    }
     const suggestion = groundedSuggestionGuard(body, outcome.suggestion);
     const guarded = outcome.suggestion !== null && suggestion === null;
     const ai_status = guarded ? "fallback_guard" : outcome.ai_status;

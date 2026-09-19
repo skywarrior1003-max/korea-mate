@@ -17,8 +17,16 @@
 
 export const WRITING_DIRECTIONS = ["calm", "witty", "warm"] as const;
 export type WritingDirection = (typeof WRITING_DIRECTIONS)[number];
-export type WritingTarget = "title" | "memo";
+/**
+ * target "moment" (MYTRIP-AI-STORY-MAP-AND-SHARE-PREVIEW-V1): 순간 기록의
+ * 제목+본문 한 쌍을 한 번의 provider 호출로 만든다. 방향(3종)별로 클라이언트가
+ * 병렬 요청하므로 서버·Worker 의 "요청당 provider 1회·재시도 0" 계약은 그대로다.
+ */
+export type WritingTarget = "title" | "memo" | "moment";
 export type WritingLocale = "ko" | "en" | "ja" | "zh";
+
+/** moment 제안 한 쌍 — 두 필드가 모두 있어야 유효하다(§A 계약) */
+export interface MomentSuggestion { title: string; memo: string }
 
 export const MODEL = "gemini-2.5-flash";     // 저장소에 이미 승인된 모델 그대로
 export const TIMEOUT_MS = 8_000;             // personalize 와 같은 상한 — 늦으면 버린다
@@ -165,7 +173,7 @@ export function isWritingRequest(v: unknown): v is WritingRequest {
   if (!v || typeof v !== "object") return false;
   const r = v as Record<string, unknown>;
   return (
-    (r.target === "title" || r.target === "memo") &&
+    (r.target === "title" || r.target === "memo" || r.target === "moment") &&
     WRITING_DIRECTIONS.includes(r.direction as WritingDirection) &&
     ["ko", "en", "ja", "zh"].includes(r.locale as string) &&
     !!r.context && typeof r.context === "object" &&
@@ -184,8 +192,8 @@ export function buildWritingPrompt(req: WritingRequest): string {
   // hasPhoto 는 양방향 사실이다 (LOCALE-FACT-GROUNDING-V1 §7): 없음을 말하지
   // 않으면 모델이 "찍었다" 를 그럴듯한 행동으로 창작한다(LIVE 실측).
   if (c.hasPhoto) facts.push("photo available: YES — a photo exists but you CANNOT see it and do NOT know what is in it: never describe or guess its contents");
-  else if (req.target === "memo") facts.push("photo available: NO — the traveler did NOT take a photo here: never mention taking, holding, reviewing, or posing for photos/cameras");
-  if (clip(c.tripTitle, 80) && req.target === "memo") facts.push(`trip title: ${clip(c.tripTitle, 80)}`);
+  else if (req.target !== "title") facts.push("photo available: NO — the traveler did NOT take a photo here: never mention taking, holding, reviewing, or posing for photos/cameras");
+  if (clip(c.tripTitle, 80) && req.target !== "title") facts.push(`trip title: ${clip(c.tripTitle, 80)}`);
   // 실제 일정에서 셈한 여행 패턴(deriveTripWritingFacts) — 특히 title 의 재료다
   for (const f of (c.tripFacts ?? []).slice(0, MAX_TRIP_FACTS)) {
     const t = clip(f, MAX_FACT_CHARS);
@@ -195,9 +203,19 @@ export function buildWritingPrompt(req: WritingRequest): string {
 
   const what = req.target === "title"
     ? `one trip title, max ${MAX_TITLE_CHARS} characters`
+    : req.target === "moment"
+    ? `one moment title (max ${MAX_TITLE_CHARS} characters) AND one short travel memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters) for the SAME moment`
     : `one short travel memo of 1-2 sentences, max ${MAX_MEMO_CHARS} characters`;
 
-  const targetCraft = req.target === "title"
+  const targetCraft = req.target === "moment"
+    ? [
+        `Moment-title craft: a short first-person heading for THIS one moment/place — like the top line of a`,
+        `diary entry. Never a label ("${clip(c.city, 40)} Day N", place name alone), never a summary of the whole trip.`,
+        `Memo craft: stay inside THIS one moment/place. Use the place identity, the draft, and what this`,
+        `moment plausibly felt like — never narrate the itinerary ("came from X, heading to Y" is forbidden).`,
+        `Title and memo must read as one entry (same scene, same tone) without repeating the same sentence.`,
+      ].join(" ")
+    : req.target === "title"
     ? [
         `Title craft: catch what makes THIS trip itself — a pattern you can actually see in the facts`,
         `(e.g. many food stops, one repeated kind of place). NEVER a label like "{N} Days in {City}" or`,
@@ -255,9 +273,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
     `  Equivalents like "unforgettable memories", "忘れられない思い出", "难忘的回忆" are equally banned.`,
     `- The line must be specific enough that it could NOT be pasted onto a different trip unchanged.`,
     `- Do NOT address the reader, do NOT explain yourself, no hashtags, no quotes around the text.`,
-    `- First person voice of the traveler. Output the ${req.target} text alone.`,
+    `- First person voice of the traveler. Output the ${req.target === "moment" ? "title and memo" : `${req.target} text`} alone.`,
     `Before you answer: silently list every concrete claim in your line (people, photos, purchases, times, weather, objects, numbers, prior stops) and DELETE any claim not literally present in the facts/draft — replace it with plain being-there observation. Then output.
-Return JSON: {"suggestion": "<text>"}`,
+${req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
 
@@ -266,6 +284,47 @@ export const RESPONSE_SCHEMA = {
   properties: { suggestion: { type: "string" } },
   required: ["suggestion"],
 } as const;
+
+/** moment 응답 스키마 — 제목·본문 두 필드가 필수(하나만 오면 실패로 취급) */
+export const MOMENT_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: { title: { type: "string" }, memo: { type: "string" } },
+  required: ["title", "memo"],
+} as const;
+
+/**
+ * moment 응답 파서 — extractSuggestion 과 같은 PARSER SAFETY GUARD 원칙:
+ * 파싱 불가/필드 누락은 제안이 아니라 실패(null)다. 절단 payload 노출 금지.
+ */
+export function extractMomentSuggestion(text: string): MomentSuggestion | null {
+  const parse = (t: string): MomentSuggestion | null => {
+    try {
+      const j = JSON.parse(t) as { title?: unknown; memo?: unknown };
+      if (typeof j.title !== "string" || typeof j.memo !== "string") return null;
+      return { title: j.title, memo: j.memo };
+    } catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  const clean = (s: string, max: number) => {
+    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    if (v.length > max) v = v.slice(0, max).trim();
+    return v;
+  };
+  const title = clean(raw.title, MAX_TITLE_CHARS + 20);
+  const memo = clean(raw.memo, MAX_MEMO_CHARS + 60);
+  if (!title || !memo) return null;
+  return { title, memo };
+}
+
+/** moment 쌍에 기존 결정적 guard 를 적용 — 한 필드라도 걸리면 쌍 전체가 실패다. */
+export function groundedMomentGuard(req: WritingRequest, pair: MomentSuggestion | null): MomentSuggestion | null {
+  if (pair === null) return null;
+  const t = groundedSuggestionGuard(req, pair.title);
+  const m = groundedSuggestionGuard(req, pair.memo);
+  return t !== null && m !== null ? pair : null;
+}
 
 /**
  * provider 응답에서 제안을 안전하게 꺼낸다 — 깨졌으면 null(저장 흐름은 무사하다).
@@ -341,7 +400,7 @@ export const DIRECTION_TEMPERATURE: Record<WritingDirection, number> = {
 export const WITTY_THINKING_BUDGET = 1024;
 export const WITTY_MAX_OUTPUT_TOKENS = 1800;
 
-export function buildProviderBody(prompt: string, direction?: WritingDirection): unknown {
+export function buildProviderBody(prompt: string, direction?: WritingDirection, target?: WritingTarget): unknown {
   const witty = direction === "witty";
   return {
     contents: [{ parts: [{ text: prompt }] }],
@@ -350,7 +409,7 @@ export function buildProviderBody(prompt: string, direction?: WritingDirection):
       // 글맛이 필요한 작업 — profile(0.3)보다 높게, 폭주는 스키마로 잠근다
       temperature: direction ? DIRECTION_TEMPERATURE[direction] : 0.7,
       responseMimeType: "application/json",
-      responseSchema: RESPONSE_SCHEMA,
+      responseSchema: target === "moment" ? MOMENT_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
       // witty 만 thinking 증액 — "관찰→반전" 구성이 즉답으로는 자주 무너진다
       // (blind 실측, 특히 JA·food-heavy title). 같은 모델·같은 provider 의
       // 요청 옵션이며 호출은 버튼 클릭 시 1회뿐이다.

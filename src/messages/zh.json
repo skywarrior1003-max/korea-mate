@@ -607,7 +607,12 @@
     "loadingTrip": "正在载入行程…",
     "notFoundTitle": "找不到该行程",
     "notFoundBody": "此链接已失效或不存在。",
-    "planMyTrip": "规划我的行程"
+    "planMyTrip": "规划我的行程",
+    "journeyDone": "旅程完成",
+    "journeyOngoing": "旅程进行中",
+    "journeyUpcoming": "旅程即将开始",
+    "theJourney": "旅程轨迹",
+    "scrollExplore": "滑动浏览"
   },
   "memo": {
     "edit": "编辑",
@@ -680,7 +685,9 @@
     "consentApplying": "保存中…",
     "consentCancel": "取消",
     "publicFailed": "无法更改，请重试。",
-    "placeBound": "将记录到这个行程地点。其他地点请以自由瞬间记录。"
+    "placeBound": "将记录到这个行程地点。其他地点请以自由瞬间记录。",
+    "titleLabel": "标题",
+    "titlePlaceholder": "这一刻的标题（可选）"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",
@@ -1427,7 +1434,12 @@
     "go": "用 AI 来写",
     "busy": "生成中…",
     "failed": "暂时无法生成，请稍后再试。",
-    "editableHint": "可以自由修改建议的文字。这些内容也会出现在故事中。"
+    "editableHint": "可以自由修改建议的文字。这些内容也会出现在故事中。",
+    "suggestHeading": "AI 建议 — 三种风格",
+    "regenerate": "再次建议",
+    "suggestBusy": "正在生成三条建议…",
+    "suggestFailed": "暂时无法生成建议。可以自己填写，或稍后再试。",
+    "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。"
   },
   "guide": {
     "gotIt": "知道了",

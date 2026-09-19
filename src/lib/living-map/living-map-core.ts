@@ -81,3 +81,43 @@ export function livingMapDayColor(dayNumber: number): string {
   const n = Number.isInteger(dayNumber) && dayNumber >= 1 ? dayNumber : 1;
   return LIVING_MAP_DAY_COLORS[(n - 1) % LIVING_MAP_DAY_COLORS.length]!;
 }
+
+// ── 사진 마커 근접 강등 (MYTRIP-AI-STORY-MAP-AND-SHARE-PREVIEW-V1 §C) ────────
+//
+// 사진 썸네일 마커가 서로 겹치면 번호도 경로도 읽을 수 없다. 서로 충분히
+// 떨어진 마커는 사진+번호를 함께 보여도 되지만, 가까운 마커 무리는 **번호
+// 마커로 강등**한다 — 번호는 항상 식별 가능하고, 사진과 장소명은 마커 선택
+// 시 STOP 시트가 보여 준다(기존 계약). 줌 의존 픽셀 계산 대신 좌표 거리의
+// 결정적 규칙을 쓴다 — 렌더마다 흔들리지 않고 단위 테스트로 고정된다.
+
+/** 이 거리(미터) 안의 사진 마커 쌍은 서로를 가린다고 본다(썸네일 ≈ 48px). */
+export const PHOTO_MARKER_CLOSE_M = 90;
+
+function distM(aLat: number, aLng: number, bLat: number, bLng: number): number {
+  const R = 6371000, rad = (x: number) => (x * Math.PI) / 180;
+  const dLat = rad(bLat - aLat), dLng = rad(bLng - aLng);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(aLat)) * Math.cos(rad(bLat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+/**
+ * 같은 지도에 함께 그려질 마커 좌표들에서, 사진 마커를 번호로 강등해야 하는
+ * 인덱스를 돌려준다. 근접 쌍의 양쪽을 모두 강등한다 — 한쪽만 남기면 그 사진이
+ * 상대의 번호를 가린다. 좌표 없는 항목은 판정에서 빠진다(false).
+ */
+export function photoMarkerDemotions(
+  points: readonly ({ lat: number | null | undefined; lng: number | null | undefined })[],
+  thresholdM: number = PHOTO_MARKER_CLOSE_M,
+): boolean[] {
+  const out = points.map(() => false);
+  for (let i = 0; i < points.length; i++) {
+    const a = points[i]!;
+    if (typeof a.lat !== "number" || typeof a.lng !== "number") continue;
+    for (let j = i + 1; j < points.length; j++) {
+      const b = points[j]!;
+      if (typeof b.lat !== "number" || typeof b.lng !== "number") continue;
+      if (distM(a.lat, a.lng, b.lat, b.lng) <= thresholdM) { out[i] = true; out[j] = true; }
+    }
+  }
+  return out;
+}

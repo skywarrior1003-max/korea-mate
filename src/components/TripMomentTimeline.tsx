@@ -388,6 +388,10 @@ export default function TripMomentTimeline({
                 </div>
               ) : (
                 <>
+                  {/* 저장된 순간 제목(061) — AI 3안에서 고르거나 직접 쓴 최종값 그대로 */}
+                  {(m.title ?? "").trim() !== "" && (
+                    <p className="text-[15px] text-[#191C21] font-bold leading-snug mb-1">{m.title}</p>
+                  )}
                   {/* 최종 디자인은 메모를 여행자 본인의 목소리로 읽히게 둔다 —
                       설명문이 아니라 그때 쓴 문장이다. */}
                   {m.memo && (

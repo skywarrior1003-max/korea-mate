@@ -23,6 +23,8 @@ import { resolveDisplayImage } from "../place-detail/place-detail-core.ts";
 export interface ApiMemory {
   dayNumber: number | null;
   memo:      string | null;
+  /** 저장된 순간 제목(061) — 공개 egress 화이트리스트를 통과한 값. 옛 행은 없음. */
+  title?:    string | null;
   placeName: string | null;
   placeId:   string | null;
   photos:    { ref: string }[];
@@ -80,6 +82,8 @@ function baselineItem(dayNumber: number, idx: number, place: ApiPlace): StoryMem
     id:        `stop-${dayNumber}-${idx}`,
     memo:      "",
     placeName: name,
+    kind:      "stop",
+    order:     idx + 1,
     photos:    img ? [{ url: img, alt: name }] : [],
   };
 }
@@ -126,11 +130,14 @@ export function toStoryDays(api: ApiStory): StoryDay[] {
     byDay.set(target, list);
   });
 
-  const memoryItem = (m: ApiMemory, idx: number, target: number, placeName?: string): StoryMemory => ({
+  const memoryItem = (m: ApiMemory, idx: number, target: number, placeName?: string, order?: number): StoryMemory => ({
     // 화면 안에서만 쓰는 key. 서버가 준 내부 id 가 아니다(응답에 오지도 않는다).
     id:        `d${target}-${idx}`,
     memo:      m.memo ?? "",
+    ...(typeof m.title === "string" && m.title.trim() ? { title: m.title.trim() } : {}),
     placeName: m.placeName ?? placeName,
+    kind:      "moment",
+    ...(order !== undefined ? { order } : {}),
     photos:    m.photos.map(p => ({ url: memoryPhotoUrl(api.id, p.ref), alt: m.placeName ?? placeName })),
   });
 
@@ -148,7 +155,7 @@ export function toStoryDays(api: ApiStory): StoryDay[] {
     places.forEach((place, idx) => {
       const matched = dayMemories.filter(e => !used.has(e.idx) && memoryBelongsToPlace(e.m, place));
       if (matched.length > 0) {
-        for (const e of matched) { used.add(e.idx); items.push(memoryItem(e.m, e.idx, n, str(place.name) || undefined)); }
+        for (const e of matched) { used.add(e.idx); items.push(memoryItem(e.m, e.idx, n, str(place.name) || undefined, idx + 1)); }
       } else {
         items.push(baselineItem(n, idx, place));
       }

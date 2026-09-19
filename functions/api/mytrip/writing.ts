@@ -20,7 +20,8 @@
 
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
-  groundedSuggestionGuard, MODEL, TIMEOUT_MS, type WritingRequest,
+  groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
+  MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 interface Env {
@@ -38,7 +39,9 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-const reply = (suggestion: string | null, ai_status: string) => json({ suggestion, ai_status });
+// moment(제목+본문 쌍) 응답은 moment 필드로 나간다 — 기존 suggestion 소비자는 영향 없다.
+const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null) =>
+  json({ suggestion, moment, ai_status });
 
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "mytrip-writing", ...fields }));
@@ -64,11 +67,14 @@ async function viaWorker(
       log({ ok: false, kind: "worker_http", status: res.status, latencyMs: Date.now() - started });
       return reply(null, `fallback_worker_${res.status}`);
     }
-    const out = (await res.json()) as { suggestion?: unknown; ai_status?: unknown };
+    const out = (await res.json()) as { suggestion?: unknown; moment?: unknown; ai_status?: unknown };
     const suggestion = typeof out.suggestion === "string" ? out.suggestion : null;
+    const m = out.moment as { title?: unknown; memo?: unknown } | null | undefined;
+    const moment = m && typeof m.title === "string" && typeof m.memo === "string"
+      ? { title: m.title, memo: m.memo } : null;
     const ai_status = typeof out.ai_status === "string" ? out.ai_status : "fallback_worker_shape";
-    log({ ok: suggestion !== null, via: "worker", ai_status, latencyMs: Date.now() - started });
-    return reply(suggestion, ai_status);
+    log({ ok: suggestion !== null || moment !== null, via: "worker", ai_status, latencyMs: Date.now() - started });
+    return reply(suggestion, ai_status, moment);
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
@@ -92,7 +98,7 @@ async function viaDirect(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt, body.direction)),
+        body: JSON.stringify(buildProviderBody(prompt, body.direction, body.target)),
       },
     );
     clearTimeout(timer);
@@ -107,6 +113,12 @@ async function viaDirect(
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    if (body.target === "moment") {
+      const extracted = extractMomentSuggestion(text);
+      const moment = groundedMomentGuard(body, extracted);
+      log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null });
+      return reply(null, moment !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty", moment);
+    }
     const extracted = extractSuggestion(text, body.target);
     // 좁은 결정적 guard(§11) — 한글 오염/사진행동 발명만. 걸리면 honest fallback.
     const suggestion = groundedSuggestionGuard(body, extracted);

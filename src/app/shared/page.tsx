@@ -397,6 +397,7 @@ export default function SharedTripPage() {
         {cover ? (
           <StoryCover
             scrollHint="story-journal"
+            scrollHintLabel={tStory("scrollExplore")}
             data={{
               imageUrl: cover,
               eyebrow:  coverEyebrow(apiStory),
@@ -427,10 +428,19 @@ export default function SharedTripPage() {
             기하만 받는다 — 좌표·주소·클릭 가능한 위치 payload 는 없다. */}
         {(() => {
           const scene = parseJourneyScene((trip as unknown as { journeyMap?: unknown }).journeyMap);
-          return scene ? <StoryJourneyMap scene={scene} /> : null;
+          return scene ? <StoryJourneyMap scene={scene} titleLabel={tStory("theJourney")} /> : null;
         })()}
 
         <StorySummary
+          /* 여행 상태(예정/진행/완료)에 맞는 칩 — 완료 아닌 여행에 완료 문구 금지(§E) */
+          statusChipLabel={(() => {
+            const today = new Date().toISOString().slice(0, 10);
+            const start = (trip.start_date ?? "").slice(0, 10);
+            const end = (trip.end_date ?? "").slice(0, 10);
+            if (end && end < today) return tStory("journeyDone");
+            if (start && start > today) return tStory("journeyUpcoming");
+            return tStory("journeyOngoing");
+          })()}
           data={{
             title,
             stats: `${stats.dayCount} Days · ${stats.placeCount} Places`,

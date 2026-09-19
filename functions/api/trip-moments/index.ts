@@ -21,7 +21,7 @@ import {
   str,
   optNum,
 } from "../../../src/lib/itinerary-validate";
-import { normalizeMemo } from "../../../src/lib/trip-moments/memo-patch-core";
+import { normalizeMemo, normalizeMomentTitle } from "../../../src/lib/trip-moments/memo-patch-core";
 
 import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-moments/public-consent-core";
 import { normalizeStopKey, isMissingColumnError } from "../../../src/lib/trip-moments/stop-binding";
@@ -91,13 +91,15 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   // 그 컬럼 없이 한 번 더 읽는다(cover-state-core 의 031 fallback 과 같은 방식).
   const MOMENT_COLS      = "moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public";
   const MOMENT_COLS_055  = `${MOMENT_COLS}, stop_key`;
+  const MOMENT_COLS_061  = `${MOMENT_COLS_055}, title`; // 순간 제목(061 초안) — 미적용 환경 fallback 아래
   const listMoments = (cols: string) => admin
     .from("trip_moments")
     .select(cols)
     .eq("itinerary_id", itineraryId)
     .eq("device_id", deviceId)
     .order("captured_at", { ascending: false });
-  let { data, error } = await listMoments(MOMENT_COLS_055);
+  let { data, error } = await listMoments(MOMENT_COLS_061);
+  if (error && isMissingColumnError(error)) ({ data, error } = await listMoments(MOMENT_COLS_055));
   if (error && isMissingColumnError(error)) ({ data, error } = await listMoments(MOMENT_COLS));
 
   if (error) {
@@ -136,6 +138,9 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // memo: 무음 절단 금지 — 초과 시 400 (PATCH 와 동일 정책). 공백만 입력은 "" 허용.
   const memoNorm = normalizeMemo(body.memo ?? "");
   if (!memoNorm.ok) return json({ error: "Invalid memo" }, 400);
+  // title: 선택 사항 — memo 와 같은 정책(초과 400, 빈 값은 저장하지 않음)
+  const titleNorm = normalizeMomentTitle(body.title ?? null);
+  if (!titleNorm.ok) return json({ error: "Invalid title" }, 400);
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -173,6 +178,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     captured_at:    str(body.captured_at, 30) || new Date().toISOString(),
     // is_public 은 여기서 받지 않는다 — 기본값 false 로 들어가고, 공개 선택은
     // 동의를 함께 확인하는 전용 경로(`PUT .../public`)에서만 바뀐다.
+    ...(titleNorm.title !== null ? { title: titleNorm.title } : {}),
     ...(placeRes.placeName !== null ? { place_name:   placeRes.placeName }   : {}),
     ...(spotRes.citySpotId  !== null ? { city_spot_id: spotRes.citySpotId } : {}),
     ...(stopRes.stopKey     !== null ? { stop_key:     stopRes.stopKey }     : {}),
@@ -201,8 +207,16 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .upsert(row, { onConflict: "moment_id" });
 
-  // 055 미적용 환경: stop_key 컬럼이 없으면 그 값만 빼고 한 번 더 저장한다.
-  // 순간 자체는 남고, 장소 결합만 빠진다(자유 순간으로 보임). 저장을 막지 않는다.
+  // 미적용 migration 환경: 없는 컬럼(title 061 초안 → stop_key 055 순)만 빼고
+  // 다시 저장한다. 순간 자체는 남는다 — 저장을 막지 않는다.
+  if (error && "title" in row && isMissingColumnError(error)) {
+    console.warn("[trip-moments POST] title column missing — draft 061 not applied; saving without it");
+    const { title: _omitTitle, ...rowWithoutTitle } = row;
+    void _omitTitle;
+    Object.keys(row).forEach(k => delete row[k]);
+    Object.assign(row, rowWithoutTitle);
+    ({ error } = await admin.from("trip_moments").upsert(row, { onConflict: "moment_id" }));
+  }
   if (error && "stop_key" in row && isMissingColumnError(error)) {
     console.warn("[trip-moments POST] stop_key column missing — migration 055 not applied; saving without it");
     const { stop_key: _omit, ...rowWithoutStopKey } = row;

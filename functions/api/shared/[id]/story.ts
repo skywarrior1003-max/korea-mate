@@ -31,9 +31,10 @@ import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS } from "../../../../src/lib/share/public-story";
 import { buildJourneyScene } from "../../../../src/lib/share/journey-scene-core";
 import {
-  serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS,
+  serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS, PUBLIC_MEMORY_SELECT_COLUMNS_061,
   isMemoryPublic, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
+import { isMissingColumnError } from "../../../../src/lib/trip-moments/stop-binding";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
 import { isModerationHidden } from "../../../../src/lib/moderation/story-moderation-core";
 import { mergePhotoSet, type ChildPhotoRow } from "../../../../src/lib/trip-moments/photo-set";
@@ -102,11 +103,14 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   // ── 공개된 Memory ────────────────────────────────────────────────────────
   // 여기까지 왔다는 것은 여행이 공개라는 뜻이다(위에서 is_public 을 걸었다).
   // 그래도 Memory 쪽 조건은 따로 본다 — 여행 공개가 Memory 공개는 아니다.
-  const { data: momentRows, error: mErr } = await admin
+  // title(061 초안) 미적용 환경은 그 컬럼 없이 한 번 더 읽는다 — Story 를 막지 않는다.
+  const listMoments = (cols: string) => admin
     .from("trip_moments")
-    .select(PUBLIC_MEMORY_SELECT_COLUMNS)
+    .select(cols)
     .eq("itinerary_id", id)
     .eq("is_public", true);
+  let { data: momentRows, error: mErr } = await listMoments(PUBLIC_MEMORY_SELECT_COLUMNS_061);
+  if (mErr && isMissingColumnError(mErr)) ({ data: momentRows, error: mErr } = await listMoments(PUBLIC_MEMORY_SELECT_COLUMNS));
 
   if (mErr) {
     // Memory 를 못 읽었다고 일정 전체를 막지 않는다 — 빈 목록으로 내보낸다.

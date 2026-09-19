@@ -13,6 +13,17 @@
 import { normalizePlaceName, normalizeCitySpotId } from "./public-consent-core.ts";
 
 export const MEMO_MAX = 2000 as const;
+/** 순간 제목 상한 — 캡처 입력 maxLength(60)와 같은 값 */
+export const MOMENT_TITLE_MAX = 60 as const;
+
+/** title 입력 정규화 — memo 와 같은 원칙(무음 절단 금지, 빈 문자열 허용=제거). */
+export function normalizeMomentTitle(raw: unknown): { ok: true; title: string | null } | { ok: false } {
+  if (raw === null || raw === undefined) return { ok: true, title: null };
+  if (typeof raw !== "string") return { ok: false };
+  const title = raw.trim();
+  if (title.length > MOMENT_TITLE_MAX) return { ok: false };
+  return { ok: true, title: title || null };
+}
 
 interface QueryChain {
   select(fields: string): QueryChain;
@@ -44,16 +55,19 @@ export async function patchMomentMemo(
   body: Record<string, unknown>,
   admin: MomentAdminLike,
 ): Promise<MemoPatchResult> {
-  // 셋 다 없으면 바꿀 것이 없다
+  // 바꿀 것이 하나도 없으면 400
   const wantsMemo  = "memo" in body;
+  const wantsTitle = "title" in body;
   const wantsPlace = "place_name" in body;
   const wantsSpot  = "city_spot_id" in body;
-  if (!wantsMemo && !wantsPlace && !wantsSpot) {
+  if (!wantsMemo && !wantsTitle && !wantsPlace && !wantsSpot) {
     return { status: 400, body: { error: "memo is required" } };
   }
 
   const norm = wantsMemo ? normalizeMemo(body.memo) : ({ ok: true, memo: "" } as const);
   if (!norm.ok) return { status: 400, body: { error: "Invalid memo" } };
+  const titleRes = wantsTitle ? normalizeMomentTitle(body.title) : null;
+  if (titleRes && !titleRes.ok) return { status: 400, body: { error: "Invalid title" } };
 
   // 장소 표시명 — 비우는 것은 정상이고, 좌표 문자열은 거절한다
   const placeRes = wantsPlace ? normalizePlaceName(body.place_name) : null;
@@ -92,18 +106,25 @@ export async function patchMomentMemo(
   }
   if (!itinerary) return { status: 404, body: { error: "Not found" } };
 
-  // 3단계: memo 만 UPDATE. WHERE 에 device_id 를 함께 걸어 경합 상황을 방어한다.
-  const { data: updated, error: updErr } = (await admin
+  // 3단계: 화이트리스트 필드만 UPDATE. WHERE 에 device_id 를 함께 걸어 경합을 방어한다.
+  // title 컬럼(061 초안) 미적용 환경에서는 title 만 빼고 한 번 더 수행한다 —
+  // stop_key(055)와 같은 missing-column fallback 원칙. 수정 자체를 막지 않는다.
+  const RESPONSE_COLS = "moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, place_name, city_spot_id, is_public";
+  const runUpdate = (withTitle: boolean) => admin
     .from("trip_moments")
     .update({
       ...(wantsMemo  ? { memo: norm.memo } : {}),
+      ...(withTitle && titleRes ? { title: titleRes.title } : {}),
       ...(placeRes   ? { place_name:   placeRes.placeName }   : {}),
       ...(spotRes    ? { city_spot_id: spotRes.citySpotId }   : {}),
     })
     .eq("moment_id", momentId)
     .eq("device_id", deviceId)
-    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, place_name, city_spot_id, is_public")
-    .maybeSingle()) as { data: Record<string, unknown> | null; error: { code?: string } | null };
+    .select(withTitle ? `${RESPONSE_COLS}, title` : RESPONSE_COLS)
+    .maybeSingle() as Promise<{ data: Record<string, unknown> | null; error: { code?: string; message?: string } | null }>;
+  let { data: updated, error: updErr } = await runUpdate(true);
+  const missingTitleCol = updErr && (updErr.code === "42703" || /column .*title/i.test(updErr.message ?? "") || updErr.code === "PGRST204");
+  if (missingTitleCol) ({ data: updated, error: updErr } = await runUpdate(false));
   if (updErr) {
     console.error("[trip-moments PATCH] db error (update):", updErr.code);
     return { status: 500, body: { error: "Server error" } };

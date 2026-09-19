@@ -10,7 +10,7 @@ import { useTranslations, useLocale } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
-import AiWritingAssist from "@/components/AiWritingAssist";
+import MomentAiSuggest from "@/components/MomentAiSuggest";
 
 interface Props {
   itineraryId: string;
@@ -59,6 +59,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
   /** 압축에 실패해 빠진 장 수. 조용히 사라지면 몇 장을 골랐는지와 어긋난다. */
   const [failedCount,  setFailedCount]  = useState(0);
   const [memo,         setMemo]         = useState("");
+  /** 순간 제목 — AI 3안에서 고르거나 직접 쓴다. 저장 시 memo 와 함께 SSOT 가 된다. */
+  const [title,        setTitle]        = useState("");
   /**
    * 장소 이름. 선택 사항이다 — 여행 중 사진을 남기는 흐름을 막지 않는다.
    * 좌표(`location_label`)와 다른 값이다. 비워 두면 저장하지 않는다.
@@ -162,6 +164,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
       device_id:      deviceId,
       photo_data:     photoData,
       memo:           memo.trim(),
+      ...(title.trim() ? { title: title.trim() } : {}),
       category,
       lat,
       lng,
@@ -188,7 +191,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
       // 성공·실패 어느 쪽이든 loading 을 반드시 해제한다
       setSaving(false);
     }
-  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, placeName, category, lat, lng, dayNumber, onSave]);
+  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, title, placeName, category, lat, lng, dayNumber, onSave]);
 
   // 내부 enum(key)과 API 값은 영어 그대로 유지하고 표시명만 번역한다
   const catLabel = (k: MomentCategory) =>
@@ -369,11 +372,12 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
           )}
           <div>
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
-            {/* AI 글 방향 3종 — 결과는 아래 textarea 에 채워지고 그대로 고칠 수 있다 */}
+            {/* AI 3안(제목+본문) — 정보가 준비되면 자동 제안, 고른 안은 아래
+                필드에 채워지고 그대로 고칠 수 있다. 저장값이 Story 의 SSOT 다. */}
             <div className="mb-2"><JourneyCoach step="aiWriting" /></div>
             <div className="mb-3">
-              <AiWritingAssist
-                target="memo" dark
+              <MomentAiSuggest
+                ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}
                 buildContext={() => ({
                   city: (city ?? "").trim() || "Korea",
                   // 결합 순간 = DB canonical locale 이름(aiPlaceName), 자유 순간 =
@@ -385,9 +389,19 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
                   draft: memo.trim() || null,
                   tripTitle: (tripTitle ?? "").trim() || null,
                 })}
-                onSuggestion={text => setMemo(text.slice(0, 300))}
+                onPick={pick => { setTitle(pick.title.slice(0, 60)); setMemo(pick.memo.slice(0, 300)); }}
               />
             </div>
+            <label className="block text-xs font-bold text-white/50 mb-1.5" htmlFor="moment-title">{t("titleLabel")}</label>
+            <input
+              id="moment-title"
+              type="text"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              maxLength={60}
+              placeholder={t("titlePlaceholder")}
+              className="w-full mb-3 bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/25 placeholder:font-normal focus:outline-none focus:border-[#FF4A2D]/60"
+            />
             <textarea
               value={memo}
               onChange={e => setMemo(e.target.value)}

@@ -19,7 +19,7 @@ import { fetchCitySpotsByIds } from "@/lib/city-spots";
 import { uniqueNumericIds } from "@/lib/city-spots-paging";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { localizedPlaceName } from "@/lib/planner/planning-view-core";
-import { stopMarker, livingMapDayColor } from "@/lib/living-map/living-map-core";
+import { stopMarker, livingMapDayColor, photoMarkerDemotions } from "@/lib/living-map/living-map-core";
 import { stopKeyOf, stopCitySpotId } from "@/lib/trip-moments/stop-binding";
 import { naverPlaceSearchUrl } from "@/lib/maps/place-navigation";
 import type { StoryMomentInput } from "@/lib/share/private-story-adapter";
@@ -132,8 +132,13 @@ export default function ItineraryDayMap({
   }, [citySpots, moments, locale, selectedStop]);
 
   const dayPlaces: DayPlace[] = useMemo(() => {
-    if (mode === "whole") return days.flatMap(d => buildDayPlaces(d, { whole: true }));
-    return day ? buildDayPlaces(day, { whole: false }) : [];
+    const raw = mode === "whole"
+      ? days.flatMap(d => buildDayPlaces(d, { whole: true }))
+      : (day ? buildDayPlaces(day, { whole: false }) : []);
+    // 근접 마커의 사진 강등(§C) — 겹치는 사진 썸네일이 번호·경로를 가리지 않게.
+    // 강등돼도 번호 마커는 남고, 사진·장소명은 마커 선택 시 STOP 시트가 보여 준다.
+    const demote = photoMarkerDemotions(raw);
+    return raw.map((p, i) => (demote[i] && p.photoUrl ? { ...p, photoUrl: null } : p));
   }, [mode, days, day, buildDayPlaces]);
 
   // 이미 이 Day 일정에 있는 장소는 base 핀에서 제외 (중복 마커 방지).

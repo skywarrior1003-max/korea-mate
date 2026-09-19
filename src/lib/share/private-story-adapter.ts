@@ -59,6 +59,8 @@ export interface StoryMomentInput {
   /** 일반 열쇠(055). 있으면 이것이 우선, 없는 옛 행은 city_spot_id 로 결합 */
   stop_key?:         string | null;
   memo:              string;
+  /** 저장된 순간 제목(061). 옛 행에는 없다 — 그대로 없음으로 흐른다. */
+  title?:            string | null;
   photo_data?:       string | null;
   photo_data_extra?: string[] | null;
 }
@@ -105,11 +107,14 @@ function momentPhotos(m: StoryMomentInput, alt: string | undefined): StoryPhoto[
   return list.map(url => ({ url, alt }));
 }
 
-function momentItem(m: StoryMomentInput, placeName: string | undefined): StoryMemory {
+function momentItem(m: StoryMomentInput, placeName: string | undefined, order?: number): StoryMemory {
   return {
     id:        m.moment_id,
     memo:      s(m.memo),
+    ...(s(m.title) ? { title: s(m.title) } : {}),
     placeName,
+    kind:      "moment",
+    ...(order !== undefined ? { order } : {}),
     photos:    momentPhotos(m, placeName),
   };
 }
@@ -122,6 +127,8 @@ function baselineItem(dayNumber: number, idx: number, stop: StoryStopInput): Sto
     id:        `stop-${dayNumber}-${idx}`,
     memo:      "",
     placeName: name,
+    kind:      "stop",
+    order:     idx + 1,
     photos:    img ? [{ url: img, alt: name }] : [],
   };
 }
@@ -185,7 +192,7 @@ export function buildPrivateStoryDays(
       if (!opt.isPast && !stopReached(day.date, stop.time, opt)) return;
       const matched = dayMoments.filter(m => !used.has(m.moment_id) && momentBelongsToStop(m, stop));
       if (matched.length > 0) {
-        for (const m of matched) { used.add(m.moment_id); items.push(momentItem(m, s(stop.name) || undefined)); }
+        for (const m of matched) { used.add(m.moment_id); items.push(momentItem(m, s(stop.name) || undefined, idx + 1)); }
       } else {
         items.push(baselineItem(day.dayNumber, idx, stop));
       }

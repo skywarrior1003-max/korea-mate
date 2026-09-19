@@ -45,6 +45,9 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     location_label: String(r.location_label ?? ""),
     captured_at:    String(r.captured_at ?? new Date().toISOString()),
     day_number:     typeof r.day_number === "number" ? r.day_number : null,
+    // 저장된 제목이 SSOT 다 — 버리면 Story·Timeline 이 제목 없이 그려진다.
+    // 061 미적용 서버는 이 키를 주지 않으므로 없으면 null 로 둔다.
+    title:          typeof r.title === "string" && r.title.trim() !== "" ? r.title : null,
     synced:         true,
     // 서버는 storage_path 원문 대신 has_photo boolean 만 준다
     has_photo:      r.has_photo === true,
@@ -253,6 +256,9 @@ async function postMomentMeta(m: TripMoment, deviceId: string): Promise<boolean>
         moment_id:      m.moment_id,
         itinerary_id:   m.itinerary_id,
         memo:           m.memo,
+        // 제목 — 없으면 보내지 않는다(서버가 null 로 둔다). 061 미적용 서버는
+        // 이 키를 모르는 컬럼으로 받아도 fallback 재시도로 나머지를 저장한다.
+        ...(m.title ? { title: m.title } : {}),
         category:       m.category,
         // 장소 표시명 — 없으면 보내지 않는다(서버가 null 로 둔다)
         ...(m.place_name   ? { place_name:   m.place_name }   : {}),

@@ -27,9 +27,11 @@ const DOT_GRID =
 
 interface Props {
   scene: JourneyScene;
+  /** 섹션 제목 — 호출부가 UI locale 로 넘긴다. */
+  titleLabel?: string;
 }
 
-export default function StoryJourneyMap({ scene }: Props) {
+export default function StoryJourneyMap({ scene, titleLabel }: Props) {
   // 단위 공간(0..1)을 100×100 뷰박스에 얹고 8% 여백을 준다
   const S = 84, O = 8;
   const sx = (x: number) => O + x * S;
@@ -45,7 +47,7 @@ export default function StoryJourneyMap({ scene }: Props) {
         className="uppercase text-center"
         style={{ ...LABEL_CAPS_WIDE, color: ON_SURFACE_VARIANT, marginBottom: STACK_MD }}
       >
-        The Journey
+        {titleLabel ?? "The Journey"}
       </p>
 
       <div

@@ -35,8 +35,10 @@ const SUMMARY = read("src", "components", "story", "StorySummary.tsx");
 // ── 390px reference 실측으로 잡아낸 값들 ────────────────────────────────────
 // 아래 다섯은 눈으로는 "비슷"했지만 재 보니 달랐던 것들이다. 숫자로 박아 둔다.
 test("★독립 QA 에서 잡은 실측값이 되돌아가지 않는다", () => {
-  // ① 인용 줄간격 42.25px (26 × 1.625). 토큰의 1.3 을 그대로 쓰면 33.8px 이었다.
-  assert.match(JOURNAL, /lineHeight: 1\.625/);
+  // ① §B 재구성(2026-09-19) 실측: 개인 순간 본문 줄간격 1.6, 카드 비율 16:10.
+  //    한 장이 화면 높이를 독점하던 4/5 대형 반복 구조로 되돌아가지 않는다.
+  assert.match(JOURNAL, /lineHeight: 1\.6/);
+  assert.match(JOURNAL, /aspect-\[16\/10\]/);
   // ② Journey Complete 칩 글자색. 팔레트에서 눈으로 고르면 #370e00 을 집는다.
   assert.equal(T.ON_PRIMARY_CONTAINER, "#692200");
   // ③ Focus 인용 줄간격 60px (48 × 1.25). 1.2 면 57.6px 이었다.
@@ -174,7 +176,8 @@ test("★긴 memo 를 데이터에서 잘라내지 않는다", () => {
 test("★Summary 는 시안 순서를 지킨다", () => {
   // Props 선언이 아니라 **그려지는 순서**를 본다
   const jsx = SUMMARY.slice(SUMMARY.indexOf("return ("));
-  const order = ["Journey Complete", "data.title", "data.stats", "data.description",
+  // 칩 문구는 여행 상태별 prop(statusChipLabel)이다 — 완료 아닌 여행에 완료 문구 금지(§E)
+  const order = ["statusChipLabel", "data.title", "data.stats", "data.description",
                  "mapSlot", "copyLabel", "shareLabel", "gokoreamate"];
   let at = -1;
   for (const k of order) {

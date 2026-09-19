@@ -607,7 +607,12 @@
     "loadingTrip": "旅程を読み込んでいます…",
     "notFoundTitle": "旅程が見つかりません",
     "notFoundBody": "このリンクは期限切れか、存在しません。",
-    "planMyTrip": "自分の旅を作る"
+    "planMyTrip": "自分の旅を作る",
+    "journeyDone": "旅の記録 完",
+    "journeyOngoing": "旅の途中",
+    "journeyUpcoming": "旅の準備中",
+    "theJourney": "旅の軌跡",
+    "scrollExplore": "スクロールして見る"
   },
   "memo": {
     "edit": "編集",
@@ -680,7 +685,9 @@
     "consentApplying": "保存中…",
     "consentCancel": "キャンセル",
     "publicFailed": "変更できませんでした。もう一度お試しください。",
-    "placeBound": "この旅程の場所に記録されます。別の場所は自由な瞬間として残してください。"
+    "placeBound": "この旅程の場所に記録されます。別の場所は自由な瞬間として残してください。",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "この瞬間のタイトル（任意）"
   },
   "dayDone": {
     "title": "Day {n} 完走！",
@@ -1427,7 +1434,12 @@
     "go": "AIで書いてみる",
     "busy": "作成中…",
     "failed": "今は作成できません。しばらくしてからもう一度お試しください。",
-    "editableHint": "提案された文章は自由に編集できます。この内容はストーリーにも表示されます。"
+    "editableHint": "提案された文章は自由に編集できます。この内容はストーリーにも表示されます。",
+    "suggestHeading": "AIの提案 — 3つのスタイル",
+    "regenerate": "もう一度提案",
+    "suggestBusy": "3つの提案を作成中…",
+    "suggestFailed": "いま提案を作成できません。自分で書くか、少し後で再度お試しください。",
+    "pickHint": "気に入った案をタップすると下のタイトルとメモに入ります — 自由に編集できます。"
   },
   "guide": {
     "gotIt": "わかった",

@@ -19,8 +19,17 @@ export interface StoryMemory {
   id: string;
   /** 사용자가 적은 문구 그대로. 여기서 만들어 내거나 다듬지 않는다. */
   memo: string;
+  /** 저장된 순간 제목 그대로(061). 없으면 그리지 않는다 — 만들어 내지 않는다. */
+  title?: string;
   /** 화면에 보이는 장소 이름. 좌표·주소·지도 링크는 받지 않는다. */
   placeName?: string;
+  /**
+   * moment = 사용자가 남긴 개인 순간(시각적 우선) · stop = 일정 골격 장소.
+   * 없으면 stop 으로 취급한다(옛 호출부 호환).
+   */
+  kind?: "moment" | "stop";
+  /** 그 Day 안의 방문 순서(1부터). 일정에 결합된 항목만 갖는다. */
+  order?: number;
   photos: StoryPhoto[];
 }
 

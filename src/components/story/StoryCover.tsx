@@ -17,9 +17,11 @@ interface Props {
   data: StoryCoverData;
   /** 아래로 넘어갈 자리. Journal 섹션의 id 를 준다. */
   scrollHint?: string;
+  /** 스크롤 힌트 문구 — 호출부가 UI locale 로 넘긴다(영문 하드코딩 금지 §E). */
+  scrollHintLabel?: string;
 }
 
-export default function StoryCover({ data, scrollHint }: Props) {
+export default function StoryCover({ data, scrollHint, scrollHintLabel }: Props) {
   return (
     <section
       className="relative h-screen w-full flex flex-col justify-end overflow-hidden"
@@ -76,7 +78,7 @@ export default function StoryCover({ data, scrollHint }: Props) {
         >
           {/* prefers-reduced-motion 에서는 흔들지 않는다 */}
           <span className="motion-safe:animate-bounce flex flex-col items-center">
-            <span className="text-white mb-1" style={LABEL_CAPS}>Scroll to explore</span>
+            <span className="text-white mb-1" style={LABEL_CAPS}>{scrollHintLabel ?? "Scroll to explore"}</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden
                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                  className="text-white">

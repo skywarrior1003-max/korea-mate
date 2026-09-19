@@ -21,11 +21,15 @@
 /** 서버가 읽어야 하는 Memory 컬럼. 이 목록 밖의 값은 가져오지 않는다. */
 export const PUBLIC_MEMORY_SELECT_COLUMNS =
   "moment_id, memo, place_name, city_spot_id, day_number, captured_at, storage_path, is_public, public_consent_at, public_consent_version";
+/** 061(title) 적용 환경용 — 미적용이면 호출부가 위 목록으로 fallback 한다. */
+export const PUBLIC_MEMORY_SELECT_COLUMNS_061 = `${PUBLIC_MEMORY_SELECT_COLUMNS}, title`;
 
 /** DB 에서 읽은 Memory 한 행 중 이 모듈이 쓰는 것 */
 export interface InternalMemoryRow {
   moment_id:              string;
   memo:                   string | null;
+  /** 순간 제목(061). 미적용 환경 행에는 없다. */
+  title?:                 string | null;
   place_name:             string | null;
   city_spot_id:           number | null;
   day_number:             number | null;
@@ -55,6 +59,8 @@ export interface PublicMemoryPhoto {
 export interface PublicMemory {
   dayNumber: number | null;
   memo:      string | null;
+  /** 저장된 순간 제목 그대로 — 공개로 고른 Memory 의 일부다(별도 동의 아님). */
+  title:     string | null;
   placeName: string | null;
   /** 공식 장소일 때만. 나중에 "내 Saved 로" 를 붙일 때 쓴다. */
   placeId:   string | null;
@@ -166,9 +172,11 @@ export async function serializePublicMemories(input: SerializeInput): Promise<Pu
       : null;
 
     const memo = clean(r.memo);
+    const title = clean(r.title);
     out.push({
       dayNumber: typeof r.day_number === "number" ? r.day_number : null,
       memo:      memo === "" ? null : memo,
+      title:     title === "" ? null : title,
       placeName: clean(r.place_name) === "" ? null : clean(r.place_name),
       placeId,
       photos,

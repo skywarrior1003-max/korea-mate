@@ -190,7 +190,7 @@ test("★나가는 객체에 내부 값이 하나도 없다", async () => {
     assert.ok(!raw.includes(field), `이름이 샌다: ${field}`);
   }
   assert.deepEqual(Object.keys(out[0]!).sort(),
-    ["dayNumber", "memo", "photos", "placeId", "placeName"].sort());
+    ["dayNumber", "memo", "title", "photos", "placeId", "placeName"].sort());
   assert.deepEqual(Object.keys(out[0]!.photos[0]!), ["ref"]);
 });
 

@@ -41,10 +41,15 @@ interface Props {
   copyBusy?: boolean;
   onShare?: () => void;
   shareLabel: string;
+  /**
+   * 상단 칩 문구 — 여행 상태(예정/진행 중/완료)에 맞게 호출부가 UI locale 로
+   * 만들어 넘긴다. 완료가 아닌 여행에 "Journey Complete" 를 박지 않는다(§E).
+   */
+  statusChipLabel: string;
 }
 
 export default function StorySummary({
-  data, mapSlot, hideMapSlot, onCopy, copyLabel, copyBusy, onShare, shareLabel,
+  data, mapSlot, hideMapSlot, onCopy, copyLabel, copyBusy, onShare, shareLabel, statusChipLabel,
 }: Props) {
   return (
     <section
@@ -68,7 +73,7 @@ export default function StorySummary({
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden fill="currentColor">
             <path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4L4.2 7.7l5.4-.8z" />
           </svg>
-          Journey Complete
+          {statusChipLabel}
         </span>
 
         <h2 className="mb-2" style={{ ...DISPLAY_MEMORY, color: ON_SURFACE }}>{data.title}</h2>

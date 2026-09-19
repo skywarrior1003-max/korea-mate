@@ -1405,6 +1405,7 @@ function ItineraryResult() {
   // ── Supabase 동기화 상태 ──────────────────────────────────
   const t = useTranslations("itin");
   const tStay = useTranslations("stay");
+  const tStory = useTranslations("story");
   const tMemo = useTranslations("memo");
   const tPlanner = useTranslations("planner");
   // 체류시간 표기 — 값은 스케줄러의 stay_minutes 그대로, 표기만 locale 로
@@ -2337,6 +2338,8 @@ function ItineraryResult() {
       setStoryCardMoments(toStoryCardMoments(api));
       // 카드의 제목·대표 fallback 이미지도 공개 payload 값만 쓴다(9:16 = OG 규칙)
       setStoryCardFallback(representativeCoverUrl(api));
+      // 공개 성공 모달 위에 카드 모달을 겹치지 않는다(§E) — 카드가 열리면 앞 모달은 닫는다.
+      setPublishPreviewOpen(false);
       setStoryExportOpen(true);
       return true;
     } catch { return false; }
@@ -3086,6 +3089,7 @@ function ItineraryResult() {
                   {coverUrl && (
                     <StoryCover
                       scrollHint="owner-story-journal"
+                      scrollHintLabel={tStory("scrollExplore")}
                       data={{ imageUrl: coverUrl, eyebrow, title: storyTitle }}
                     />
                   )}
@@ -3098,6 +3102,7 @@ function ItineraryResult() {
                   {/* Journey Summary + map context — Living Map 전체 여정을 작게.
                       새 지도가 아니라 같은 Living Map 의 읽기 전용 Whole Trip 이다(§12). */}
                   <StorySummary
+                    statusChipLabel={isPastTrip ? tStory("journeyDone") : tStory("journeyOngoing")}
                     data={{ title: storyTitle, stats: `${days.length} Days · ${placeTotal} Places`, description: "" }}
                     copyLabel=""
                     shareLabel=""

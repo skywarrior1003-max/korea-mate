@@ -607,7 +607,12 @@
     "loadingTrip": "Loading itinerary…",
     "notFoundTitle": "Itinerary not found",
     "notFoundBody": "This link has expired or does not exist.",
-    "planMyTrip": "Plan my trip"
+    "planMyTrip": "Plan my trip",
+    "journeyDone": "Journey Complete",
+    "journeyOngoing": "Journey in Progress",
+    "journeyUpcoming": "Journey Ahead",
+    "theJourney": "The Journey",
+    "scrollExplore": "Scroll to explore"
   },
   "memo": {
     "edit": "Edit",
@@ -680,7 +685,9 @@
     "consentApplying": "Saving…",
     "consentCancel": "Cancel",
     "publicFailed": "Could not change this. Please try again.",
-    "placeBound": "Saved to this itinerary stop. To record somewhere else, add a free moment."
+    "placeBound": "Saved to this itinerary stop. To record somewhere else, add a free moment.",
+    "titleLabel": "Title",
+    "titlePlaceholder": "A title for this moment (optional)"
   },
   "dayDone": {
     "title": "Day {n} complete!",
@@ -1427,7 +1434,12 @@
     "go": "Write with AI",
     "busy": "Writing…",
     "failed": "Couldn't write right now. Please try again in a moment.",
-    "editableHint": "You can edit the suggestion freely. This text also appears in your Story."
+    "editableHint": "You can edit the suggestion freely. This text also appears in your Story.",
+    "suggestHeading": "AI suggestions — three styles",
+    "regenerate": "Suggest again",
+    "suggestBusy": "Writing three suggestions…",
+    "suggestFailed": "Suggestions are unavailable right now. Write your own, or try again shortly.",
+    "pickHint": "Tap one to fill the title and memo below — you can edit freely."
   },
   "guide": {
     "gotIt": "Got it",

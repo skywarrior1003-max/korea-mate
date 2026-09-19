@@ -6,7 +6,7 @@
 
 import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
 import ShareIcon from "@/components/ui/ShareIcon";
-import { useRef, useCallback, useState } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
 // 390px 로 실측해 확정한 값(story-tokens)을 그대로 확대해 쓴다.
@@ -533,6 +533,15 @@ export default function TripStoryExport({
   }, []);
 
   const nativeShareSupported = typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+  // 모달이 열리면 바로 그린다 — "빈 카드 + 생성 버튼" 단계를 없앤다(§E).
+  // 실패(photoError)하면 기존 다시 시도 버튼 흐름이 그대로 이어받는다.
+  const autoRendered = useRef(false);
+  useEffect(() => {
+    if (autoRendered.current) return;
+    autoRendered.current = true;
+    void render();
+  }, [render]);
 
   return (
     <div

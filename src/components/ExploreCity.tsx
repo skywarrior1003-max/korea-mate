@@ -540,8 +540,13 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           가짜 결과는 없다(입력 전에는 기존 목록 그대로). */}
       <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} autoFocus={searchParams.get("focus") === "search"} />
       {pastedUrl && (
-        <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
-             style={{ backgroundColor: "var(--gkm-action-tint)" }}>
+        /* URL 은 검색어가 아니다 — 행 전체가 눌리는 명확한 액션이다(작은 화살표에
+           동작을 숨기지 않는다, §F). Home 검색의 URL 행과 같은 계약을 쓴다. */
+        <Link
+          href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
+          className="gkm-focus mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3 min-h-12"
+          style={{ backgroundColor: "var(--gkm-action-tint)" }}
+        >
           <div className="min-w-0">
             <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
               {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("urlOpenShared")}
@@ -550,12 +555,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}
             </p>
           </div>
-          <Link
-            href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
-            className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
-            style={{ backgroundColor: "var(--gkm-action-primary)" }}
-          >→</Link>
-        </div>
+          <span aria-hidden className="shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
+                style={{ backgroundColor: "var(--gkm-action-primary)" }}>→</span>
+        </Link>
       )}
       <div className="mt-3">{viewToggle}</div>
       <div className="flex flex-wrap items-center gap-2 mt-1">
@@ -668,9 +670,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const pageHeader = (
     <div className="flex items-center justify-between gap-4 mb-5">
       <p className="text-gray-500 text-sm">
-        {/* 데이터 로딩이 끝나기 전에는 개수를 말하지 않는다 — "0개 장소" 오표시 방지 */}
-        {spotsLoading
-          ? tE("loadingSpots")
+        {/* 데이터 로딩이 끝나기 전에는 개수를 말하지 않는다 — "0개 장소" 오표시 방지.
+            URL 입력 중에도 개수를 말하지 않는다 — URL 은 장소 검색이 아니다(§F). */}
+        {spotsLoading || pastedUrl
+          ? (pastedUrl ? "" : tE("loadingSpots"))
           : <>
               {filteredSpots.length === 1
                 ? tE("spotCount", { count: filteredSpots.length })
@@ -829,8 +832,12 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                   className="gkm-focus shrink-0 min-h-11 px-2.5 text-sm font-bold text-gray-500">{tM("closeAria")}</button>
               </div>
               {pastedUrl && (
-                <div className="mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3"
-                     style={{ backgroundColor: "var(--gkm-action-tint)" }}>
+                /* 리스트 뷰와 같은 계약 — 행 전체가 눌리는 명확한 액션(§F) */
+                <Link
+                  href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
+                  className="gkm-focus mt-2 px-4 py-3 rounded-xl flex items-center justify-between gap-3 min-h-12"
+                  style={{ backgroundColor: "var(--gkm-action-tint)" }}
+                >
                   <div className="min-w-0">
                     <p className="text-sm font-bold truncate" style={{ color: "var(--gkm-action-primary)" }}>
                       {pastedUrl.kind === "external" ? tQ("urlAnalyzeCta") : tQ("urlOpenShared")}
@@ -839,12 +846,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                       {pastedUrl.kind === "external" ? new URL(pastedUrl.url).hostname : pastedUrl.path}
                     </p>
                   </div>
-                  <Link
-                    href={pastedUrl.kind === "external" ? `/import?url=${encodeURIComponent(pastedUrl.url)}` : pastedUrl.path}
-                    className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
-                    style={{ backgroundColor: "var(--gkm-action-primary)" }}
-                  >→</Link>
-                </div>
+                  <span aria-hidden className="shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-white inline-flex items-center"
+                        style={{ backgroundColor: "var(--gkm-action-primary)" }}>→</span>
+                </Link>
               )}
               <div className="flex flex-wrap items-center gap-2 mt-3">
                 {spotCategories.map(cat => (

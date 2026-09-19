@@ -17,6 +17,12 @@ export interface TripMoment {
   device_id:    string;
   photo_data:   string | null; // canvas-compressed data URL (max 600px JPEG 75%)
   memo:         string;
+  /**
+   * 순간 제목 (MYTRIP-AI-STORY-MAP-AND-SHARE-PREVIEW-V1). AI 3안에서 고르거나
+   * 직접 쓴 값 — memo 와 함께 이 저장값이 Story 표시의 SSOT 다. 선택 사항.
+   * (컬럼 미적용 환경에서는 저장 시 이 값만 빠지고 순간 자체는 남는다.)
+   */
+  title?:       string | null;
   category:     MomentCategory;
   lat:          number | null;
   lng:          number | null;
