@@ -23,8 +23,9 @@ import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-
 import { QUIET_CITIES } from "./quiet-data";
 import QuietSearch from "./QuietSearch";
 
-// KTO 광화문(contentId 126512) 공식 이미지 — 프로젝트 자산(hotlink 아님).
-const HERO_IMG = "/images/home/home-hero-seoul-gwanghwamun-v1.webp";
+// Owner 제공 AI 생성 비주얼(비 갠 늦은 오후의 광화문) — 공식 사진 아님.
+// 출처·Known Risk: docs/product/home-seoul-a-hero-image-source-v2-ai.md
+const HERO_IMG = "/images/home/home-hero-seoul-gwanghwamun-ai-v1.webp";
 
 export default function QuietHome() {
   const t = useTranslations("quiet");
@@ -64,12 +65,14 @@ export default function QuietHome() {
       >
         {/* RT-08 art-direction fallback: 사진이 없어도 성립하는 어두운 베이스 */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(178deg,#12161d 0%,#1a212b 46%,#0d1015 100%)" }} />
+        {/* crop: 모바일 = 광화문(x≈56%)+여행자(x≈72~80%)가 함께 남는 66% 중심,
+            데스크톱 = 가로 전폭·세로만 잘리므로 문루 지붕과 여행자 발이 같이 남는 y 위치 */}
         <Image
-          src={HERO_IMG} alt="" fill priority sizes="100vw"
-          className="object-cover" style={{ objectPosition: "50% 42%" }}
+          src={HERO_IMG} alt={t("heroAlt")} fill priority sizes="100vw"
+          className="object-cover object-[66%_50%] md:object-[50%_55%]"
         />
-        {/* RT-04: 하단 scrim — 밝은 사진 위 흰 글자 보호 */}
-        <div className="absolute inset-x-0 bottom-0 h-[62%]" style={{ background: "linear-gradient(180deg,transparent,rgba(8,15,14,.18) 30%,rgba(8,15,14,.8))" }} />
+        {/* RT-04: 하단 scrim — 좌하단 문구 가독 보호(이미지 전체를 검게 만들지 않는다) */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,15,14,.72) 0%, rgba(8,15,14,.18) 42%, transparent 68%)" }} />
 
         <div className="relative h-full max-w-3xl mx-auto px-5 md:px-6 flex flex-col">
           {/* keep-all: 한국어 단어 중간 줄바꿈 방지("오/늘의" 실측) — 라틴 문안엔 영향 없음 */}
@@ -96,33 +99,33 @@ export default function QuietHome() {
       </div>
 
       {/* ══ FLOOR — 3단계 → 5도시 → Picks ══ */}
-      <section className="max-w-3xl mx-auto px-5 md:px-6 pt-10 pb-12" style={{ scrollMarginTop: "4.2rem" }}>
+      <section className="max-w-3xl mx-auto px-5 md:px-6 pt-10 md:pt-14 pb-12" style={{ scrollMarginTop: "4.2rem" }}>
         {/* 모바일에서 검색 활성 중엔 결과 표면이 곧 화면 — 아래 섹션은 조용히 물러난다 */}
         <div className={searchActive ? "hidden md:block" : undefined}>
           {/* 여행이 이렇게 남습니다 — 01 일정 · 02 순간 · 03 Story */}
-          <h2 className="qh-serif text-[22px] md:text-[27px] text-[var(--qh-ink)]" style={{ letterSpacing: "-.03em" }}>
+          <h2 className="qh-serif text-[22px] md:text-[30px] text-[var(--qh-ink)]" style={{ letterSpacing: "-.03em" }}>
             {t("journeyTitle")}
           </h2>
-          <div className="mt-2 md:mt-6 md:grid md:grid-cols-3 border-t border-[var(--qh-line)] md:border-t-0 md:pb-2" style={{ wordBreak: "keep-all" }}>
+          <div className="mt-2 md:mt-7 md:grid md:grid-cols-3 border-t border-[var(--qh-line)] md:border-t-0 md:pb-2" style={{ wordBreak: "keep-all" }}>
             {steps.map((n, i) => (
               <div
                 key={n}
-                className={`grid grid-cols-[40px_1fr] gap-2.5 py-4 border-b border-[var(--qh-line)] md:border-b-0 md:py-1 ${
+                className={`grid grid-cols-[40px_1fr] md:grid-cols-[46px_1fr] gap-2.5 py-4 border-b border-[var(--qh-line)] md:border-b-0 md:py-2 ${
                   i > 0 ? "md:pl-8 md:border-l md:border-[var(--qh-line)]" : ""
                 } ${i < steps.length - 1 ? "md:pr-8" : ""}`}
               >
-                <span aria-hidden className="qh-serif text-[20px] md:text-[22px] leading-[1.15] text-[var(--qh-clay)]">
+                <span aria-hidden className="qh-serif text-[20px] md:text-[26px] leading-[1.15] text-[var(--qh-clay)]">
                   {`0${n}`}
                 </span>
                 <span>
-                  <h3 className="text-[15px] font-semibold text-[var(--qh-ink)]">{t(`journeyStep${n}Title`)}</h3>
-                  <p className="mt-1 text-[12.5px] md:text-[13px] leading-[1.55] text-[var(--qh-faint)]">{t(`journeyStep${n}Desc`)}</p>
+                  <h3 className="text-[15px] md:text-[17px] font-semibold text-[var(--qh-ink)]">{t(`journeyStep${n}Title`)}</h3>
+                  <p className="mt-1 text-[12.5px] md:text-[14px] leading-[1.55] md:leading-[1.6] text-[var(--qh-faint)]">{t(`journeyStep${n}Desc`)}</p>
                 </span>
               </div>
             ))}
           </div>
 
-          <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-8">{t("citiesLabel")}</h2>
+          <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-8 md:mt-12">{t("citiesLabel")}</h2>
           <div className="mt-3 flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-5 md:overflow-visible" style={{ scrollbarWidth: "none" }}>
             {QUIET_CITIES.map(c => {
               // 도시 진입 selector 는 City Hub Hero 와 도시 identity 를 맞춘다

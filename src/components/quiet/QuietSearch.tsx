@@ -154,11 +154,12 @@ export default function QuietSearch({ variant, onActiveChange }: QuietSearchProp
   return (
     <div className="qh relative">
       {/* ── field — 모든 상태에서 같은 자리, 같은 요소 ── */}
+      {/* 조용한 흰색 pill(시안 3-A) — 얕은 그림자 하나, 유리 효과·과도한 음영 금지 */}
       <div
-        className={`flex items-center gap-3 rounded-[4px] px-4 transition-colors duration-200 ${
+        className={`flex items-center gap-3 rounded-[14px] px-5 transition-colors duration-200 ${
           glass
             ? "bg-white/15 border border-white/30 backdrop-blur-[6px]"
-            : "bg-white border-[1.5px] border-[var(--qh-ink)]"
+            : "bg-white border border-[rgba(32,39,36,.22)] shadow-[0_5px_18px_rgba(31,40,35,.10)]"
         } ${active ? "ring-2 ring-[var(--qh-clay)]/25" : ""}`}
         style={{ minHeight: 52 }}
       >

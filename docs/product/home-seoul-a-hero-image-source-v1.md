@@ -2,6 +2,11 @@
 
 MAIN-HOME-SEOUL-A-REAL-APP-PREVIEW-V1 (2026-09-19)
 
+> **STATUS(2026-09-19, V2): 이전 후보 — 현재 Preview 미사용.**
+> MAIN-HOME-SEOUL-A-AI-HERO-PREVIEW-REFINEMENT-V2 에서 Owner 제공 AI 생성 비주얼로
+> 교체됨(`docs/product/home-seoul-a-hero-image-source-v2-ai.md`). 이 문서와
+> `home-hero-seoul-gwanghwamun-v1.webp` 자산은 이력·재검토용으로 보존한다.
+
 ## 자산
 
 - 파일: `public/images/home/home-hero-seoul-gwanghwamun-v1.webp` (940×627, webp q82, 약 129KB)
