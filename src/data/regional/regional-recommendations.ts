@@ -275,12 +275,13 @@ export function essentialKeyInfoRows(es: TravelEssential): Array<[string, string
 }
 
 /**
- * City Hub 추천 장소의 명시적 editorial order (Owner 2026-09-19).
- * 경주: 동궁과 월지(439) → 경주 계림(425) → 경주세계자동차박물관(506).
- * 자동 순서(recommended_now → 보충)가 506 을 다시 첫 번째로 만들지 않도록
- * 데이터 계층에서 고정한다. 명시된 도시 외에는 null — 다른 도시 순서 무변경.
+ * City Hub 추천 장소의 명시적 editorial order (Owner 2026-09-19, V3 확정).
+ * 경주: 동궁과 월지(439) → 경주 계림(425) → 경주월드(507).
+ * 506(자동차박물관)은 Hub 추천 3곳에서만 제외 — 행·공개·검색은 그대로다.
+ * 자동 보충이 이 순서를 덮지 않도록 데이터 계층에서 고정한다.
+ * 명시된 도시 외에는 null — 다른 도시 순서 무변경.
  */
-const HUB_EDITORIAL_ORDER: Record<string, number[]> = { gyeongju: [439, 425, 506] };
+const HUB_EDITORIAL_ORDER: Record<string, number[]> = { gyeongju: [439, 425, 507] };
 export function hubEditorialSpotOrder(city: string): number[] | null {
   return HUB_EDITORIAL_ORDER[city.toLowerCase()] ?? null;
 }

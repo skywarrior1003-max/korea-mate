@@ -2188,12 +2188,115 @@
   "ca1326e503446f": {
    "title": "경주여행17선(영문)",
    "kind": "collection",
-   "verdict": "SOURCE_NOT_FOUND",
+   "verdict": "PARSED",
    "intro": null,
-   "sourceUrl": null,
+   "sourceUrl": "https://www.gyeongju.go.kr/tour_bak/page.do?mnu_uid=4156",
    "provider": "경주문화관광(gyeongju.go.kr)",
    "asOf": "2026-09-19",
-   "items": []
+   "items": [
+    {
+     "name": "Gameunsa Temple Site",
+     "desc": "A serene temple where the spirit of Unified Silla still lingers.",
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Gyerim Forest",
+     "desc": "A mystical forest where the legend of Silla’s first king was born.",
+     "spotId": 425,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Gwaereung",
+     "desc": "The peaceful resting place of King Wonseong surrounded by stone guardians.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Kim Yushin’s Tomb",
+     "desc": "A sacred site honoring the great general who unified the Three Kingdoms.",
+     "spotId": 660,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Namsan",
+     "desc": "A sacred mountain trail filled with ancient Buddha carvings and peace.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Daereungwon",
+     "desc": "Walk among royal tombs and capture timeless beauty in the heart of Gyeongju.",
+     "spotId": 436,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Daewangam",
+     "desc": "Where King Munmu rests beneath the waves, waiting for the sunrise.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Donggung & Wolji",
+     "desc": "A magical night view where history reflects on shimmering waters.",
+     "spotId": 439,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Bunhwangsa Temple Site",
+     "desc": "An ancient temple linked to Queen Seondeok and Monk Wonhyo’s wisdom.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Seokguram & Bulguksa",
+     "desc": "UNESCO treasures showcasing Silla’s sacred art and harmony.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Sunghyejeon Shrine",
+     "desc": "A royal shrine preserving Gyeongju’s Confucian spirit and ancestral rites.",
+     "spotId": 450,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Yongyeon",
+     "desc": "A quiet pond wrapped in legend and autumn reflections.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Woljeonggyo",
+     "desc": "A beautifully lit bridge that connects Silla’s history and romance.",
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Cheomseongdae",
+     "desc": "The oldest observatory in Asia, shining with 1,400 years of wisdom.",
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "Choi Clan House of Gyeongju",
+     "desc": "A noble home embodying Korea’s spirit of generosity and honor.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Pyoam",
+     "desc": "The birthplace of Silla’s Hwabaek Council and early governance.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "Hwangnyongsa Temple Site",
+     "desc": "Imagine the towering pagoda that once symbolized Silla’s golden age.",
+     "spotId": 461,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
   }
  }
 }

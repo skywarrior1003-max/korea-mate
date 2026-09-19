@@ -38,13 +38,13 @@ test("V2 콘텐츠: 38코스 전부 legacyContent — 빈 상세는 17선(영문
   const withContent = legacy.filter(t => t.legacyContent);
   assert.equal(withContent.length, 38);
   const listOnly = legacy.filter(t => t.stops.length === 0 && (t.legacyContent?.items.length ?? 0) > 0);
-  assert.equal(listOnly.length, 24); // 목록형 — 억지 일정화 금지(§4B): stops 비움
+  assert.equal(listOnly.length, 25); // 목록형(V3: 영문 17선 포함) — 억지 일정화 금지(§4B)
   const empty = legacy.filter(t => t.stops.length === 0 && !t.legacyContent?.intro && (t.legacyContent?.items.length ?? 0) === 0);
-  assert.deepEqual(empty.map(t => t.title), ["경주여행17선(영문)"]);
+  assert.deepEqual(empty.map(t => t.title), []); // V3: 영문 17선 복구로 빈 상세 0
   // 목록형 items 실측 고정
   const items = listOnly.flatMap(t => t.legacyContent!.items);
-  assert.equal(items.length, 200);
-  assert.equal(items.filter(i => i.spotId !== null).length, 67);
+  assert.equal(items.length, 217); // V2 200 + V3 영문 17선 17
+  assert.equal(items.filter(i => i.spotId !== null).length, 76); // 67 + en17 재사용 9
   // 17선(ko)은 17개 항목 원문 desc 보존
   const c17 = legacy.find(t => t.id === "6e425c8d087dae")!;
   assert.equal(c17.legacyContent!.items.length, 17);
@@ -62,10 +62,30 @@ test("V2 승격 코스 표본 — 버스10 순서·김유신 코스 연결", () 
   assert.ok(kim.stops.some(s => s.name === "경주 김유신묘" && s.spotId === 660));
 });
 
-test("경주 Hub editorial order = 439 → 425 → 506 (다른 도시 null)", async () => {
+test("경주 Hub editorial order = 439 → 425 → 507 경주월드 (다른 도시 null)", async () => {
   const { hubEditorialSpotOrder } = await import("./regional-recommendations.ts");
-  assert.deepEqual(hubEditorialSpotOrder("gyeongju"), [439, 425, 506]);
+  assert.deepEqual(hubEditorialSpotOrder("gyeongju"), [439, 425, 507]);
   for (const c of ["busan", "seoul", "jeju", "jeonju"]) assert.equal(hubEditorialSpotOrder(c), null);
+});
+
+test("V3: 영문 17선 — 공식 순서 17개·원문 desc 전부·LINKED 9(ko 재사용)", () => {
+  const en17 = legacy.find(t => t.id === "ca1326e503446f")!;
+  const c = en17.legacyContent!;
+  assert.equal(c.kind, "collection");
+  assert.equal(c.sourceUrl, "https://www.gyeongju.go.kr/tour_bak/page.do?mnu_uid=4156");
+  assert.equal(c.items.length, 17);
+  assert.ok(c.items.every(i => i.desc && i.desc.length > 10));
+  assert.equal(c.items[0].name, "Gameunsa Temple Site");
+  assert.equal(c.items[16].name, "Hwangnyongsa Temple Site");
+  assert.equal(c.items.filter(i => i.spotId !== null).length, 9);
+  // 조합형은 억지 연결 금지
+  assert.equal(c.items[9].name, "Seokguram & Bulguksa");
+  assert.equal(c.items[9].spotId, null);
+  // ko 17선과 동일 대상 동일 id
+  const ko17 = legacy.find(t => t.id === "6e425c8d087dae")!.legacyContent!;
+  assert.deepEqual(c.items.map(i => i.spotId), ko17.items.map(i => i.spotId));
+  // 컬렉션은 채택 대상 아님
+  assert.equal(en17.stops.length, 0);
 });
 
 test("대표 코스 stop 순서·연결 고정(시내권 유네스코·바다 코스)", () => {

@@ -190,9 +190,10 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
                       </span>
                     )}
                     <span className="min-w-0 flex-1">
+                      {/* 공식 원문 desc 가 있는 컬렉션(17선 등)은 항목명도 원문 그대로 유지한다(§5) */}
                       <span className={`block text-[14.5px] leading-snug ${spot ? "font-semibold text-[var(--qh-ink)]" : "font-medium"}`}
                         style={spot ? undefined : { color: "rgba(33,29,23,.72)" }}>
-                        {spot ? displayPlaceName(spot.name, spot.nameL10n, locale) : it.name}
+                        {spot && !it.desc ? displayPlaceName(spot.name, spot.nameL10n, locale) : it.name}
                       </span>
                       {it.desc && <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)]">{it.desc}</span>}
                       {spot?.district && <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)]">{spot.district}</span>}
