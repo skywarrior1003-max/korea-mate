@@ -1,21 +1,20 @@
 "use client";
 
-// Home — Quiet Travel Editorial (최종 디자인 GoKoreaMate App.dc.html Turn 3).
+// Home — Seoul A 편집형 (MAIN-HOME-SEOUL-A-REAL-APP-PREVIEW-V1, 2026-09-19).
 //
-//  HOME 1 = COVER  : 실제 여행 기록 한 장(사진 + serif 캡션 + Search). 광고 아님.
-//  HOME 2 = FLOOR  : Search dock → 5도시 → KoreaMate Picks(~3). 대시보드 금지.
+//  HERO    : 서울 광화문(고전+현대) 이미지 + 여행 이야기 예시 문구. 홈의 주제는
+//            "나의 여행과 추억이 이렇게 남는다"이지 관광지 나열이 아니다.
+//  SEARCH  : 히어로와 본문 사이 하나의 검색창(Surviving Search 유지 — 이동·복제 없음).
+//            기존 검색·URL 붙여넣기 계약을 그대로 재사용한다.
+//  JOURNEY : 일정 → 순간 기록 → Story 공유 3단계. 데스크톱 3열 / 모바일 3행.
+//  FLOOR   : 5도시 → KoreaMate Picks(전부 동일 크기 컴팩트 행 — 대형 배너 없음).
 //
-// Cover → Floor 는 하나의 연속 수직 스크롤이다. Search 는 이 파일에서 "한 번만"
-// 렌더되고 position:sticky 로 Cover 하단에서 Floor 상단으로 살아남는다 — 두 개의
-// 검색이 교체되는 느낌 금지(Surviving Search). 스타일(유리질↔dock)만 스크롤
-// 위치에 따라 바뀐다. prefers-reduced-motion 이면 smooth scroll 을 쓰지 않는다.
-//
-// Cover 사진은 repo 권리 안전 자산(도시 대표 비주얼)만 사용한다. 캡션은 장소·
-// 시각을 지어내지 않는 범위의 담백한 문장(quiet.coverCaption/coverMeta).
-// RT-04: 사진 상단·하단 모두 scrim — 밝은 사진으로 교체돼도 글자가 살아남는다.
-// RT-08: 사진 로드 실패/미지정 시에도 어두운 베이스 그라데이션이 구도를 지킨다.
+// 신규 CTA 버튼은 만들지 않는다. 히어로 이미지는 KTO 공식 원천을 프로젝트 자산으로
+// 최적화해 사용한다(출처 기록: docs/product/home-seoul-a-hero-image-source-v1.md).
+// RT-04: 밝은 사진에서도 글자가 살아남도록 하단 scrim 을 유지한다.
+// RT-08: 사진 로드 실패 시에도 어두운 베이스 그라데이션이 구도를 지킨다.
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
@@ -24,47 +23,26 @@ import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-
 import { QUIET_CITIES } from "./quiet-data";
 import QuietSearch from "./QuietSearch";
 
-const COVER_IMG = cityVisual("busan"); // 서비스 도시 대표 비주얼 — 사실 기록사진 주장 없음
+// KTO 광화문(contentId 126512) 공식 이미지 — 프로젝트 자산(hotlink 아님).
+const HERO_IMG = "/images/home/home-hero-seoul-gwanghwamun-v1.webp";
 
 export default function QuietHome() {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
-  const coverRef = useRef<HTMLElement>(null);
-  const floorRef = useRef<HTMLElement>(null);
-  const [overCover, setOverCover] = useState(true);
+  const heroRef = useRef<HTMLElement>(null);
   const [searchActive, setSearchActive] = useState(false);
-
-  // Search 스타일 전환: Cover 를 70% 지나면 dock. rAF 스로틀.
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const h = coverRef.current?.offsetHeight ?? 0;
-        setOverCover(window.scrollY < Math.max(1, h * 0.7));
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
-  }, []);
 
   // 검색이 열리면 field 를 dock 위치까지 올린다 — 같은 요소가 이동하는 것이지 복제가 아니다.
   const onSearchActive = useCallback((active: boolean) => {
     setSearchActive(active);
     if (active) {
-      const coverH = coverRef.current?.offsetHeight ?? 0;
-      if (window.scrollY < coverH - 80) {
+      const heroH = heroRef.current?.offsetHeight ?? 0;
+      if (window.scrollY < heroH - 80) {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        window.scrollTo({ top: Math.max(0, coverH - 72), behavior: reduced ? "auto" : "smooth" });
+        window.scrollTo({ top: Math.max(0, heroH - 72), behavior: reduced ? "auto" : "smooth" });
       }
     }
-  }, []);
-
-  const scrollToFloor = useCallback(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    floorRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
   }, []);
 
   // 홈 Picks: 5도시 공식 추천에서 도시 교차로 3개(부산·서울·제주의 첫 코스).
@@ -73,60 +51,78 @@ export default function QuietHome() {
     .map(c => getRecommendedTrips(c)[0])
     .filter((tr): tr is NonNullable<typeof tr> => Boolean(tr));
 
+  const steps = [1, 2, 3] as const;
+
   return (
     <div className="qh" style={{ backgroundColor: "var(--qh-paper)" }}>
-      {/* ══ HOME 1 — COVER ══ */}
+      {/* ══ HERO — 광화문, 여행 이야기 예시 ══ */}
       <section
-        ref={coverRef}
-        onClick={scrollToFloor}
-        className="relative overflow-hidden cursor-pointer"
-        style={{ height: "calc(100svh - 3.5rem)", minHeight: 520, backgroundColor: "#0b0e14" }}
-        aria-label={t("coverMeta")}
+        ref={heroRef}
+        className="relative overflow-hidden h-[448px] md:h-[520px]"
+        style={{ backgroundColor: "#12161d" }}
+        aria-label={t("heroEyebrow")}
       >
         {/* RT-08 art-direction fallback: 사진이 없어도 성립하는 어두운 베이스 */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(178deg,#0b0e14 0%,#131923 46%,#0a0c10 100%)" }} />
-        {COVER_IMG && (
-          <Image
-            src={COVER_IMG.src} alt="" fill priority sizes="100vw"
-            className="object-cover" style={{ objectPosition: COVER_IMG.objectPosition }}
-          />
-        )}
-        {/* RT-04: 상단·하단 scrim — 밝은 하늘 사진에서도 텍스트 보호 */}
-        <div className="absolute inset-x-0 top-0 h-[18%]" style={{ background: "linear-gradient(180deg,rgba(4,5,7,.55),transparent)" }} />
-        <div className="absolute inset-x-0 bottom-0 h-[46%]" style={{ background: "linear-gradient(180deg,transparent,rgba(4,5,7,.78))" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(178deg,#12161d 0%,#1a212b 46%,#0d1015 100%)" }} />
+        <Image
+          src={HERO_IMG} alt="" fill priority sizes="100vw"
+          className="object-cover" style={{ objectPosition: "50% 42%" }}
+        />
+        {/* RT-04: 하단 scrim — 밝은 사진 위 흰 글자 보호 */}
+        <div className="absolute inset-x-0 bottom-0 h-[62%]" style={{ background: "linear-gradient(180deg,transparent,rgba(8,15,14,.18) 30%,rgba(8,15,14,.8))" }} />
 
-        <div className="relative h-full flex flex-col max-w-3xl mx-auto px-6">
-          <div className="mt-auto pb-[150px] md:pb-[170px]">
-            <p className="qh-serif italic text-white text-[32px] md:text-[44px] leading-[1.2]" style={{ textWrap: "balance" }}>
-              {t("coverCaption")}
+        <div className="relative h-full max-w-3xl mx-auto px-5 md:px-6 flex flex-col">
+          {/* keep-all: 한국어 단어 중간 줄바꿈 방지("오/늘의" 실측) — 라틴 문안엔 영향 없음 */}
+          <div className="mt-auto pb-[64px] md:pb-[76px]" style={{ textShadow: "0 1px 16px rgba(0,0,0,.3)", wordBreak: "keep-all" }}>
+            <p className="text-[12px] md:text-[14px] font-medium tracking-[.02em] text-white/85">{t("heroEyebrow")}</p>
+            <h1 className="qh-serif mt-2.5 md:mt-3.5 text-white text-[31px] md:text-[46px] leading-[1.2] md:leading-[1.16]" style={{ textWrap: "balance", letterSpacing: "-.04em" }}>
+              {t("heroTitle")}
+            </h1>
+            <p className="mt-3 md:mt-4 max-w-[560px] text-[13.5px] md:text-[16px] leading-[1.6] text-white/90">
+              {t("heroDesc")}
             </p>
-            <p className="mt-2.5 text-[13px] md:text-[14px] text-white/65">{t("coverMeta")}</p>
           </div>
-          <p className="absolute left-0 right-0 bottom-6 text-center text-[11px] tracking-[.14em] text-white/50 uppercase">
-            {t("continueHint")} ↓
-          </p>
         </div>
       </section>
 
-      {/* ══ SURVIVING SEARCH — Cover 하단 ↔ Floor 상단을 하나의 요소로 ══ */}
+      {/* ══ SURVIVING SEARCH — 히어로와 본문 사이, 스크롤하면 dock 으로 생존 ══ */}
       <div
-        className="sticky z-30 px-5 md:px-6 -mt-[104px] pb-2 max-w-3xl mx-auto w-full"
+        className="sticky z-30 px-4 md:px-6 -mt-[26px] pb-2 max-w-3xl mx-auto w-full"
         style={{ top: "calc(3.5rem + 8px)" }}
-        onClick={e => e.stopPropagation()}
       >
         <div className="md:max-w-[620px] md:mx-auto">
-          <QuietSearch variant={overCover ? "cover" : "floor"} onActiveChange={onSearchActive} />
+          <QuietSearch variant="floor" onActiveChange={onSearchActive} />
         </div>
       </div>
 
-      {/* ══ HOME 2 — FLOOR ══ */}
-      {/* pt-12: sticky Search dock(-mt-[104px] 오버랩) 아래로 "도시" 라벨이 완전히
-          내려오도록 시작 여백을 확보한다 — 정적 흐름에서 field 하단과 라벨 사이가
-          0px 이라 dock 상태에서 라벨이 가려지던 실측 버그의 최소 수정. */}
-      <section ref={floorRef} className="max-w-3xl mx-auto px-5 md:px-6 pt-12 pb-12" style={{ scrollMarginTop: "4.2rem" }}>
+      {/* ══ FLOOR — 3단계 → 5도시 → Picks ══ */}
+      <section className="max-w-3xl mx-auto px-5 md:px-6 pt-10 pb-12" style={{ scrollMarginTop: "4.2rem" }}>
         {/* 모바일에서 검색 활성 중엔 결과 표면이 곧 화면 — 아래 섹션은 조용히 물러난다 */}
         <div className={searchActive ? "hidden md:block" : undefined}>
-          <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-4">{t("citiesLabel")}</h2>
+          {/* 여행이 이렇게 남습니다 — 01 일정 · 02 순간 · 03 Story */}
+          <h2 className="qh-serif text-[22px] md:text-[27px] text-[var(--qh-ink)]" style={{ letterSpacing: "-.03em" }}>
+            {t("journeyTitle")}
+          </h2>
+          <div className="mt-2 md:mt-6 md:grid md:grid-cols-3 border-t border-[var(--qh-line)] md:border-t-0 md:pb-2" style={{ wordBreak: "keep-all" }}>
+            {steps.map((n, i) => (
+              <div
+                key={n}
+                className={`grid grid-cols-[40px_1fr] gap-2.5 py-4 border-b border-[var(--qh-line)] md:border-b-0 md:py-1 ${
+                  i > 0 ? "md:pl-8 md:border-l md:border-[var(--qh-line)]" : ""
+                } ${i < steps.length - 1 ? "md:pr-8" : ""}`}
+              >
+                <span aria-hidden className="qh-serif text-[20px] md:text-[22px] leading-[1.15] text-[var(--qh-clay)]">
+                  {`0${n}`}
+                </span>
+                <span>
+                  <h3 className="text-[15px] font-semibold text-[var(--qh-ink)]">{t(`journeyStep${n}Title`)}</h3>
+                  <p className="mt-1 text-[12.5px] md:text-[13px] leading-[1.55] text-[var(--qh-faint)]">{t(`journeyStep${n}Desc`)}</p>
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-8">{t("citiesLabel")}</h2>
           <div className="mt-3 flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-5 md:overflow-visible" style={{ scrollbarWidth: "none" }}>
             {QUIET_CITIES.map(c => {
               // 도시 진입 selector 는 City Hub Hero 와 도시 identity 를 맞춘다
@@ -150,25 +146,10 @@ export default function QuietHome() {
             })}
           </div>
 
+          {/* Picks — 전부 동일 크기의 컴팩트 행(대형 배너 없음). 순서·데이터 무변경 */}
           <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)] mt-8">{t("picksLabel")}</h2>
-          {picks[0] && (
-            <Link href={`/city/${picks[0].city}/trips`} className="block mt-3 gkm-focus rounded-[4px]">
-              <span className="relative block h-[180px] rounded-[4px] overflow-hidden bg-[#4f4234]">
-                {cityVisual(picks[0].city) && (
-                  <Image src={cityVisual(picks[0].city)!.src} alt="" fill sizes="(max-width: 768px) 100vw, 680px"
-                    className="object-cover" style={{ objectPosition: cityVisual(picks[0].city)!.objectPosition }} />
-                )}
-                <span className="absolute inset-x-0 bottom-0 h-[64px]" style={{ background: "linear-gradient(180deg,transparent,rgba(10,10,8,.6))" }} />
-              </span>
-              <span className="block mt-2 text-[16px] font-semibold text-[var(--qh-ink)]">{tripDisplayTitle(picks[0], locale)}</span>
-              <span className="block mt-0.5 text-[12.5px] text-[var(--qh-faint)]">
-                {t("typeTrip")} · {tForm(`city_${picks[0].city.charAt(0).toUpperCase()}${picks[0].city.slice(1)}`)}
-                {picks[0].days && Number.isInteger(picks[0].days) && picks[0].days >= 1 ? ` · ${picks[0].days}d` : ""}
-              </span>
-            </Link>
-          )}
-          <ul>
-            {picks.slice(1).map(p => (
+          <ul className="mt-1">
+            {picks.map(p => (
               <li key={p.id}>
                 <Link href={`/city/${p.city}/trips`} className="flex items-center gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
                   <span className="relative w-[82px] h-[56px] rounded-[4px] overflow-hidden flex-none bg-[#4f4234]">
@@ -184,6 +165,7 @@ export default function QuietHome() {
                       {p.days && Number.isInteger(p.days) && p.days >= 1 ? ` · ${p.days}d` : ""}
                     </span>
                   </span>
+                  <span aria-hidden className="flex-none text-[15px] text-[var(--qh-faint)]">→</span>
                 </Link>
               </li>
             ))}

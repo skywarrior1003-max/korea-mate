@@ -1332,7 +1332,17 @@
     "type_other": "기타"
   },
   "quiet": {
-    "searchPlaceholder": "한국 검색 — 도시, 여행, 장소",
+    "searchPlaceholder": "한국 검색 — 도시, 여행, 장소 또는 여행 링크",
+    "heroEyebrow": "여행 이야기 예시 · 서울 · 늦은 오후",
+    "heroTitle": "오래된 문을 지나, 오늘의 서울을 걸었다.",
+    "heroDesc": "일정을 만들고, 여행 중 사진과 메모를 남겨 나만의 Story로 간직하고 공유하세요.",
+    "journeyTitle": "여행이 이렇게 남습니다",
+    "journeyStep1Title": "일정을 만들고",
+    "journeyStep1Desc": "장소와 추천 코스를 My Trip에 담습니다.",
+    "journeyStep2Title": "순간을 기록하고",
+    "journeyStep2Desc": "여행 중 사진과 메모를 남깁니다.",
+    "journeyStep3Title": "Story로 간직하고 공유합니다",
+    "journeyStep3Desc": "사진과 메모를 하나의 Story로 남기고 SNS에 공유합니다.",
     "searchShort": "한국 검색",
     "cancel": "취소",
     "citiesLabel": "도시",

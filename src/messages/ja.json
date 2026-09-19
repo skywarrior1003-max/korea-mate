@@ -1332,7 +1332,17 @@
     "type_other": "その他"
   },
   "quiet": {
-    "searchPlaceholder": "韓国を検索 — 都市・旅・場所",
+    "searchPlaceholder": "韓国を検索 — 都市・旅・場所・旅行リンク",
+    "heroEyebrow": "旅の記録の一例 · ソウル · 遅い午後",
+    "heroTitle": "古い門をくぐって、今日のソウルを歩いた。",
+    "heroDesc": "旅程をつくり、旅の途中で写真とメモを残して、自分だけのStoryとして保存・共有しましょう。",
+    "journeyTitle": "旅はこうして残ります",
+    "journeyStep1Title": "旅程をつくる",
+    "journeyStep1Desc": "場所やおすすめコースをMy Tripに集めます。",
+    "journeyStep2Title": "瞬間を記録する",
+    "journeyStep2Desc": "旅の途中で写真とメモを残します。",
+    "journeyStep3Title": "Storyとして残し、共有する",
+    "journeyStep3Desc": "写真とメモをひとつのStoryにまとめ、SNSでシェアします。",
     "searchShort": "韓国を検索",
     "cancel": "キャンセル",
     "citiesLabel": "都市",

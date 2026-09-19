@@ -1332,7 +1332,17 @@
     "type_other": "Other"
   },
   "quiet": {
-    "searchPlaceholder": "Search Korea — city, trip, place",
+    "searchPlaceholder": "Search Korea — city, trip, place, or a trip link",
+    "heroEyebrow": "A travel story · Seoul · Late afternoon",
+    "heroTitle": "Through an old gate, into today's Seoul.",
+    "heroDesc": "Build an itinerary, leave photos and notes along the way, and keep and share it as your own Story.",
+    "journeyTitle": "How your trip stays with you",
+    "journeyStep1Title": "Plan your trip",
+    "journeyStep1Desc": "Add places and recommended courses to My Trip.",
+    "journeyStep2Title": "Capture the moments",
+    "journeyStep2Desc": "Leave photos and notes as you travel.",
+    "journeyStep3Title": "Keep and share it as a Story",
+    "journeyStep3Desc": "Turn your photos and notes into one Story and share it on social media.",
     "searchShort": "Search Korea",
     "cancel": "Cancel",
     "citiesLabel": "CITIES",
