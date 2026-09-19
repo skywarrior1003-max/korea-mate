@@ -1,0 +1,2199 @@
+{
+ "note": "GYEONGJU-LEGACY-CONTENT-COMPLETION-V2 — 경주문화관광 공식 페이지 원문(소개문·구성 항목)만. LINKED 는 정규화 완전일치·유일. 섹션형(seasonal 등)은 매칭하지 않음.",
+ "courses": {
+  "a1fa3f62d154dc": {
+   "title": "동학의 발상지 따라 현곡 여행",
+   "kind": "course",
+   "verdict": "PARSED",
+   "intro": "경주 현곡면 가정리에 거북이 꼬리 모양을 닮은 구미산이 자리한다. 잘 알려진 산은 아니지만 경주에서는 제법 산세가 굵고 규모가 큰 산에 속한다. 구미산 기슭에 하늘 아래 만인의 평등을 이야기했던 ‘동학’의 발상지가 있다. 동학의 창시자 최제우가 한울님의 말씀을 들었다는 정자, 용담정이 바로 그 곳. 역사적으로 의미가 있는 곳이기도 하고, 봄·가을철 아름다운\n\n풍광을 뽐내 계절여행지로서의 매력도 있는 곳이다. 첨성대, 동궁과 월지를 넘어 조금 더 깊숙이 경주의 또 다른 역사를 찾아 나서는 길. 동학의 발상지를 비롯해 신라시대의 아름다운 탑과 왕릉, 그리고 여유로운 들녘의 풍경이 있는 경주의 현곡면으로 떠난다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4735",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "용담정",
+     "desc": null,
+     "spotId": 549,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "최제우 생가",
+     "desc": null,
+     "spotId": 550,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "jj갤러리카페",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "진덕왕릉",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "나원리오층석탑",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "e689141b4cf3f3": {
+   "title": "인물여행 김유신",
+   "kind": "course",
+   "verdict": "PARSED",
+   "intro": "금관가야의 왕손이었던 김유신은 고국이 신라에 병합되면서 신라인이 되어 새로운 도전에 나선다. 15세에 용화향도를 조직하여 낭도 무리를 이끌며 호연지기를 길렀다. 그로부터 약 20여 년 뒤, 김유신 이름을 제대로 알린 낭비성 전투를 시작으로 치열한 전투의 현장에서 활약했다. 반쪽짜리 신라인이라는 신분의 한계를 뛰어 넘기 위해 김춘추와 손을 잡았다. 폐위된 왕의 손자로 성골에서 진골로 강등되었던 김춘추를 진골 최초로 왕위에 오르는 데 일조했고, 둘을 합심하여 삼국통일의 기틀을 다졌다. 진평왕부터 시작해 삼국통일의 대업을 완성한 문무왕까지 신라 다섯 왕을 모신 김유신은 80평생 전장에서 활약하며 신라를 지켰다. 망국의 왕족에서 한 나라를 통일국가로 이룩해 낸 대장군이 되기까지. 김유신의 흔적을 따라 나섰다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4736",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "경주 월성",
+     "desc": null,
+     "spotId": 427,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "월정교",
+     "desc": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주 재매정",
+     "desc": null,
+     "spotId": 698,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주 천관사지",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 김유신묘",
+     "desc": null,
+     "spotId": 660,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "화랑마을",
+     "desc": null,
+     "spotId": 459,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황성공원 김유신 동상",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "f987a6e0dbfe8d": {
+   "title": "10번 버스타GO '알짜배기 경주여행'",
+   "kind": "bus",
+   "verdict": "PARSED",
+   "intro": "뚜벅이 여행자도 어려움 없이 버스 타고 경주를 누빌 수 있다. 유명 관광지를 가는 버스는 노선이 잘 갖추어져 있고 2016년 하반기부터는 버스정보시스템(BIS)를 도입해 스마트폰으로 손쉽게 버스 출·도착 정보, 배차간격 등을 확인할 수 있게 되었다. 버스로 경주를 여행하는 관광객들이 꼭 한번은 타보았을 버스 노선이 있다. 경주의 핵심 관광지를 경유하는 이른 바 ‘황금노선’ 10번 버스이다. 이 버스 노선 하나만 따라가도 경주 여행을 알차게 할 수 있다. 10번 버스에 몸을 맡겨 보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4748",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "첨성대",
+     "desc": null,
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "동궁과 월지",
+     "desc": null,
+     "spotId": 439,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "분황사",
+     "desc": null,
+     "spotId": 444,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주동궁원",
+     "desc": null,
+     "spotId": 502,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "보문관광단지, 경주월드",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주세계문화엑스포공원",
+     "desc": null,
+     "spotId": 504,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "불국사",
+     "desc": null,
+     "spotId": 528,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "b35b62bc96887e": {
+   "title": "100번 버스타GO '청량함 싣고 경주동해로' 1코스",
+   "kind": "bus",
+   "verdict": "PARSED",
+   "intro": "천년 신라의 유구한 문화유산으로 가득 찬 경주. 볼 것 많고 즐길 것 많은 경주인데 시내버스로 40분이면 바다를 보러갈 수도 있다면 어떤가. 여행종합선물세트가 따로 없는 경주다. 100번 버스를 타고 떠나는 경주 동해안 여행. 첨성대, 동궁과 월지 등 시내권 주요 여행지 일단 건너뛰고, 경주 관광의 메카 보문관광단지도 지나쳐, 동해안으로 내달린다. 한적한 시골 어촌의 풍경에 절로 평화로워 지는 마음, 힐링에 최적이다. 곳곳에 숨어 있는 문화유산을 찾는 즐거움도 누릴 수 있다. 경주 동해안으로 가는 버스는 100번과 150번 노선이 있다.\n\n의 어일정류소에서 100번은 감포로, 150번은 양남으로 노선이 갈라진다. 이 두 노선만 있으면 경주 동해안의 웬만한 명소는 모두 돌아볼 수 있다. 먼저 100번 버스 타고 감포로 떠나보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4749",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "골굴사",
+     "desc": null,
+     "spotId": 489,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "전촌항, 전촌솔밭해변",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포항",
+     "desc": null,
+     "spotId": 669,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감포해상공원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "송대말등대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "첨성대 야경",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동궁과 월지 야경",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "e3736bc117911a": {
+   "title": "150번 버스타GO '청량함 싣고 경주동해로' 2코스",
+   "kind": "bus",
+   "verdict": "PARSED",
+   "intro": "최남단 관성솔밭해변부터 최북단 연동어촌체험마을까지 약 33km의 경주 동해안. 경주 시가지에서 출발해 바다로 떠나는 100번 버스와 150번 버스만 있으면 경주 바다의 웬만한 명소는 모두 훑을 수 있다. 감포항과 전촌솔밭해변, 송대말등대 등 경주 동해 북부의 볼거리를 즐길 수 있는 100번 버스 여행에 이어 150번을 타고 경주 동해남부로 떠난다. 100번과 150번 버스 노선은 양북의 어일정류소에서 노선이 갈라져\n\n100번은 감포로, 150번은 양남으로 향한다. 경주 동해남부 지역인 양북, 양남면에는 왕이 잠든 수중릉, 야경이 아름다운 동서 석탑, 동해안 지질명소까지 이채로운 볼거리가 산재해 있다. 150번 버스에 몸을 실어 보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4750",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "한국수력원자력 본사 홍보관 '에너지팜(Energy Farm)'",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감은사지",
+     "desc": null,
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "문무대왕릉",
+     "desc": null,
+     "spotId": 493,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "읍천항",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "주상절리 파도소리길 & 주상절리 전망대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "물빛사랑길 & 하서해안공원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "82db3925ea6042": {
+   "title": "203번 버스타GO '신라에서 조선으로'",
+   "kind": "bus",
+   "verdict": "PARSED",
+   "intro": "첨성대, 대릉원, 동궁과 월지 등이 모여 있는 시내권 유적은 버스는 물론 도보나 자전거로 여행이 가능하고, 보문관광단지권, 불국사권은 배차간격이 길지 않은 버스노선(10번)이 있어 대중교통으로 여행하기 어렵지 않다. 시가지에서 조금 벗어나 양동마을과 옥산서원 등 조선시대 경주 유적이 자리한 경주 북부권은 자차 이용이 아니라면 접근이 쉬운 편은 아니다. 여기에, 뚜벅이 여행자들을 위한 희소식. 시내권과 북부권을 잇는 203번 버스가 있어 우리는 신라의 경주와 조선의 경주를 이어 여행할 수 있다. 양동마을, 안강시장, 옥산서원, 독락당 등 웬만한 경주 북부권 명소는 모두 경유하는 고마운 노선이다. 203번 버스 타고 신라에서 조선으로 출발.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4751",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "봉황대",
+     "desc": null,
+     "spotId": 443,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주중심상가 & 계림로 벽화골목",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "양동마을",
+     "desc": null,
+     "spotId": 546,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "옥산서원",
+     "desc": null,
+     "spotId": 548,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "독락당",
+     "desc": null,
+     "spotId": 539,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "정혜사지십삼층석탑",
+     "desc": null,
+     "spotId": 694,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "6dc36d3aecd295": {
+   "title": "350번 버스타GO '건천산내여행'",
+   "kind": "bus",
+   "verdict": "PARSED",
+   "intro": "경주에서도 청정지역으로 소문난 건천읍, 산내면으로 느린 여행을 나서 보자. 350번 버스에 몸을 싣고 경주의 서쪽으로 내달린다. 경주의 가장 높은 산인 단석산 골짜기를 따라 굽이굽이 뻗어 있는 도로를 지나 산내면 버스 정류장에 도착했다. 버스 안에서 연신 창밖의 때 묻지 않은 자연을 감상하며 개안했다. 산, 강, 숲 모두가 푸르고 푸르렀던 그 곳에 느리게, 오래도록 머물렀다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4752",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "산내 버스정류장",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동창천",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "건천 편백나무숲",
+     "desc": null,
+     "spotId": 534,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "건천시장",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "금척리고분군",
+     "desc": null,
+     "spotId": 703,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "박목월 생가",
+     "desc": null,
+     "spotId": 541,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "6bfadc7341b809": {
+   "title": "경주숲길10Pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "나뭇잎 사이사이를 비집고 들어오는 햇살 한 줄기가 반갑다가, 뜨거운 볕을 막아주는 나무그늘이 반갑기도 하다. 치열한 삶의 현장에서는 ‘이랬다 저랬다’를 하다 우를 범하기도 하지만, 경주의 숲에서는 ‘이런들 어떠하고, 저런들 어떠하리‘다. 지친 마음을 치유하는 어느 멋진 날, 경주의 숲길을 거닐어 보는 날이다. 경주의 힐링하기 좋은 숲길을 소개한다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4858",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "건천 편백나무숲",
+     "desc": null,
+     "spotId": 534,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경북천년숲정원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주엑스포대공원",
+     "desc": null,
+     "spotId": 504,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "계림",
+     "desc": null,
+     "spotId": 425,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "도리마을 은행나무숲",
+     "desc": null,
+     "spotId": 538,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "삼릉 솔숲",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "숲머리 뚝방길 &진평왕릉",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "신라왕경숲",
+     "desc": null,
+     "spotId": 452,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황성공원 솔숲",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "흥덕왕릉 솔숲",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "5728abfbb88094": {
+   "title": "경주야경 10Pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "신라의 달밤, 달빛은 운치를 더하고 경관조명은 신라의 화려하고 빛나는 유산을 더욱 반짝이게 돕는다. 밤의 경주에 꼭 찾아야하는 동궁과 월지부터, 과거의 유산에 현대의 기술을 더한 경주타워까지. 경주 곳곳의 야경명소를 10곳 모았다. 낮보다 아름다운 경주의 밤에 취해보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4859",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "동궁과 월지",
+     "desc": null,
+     "spotId": 439,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "첨성대",
+     "desc": null,
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "월정교",
+     "desc": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주읍성",
+     "desc": null,
+     "spotId": 428,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "봉황대&봉황로 문화의 거리",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문호반길&보문정",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "서출지",
+     "desc": null,
+     "spotId": 474,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "금장대",
+     "desc": null,
+     "spotId": 433,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감은사지",
+     "desc": null,
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주엑스포공원 경주타워&루미나 나이트워크",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "fd0e3a620de673": {
+   "title": "경주걷기길10Pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "오감을 열어 경주의 아름다운 길을 걷는다. 시선 향하는 곳마다 역사의 현장 아닌 곳이 없어 눈이 즐겁다. 문화유산만큼이나 찬란한 경주의 자연을 눈으로, 귀로, 코로 오롯이 담는다. 뺨을 스치는 청아한 바람에 지칠 듯 했던 두 다리는 다시금 힘을 얻는다. 봄날 벚꽃이 만들어주는 터널에서 황홀함을 만끽하고, 가을날 바삭바삭한 나뭇잎 소리가 귀를 간질인다. 이 모두가 경주의 길을 걷는다면 얻을 수 있는 것들. 문화유적, 산, 호수,\n\n바다, 들녘까지 거닐기 좋은 경주의 길을 10곳 모았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4860",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "대릉원돌담길 (약550m)",
+     "desc": null,
+     "spotId": 437,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황룡사마루길 (1.5km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문호반길 (약 8km)",
+     "desc": null,
+     "spotId": 514,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "통일전 은행나무길 (약 2km)",
+     "desc": null,
+     "spotId": 480,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "신문왕 호국행차길 (약 4.5km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동남산 가는 길 (약 8km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "삼릉가는 길 (약 8km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "주상절리파도소리길 (약 1.7km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포깍지길 (총 7코스, 제4코스 4.5km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "물빛사랑길 (약 1.1km)",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "a4a5a5bc7e642f": {
+   "title": "지식채우기10Pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "한 걸음 더 깊이 있게 경주를 여행하는 법, 경주의 다양한 박물관과 전시관을 씹고 뜯고 맛보고 즐겨 보자. 신라 천년의 역사를 망라한 박물관에서 집요하게 파고들어 보기도 하고, 하나의 주제에 집중한 전시관에서 미처 몰랐던 이야기를 알아가는 즐거움까지 있다. 신라의 태동부터 마지막까지 수도로 역할 했던 경주에는 쌓인 역사만큼이나 펼쳐 보일 주제도 다양하다. 경주의 박물관과 전시관 10곳을 모았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4861",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "국립경주박물관",
+     "desc": null,
+     "spotId": 432,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "신라역사과학관",
+     "desc": null,
+     "spotId": 531,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "화랑마을",
+     "desc": null,
+     "spotId": 459,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황룡사역사문화관",
+     "desc": null,
+     "spotId": 460,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "불국사박물관",
+     "desc": null,
+     "spotId": 529,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "한국대중음악박물관",
+     "desc": null,
+     "spotId": 523,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "양동마을 문화관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "국립문화유산연구소 천존고",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "전통명주전시관",
+     "desc": null,
+     "spotId": 500,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "동리목월문학관",
+     "desc": null,
+     "spotId": 526,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "f00181052ef9b6": {
+   "title": "일출&일몰스팟 10pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "모든 여행이 그렇지만 이번에는 특히 준비가 더 촘촘해야 한다. T.P.O.가 완벽해야 최고의 그 순간, 멋진 그 풍경을 마주할 수 있기 때문. 날짜마다, 장소마다 미세하게 달라지는 시간을 확인하고, 어느 포인트가 가장 아름다울 수 있을지 사전 조사를 하고, 여행의 8할을 담당한다는 날씨 체크는 이번만큼은 10할을 담당할 필수 요소. 서서히 번지는 여명, 차분하게 젖어 드는 노을. 바다, 문화유적, 산 등 경주의 아름답고도 의미\n\n경주에서 그 최고의 순간을 누릴 수 있는 당신은 부지런한 개미이다. 그날의 빛, 황홀함 속으로 출발. 경주의 일출&일몰 명소 10곳을 모았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4862",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "일출스팟 토함산 정상",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "일출스팟 전촌 용굴",
+     "desc": null,
+     "spotId": 497,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "일출스팟 문무대왕릉",
+     "desc": null,
+     "spotId": 493,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "일출스팟 양남 주상절리군",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "일출스팟 송대말등대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "일출스팟 경주 남산 ‘신선암 마애보살반가상’",
+     "desc": null,
+     "spotId": 466,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "일몰스팟 경주 풍력발전 ‘바람의 언덕’",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "일몰스팟 경주 남산 ‘늠비봉 오층 석탑’",
+     "desc": null,
+     "spotId": 465,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "일몰스팟_경주 남산 ‘용장사곡 삼층석탑’",
+     "desc": null,
+     "spotId": 467,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "일몰스팟 경주 대릉원일원 황남리 고분군",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "247aaa299cb1c3": {
+   "title": "여름경주 힐링스팟 20pick",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "울창한 숲이 내어주는 그늘 아래에서 느린 호흡으로 쉼, 끝없이 펼쳐진 바다를 벗 삼아 낭만 가득한 하루를, 티 없이 깨끗한 폭포와 계곡에서 지친 감각 깨우기, 싱그러운 풍경을 배경으로 인생사진 남기기, 더위와 스트레스를 날려버릴 다양한 액티비티까지.\n\n경주에서 여름을 보내는 법, 20곳의 힐링스팟을 모았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4863",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "오류고아라해변",
+     "desc": null,
+     "spotId": 495,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "전촌솔밭해변",
+     "desc": null,
+     "spotId": 498,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "나정고운모래해변",
+     "desc": null,
+     "spotId": 492,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "봉길대왕암해변",
+     "desc": null,
+     "spotId": 494,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "관성솔밭해변",
+     "desc": null,
+     "spotId": 490,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "송대말등대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주풍력발전단지",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동궁과 월지 연꽃단지",
+     "desc": null,
+     "spotId": 440,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "금장대 생태숲길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "주상절리파도소리길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포깍지길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "건천편백나무숲내음길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경북천년숲정원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "산내 동창천&청룡폭포",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "옥산서원 세심대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "용연폭포",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "블루원 워터파크",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "캘리포니아비치",
+     "desc": null,
+     "spotId": 521,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "소노벨 경주 오션플레이",
+     "desc": null,
+     "spotId": 516,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "뽀로로 아쿠아빌리지",
+     "desc": null,
+     "spotId": 515,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "0c3c3e94a81937": {
+   "title": "신라인의 숨결 경주 둘레길",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "경주는 넓게 펼쳐진 평야를 비롯해 호수와 산, 바다까지 모두 만날 수 있는 천혜의 자연환경을 갖춰 사계절 다른 매력으로 사람들을 반긴다. 그뿐 아니라 천년 신라부터 조 선 시대로 이어지는, 오랜 세월을 품은 유적지들이 고스란히 남아 살아 있는 박물관 역할을 한다. 경주 곳곳을 지나는 10개의 둘레길에서는 이 같은 도시의 매력을 모두 마주하게 된다. 때로는 빼어난 풍경을 바라보며 고즈넉한 여유를 만끽하고, 때로는 찬란한 역사 속 문화와 역사의 숨결을 느끼면서 천천히 발걸음을 옮겨보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4864",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "시내권역",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "보문·동해안권역",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "남산권역",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "89997af17ed277": {
+   "title": "경주의 전망 포인트",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": null,
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4865",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "경주엑스포대공원 경주타워",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 루지월드 전망대",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "블루원 CC 전망데크",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "주상절리 전망대",
+     "desc": null,
+     "spotId": 488,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "이견대",
+     "desc": null,
+     "spotId": 487,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "금오정",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "통일전 누각",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "서악동 3층 석탑 둘레길 전망 포인트",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "금장대",
+     "desc": null,
+     "spotId": 433,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "화랑의 언덕",
+     "desc": null,
+     "spotId": 553,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "45aa0fe79898cc": {
+   "title": "경주 가을 명소 10",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "‘사계절이 뚜렷한 기후’라는 지리책 속의 한반도 기후 설명이 무색하다는 느낌이다. 안 그래도 짧은 가을인데 이제는 정말 스치듯 지나는 계절이\n\n긴 여름, 긴 겨울로 우리의 계절 달력이 지배당하기 전에 찰나의 가을을 영원한 기억으로 남겨 보자. 가을에 경주를 찾는다면 꼭 가보아야 할 단풍 명소 10곳을 꼽아 보았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4866",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "경북산림환경연구원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "도리마을",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "첨성대 핑크뮬리",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "통일전 은행나무길",
+     "desc": null,
+     "spotId": 480,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "무장봉 억새군락",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "운곡서원",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "불국사",
+     "desc": null,
+     "spotId": 528,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주 계림",
+     "desc": null,
+     "spotId": 425,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "용담정",
+     "desc": null,
+     "spotId": 549,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주 포석정지",
+     "desc": null,
+     "spotId": 662,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "651162d964cc91": {
+   "title": "미술관 여행, 경주 감성 여행의 또 다른 방법",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "경주를 색다르게 체험하고 싶다면, 다른 경주의 모습을 보고 싶다면, 비가 오거나 날씨가 추워 실외에서의 활동이 제약을 받는다면, 경주 미술관으로 가보자. 경주라는 지역과 예술이 어우러진 감성과 풍경이 삶에 또 다른 영감과 에너지를 줄지도 모른다.\n\n시각과 함께 각종 오감을 열고 경주의 미술관을 따라 감성 여행을 해보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4868",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "오아르미술관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "국립경주박물관 신라미술관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주솔거미술관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "플레이스씨",
+     "desc": null,
+     "spotId": 1617,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주 우양미술관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "알천미술관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "2d3d10a3fbc408": {
+   "title": "비오는날, 촉촉한 경주여행",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "여행의 8할은 날씨라는데 마음먹고 나선 경주 나들이 길에 하늘이 심상찮다. 짙은 먹구름에 추적추적 비까지 내려 타들어가는 마음. 비 내리는 경주는 그 만의 운치로 속상한 마음을 어루만져 줄 것이다.\n\n짙은 먹구름을 상쇄시켜줄 만큼 짙은 감성이 존재하고, 이동이 번거로운 빗길을 피해 아늑한 실내에서 즐길 거리도 많다. 볼거리가 워낙 많은 경주인 탓에 늘 빡빡하게 코스를 짰다면, 이번만큼은 여유를\n\n가지며 느긋하게 여행을 해보자. 비 내리는 날, 경주의 촉촉한 감성에 충분히 젖어들 수 있을 정도의 여유로 말이다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4869",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "실내여행지 '황룡사역사문화관'",
+     "desc": null,
+     "spotId": 460,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감실내여행지 ‘경주 동궁원’",
+     "desc": null,
+     "spotId": 502,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감성에 젖어드는 곳 '보문정'",
+     "desc": null,
+     "spotId": 513,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "실내여행지 '경주타워&솔거미술관'",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감성에 젖어드는 곳 '불국사'",
+     "desc": null,
+     "spotId": 528,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "실내여행지 '동리목월문학관'",
+     "desc": null,
+     "spotId": 526,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감성에 젖어드는 곳 '불리단길 카페'",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "20a91f06641a78": {
+   "title": "포토존이 있는 산으로",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": null,
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4870",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "단석산 화랑의 언덕",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "함월산 용연폭포",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주남산 늠비봉오층석탑",
+     "desc": null,
+     "spotId": 465,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "오봉산 마당바위",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동대봉산 무장봉 억새군락지",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "d030a19dcb7031": {
+   "title": "TV속 경주 찾기 '선을 넘는 녀석들' 따라 신라 한 바퀴",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "이슬람의 지리학자 알 이드리시는 세계를 탐험하고 아시아와 스칸디나비아 반도를 포함한 세계지도를 그렸다. 천 년 전 그려진 이 지도를 통해 최초로 세계에 ‘신라’라는 나라가 알려지게 됐다. 이 지도는 당시 세계와 교류했던 신라의 발자취를 좇는 아주 귀한 사료다. 알 이드리시는 신라에 처음 방문한 뒤 이런 말을 남겼다.\n\n“신라를 방문한 여행자는 나올 생각을 하지 않는다. 그곳에서는 금이 너무 흔해서 개의 사슬이나 원숭이의 목테도 금으로 만든다.”\n\n이방인의 눈에 비친 황금의 나라 신라, 여전히 영롱하고 찬란하게 빛나는 천년의 역사를 간직한 채 오늘의 역사를 새로 새기고 있다. 지난 해 MBC에서 방영되었던 교양예능 프로그램 ‘선을 넘는 녀석들’의 경주편에서 소개된 내용이다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4871",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "쪽샘유적발굴관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "국립경주박물관",
+     "desc": null,
+     "spotId": 432,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "무열왕릉",
+     "desc": null,
+     "spotId": 540,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "김유신장군묘",
+     "desc": null,
+     "spotId": 536,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황룡사지, 황룡사역사문화관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "문무대왕릉",
+     "desc": null,
+     "spotId": 493,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "감은사지",
+     "desc": null,
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "7546034f3fa67b": {
+   "title": "경주 뉴트로(New + Retro) 여행",
+   "kind": "picks",
+   "verdict": "PARSED",
+   "intro": "시시각각 변화하는 시대의 흐름에서 잠시 쉬어 가고 싶은 생각이 들 때가 있다. 변화 속 쉼표가 필요할 때, 우리는 ‘뉴트로(New +Retro)’를 찾았다. 옛 것이 새로운 것으로 다가오는 이색적인 콘셉트의 유행. 변화무쌍함과 정적인 풍경을 동시에 갖고 있는 경주는 뉴트로 여행하기 제격인 곳이다. 모든 것이 디지털화 되어감에도 여행만큼은 ‘아날로그적 감성’이 주류이기를 바란다. 경주의 레트로 여행지, 레트로 체험, 레트로 감성카페를 모았다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4872",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "세대공감 온 가족 여행지",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "낡은 사진첩 속 반가운 그곳",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "누구에게나 있는 그곳의 추억",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "어른이와 어린이의 소통 공간",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "레트로 콘셉트의 이색 갤러리 카페로",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "옛날 교복입고 흑백사진 한컷",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "레트로 감성 카페",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "368cf591ae580e": {
+   "title": "이색 게임으로 새롭게 만나는 경주",
+   "kind": "picks",
+   "verdict": "INTRO_ONLY",
+   "intro": "비디오 게임 장르 중 탈출 게임을 오프라인 상에서 재현한 것으로 몇 년 사이 전국적으로 많은 방탈출 게임 시설이 들어서며 선풍적인 인기를 끌었다.\n\n경주에 이 방탈출 게임을 야외 공간에서 할 수 있는 이색 체험이 있다. 역사와 문화를 소재로 한 탄탄한 스토리라인을 기반으로 증강현실 기술과 접목하여 흥미진진한 콘텐츠를 만들어 낸 것이다.\n\n경주에서 경험해볼 수 있는 야외 방탈출 게임을 소개한다. 추리와 게임을 하면서 미션을 해결해나가는 쾌감과 경주의 의미 있는 여행지들을 둘러볼 수 있는 즐거움까지 누릴 수 있는 특별한 여행법이 될 것이다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4873",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": []
+  },
+  "2cd01c86259f9a": {
+   "title": "보문동 속살걷기",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "보문관광단지로 가는 길, 잠시 샛길로 들어서 보자. 진평왕릉이 있는 보문동으로 향한다. 보문동이라는 지명은 인근에 보문사가 자리하고 있었던 데에서 유래했다. 현재 절은 터만 남아 있는데 발굴조사 당시 '보문(普門)'이라는 이름이 새겨진 기와조각이 발견되면서 위치와 이름이 굳어졌다. 보문관광단지의 그 보문도 같은 경우로 이름 붙여졌다. 신라시대 산성이 있었던 명활산이 동쪽을 호위하듯 서 있고 동네 서쪽은 평야에 버금가는 너른 들녘이다. 보문동의 주요 명소인 진평왕릉이 있는 마을은 남촌마을이라는 곳인데 조선시대 성균관 진사 남용만이 이 마을에 정착하여 대대로 살면서 남씨마을, 남촌이라 불렀다. 경관이 수려해 펜션이 밀집해 있는 곳이기도 하다. 남촌마을 일대와 구황동의 황복마을 일부를 둘러보는 보문동 동네 여행을 시작한다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4874",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "신라왕경숲",
+     "desc": null,
+     "spotId": 452,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황복사지 삼층석탑",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "진평왕릉",
+     "desc": null,
+     "spotId": 520,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "보문사지 연화문 당간지주",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "전 홍유후 설총묘",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "숲머리 뚝방길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "숲머리 음식촌",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "0523c182142057": {
+   "title": "황오&구황동 속살걷기",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "황리단길의 북적함은 피하고 싶지만 감성 가득한 카페는 놓치고 싶지 않을 때, 시내권 여행지와 멀지 않으면서도 경주의 일상에 젖어들고 싶을 때 경주 황오동과 구황동으로 떠나 보자. 황오동과 구황동은 구)경주역 인근에 이웃하고 있는 동네이다. 고려시대의 경주 지역 인문지리서 '동경잡기'에서 이곳을 6방 중 5번 째 방에 해당하는 지역이라 '황오방'이라고 불렀다고 한데에서 황오동 이름이 연유했다. 구황동이란 지명은 신라 진흥왕이 궁궐을 지으려고 하자 9마리의 용이 승천하였다는 설화에서 유래했다.\n\n구)경주역을 중심으로 하는 시가지 일부와 분황사, 황룡사터 등을 아우르는 영역이 황오동과 구황동이다. 주요 문화유적은 물론 동네 곳곳에 보물 숨겨 놓듯 예쁜 카페와 책방, 식당이 자리하고 있다. 찾아다니며 걸을 맛 나는 황오·구황동 동네산책 스타트.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4875",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "분황사",
+     "desc": null,
+     "spotId": 444,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "황오·구황동 감성 카페",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "황룡사역사문화관",
+     "desc": null,
+     "spotId": 460,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주황룡사지와 황룡사마루길 산책",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "황오·구황동 가볼만한 식당&펍",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "1ecb317b5950c2": {
+   "title": "동부동 속살걷기",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "집 앞마당에 우물을 하나 파려 했는데 문화유산이 쏟아져 나오는 동네가 경주다. 교촌마을 한 집 마당에는 어느 문화유산에서 떨어져 나온 것인지 궁금해지는 잘 다듬어진 석조유물이 쌓여 있다. 그야말로 생활 속 유적. 경주 동네를 한 곳 골라 돌아보자. '생활 속 유적'을 요소요소에서 보물찾기하듯 발견하는 재미가 있다. 경주 시가지 한복판, 동부동으로 향한다. 고려, 조선시대의 경주를 만날 수 있는 읍성이 있는 동네다. 동부동 속살걷기, 출발.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4876",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "경주읍성",
+     "desc": null,
+     "spotId": 428,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "경주문화원",
+     "desc": null,
+     "spotId": 426,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "동경관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "집경전지",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동문 앞 카페&식당",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "성동시장",
+     "desc": null,
+     "spotId": 447,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "d7f70d781f9ae3": {
+   "title": "교촌마을 안내서",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "경주 교촌마을은 신라에서 조선으로 이어지는 천년의 배움터였다. 신라 신문왕2년(682)에는 한반도 최초의 국립대학 국학이 세워졌던 곳이고 이는 고려시대에 향학으로, 조선시대의 향교로 이어졌다. 마을이 교촌(校村), 교리(校里), 교동(校洞)이라 불리는 연유도 이곳에 향교가 자리했기 때문이다. 교촌마을은 한국판 노블레스 오블리주의 상징 '경주 최부자댁'의 정신을 배울 수 있는 곳이기도 하다. 9대 진사를 배출한 명망 있는 가문 경주 최부자는 12대에 걸친 400년의 시간 동안 만석지기 재산을 지키면서 관용과 베품의 미덕을 실천했다.\n\n최부자댁을 중심으로 인근에 경주 최씨 가문의 고택이 많이 남아 있으며, 새롭게 조성한 한옥들이 어우러져 고즈넉한 한옥마을의 정취를 뽐낸다. 교촌마을 곁에는 신라의 궁성이 있던 월성과 천년의 숲 계림, 야경이 아름다운 월정교 등 문화유산이 산재해 있다. 배우고, 노닐며, 즐길 수 있는 교촌마을로 떠나 보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4877",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "경주 최부자댁",
+     "desc": null,
+     "spotId": 429,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "교촌홍보관",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주향교",
+     "desc": null,
+     "spotId": 430,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "교동법주",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "월정교",
+     "desc": null,
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "교촌의상실",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "한국토기",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "교촌가람",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "전통식문화연구소 미경",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "미정당 교촌곳간",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "식당_요석궁1779",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "식당_진수성찬",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "식당_알천반상",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "찻집_고운님오시는길",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 이스트1779",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페&고택스테이_교동석등있는집",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "고텍스테이_한옥스테이 디휴",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "35b418b139eeaa": {
+   "title": "경주 벽화골목을 찾아서",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "이웃 동네와 같은 친근한 느낌의 마을에 특별한 그림이 채워진다. 누군가의 집 담벼락은 도화지가 되고 마을에 전하는 이야기를, 때로는 경주를 상징하는 아름다운 풍경을 그려 넣어 시선을 끈다. 경주의 그림 있는 마을, 그림 있는 골목길을 찾아 갔다. 그 담벼락에 흐르는 이야기를 찾아.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4878",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "소현리 타일벽화마을",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "황리단길 벽화골목",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동경이 벽화마을",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "감포 해국길",
+     "desc": null,
+     "spotId": 484,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "계림로 벽화골목",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "불리단길 벽화 골목",
+     "desc": null,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "828ae9f13080d0": {
+   "title": "황촌마을 탐방",
+   "kind": "walk",
+   "verdict": "PARSED",
+   "intro": "경주는 열 손가락이 모자랄 만큼 손에 꼽을 유명한 관광명소가 많지만, 낮은 지붕의 옛집들이 어우러지는 골목길이 주는 정취는 경주만의 또 다른 매력을 담고 있다. 높은 건물과 아파트에 둘러싸여 사라지고 있는, 아쉬움과 그리움을 안고 있는 풍경들이다. 이러한 정취를 잘 느낄 수 있는 곳이 바로 황촌마을(황오동과 성동동 일대)이다.\n\n이곳은 과거 황오동이 신라 왕실 부근에 있다고 해서 '황촌'이라고 불렸다. 근현대에는 기차역의 영업 개시, 폐역되는 100여 년간 함께 흥했고 쇠했던 지역이기도 하다. 그리고 최근 도시 재생 사업과 시민들의 참여로 마을이 생기를 찾고 있다.\n\n(구)경주역이었던 경주문화관 1918을 시작으로 황촌마을을 사부작사부작 거닐어보자.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4879",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "기차역에서 문화공간으로",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "마을 속의 문화유산",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "행복황촌마을의 중심",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "9c703eda692ce2": {
+   "title": "8월 경주, 푸름에 머물다",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "숲과 바다 사이 쉼을 만나는 여행\n8월의 경주는 가장 짙어진 푸름으로 우리를 맞이한다.\n내리쬐는 햇살을 온전하게 가려주는 숲의 그늘은\n지친 여행자를 넉넉하게 품어준다.\n끝없이 펼쳐지는 푸른 바다는\n이 뜨거운 계절에 맞설 수 있게 든든한 뒷배가 되어준다.\n도심의 열기와 밀도에서 벗어나 쉼을 구하는 이들을 위해\n여름 경주가 기다린다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4714",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 테마 여행 1",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 테마 여행 2",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "특별한 행사",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "금리단길 이색 체험",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "16640d7429ed18": {
+   "title": "7월 경주, 여름을 채우다",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "함께 만드는 한 여름날의 추억\n본격적인 여름이 시작되는 7월, 경주는 파릇파릇 생기로 가득하다.\n푸른 바다와 한층 짙어진 숲, 해가 길어진 저녁 풍경까지.\n도시 곳곳은 여름만의 색으로 물들며 여행자에게 뜨거운 안부를 건넨다.\n올여름에는 계절이 선사하는 즐거움을 온전히 누려보자.\n방학을 맞이한 아이들과 함께 웃고 뛰노는 여행부터,\n여름휴가의 여유를 만끽하는 여행 메이트들과의 시간까지.\n함께하는 모든 순간이 7월 경주의 풍경과 어우러져\n오래도록 기억에 남을 추억으로 채워질 것이다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4713",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 테마 여행 1",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 실내 여행지",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "반려견과 경주 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 테마 여행 2",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "f179c4c0563066": {
+   "title": "6월 경주, 여름의 문턱에서",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "햇살과 바람 사이 계절이 바뀌는 순간\n봄의 끝자락과 여름의 시작이 천천히 맞닿는 6월의 경주.\n햇살은 한층 길어져 계절의 온도를 조금씩 바꾸어 간다.\n짙어진 녹음에 더욱 넓어지는 그늘 아래에 머물고,\n해가 길어진 저녁의 여유로운 빛을 맞이해 본다.\n바람의 결 사이로 문득 다가온 초여름 경주의 풍경들을 즐기기로 했다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4712",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "여름 트레킹",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "테마 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "이달의 행사",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "특별한 체험",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "e79dabc0bf2f5f": {
+   "title": "5월 경주, 함께라 더 좋은",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "함께하는 순간마다 깊어지는 초록 풍경\n나무는 어느새 잎을 가득 채우고\n길 위에는 그늘이 드리워져 걷는 시간이 한층 여유로워진다.\n누군가와 함께하기 좋은 5월이다.\n가족과, 친구와, 혹은 소중한 사람과 경주의 초록 속을 거닐며\n함께하는 시간을 더욱 깊고, 짙게 만들어 본다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4711",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "이달의 공연",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "가족 나들이 추천",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동네 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "가정의 달 테마 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "5월의 행사",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "d8944f428ce3de": {
+   "title": "4월 경주, 봄의 완성",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "눈부신 경주의 봄에 머물다\n이보다 더 아름답게 빚을 수 있을까 싶은 풍경으로 우리 앞에 찾아왔다.\n나무마다 피어난 꽃송이에, 들녘에 내려앉은 연둣빛에,\n시선을 훔치는 황홀함 한가득이라 느려지는 걸음은 어쩔 도리가 없다.\n눈부시게 완성된 경주의 봄을 만나러 길을 나선다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4710",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 뉴플",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "트레킹 경주",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "테마 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "축제의 경주",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "6a95265cdb0e62": {
+   "title": "3월 경주, 피어나다",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "봄기운이 번지는 고도(古都)의 산책\n겨울의 기운이 서서히 물러나는 3월,\n경주는 시나브로 계절의 변화를 맞이한다.\n나뭇가지 끝에 맺힌 작은 꽃망울은 겨우내 응축한 힘을 머금은 채,\n조용히 피어날 준비를 한다.\n봄은 갑작스럽게 다가오기보다 고도의 풍경 속에서 천천히 번져가고,\n그 변화의 장면을 따라 3월 경주를 거닌다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4709",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "트레킹 경주",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동네 탐구",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "반려견과 경주 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 체험 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "a8cbfb4ae37b56": {
+   "title": "2월 경주, 교차의 시간",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "계절의 경계에 만나는 경주의 풍경\n겨울과 봄 사이, 경주를 느린 템포로 만난다.\n차가운 공기 속에서도 햇살은 한결 부드러워지고,\n경주는 분주해질 봄을 기다리며 숨을 고른다.\n겨울의 끝자락에서 만나는 유적과 바다,\n그리고 조용한 골목은 계절의 경계에 선 도시의 모습을 담담하게 보여준다.\n천천히 바라볼수록 또렷해지는 경주 본래의 결을 느끼러\n2월의 경주로 떠난다. .",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4708",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 야경 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "이야기가 있는 경주",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "이색 테마 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 예술 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "cf1ba763c45515": {
+   "title": "1월 경주, 경주다움",
+   "kind": "seasonal",
+   "verdict": "PARSED",
+   "intro": "이 계절에 비로소 보이는 것들\n여행 성수기가 지나간 자리,\n1월의 경주는 가장 경주다운 얼굴을 드러낸다.\n고분의 곡선과 석탑의 윤곽은 겨울 볕 아래 더욱 명징하게 다가온다.\n잎사귀가 걷힌 오솔길 너머에 이 계절에야 비로소 보이는 풍경들이 있었다.\n사람보다 유적이 먼저 말을 거는 도시 경주의 겨울 안에서 녹진하게 오래도록 머물러 간다.",
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4707",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "이달의 풍경",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "테마 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "이야기 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 전시",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "경주 미식 여행",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "카페 투어",
+     "desc": null,
+     "section": true,
+     "spotId": null,
+     "linkage": null
+    }
+   ]
+  },
+  "6e425c8d087dae": {
+   "title": "경주여행17선",
+   "kind": "collection",
+   "verdict": "PARSED",
+   "intro": null,
+   "sourceUrl": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4776",
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": [
+    {
+     "name": "감은사지",
+     "desc": "통일신라의 숨결이 고요히 흐르는 사찰.",
+     "spotId": 485,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "계림",
+     "desc": "신라 시조의 전설이 깃든 신비로운 숲.",
+     "spotId": 425,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "괘릉",
+     "desc": "신라 원성왕의 능, 석상이 지키는 고요한 왕릉.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "김유신묘",
+     "desc": "삼국통일의 영웅, 김유신 장군의 위대한 흔적.",
+     "spotId": 660,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "남산",
+     "desc": "불적과 자연이 어우러진 신라의 영산.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "대릉원",
+     "desc": "천년 고분이 전하는 신라 왕들의 이야기.",
+     "spotId": 436,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "대왕암",
+     "desc": "문무왕이 바다에 잠든 해중릉, 일출이 아름다운 명소.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "동궁과 월지",
+     "desc": "밤이면 빛으로 물드는 신라의 궁원.",
+     "spotId": 439,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "분황사지",
+     "desc": "선덕여왕과 원효의 자취가 남은 천년 고찰.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "석굴암과 불국사",
+     "desc": "유네스코 세계유산, 신라 예술과 정신의 결정체.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "숭혜전",
+     "desc": "신라 왕들의 위패가 모셔진 유교 제향 공간.",
+     "spotId": 450,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "용연",
+     "desc": "전설과 단풍이 어우러진 신비로운 연못.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "월정교",
+     "desc": "낭만적인 야경이 펼쳐지는 신라의 한옥 다리.",
+     "spotId": 454,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "첨성대",
+     "desc": "1400년 별빛이 비추는 신라의 천문대.",
+     "spotId": 457,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    },
+    {
+     "name": "최부잣집",
+     "desc": "노블레스 오블리주 정신이 깃든 전통가옥.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "표암",
+     "desc": "신라 건국의 뿌리, 화백회의의 발상지.",
+     "spotId": null,
+     "linkage": null
+    },
+    {
+     "name": "황룡사지",
+     "desc": "구층목탑이 솟았던 신라의 황금빛 유적지.",
+     "spotId": 461,
+     "linkage": "GYEONGJU_LEGACY_CONTENT_V1"
+    }
+   ]
+  },
+  "ca1326e503446f": {
+   "title": "경주여행17선(영문)",
+   "kind": "collection",
+   "verdict": "SOURCE_NOT_FOUND",
+   "intro": null,
+   "sourceUrl": null,
+   "provider": "경주문화관광(gyeongju.go.kr)",
+   "asOf": "2026-09-19",
+   "items": []
+  }
+ }
+}

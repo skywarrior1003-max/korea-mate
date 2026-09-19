@@ -14,7 +14,7 @@ import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
-import { tripCoverSpot } from "./TripCourseClient";
+import { tripCoverSpot, tripKindLabelKey } from "./TripCourseClient";
 
 export default function TripsAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
@@ -44,9 +44,12 @@ export default function TripsAllClient({ slug }: { slug: string }) {
           <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6">
             {trips.map(trip => {
               const cover = tripCoverSpot(trip, byId);
-              const preview = trip.stops.slice(0, 3)
-                .map(s => (locale !== "ko" && s.nameEn ? s.nameEn : s.name))
-                .filter((n): n is string => Boolean(n));
+              // preview: stop 순서 → 없으면 공식 추천 항목(목록형) — 제목만 있는 빈 카드를 만들지 않는다
+              const previewSource = trip.stops.length > 0
+                ? trip.stops.map(s => (locale !== "ko" && s.nameEn ? s.nameEn : s.name))
+                : (trip.legacyContent?.items ?? []).map(it => it.name);
+              const preview = previewSource.slice(0, 3).filter((n): n is string => Boolean(n));
+              const previewTotal = trip.stops.length > 0 ? trip.stops.length : (trip.legacyContent?.items.length ?? 0);
               return (
                 <li key={trip.id} className="py-4 border-b border-[var(--qh-line)]">
                   <Link href={`/city/${slug}/trips/${trip.id}`} className="block gkm-focus rounded-[4px] min-h-11">
@@ -64,15 +67,20 @@ export default function TripsAllClient({ slug }: { slug: string }) {
                       )}
                     </span>
                     <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)]">
-                      {t("officialCourse")}
+                      {t(tripKindLabelKey(trip))}
                       {!Number.isInteger(trip.days) && trip.durationLabel && locale === "ko" ? ` · ${trip.durationLabel}` : ""}
                     </span>
-                    {trip.theme && (
+                    {trip.theme ? (
                       <span className="block mt-1 text-[13px] leading-relaxed" style={{ color: "rgba(33,29,23,.6)" }}>{trip.theme}</span>
-                    )}
+                    ) : trip.legacyContent?.intro && locale === "ko" ? (
+                      /* theme 이 없는 코스는 공식 소개 첫 문장(원문)으로 빈 카드를 없앤다 */
+                      <span className="block mt-1 text-[13px] leading-relaxed line-clamp-2" style={{ color: "rgba(33,29,23,.6)" }}>
+                        {trip.legacyContent.intro.split("\n")[0]}
+                      </span>
+                    ) : null}
                     {preview.length > 0 && (
                       <span className="block mt-1 text-[12px] text-[var(--qh-faint2)] truncate">
-                        {preview.join(" → ")}{trip.stops.length > preview.length ? " …" : ""}
+                        {preview.join(trip.stops.length > 0 ? " → " : " · ")}{previewTotal > preview.length ? " …" : ""}
                       </span>
                     )}
                   </Link>

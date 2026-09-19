@@ -14,6 +14,7 @@ import tripsRaw from "./regional-trips-v1.json" with { type: "json" };
 import placesRaw from "./regional-places-v1.json" with { type: "json" };
 import essentialsRaw from "./regional-essentials-v1.json" with { type: "json" };
 import legacyStopsRaw from "./gyeongju-legacy-stops-v1.json" with { type: "json" };
+import legacyContentRaw from "./gyeongju-legacy-content-v1.json" with { type: "json" };
 import { curatedTripsForCity } from "../curated-trips.ts";
 
 export interface RegionalTripStop {
@@ -22,6 +23,26 @@ export interface RegionalTripStop {
   /** published city_spots.id — canonical 링크가 불충분하면 null(임의 매칭 금지) */
   spotId: number | null;
   linkage: string | null;
+}
+
+/** 경주 legacy 코스의 공식 콘텐츠(GYEONGJU-LEGACY-CONTENT-COMPLETION-V2) */
+export interface LegacyContentItem {
+  name: string;
+  /** 17선 등 원문에 항목 설명이 있으면 그대로 */
+  desc?: string | null;
+  /** true = 장소가 아닌 원문 구성 섹션(이달의 풍경 등) — 링크·매칭 없음 */
+  section?: boolean;
+  spotId: number | null;
+  linkage: string | null;
+}
+export interface LegacyCourseContent {
+  /** bus=버스 노선, walk=동네 도보, course=순서형, picks=테마 추천 목록, seasonal=이달의 추천, collection=추천 컬렉션 */
+  kind: "bus" | "walk" | "course" | "picks" | "seasonal" | "collection";
+  intro: string | null;
+  sourceUrl: string | null;
+  provider: string;
+  asOf: string;
+  items: LegacyContentItem[];
 }
 
 export interface RecommendedTrip {
@@ -36,6 +57,8 @@ export interface RecommendedTrip {
   /** 공식 provenance — UI 배지 남발 금지, 데이터로만 유지 */
   source: unknown;
   origin: "regional-official" | "gyeongju-official";
+  /** 경주 legacy: 공식 소개문·추천 목록(순서형이 아니면 stops 대신 이걸 그린다) */
+  legacyContent?: LegacyCourseContent;
 }
 
 export interface RecommendedPlace {
@@ -69,6 +92,22 @@ const GYEONGJU_LEGACY_STOPS: Record<string, RegionalTripStop[]> = Object.fromEnt
   Object.entries((legacyStopsRaw as unknown as LegacyStopsFile).courses).map(([id, c]) => [id, c.stops]),
 );
 
+// 잔여 legacy 코스의 공식 콘텐츠(경주문화관광 원문). 순서형(bus/walk/course)은
+// 공식 방문 순서가 있으므로 items 를 stops 로 승격해 채택 대상이 된다(§4A).
+// 목록형(picks/seasonal/collection)은 억지 일정화하지 않는다(§4B) — stops 는 비운다.
+interface LegacyContentFile { courses: Record<string, LegacyCourseContent & { title?: string; verdict?: string }> }
+const GYEONGJU_LEGACY_CONTENT: Record<string, LegacyCourseContent> = Object.fromEntries(
+  Object.entries((legacyContentRaw as unknown as LegacyContentFile).courses)
+    .map(([id, c]) => [id, { kind: c.kind, intro: c.intro, sourceUrl: c.sourceUrl, provider: c.provider, asOf: c.asOf, items: c.items }]),
+);
+const ORDERED_KINDS = new Set(["bus", "walk", "course"]);
+function legacyContentStops(content: LegacyCourseContent | undefined): RegionalTripStop[] {
+  if (!content || !ORDERED_KINDS.has(content.kind)) return [];
+  return content.items
+    .filter(it => !it.section)
+    .map(it => ({ name: it.name, nameEn: null, spotId: it.spotId, linkage: it.linkage }));
+}
+
 /** locale 에 맞는 코스 제목 — 번역을 창작하지 않는다(title_en 없으면 원제) */
 export function tripDisplayTitle(trip: RecommendedTrip, locale: string): string {
   if (locale !== "ko" && trip.titleEn) return trip.titleEn;
@@ -86,14 +125,19 @@ export function getRecommendedTrips(city: string): RecommendedTrip[] {
   const seen = new Set(primary.map(t => t.title.trim()));
   const legacy: RecommendedTrip[] = curatedTripsForCity("gyeongju")
     .filter(t => !seen.has(t.title.trim()))
-    .map(t => ({
-      id: t.id, city: "gyeongju",
-      title: t.title, titleEn: null,
-      theme: t.theme, durationLabel: null,
-      days: t.days, stops: GYEONGJU_LEGACY_STOPS[t.id] ?? [],
-      source: { provider: "Gyeongju official travel content", category: t.category },
-      origin: "gyeongju-official" as const,
-    }));
+    .map(t => {
+      const content = GYEONGJU_LEGACY_CONTENT[t.id];
+      return {
+        id: t.id, city: "gyeongju",
+        title: t.title, titleEn: null,
+        theme: t.theme, durationLabel: null,
+        days: t.days,
+        stops: GYEONGJU_LEGACY_STOPS[t.id] ?? legacyContentStops(content),
+        source: { provider: "Gyeongju official travel content", category: t.category },
+        origin: "gyeongju-official" as const,
+        ...(content ? { legacyContent: content } : {}),
+      };
+    });
   return [...primary, ...legacy];
 }
 
@@ -228,6 +272,17 @@ export function essentialKeyInfoRows(es: TravelEssential): Array<[string, string
     }
   }
   return rows;
+}
+
+/**
+ * City Hub 추천 장소의 명시적 editorial order (Owner 2026-09-19).
+ * 경주: 동궁과 월지(439) → 경주 계림(425) → 경주세계자동차박물관(506).
+ * 자동 순서(recommended_now → 보충)가 506 을 다시 첫 번째로 만들지 않도록
+ * 데이터 계층에서 고정한다. 명시된 도시 외에는 null — 다른 도시 순서 무변경.
+ */
+const HUB_EDITORIAL_ORDER: Record<string, number[]> = { gyeongju: [439, 425, 506] };
+export function hubEditorialSpotOrder(city: string): number[] | null {
+  return HUB_EDITORIAL_ORDER[city.toLowerCase()] ?? null;
 }
 
 /** canonical 연결이 확정된 추천 장소의 city_spot id 목록(도시별, 순서 보존) */

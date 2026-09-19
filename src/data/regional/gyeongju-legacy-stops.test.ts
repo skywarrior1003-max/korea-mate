@@ -14,29 +14,58 @@ test("legacy 코스는 54개, 제목·순서 유지", () => {
   assert.equal(legacy[53].title, "경주여행17선(영문)");
 });
 
-test("source-backed 16개 코스만 stops 를 갖는다", () => {
+test("stops 코스 28 = V1 16 + V2 순서형 승격 12(bus5·walk5·course2)", () => {
   const withStops = legacy.filter(t => t.stops.length > 0);
-  assert.equal(withStops.length, 16);
-  assert.equal(legacy.length - withStops.length, 38); // 0-stop 유지(CTA 가드 대상)
-  assert.deepEqual(
-    withStops.map(t => t.id).sort(),
-    ["080c8957f0431a", "1db6f2f1c75c66", "26dc1a68d89d91", "2fde29376fca2e", "3bd3edd4276e0f",
-     "62459c196210d2", "665f6a1495f352", "6d2dfd6d4e94a0", "79870661da2f6c", "7ca104af2a43d8",
-     "81f7239c56b927", "8634d5b04154fc", "87b7d6be431eef", "9b2d66c1682879", "9e63b9e88c7484",
-     "d96db695f6d542"].sort(),
-  );
+  assert.equal(withStops.length, 28);
+  const v1 = ["080c8957f0431a", "1db6f2f1c75c66", "26dc1a68d89d91", "2fde29376fca2e", "3bd3edd4276e0f",
+    "62459c196210d2", "665f6a1495f352", "6d2dfd6d4e94a0", "79870661da2f6c", "7ca104af2a43d8",
+    "81f7239c56b927", "8634d5b04154fc", "87b7d6be431eef", "9b2d66c1682879", "9e63b9e88c7484",
+    "d96db695f6d542"];
+  for (const id of v1) assert.ok(withStops.some(t => t.id === id), `V1 코스 ${id} stops 유지`);
 });
 
-test("occurrence 118 · LINKED 84 · name-only(HOLD 포함) 34", () => {
+test("stops occurrence 203 · linked 120 — V1 118/84 + V2 승격 85/36", () => {
   const stops = legacy.flatMap(t => t.stops);
-  assert.equal(stops.length, 118);
-  assert.equal(stops.filter(s => s.spotId !== null).length, 84);
-  assert.equal(stops.filter(s => s.spotId === null).length, 34);
-  // linked 는 전부 배선 계보 라벨을 갖는다
+  assert.equal(stops.length, 203);
+  assert.equal(stops.filter(s => s.spotId !== null).length, 120);
   for (const s of stops) {
-    if (s.spotId !== null) assert.equal(s.linkage, "GYEONGJU_LEGACY_STOPS_V1");
+    if (s.spotId !== null) assert.ok(s.linkage === "GYEONGJU_LEGACY_STOPS_V1" || s.linkage === "GYEONGJU_LEGACY_CONTENT_V1");
     else assert.equal(s.linkage, null);
   }
+});
+
+test("V2 콘텐츠: 38코스 전부 legacyContent — 빈 상세는 17선(영문) 1개뿐", () => {
+  const withContent = legacy.filter(t => t.legacyContent);
+  assert.equal(withContent.length, 38);
+  const listOnly = legacy.filter(t => t.stops.length === 0 && (t.legacyContent?.items.length ?? 0) > 0);
+  assert.equal(listOnly.length, 24); // 목록형 — 억지 일정화 금지(§4B): stops 비움
+  const empty = legacy.filter(t => t.stops.length === 0 && !t.legacyContent?.intro && (t.legacyContent?.items.length ?? 0) === 0);
+  assert.deepEqual(empty.map(t => t.title), ["경주여행17선(영문)"]);
+  // 목록형 items 실측 고정
+  const items = listOnly.flatMap(t => t.legacyContent!.items);
+  assert.equal(items.length, 200);
+  assert.equal(items.filter(i => i.spotId !== null).length, 67);
+  // 17선(ko)은 17개 항목 원문 desc 보존
+  const c17 = legacy.find(t => t.id === "6e425c8d087dae")!;
+  assert.equal(c17.legacyContent!.items.length, 17);
+  assert.ok(c17.legacyContent!.items.every(i => i.desc));
+});
+
+test("V2 승격 코스 표본 — 버스10 순서·김유신 코스 연결", () => {
+  const bus10 = legacy.find(t => t.id === "f987a6e0dbfe8d")!;
+  assert.deepEqual(bus10.stops.map(s => s.name), [
+    "첨성대", "동궁과 월지", "분황사", "경주동궁원", "보문관광단지, 경주월드", "경주세계문화엑스포공원", "불국사",
+  ]);
+  assert.equal(bus10.stops.filter(s => s.spotId !== null).length, 6); // 복합명 1건만 name-only
+  const kim = legacy.find(t => t.id === "e689141b4cf3f3")!;
+  assert.equal(kim.legacyContent!.kind, "course");
+  assert.ok(kim.stops.some(s => s.name === "경주 김유신묘" && s.spotId === 660));
+});
+
+test("경주 Hub editorial order = 439 → 425 → 506 (다른 도시 null)", async () => {
+  const { hubEditorialSpotOrder } = await import("./regional-recommendations.ts");
+  assert.deepEqual(hubEditorialSpotOrder("gyeongju"), [439, 425, 506]);
+  for (const c of ["busan", "seoul", "jeju", "jeonju"]) assert.equal(hubEditorialSpotOrder(c), null);
 });
 
 test("대표 코스 stop 순서·연결 고정(시내권 유네스코·바다 코스)", () => {

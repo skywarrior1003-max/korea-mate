@@ -24,14 +24,26 @@ import { adoptCourseDays, type AdoptSpotFacts } from "@/lib/trip-plan/course-ado
 import { getDeviceId } from "@/lib/deviceId";
 import { loadCitySpots, quietCity } from "./quiet-data";
 
-/** 코스 대표 이미지 — 연결된 stop 중 카탈로그 사진이 있는 첫 장소. 지어내지 않는다. */
+/** 코스 대표 이미지 — 연결된 stop(또는 추천 목록 항목) 중 카탈로그 사진이 있는 첫 장소. 지어내지 않는다. */
 export function tripCoverSpot(trip: RecommendedTrip, byId: Map<number, CitySpot>): CitySpot | null {
-  for (const s of trip.stops) {
+  for (const s of [...trip.stops, ...(trip.legacyContent?.items ?? [])]) {
     if (s.spotId === null) continue;
     const spot = byId.get(s.spotId);
     if (spot?.image) return spot;
   }
   return null;
+}
+
+/** 코스 유형 라벨 키 — 목록형을 '여행코스'라고 부르지 않는다(원문 성격 그대로) */
+export function tripKindLabelKey(trip: RecommendedTrip): string {
+  switch (trip.legacyContent?.kind) {
+    case "bus": return "courseKindBus";
+    case "walk": return "courseKindWalk";
+    case "picks": return "courseKindPicks";
+    case "seasonal": return "courseKindSeasonal";
+    case "collection": return "courseKindCollection";
+    default: return "officialCourse";
+  }
 }
 
 export default function TripCourseClient({ slug, tripId }: { slug: string; tripId: string }) {
@@ -91,7 +103,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
           ← {cityLabel}
         </Link>
         <div className="absolute left-0 right-0 bottom-0 max-w-3xl mx-auto px-5 md:px-6 pb-4">
-          <p className="text-[11px] font-medium tracking-[.14em] text-white/75 uppercase">{t("officialCourse")} · {cityLabel}</p>
+          <p className="text-[11px] font-medium tracking-[.14em] text-white/75 uppercase">{t(tripKindLabelKey(trip))} · {cityLabel}</p>
           <h1 className="mt-0.5 text-white text-[22px] md:text-[30px] font-semibold leading-tight">{tripDisplayTitle(trip, locale)}</h1>
           {metaLine && <p className="mt-0.5 text-[12.5px] text-white/80">{metaLine}</p>}
         </div>
@@ -101,6 +113,12 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
         {/* 짧은 여행 설명 — 원문 theme 그대로(창작 없음) */}
         {trip.theme && (
           <p className="text-[14px] leading-relaxed" style={{ color: "rgba(33,29,23,.72)" }}>{trip.theme}</p>
+        )}
+        {/* 공식 소개 본문(경주문화관광 원문 그대로) — 번역을 창작하지 않는다 */}
+        {trip.legacyContent?.intro && (
+          <p className="mt-3 text-[13.5px] leading-[1.7] whitespace-pre-line" style={{ color: "rgba(33,29,23,.66)" }}>
+            {trip.legacyContent.intro}
+          </p>
         )}
 
         {/* ── 코스 흐름 — 세로 타임라인, Story 의 이동감 문법 ── */}
@@ -153,8 +171,58 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
               );
             })}
           </ol>
-        ) : (
+        ) : trip.legacyContent && trip.legacyContent.items.length > 0 ? (
+          /* ── 추천 목록/컬렉션/이달 구성 — 억지 일정화하지 않는다(§4B).
+             LINKED 항목만 Place Detail 로, 섹션·name-only 는 원문 이름 그대로 ── */
+          <div className="mt-5">
+            <h2 className="text-[12px] font-medium tracking-[.12em] text-[var(--qh-faint)]">{t("legacyItemsLabel")}</h2>
+            <ul className="mt-2">
+              {trip.legacyContent.items.map((it, i) => {
+                const spot = it.spotId !== null ? byId.get(it.spotId) : undefined;
+                const inner = (
+                  <>
+                    <span aria-hidden className="flex-none w-[22px] text-[12px] font-semibold text-[var(--qh-clay)]">{i + 1}</span>
+                    {spot && (
+                      <span className="relative flex-none w-[52px] h-[52px] rounded-[4px] overflow-hidden bg-[var(--qh-line)]">
+                        {spot.image
+                          ? <img src={spot.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                          : <img src="/images/placeholder-spot.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />}
+                      </span>
+                    )}
+                    <span className="min-w-0 flex-1">
+                      <span className={`block text-[14.5px] leading-snug ${spot ? "font-semibold text-[var(--qh-ink)]" : "font-medium"}`}
+                        style={spot ? undefined : { color: "rgba(33,29,23,.72)" }}>
+                        {spot ? displayPlaceName(spot.name, spot.nameL10n, locale) : it.name}
+                      </span>
+                      {it.desc && <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)]">{it.desc}</span>}
+                      {spot?.district && <span className="block mt-0.5 text-[11.5px] text-[var(--qh-faint2)]">{spot.district}</span>}
+                    </span>
+                    {spot && <span className="flex-none text-[13px] text-[var(--qh-faint)]" aria-hidden>→</span>}
+                  </>
+                );
+                return (
+                  <li key={`${trip.id}-it-${i}`} className="border-b border-[var(--qh-line)]">
+                    {spot ? (
+                      <Link href={`/place/${spot.id}/`} className="flex items-center gap-3 py-2.5 gkm-focus rounded-[4px] min-h-11">{inner}</Link>
+                    ) : (
+                      <div className="flex items-center gap-3 py-2.5 min-h-11">{inner}</div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : !trip.legacyContent?.intro ? (
           <p className="mt-5 text-[13px] leading-relaxed text-[var(--qh-faint2)]">{t("courseNoStops")}</p>
+        ) : null}
+
+        {/* 공식 원문 출처 — provider·확인일. 링크는 공식 페이지로만 */}
+        {trip.legacyContent?.sourceUrl && (
+          <p className="mt-4 text-[11.5px] text-[var(--qh-faint2)]">
+            <a href={trip.legacyContent.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 gkm-focus">
+              {t("sourceLine", { provider: trip.legacyContent.provider })}
+            </a>
+          </p>
         )}
 
         {/* ── Primary CTA — 이 코스 그대로 내 일정으로 (Owner 2026-09-12, 업계형 코스=시드)

@@ -20,7 +20,7 @@ import { cityHubHeroVisual } from "@/lib/city-visual";
 import { KMA_SHORT_FORECAST_URL, formatNowTemp } from "@/lib/weather/city-now-core";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import PartnerOfferRow from "@/components/PartnerOfferRow";
-import { getRecommendedTrips, recommendedSpotIds, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
+import { getRecommendedTrips, recommendedSpotIds, hubEditorialSpotOrder, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
 
@@ -72,7 +72,8 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const essentials = getTravelEssentials(slug);
   // 추천 장소: 공식 recommended_now 의 canonical 연결(순서 보존)을 먼저,
   // 부족분만 카탈로그에서 보충 — 임의 매칭·가짜 인기 없음.
-  const officialIds = recommendedSpotIds(slug);
+  // editorial order(Owner 지정 도시)가 있으면 그 순서를 그대로 쓴다 — 자동 순서가 덮지 않는다.
+  const officialIds = hubEditorialSpotOrder(slug) ?? recommendedSpotIds(slug);
   const places = (() => {
     if (!spots) return [];
     const byId = new Map(spots.map(s => [Number(s.id), s]));
