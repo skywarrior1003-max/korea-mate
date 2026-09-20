@@ -45,7 +45,33 @@ export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSugges
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
 export const MOMENT3_PROMPT_VERSION = "moment3-v1";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v2-grounded";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v3-witty";
+
+/**
+ * 재치 문체의 허용 표현 장치 (WITTY-TONE-QUALITY V1 §E).
+ * witty(화면 라벨: "가볍고 재치 있게")에서만 응답에 style_device 가 필수이고,
+ * 이 목록 밖 값이면 서버가 결과를 폐기한다. DB·공개 API·화면에 저장·노출 0.
+ */
+export const HERO_STYLE_DEVICES = ["contrast", "rhythm", "callback", "wordplay", "observation"] as const;
+export type HeroStyleDevice = (typeof HERO_STYLE_DEVICES)[number];
+
+/**
+ * hero 전용 재치 브리프 — moment 용 witty 브리프와 별개다. 재치는 사실을 바꾸는
+ * 기능이 아니라 같은 사실의 배열·리듬을 바꾸는 기능이다(§C).
+ */
+export const HERO_WITTY_BRIEF = [
+  "Direction 2 — light, witty (화면: 가볍고 재치 있게). NOT comedy, NOT jokes — the quiet wit of a",
+  "well-written travel journal. You MUST use at least ONE of these devices, built ONLY from the listed facts,",
+  "and name it in style_device:",
+  '- "contrast": play the trip numbers or places against each other (e.g. 9 stops on the itinerary vs the one scene the memos lingered on).',
+  '- "rhythm": repeat one sentence shape across places so the repetition itself carries the smile.',
+  '- "callback": pick up a word that actually appears in a public moment memo and return to it with a twist.',
+  '- "wordplay": light, natural play on a place name or a memo word of THIS locale — never translate a pun from another language.',
+  '- "observation": one dry observation about the trip pattern visible in the facts (a mild personification of the itinerary/footsteps/gaze is allowed — never of people).',
+  "The reader must feel the difference from a plain calm line — but the FACTS stay identical to calm.",
+  "STILL FORBIDDEN: invented actions/feelings/companions/weather/food/mishaps/tiredness, revisit-intent,",
+  "mocking heritage or locals, internet slang, ㅋㅋ/LOL, emoji, forced dad-jokes, sarcasm, exaggeration beyond the facts.",
+].join(" ");
 
 /** 표지 소개문 상한 — 표지에서 2~4줄로 읽히는 길이(§10) */
 export const MAX_HERO_INTRO_CHARS = 160;
@@ -89,8 +115,8 @@ export function buildHeroFacts(c: WritingContext): HeroFact[] {
   return facts;
 }
 
-/** hero 응답 — {title, memo(=intro), source_refs}. 파싱 실패·필드 누락은 null. */
-export interface HeroSuggestion extends MomentSuggestion { sourceRefs: string[] }
+/** hero 응답 — {title, memo(=intro), source_refs, style_device?}. 파싱 실패·필드 누락은 null. */
+export interface HeroSuggestion extends MomentSuggestion { sourceRefs: string[]; styleDevice: string | null }
 
 export const HERO_RESPONSE_SCHEMA = {
   type: "object",
@@ -98,6 +124,7 @@ export const HERO_RESPONSE_SCHEMA = {
     title: { type: "string" },
     memo: { type: "string" },
     source_refs: { type: "array", items: { type: "string" } },
+    style_device: { type: "string" },
   },
   required: ["title", "memo", "source_refs"],
 } as const;
@@ -120,14 +147,22 @@ export function extractHeroSuggestion(text: string): HeroSuggestion | null {
   const title = clean(raw.title, MAX_TITLE_CHARS + 20);
   const memo = clean(raw.memo, MAX_HERO_INTRO_CHARS + 60);
   if (!title || !memo || refs.length === 0) return null;
-  return { title, memo, sourceRefs: refs };
+  const styleDevice = typeof raw.style_device === "string" ? raw.style_device.trim() : null;
+  return { title, memo, sourceRefs: refs, styleDevice };
 }
 
-/** source_refs 가 실제 제공한 키 집합 안에만 있는가 — 밖의 키가 하나라도 있으면 거부. */
+/**
+ * hero 결과 검증 — ① source_refs 가 제공 키 집합 안에만 있어야 하고,
+ * ② witty(재치)는 허용 style_device 가 반드시 있어야 한다(§E). 위반은 폐기.
+ * style_device 는 검증에만 쓰고 저장·노출하지 않는다.
+ */
 export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | null): MomentSuggestion | null {
   if (hero === null) return null;
   const keys = new Set(buildHeroFacts(req.context).map(f => f.key));
   for (const r of hero.sourceRefs) if (!keys.has(r)) return null;
+  if (req.direction === "witty") {
+    if (!hero.styleDevice || !(HERO_STYLE_DEVICES as readonly string[]).includes(hero.styleDevice)) return null;
+  }
   return { title: hero.title, memo: hero.memo };
 }
 
@@ -351,6 +386,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
     LOCALE_VOICE[req.locale],
     ...(req.target === "moment3"
       ? [DIRECTION_BRIEF.calm, DIRECTION_BRIEF.witty, DIRECTION_BRIEF.warm]
+      // 표지 재치는 moment 재치와 다른 공예다(§C) — hero 전용 브리프로 교체.
+      : req.target === "storyHero" && req.direction === "witty"
+      ? [HERO_WITTY_BRIEF]
       : [DIRECTION_BRIEF[req.direction]]),
     targetCraft,
     `ALLOWED FACTS (the ONLY facts that exist — everything else is UNKNOWN):`,
@@ -406,7 +444,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
 ${req.target === "moment3"
   ? 'Return JSON: {"calm": {"title": "<title>", "memo": "<memo>"}, "witty": {"title": "<title>", "memo": "<memo>"}, "warm": {"title": "<title>", "memo": "<memo>"}}'
   : req.target === "storyHero"
-  ? 'Return JSON: {"title": "<title>", "memo": "<intro>", "source_refs": ["f1", "f2"]}'
+  ? (req.direction === "witty"
+      ? 'Return JSON: {"title": "<title>", "memo": "<intro>", "source_refs": ["f1", "f2"], "style_device": "<one of: contrast|rhythm|callback|wordplay|observation>"}'
+      : 'Return JSON: {"title": "<title>", "memo": "<intro>", "source_refs": ["f1", "f2"]}')
   : req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
