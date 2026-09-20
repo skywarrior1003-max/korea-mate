@@ -634,7 +634,11 @@
     "heroBusy": "AI가 쓰는 중…",
     "heroFailed": "생성에 실패했어요. 아래 문구를 직접 적거나 다시 시도해 주세요.",
     "heroEditHeading": "여행 Story 표지",
-    "heroChangeTone": "문체 바꾸기"
+    "heroChangeTone": "문체 바꾸기",
+    "heroRegen": "다시 제안받기",
+    "heroCostNote": "AI 제안은 문체를 선택하거나 다시 생성할 때만 만들어집니다.",
+    "mapLoadFailed": "지도를 불러오지 못했어요.",
+    "mapRetry": "다시 시도"
   },
   "memo": {
     "edit": "수정",

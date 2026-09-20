@@ -634,7 +634,11 @@
     "heroBusy": "AI创作中…",
     "heroFailed": "生成失败。可以自己填写，或再试一次。",
     "heroEditHeading": "旅行Story封面",
-    "heroChangeTone": "更换语气"
+    "heroChangeTone": "更换语气",
+    "heroRegen": "再次建议",
+    "heroCostNote": "只有在选择语气或再次生成时才会调用AI。",
+    "mapLoadFailed": "无法加载地图。",
+    "mapRetry": "重试"
   },
   "memo": {
     "edit": "编辑",

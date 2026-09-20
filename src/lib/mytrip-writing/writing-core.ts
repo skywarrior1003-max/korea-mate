@@ -45,7 +45,7 @@ export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSugges
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
 export const MOMENT3_PROMPT_VERSION = "moment3-v1";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v1";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v2-grounded";
 
 /** 표지 소개문 상한 — 표지에서 2~4줄로 읽히는 길이(§10) */
 export const MAX_HERO_INTRO_CHARS = 160;
@@ -62,6 +62,73 @@ export function deriveHeroMomentFacts(moments: PublicMomentFact[]): string[] {
     if (parts.length > 0) out.push(`public moment — ${parts.join(" / ").slice(0, 160)}`);
   }
   return out;
+}
+
+// ── storyHero 사실 접지 (GROUNDING-STABLE V3 §A) ────────────────────────────
+// 표지 문장은 나열된 사실 키에서만 나와야 한다. 모델은 사용한 키를
+// source_refs 로 되돌려 주고, 서버는 존재하지 않는 키가 하나라도 있으면
+// 결과를 버린다(추가 AI 검수 요청 없음 — 요청은 계속 1회다).
+// 완전한 의미 검증은 코드만으로 불가능하다 — 이 키 검증·프롬프트 제한·고정
+// fixture 검사가 방어선이고, 그 한계는 보고서에 그대로 적는다.
+
+export interface HeroFact { key: string; text: string }
+
+/** storyHero 가 쓸 수 있는 입력 전부 — §A-1 허용 목록과 1:1. 순서 결정적. */
+export function buildHeroFacts(c: WritingContext): HeroFact[] {
+  const clipLocal = (v: unknown, max: number): string => (typeof v === "string" ? v.trim().slice(0, max) : "");
+  const facts: HeroFact[] = [];
+  let n = 0;
+  const push = (text: string) => { n += 1; facts.push({ key: `f${n}`, text }); };
+  push(`city: ${clipLocal(c.city, 40)}`);
+  if (clipLocal(c.dates, 40)) push(`trip dates: ${clipLocal(c.dates, 40)}`);
+  if (c.hasPhoto) push("public photos exist: YES — you CANNOT see them; never describe their contents");
+  for (const f of (c.tripFacts ?? []).slice(0, MAX_TRIP_FACTS + 8)) {
+    const t = clipLocal(f, MAX_FACT_CHARS + 60);
+    if (t) push(t);
+  }
+  return facts;
+}
+
+/** hero 응답 — {title, memo(=intro), source_refs}. 파싱 실패·필드 누락은 null. */
+export interface HeroSuggestion extends MomentSuggestion { sourceRefs: string[] }
+
+export const HERO_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    title: { type: "string" },
+    memo: { type: "string" },
+    source_refs: { type: "array", items: { type: "string" } },
+  },
+  required: ["title", "memo", "source_refs"],
+} as const;
+
+export function extractHeroSuggestion(text: string): HeroSuggestion | null {
+  const parse = (t: string): Record<string, unknown> | null => {
+    try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
+    catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  if (typeof raw.title !== "string" || typeof raw.memo !== "string" || !Array.isArray(raw.source_refs)) return null;
+  const refs = raw.source_refs.filter((r): r is string => typeof r === "string").map(r => r.trim()).filter(Boolean);
+  const clean = (s: string, max: number) => {
+    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    if (v.length > max) v = v.slice(0, max).trim();
+    return v;
+  };
+  const title = clean(raw.title, MAX_TITLE_CHARS + 20);
+  const memo = clean(raw.memo, MAX_HERO_INTRO_CHARS + 60);
+  if (!title || !memo || refs.length === 0) return null;
+  return { title, memo, sourceRefs: refs };
+}
+
+/** source_refs 가 실제 제공한 키 집합 안에만 있는가 — 밖의 키가 하나라도 있으면 거부. */
+export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | null): MomentSuggestion | null {
+  if (hero === null) return null;
+  const keys = new Set(buildHeroFacts(req.context).map(f => f.key));
+  for (const r of hero.sourceRefs) if (!keys.has(r)) return null;
+  return { title: hero.title, memo: hero.memo };
 }
 
 export const MODEL = "gemini-2.5-flash";     // 저장소에 이미 승인된 모델 그대로
@@ -287,7 +354,16 @@ export function buildWritingPrompt(req: WritingRequest): string {
       : [DIRECTION_BRIEF[req.direction]]),
     targetCraft,
     `ALLOWED FACTS (the ONLY facts that exist — everything else is UNKNOWN):`,
-    ...facts.map(f => `- ${f}`),
+    ...(req.target === "storyHero"
+      ? buildHeroFacts(c).map(f => `- [${f.key}] ${f.text}`)
+      : facts.map(f => `- ${f}`)),
+    ...(req.target === "storyHero" ? [
+      `GROUNDING RULES (storyHero):
+- Every sentence of the title and intro must be traceable to the listed fact keys — nothing else exists.
+- Return in "source_refs" ONLY the keys (like "f1") you actually used. Do not invent keys.
+- NEVER add feelings, satisfaction, regret, longing, or intent to return (e.g. "다시 걷고 싶다", "또 오고 싶다", "좋았다") unless that exact sentiment is written inside a listed public moment memo.
+- The three tones (calm/witty/warm) change WORDING ONLY — never the set of facts. No new events, no new emotions in any tone.`,
+    ] : []),
     `FACT RULES:
 - You may only state concrete events, actions, foods, and numbers that are supported by the ALLOWED FACTS or the traveler's draft.
 - Missing information means UNKNOWN — it is never permission to invent.
@@ -329,7 +405,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
     `Before you answer: silently list every concrete claim in your line (people, photos, purchases, times, weather, objects, numbers, prior stops) and DELETE any claim not literally present in the facts/draft — replace it with plain being-there observation. Then output.
 ${req.target === "moment3"
   ? 'Return JSON: {"calm": {"title": "<title>", "memo": "<memo>"}, "witty": {"title": "<title>", "memo": "<memo>"}, "warm": {"title": "<title>", "memo": "<memo>"}}'
-  : req.target === "moment" || req.target === "storyHero" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
+  : req.target === "storyHero"
+  ? 'Return JSON: {"title": "<title>", "memo": "<intro>", "source_refs": ["f1", "f2"]}'
+  : req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
 
@@ -536,7 +614,7 @@ export function buildProviderBody(prompt: string, direction?: WritingDirection, 
       // 글맛이 필요한 작업 — profile(0.3)보다 높게, 폭주는 스키마로 잠근다
       temperature: direction ? DIRECTION_TEMPERATURE[direction] : 0.7,
       responseMimeType: "application/json",
-      responseSchema: target === "moment" || target === "storyHero" ? MOMENT_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
+      responseSchema: target === "storyHero" ? HERO_RESPONSE_SCHEMA : target === "moment" ? MOMENT_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
       // witty 만 thinking 증액 — "관찰→반전" 구성이 즉답으로는 자주 무너진다
       // (blind 실측, 특히 JA·food-heavy title). 같은 모델·같은 provider 의
       // 요청 옵션이며 호출은 버튼 클릭 시 1회뿐이다.

@@ -347,8 +347,9 @@ export default function NaverMap({
 
   const renderSpotLayer = (force = false) => {
     const nmap = mapRef.current;
-    if (!nmap || !window.naver) return;
+    if (!nmap || !window.naver || failed) return;
     const map = window.naver.maps;
+    try {
 
     const zoom = typeof nmap.getZoom === "function" ? nmap.getZoom() : DEFAULT_ZOOM;
     // 클러스터를 끈 화면은 예전처럼 전부 개별 마커, 이름 pill 없음.
@@ -437,6 +438,11 @@ export default function NaverMap({
       });
 
       markersRef.current.push(marker);
+    }
+    } catch {
+      // 인증 실패 SDK 의 내부 예외(§E) — 지도 칸만 실패로 표시한다.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInitFailed(true);
     }
   };
 
@@ -566,7 +572,7 @@ export default function NaverMap({
   useEffect(() => { onDayPlaceClickRef.current = onDayPlaceClick; }, [onDayPlaceClick]);
 
   useEffect(() => {
-    if (!mapRef.current || !window.naver?.maps) return;
+    if (!mapRef.current || !window.naver?.maps || failed) return;
     // 이전 trip 레이어 정리 — SDK 가 반쯤만 살아 있어도 여기서 터지지 않는다
     try {
       dayMarkersRef.current.forEach(m => m.setMap(null));
@@ -579,6 +585,11 @@ export default function NaverMap({
 
     const pts = (dayPlaces ?? []).filter(p => p.lat && p.lng);
     if (pts.length === 0) return;
+    // 생성부 전체를 방어한다(GROUNDING-STABLE V3 §E) — 인증 실패 SDK 는 마커
+    // 생성/setMap 안에서 null 을 밟는다(실측: "reading 'capitalize'"). 그 예외가
+    // effect 밖으로 나가면 React 트리 전체(My Trip 화면)가 내려간다. 지도 하나의
+    // 실패는 지도 칸의 실패로 끝나야 한다.
+    try {
 
     const map = window.naver.maps;
     const nmap = mapRef.current;
@@ -650,7 +661,12 @@ export default function NaverMap({
         nmap.fitBounds(bounds, { top: dayMarkerStyle === "photo" ? 96 : 40, right: 40, bottom: 40, left: 40 });
       }
     }
-  }, [dayPlaces, dayMarkerStyle, ready]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행
+    } catch {
+      // 지도만 실패로 표시하고 화면은 계속 산다 — 무한 재시도 없음(상태 한 번).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInitFailed(true);
+    }
+  }, [dayPlaces, dayMarkerStyle, ready, failed]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행
 
   // User location marker
   useEffect(() => {

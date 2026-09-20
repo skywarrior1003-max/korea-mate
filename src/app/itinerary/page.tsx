@@ -44,6 +44,7 @@ import PartnerOfferRow from "@/components/PartnerOfferRow";
 import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import StoryHeroEditor from "@/components/StoryHeroEditor";
+import MapErrorBoundary from "@/components/MapErrorBoundary";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo, setMomentPublic } from "@/lib/trip-moments";
@@ -3148,16 +3149,18 @@ function ItineraryResult() {
                     shareLabel=""
                     mapSlot={
                       <div className="w-full h-full">
-                        <ItineraryDayMap
-                          days={days}
-                          city={city}
-                          selectedDay={0}
-                          onSelectDay={() => {}}
-                          showDayTabs={false}
-                          mapHeight={256}
-                          variant="context"
-                          moments={displayMoments}
-                        />
+                        <MapErrorBoundary failLabel={tStory("mapLoadFailed")}>
+                          <ItineraryDayMap
+                            days={days}
+                            city={city}
+                            selectedDay={0}
+                            onSelectDay={() => {}}
+                            showDayTabs={false}
+                            mapHeight={256}
+                            variant="context"
+                            moments={displayMoments}
+                          />
+                        </MapErrorBoundary>
                       </div>
                     }
                   />
@@ -3661,17 +3664,23 @@ function ItineraryResult() {
               Day 칩은 끈다 — 위 PlannerDayNav 가 선택을 맡는다. 두 벌이 같이 보이면
               어느 쪽이 진짜 선택인지 알 수 없고 스크린리더도 Day 탭을 두 번 읽는다. */}
           {days.length > 0 && (
-            <ItineraryDayMap
-              days={days}
-              city={city}
-              selectedDay={Math.min(mapDay, days.length - 1)}
-              onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
-              onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
-              onStopClick={openStopFromMap}
-              showDayTabs={false}
-              moments={displayMoments}
-              onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
-            />
+            /* 지도 오류 경계(§E) — SDK 예외가 화면 전체를 내리지 않게 지도 칸에 가둔다 */
+            <MapErrorBoundary
+              failLabel={tStory("mapLoadFailed")}
+              places={days.flatMap(d => d.places.map((p, i) => ({ dayNumber: d.dayNumber, order: i + 1, name: p.name })))}
+            >
+              <ItineraryDayMap
+                days={days}
+                city={city}
+                selectedDay={Math.min(mapDay, days.length - 1)}
+                onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
+                onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
+                onStopClick={openStopFromMap}
+                showDayTabs={false}
+                moments={displayMoments}
+                onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
+              />
+            </MapErrorBoundary>
           )}
           {days.filter(day => day.dayNumber === clampDay(days.length, plannerDay)).map((day) => {
             // Layer 3: 공항 저녁 도착 + Day 1 → 도착 시간 이전 장소 렌더링 완전 제거
@@ -4075,17 +4084,22 @@ function ItineraryResult() {
             >✕</button>
           </div>
           <div className="flex-1 overflow-y-auto px-3 pt-3">
-            <ItineraryDayMap
-              days={days}
-              city={city}
-              selectedDay={Math.min(mapDay, days.length - 1)}
-              onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
-              onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
-              onStopClick={openStopFromMap}
-              mapHeight="62vh"
-              moments={displayMoments}
-              onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
-            />
+            <MapErrorBoundary
+              failLabel={tStory("mapLoadFailed")}
+              places={days.flatMap(d => d.places.map((p, i) => ({ dayNumber: d.dayNumber, order: i + 1, name: p.name })))}
+            >
+              <ItineraryDayMap
+                days={days}
+                city={city}
+                selectedDay={Math.min(mapDay, days.length - 1)}
+                onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
+                onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
+                onStopClick={openStopFromMap}
+                mapHeight="62vh"
+                moments={displayMoments}
+                onAddPhoto={(!shareId || isOwner) ? handleMapAddPhoto : undefined}
+              />
+            </MapErrorBoundary>
           </div>
         </div>
       )}

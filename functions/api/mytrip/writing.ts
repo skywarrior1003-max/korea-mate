@@ -21,7 +21,7 @@
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
-  extractMoment3, groundedMoment3Guard,
+  extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
   MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
@@ -140,7 +140,18 @@ async function viaDirect(
       log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, ...usage });
       return reply(null, n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty", null, set);
     }
-    if (body.target === "moment" || body.target === "storyHero") {
+    if (body.target === "storyHero") {
+      // 사실 접지(§A-3): source_refs 가 제공한 키 밖이면 거부. 추가 AI 검수 없음.
+      const hero = extractHeroSuggestion(text);
+      const grounded = validateHeroRefs(body, hero);
+      const moment = groundedMomentGuard(body, grounded);
+      const refsRejected = hero !== null && grounded === null;
+      log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale,
+            refs: hero?.sourceRefs.length ?? 0, refsRejected, guarded: grounded !== null && moment === null, ...usage });
+      // source_refs 는 저장·노출하지 않는다 — 검증에만 쓰고 버린다.
+      return reply(null, moment !== null ? "live" : refsRejected ? "fallback_refs" : hero !== null ? "fallback_guard" : "fallback_empty", moment);
+    }
+    if (body.target === "moment") {
       const extracted = extractMomentSuggestion(text);
       const moment = groundedMomentGuard(body, extracted);
       log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null, ...usage });

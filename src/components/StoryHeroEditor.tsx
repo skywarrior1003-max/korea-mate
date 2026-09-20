@@ -70,14 +70,17 @@ export default function StoryHeroEditor({
     tripFacts: [...tripFacts, ...deriveHeroMomentFacts(publicMoments)],
   }), [city, startDate, endDate, hasPublicPhoto, tripFacts, publicMoments]);
 
-  /** 문체 선택 = 그 방향으로 정확히 1요청(캐시 hit 면 0). */
-  const pickTone = useCallback(async (dir: WritingDirection) => {
+  /**
+   * 문체 선택 = 그 방향으로 정확히 1요청(같은 입력·같은 문체는 캐시 → 0).
+   * forceFresh 는 "다시 제안받기" 명시 버튼 전용 — 그때만 캐시를 지나쳐 +1.
+   */
+  const pickTone = useCallback(async (dir: WritingDirection, opts?: { forceFresh?: boolean }) => {
     if (busy) return;
     setTone(dir);
     setFailed(false);
     const context = buildContext();
     const key = `gkm_hero_${STORY_HERO_PROMPT_VERSION}_${locale}_${dir}_${djb2(JSON.stringify(context))}`;
-    try {
+    if (!opts?.forceFresh) try {
       const cached = sessionStorage.getItem(key);
       if (cached) {
         const j = JSON.parse(cached) as { title?: string; intro?: string };
@@ -196,7 +199,7 @@ export default function StoryHeroEditor({
                 className="gkm-focus mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-[13.5px] text-[#131b2e] leading-relaxed"
               />
             </label>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button" onClick={() => void save()} disabled={saving || !title.trim()}
                 className="gkm-focus px-4 py-2 rounded-xl text-sm font-black text-white cursor-pointer disabled:opacity-50"
@@ -204,6 +207,15 @@ export default function StoryHeroEditor({
               >
                 {t("heroSave")}
               </button>
+              {/* 명시적 재제안(§B) — 누를 때만 정확히 1요청. 자동 재호출 없음. */}
+              {tone && (
+                <button
+                  type="button" onClick={() => void pickTone(tone, { forceFresh: true })} disabled={busy}
+                  className="gkm-focus px-3 py-2 rounded-xl text-xs font-bold border border-black/15 text-[#565D66] cursor-pointer disabled:opacity-50"
+                >
+                  {busy ? t("heroBusy") : t("heroRegen")}
+                </button>
+              )}
               <button
                 type="button" onClick={() => setMode("ask")} disabled={busy}
                 className="gkm-focus px-3 py-2 rounded-xl text-xs font-bold border border-black/15 text-[#565D66] cursor-pointer"
@@ -211,6 +223,8 @@ export default function StoryHeroEditor({
                 {t("heroChangeTone")}
               </button>
             </div>
+            {/* 비용 구조 안내(§B) — 과장 없이 */}
+            <p className="text-[11.5px] text-[#8A919B]">{t("heroCostNote")}</p>
           </div>
         )}
       </div>

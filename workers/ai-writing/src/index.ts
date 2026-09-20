@@ -23,8 +23,8 @@
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
-  extractMoment3, groundedMoment3Guard,
-  MODEL, TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3,
+  extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
+  MODEL, TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3, type HeroSuggestion,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 export interface Env {
@@ -61,6 +61,7 @@ async function keysMatch(provided: string, expected: string): Promise<boolean> {
 interface ProviderOutcome {
   suggestion: string | null;
   moment: MomentSuggestion | null;
+  hero: HeroSuggestion | null;
   set: MomentSuggestionSet3 | null;
   ai_status: string;
   httpStatus: number | null;
@@ -91,29 +92,33 @@ async function callProvider(
     if (!res.ok) {
       let errSnippet = "";
       try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
-      return { suggestion: null, moment: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
+      return { suggestion: null, moment: null, hero: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     if (target === "moment3") {
       const set = extractMoment3(text);
       return {
-        suggestion: null, moment: null, set,
+        suggestion: null, moment: null, hero: null, set,
         ai_status: set !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
-    if (target === "moment" || target === "storyHero") {
+    if (target === "storyHero") {
+      const hero = extractHeroSuggestion(text);
+      return { suggestion: null, moment: null, hero, set: null, ai_status: hero !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
+    }
+    if (target === "moment") {
       const moment = extractMomentSuggestion(text);
       return {
-        suggestion: null, moment, set: null,
+        suggestion: null, moment, hero: null, set: null,
         ai_status: moment !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
     const suggestion = extractSuggestion(text, target);
     return {
-      suggestion, moment: null, set: null,
+      suggestion, moment: null, hero: null, set: null,
       ai_status: suggestion !== null ? "live" : "fallback_empty",
       httpStatus: res.status, latencyMs, errSnippet: "",
     };
@@ -121,7 +126,7 @@ async function callProvider(
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
     return {
-      suggestion: null, moment: null, set: null,
+      suggestion: null, moment: null, hero: null, set: null,
       ai_status: isAbort ? "fallback_timeout" : "fallback_error",
       httpStatus: null, latencyMs: Date.now() - started, errSnippet: "",
     };
@@ -232,7 +237,17 @@ export default {
       });
       return reply(null, ai_status, null, set);
     }
-    if (body.target === "moment" || body.target === "storyHero") {
+    if (body.target === "storyHero") {
+      // 사실 접지(§A-3): source_refs 검증 → 결정적 guard. 추가 provider 호출 없음.
+      const grounded = validateHeroRefs(body, outcome.hero);
+      const moment = groundedMomentGuard(body, grounded);
+      const refsRejected = outcome.hero !== null && grounded === null;
+      const ai_status = moment !== null ? "live" : refsRejected ? "fallback_refs" : outcome.hero !== null ? "fallback_guard" : outcome.ai_status;
+      log({ ok: moment !== null, ai_status, httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
+            target: body.target, dir: body.direction, locale: body.locale, refs: outcome.hero?.sourceRefs.length ?? 0, refsRejected });
+      return reply(null, ai_status, moment);
+    }
+    if (body.target === "moment") {
       const moment = groundedMomentGuard(body, outcome.moment);
       const guarded = outcome.moment !== null && moment === null;
       const ai_status = guarded ? "fallback_guard" : outcome.ai_status;
