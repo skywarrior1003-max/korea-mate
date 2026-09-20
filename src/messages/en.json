@@ -1304,6 +1304,7 @@
     "kicker": "Notice",
     "title": "GoKoreaMate is currently being improved before its official launch.",
     "body": "Some page transitions, search features, and parts of the design are not yet complete, so the site may feel less convenient to use. We’re continuing to improve the experience.",
+    "dataNotice": "gokoreamate is currently in pre-launch testing. Saved trips, photos, and Stories may be reset during this period. Please save important memories as share images on your device or post them to social media. Shared links may stop working after a reset.",
     "close": "Got it, continue"
   },
   "contactForm": {

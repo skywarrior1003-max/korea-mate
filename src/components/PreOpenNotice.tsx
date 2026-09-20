@@ -55,7 +55,12 @@ export default function PreOpenNotice() {
       >
         <p className="text-[11px] font-black uppercase tracking-[0.16em] text-orange-600">{t("kicker")}</p>
         <h2 id="gkm-preopen-title" className="mt-3 text-xl sm:text-2xl font-black leading-snug text-balance">{t("title")}</h2>
-        <p id="gkm-preopen-body" className="mt-4 text-[15px] sm:text-base leading-relaxed text-gray-600 flex-1">{t("body")}</p>
+        <div className="mt-4 flex-1 min-h-0 overflow-y-auto">
+          <p id="gkm-preopen-body" className="text-[15px] sm:text-base leading-relaxed text-gray-600">{t("body")}</p>
+          {/* 테스트 기간 데이터 보존 안내 (Owner 확정 문구 — PRELAUNCH-DATA-NOTICE V1).
+              "초기화될 수 있다" 표현을 유지하고, 공유 링크를 백업 수단으로 안내하지 않는다. */}
+          <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-gray-600">{t("dataNotice")}</p>
+        </div>
         <button
           ref={closeRef}
           type="button"

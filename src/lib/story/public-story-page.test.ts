@@ -19,11 +19,12 @@ const FOCUS   = code(readFileSync("src/components/story/StoryMemoryFocus.tsx", "
 
 test("M1 Journal 은 적은 글이 없으면 인용 줄을 그리지 않는다", () => {
   assert.match(JOURNAL, /const hasMemo = memory\.memo\.trim\(\) !== ""/);
-  assert.match(JOURNAL, /\{\(hasMemo \|\| onSave\) && \(/);
-  // 따옴표는 hasMemo 가 참일 때만 붙는다
+  // MYTRIP-AI-STORY V1: 저장된 제목이 생기며 블록 조건이 (hasTitle || hasMemo || onSave) 로 넓어졌다.
+  assert.match(JOURNAL, /\{\(hasTitle \|\| hasMemo \|\| onSave\) && \(/);
+  // 따옴표(인용 줄)는 여전히 hasMemo 가 참일 때만 붙는다
   const quote = JOURNAL.indexOf("“${memory.memo}”");
   assert.ok(quote > 0);
-  assert.match(JOURNAL.slice(quote - 260, quote), /\{hasMemo \? \(/);
+  assert.match(JOURNAL.slice(quote - 260, quote), /\{hasMemo && \(/);
 });
 
 test("M2 Focus 도 같은 규칙이다", () => {
