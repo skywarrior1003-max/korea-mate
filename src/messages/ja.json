@@ -624,7 +624,7 @@
     "heroFallbackIntro": "{days}日間で{places}か所をめぐった記録です。",
     "heroToneQuestion": "どんな雰囲気で旅の話を残しますか？",
     "heroToneCalm": "淡々と",
-    "heroToneWitty": "ユーモアで",
+    "heroToneWitty": "軽やかに、気の利いた表現で",
     "heroToneWarm": "感性的に",
     "heroTitleLabel": "Storyタイトル",
     "heroIntroLabel": "紹介文",
@@ -1466,7 +1466,8 @@
     "regenerate": "もう一度提案",
     "suggestBusy": "3つの提案を作成中…",
     "suggestFailed": "いま提案を作成できません。自分で書くか、少し後で再度お試しください。",
-    "pickHint": "気に入った案をタップすると下のタイトルとメモに入ります — 自由に編集できます。"
+    "pickHint": "気に入った案をタップすると下のタイトルとメモに入ります — 自由に編集できます。",
+    "photoUseNotice": "AI提案を作るために、この写真と場所の情報を使用します。"
   },
   "guide": {
     "gotIt": "わかった",

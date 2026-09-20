@@ -624,7 +624,7 @@
     "heroFallbackIntro": "{days}일 동안 {places}곳을 다녀온 기록이에요.",
     "heroToneQuestion": "어떤 분위기로 여행 이야기를 남길까요?",
     "heroToneCalm": "담담하게",
-    "heroToneWitty": "유머 있게",
+    "heroToneWitty": "가볍고 재치 있게",
     "heroToneWarm": "감성적으로",
     "heroTitleLabel": "Story 제목",
     "heroIntroLabel": "소개문",
@@ -1466,7 +1466,8 @@
     "regenerate": "다시 제안",
     "suggestBusy": "세 가지 제안을 만드는 중…",
     "suggestFailed": "지금은 제안을 만들 수 없어요. 직접 적거나 잠시 후 다시 눌러 주세요.",
-    "pickHint": "마음에 드는 안을 누르면 아래 제목·메모에 채워져요 — 그대로 고칠 수 있어요."
+    "pickHint": "마음에 드는 안을 누르면 아래 제목·메모에 채워져요 — 그대로 고칠 수 있어요.",
+    "photoUseNotice": "AI 제안을 만들기 위해 이 사진과 장소 정보를 사용합니다."
   },
   "guide": {
     "gotIt": "알겠어요",

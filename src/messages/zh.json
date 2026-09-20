@@ -624,7 +624,7 @@
     "heroFallbackIntro": "{days}天走过{places}个地方的记录。",
     "heroToneQuestion": "想用什么样的语气记录这段旅程？",
     "heroToneCalm": "平静地",
-    "heroToneWitty": "幽默地",
+    "heroToneWitty": "轻松又巧妙",
     "heroToneWarm": "感性地",
     "heroTitleLabel": "Story标题",
     "heroIntroLabel": "介绍语",
@@ -1466,7 +1466,8 @@
     "regenerate": "再次建议",
     "suggestBusy": "正在生成三条建议…",
     "suggestFailed": "暂时无法生成建议。可以自己填写，或稍后再试。",
-    "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。"
+    "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。",
+    "photoUseNotice": "为生成AI建议，会使用这张照片和地点信息。"
   },
   "guide": {
     "gotIt": "知道了",

@@ -378,6 +378,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
             <div className="mb-3">
               <MomentAiSuggest
                 ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}
+                photoDataUrl={photoData}
                 buildContext={() => ({
                   city: (city ?? "").trim() || "Korea",
                   // 결합 순간 = DB canonical locale 이름(aiPlaceName), 자유 순간 =

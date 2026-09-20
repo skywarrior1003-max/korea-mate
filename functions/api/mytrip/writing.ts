@@ -22,7 +22,9 @@ import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
-  MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
+  extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
+  MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS, type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
+  type WritingImage,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 interface Env {
@@ -54,8 +56,8 @@ async function viaWorker(
   binding: { fetch: typeof fetch }, internalKey: string, body: unknown,
 ): Promise<Response> {
   const controller = new AbortController();
-  // Worker 내부 provider timeout(8s)보다 넉넉히 — 정상 경로에서 이중 중단을 피한다.
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS + 3_000);
+  // Worker 내부 provider timeout(멀티모달 12s/기본 8s)보다 넉넉히 — 이중 중단 방지.
+  const timer = setTimeout(() => controller.abort(), MOMENT3_MULTIMODAL_TIMEOUT_MS + 3_000);
   const started = Date.now();
   try {
     const res = await binding.fetch("https://ai-writing.internal/generate", {
@@ -98,11 +100,14 @@ async function viaWorker(
 
 /** 직결 경로 — binding 이 없는 로컬/테스트 환경 전용. 기존 동작 그대로. */
 async function viaDirect(
-  providerFetch: typeof fetch, apiKey: string, body: WritingRequest,
+  providerFetch: typeof fetch, apiKey: string, body: WritingRequest, image: WritingImage | null,
 ): Promise<Response> {
-  const prompt = buildWritingPrompt(body);
+  // 멀티모달(§A-1)은 moment3 + 사진일 때만 — 그 외엔 기존 텍스트 프롬프트다.
+  const isMultimodal = body.target === "moment3" && image !== null;
+  const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body) : buildWritingPrompt(body);
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  // 멀티모달은 12s(QA 실측 ja 8.0s 초과) — 재시도 0 계약은 그대로다.
+  const timer = setTimeout(() => controller.abort(), isMultimodal ? MOMENT3_MULTIMODAL_TIMEOUT_MS : TIMEOUT_MS);
   const started = Date.now();
   try {
     const res = await providerFetch(
@@ -111,7 +116,7 @@ async function viaDirect(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt, body.direction, body.target)),
+        body: JSON.stringify(buildProviderBody(prompt, body.direction, body.target, isMultimodal ? image : null)),
       },
     );
     clearTimeout(timer);
@@ -134,21 +139,26 @@ async function viaDirect(
       ? { inTok: raw.usageMetadata.promptTokenCount ?? null, outTok: raw.usageMetadata.candidatesTokenCount ?? null, thinkTok: raw.usageMetadata.thoughtsTokenCount ?? null }
       : {};
     if (body.target === "moment3") {
-      const extracted = extractMoment3(text);
+      // 사진 경로는 창작 검증 파서(creative_kind·visual_basis whitelist) —
+      // 위반 방향만 빠진다. 이미지 데이터는 여기서 끝(로그·저장 0, 즉시 폐기).
+      const creative = isMultimodal ? extractMoment3Creative(text) : null;
+      const extracted = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       const set = groundedMoment3Guard(body, extracted);
       const n = set ? Object.keys(set).length : 0;
-      log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, ...usage });
+      log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n,
+            multimodal: isMultimodal, ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: creative?.meta.kinds ?? null, dropped: creative?.meta.dropped ?? null } : {}), ...usage });
       return reply(null, n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty", null, set);
     }
     if (body.target === "storyHero") {
-      // 사실 접지(§A-3): source_refs 가 제공한 키 밖이면 거부. 추가 AI 검수 없음.
+      // 표지는 AI 가 최종 문장을 직접 쓴다(§J). basis_refs 는 확인 용도 —
+      // 제공 키 밖이면 거부. witty/warm 은 creative_kind whitelist 필수.
       const hero = extractHeroSuggestion(text);
       const grounded = validateHeroRefs(body, hero);
       const moment = groundedMomentGuard(body, grounded);
       const refsRejected = hero !== null && grounded === null;
       log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale,
-            refs: hero?.sourceRefs.length ?? 0, refsRejected, guarded: grounded !== null && moment === null, ...usage });
-      // source_refs 는 저장·노출하지 않는다 — 검증에만 쓰고 버린다.
+            refs: hero?.sourceRefs.length ?? 0, kind: hero?.creativeKind ?? null, refsRejected, guarded: grounded !== null && moment === null, ...usage });
+      // basis_refs·creative_kind 는 저장·노출하지 않는다 — 검증에만 쓰고 버린다.
       return reply(null, moment !== null ? "live" : refsRejected ? "fallback_refs" : hero !== null ? "fallback_guard" : "fallback_empty", moment);
     }
     if (body.target === "moment") {
@@ -182,6 +192,20 @@ export async function onRequestPost(
   catch { return reply(null, "invalid_request"); }
   if (!isWritingRequest(body)) return reply(null, "invalid_request");
 
+  // 사진 입력(§B) — moment3 전용. 계약 위반 이미지는 provider 호출 없이 정직한
+  // 실패다(사진을 본 척하는 경로 금지). URL 은 어떤 형태로도 받지 않는다(SSRF 0).
+  let image: WritingImage | null = null;
+  const rawImage = (body as WritingRequest).image;
+  if (rawImage !== undefined && rawImage !== null) {
+    if (body.target !== "moment3") return reply(null, "invalid_image");
+    const img = extractRequestImage(rawImage);
+    if (img === "invalid") {
+      log({ ok: false, target: body.target, locale: body.locale, kind: "invalid_image" });
+      return reply(null, "invalid_image");
+    }
+    image = img;
+  }
+
   const binding = ctx.env.AI_WRITING;
   const internalKey = ctx.env.INTERNAL_KEY;
   if (binding && typeof binding.fetch === "function" && internalKey) {
@@ -190,5 +214,5 @@ export async function onRequestPost(
 
   const apiKey = ctx.env.GEMINI_API_KEY;
   if (!apiKey) return reply(null, "no_key");
-  return viaDirect(ctx.fetchFn ?? fetch, apiKey, body);
+  return viaDirect(ctx.fetchFn ?? fetch, apiKey, body, image);
 }

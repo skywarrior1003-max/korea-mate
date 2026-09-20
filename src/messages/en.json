@@ -624,7 +624,7 @@
     "heroFallbackIntro": "A record of {places} places over {days} days.",
     "heroToneQuestion": "What mood should your trip story open with?",
     "heroToneCalm": "Calm",
-    "heroToneWitty": "Witty",
+    "heroToneWitty": "Light & witty",
     "heroToneWarm": "Heartfelt",
     "heroTitleLabel": "Story title",
     "heroIntroLabel": "Introduction",
@@ -1466,7 +1466,8 @@
     "regenerate": "Suggest again",
     "suggestBusy": "Writing three suggestions…",
     "suggestFailed": "Suggestions are unavailable right now. Write your own, or try again shortly.",
-    "pickHint": "Tap one to fill the title and memo below — you can edit freely."
+    "pickHint": "Tap one to fill the title and memo below — you can edit freely.",
+    "photoUseNotice": "This photo and the place info are used to create the AI suggestions."
   },
   "guide": {
     "gotIt": "Got it",

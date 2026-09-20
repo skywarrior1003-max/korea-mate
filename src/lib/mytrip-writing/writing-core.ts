@@ -44,8 +44,52 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v1";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v2-grounded";
+export const MOMENT3_PROMPT_VERSION = "moment3-v2-multimodal";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v5-creative";
+
+// ── 멀티모달 순간 기록 + 창작 계약 (MULTIMODAL-MOMENT-AND-CREATIVE-STORY-AI V1) ──
+// AI 는 DB 문구 조립기가 아니다 — 사진과 여행 정보를 보고 SNS 에 남기고 싶은
+// 문구를 창작해 제안한다. 다만 문체별로 창작 허용 범위를 구분한다(§C):
+//   calm  = 사실 중심(사진에 명확히 보이는 것만) · witty = 시각적 말장난·비유·
+//   의인화·반전·과장 허용 · warm(감성) = 시적 표현·감정적 상상 허용.
+// 공통 금지: 실제 사건(사고·구매·숙박·음식 경험)·동행자·역사 정보 발명,
+// 사진 속 인물의 신원·관계·나이·인종·국적·건강 추측.
+
+/** witty/warm 창작 응답의 검증용 분류 — DB·공개 API·화면 저장·노출 0 */
+export const CREATIVE_KINDS = [
+  "visual_wordplay", "metaphor", "personification",
+  "playful_exaggeration", "poetic_imagery", "visual_contrast",
+] as const;
+export type CreativeKind = (typeof CREATIVE_KINDS)[number];
+
+/** visual_basis 허용 — 사진의 일반적 시각 요소만(인물·신원·위치 추론 금지) */
+export const VISUAL_BASIS_ALLOWED = [
+  "reflection", "symmetry", "night_light", "silhouette",
+  "color_contrast", "framing", "repeated_shape", "foreground_background",
+] as const;
+
+/** 멀티모달 이미지 입력 — 클라이언트 canvas 전처리(재인코딩 JPEG)만 받는다 */
+export interface WritingImage { mimeType: "image/jpeg"; data: string }
+/** base64 상한 — 1024px q0.75 JPEG 여유(≈1.5MB 원본) + 프롬프트 주입/비용 방어 */
+export const MAX_IMAGE_BASE64_CHARS = 2_000_000;
+const BASE64_RE = /^[A-Za-z0-9+/]+={0,2}$/;
+
+/**
+ * 요청의 image 필드를 안전하게 꺼낸다. 규칙:
+ *  · 없으면 null(텍스트 경로) · 있는데 계약 위반이면 "invalid"(호출부가
+ *    provider 호출 없이 정직하게 실패) — 임의 URL·타 포맷·초과 크기를 조용히
+ *    무시하고 사진을 본 척하는 경로를 만들지 않는다.
+ *  · URL 은 어떤 형태로도 받지 않는다(SSRF 원천 차단 — fetch 대상 없음).
+ */
+export function extractRequestImage(v: unknown): WritingImage | null | "invalid" {
+  if (!v || typeof v !== "object") return "invalid";
+  const r = v as Record<string, unknown>;
+  if (r.mimeType !== "image/jpeg") return "invalid";
+  if (typeof r.data !== "string" || r.data.length === 0) return "invalid";
+  if (r.data.length > MAX_IMAGE_BASE64_CHARS) return "invalid";
+  if (!BASE64_RE.test(r.data)) return "invalid";
+  return { mimeType: "image/jpeg", data: r.data };
+}
 
 /** 표지 소개문 상한 — 표지에서 2~4줄로 읽히는 길이(§10) */
 export const MAX_HERO_INTRO_CHARS = 160;
@@ -89,17 +133,22 @@ export function buildHeroFacts(c: WritingContext): HeroFact[] {
   return facts;
 }
 
-/** hero 응답 — {title, memo(=intro), source_refs}. 파싱 실패·필드 누락은 null. */
-export interface HeroSuggestion extends MomentSuggestion { sourceRefs: string[] }
+/**
+ * hero 응답 — {title, memo(=intro), basis_refs, creative_kind}. 파싱 실패·필드
+ * 누락은 null. basis_refs 는 "어떤 공개 순간·장소를 참고했는가" 확인 용도이며
+ * exact substring 강제 도구가 아니다(§J) — AI 가 최종 문장을 직접 쓴다.
+ */
+export interface HeroSuggestion extends MomentSuggestion { sourceRefs: string[]; creativeKind: string | null }
 
 export const HERO_RESPONSE_SCHEMA = {
   type: "object",
   properties: {
     title: { type: "string" },
     memo: { type: "string" },
-    source_refs: { type: "array", items: { type: "string" } },
+    basis_refs: { type: "array", items: { type: "string" } },
+    creative_kind: { type: "string" },
   },
-  required: ["title", "memo", "source_refs"],
+  required: ["title", "memo", "basis_refs"],
 } as const;
 
 export function extractHeroSuggestion(text: string): HeroSuggestion | null {
@@ -110,8 +159,8 @@ export function extractHeroSuggestion(text: string): HeroSuggestion | null {
   const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
   const raw = parse(text) ?? parse(fenced);
   if (raw === null) return null;
-  if (typeof raw.title !== "string" || typeof raw.memo !== "string" || !Array.isArray(raw.source_refs)) return null;
-  const refs = raw.source_refs.filter((r): r is string => typeof r === "string").map(r => r.trim()).filter(Boolean);
+  if (typeof raw.title !== "string" || typeof raw.memo !== "string" || !Array.isArray(raw.basis_refs)) return null;
+  const refs = raw.basis_refs.filter((r): r is string => typeof r === "string").map(r => r.trim()).filter(Boolean);
   const clean = (s: string, max: number) => {
     let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
     if (v.length > max) v = v.slice(0, max).trim();
@@ -120,14 +169,22 @@ export function extractHeroSuggestion(text: string): HeroSuggestion | null {
   const title = clean(raw.title, MAX_TITLE_CHARS + 20);
   const memo = clean(raw.memo, MAX_HERO_INTRO_CHARS + 60);
   if (!title || !memo || refs.length === 0) return null;
-  return { title, memo, sourceRefs: refs };
+  const kind = typeof raw.creative_kind === "string" ? raw.creative_kind.trim() : null;
+  return { title, memo, sourceRefs: refs, creativeKind: kind || null };
 }
 
-/** source_refs 가 실제 제공한 키 집합 안에만 있는가 — 밖의 키가 하나라도 있으면 거부. */
+/**
+ * basis_refs 가 실제 제공한 키 집합 안에만 있는가 — 밖의 키가 하나라도 있으면
+ * 거부(확인 용도 — substring 강제가 아니다). witty/warm 은 creative_kind 가
+ * 허용 목록에 있어야 한다(§D — 검증에만 쓰고 저장·노출 0). 형식 검증이 창작
+ * 품질·완전한 진실성을 보장하지 못한다는 한계는 보고서에 그대로 적는다.
+ */
 export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | null): MomentSuggestion | null {
   if (hero === null) return null;
   const keys = new Set(buildHeroFacts(req.context).map(f => f.key));
   for (const r of hero.sourceRefs) if (!keys.has(r)) return null;
+  if ((req.direction === "witty" || req.direction === "warm") &&
+      !(CREATIVE_KINDS as readonly string[]).includes(hero.creativeKind ?? "")) return null;
   return { title: hero.title, memo: hero.memo };
 }
 
@@ -212,6 +269,12 @@ export interface WritingRequest {
   direction: WritingDirection;
   locale: WritingLocale;
   context: WritingContext;
+  /**
+   * 멀티모달 사진 입력(moment3 전용) — 클라이언트가 canvas 재인코딩으로 EXIF·
+   * GPS·기기 메타데이터를 제거한 JPEG base64. 서버는 어떤 URL 도 fetch 하지
+   * 않는다. AI 요청 후 즉시 폐기 — DB·로그·캐시에 저장 금지.
+   */
+  image?: WritingImage | null;
 }
 
 const LOCALE_NAME: Record<WritingLocale, string> = {
@@ -242,6 +305,32 @@ const DIRECTION_BRIEF: Record<WritingDirection, string> = {
     "(light, wind, rain, food steam, a pause, what the photo moment felt like) — never from abstract sentiment.",
     'Good shape (Korean example, do not copy): "해가 지는 걸 끝까지 봤다. 별 이유는 없었다."',
     "Never: 낭만/설렘/감성 가득, 특별한 순간, 잊지 못할 추억 — brochure emotion words in any language. No emoji.",
+  ].join(" "),
+};
+
+// ── Story 표지 전용 창작 브리프 (§J) — moment 용 DIRECTION_BRIEF 와 별개다.
+// 표지는 AI 가 최종 문장을 직접 쓴다(서버 고정 템플릿 조립 금지). 문체별로
+// 창작 허용 범위만 다르다. 실제 사건·동행자·역사 발명은 전 문체 금지.
+export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
+  calm: [
+    "Tone — calm, restrained. Build the cover from the itinerary and the traveler's own public moment notes.",
+    "Quiet concrete summary of the whole trip; no evaluation words, no superlatives, no exclamation marks.",
+    "Stay factual: only what the listed facts actually say.",
+  ].join(" "),
+  witty: [
+    "Tone — light and witty. CREATIVITY IS ALLOWED here: you may pick up and twist a witty phrase the traveler",
+    "saved in a public moment, play the trip numbers (days/places) into a gentle reversal, or use an obvious",
+    "joke or metaphor. The reader must smile at how the REAL trip facts are arranged — never at invented events.",
+    "The wit must clearly come from THIS trip's facts; a line that fits any trip fails.",
+    "Allowed: metaphor, personification of the itinerary/scenes, playful exaggeration that no one could mistake for a real event.",
+    "creative_kind must name the main device you used.",
+  ].join(" "),
+  warm: [
+    "Tone — emotional, poetic. CREATIVITY IS ALLOWED here: you may connect the emotional lines the traveler",
+    "saved in public moments, compress the whole trip into one poetic sentence, and add atmosphere or",
+    "emotional imagination that is clearly mood, not a claimed event.",
+    "Allowed: poetic imagery, personification of light/night/water/streets, gentle metaphor.",
+    "creative_kind must name the main device you used.",
   ].join(" "),
 };
 
@@ -351,6 +440,8 @@ export function buildWritingPrompt(req: WritingRequest): string {
     LOCALE_VOICE[req.locale],
     ...(req.target === "moment3"
       ? [DIRECTION_BRIEF.calm, DIRECTION_BRIEF.witty, DIRECTION_BRIEF.warm]
+      : req.target === "storyHero"
+      ? [HERO_CREATIVE_BRIEF[req.direction]]
       : [DIRECTION_BRIEF[req.direction]]),
     targetCraft,
     `ALLOWED FACTS (the ONLY facts that exist — everything else is UNKNOWN):`,
@@ -358,11 +449,12 @@ export function buildWritingPrompt(req: WritingRequest): string {
       ? buildHeroFacts(c).map(f => `- [${f.key}] ${f.text}`)
       : facts.map(f => `- ${f}`)),
     ...(req.target === "storyHero" ? [
-      `GROUNDING RULES (storyHero):
-- Every sentence of the title and intro must be traceable to the listed fact keys — nothing else exists.
-- Return in "source_refs" ONLY the keys (like "f1") you actually used. Do not invent keys.
-- NEVER add feelings, satisfaction, regret, longing, or intent to return (e.g. "다시 걷고 싶다", "또 오고 싶다", "좋았다") unless that exact sentiment is written inside a listed public moment memo.
-- The three tones (calm/witty/warm) change WORDING ONLY — never the set of facts. No new events, no new emotions in any tone.`,
+      `COVER RULES (storyHero):
+- You write the FINAL title and intro yourself — creative, in the tone described above. No template assembly.
+- Your material is the listed facts (places, itinerary, the traveler's saved public moment titles/notes). Creativity means arranging, twisting, or poetically compressing THESE — never inventing new events, companions, purchases, accidents, meals, weather-as-fact, or history.
+- Return in "basis_refs" ONLY the keys (like "f1") of the facts you actually drew from. Do not invent keys. This is a reference list, not a quotation constraint — your sentences do not need to copy the facts verbatim.
+- Return in "creative_kind" the main device you used, one of: ${CREATIVE_KINDS.join(", ")}. For calm you may omit it.
+- Never mock the place, the culture, or people. Never state wrong historical/cultural claims as fact.`,
     ] : []),
     `FACT RULES:
 - You may only state concrete events, actions, foods, and numbers that are supported by the ALLOWED FACTS or the traveler's draft.
@@ -406,7 +498,7 @@ export function buildWritingPrompt(req: WritingRequest): string {
 ${req.target === "moment3"
   ? 'Return JSON: {"calm": {"title": "<title>", "memo": "<memo>"}, "witty": {"title": "<title>", "memo": "<memo>"}, "warm": {"title": "<title>", "memo": "<memo>"}}'
   : req.target === "storyHero"
-  ? 'Return JSON: {"title": "<title>", "memo": "<intro>", "source_refs": ["f1", "f2"]}'
+  ? 'Return JSON: {"title": "<title>", "memo": "<intro>", "basis_refs": ["f1", "f2"], "creative_kind": "<device>"}'
   : req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
@@ -502,6 +594,141 @@ export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionS
   return Object.keys(out).length > 0 ? out : null;
 }
 
+// ── 멀티모달 moment3 (§A-1·§B·§C·§D) ────────────────────────────────────────
+// 사진이 있으면 한 번의 멀티모달 요청으로 세 문체를 창작한다. 사진이 없으면
+// 이 경로를 절대 타지 않는다(§G — 기존 텍스트 프롬프트 그대로, 멀티모달 0).
+
+/** 멀티모달 응답 스키마 — witty/warm 은 검증용 creative_kind·visual_basis 필수 */
+export const MOMENT3_MULTIMODAL_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    calm:  { type: "object", properties: { title: { type: "string" }, memo: { type: "string" } }, required: ["title", "memo"] },
+    witty: { type: "object", properties: {
+      title: { type: "string" }, memo: { type: "string" },
+      creative_kind: { type: "string" }, visual_basis: { type: "array", items: { type: "string" } },
+    }, required: ["title", "memo", "creative_kind", "visual_basis"] },
+    warm:  { type: "object", properties: {
+      title: { type: "string" }, memo: { type: "string" },
+      creative_kind: { type: "string" }, visual_basis: { type: "array", items: { type: "string" } },
+    }, required: ["title", "memo", "creative_kind", "visual_basis"] },
+  },
+  required: ["calm", "witty", "warm"],
+} as const;
+
+/** 사진 경로 전용 생성 예산 — 검증 필드 2종이 추가되므로 상향(thinking 포함 상한) */
+export const MOMENT3_MULTIMODAL_MAX_OUTPUT_TOKENS = 3400;
+
+/**
+ * 멀티모달 전용 timeout — 이미지 입력은 텍스트보다 오래 걸린다(QA 실측: 4locale
+ * 중 6.8~7.7s, ja 1건 8.0s 초과로 기존 8s 상한 timeout). 재시도 0 계약은 그대로.
+ */
+export const MOMENT3_MULTIMODAL_TIMEOUT_MS = 12_000;
+
+/**
+ * 멀티모달 moment3 프롬프트 — 텍스트 경로(buildWritingPrompt)와 분리한다.
+ * 이유: 텍스트 경로의 "사진 내용 단정 금지·비유/의인화 금지" 규칙이 사진을
+ * 실제로 보는 창작 계약과 정면 충돌한다. 공통 안전 규칙(고유명사·언어 격리·
+ * 인물 추론 금지·사건 발명 금지)은 그대로 유지한다.
+ */
+export function buildMoment3MultimodalPrompt(req: WritingRequest): string {
+  const c = req.context;
+  const facts: string[] = [`city: ${clip(c.city, 40)}`];
+  if (clip(c.placeName)) facts.push(`place: ${clip(c.placeName, 80)}`);
+  if (clip(c.category, 40)) facts.push(`place category: ${clip(c.category, 40)}`);
+  if (typeof c.dayNumber === "number" && c.dayNumber >= 1) facts.push(`trip day: Day ${Math.floor(c.dayNumber)}`);
+  if (clip(c.dates, 40)) facts.push(`trip dates: ${clip(c.dates, 40)}`);
+  const draft = clip(c.draft, MAX_CONTEXT_CHARS);
+  return [
+    `You help a traveler caption ONE moment of their trip for their own diary/SNS. You are given the traveler's`,
+    `own photo of this moment (attached) plus the facts below. Look at the photo carefully — the caption should`,
+    `feel like it was written by someone who was actually standing there looking at this exact scene.`,
+    `Write THREE complete entries for this SAME moment — one per direction (calm, witty, warm). Each entry =`,
+    `one title (max ${MAX_TITLE_CHARS} characters) AND one short memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters).`,
+    `Language: write ONLY in ${LOCALE_NAME[req.locale]}. No other language, no romanization.`,
+    LOCALE_ISOLATION[req.locale],
+    LOCALE_VOICE[req.locale],
+    `DIRECTIONS (each has its OWN creative license — they must be clearly distinguishable):`,
+    `- "calm": factual and quiet. Only what is clearly visible in the photo, the place, the traveler's note, the`,
+    `  real itinerary. A restrained diary line. No metaphor, no jokes.`,
+    `- "witty": CREATIVE. Use what you actually SEE — visual wordplay, metaphor, personification, a short`,
+    `  twist, playful exaggeration built on the scene (reflections, symmetry, light, composition, object`,
+    `  relations). The joke must come from THIS photo/scene, be obviously playful, and never read as a claim`,
+    `  that a real event happened.`,
+    `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
+    `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report.`,
+    `FACTS (besides the photo, the ONLY things known):`,
+    ...facts.map(f => `- ${f}`),
+    draft
+      ? `The traveler already wrote this note — keep its meaning and voice, build on it, never contradict it:\n"${draft}"`
+      : `No note exists — write freshly from the photo and facts above.`,
+    `HARD RULES (all directions):`,
+    `- NEVER guess or mention the identity, relationship, age, race, nationality, health, or character of any`,
+    `  person in the photo. If people appear, treat them only as part of the general scene composition.`,
+    `- NEVER invent real-sounding events: accidents, illness, purchases, lodging, eating/ordering, meeting`,
+    `  people, dangerous actions. Creative imagery is allowed; fake experience reports are not.`,
+    `- NEVER state wrong history/culture as fact. Never mock the place, local people, or culture.`,
+    `- Provided place/business names are IMMUTABLE PROPER NOUNS — copy them exactly as written above.`,
+    `- Do NOT guess the season or weather beyond what the photo clearly shows.`,
+    `- No internet slang, no ㅋㅋ/LOL, no emoji, no hashtags. Do not address the reader.`,
+    `- NO tourism-marketing clichés in any language (banned Korean examples: ${BANNED_PHRASES}).`,
+    `- First person voice of the traveler.`,
+    `For "witty" and "warm" also return, FOR VERIFICATION ONLY:`,
+    `- "creative_kind": the main device used — one of ${CREATIVE_KINDS.join(", ")}.`,
+    `- "visual_basis": 1-3 generic visual elements of the photo you actually used — ONLY from:`,
+    `  ${VISUAL_BASIS_ALLOWED.join(", ")}. Never people, identity, GPS, or objects not in the photo.`,
+    `Return JSON: {"calm": {"title": "...", "memo": "..."}, "witty": {"title": "...", "memo": "...",`,
+    `"creative_kind": "...", "visual_basis": ["..."]}, "warm": {"title": "...", "memo": "...",`,
+    `"creative_kind": "...", "visual_basis": ["..."]}}`,
+  ].join("\n");
+}
+
+/** 멀티모달 응답의 검증 메타 — 로그 진단용(문자열은 whitelist 값뿐, 저장·노출 0) */
+export interface Moment3CreativeMeta { kinds: Partial<Record<WritingDirection, string>>; dropped: WritingDirection[] }
+
+/**
+ * 멀티모달 moment3 파서+검증 — calm 은 기존과 동일(제목·메모). witty/warm 은
+ * creative_kind 가 허용 6종, visual_basis 가 허용 8종 ⊆ 이고 1개 이상이어야
+ * 통과한다. 위반 방향만 빠진다(부분 성공 유지). 검증 필드는 클라이언트로
+ * 돌려보내지 않는다 — 세트에는 title/memo 만 남긴다.
+ */
+export function extractMoment3Creative(text: string): { set: MomentSuggestionSet3; meta: Moment3CreativeMeta } | null {
+  const parse = (t: string): Record<string, unknown> | null => {
+    try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
+    catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  const clean = (s: string, max: number) => {
+    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    if (v.length > max) v = v.slice(0, max).trim();
+    return v;
+  };
+  const set: MomentSuggestionSet3 = {};
+  const meta: Moment3CreativeMeta = { kinds: {}, dropped: [] };
+  for (const d of WRITING_DIRECTIONS) {
+    const e = raw[d] as { title?: unknown; memo?: unknown; creative_kind?: unknown; visual_basis?: unknown } | undefined;
+    if (!e || typeof e.title !== "string" || typeof e.memo !== "string") { meta.dropped.push(d); continue; }
+    const title = clean(e.title, MAX_TITLE_CHARS + 20);
+    const memo = clean(e.memo, MAX_MEMO_CHARS + 60);
+    if (!title || !memo) { meta.dropped.push(d); continue; }
+    if (d === "witty" || d === "warm") {
+      const kind = typeof e.creative_kind === "string" ? e.creative_kind.trim() : "";
+      const basis = Array.isArray(e.visual_basis)
+        ? e.visual_basis.filter((b): b is string => typeof b === "string").map(b => b.trim())
+        : [];
+      const allAllowed = basis.every(b => (VISUAL_BASIS_ALLOWED as readonly string[]).includes(b));
+      if (!(CREATIVE_KINDS as readonly string[]).includes(kind) || basis.length === 0 || !allAllowed) {
+        meta.dropped.push(d);
+        continue;
+      }
+      meta.kinds[d] = kind;
+    }
+    set[d] = { title, memo };
+  }
+  return Object.keys(set).length > 0 ? { set, meta } : null;
+}
+
 /** moment 쌍에 기존 결정적 guard 를 적용 — 한 필드라도 걸리면 쌍 전체가 실패다. */
 export function groundedMomentGuard(req: WritingRequest, pair: MomentSuggestion | null): MomentSuggestion | null {
   if (pair === null) return null;
@@ -593,15 +820,20 @@ export const MOMENT3_MAX_OUTPUT_TOKENS = 3000;
 export const MOMENT3_THINKING_BUDGET = 1024;
 export const MOMENT3_TEMPERATURE = 0.85;
 
-export function buildProviderBody(prompt: string, direction?: WritingDirection, target?: WritingTarget): unknown {
+export function buildProviderBody(prompt: string, direction?: WritingDirection, target?: WritingTarget, image?: WritingImage | null): unknown {
   if (target === "moment3") {
+    // 멀티모달(§A-1): 사진이 있으면 inlineData 로 픽셀을 함께 보낸다 — 1회 요청.
+    // 사진이 없으면 이미지 part 자체가 없다(§G — 멀티모달 호출 0).
+    const parts = image
+      ? [{ inlineData: { mimeType: image.mimeType, data: image.data } }, { text: prompt }]
+      : [{ text: prompt }];
     return {
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [{ parts }],
       generationConfig: {
-        maxOutputTokens: MOMENT3_MAX_OUTPUT_TOKENS,
+        maxOutputTokens: image ? MOMENT3_MULTIMODAL_MAX_OUTPUT_TOKENS : MOMENT3_MAX_OUTPUT_TOKENS,
         temperature: MOMENT3_TEMPERATURE,
         responseMimeType: "application/json",
-        responseSchema: MOMENT3_RESPONSE_SCHEMA,
+        responseSchema: image ? MOMENT3_MULTIMODAL_RESPONSE_SCHEMA : MOMENT3_RESPONSE_SCHEMA,
         thinkingConfig: { thinkingBudget: MOMENT3_THINKING_BUDGET },
       },
     };

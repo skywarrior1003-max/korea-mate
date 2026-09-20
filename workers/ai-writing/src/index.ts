@@ -8,8 +8,9 @@
 //
 // 계약 (functions/api/mytrip/writing.ts 와 동일 — writing-core 를 그대로 import)
 //   · 재시도 0 · timeout 8초 · 어떤 실패도 200 + {suggestion:null}
-//   · secret 은 env 에서 요청 시점에만 · 로그에 사용자 원문/secret 0
-//   · 사진 픽셀 없음(hasPhoto boolean 뿐) · locale 은 요청값 그대로(언어 질문 없음)
+//   · secret 은 env 에서 요청 시점에만 · 로그에 사용자 원문/secret/이미지 데이터 0
+//   · moment3 는 멀티모달 허용(클라 전처리 JPEG inlineData, §B) — 그 외 target 은
+//     텍스트뿐 · locale 은 요청값 그대로(언어 질문 없음)
 //
 // 접근 제어
 //   원칙은 Service Binding 전용이다. canary 기간 workers.dev 노출이 필요하므로
@@ -24,7 +25,9 @@ import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
-  MODEL, TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3, type HeroSuggestion,
+  extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
+  MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3, type HeroSuggestion,
+  type WritingImage, type WritingRequest, type Moment3CreativeMeta,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 export interface Env {
@@ -63,6 +66,7 @@ interface ProviderOutcome {
   moment: MomentSuggestion | null;
   hero: HeroSuggestion | null;
   set: MomentSuggestionSet3 | null;
+  creativeMeta: Moment3CreativeMeta | null;
   ai_status: string;
   httpStatus: number | null;
   latencyMs: number;
@@ -72,11 +76,13 @@ interface ProviderOutcome {
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
   apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3" | "storyHero",
-  direction?: "calm" | "witty" | "warm",
+  direction?: "calm" | "witty" | "warm", image?: WritingImage | null,
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   const started = Date.now();
+  const isMultimodal = target === "moment3" && !!image;
+  // 멀티모달은 12s(QA 실측 ja 8.0s 초과) — 재시도 0 계약은 그대로다.
+  const timer = setTimeout(() => controller.abort(), isMultimodal ? MOMENT3_MULTIMODAL_TIMEOUT_MS : TIMEOUT_MS);
   try {
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
@@ -84,7 +90,7 @@ async function callProvider(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify(buildProviderBody(prompt, direction, target)),
+        body: JSON.stringify(buildProviderBody(prompt, direction, target, isMultimodal ? image : null)),
       },
     );
     clearTimeout(timer);
@@ -92,33 +98,35 @@ async function callProvider(
     if (!res.ok) {
       let errSnippet = "";
       try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
-      return { suggestion: null, moment: null, hero: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
+      return { suggestion: null, moment: null, hero: null, set: null, creativeMeta: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     if (target === "moment3") {
-      const set = extractMoment3(text);
+      // 사진 경로는 창작 검증 파서 — 이미지 데이터는 이 함수 밖으로 나가지 않는다.
+      const creative = isMultimodal ? extractMoment3Creative(text) : null;
+      const set = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       return {
-        suggestion: null, moment: null, hero: null, set,
+        suggestion: null, moment: null, hero: null, set, creativeMeta: creative?.meta ?? null,
         ai_status: set !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
     if (target === "storyHero") {
       const hero = extractHeroSuggestion(text);
-      return { suggestion: null, moment: null, hero, set: null, ai_status: hero !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
+      return { suggestion: null, moment: null, hero, set: null, creativeMeta: null, ai_status: hero !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
     }
     if (target === "moment") {
       const moment = extractMomentSuggestion(text);
       return {
-        suggestion: null, moment, hero: null, set: null,
+        suggestion: null, moment, hero: null, set: null, creativeMeta: null,
         ai_status: moment !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
     const suggestion = extractSuggestion(text, target);
     return {
-      suggestion, moment: null, hero: null, set: null,
+      suggestion, moment: null, hero: null, set: null, creativeMeta: null,
       ai_status: suggestion !== null ? "live" : "fallback_empty",
       httpStatus: res.status, latencyMs, errSnippet: "",
     };
@@ -126,7 +134,7 @@ async function callProvider(
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
     return {
-      suggestion: null, moment: null, hero: null, set: null,
+      suggestion: null, moment: null, hero: null, set: null, creativeMeta: null,
       ai_status: isAbort ? "fallback_timeout" : "fallback_error",
       httpStatus: null, latencyMs: Date.now() - started, errSnippet: "",
     };
@@ -219,9 +227,24 @@ export default {
     catch { return reply(null, "invalid_request"); }
     if (!isWritingRequest(body)) return reply(null, "invalid_request");
 
+    // 사진 입력(§B) — moment3 전용. 위반 이미지는 provider 호출 없이 정직한 실패.
+    let image: WritingImage | null = null;
+    const rawImage = (body as WritingRequest).image;
+    if (rawImage !== undefined && rawImage !== null) {
+      if (body.target !== "moment3") return reply(null, "invalid_image");
+      const img = extractRequestImage(rawImage);
+      if (img === "invalid") {
+        log({ ok: false, target: body.target, locale: body.locale, kind: "invalid_image" });
+        return reply(null, "invalid_image");
+      }
+      image = img;
+    }
+    const isMultimodal = body.target === "moment3" && image !== null;
+    const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body) : buildWritingPrompt(body);
+
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, buildWritingPrompt(body), body.target, body.direction),
+      callProvider(apiKey, prompt, body.target, body.direction, image),
       executionColo(),
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.
@@ -234,17 +257,19 @@ export default {
       log({
         ok: n > 0, ai_status, httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
         target: body.target, locale: body.locale, styles: n, err: outcome.errSnippet, guarded,
+        multimodal: isMultimodal,
+        ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: outcome.creativeMeta?.kinds ?? null, dropped: outcome.creativeMeta?.dropped ?? null } : {}),
       });
       return reply(null, ai_status, null, set);
     }
     if (body.target === "storyHero") {
-      // 사실 접지(§A-3): source_refs 검증 → 결정적 guard. 추가 provider 호출 없음.
+      // 표지는 AI 가 직접 쓴다(§J) — basis_refs 확인 + creative_kind whitelist 검증.
       const grounded = validateHeroRefs(body, outcome.hero);
       const moment = groundedMomentGuard(body, grounded);
       const refsRejected = outcome.hero !== null && grounded === null;
       const ai_status = moment !== null ? "live" : refsRejected ? "fallback_refs" : outcome.hero !== null ? "fallback_guard" : outcome.ai_status;
       log({ ok: moment !== null, ai_status, httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
-            target: body.target, dir: body.direction, locale: body.locale, refs: outcome.hero?.sourceRefs.length ?? 0, refsRejected });
+            target: body.target, dir: body.direction, locale: body.locale, refs: outcome.hero?.sourceRefs.length ?? 0, kind: outcome.hero?.creativeKind ?? null, refsRejected });
       return reply(null, ai_status, moment);
     }
     if (body.target === "moment") {

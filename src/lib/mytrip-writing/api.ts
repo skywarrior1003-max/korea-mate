@@ -1,6 +1,6 @@
 // My Trip AI 글쓰기 클라이언트 — 서버 함수(/api/mytrip/writing)만 호출한다. secret 없음.
 // 실패는 전부 null — 편집기는 사용자가 쓰던 그대로 남는다.
-import type { WritingDirection, WritingTarget, WritingLocale, WritingContext } from "./writing-core";
+import type { WritingDirection, WritingTarget, WritingLocale, WritingContext, WritingImage } from "./writing-core";
 
 export async function apiSuggestWriting(args: {
   target: WritingTarget;
@@ -68,17 +68,21 @@ export type MomentSuggestionSet = Partial<Record<WritingDirection, { title: stri
 export async function apiSuggestMomentSet(args: {
   locale: string;
   context: WritingContext;
+  /** 멀티모달(§A-1) — 클라 canvas 전처리 JPEG. 서버는 URL 을 fetch 하지 않는다. */
+  image?: WritingImage | null;
   signal?: AbortSignal;
 }): Promise<MomentSuggestionSet> {
   const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
   try {
-    const timeout = AbortSignal.timeout(12_000);
+    // 멀티모달은 서버 timeout(12s)보다 넉넉히 — 사진 업로드 왕복 포함
+    const timeout = AbortSignal.timeout(args.image ? 20_000 : 12_000);
     const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // direction 은 요청 형식상 필수 — moment3 에서는 서버가 무시한다
-      body: JSON.stringify({ target: "moment3", direction: "calm", locale, context: args.context }),
+      body: JSON.stringify({ target: "moment3", direction: "calm", locale, context: args.context,
+        ...(args.image ? { image: args.image } : {}) }),
       signal,
     });
     if (!res.ok) return {};
