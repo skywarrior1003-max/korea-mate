@@ -9,7 +9,8 @@ export const dynamic = "force-static";
 
 import { useEffect, useState } from "react";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { resolveCitySlug, CITY_DISPLAY_NAMES } from "@/data/cities/resolve";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { fetchSharedItinerary, type ItineraryRow } from "@/lib/supabase";
@@ -173,6 +174,7 @@ export default function SharedTripPage() {
   const tStory = useTranslations("story");
   // 공유 카드 CTA 는 소유자 화면·Publish 성공 화면과 같은 키를 쓴다.
   const tPublish = useTranslations("publish");
+  const locale = useLocale();
   const [status,        setStatus]        = useState<Status>("loading");
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
@@ -388,7 +390,15 @@ export default function SharedTripPage() {
       ?? coverPhotoUrl(apiStory)
       ?? representativeCoverUrl(apiStory);
     const stats     = storyStats(apiStory);
-    const title     = trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`;
+    // 첫 표지 제목·소개문 (STORY-HERO-TONE-SELECTION V2 §2·§8):
+    // 사용자가 저장한 Story 제목이 정본이고, 없을 때만 사실 기반 locale fallback.
+    // 내부 여행 이름(trip_title)은 관리용이라 공개 표지에 쓰지 않는다.
+    const citySlug   = resolveCitySlug(trip.city);
+    const cityLabel  = citySlug ? CITY_DISPLAY_NAMES[citySlug][(["ko","en","ja","zh"].includes(locale) ? locale : "en") as "ko"|"en"|"ja"|"zh"] : cityCap;
+    const title      = apiStory.story_title?.trim()
+      || tStory("heroFallbackTitle", { city: cityLabel, n: days.length });
+    const heroIntro  = apiStory.story_intro?.trim()
+      || tStory("heroFallbackIntro", { days: days.length, places: stats.placeCount });
 
     return (
       <div style={{ backgroundColor: PAGE_BG }}>
@@ -404,6 +414,7 @@ export default function SharedTripPage() {
               imageUrl: cover,
               eyebrow:  coverEyebrow(apiStory),
               title,
+              intro: heroIntro,
               // 작성자 표시값이 서비스에 없다. 없는 이름을 지어내지 않고 줄을 숨긴다.
             }}
           />
@@ -500,7 +511,8 @@ export default function SharedTripPage() {
             endDate={trip.end_date}
             dayCount={stats.dayCount}
             placeCount={stats.placeCount}
-            tripTitle={trip.trip_title}
+            /* 공유 카드도 공개 Story 제목이 정본 — 내부 여행 이름을 바깥 산출물에 쓰지 않는다 */
+            tripTitle={apiStory.story_title?.trim() || null}
             /* 공개 사진 0 인 여행의 카드 이미지 — OG 와 같은 대표 카탈로그 규칙 */
             fallbackPhotoSrc={representativeCoverUrl(apiStory)}
             /* 서버가 공개 여부·동의 판본·차단을 이미 다 보고 걸러 준 것만 들어간다 */

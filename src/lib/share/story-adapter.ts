@@ -39,6 +39,9 @@ export interface ApiStory {
   trip_title:  string;
   days:        unknown;
   memories?:   ApiMemory[];
+  /** 사용자가 저장한 공개 Story 표지 제목·소개문(062). 없으면 fallback. */
+  story_title?: string | null;
+  story_intro?: string | null;
 }
 
 /**

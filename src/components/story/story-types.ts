@@ -49,6 +49,11 @@ export interface StoryCoverData {
   /** 날짜와 도시를 한 줄로. 만드는 쪽이 조립한다. */
   eyebrow: string;
   title: string;
+  /**
+   * 여행 전체를 소개하는 짧은 문장 (STORY-HERO-TONE-SELECTION V2).
+   * 사용자가 저장한 story_intro 또는 사실 기반 fallback. 없으면 줄을 숨긴다.
+   */
+  intro?: string;
   /** 작성자 표시 이름. 없으면 작성자 줄을 그리지 않는다. */
   authorName?: string;
   authorAvatarUrl?: string;

@@ -43,6 +43,7 @@ import TripMomentCapture from "@/components/TripMomentCapture";
 import PartnerOfferRow from "@/components/PartnerOfferRow";
 import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
+import StoryHeroEditor from "@/components/StoryHeroEditor";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo, setMomentPublic } from "@/lib/trip-moments";
@@ -1498,6 +1499,10 @@ function ItineraryResult() {
   const [isPublic, setIsPublic] = useState(false);
   // 현재 표지 상태 — 소유자 GET 이 내려주므로 새로고침 후에도 복원된다
   const [coverKind,     setCoverKind]     = useState<"auto" | "asset" | "moment">("auto");
+  // 공개 Story 표지 제목·소개문·문체 (062, STORY-HERO-TONE-SELECTION V2)
+  const [storyHeroTitle, setStoryHeroTitle] = useState<string | null>(null);
+  const [storyHeroIntro, setStoryHeroIntro] = useState<string | null>(null);
+  const [storyHeroTone,  setStoryHeroTone]  = useState<string | null>(null);
   const [coverMomentId, setCoverMomentId] = useState<string | null>(null);
   const [coverBusy,     setCoverBusy]     = useState(false);
   const [coverNotice,   setCoverNotice]   = useState<"coverUpdated" | "tourismCoverRestored" | "coverUpdateFailed" | null>(null);
@@ -1823,6 +1828,9 @@ function ItineraryResult() {
       setTravelers(record.travelers);
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
+      setStoryHeroTitle((record as { story_title?: string | null }).story_title ?? null);
+      setStoryHeroIntro((record as { story_intro?: string | null }).story_intro ?? null);
+      setStoryHeroTone((record as { story_tone?: string | null }).story_tone ?? null);
       if (record.is_public !== undefined) setIsPublic(record.is_public);
       if (record.cover_kind) setCoverKind(record.cover_kind);
       setCoverMomentId(record.cover_moment_id ?? null);
@@ -1967,6 +1975,9 @@ function ItineraryResult() {
         // 되돌리지 않는다 — 방금 담은 장소가 조용히 사라지던 자리다.
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
+      setStoryHeroTitle((record as { story_title?: string | null }).story_title ?? null);
+      setStoryHeroIntro((record as { story_intro?: string | null }).story_intro ?? null);
+      setStoryHeroTone((record as { story_tone?: string | null }).story_tone ?? null);
         if (record.is_public !== undefined) setIsPublic(record.is_public);
         if (record.cover_kind) setCoverKind(record.cover_kind);
         setCoverMomentId(record.cover_moment_id ?? null);
@@ -3086,7 +3097,12 @@ function ItineraryResult() {
               // 그리지 않는다 — 빈 이미지 상자를 만들지 않는다.
               const coverUrl = storyDays.flatMap(d => d.memories).flatMap(m => m.photos)[0]?.url ?? null;
               const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), city.charAt(0).toUpperCase() + city.slice(1)].filter(Boolean).join(" · ");
-              const storyTitle = tripTitle.trim() || `${days.length}-Day ${city.charAt(0).toUpperCase() + city.slice(1)} Trip`;
+              // 표지 정본은 사용자가 저장한 Story 제목(§2). 내부 여행 이름(tripTitle)은
+              // 관리용이라 표지·공유 산출물에 쓰지 않는다. 없으면 사실 기반 fallback.
+              const storyTitle = (storyHeroTitle ?? "").trim()
+                || tStory("heroFallbackTitle", { city: city.charAt(0).toUpperCase() + city.slice(1), n: days.length });
+              const storyIntroText = (storyHeroIntro ?? "").trim()
+                || tStory("heroFallbackIntro", { days: days.length, places: days.reduce((n, d) => n + d.places.length, 0) });
               const placeTotal = days.reduce((n, d) => n + d.places.length, 0);
               return (
                 <>
@@ -3094,7 +3110,27 @@ function ItineraryResult() {
                     <StoryCover
                       scrollHint="owner-story-journal"
                       scrollHintLabel={tStory("scrollExplore")}
-                      data={{ imageUrl: coverUrl, eyebrow, title: storyTitle }}
+                      data={{ imageUrl: coverUrl, eyebrow, title: storyTitle, intro: storyIntroText }}
+                    />
+                  )}
+                  {/* 여행 전체 Story 표지 만들기(§3) — 소유자 전용. 문체를 먼저 묻고,
+                      선택 시 그 방향 1회만 생성한다. 저장값이 위 표지·공개 Story 의 정본. */}
+                  {itinId && (
+                    <StoryHeroEditor
+                      itineraryId={itinId}
+                      deviceId={getDeviceId()}
+                      city={city}
+                      startDate={startDate}
+                      endDate={endDate}
+                      tripFacts={deriveTripWritingFacts(days)}
+                      publicMoments={moments.filter(m => m.is_public === true).map(m => ({
+                        placeName: m.place_name ?? null, title: m.title ?? null, memo: m.memo ?? null,
+                      }))}
+                      hasPublicPhoto={moments.some(m => m.is_public === true && (m.has_photo === true || !!m.photo_data))}
+                      storyTitle={storyHeroTitle}
+                      storyIntro={storyHeroIntro}
+                      storyTone={storyHeroTone}
+                      onSaved={v => { setStoryHeroTitle(v.title); setStoryHeroIntro(v.intro); setStoryHeroTone(v.tone); }}
                     />
                   )}
                   <StoryJournal
@@ -4091,7 +4127,8 @@ function ItineraryResult() {
           placeCount={days.reduce((s, d) => s + d.places.length, 0)}
           moments={storyCardMoments}
           travelStyle={travelStyle}
-          tripTitle={tripTitle}
+          /* 공유 카드에도 내부 여행 이름 대신 저장된 Story 제목을 쓴다(§2) */
+          tripTitle={(storyHeroTitle ?? "").trim() || null}
           fallbackPhotoSrc={storyCardFallback}
           deck={storyCardDeck}
           shareUrl={publicStoryUrl(window.location.origin, itinId ?? "")}

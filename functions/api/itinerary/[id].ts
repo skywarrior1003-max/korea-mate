@@ -79,14 +79,18 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const { data, error } = await admin
+  // 커버 상태는 소유자가 "현재 표지"를 표시·해제하는 데 필요하다.
+  // storage_path·device_id·cover_consent_* 는 select 하지 않으므로 응답에 나갈 수 없다.
+  const BASE_COLS = "id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, is_public, copy_of, cover_kind, cover_moment_id";
+  const sel = (cols: string) => admin
     .from("itineraries")
-    // 커버 상태는 소유자가 "현재 표지"를 표시·해제하는 데 필요하다.
-    // storage_path·device_id·cover_consent_* 는 select 하지 않으므로 응답에 나갈 수 없다.
-    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, is_public, copy_of, cover_kind, cover_moment_id")
+    .select(cols)
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
+  // 공개 Story 표지 제목·소개문·문체(062) — 미적용 DB 는 기존 목록으로 내려간다
+  let { data, error } = await sel(`${BASE_COLS}, story_title, story_intro, story_tone`);
+  if (error && (error.code === "42703" || error.code === "PGRST204")) ({ data, error } = await sel(BASE_COLS));
 
   if (error) {
     console.error("[functions/api/itinerary GET] db error:", error.code);
@@ -167,12 +171,28 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
 
   const read = await readBodyWithLimit(ctx.request, MAX_SMALL_BODY_BYTES);
   if (!read.ok) return json({ error: read.error }, read.status);
-  const body = read.body as { trip_title?: unknown; is_public?: unknown };
+  const body = read.body as {
+    trip_title?: unknown; is_public?: unknown;
+    story_title?: unknown; story_intro?: unknown; story_tone?: unknown;
+  };
 
   const row: Record<string, unknown> = { updated_at: new Date().toISOString() };
   const title = typeof body.trip_title === "string" ? body.trip_title.trim().slice(0, 300) : "";
   if (title) row.trip_title = title;
   if (typeof body.is_public === "boolean") row.is_public = body.is_public;
+  // 공개 Story 표지 제목·소개문·문체 (062, STORY-HERO-TONE-SELECTION V2).
+  // 사용자가 저장한 최종값만 공개 표지에 쓰인다. 빈 문자열은 "지움"(null)이다.
+  if (typeof body.story_title === "string") {
+    const v = body.story_title.trim().slice(0, 80);
+    row.story_title = v || null;
+  }
+  if (typeof body.story_intro === "string") {
+    const v = body.story_intro.trim().slice(0, 300);
+    row.story_intro = v || null;
+  }
+  if (body.story_tone === "calm" || body.story_tone === "witty" || body.story_tone === "warm") {
+    row.story_tone = body.story_tone;
+  }
 
   if (Object.keys(row).length === 1) return json({ error: "No valid fields to update" }, 400);
 
@@ -185,12 +205,21 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const gate = await publishGate(moderationReader(admin), id, deviceId, row.is_public);
   if (!gate.allowed) return json({ error: gate.error }, gate.status);
 
-  const { data, error } = await admin
+  const runUpdate = (r: Record<string, unknown>) => admin
     .from("itineraries")
-    .update(row)
+    .update(r)
     .eq("id", id)
     .eq("device_id", deviceId)
     .select("id");
+
+  let { data, error } = await runUpdate(row);
+  // 062 미적용 DB(story_* 컬럼 없음) — 해당 필드만 빼고 나머지를 저장한다.
+  // (trip_moments title 의 061 fallback 과 같은 패턴 — 배포 순서 안전장치)
+  if (error && (error.code === "42703" || error.code === "PGRST204") &&
+      ("story_title" in row || "story_intro" in row || "story_tone" in row)) {
+    const { story_title: _t, story_intro: _i, story_tone: _o, ...rest } = row;
+    if (Object.keys(rest).length > 1) ({ data, error } = await runUpdate(rest));
+  }
 
   if (error) {
     console.error("[functions/api/itinerary PATCH] db error:", error.code);

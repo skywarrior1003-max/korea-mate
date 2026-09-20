@@ -70,7 +70,7 @@ interface ProviderOutcome {
 
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
-  apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3",
+  apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3" | "storyHero",
   direction?: "calm" | "witty" | "warm",
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
@@ -103,7 +103,7 @@ async function callProvider(
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
-    if (target === "moment") {
+    if (target === "moment" || target === "storyHero") {
       const moment = extractMomentSuggestion(text);
       return {
         suggestion: null, moment, set: null,
@@ -232,7 +232,7 @@ export default {
       });
       return reply(null, ai_status, null, set);
     }
-    if (body.target === "moment") {
+    if (body.target === "moment" || body.target === "storyHero") {
       const moment = groundedMomentGuard(body, outcome.moment);
       const guarded = outcome.moment !== null && moment === null;
       const ai_status = guarded ? "fallback_guard" : outcome.ai_status;

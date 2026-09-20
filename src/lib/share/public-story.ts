@@ -136,6 +136,13 @@ export interface PublicItinerary {
   view_count:     number;
   helpful_count:  number;
   copy_count:     number;
+  /**
+   * 공개 Story 표지 제목·소개문 (062, STORY-HERO-TONE-SELECTION V2).
+   * 사용자가 **최종 저장한** 값만 온다 — AI 임시 응답은 저장 전이라 여기 올 수
+   * 없다. 없으면 null 이고, 화면은 사실 기반 fallback 을 그린다.
+   */
+  story_title:    string | null;
+  story_intro:    string | null;
 }
 
 const num = (v: unknown): number => (typeof v === "number" && Number.isFinite(v) ? v : 0);
@@ -154,14 +161,22 @@ export function serializePublicItinerary(row: unknown): PublicItinerary {
     travelers:     str(r.travelers),
     travel_style:  str(r.travel_style),
     days:          serializePublicDays(r.days),
-    trip_title:    str(r.trip_title),
+    // 공개 산출물의 제목 정본은 저장된 Story 제목이다(§2). Story 제목이 있으면
+    // 내부 여행 이름(trip_title)은 응답 어디에도 나가지 않는다 — 하위 호환을
+    // 위해 필드 이름은 유지하고 값만 대체한다.
+    trip_title:    (typeof r.story_title === "string" && r.story_title.trim() !== "") ? r.story_title.trim() : str(r.trip_title),
     updated_at:    typeof r.updated_at === "string" ? r.updated_at : null,
     view_count:    num(r.view_count),
     helpful_count: num(r.helpful_count),
     copy_count:    num(r.copy_count),
+    story_title:   typeof r.story_title === "string" && r.story_title.trim() !== "" ? r.story_title : null,
+    story_intro:   typeof r.story_intro === "string" && r.story_intro.trim() !== "" ? r.story_intro : null,
   };
 }
 
 /** 서버가 읽어야 하는 컬럼. 이 목록 밖의 값은 애초에 가져오지 않는다. */
 export const PUBLIC_SELECT_COLUMNS =
   "id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, copy_count";
+
+/** 062 적용 DB 용 — 표지 제목·소개문 포함. 미적용 DB 는 위 목록으로 내려간다. */
+export const PUBLIC_SELECT_COLUMNS_062 = `${PUBLIC_SELECT_COLUMNS}, story_title, story_intro`;

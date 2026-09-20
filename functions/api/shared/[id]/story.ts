@@ -28,7 +28,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
-import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS } from "../../../../src/lib/share/public-story";
+import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS, PUBLIC_SELECT_COLUMNS_062 } from "../../../../src/lib/share/public-story";
 import { buildJourneyScene } from "../../../../src/lib/share/journey-scene-core";
 import {
   serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS, PUBLIC_MEMORY_SELECT_COLUMNS_061,
@@ -75,12 +75,15 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 
-  const { data, error } = await admin
+  const selItin = (cols: string) => admin
     .from("itineraries")
-    .select(`${PUBLIC_SELECT_COLUMNS}, moderation_hidden_at`)
+    .select(`${cols}, moderation_hidden_at`)
     .eq("id", id)
     .eq("is_public", true)
     .maybeSingle();
+  // 표지 제목·소개문(062) 우선 — 미적용 DB 는 기존 컬럼 목록으로 내려간다
+  let { data, error } = await selItin(PUBLIC_SELECT_COLUMNS_062);
+  if (error && isMissingColumnError(error)) ({ data, error } = await selItin(PUBLIC_SELECT_COLUMNS));
 
   if (error) {
     console.error("[shared story GET] db error:", error.code);

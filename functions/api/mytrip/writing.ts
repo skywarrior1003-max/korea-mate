@@ -140,7 +140,7 @@ async function viaDirect(
       log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, ...usage });
       return reply(null, n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty", null, set);
     }
-    if (body.target === "moment") {
+    if (body.target === "moment" || body.target === "storyHero") {
       const extracted = extractMomentSuggestion(text);
       const moment = groundedMomentGuard(body, extracted);
       log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null, ...usage });

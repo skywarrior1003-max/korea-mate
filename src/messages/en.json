@@ -619,7 +619,22 @@
     "saveAllCards": "Save all {n}",
     "savingAllCards": "Saving…",
     "journeyCardKicker": "The Journey",
-    "journeyAllDays": "All days"
+    "journeyAllDays": "All days",
+    "heroFallbackTitle": "{n} Days in {city}",
+    "heroFallbackIntro": "A record of {places} places over {days} days.",
+    "heroToneQuestion": "What mood should your trip story open with?",
+    "heroToneCalm": "Calm",
+    "heroToneWitty": "Witty",
+    "heroToneWarm": "Heartfelt",
+    "heroTitleLabel": "Story title",
+    "heroIntroLabel": "Introduction",
+    "heroSave": "Save story cover",
+    "heroSaved": "Saved",
+    "heroRegenNote": "Changing the mood asks the AI to write once more.",
+    "heroBusy": "Writing…",
+    "heroFailed": "Generation failed. Write your own or try again.",
+    "heroEditHeading": "Trip story cover",
+    "heroChangeTone": "Change mood"
   },
   "memo": {
     "edit": "Edit",

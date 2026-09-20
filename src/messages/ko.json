@@ -619,7 +619,22 @@
     "saveAllCards": "전체 {n}장 저장",
     "savingAllCards": "저장 중…",
     "journeyCardKicker": "여행의 여정",
-    "journeyAllDays": "전체"
+    "journeyAllDays": "전체",
+    "heroFallbackTitle": "{city}에서 보낸 {n}일",
+    "heroFallbackIntro": "{days}일 동안 {places}곳을 다녀온 기록이에요.",
+    "heroToneQuestion": "어떤 분위기로 여행 이야기를 남길까요?",
+    "heroToneCalm": "담담하게",
+    "heroToneWitty": "유머 있게",
+    "heroToneWarm": "감성적으로",
+    "heroTitleLabel": "Story 제목",
+    "heroIntroLabel": "소개문",
+    "heroSave": "Story 표지 저장",
+    "heroSaved": "저장되었어요",
+    "heroRegenNote": "문체를 바꾸면 AI가 한 번 더 생성해요.",
+    "heroBusy": "AI가 쓰는 중…",
+    "heroFailed": "생성에 실패했어요. 아래 문구를 직접 적거나 다시 시도해 주세요.",
+    "heroEditHeading": "여행 Story 표지",
+    "heroChangeTone": "문체 바꾸기"
   },
   "memo": {
     "edit": "수정",

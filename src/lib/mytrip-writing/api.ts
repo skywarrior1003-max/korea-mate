@@ -25,6 +25,39 @@ export async function apiSuggestWriting(args: {
 }
 
 /**
+ * 여행 전체 Story 표지 제목+소개문 (STORY-HERO-TONE-SELECTION V2 §3).
+ * 사용자가 문체를 **먼저 고른 뒤** 그 방향으로 정확히 1요청 — 세 문체를 미리
+ * 만들지 않는다. 실패는 null(화면은 fallback 유지, 재시도 없음).
+ */
+export async function apiSuggestStoryHero(args: {
+  direction: WritingDirection;
+  locale: string;
+  context: WritingContext;
+  signal?: AbortSignal;
+}): Promise<{ title: string; intro: string } | null> {
+  const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
+  try {
+    const timeout = AbortSignal.timeout(12_000);
+    const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
+    const res = await fetch("/api/mytrip/writing", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ target: "storyHero", direction: args.direction, locale, context: args.context }),
+      signal,
+    });
+    if (!res.ok) return null;
+    const j = (await res.json()) as { moment?: { title?: unknown; memo?: unknown } | null };
+    const m = j.moment;
+    if (m && typeof m.title === "string" && m.title.trim() && typeof m.memo === "string" && m.memo.trim()) {
+      return { title: m.title.trim(), intro: m.memo.trim() };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * 순간 기록 3안 세트 (STORY-MULTICARD-JOURNEY-MAP-AND-AI-COST-PREVIEW-V1 §8-2).
  * 예전에는 방향별 3병렬(=provider 3회)이었다 — 이제 target "moment3" **단일 요청**
  * 으로 세 스타일을 함께 받는다(순간 1건 = provider 1회). 서버가 방향별로 검증해

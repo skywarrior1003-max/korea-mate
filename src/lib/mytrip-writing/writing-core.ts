@@ -28,7 +28,13 @@ export type WritingDirection = (typeof WRITING_DIRECTIONS)[number];
  * 기존 "moment"(방향당 1쌍·클라 3병렬)의 비용을 1/3 로 줄이는 계약이며,
  * 한 방향이 깨져도 나머지 방향은 살린다(파서가 방향별로 검증).
  */
-export type WritingTarget = "title" | "memo" | "moment" | "moment3";
+/**
+ * target "storyHero" (STORY-HERO-TONE-SELECTION V2): 공개 Story 첫 표지의
+ * **여행 전체** 제목 + 소개문 한 쌍. 사용자가 문체(3방향 중 하나)를 먼저 고른
+ * 뒤에만 호출된다 — 세 문체를 미리 만들지 않고, 방향당 정확히 1회다.
+ * 응답 모양은 moment 와 같은 {title, memo} 쌍을 재사용한다(memo = 소개문).
+ */
+export type WritingTarget = "title" | "memo" | "moment" | "moment3" | "storyHero";
 export type WritingLocale = "ko" | "en" | "ja" | "zh";
 
 /** moment 제안 한 쌍 — 두 필드가 모두 있어야 유효하다(§A 계약) */
@@ -39,6 +45,24 @@ export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSugges
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
 export const MOMENT3_PROMPT_VERSION = "moment3-v1";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v1";
+
+/** 표지 소개문 상한 — 표지에서 2~4줄로 읽히는 길이(§10) */
+export const MAX_HERO_INTRO_CHARS = 160;
+
+/**
+ * 공개된 moment 제목·메모 요약 — storyHero 의 사실 재료(§5 허용 입력).
+ * **공개로 저장된 값만** 넣는다: 호출부(소유자 화면)가 공개 목록을 골라 넘긴다.
+ */
+export interface PublicMomentFact { placeName?: string | null; title?: string | null; memo?: string | null }
+export function deriveHeroMomentFacts(moments: PublicMomentFact[]): string[] {
+  const out: string[] = [];
+  for (const m of moments.slice(0, 6)) {
+    const parts = [m.placeName, m.title, m.memo].map(v => (typeof v === "string" ? v.trim() : "")).filter(Boolean);
+    if (parts.length > 0) out.push(`public moment — ${parts.join(" / ").slice(0, 160)}`);
+  }
+  return out;
+}
 
 export const MODEL = "gemini-2.5-flash";     // 저장소에 이미 승인된 모델 그대로
 export const TIMEOUT_MS = 8_000;             // personalize 와 같은 상한 — 늦으면 버린다
@@ -185,7 +209,7 @@ export function isWritingRequest(v: unknown): v is WritingRequest {
   if (!v || typeof v !== "object") return false;
   const r = v as Record<string, unknown>;
   return (
-    (r.target === "title" || r.target === "memo" || r.target === "moment" || r.target === "moment3") &&
+    (r.target === "title" || r.target === "memo" || r.target === "moment" || r.target === "moment3" || r.target === "storyHero") &&
     WRITING_DIRECTIONS.includes(r.direction as WritingDirection) &&
     ["ko", "en", "ja", "zh"].includes(r.locale as string) &&
     !!r.context && typeof r.context === "object" &&
@@ -205,7 +229,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
   // 않으면 모델이 "찍었다" 를 그럴듯한 행동으로 창작한다(LIVE 실측).
   if (c.hasPhoto) facts.push("photo available: YES — a photo exists but you CANNOT see it and do NOT know what is in it: never describe or guess its contents");
   else if (req.target !== "title") facts.push("photo available: NO — the traveler did NOT take a photo here: never mention taking, holding, reviewing, or posing for photos/cameras");
-  if (clip(c.tripTitle, 80) && req.target !== "title") facts.push(`trip title: ${clip(c.tripTitle, 80)}`);
+  // storyHero 에는 내부 여행 이름(trip_title)을 넣지 않는다 — 관리용 이름(QA 표기
+  // 포함)이 공개 표지 문구의 재료가 되면 안 된다(§5 금지 입력).
+  if (clip(c.tripTitle, 80) && req.target !== "title" && req.target !== "storyHero") facts.push(`trip title: ${clip(c.tripTitle, 80)}`);
   // 실제 일정에서 셈한 여행 패턴(deriveTripWritingFacts) — 특히 title 의 재료다
   for (const f of (c.tripFacts ?? []).slice(0, MAX_TRIP_FACTS)) {
     const t = clip(f, MAX_FACT_CHARS);
@@ -219,9 +245,19 @@ export function buildWritingPrompt(req: WritingRequest): string {
     ? `one moment title (max ${MAX_TITLE_CHARS} characters) AND one short travel memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters) for the SAME moment`
     : req.target === "moment3"
     ? `THREE complete diary entries for the SAME single moment — one per direction (calm, witty, warm). Each entry = one moment title (max ${MAX_TITLE_CHARS} characters) AND one short travel memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters)`
+    : req.target === "storyHero"
+    ? `one cover title for the WHOLE trip story (max ${MAX_TITLE_CHARS} characters) AND one short introduction of 1-2 sentences (max ${MAX_HERO_INTRO_CHARS} characters) that opens the whole trip`
     : `one short travel memo of 1-2 sentences, max ${MAX_MEMO_CHARS} characters`;
 
-  const targetCraft = req.target === "moment" || req.target === "moment3"
+  const targetCraft = req.target === "storyHero"
+    ? [
+        `Cover craft: this is the FIRST screen of a shared trip story — it introduces the WHOLE trip, not one`,
+        `place. Draw an arc from the places/moments in the facts (e.g. from the first to the last scene) without`,
+        `inventing anything. Never a label ("${clip(c.city, 40)} Day N", "{N} Days in {City}" — the cover already`,
+        `shows city and dates elsewhere). The intro must read as an invitation into the story: 1-2 quiet sentences`,
+        `grounded ONLY in the listed places and public moment notes. Title and intro must not repeat each other.`,
+      ].join(" ")
+    : req.target === "moment" || req.target === "moment3"
     ? [
         `Moment-title craft: a short first-person heading for THIS one moment/place — like the top line of a`,
         `diary entry. Never a label ("${clip(c.city, 40)} Day N", place name alone), never a summary of the whole trip.`,
@@ -289,11 +325,11 @@ export function buildWritingPrompt(req: WritingRequest): string {
     `  Equivalents like "unforgettable memories", "忘れられない思い出", "难忘的回忆" are equally banned.`,
     `- The line must be specific enough that it could NOT be pasted onto a different trip unchanged.`,
     `- Do NOT address the reader, do NOT explain yourself, no hashtags, no quotes around the text.`,
-    `- First person voice of the traveler. Output the ${req.target === "moment" || req.target === "moment3" ? "title and memo" : `${req.target} text`} alone.`,
+    `- First person voice of the traveler. Output the ${req.target === "moment" || req.target === "moment3" || req.target === "storyHero" ? "title and memo" : `${req.target} text`} alone.`,
     `Before you answer: silently list every concrete claim in your line (people, photos, purchases, times, weather, objects, numbers, prior stops) and DELETE any claim not literally present in the facts/draft — replace it with plain being-there observation. Then output.
 ${req.target === "moment3"
   ? 'Return JSON: {"calm": {"title": "<title>", "memo": "<memo>"}, "witty": {"title": "<title>", "memo": "<memo>"}, "warm": {"title": "<title>", "memo": "<memo>"}}'
-  : req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
+  : req.target === "moment" || req.target === "storyHero" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
 
@@ -500,7 +536,7 @@ export function buildProviderBody(prompt: string, direction?: WritingDirection, 
       // 글맛이 필요한 작업 — profile(0.3)보다 높게, 폭주는 스키마로 잠근다
       temperature: direction ? DIRECTION_TEMPERATURE[direction] : 0.7,
       responseMimeType: "application/json",
-      responseSchema: target === "moment" ? MOMENT_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
+      responseSchema: target === "moment" || target === "storyHero" ? MOMENT_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
       // witty 만 thinking 증액 — "관찰→반전" 구성이 즉답으로는 자주 무너진다
       // (blind 실측, 특히 JA·food-heavy title). 같은 모델·같은 provider 의
       // 요청 옵션이며 호출은 버튼 클릭 시 1회뿐이다.

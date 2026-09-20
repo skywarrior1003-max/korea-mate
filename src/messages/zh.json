@@ -619,7 +619,22 @@
     "saveAllCards": "保存全部{n}张",
     "savingAllCards": "保存中…",
     "journeyCardKicker": "旅程路线",
-    "journeyAllDays": "全部"
+    "journeyAllDays": "全部",
+    "heroFallbackTitle": "在{city}度过的{n}天",
+    "heroFallbackIntro": "{days}天走过{places}个地方的记录。",
+    "heroToneQuestion": "想用什么样的语气记录这段旅程？",
+    "heroToneCalm": "平静地",
+    "heroToneWitty": "幽默地",
+    "heroToneWarm": "感性地",
+    "heroTitleLabel": "Story标题",
+    "heroIntroLabel": "介绍语",
+    "heroSave": "保存Story封面",
+    "heroSaved": "已保存",
+    "heroRegenNote": "更换语气会让AI再生成一次。",
+    "heroBusy": "AI创作中…",
+    "heroFailed": "生成失败。可以自己填写，或再试一次。",
+    "heroEditHeading": "旅行Story封面",
+    "heroChangeTone": "更换语气"
   },
   "memo": {
     "edit": "编辑",

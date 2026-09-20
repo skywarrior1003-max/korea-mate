@@ -619,7 +619,22 @@
     "saveAllCards": "全{n}枚を保存",
     "savingAllCards": "保存中…",
     "journeyCardKicker": "旅の道のり",
-    "journeyAllDays": "全日程"
+    "journeyAllDays": "全日程",
+    "heroFallbackTitle": "{city}で過ごした{n}日間",
+    "heroFallbackIntro": "{days}日間で{places}か所をめぐった記録です。",
+    "heroToneQuestion": "どんな雰囲気で旅の話を残しますか？",
+    "heroToneCalm": "淡々と",
+    "heroToneWitty": "ユーモアで",
+    "heroToneWarm": "感性的に",
+    "heroTitleLabel": "Storyタイトル",
+    "heroIntroLabel": "紹介文",
+    "heroSave": "Story表紙を保存",
+    "heroSaved": "保存しました",
+    "heroRegenNote": "雰囲気を変えると、AIがもう一度生成します。",
+    "heroBusy": "AIが作成中…",
+    "heroFailed": "生成に失敗しました。直接入力するか、もう一度お試しください。",
+    "heroEditHeading": "旅のStory表紙",
+    "heroChangeTone": "雰囲気を変える"
   },
   "memo": {
     "edit": "編集",
