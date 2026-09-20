@@ -22,6 +22,7 @@ import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
+  buildWittySelectionPrompt, extractWittySelection, renderWittyHero, wittyHasEnoughFacts,
   MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
@@ -100,7 +101,8 @@ async function viaWorker(
 async function viaDirect(
   providerFetch: typeof fetch, apiKey: string, body: WritingRequest,
 ): Promise<Response> {
-  const prompt = buildWritingPrompt(body);
+  const isWittyHero = body.target === "storyHero" && body.direction === "witty";
+  const prompt = isWittyHero ? buildWittySelectionPrompt(body) : buildWritingPrompt(body);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   const started = Date.now();
@@ -141,6 +143,15 @@ async function viaDirect(
       return reply(null, n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty", null, set);
     }
     if (body.target === "storyHero") {
+      // witty Hybrid(§B): AI 선택 → 서버 렌더·검증. 실패 = 폐기(자동 재호출 0).
+      if (isWittyHero) {
+        const sel = extractWittySelection(text);
+        const rendered = renderWittyHero(body, sel);
+        const moment = groundedMomentGuard(body, rendered);
+        log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale,
+              hybrid: true, pattern: sel?.patternId ?? null, rejected: sel !== null && rendered === null, ...usage });
+        return reply(null, moment !== null ? "live" : sel !== null ? "fallback_refs" : "fallback_empty", moment);
+      }
       // 사실 접지(§A-3): source_refs 가 제공한 키 밖이면 거부. 추가 AI 검수 없음.
       const hero = extractHeroSuggestion(text);
       const grounded = validateHeroRefs(body, hero);
@@ -181,6 +192,13 @@ export async function onRequestPost(
   try { body = await ctx.request.json(); }
   catch { return reply(null, "invalid_request"); }
   if (!isWritingRequest(body)) return reply(null, "invalid_request");
+
+  // witty Hybrid 사실 부족(§G-1): 공개 메모 0건이면 재치를 억지로 만들지 않는다 —
+  // provider 를 아예 부르지 않고(호출 0) 정직한 실패로 답한다. 화면은 직접 입력 유지.
+  if (body.target === "storyHero" && body.direction === "witty" && !wittyHasEnoughFacts(body.context)) {
+    log({ ok: false, target: body.target, dir: body.direction, locale: body.locale, hybrid: true, kind: "insufficient_facts", calls: 0 });
+    return reply(null, "fallback_insufficient");
+  }
 
   const binding = ctx.env.AI_WRITING;
   const internalKey = ctx.env.INTERNAL_KEY;

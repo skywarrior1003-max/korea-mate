@@ -24,6 +24,7 @@ import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
+  buildWittySelectionPrompt, extractWittySelection, renderWittyHero, wittyHasEnoughFacts, type WittySelection,
   MODEL, TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3, type HeroSuggestion,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
@@ -62,6 +63,7 @@ interface ProviderOutcome {
   suggestion: string | null;
   moment: MomentSuggestion | null;
   hero: HeroSuggestion | null;
+  wittySel: WittySelection | null;
   set: MomentSuggestionSet3 | null;
   ai_status: string;
   httpStatus: number | null;
@@ -92,33 +94,37 @@ async function callProvider(
     if (!res.ok) {
       let errSnippet = "";
       try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
-      return { suggestion: null, moment: null, hero: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
+      return { suggestion: null, moment: null, hero: null, wittySel: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     if (target === "moment3") {
       const set = extractMoment3(text);
       return {
-        suggestion: null, moment: null, hero: null, set,
+        suggestion: null, moment: null, hero: null, wittySel: null, set,
         ai_status: set !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
+    if (target === "storyHero" && direction === "witty") {
+      const wittySel = extractWittySelection(text);
+      return { suggestion: null, moment: null, hero: null, wittySel, set: null, ai_status: wittySel !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
+    }
     if (target === "storyHero") {
       const hero = extractHeroSuggestion(text);
-      return { suggestion: null, moment: null, hero, set: null, ai_status: hero !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
+      return { suggestion: null, moment: null, hero, wittySel: null, set: null, ai_status: hero !== null ? "live" : "fallback_empty", httpStatus: res.status, latencyMs, errSnippet: "" };
     }
     if (target === "moment") {
       const moment = extractMomentSuggestion(text);
       return {
-        suggestion: null, moment, hero: null, set: null,
+        suggestion: null, moment, hero: null, wittySel: null, set: null,
         ai_status: moment !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
     const suggestion = extractSuggestion(text, target);
     return {
-      suggestion, moment: null, hero: null, set: null,
+      suggestion, moment: null, hero: null, wittySel: null, set: null,
       ai_status: suggestion !== null ? "live" : "fallback_empty",
       httpStatus: res.status, latencyMs, errSnippet: "",
     };
@@ -126,7 +132,7 @@ async function callProvider(
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
     return {
-      suggestion: null, moment: null, hero: null, set: null,
+      suggestion: null, moment: null, hero: null, wittySel: null, set: null,
       ai_status: isAbort ? "fallback_timeout" : "fallback_error",
       httpStatus: null, latencyMs: Date.now() - started, errSnippet: "",
     };
@@ -220,8 +226,13 @@ export default {
     if (!isWritingRequest(body)) return reply(null, "invalid_request");
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
+    if (body.target === "storyHero" && body.direction === "witty" && !wittyHasEnoughFacts(body.context)) {
+      log({ ok: false, target: body.target, dir: body.direction, hybrid: true, kind: "insufficient_facts" });
+      return reply(null, "fallback_insufficient");
+    }
+    const heroWitty = body.target === "storyHero" && body.direction === "witty";
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, buildWritingPrompt(body), body.target, body.direction),
+      callProvider(apiKey, heroWitty ? buildWittySelectionPrompt(body) : buildWritingPrompt(body), body.target, body.direction),
       executionColo(),
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.
@@ -236,6 +247,13 @@ export default {
         target: body.target, locale: body.locale, styles: n, err: outcome.errSnippet, guarded,
       });
       return reply(null, ai_status, null, set);
+    }
+    if (body.target === "storyHero" && body.direction === "witty") {
+      const rendered = renderWittyHero(body, outcome.wittySel);
+      const moment = groundedMomentGuard(body, rendered);
+      const ai_status = moment !== null ? "live" : outcome.wittySel !== null ? "fallback_refs" : outcome.ai_status;
+      log({ ok: moment !== null, ai_status, colo, target: body.target, dir: body.direction, hybrid: true, pattern: outcome.wittySel?.patternId ?? null });
+      return reply(null, ai_status, moment);
     }
     if (body.target === "storyHero") {
       // 사실 접지(§A-3): source_refs 검증 → 결정적 guard. 추가 provider 호출 없음.

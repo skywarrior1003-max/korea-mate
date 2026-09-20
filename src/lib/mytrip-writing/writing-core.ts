@@ -45,7 +45,232 @@ export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSugges
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
 export const MOMENT3_PROMPT_VERSION = "moment3-v1";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v3-witty";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v4-hybrid";
+
+// ═══ 재치(witty) Hybrid 생성 (WITTY-GROUNDED-HYBRID V2) ══════════════════════
+//
+// V1 실측 실패의 반영: 자유 생성은 장치를 선언해도 ① 감성으로 미끄러지거나
+// ② 원문 동사의 강도를 바꾸거나("느려졌다"→"멈췄다") ③ 단위를 바꿨다
+// ("9곳"→"9개의 발걸음"). 그래서 witty 에서는 **AI 가 최종 문장을 쓰지 않는다**:
+//   AI 역할 = 어떤 사실을 중심으로 삼을지·무엇을 대비할지·원문에서 어떤 표현을
+//             되받을지·허용 pattern 중 무엇을 쓸지 "선택"만.
+//   서버 역할 = locale 별 검증된 문장 구조로 제목·소개문을 완성 + 엄격 검증.
+// 검증 실패 = 폐기(자동 재호출 0). 원문은 무변경 삽입만 하므로 강도·단위 변경이
+// 구조적으로 불가능하다. style device 는 pattern 이 결정한다(자가 선언 없음).
+
+export const WITTY_PATTERNS = {
+  schedule_vs_note:     "contrast",
+  count_and_callback:   "callback",
+  two_scene_rhythm:     "rhythm",
+  place_contrast:       "contrast",
+  observation_callback: "observation",
+} as const;
+export type WittyPatternId = keyof typeof WITTY_PATTERNS;
+
+/** §D 사실 구조 — 공개 moment 는 원문 그대로, 숫자는 별도 fact 로 구분 */
+export interface WittyMomentFact {
+  id: string;
+  type: "public_moment";
+  placeName: string;
+  exactTitle: string | null;
+  exactMemo: string;
+}
+export interface WittyFacts {
+  days: number | null;
+  places: number | null;
+  city: string;
+  moments: WittyMomentFact[];
+}
+
+/**
+ * hero context(tripFacts 문자열 계약)에서 witty 용 구조화 사실을 만든다.
+ * 문자열 계약: "trip length: {d} day(s), {p} stops" · "public moment — 장소 / 제목 / 메모"
+ * (deriveHeroMomentFacts 가 만드는 그 형식). 파싱 불가 항목은 조용히 버린다 —
+ * 없는 사실은 없는 것이다.
+ */
+export function buildWittyFacts(c: WritingContext): WittyFacts {
+  let days: number | null = null, places: number | null = null;
+  const moments: WittyMomentFact[] = [];
+  let mi = 0;
+  for (const raw of (c.tripFacts ?? [])) {
+    const t = typeof raw === "string" ? raw.trim() : "";
+    const len = /^trip length:\s*(\d+)\s*day\(s\),\s*(\d+)\s*stops/.exec(t);
+    if (len) { days = Number(len[1]); places = Number(len[2]); continue; }
+    const pm = /^public moment — ([^/]+?)\s*\/\s*(.*)$/.exec(t);
+    if (pm) {
+      const rest = pm[2]!.split(" / ");
+      const memo = (rest.length >= 2 ? rest.slice(1).join(" / ") : rest[0] ?? "").trim();
+      const title = rest.length >= 2 ? (rest[0] ?? "").trim() : null;
+      if (memo) {
+        mi += 1;
+        moments.push({ id: `m${mi}`, type: "public_moment", placeName: pm[1]!.trim(), exactTitle: title || null, exactMemo: memo });
+      }
+    }
+  }
+  return { days, places, city: (c.city ?? "").trim(), moments };
+}
+
+/** AI 가 반환하는 선택 — 최종 문장이 아니다 */
+export interface WittySelection {
+  patternId: string;
+  primaryFactId: string;
+  secondaryFactId: string | null;
+  callbackQuote: string;
+  sourceRefs: string[];
+}
+
+export const WITTY_SELECTION_SCHEMA = {
+  type: "object",
+  properties: {
+    pattern_id: { type: "string" },
+    primary_fact_id: { type: "string" },
+    secondary_fact_id: { type: "string" },
+    callback_quote: { type: "string" },
+    source_refs: { type: "array", items: { type: "string" } },
+  },
+  required: ["pattern_id", "primary_fact_id", "callback_quote", "source_refs"],
+} as const;
+
+export function extractWittySelection(text: string): WittySelection | null {
+  const parse = (t: string): Record<string, unknown> | null => {
+    try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
+    catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  if (typeof raw.pattern_id !== "string" || typeof raw.primary_fact_id !== "string" ||
+      typeof raw.callback_quote !== "string" || !Array.isArray(raw.source_refs)) return null;
+  return {
+    patternId: raw.pattern_id.trim(),
+    primaryFactId: raw.primary_fact_id.trim(),
+    secondaryFactId: typeof raw.secondary_fact_id === "string" && raw.secondary_fact_id.trim() ? raw.secondary_fact_id.trim() : null,
+    callbackQuote: raw.callback_quote.trim(),
+    sourceRefs: raw.source_refs.filter((r): r is string => typeof r === "string").map(r => r.trim()).filter(Boolean),
+  };
+}
+
+/** witty 전용 선택 프롬프트 — 문장을 쓰게 하지 않는다 */
+export function buildWittySelectionPrompt(req: WritingRequest): string {
+  const f = buildWittyFacts(req.context);
+  const factLines = [
+    ...(f.days !== null && f.places !== null ? [`- [trip_count] days=${f.days}, places=${f.places}`] : []),
+    ...f.moments.map(m => `- [${m.id}] public_moment · place="${m.placeName}"${m.exactTitle ? ` · title="${m.exactTitle}"` : ""} · memo="${m.exactMemo}"`),
+  ];
+  return [
+    `You help compose a witty cover line for a trip story — but you do NOT write the sentences.`,
+    `The server renders the final title/intro from verified ${req.locale} templates. Your ONLY job is selection.`,
+    `FACTS (the only things that exist):`,
+    ...factLines,
+    `PATTERNS (pick exactly one):`,
+    `- "schedule_vs_note": contrast the itinerary count with one word the traveler actually wrote. Needs trip_count + 1-2 moments.`,
+    `- "count_and_callback": lead with days/places, land on a quoted word from a memo. Needs trip_count + 1-2 moments.`,
+    `- "two_scene_rhythm": two places, same sentence shape. Needs 2 moments.`,
+    `- "place_contrast": play the two saved moment TITLES against each other. Needs 2 moments that both have a title.`,
+    `- "observation_callback": dry observation of the count, then a quoted word. Needs trip_count + 1-2 moments.`,
+    `RULES:`,
+    `- primary_fact_id (and secondary_fact_id when the pattern needs two) must be moment ids from the list ([m1]...).`,
+    `- callback_quote must be a SHORT phrase (1-6 words) copied EXACTLY, character-for-character, from one listed memo or title. Never paraphrase, never intensify.`,
+    `- Choose the quote with the most personality (a word like "한참" beats a plain verb).`,
+    `- source_refs lists every fact id you used (moment ids, and "trip_count" if used).`,
+    `Return JSON only: {"pattern_id": "...", "primary_fact_id": "m1", "secondary_fact_id": "m2", "callback_quote": "...", "source_refs": ["m1","m2","trip_count"]}`,
+  ].join("\n");
+}
+
+const firstSentence = (s: string): string => {
+  const m = /^[^.!?。！？]*[.!?。！？]?/.exec(s.trim());
+  return (m?.[0] ?? s).trim();
+};
+const koTopic = (w: string): string => {
+  const code = w.charCodeAt(w.length - 1);
+  const hasBatchim = code >= 0xac00 && code <= 0xd7a3 && (code - 0xac00) % 28 !== 0;
+  return hasBatchim ? "은" : "는";
+};
+
+/**
+ * 서버 렌더(§B-4) — locale 별 검증된 구조로만 문장을 만든다. 원문(메모·제목·
+ * 인용)은 무변경 삽입뿐이라 강도·단위 변경이 있을 수 없다. 실패는 null(폐기).
+ */
+export function renderWittyHero(req: WritingRequest, sel: WittySelection | null): MomentSuggestion | null {
+  if (sel === null) return null;
+  const f = buildWittyFacts(req.context);
+  if (!(sel.patternId in WITTY_PATTERNS)) return null;
+  const byId = new Map(f.moments.map(m => [m.id, m]));
+  const p1 = byId.get(sel.primaryFactId);
+  if (!p1) return null;
+  const p2 = sel.secondaryFactId ? byId.get(sel.secondaryFactId) ?? null : null;
+  if (sel.secondaryFactId && !p2) return null;
+  // callback 은 공개 메모/제목의 exact substring 이어야 한다(§C-2)
+  const q = sel.callbackQuote;
+  const hay = f.moments.map(m => `${m.exactTitle ?? ""}\n${m.exactMemo}`).join("\n");
+  if (!q || q.length > 24 || !hay.includes(q)) return null;
+  // source_refs = 선택 fact 와 정확히 일치해야 한다
+  const expected = new Set([sel.primaryFactId, ...(sel.secondaryFactId ? [sel.secondaryFactId] : [])]);
+  const allowedExtra = new Set(["trip_count"]);
+  for (const r of sel.sourceRefs) if (!expected.has(r) && !allowedExtra.has(r)) return null;
+  for (const e of expected) if (!sel.sourceRefs.includes(e)) return null;
+  const needsCount = sel.patternId === "schedule_vs_note" || sel.patternId === "count_and_callback" || sel.patternId === "observation_callback";
+  if (needsCount && (f.days === null || f.places === null)) return null;
+  const needsTwo = sel.patternId === "two_scene_rhythm" || sel.patternId === "place_contrast";
+  if (needsTwo && !p2) return null;
+  if (sel.patternId === "place_contrast" && !(p1.exactTitle && p2!.exactTitle)) return null;
+
+  const s1 = firstSentence(p1.exactMemo);
+  const s2 = p2 ? firstSentence(p2.exactMemo) : null;
+  const L = req.locale;
+  let title = "", intro = "";
+  // 소개문 공통: 선택한 실제 메모 문장(원문)만 연결한다 — 의미 변경 0
+  const introOf = (a: WittyMomentFact, sa: string, b: WittyMomentFact | null, sb: string | null): string => {
+    if (L === "ko") return b && sb ? `${a.placeName}에서는 ${sa} ${b.placeName}에서는 ${sb}` : `${a.placeName}에서는 ${sa}`;
+    if (L === "en") return b && sb ? `${a.placeName}: ${sa} ${b.placeName}: ${sb}` : `${a.placeName}: ${sa}`;
+    if (L === "ja") return b && sb ? `${a.placeName}では、${sa}${b.placeName}では、${sb}` : `${a.placeName}では、${sa}`;
+    return b && sb ? `在${a.placeName}，${sa}在${b.placeName}，${sb}` : `在${a.placeName}，${sa}`;
+  };
+  intro = introOf(p1, s1, p2, s2);
+
+  switch (sel.patternId as WittyPatternId) {
+    case "schedule_vs_note":
+      title = L === "ko" ? `일정표에는 ${f.places}곳, 메모에는 '${q}'`
+        : L === "en" ? `${f.places} stops on the plan, "${q}" in the notes`
+        : L === "ja" ? `予定表には${f.places}か所、メモには「${q}」`
+        : `行程上${f.places}站，笔记里是“${q}”`;
+      break;
+    case "count_and_callback":
+      title = L === "ko" ? `${f.days}일 동안 ${f.places}곳, 메모에는 '${q}'`
+        : L === "en" ? `${f.days} days, ${f.places} stops — and "${q}" in the notes`
+        : L === "ja" ? `${f.days}日で${f.places}か所、メモには「${q}」`
+        : `${f.days}天${f.places}站，笔记里留下“${q}”`;
+      break;
+    case "two_scene_rhythm":
+      title = L === "ko" ? `${p1.placeName}에서 한 번, ${p2!.placeName}에서 또 한 번`
+        : L === "en" ? `Once at ${p1.placeName}, once more at ${p2!.placeName}`
+        : L === "ja" ? `${p1.placeName}で一度、${p2!.placeName}でもう一度`
+        : `在${p1.placeName}停一次，在${p2!.placeName}再停一次`;
+      break;
+    case "place_contrast":
+      title = L === "ko" ? `${p1.placeName}${koTopic(p1.placeName)} '${p1.exactTitle}', ${p2!.placeName}${koTopic(p2!.placeName)} '${p2!.exactTitle}'`
+        : L === "en" ? `${p1.placeName}: "${p1.exactTitle}" · ${p2!.placeName}: "${p2!.exactTitle}"`
+        : L === "ja" ? `${p1.placeName}は「${p1.exactTitle}」、${p2!.placeName}は「${p2!.exactTitle}」`
+        : `${p1.placeName}是“${p1.exactTitle}”，${p2!.placeName}是“${p2!.exactTitle}”`;
+      break;
+    case "observation_callback":
+      title = L === "ko" ? `장소는 ${f.places}곳, 메모에는 '${q}'`
+        : L === "en" ? `${f.places} places on the map, "${q}" in the notes`
+        : L === "ja" ? `場所は${f.places}か所、メモには「${q}」`
+        : `地点有${f.places}处，笔记里是“${q}”`;
+      break;
+  }
+  title = title.trim();
+  intro = intro.trim();
+  if (!title || !intro) return null;
+  if (title.length > MAX_TITLE_CHARS + 20 || intro.length > MAX_HERO_INTRO_CHARS + 40) return null;
+  return { title, memo: intro };
+}
+
+/** witty 가 안전하게 성립하려면 공개 메모가 최소 1건 필요하다(§G-1 억지 생성 금지). */
+export function wittyHasEnoughFacts(c: WritingContext): boolean {
+  return buildWittyFacts(c).moments.length >= 1;
+}
 
 /**
  * 재치 문체의 허용 표현 장치 (WITTY-TONE-QUALITY V1 §E).
@@ -634,6 +859,22 @@ export const MOMENT3_THINKING_BUDGET = 1024;
 export const MOMENT3_TEMPERATURE = 0.85;
 
 export function buildProviderBody(prompt: string, direction?: WritingDirection, target?: WritingTarget): unknown {
+  // witty Hybrid(§B): AI 는 선택만 한다 — 짧은 구조화 응답, 낮은 예산.
+  if (target === "storyHero" && direction === "witty") {
+    return {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        // Gemini 2.5 는 maxOutputTokens 에 thinking 토큰을 포함한다 —
+        // 500 이면 thinking 442 + 응답 43 = 485 로 절단 실측(QA ko-2 파싱 실패).
+        // thinkingBudget 512 + 선택 JSON(~50tok) 여유 = 900.
+        maxOutputTokens: 900,
+        temperature: 0.7,
+        responseMimeType: "application/json",
+        responseSchema: WITTY_SELECTION_SCHEMA,
+        thinkingConfig: { thinkingBudget: 512 },
+      },
+    };
+  }
   if (target === "moment3") {
     return {
       contents: [{ parts: [{ text: prompt }] }],

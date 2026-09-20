@@ -7,7 +7,7 @@ import { join } from "node:path";
 import {
   buildWritingPrompt, deriveTripWritingFacts, buildProviderBody,
   DIRECTION_TEMPERATURE, WRITING_DIRECTIONS, MAX_TRIP_FACTS,
-  extractSuggestion, groundedSuggestionGuard, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
+  extractSuggestion, groundedSuggestionGuard, buildWittyFacts, renderWittyHero, extractWittySelection, wittyHasEnoughFacts, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
   type WritingRequest,
 } from "./writing-core.ts";
 
@@ -157,10 +157,11 @@ test("배선 가드 — title 은 locale 해석 tripFacts, memo 는 tripTitle·a
   assert.match(cap, /tripTitle: \(tripTitle \?\? ""\)\.trim\(\) \|\| null/);
   assert.match(cap, /placeName: \(isBound \? \(aiPlaceName \?\? placeName\) : placeName\) \|\| null/);
   const worker = readFileSync(join(process.cwd(), "workers", "ai-writing", "src", "index.ts"), "utf8");
-  assert.match(worker, /buildProviderBody\(prompt, direction\)/);
+  // moment3(73d8802)부터 target 3-인자 — 가드가 구계약(2-인자)이라 선재 FAIL 이었다
+  assert.match(worker, /buildProviderBody\(prompt, direction, target\)/);
   assert.match(worker, /groundedSuggestionGuard\(body, outcome\.suggestion\)/);
   const fn = readFileSync(join(process.cwd(), "functions", "api", "mytrip", "writing.ts"), "utf8");
-  assert.match(fn, /buildProviderBody\(prompt, body\.direction\)/);
+  assert.match(fn, /buildProviderBody\(prompt, body\.direction, body\.target\)/);
   assert.match(fn, /groundedSuggestionGuard\(body, extracted\)/);
 });
 
@@ -209,4 +210,87 @@ test("groundedSuggestionGuard — 한글 오염/사진행동 발명만 좁게 �
   assert.equal(groundedSuggestionGuard(draftPhoto, "같은 골목 사진만 40장."), "같은 골목 사진만 40장.");
   // null 은 null
   assert.equal(groundedSuggestionGuard(base, null), null);
+});
+
+// ── WITTY-GROUNDED-HYBRID V2 계약 (STORY-WITTY-GROUNDED-HYBRID-PREVIEW-V2) ──
+// AI 는 선택만, 서버가 검증된 템플릿으로 렌더한다. 원문 무변경 삽입이므로
+// 강도·단위 변경이 구조적으로 불가능해야 한다.
+
+const hybridReq = (locale: "ko" | "en" | "ja" | "zh" = "ko"): WritingRequest => ({
+  target: "storyHero", direction: "witty", locale,
+  context: { city: "gyeongju", hasPhoto: true, tripFacts: [
+    "trip length: 3 day(s), 9 stops",
+    "public moment — 첨성대 / 첨성대의 밤 / 밤 조명이 켜질 때가 제일 예뻤다. 낮과 다른 모습이었다.",
+    "public moment — 월정교 / 다리 위에서 잠시 / 물에 비친 지붕선을 한참 봤다. 걸음이 저절로 느려졌다.",
+  ] },
+});
+const sel = (over: Partial<import("./writing-core.ts").WittySelection> = {}) => ({
+  patternId: "count_and_callback", primaryFactId: "m2", secondaryFactId: null,
+  callbackQuote: "한참", sourceRefs: ["m2", "trip_count"], ...over,
+});
+
+test("hybrid — buildWittyFacts 는 tripFacts 문자열 계약을 구조화한다", () => {
+  const f = buildWittyFacts(hybridReq().context);
+  assert.equal(f.days, 3); assert.equal(f.places, 9);
+  assert.equal(f.moments.length, 2);
+  assert.deepEqual(f.moments.map(m => m.id), ["m1", "m2"]);
+  assert.equal(f.moments[1]!.placeName, "월정교");
+  assert.equal(f.moments[1]!.exactTitle, "다리 위에서 잠시");
+  assert.match(f.moments[1]!.exactMemo, /^물에 비친 지붕선을 한참 봤다/);
+});
+
+test("hybrid — 정상 선택은 locale 템플릿으로 렌더, 원문 무변경 삽입", () => {
+  const out = renderWittyHero(hybridReq(), sel());
+  assert.ok(out);
+  assert.equal(out!.title, "3일 동안 9곳, 메모에는 '한참'");
+  assert.equal(out!.memo, "월정교에서는 물에 비친 지붕선을 한참 봤다.");
+  const en = renderWittyHero(hybridReq("en"), sel());
+  assert.ok(en && en.title.includes('"한참"') && en.memo.startsWith("월정교: "));
+});
+
+test("hybrid — callback 이 원문 exact substring 이 아니면 폐기(강도·단위 왜곡 차단)", () => {
+  assert.equal(renderWittyHero(hybridReq(), sel({ callbackQuote: "멈췄다" })), null);      // 강도 변경
+  assert.equal(renderWittyHero(hybridReq(), sel({ callbackQuote: "9개의 발걸음" })), null); // 단위 왜곡
+  assert.equal(renderWittyHero(hybridReq(), sel({ callbackQuote: "" })), null);
+  assert.equal(renderWittyHero(hybridReq(), sel({ callbackQuote: "물에 비친 지붕선을 한참 봤다. 걸음이 저절로" })), null); // 24자 초과
+});
+
+test("hybrid — source_refs 불일치·미존재 fact·미허용 pattern 은 폐기", () => {
+  assert.equal(renderWittyHero(hybridReq(), sel({ sourceRefs: ["m2", "m9"] })), null);
+  assert.equal(renderWittyHero(hybridReq(), sel({ sourceRefs: [] })), null);
+  assert.equal(renderWittyHero(hybridReq(), sel({ primaryFactId: "m9", sourceRefs: ["m9"] })), null);
+  assert.equal(renderWittyHero(hybridReq(), sel({ patternId: "free_verse" })), null);
+  assert.equal(renderWittyHero(hybridReq(), null), null);
+});
+
+test("hybrid — pattern 전제조건: two_scene 은 2 moment, place_contrast 는 양쪽 title 필수", () => {
+  const two = renderWittyHero(hybridReq(), sel({ patternId: "two_scene_rhythm", primaryFactId: "m1", secondaryFactId: "m2", sourceRefs: ["m1", "m2"] }));
+  assert.ok(two && two.title.includes("첨성대") && two.title.includes("월정교"));
+  assert.equal(renderWittyHero(hybridReq(), sel({ patternId: "two_scene_rhythm", secondaryFactId: null, sourceRefs: ["m2"] })), null);
+  // 제목 없는 moment 로 place_contrast → 폐기
+  const noTitle = hybridReq();
+  noTitle.context.tripFacts = ["trip length: 3 day(s), 9 stops",
+    "public moment — 첨성대 / 밤 조명이 켜질 때가 제일 예뻤다.",
+    "public moment — 월정교 / 다리 위에서 잠시 / 물에 비친 지붕선을 한참 봤다."];
+  assert.equal(renderWittyHero(noTitle, sel({ patternId: "place_contrast", primaryFactId: "m1", secondaryFactId: "m2", sourceRefs: ["m1", "m2"] })), null);
+});
+
+test("hybrid — extractWittySelection 은 JSON only, 필수 키 없으면 null", () => {
+  const ok = extractWittySelection('{"pattern_id":"count_and_callback","primary_fact_id":"m2","callback_quote":"한참","source_refs":["m2"]}');
+  assert.ok(ok && ok.patternId === "count_and_callback" && ok.secondaryFactId === null);
+  assert.equal(extractWittySelection('{"pattern_id":"x"}'), null);
+  assert.equal(extractWittySelection("멋진 제목: 빛과 바람의 시간"), null);
+  assert.equal(extractWittySelection('{"pattern_id":"count_and_callback","primary_fact_id":"m2","callback_quote":"한참","source_refs":["m2"]'), null); // 절단 JSON
+});
+
+test("hybrid — 공개 메모 0건이면 witty 는 성립하지 않는다(§G-1 억지 생성 금지)", () => {
+  assert.equal(wittyHasEnoughFacts({ city: "gyeongju", tripFacts: ["trip length: 3 day(s), 9 stops"] }), false);
+  assert.equal(wittyHasEnoughFacts(hybridReq().context), true);
+});
+
+test("hybrid — provider 예산: thinking 포함 상한이므로 출력 여유가 실제로 남아야 한다", () => {
+  const b = buildProviderBody("p", "witty", "storyHero") as { generationConfig: { maxOutputTokens: number; responseMimeType: string; thinkingConfig: { thinkingBudget: number } } };
+  assert.equal(b.generationConfig.responseMimeType, "application/json");
+  // 실측: thinking 442~453 + 선택 JSON 43~48 — 구 상한 500 은 절단됐다(QA ko-2)
+  assert.ok(b.generationConfig.maxOutputTokens - b.generationConfig.thinkingConfig.thinkingBudget >= 300, "witty hero 출력 여유 부족");
 });
