@@ -39,6 +39,29 @@ import {
 } from "@/lib/share/story-adapter";
 import { buildStoryCardDeck } from "@/lib/share/story-card-deck";
 import { journeyStops } from "@/lib/share/story-adapter";
+
+// ── 표지 A/B Preview 스위치 (COVER-EDITORIAL-AB V2 §6) ───────────────────────
+// Preview 전용 query: ?cover=a|b (표지 시안), ?ctitle=/&cquote= (§5 검증 전용
+// 렌더 override — 어디에도 저장되지 않는다). query 가 없으면 기존 표지 그대로.
+// Owner 가 한 안을 고르면 Production 반영 단계에서 이 함수와 함께 제거한다.
+function previewCoverParams(): { coverVariant?: "a" | "b"; coverFixture?: { title?: string; quote?: string } } {
+  if (typeof window === "undefined") return {};
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const v = q.get("cover");
+    const out: { coverVariant?: "a" | "b"; coverFixture?: { title?: string; quote?: string } } = {};
+    if (v === "a" || v === "b") out.coverVariant = v;
+    const title = q.get("ctitle");
+    const quote = q.get("cquote");
+    if (title || quote) {
+      out.coverFixture = {
+        ...(title ? { title: title.slice(0, 120) } : {}),
+        ...(quote ? { quote: quote.slice(0, 240) } : {}),
+      };
+    }
+    return out;
+  } catch { return {}; }
+}
 import {
   googlePlaceSearchUrl, isSafeMapUrl, naverPlaceSearchUrl,
 } from "@/lib/maps/place-navigation";
@@ -506,6 +529,7 @@ export default function SharedTripPage() {
             /* 서버가 공개 여부·동의 판본·차단을 이미 다 보고 걸러 준 것만 들어간다 */
             moments={toStoryCardMoments(apiStory)}
             deck={buildStoryCardDeck(apiStory)}
+            {...previewCoverParams()}
             travelStyle={trip.travel_style ?? ""}
             shareUrl={publicStoryUrl(window.location.origin, trip.id)}
             onClose={() => setStoryExportOpen(false)}
@@ -829,6 +853,7 @@ export default function SharedTripPage() {
           /* 이 분기는 공개 Memory 가 0건일 때만 도달한다 — 일정 카드만으로 덱을 만든다 */
           moments={[]}
           deck={buildStoryCardDeck(trip as unknown as ApiStory)}
+          {...previewCoverParams()}
           travelStyle={trip.travel_style}
           shareUrl={publicStoryUrl(window.location.origin, trip.id)}
           onClose={() => setStoryExportOpen(false)}

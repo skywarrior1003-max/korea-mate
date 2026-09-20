@@ -72,6 +72,18 @@ interface Props {
    * 덱에도 존재할 수 없다.
    */
   deck?:       StoryCardSpec[];
+  /**
+   * 표지 A/B 시안 (COVER-EDITORIAL-AB V2 — Preview 전용 선택 스위치).
+   * "a" = Cinematic Social, "b" = Editorial Invitation. 없으면 기존 표지 그대로.
+   * Owner 가 한 안을 고르면 Production 반영 단계에서 이 스위치를 제거하고
+   * 선택안 하나만 남긴다(§6 계약).
+   */
+  coverVariant?: "a" | "b";
+  /**
+   * §5 검증 전용 override — Preview query 로만 들어오고 어디에도 저장되지
+   * 않는다(렌더에만 사용). Production 반영 시 variant 스위치와 함께 제거한다.
+   */
+  coverFixture?: { title?: string; quote?: string };
 }
 
 /** Day 별 경로 색 — 여정 카드·Day 카드가 같은 팔레트를 쓴다(4일 이후 순환) */
@@ -118,6 +130,25 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
   return lines;
 }
 
+// ── 표지 A/B 제목 맞춤 (COVER-EDITORIAL-AB V2 §5) ────────────────────────────
+// 글자 수로 자르지 않는다. 실제 렌더 폭을 재서 크기를 내리고, 최소 크기에서도
+// maxLines 를 넘으면 long-title 모드(호출부가 다른 레이아웃 파라미터로 재호출)로
+// 전환한다. 반환 lines 는 항상 원문 전체다 — 말줄임 없음.
+function fitText(
+  ctx: CanvasRenderingContext2D, text: string,
+  opts: { maxWidth: number; maxPx: number; minPx: number; maxLines: number; font: (px: number) => string },
+): { fontPx: number; lines: string[]; overflow: boolean } {
+  let lines: string[] = [text];
+  for (let px = opts.maxPx; px >= opts.minPx; px -= 2) {
+    ctx.font = opts.font(px);
+    lines = wrapText(ctx, text, opts.maxWidth);
+    if (lines.length <= opts.maxLines) return { fontPx: px, lines, overflow: false };
+  }
+  ctx.font = opts.font(opts.minPx);
+  lines = wrapText(ctx, text, opts.maxWidth);
+  return { fontPx: opts.minPx, lines, overflow: lines.length > opts.maxLines };
+}
+
 // ── TASK-024: DataURL → File 변환 (메모리 내 가공, 패키지 없음) ───────────────
 function dataUrlToFile(dataUrl: string, filename: string): File {
   const [header, base64] = dataUrl.split(",");
@@ -151,7 +182,7 @@ function canShareFiles(file: File): boolean {
 
 export default function TripStoryExport({
   city, startDate, endDate, dayCount, placeCount, moments, travelStyle, shareUrl, onClose,
-  tripTitle, fallbackPhotoSrc, deck,
+  tripTitle, fallbackPhotoSrc, deck, coverVariant, coverFixture,
 }: Props) {
   const t = useTranslations("story");
   const locale = useLocale();
@@ -476,6 +507,198 @@ export default function TripStoryExport({
     ctx.textAlign = "left";
   };
 
+  // ── 표지 A/B (COVER-EDITORIAL-AB V2) — 표지 한 장만 다시 그린다. 카드 2~14 무접촉. ──
+
+  /** A/B 공통 재료 — 사진 1장 full-bleed 후보, 제목/인용/보조 정보 문자열 */
+  const coverMaterial = useCallback(async (ctx: CanvasRenderingContext2D, W: number, H: number, px: (n: number) => number) => {
+    // 사진: 공개 개인 사진 첫 장 → 대표 카탈로그 → 승인 도시 자산 → 잉크 바탕
+    let img: HTMLImageElement | null = null;
+    const firstMoment = moments.find(m => typeof m.photoSrc === "string" && m.photoSrc.trim() !== "")?.photoSrc ?? null;
+    for (const cand of [firstMoment, fallbackPhotoSrc, cityShareFallback(city)]) {
+      if (!cand) continue;
+      try { img = await loadImage(cand); break; } catch { /* 다음 후보 */ }
+    }
+    if (img) {
+      const r = Math.max(W / img.width, H / img.height);
+      const dw = img.width * r, dh = img.height * r;
+      // 세로 사진은 중앙, 가로 사진은 위쪽 1/3 지점을 살린다(피사체가 보통 상단·중앙에 있다)
+      const dy = dh > H ? Math.min(0, -(dh - H) * 0.33) : (H - dh) / 2;
+      ctx.drawImage(img, (W - dw) / 2, dy, dw, dh);
+    } else {
+      drawInkGround(ctx, W, H, px);
+    }
+    const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
+    const actual = isActualTitle(tripTitle);
+    const headline = (coverFixture?.title?.trim())
+      || (actual ? shareTitle(tripTitle, city, dayCount) : t("cardHeadline", { n: dayCount, city: cityCap }));
+    const quote = (coverFixture?.quote?.trim())
+      || (moments.find(m => m.memo && m.memo.trim() !== "")?.memo?.trim() ?? "");
+    const localeTag = { en: "en-US", ko: "ko-KR", ja: "ja-JP", zh: "zh-CN" }[locale] ?? "en-US";
+    const hd = (iso: string) => {
+      const d = new Date(`${iso}T00:00:00`);
+      return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(localeTag, { month: "short", day: "numeric" }).format(d);
+    };
+    const meta = `${hd(startDate)} – ${hd(endDate)}  ·  ${cityCap}  ·  ${t("cardPlaces", { n: placeCount })}`.toUpperCase();
+    return { hasPhoto: img !== null, headline, quote, meta };
+  }, [moments, fallbackPhotoSrc, city, tripTitle, dayCount, placeCount, startDate, endDate, locale, t, coverFixture]);
+
+  /** 인용 줄 맞춤 — 넘치면 마지막 줄만 말줄임(원문 왜곡 없는 축약, §6-3과 같은 규칙) */
+  const clampQuote = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number, maxLines: number): string[] => {
+    const all = wrapText(ctx, `“${text}”`, maxWidth);
+    const lines = all.slice(0, maxLines);
+    if (all.length > maxLines && lines.length > 0) {
+      let last = lines[lines.length - 1]!.replace(/[”"]?$/, "");
+      while (last.length > 1 && ctx.measureText(`${last}…”`).width > maxWidth) last = last.slice(0, -1);
+      lines[lines.length - 1] = `${last}…”`;
+    }
+    return lines;
+  };
+
+  /** 제목 맞춤 — 1~3줄 자동 크기, 안 되면 long-title 레이아웃(더 작게·더 많은 줄) */
+  const fitHeadline = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number, serif: string, px: (n: number) => number, base: { maxPx: number; minPx: number }) => {
+    const font = (p: number) => `700 ${p}px ${serif}`;
+    const first = fitText(ctx, text, { maxWidth, maxPx: px(base.maxPx), minPx: px(base.minPx), maxLines: 3, font });
+    if (!first.overflow) return { ...first, long: false };
+    // long-title 모드(§5-3): 자르지 않고 크기·줄 수·간격을 바꾼다
+    const long = fitText(ctx, text, { maxWidth, maxPx: px(base.minPx - 2), minPx: px(13), maxLines: 6, font });
+    return { ...long, long: true };
+  };
+
+  /** A안 — Cinematic Social Cover: 사진 전면, 좌하단 앵커, 국소 그라데이션 */
+  const drawCoverAOn = useCallback(async (canvas: HTMLCanvasElement) => {
+    const W = 1080, H = 1920, S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    const PAD = px(MARGIN_MOBILE + 2);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d")!;
+    const { serif, sans } = specFonts();
+    try { await document.fonts.ready; } catch { /* fallback */ }
+    const m = await coverMaterial(ctx, W, H, px);
+
+    // 텍스트가 놓이는 하단에만 국소 그라데이션 — 사진 전체를 덮지 않는다(§2-7·8)
+    const g = ctx.createLinearGradient(0, H * 0.58, 0, H);
+    g.addColorStop(0, "rgba(0,0,0,0)");
+    g.addColorStop(0.45, "rgba(0,0,0,0.34)");
+    g.addColorStop(1, "rgba(0,0,0,0.8)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.textAlign = "left";
+    const maxW = W - PAD * 2;
+    // 아래에서 위로 쌓는다 — 하단 안전영역(≈5.5%) 위
+    let y = H - Math.round(H * 0.055);
+    ctx.font = `700 ${px(11)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.fillText("gokoreamate", PAD, y);
+    y -= px(26);
+
+    // 인용 — 제목보다 확실히 작게(세 번째 위계)
+    if (m.quote) {
+      const qfs = px(15);
+      ctx.font = `italic 400 ${qfs}px ${serif}`;
+      const qlines = clampQuote(ctx, m.quote, maxW, 2);
+      y -= (qlines.length - 1) * Math.round(qfs * 1.45);
+      ctx.fillStyle = "rgba(255,255,255,0.86)";
+      let qy = y;
+      for (const line of qlines) { ctx.fillText(line, PAD, qy); qy += Math.round(qfs * 1.45); }
+      y -= Math.round(qfs * 1.45) + px(6);
+    }
+
+    // 제목 — 두 번째 위계. 측정 기반 자동 크기, long-title 전환(§5)
+    const fit = fitHeadline(ctx, m.headline, maxW, serif, px, { maxPx: 33, minPx: 22 });
+    ctx.font = `700 ${fit.fontPx}px ${serif}`;
+    const lh = Math.round(fit.fontPx * (fit.long ? 1.22 : 1.18));
+    y -= (fit.lines.length - 1) * lh;
+    ctx.fillStyle = "#ffffff";
+    let ty = y;
+    for (const line of fit.lines) { ctx.fillText(line, PAD, ty); ty += lh; }
+    y -= Math.round(fit.fontPx * 1.05) + px(8);
+
+    // 보조 정보 한 줄 — 날짜·도시·장소 수(§3)
+    ctx.letterSpacing = `${px(1.6)}px`;
+    let mfs = 12.5;
+    ctx.font = `700 ${px(mfs)}px ${sans}`;
+    while (mfs > 9.5 && ctx.measureText(m.meta).width > maxW) { mfs -= 0.5; ctx.font = `700 ${px(mfs)}px ${sans}`; }
+    ctx.fillStyle = "rgba(255,255,255,0.72)";
+    ctx.fillText(m.meta, PAD, y);
+    ctx.letterSpacing = "0px";
+  }, [specFonts, coverMaterial]);
+
+  /** B안 — Editorial Invitation Cover: 중앙 정렬 세로 그룹, 얇은 선, 절제된 제목 */
+  const drawCoverBOn = useCallback(async (canvas: HTMLCanvasElement) => {
+    const W = 1080, H = 1920, S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    const PAD = px(MARGIN_MOBILE + 6);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d")!;
+    const { serif, sans } = specFonts();
+    try { await document.fonts.ready; } catch { /* fallback */ }
+    const m = await coverMaterial(ctx, W, H, px);
+
+    // 위·아래 국소 색조만 — 문서형 박스 금지(§2-4)
+    const top = ctx.createLinearGradient(0, 0, 0, H * 0.2);
+    top.addColorStop(0, "rgba(10,12,16,0.5)");
+    top.addColorStop(1, "rgba(10,12,16,0)");
+    ctx.fillStyle = top; ctx.fillRect(0, 0, W, H * 0.2);
+    const bot = ctx.createLinearGradient(0, H * 0.52, 0, H);
+    bot.addColorStop(0, "rgba(10,12,16,0)");
+    bot.addColorStop(0.5, "rgba(10,12,16,0.4)");
+    bot.addColorStop(1, "rgba(10,12,16,0.84)");
+    ctx.fillStyle = bot; ctx.fillRect(0, H * 0.5, W, H * 0.5);
+
+    ctx.textAlign = "center";
+    const cx = W / 2;
+    const maxW = W - PAD * 2;
+    // 상단: 얇은 선 + 도시·날짜 소캡션(청첩장의 머리글)
+    const capY = Math.round(H * 0.085);
+    ctx.strokeStyle = "rgba(255,255,255,0.7)";
+    ctx.lineWidth = px(1);
+    ctx.beginPath(); ctx.moveTo(cx - px(16), capY - px(18)); ctx.lineTo(cx + px(16), capY - px(18)); ctx.stroke();
+    ctx.letterSpacing = `${px(3)}px`;
+    let cfs = 11.5;
+    ctx.font = `700 ${px(cfs)}px ${sans}`;
+    while (cfs > 9 && ctx.measureText(m.meta).width > maxW) { cfs -= 0.5; ctx.font = `700 ${px(cfs)}px ${sans}`; }
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.fillText(m.meta, cx, capY);
+    ctx.letterSpacing = "0px";
+
+    // 하단 세로 그룹(아래→위): 브랜드 → 얇은 선 → 인용 → 점 → 제목
+    let y = H - Math.round(H * 0.05);
+    ctx.font = `700 ${px(10.5)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.fillText("gokoreamate", cx, y);
+    y -= px(22);
+    ctx.strokeStyle = "rgba(255,255,255,0.55)";
+    ctx.beginPath(); ctx.moveTo(cx - px(13), y - px(4)); ctx.lineTo(cx + px(13), y - px(4)); ctx.stroke();
+    y -= px(18);
+
+    if (m.quote) {
+      const qfs = px(14.5);
+      ctx.font = `italic 400 ${qfs}px ${serif}`;
+      const qlines = clampQuote(ctx, m.quote, maxW - px(16), 3);
+      y -= (qlines.length - 1) * Math.round(qfs * 1.55);
+      ctx.fillStyle = "rgba(255,255,255,0.88)";
+      let qy = y;
+      for (const line of qlines) { ctx.fillText(line, cx, qy); qy += Math.round(qfs * 1.55); }
+      y -= Math.round(qfs * 1.55) + px(10);
+      // 작은 점 구분(§4 — 얇은 선·작은 점 정도만)
+      ctx.fillStyle = "rgba(255,255,255,0.65)";
+      ctx.beginPath(); ctx.arc(cx, y - px(2), px(1.6), 0, Math.PI * 2); ctx.fill();
+      y -= px(16);
+    }
+
+    // 제목 — A보다 절제된 크기·넓은 줄 간격(§4)
+    const fit = fitHeadline(ctx, m.headline, maxW, serif, px, { maxPx: 26, minPx: 18 });
+    ctx.font = `700 ${fit.fontPx}px ${serif}`;
+    const lh = Math.round(fit.fontPx * (fit.long ? 1.3 : 1.38));
+    y -= (fit.lines.length - 1) * lh;
+    ctx.fillStyle = "#ffffff";
+    let ty = y;
+    for (const line of fit.lines) { ctx.fillText(line, cx, ty); ty += lh; }
+
+    ctx.textAlign = "left";
+  }, [specFonts, coverMaterial]);
+
   const drawDayCardOn = useCallback(async (canvas: HTMLCanvasElement, spec: Extract<StoryCardSpec, { kind: "day" }>) => {
     const W = 1080, H = 1920, S = W / 390;
     const px = (n: number) => Math.round(n * S);
@@ -738,11 +961,17 @@ export default function TripStoryExport({
   }, [specFonts, tripTitle, city, dayCount, startDate, endDate, t]);
 
   const drawSpecOn = useCallback(async (canvas: HTMLCanvasElement, spec: StoryCardSpec): Promise<void> => {
-    if (spec.kind === "cover") { await drawCoverOn(canvas); return; }
+    if (spec.kind === "cover") {
+      // A/B 시안(Preview 스위치) — 없으면 기존 표지 그대로(§6: query 없음 = 기존 동작)
+      if (coverVariant === "a") { await drawCoverAOn(canvas); return; }
+      if (coverVariant === "b") { await drawCoverBOn(canvas); return; }
+      await drawCoverOn(canvas);
+      return;
+    }
     if (spec.kind === "day") { await drawDayCardOn(canvas, spec); return; }
     if (spec.kind === "place") { await drawPlaceCardOn(canvas, spec); return; }
     await drawJourneyCardOn(canvas, spec);
-  }, [drawCoverOn, drawDayCardOn, drawPlaceCardOn, drawJourneyCardOn]);
+  }, [coverVariant, drawCoverOn, drawCoverAOn, drawCoverBOn, drawDayCardOn, drawPlaceCardOn, drawJourneyCardOn]);
 
   // ── 다중 카드 상태 (§6-1) — 파일명이 현재 장 번호를 쓰므로 여기서 선언한다 ──
   const hasDeck = Array.isArray(deck) && deck.length > 1;
