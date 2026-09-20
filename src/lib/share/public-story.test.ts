@@ -40,7 +40,10 @@ const STAY = {
 };
 
 // ── A. 공식 장소 ─────────────────────────────────────────────────────────────
-test("★공식 장소는 안내문과 정본 열쇠를 유지하고 좌표·지도링크는 내보내지 않는다", () => {
+test("★공식 장소는 안내문·정본 열쇠·카탈로그 좌표를 내보내고 지도링크·내부값은 내보내지 않는다", () => {
+  // STORY-MULTICARD-JOURNEY-MAP V1 §7-1: 공식 장소의 카탈로그 좌표(lat/lng)는
+  // 공개 /place 페이지와 같은 공개 정보라 공개 Story 여정 지도용으로 내보낸다.
+  // user_spot·개인 GPS 는 계속 나가지 않는다(아래 비공식 테스트가 지킨다).
   const p = publicPlace(CITY_SPOT);
   assert.equal(p.name, "감천문화마을");
   assert.equal(p.category, "attraction");
@@ -49,7 +52,9 @@ test("★공식 장소는 안내문과 정본 열쇠를 유지하고 좌표·지
   assert.equal(p.slot, "morning");
   assert.equal(p.tips, CITY_SPOT.tips);
   assert.equal(p.place_id, "4412");
-  for (const gone of ["lat", "lng", "googleMapsUrl", "sourceKey", "source",
+  assert.equal(p.lat, (CITY_SPOT as { lat?: unknown }).lat, "공식 장소 카탈로그 lat 는 공개 여정 지도용으로 나간다");
+  assert.equal(p.lng, (CITY_SPOT as { lng?: unknown }).lng);
+  for (const gone of ["googleMapsUrl", "sourceKey", "source",
                       "affiliateProvider", "bookingUrl"]) {
     assert.ok(!(gone in p), `${gone} 가 공개된다`);
   }

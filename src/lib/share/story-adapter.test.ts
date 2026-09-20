@@ -218,16 +218,18 @@ test("★Save 는 연결하지 않았다 — 가짜 버튼을 두지 않는다",
   assert.doesNotMatch(j, /onSave=/);
 });
 
-test("★공개 지도 = 비인터랙티브 Trip Map 장면뿐 — interactive 지도 SDK 금지", () => {
-  // SHARED-STORY-MAP-CONTEXT-FIX-V1(Owner 결정): 공개 Story 에 큰 비인터랙티브
-  // Trip Map 장면을 넣는다. 좌표 discovery/navigation 기능은 여전히 없다 —
-  // summary 의 지도 자리는 계속 감추고(장면이 별도 챕터), 지도 SDK 는 못 들어온다.
+test("★공개 지도 = StoryJourneyMap 하나 — 소유자 지도 컴포넌트 금지", () => {
+  // STORY-MULTICARD-JOURNEY-MAP V1 §7-1(Owner 지시): 공개 Story 여정 지도를
+  // Naver 실지도 기반으로 올린다 — 단 지도는 StoryJourneyMap 안에서만 살고,
+  // 정류장은 journeyStops(공식 장소 공개 좌표·공개 사진)만 먹는다. 소유자
+  // 지도(ItineraryDayMap)와 개인 데이터는 여전히 이 화면에 못 들어온다.
   const page = strip(read("src", "app", "shared", "page.tsx"));
-  assert.match(page, /<StoryJourneyMap scene=\{scene\}/);
+  assert.match(page, /<StoryJourneyMap\s/);
   assert.match(page, /parseJourneyScene\(/);
+  assert.match(page, /journeyStops\(apiStory\)/);
   assert.match(page, /hideMapSlot/);
   assert.doesNotMatch(page, /mapSlot=\{/);
-  for (const bad of [/naver\.maps/i, /google\.maps/i, /NaverMap/, /ItineraryDayMap/]) {
+  for (const bad of [/google\.maps/i, /ItineraryDayMap/]) {
     assert.doesNotMatch(page, bad, String(bad));
   }
 });

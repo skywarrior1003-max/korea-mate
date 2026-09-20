@@ -16,6 +16,8 @@ import {
 } from "@/components/story/story-tokens";
 // SHARING-VISUAL-PRODUCTION-V1 — 제목/이미지 fallback 규칙은 OG 와 같은 코어
 import { shareTitle, isActualTitle, cardTitleFontPx, cityShareFallback } from "@/lib/share/sharing-visual-core";
+// 다중 카드 덱 (STORY-MULTICARD-JOURNEY-MAP-AND-AI-COST-PREVIEW-V1 §6 — 신규 Preview 계약)
+import { buildStoreZip, type StoryCardSpec, type DeckPlace } from "@/lib/share/story-card-deck";
 
 /**
  * 이 카드가 그리는 것 전부.
@@ -63,7 +65,17 @@ interface Props {
    */
   shareUrl:    string;
   onClose:     () => void;
+  /**
+   * 다중 카드 덱 (§6). 공개 Story payload 에서 buildStoryCardDeck 으로 만든
+   * 스펙 배열 — 있으면 한 장씩 넘겨보는 뷰어가 되고, 없으면(구 호출부·비상시)
+   * 기존 단일 표지 카드 그대로다. 비공개 moment 는 payload 에 오지 않으므로
+   * 덱에도 존재할 수 없다.
+   */
+  deck?:       StoryCardSpec[];
 }
+
+/** Day 별 경로 색 — 여정 카드·Day 카드가 같은 팔레트를 쓴다(4일 이후 순환) */
+const DAY_COLORS = ["#FF4A2D", "#3B82F6", "#10B981", "#F59E0B", "#8B5CF6", "#EC4899"];
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -139,7 +151,7 @@ function canShareFiles(file: File): boolean {
 
 export default function TripStoryExport({
   city, startDate, endDate, dayCount, placeCount, moments, travelStyle, shareUrl, onClose,
-  tripTitle, fallbackPhotoSrc,
+  tripTitle, fallbackPhotoSrc, deck,
 }: Props) {
   const t = useTranslations("story");
   const locale = useLocale();
@@ -154,11 +166,8 @@ export default function TripStoryExport({
   const [photoError, setPhotoError] = useState(false);
 
 
-  // ── PNG 렌더링 ────────────────────────────────────────────────────────────
-  const render = useCallback(async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    setRendering(true);
+  // ── PNG 렌더링 (표지) — canvas 를 인자로 받아 offscreen 렌더(전체 저장)에도 쓴다 ──
+  const drawCoverOn = useCallback(async (canvas: HTMLCanvasElement): Promise<"ok" | "photo_error"> => {
 
     // 시안은 390px 폭으로 그려졌다. 카드는 1080 이므로 토큰의 px 을 이 배율로
     // 키운다 — 여백·글자 크기를 카드용으로 따로 정하지 않기 위해서다.
@@ -197,14 +206,8 @@ export default function TripStoryExport({
     if (srcs.length > 0) {
       const settled = await Promise.allSettled(srcs.map(loadImage));
       imgs = settled.flatMap(r => (r.status === "fulfilled" ? [r.value] : []));
-      if (imgs.length === 0) {
-        setPhotoError(true);
-        setRendered(false);
-        setRendering(false);
-        return;
-      }
+      if (imgs.length === 0) return "photo_error";
     }
-    setPhotoError(false);
 
     // 사용자 공개 사진이 하나도 없는 여행 — 이미지 우선순위 §3:
     // 대표 카탈로그(외부 — CORS 실패 가능) → 승인 도시 자산(같은 출처).
@@ -425,13 +428,336 @@ export default function TripStoryExport({
     if (ctx.measureText(eyebrow).width > W - PAD * 2) ctx.letterSpacing = "0px";
     ctx.fillText(eyebrow, PAD, y);
     ctx.letterSpacing = "0px";
-
-    setRendering(false);
-    setRendered(true);
+    return "ok";
   }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, locale, t]);
 
-  // ── PNG 파일명 ────────────────────────────────────────────────────────────
-  const pngFilename = `gokoreamate-${city.toLowerCase()}-${startDate}.png`;
+  const render = useCallback(async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    setRendering(true);
+    const r = await drawCoverOn(canvas);
+    setPhotoError(r === "photo_error");
+    setRendered(r === "ok");
+    setRendering(false);
+  }, [drawCoverOn]);
+
+  // ══ 다중 카드 덱 렌더러 (§6 — 신규 Preview 계약) ═══════════════════════════
+  // 표지는 위 drawCoverOn 그대로. 아래는 Day 시작·장소·여정 카드다. 모든 값은
+  // 공개 payload 에서 온 것뿐이며, 기록 없는 장소에는 경험담을 만들지 않는다.
+
+  const specFonts = useCallback(() => {
+    const cssVar = (n: string) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    return {
+      serif: `${cssVar("--font-story-serif") || "Georgia"}, Georgia, serif`,
+      sans:  `${cssVar("--font-story-sans") || "system-ui"}, system-ui, sans-serif`,
+    };
+  }, []);
+
+  /** 잉크 배경 + 점 격자 — 표지의 designed fallback 과 같은 질감(빈 회색 금지) */
+  const drawInkGround = (ctx: CanvasRenderingContext2D, W: number, H: number, px: (n: number) => number) => {
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "#14181D");
+    g.addColorStop(1, "#232A33");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(255,255,255,0.06)";
+    const pitch = px(20);
+    for (let gy = pitch; gy < H; gy += pitch) {
+      for (let gx = pitch; gx < W; gx += pitch) { ctx.beginPath(); ctx.arc(gx, gy, px(1), 0, Math.PI * 2); ctx.fill(); }
+    }
+  };
+
+  const drawWordmark = (ctx: CanvasRenderingContext2D, W: number, H: number, px: (n: number) => number, sans: string) => {
+    ctx.font = `700 ${px(13)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.textAlign = "center";
+    // SNS 하단 UI 안전영역 위(§6-3) — 화면 하단에서 7% 위
+    ctx.fillText("gokoreamate", W / 2, H - Math.round(H * 0.07));
+    ctx.textAlign = "left";
+  };
+
+  const drawDayCardOn = useCallback(async (canvas: HTMLCanvasElement, spec: Extract<StoryCardSpec, { kind: "day" }>) => {
+    const W = 1080, H = 1920, S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d")!;
+    const { serif, sans } = specFonts();
+    try { await document.fonts.ready; } catch { /* fallback 으로 그린다 */ }
+    drawInkGround(ctx, W, H, px);
+    const color = DAY_COLORS[(spec.dayNumber - 1) % DAY_COLORS.length]!;
+    ctx.textAlign = "center";
+    // 상단 안전영역(12%) 아래부터
+    let y = Math.round(H * 0.3);
+    ctx.fillStyle = color;
+    ctx.font = `700 ${px(15)}px ${sans}`;
+    ctx.letterSpacing = `${px(4)}px`;
+    ctx.fillText(spec.dateLabel.toUpperCase(), W / 2, y);
+    ctx.letterSpacing = "0px";
+    y += px(56);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = `700 ${px(64)}px ${serif}`;
+    ctx.fillText(`DAY ${spec.dayNumber}`, W / 2, y);
+    y += px(20);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = px(2);
+    ctx.beginPath(); ctx.moveTo(W / 2 - px(24), y); ctx.lineTo(W / 2 + px(24), y); ctx.stroke();
+    y += px(44);
+    // 그 Day 의 장소 목록(순번 포함, 최대 5 + "+n") — 이동 순서가 곧 이야기 순서다
+    ctx.font = `400 ${px(19)}px ${sans}`;
+    const names = spec.placeNames.slice(0, 5);
+    names.forEach((n, i) => {
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.fillText(`${i + 1} · ${n}`, W / 2, y);
+      y += px(34);
+    });
+    if (spec.placeNames.length > names.length) {
+      ctx.fillStyle = "rgba(255,255,255,0.45)";
+      ctx.fillText(`+${spec.placeNames.length - names.length}`, W / 2, y);
+    }
+    drawWordmark(ctx, W, H, px, sans);
+    ctx.textAlign = "left";
+  }, [specFonts]);
+
+  const drawPlaceCardOn = useCallback(async (canvas: HTMLCanvasElement, spec: Extract<StoryCardSpec, { kind: "place" }>) => {
+    const W = 1080, H = 1920, S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    const PAD = px(MARGIN_MOBILE);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d")!;
+    const { serif, sans } = specFonts();
+    try { await document.fonts.ready; } catch { /* fallback */ }
+    const p = spec.place;
+    const hasStory = Boolean(p.title || p.memo);
+    // 사진이 카드의 중심(§6-3): 기록 있으면 상단 64%, 없으면 전면.
+    const photoH = hasStory ? Math.round(H * 0.64) : H;
+    let photoDrawn = false;
+    for (const src of [p.momentPhotoSrc, p.officialPhotoSrc]) {
+      if (!src) continue;
+      try {
+        const img = await loadImage(src);
+        const r = Math.max(W / img.width, photoH / img.height);
+        const dw = img.width * r, dh = img.height * r;
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, photoH); ctx.clip();
+        ctx.drawImage(img, (W - dw) / 2, (photoH - dh) / 2, dw, dh);
+        ctx.restore();
+        photoDrawn = true;
+        break;
+      } catch { /* 다음 후보 — 실패해도 카드는 장소명으로 성립한다(§9) */ }
+    }
+    if (!photoDrawn) drawInkGround(ctx, W, H, px);
+    const color = DAY_COLORS[(p.dayNumber - 1) % DAY_COLORS.length]!;
+
+    if (hasStory) {
+      // 하단 이야기 패널(36%) — 사진과 또렷이 분리된 잉크 면
+      const panelY = photoH;
+      ctx.fillStyle = "#171C22";
+      ctx.fillRect(0, panelY, W, H - panelY);
+      let y = panelY + px(34);
+      ctx.font = `700 ${px(13)}px ${sans}`;
+      ctx.fillStyle = color;
+      ctx.fillText(`DAY ${p.dayNumber} · ${p.order}`, PAD, y);
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      const dayW = ctx.measureText(`DAY ${p.dayNumber} · ${p.order}`).width;
+      ctx.fillText(`  ${p.placeName}`, PAD + dayW, y);
+      y += px(30);
+      if (p.title) {
+        ctx.font = `700 ${px(30)}px ${serif}`;
+        ctx.fillStyle = "#ffffff";
+        for (const line of wrapText(ctx, p.title, W - PAD * 2).slice(0, 2)) {
+          ctx.fillText(line, PAD, y);
+          y += px(38);
+        }
+        y += px(4);
+      }
+      if (p.memo) {
+        const fs = px(20);
+        ctx.font = `italic 400 ${fs}px ${serif}`;
+        ctx.fillStyle = "rgba(255,255,255,0.82)";
+        const inner = W - PAD * 2;
+        const all = wrapText(ctx, `“${p.memo}”`, inner);
+        const lines = all.slice(0, 3);
+        if (all.length > 3 && lines.length > 0) {
+          let last = lines[2]!.replace(/[”"]?$/, "");
+          while (last.length > 1 && ctx.measureText(`${last}…”`).width > inner) last = last.slice(0, -1);
+          lines[2] = `${last}…”`;
+        }
+        for (const line of lines) { ctx.fillText(line, PAD, y); y += Math.round(fs * 1.5); }
+      }
+    } else {
+      // 기록 없는 장소 — 경험담을 만들지 않는다. 순번·장소명만(§5-2).
+      const scrim = ctx.createLinearGradient(0, H, 0, H - Math.round(H * 0.4));
+      scrim.addColorStop(0, "rgba(0,0,0,0.74)");
+      scrim.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = scrim;
+      ctx.fillRect(0, 0, W, H);
+      let y = H - Math.round(H * 0.13);
+      ctx.font = `700 ${px(13)}px ${sans}`;
+      ctx.fillStyle = color;
+      ctx.fillText(`DAY ${p.dayNumber} · ${p.order}`, PAD, y);
+      y += px(34);
+      ctx.font = `700 ${px(30)}px ${serif}`;
+      ctx.fillStyle = "#ffffff";
+      for (const line of wrapText(ctx, p.placeName || "—", W - PAD * 2).slice(0, 2)) {
+        ctx.fillText(line, PAD, y);
+        y += px(38);
+      }
+    }
+    drawWordmark(ctx, W, H, px, sans);
+  }, [specFonts]);
+
+  /** 원형 클립 사진(로드 실패 시 순번 원) — 여정 카드 전용 */
+  const drawCircle = async (
+    ctx: CanvasRenderingContext2D, place: DeckPlace, cx: number, cy: number, r: number,
+    color: string, sans: string, px: (n: number) => number,
+  ) => {
+    let img: HTMLImageElement | null = null;
+    for (const src of [place.momentPhotoSrc, place.officialPhotoSrc]) {
+      if (!src) continue;
+      try { img = await loadImage(src); break; } catch { /* fallback 아래 */ }
+    }
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+    if (img) {
+      const s = Math.max((r * 2) / img.width, (r * 2) / img.height);
+      ctx.drawImage(img, cx - (img.width * s) / 2, cy - (img.height * s) / 2, img.width * s, img.height * s);
+    } else {
+      ctx.fillStyle = "#232A33";
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    }
+    ctx.restore();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = px(2.5);
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    // 순번 배지 — 사진 위에서도 항상 읽힌다
+    const br = px(11);
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(cx + r * 0.72, cy - r * 0.72, br, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = `700 ${px(12)}px ${sans}`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(String(place.order), cx + r * 0.72, cy - r * 0.72 + px(0.5));
+    ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+  };
+
+  const drawJourneyCardOn = useCallback(async (canvas: HTMLCanvasElement, spec: Extract<StoryCardSpec, { kind: "journey" }>) => {
+    const W = 1080, H = 1920, S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    const PAD = px(MARGIN_MOBILE);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d")!;
+    const { serif, sans } = specFonts();
+    try { await document.fonts.ready; } catch { /* fallback */ }
+    drawInkGround(ctx, W, H, px);
+
+    ctx.textAlign = "center";
+    let y = Math.round(H * 0.12);
+    ctx.font = `700 ${px(14)}px ${sans}`;
+    ctx.letterSpacing = `${px(4)}px`;
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.fillText(t("journeyCardKicker").toUpperCase(), W / 2, y);
+    ctx.letterSpacing = "0px";
+    ctx.textAlign = "left";
+
+    // 세로 흐름 — 장소마다 원형 사진 + 장소명, Day 색 연결선, 지그재그(이동 방향).
+    const all = spec.days.flatMap(d => d.places);
+    const listTop = Math.round(H * 0.16);
+    const listBottom = Math.round(H * 0.76);
+    const rowH = all.length > 0 ? Math.min(px(58), Math.floor((listBottom - listTop) / all.length)) : px(58);
+    const r = Math.min(px(19), Math.floor(rowH * 0.42));
+    const leftX = PAD + px(30), rightX = PAD + px(58);
+    let i = 0;
+    let prev: { x: number; y: number } | null = null;
+    // 연결선 먼저(사진 아래로 깔리게)
+    const points: { x: number; y: number; color: string }[] = [];
+    for (const d of spec.days) {
+      const color = DAY_COLORS[(d.dayNumber - 1) % DAY_COLORS.length]!;
+      for (const p of d.places) {
+        const cy = listTop + rowH * i + Math.floor(rowH / 2);
+        const cx = i % 2 === 0 ? leftX : rightX;
+        points.push({ x: cx, y: cy, color });
+        i += 1;
+      }
+    }
+    ctx.setLineDash([px(2), px(5)]);
+    ctx.lineWidth = px(2);
+    for (let k = 1; k < points.length; k++) {
+      ctx.strokeStyle = points[k]!.color;
+      ctx.beginPath();
+      ctx.moveTo(points[k - 1]!.x, points[k - 1]!.y);
+      ctx.lineTo(points[k]!.x, points[k]!.y);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    i = 0;
+    for (const d of spec.days) {
+      const color = DAY_COLORS[(d.dayNumber - 1) % DAY_COLORS.length]!;
+      for (const p of d.places) {
+        const pt = points[i]!;
+        await drawCircle(ctx, p, pt.x, pt.y, r, color, sans, px);
+        ctx.font = `600 ${px(17)}px ${sans}`;
+        ctx.fillStyle = "rgba(255,255,255,0.9)";
+        let name = p.placeName || "—";
+        const room = W - PAD - (pt.x + r + px(14));
+        while (name.length > 1 && ctx.measureText(name).width > room) name = name.slice(0, -1);
+        if (name !== (p.placeName || "—")) name = `${name}…`;
+        ctx.fillText(name, pt.x + r + px(14), pt.y + px(6));
+        // 시작·종료 구분
+        if (i === 0 || i === points.length - 1) {
+          ctx.font = `700 ${px(10)}px ${sans}`;
+          ctx.fillStyle = color;
+          ctx.fillText(i === 0 ? "START" : "END", pt.x - r, pt.y - r - px(6));
+        }
+        i += 1;
+      }
+    }
+    // Day 범례
+    let lx = PAD;
+    const ly = Math.round(H * 0.79);
+    ctx.font = `700 ${px(12)}px ${sans}`;
+    for (const d of spec.days) {
+      const color = DAY_COLORS[(d.dayNumber - 1) % DAY_COLORS.length]!;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(lx + px(5), ly - px(4), px(5), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      const label = `Day ${d.dayNumber}`;
+      ctx.fillText(label, lx + px(16), ly);
+      lx += px(16) + ctx.measureText(label).width + px(18);
+    }
+    // 마무리(브랜드 통합) — 여행 제목 + 기간
+    ctx.textAlign = "center";
+    const headline = isActualTitle(tripTitle) ? shareTitle(tripTitle, city, dayCount) : t("cardHeadline", { n: dayCount, city: city.charAt(0).toUpperCase() + city.slice(1) });
+    ctx.font = `700 ${px(26)}px ${serif}`;
+    ctx.fillStyle = "#ffffff";
+    let hy = Math.round(H * 0.85);
+    for (const line of wrapText(ctx, headline, W - PAD * 2).slice(0, 2)) { ctx.fillText(line, W / 2, hy); hy += px(32); }
+    ctx.font = `500 ${px(14)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.fillText(`${startDate} – ${endDate}`, W / 2, hy + px(4));
+    drawWordmark(ctx, W, H, px, sans);
+    ctx.textAlign = "left";
+  }, [specFonts, tripTitle, city, dayCount, startDate, endDate, t]);
+
+  const drawSpecOn = useCallback(async (canvas: HTMLCanvasElement, spec: StoryCardSpec): Promise<void> => {
+    if (spec.kind === "cover") { await drawCoverOn(canvas); return; }
+    if (spec.kind === "day") { await drawDayCardOn(canvas, spec); return; }
+    if (spec.kind === "place") { await drawPlaceCardOn(canvas, spec); return; }
+    await drawJourneyCardOn(canvas, spec);
+  }, [drawCoverOn, drawDayCardOn, drawPlaceCardOn, drawJourneyCardOn]);
+
+  // ── 다중 카드 상태 (§6-1) — 파일명이 현재 장 번호를 쓰므로 여기서 선언한다 ──
+  const hasDeck = Array.isArray(deck) && deck.length > 1;
+  const total = hasDeck ? deck!.length : 1;
+  const [idx, setIdx] = useState(0);
+  const [savingAll, setSavingAll] = useState(false);
+  const touchX = useRef<number | null>(null);
+  // 첫 장·마지막 장 경계: 더 이동하지 않는다(§6-1 자연스러운 경계 처리)
+  const goPrev = useCallback(() => setIdx(cur => Math.max(0, cur - 1)), []);
+  const goNext = useCallback(() => setIdx(cur => Math.min(total - 1, cur + 1)), [total]);
+
+  // ── PNG 파일명 (덱 모드에서는 현재 장 번호를 붙인다) ──────────────────────
+  const pngFilename = hasDeck
+    ? `gokoreamate-${city.toLowerCase()}-${startDate}-${String(idx + 1).padStart(2, "0")}.png`
+    : `gokoreamate-${city.toLowerCase()}-${startDate}.png`;
 
   // ── 경로 C 폴백: PNG 저장 + 링크 복사 + 배너 노출 ────────────────────────
   const runFallback = useCallback(async () => {
@@ -534,14 +860,84 @@ export default function TripStoryExport({
 
   const nativeShareSupported = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
+  // 현재 장 렌더 — 한 번에 한 장만 그린다(§9: 14장 동시 렌더 금지).
+  // 렌더 실패(사진 등)는 그 카드 안에서만 처리되고 modal 은 닫히지 않는다.
+  useEffect(() => {
+    if (!hasDeck) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    let cancelled = false;
+    (async () => {
+      setRendering(true);
+      try { await drawSpecOn(canvas, deck![idx]!); } catch { /* 카드 실패 — 장소명 fallback 은 렌더러 내부에서 */ }
+      if (!cancelled) { setRendering(false); setRendered(true); }
+    })();
+    return () => { cancelled = true; };
+  }, [hasDeck, idx, deck, drawSpecOn]);
+
+  // 키보드 좌우(§6-1) — modal 이 열려 있는 동안 화살표로 넘긴다
+  useEffect(() => {
+    if (!hasDeck) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [hasDeck, goPrev, goNext]);
+
+  // 전체 카드 저장 (§6-4): offscreen 순차 렌더 → 다중 파일 공유 지원 시 공유,
+  // 아니면 무압축 ZIP 다운로드. 진행 중 현재 화면 카드는 건드리지 않는다.
+  const handleSaveAll = useCallback(async () => {
+    if (!hasDeck || savingAll) return;
+    setSavingAll(true);
+    try {
+      const files: { name: string; data: Uint8Array }[] = [];
+      const off = document.createElement("canvas");
+      for (let i = 0; i < deck!.length; i++) {
+        try {
+          await drawSpecOn(off, deck![i]!);
+          const dataUrl = off.toDataURL("image/png");
+          const b64 = dataUrl.split(",")[1] ?? "";
+          const bin = atob(b64);
+          const buf = new Uint8Array(bin.length);
+          for (let k = 0; k < bin.length; k++) buf[k] = bin.charCodeAt(k);
+          files.push({ name: `gokoreamate-${city.toLowerCase()}-${startDate}-${String(i + 1).padStart(2, "0")}.png`, data: buf });
+        } catch { /* 실패한 장은 건너뛴다 — 나머지는 저장된다 */ }
+      }
+      if (files.length === 0) return;
+      const shareFiles = files.map(f => new File([f.data.slice().buffer as ArrayBuffer], f.name, { type: "image/png" }));
+      if (typeof navigator !== "undefined" && typeof navigator.canShare === "function" &&
+          typeof navigator.share === "function" && navigator.canShare({ files: shareFiles })) {
+        try {
+          await navigator.share({ files: shareFiles, title: "gokoreamate", url: shareUrl });
+          return;
+        } catch (err) {
+          if ((err as DOMException).name === "AbortError") return;
+          /* 강등 → ZIP */
+        }
+      }
+      const zip = buildStoreZip(files);
+      const blob = new Blob([zip.slice().buffer as ArrayBuffer], { type: "application/zip" });
+      const link = document.createElement("a");
+      link.download = `gokoreamate-${city.toLowerCase()}-${startDate}-cards.zip`;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(link.href), 30_000);
+    } finally {
+      setSavingAll(false);
+    }
+  }, [hasDeck, savingAll, deck, drawSpecOn, city, startDate, shareUrl]);
+
   // 모달이 열리면 바로 그린다 — "빈 카드 + 생성 버튼" 단계를 없앤다(§E).
   // 실패(photoError)하면 기존 다시 시도 버튼 흐름이 그대로 이어받는다.
   const autoRendered = useRef(false);
   useEffect(() => {
+    if (hasDeck) return; // 덱 모드는 위 spec effect 가 그린다
     if (autoRendered.current) return;
     autoRendered.current = true;
     void render();
-  }, [render]);
+  }, [hasDeck, render]);
 
   return (
     <div
@@ -555,13 +951,65 @@ export default function TripStoryExport({
           <button onClick={onClose} className="text-white/40 hover:text-white text-xl cursor-pointer">✕</button>
         </div>
 
-        {/* 캔버스 미리보기 */}
-        <div className="p-4">
+        {/* 캔버스 미리보기 — 덱 모드에서는 한 장씩(스와이프·버튼·키보드) */}
+        <div
+          className="p-4 relative"
+          role={hasDeck ? "group" : undefined}
+          aria-roledescription={hasDeck ? "carousel" : undefined}
+          onTouchStart={hasDeck ? (e => { touchX.current = e.touches[0]?.clientX ?? null; }) : undefined}
+          onTouchEnd={hasDeck ? (e => {
+            const start = touchX.current;
+            touchX.current = null;
+            const end = e.changedTouches[0]?.clientX;
+            if (start === null || end === undefined) return;
+            const d = end - start;
+            if (d > 40) goPrev();
+            else if (d < -40) goNext();
+          }) : undefined}
+        >
           <canvas
             ref={canvasRef}
             className="w-full rounded-2xl"
             style={{ aspectRatio: "9/16", background: "#16213e" }}
           />
+          {hasDeck && (
+            <>
+              {/* 데스크톱 이전·다음 — 첫/마지막 장에서는 해당 방향 버튼이 사라진다(경계 처리) */}
+              {idx > 0 && (
+                <button
+                  type="button" onClick={goPrev} aria-label={t("cardPrev")}
+                  className="gkm-focus absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/55 text-white text-lg font-black hidden sm:flex items-center justify-center hover:bg-black/75 cursor-pointer"
+                >‹</button>
+              )}
+              {idx < total - 1 && (
+                <button
+                  type="button" onClick={goNext} aria-label={t("cardNext")}
+                  className="gkm-focus absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/55 text-white text-lg font-black hidden sm:flex items-center justify-center hover:bg-black/75 cursor-pointer"
+                >›</button>
+              )}
+              {/* 현재 장 / 전체 장 — screen reader 에도 같은 정보(§9) */}
+              <div
+                aria-live="polite"
+                className="absolute top-6 right-6 px-2.5 py-1 rounded-full bg-black/55 text-white text-[11px] font-black"
+              >
+                {idx + 1} / {total}
+              </div>
+              {/* 진행 점 — 장수가 많으면 점 대신 축약 바(§6-1) */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center" aria-hidden>
+                {total <= 10 ? (
+                  <div className="flex gap-1.5">
+                    {Array.from({ length: total }).map((_, i) => (
+                      <span key={i} className={`w-1.5 h-1.5 rounded-full ${i === idx ? "bg-white" : "bg-white/35"}`} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="w-28 h-1 rounded-full bg-white/25 overflow-hidden">
+                    <div className="h-full bg-white rounded-full" style={{ width: `${((idx + 1) / total) * 100}%` }} />
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
 
         {/* 공개 사진을 한 장도 받아 오지 못함 — 공유를 막고 다시 시도하게 한다 */}
@@ -612,14 +1060,23 @@ export default function TripStoryExport({
                 </span>
               </button>
 
-              {/* Secondary row: 이미지 저장 + 링크 복사 */}
+              {/* Secondary row: 현재 카드 저장 (+ 전체 저장) + 링크 복사 */}
               <div className="flex gap-2">
                 <button
                   onClick={handleDownload}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                 >
-                  {t("saveImage")}
+                  {hasDeck ? t("saveCurrentCard") : t("saveImage")}
                 </button>
+                {hasDeck && (
+                  <button
+                    onClick={handleSaveAll}
+                    disabled={savingAll}
+                    className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    {savingAll ? t("savingAllCards") : t("saveAllCards", { n: total })}
+                  </button>
+                )}
                 <button
                   onClick={handleCopyLink}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer border"

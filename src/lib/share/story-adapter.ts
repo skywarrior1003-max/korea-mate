@@ -276,6 +276,41 @@ export function toStoryCardMoments(api: ApiStory): StoryCardMoment[] {
   return out;
 }
 
+/**
+ * 공개 Story 여정 지도의 정류장 (§7-1 — STORY-MULTICARD-JOURNEY-MAP V1).
+ *
+ * 좌표는 공개 serializer 가 **공식 장소(city_spot)에만** 내보내는 카탈로그
+ * 값이다(공개 /place 페이지와 같은 정보). 사진은 공개 Memory 우선 → 공식
+ * 카탈로그 순 — 비공개 사진은 payload 에 오지 않으므로 여기 올 수 없다.
+ */
+export interface JourneyStop {
+  dayNumber: number;
+  order: number;
+  name: string;
+  lat: number;
+  lng: number;
+  photo: string | null;
+}
+
+export function journeyStops(api: ApiStory): JourneyStop[] {
+  const memories = api.memories ?? [];
+  const out: JourneyStop[] = [];
+  scheduledDays(api.days).forEach((day, di) => {
+    const dayNumber = typeof day.dayNumber === "number" ? day.dayNumber : di + 1;
+    (Array.isArray(day.places) ? (day.places as (ApiPlace & { lat?: unknown; lng?: unknown })[]) : []).forEach((place, idx) => {
+      if (typeof place.lat !== "number" || typeof place.lng !== "number") return;
+      const m = memories.find(mm => memoryBelongsToPlace(mm, place) && mm.photos.length > 0);
+      out.push({
+        dayNumber, order: idx + 1,
+        name: str(place.name),
+        lat: place.lat, lng: place.lng,
+        photo: m ? memoryPhotoUrl(api.id, m.photos[0]!.ref) : (resolveDisplayImage(str(place.image) || null)),
+      });
+    });
+  });
+  return out;
+}
+
 /** 이 여행의 공개 Story 주소. 공유되는 링크는 전부 이 값 하나를 쓴다. */
 export function publicStoryUrl(origin: string, itineraryId: string): string {
   return `${origin.replace(/\/+$/, "")}/shared/${encodeURIComponent(itineraryId)}`;

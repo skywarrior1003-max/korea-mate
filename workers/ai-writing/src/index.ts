@@ -23,7 +23,8 @@
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
-  MODEL, TIMEOUT_MS, type MomentSuggestion,
+  extractMoment3, groundedMoment3Guard,
+  MODEL, TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 export interface Env {
@@ -37,8 +38,8 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null) =>
-  json({ suggestion, moment, ai_status });
+const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null, set: MomentSuggestionSet3 | null = null) =>
+  json({ suggestion, moment, set, ai_status });
 
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "ai-writing-worker", ...fields }));
@@ -60,6 +61,7 @@ async function keysMatch(provided: string, expected: string): Promise<boolean> {
 interface ProviderOutcome {
   suggestion: string | null;
   moment: MomentSuggestion | null;
+  set: MomentSuggestionSet3 | null;
   ai_status: string;
   httpStatus: number | null;
   latencyMs: number;
@@ -68,7 +70,7 @@ interface ProviderOutcome {
 
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
-  apiKey: string, prompt: string, target: "title" | "memo" | "moment",
+  apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3",
   direction?: "calm" | "witty" | "warm",
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
@@ -89,21 +91,29 @@ async function callProvider(
     if (!res.ok) {
       let errSnippet = "";
       try { errSnippet = (await res.text()).slice(0, 160).replace(/\s+/g, " "); } catch { /* ignore */ }
-      return { suggestion: null, moment: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
+      return { suggestion: null, moment: null, set: null, ai_status: `fallback_http_${res.status}`, httpStatus: res.status, latencyMs, errSnippet };
     }
     const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    if (target === "moment3") {
+      const set = extractMoment3(text);
+      return {
+        suggestion: null, moment: null, set,
+        ai_status: set !== null ? "live" : "fallback_empty",
+        httpStatus: res.status, latencyMs, errSnippet: "",
+      };
+    }
     if (target === "moment") {
       const moment = extractMomentSuggestion(text);
       return {
-        suggestion: null, moment,
+        suggestion: null, moment, set: null,
         ai_status: moment !== null ? "live" : "fallback_empty",
         httpStatus: res.status, latencyMs, errSnippet: "",
       };
     }
     const suggestion = extractSuggestion(text, target);
     return {
-      suggestion, moment: null,
+      suggestion, moment: null, set: null,
       ai_status: suggestion !== null ? "live" : "fallback_empty",
       httpStatus: res.status, latencyMs, errSnippet: "",
     };
@@ -111,7 +121,7 @@ async function callProvider(
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
     return {
-      suggestion: null, moment: null,
+      suggestion: null, moment: null, set: null,
       ai_status: isAbort ? "fallback_timeout" : "fallback_error",
       httpStatus: null, latencyMs: Date.now() - started, errSnippet: "",
     };
@@ -211,6 +221,17 @@ export default {
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.
     // 걸리면 기존 honest fallback(200 + null). 재시도 없음.
+    if (body.target === "moment3") {
+      const set = groundedMoment3Guard(body, outcome.set);
+      const guarded = outcome.set !== null && set === null;
+      const n = set ? Object.keys(set).length : 0;
+      const ai_status = guarded ? "fallback_guard" : n > 0 && n < 3 ? "live_partial" : outcome.ai_status;
+      log({
+        ok: n > 0, ai_status, httpStatus: outcome.httpStatus, latencyMs: outcome.latencyMs, colo,
+        target: body.target, locale: body.locale, styles: n, err: outcome.errSnippet, guarded,
+      });
+      return reply(null, ai_status, null, set);
+    }
     if (body.target === "moment") {
       const moment = groundedMomentGuard(body, outcome.moment);
       const guarded = outcome.moment !== null && moment === null;

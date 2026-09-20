@@ -16,10 +16,36 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { WRITING_DIRECTIONS, type WritingDirection, type WritingContext } from "@/lib/mytrip-writing/writing-core";
+import { WRITING_DIRECTIONS, MOMENT3_PROMPT_VERSION, type WritingDirection, type WritingContext } from "@/lib/mytrip-writing/writing-core";
 import { apiSuggestMomentSet, type MomentSuggestionSet } from "@/lib/mytrip-writing/api";
 
 const ORANGE = "#FF4A2D";
+
+// ── 세션 캐시 (§8-3 재호출 방지) ────────────────────────────────────────────
+// 같은 입력 + 같은 prompt version 이면 새 요청을 만들지 않는다. 키에는 사용자
+// 메모·장소명 평문을 넣지 않고 결정적 해시만 쓴다(개인 텍스트 노출 0).
+// sessionStorage 라 탭 세션 안에서만 산다 — 모달을 닫았다 다시 열어도,
+// 새로고침해도 같은 입력이면 provider 호출 0. 실패(빈 세트)는 저장하지 않는다
+// (다음 시도가 곧 정직한 재시도다 — 자동 무한 재시도 아님).
+function djb2(s: string): string {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+}
+function cacheKey(locale: string, context: WritingContext): string {
+  return `gkm_m3_${MOMENT3_PROMPT_VERSION}_${locale}_${djb2(JSON.stringify(context))}`;
+}
+function cacheGet(key: string): MomentSuggestionSet | null {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const j = JSON.parse(raw) as MomentSuggestionSet;
+    return j && typeof j === "object" ? j : null;
+  } catch { return null; }
+}
+function cachePut(key: string, set: MomentSuggestionSet): void {
+  try { if (Object.keys(set).length > 0) sessionStorage.setItem(key, JSON.stringify(set)); } catch { /* private mode */ }
+}
 
 export default function MomentAiSuggest({ ready, buildContext, onPick }: {
   /** 자동 제안을 시작할 만큼 정보가 준비됐는가(장소·사진·메모 중 하나) */
@@ -39,11 +65,14 @@ export default function MomentAiSuggest({ ready, buildContext, onPick }: {
   const inflight = useRef<AbortController | null>(null);
   const cache = useRef<Map<string, MomentSuggestionSet>>(new Map());
 
-  const run = useCallback(async () => {
+  const run = useCallback(async (opts?: { forceFresh?: boolean }) => {
     const context = buildContext();
-    const key = JSON.stringify(context);
-    const cached = cache.current.get(key);
-    if (cached) { setSet(cached); setFailed(Object.keys(cached).length === 0); return; }
+    const key = cacheKey(locale, context);
+    // 명시적 "다시 제안"(forceFresh)만 캐시를 지나친다 — 새 결과가 목적이므로.
+    if (!opts?.forceFresh) {
+      const cached = cache.current.get(key) ?? cacheGet(key);
+      if (cached && Object.keys(cached).length > 0) { setSet(cached); setFailed(false); return; }
+    }
     inflight.current?.abort();
     const controller = new AbortController();
     inflight.current = controller;
@@ -52,6 +81,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick }: {
     if (controller.signal.aborted) return;
     setBusy(false);
     cache.current.set(key, out);
+    cachePut(key, out);
     setSet(out);
     setPicked(null);
     setFailed(Object.keys(out).length === 0);
@@ -78,7 +108,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick }: {
       <div className="flex items-center justify-between">
         <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">{t("suggestHeading")}</p>
         <button
-          type="button" onClick={() => void run()} disabled={busy}
+          type="button" onClick={() => void run({ forceFresh: true })} disabled={busy}
           className="px-2.5 py-1 rounded-full text-[11.5px] font-bold border min-h-8 disabled:opacity-50"
           style={{ borderColor: ORANGE, color: "#ffb3a6" }}
         >

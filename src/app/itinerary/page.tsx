@@ -50,6 +50,7 @@ import { runFirstPublish } from "@/lib/trip-moments/publish-reconcile-core";
 import type { MemoryPublicState, PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "@/lib/trip-moments/public-consent-core";
 import { toStoryCardMoments, publicStoryUrl, representativeCoverUrl, type ApiStory } from "@/lib/share/story-adapter";
+import { buildStoryCardDeck, type StoryCardSpec } from "@/lib/share/story-card-deck";
 import type { StoryCardMoment } from "@/components/TripStoryExport";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpotsByIds, matchCitySpot } from "@/lib/city-spots";
@@ -1667,6 +1668,7 @@ function ItineraryResult() {
   /** 9:16 카드의 대표 카탈로그 fallback — 공개 payload 에서 계산(OG 와 같은 규칙) */
   const [storyCardFallback, setStoryCardFallback] = useState<string | null>(null);
   const [storyCardBusy, setStoryCardBusy] = useState(false);
+  const [storyCardDeck, setStoryCardDeck] = useState<StoryCardSpec[]>([]);
   // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
   // KO 한글명은 **정확히 같은 장소**일 때만 — place_id 일치, 아니면 이름 완전일치. 퍼지 매칭은
@@ -2336,6 +2338,8 @@ function ItineraryResult() {
       if (!res.ok) return false;
       const api = (await res.json()) as ApiStory;
       setStoryCardMoments(toStoryCardMoments(api));
+      // 다중 카드 덱(§6) — 같은 공개 payload 하나로 만든다
+      setStoryCardDeck(buildStoryCardDeck(api));
       // 카드의 제목·대표 fallback 이미지도 공개 payload 값만 쓴다(9:16 = OG 규칙)
       setStoryCardFallback(representativeCoverUrl(api));
       // 공개 성공 모달 위에 카드 모달을 겹치지 않는다(§E) — 카드가 열리면 앞 모달은 닫는다.
@@ -4089,6 +4093,7 @@ function ItineraryResult() {
           travelStyle={travelStyle}
           tripTitle={tripTitle}
           fallbackPhotoSrc={storyCardFallback}
+          deck={storyCardDeck}
           shareUrl={publicStoryUrl(window.location.origin, itinId ?? "")}
           onClose={() => setStoryExportOpen(false)}
         />

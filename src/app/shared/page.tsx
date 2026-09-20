@@ -37,6 +37,8 @@ import {
   toStoryCardMoments, publicStoryUrl,
   type ApiStory,
 } from "@/lib/share/story-adapter";
+import { buildStoryCardDeck } from "@/lib/share/story-card-deck";
+import { journeyStops } from "@/lib/share/story-adapter";
 import {
   googlePlaceSearchUrl, isSafeMapUrl, naverPlaceSearchUrl,
 } from "@/lib/maps/place-navigation";
@@ -428,7 +430,16 @@ export default function SharedTripPage() {
             기하만 받는다 — 좌표·주소·클릭 가능한 위치 payload 는 없다. */}
         {(() => {
           const scene = parseJourneyScene((trip as unknown as { journeyMap?: unknown }).journeyMap);
-          return scene ? <StoryJourneyMap scene={scene} titleLabel={tStory("theJourney")} /> : null;
+          // 실지도 정류장(§7-1) — 공식 장소 공개 좌표 + 공개 사진(비공개 불가, 어댑터 계약)
+          const stops = journeyStops(apiStory);
+          return scene ? (
+            <StoryJourneyMap
+              scene={scene}
+              titleLabel={tStory("theJourney")}
+              stops={stops}
+              allLabel={tStory("journeyAllDays")}
+            />
+          ) : null;
         })()}
 
         <StorySummary
@@ -494,6 +505,7 @@ export default function SharedTripPage() {
             fallbackPhotoSrc={representativeCoverUrl(apiStory)}
             /* 서버가 공개 여부·동의 판본·차단을 이미 다 보고 걸러 준 것만 들어간다 */
             moments={toStoryCardMoments(apiStory)}
+            deck={buildStoryCardDeck(apiStory)}
             travelStyle={trip.travel_style ?? ""}
             shareUrl={publicStoryUrl(window.location.origin, trip.id)}
             onClose={() => setStoryExportOpen(false)}
@@ -814,8 +826,9 @@ export default function SharedTripPage() {
           endDate={trip.end_date}
           dayCount={days.length}
           placeCount={totalSpots}
-          /* 이 분기는 공개 Memory 가 0건일 때만 도달한다 — 넣을 것이 없다 */
+          /* 이 분기는 공개 Memory 가 0건일 때만 도달한다 — 일정 카드만으로 덱을 만든다 */
           moments={[]}
+          deck={buildStoryCardDeck(trip as unknown as ApiStory)}
           travelStyle={trip.travel_style}
           shareUrl={publicStoryUrl(window.location.origin, trip.id)}
           onClose={() => setStoryExportOpen(false)}

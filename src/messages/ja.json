@@ -612,7 +612,14 @@
     "journeyOngoing": "旅の途中",
     "journeyUpcoming": "旅の準備中",
     "theJourney": "旅の軌跡",
-    "scrollExplore": "スクロールして見る"
+    "scrollExplore": "スクロールして見る",
+    "cardPrev": "前のカード",
+    "cardNext": "次のカード",
+    "saveCurrentCard": "このカードを保存",
+    "saveAllCards": "全{n}枚を保存",
+    "savingAllCards": "保存中…",
+    "journeyCardKicker": "旅の道のり",
+    "journeyAllDays": "全日程"
   },
   "memo": {
     "edit": "編集",

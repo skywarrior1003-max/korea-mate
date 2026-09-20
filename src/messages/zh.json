@@ -612,7 +612,14 @@
     "journeyOngoing": "旅程进行中",
     "journeyUpcoming": "旅程即将开始",
     "theJourney": "旅程轨迹",
-    "scrollExplore": "滑动浏览"
+    "scrollExplore": "滑动浏览",
+    "cardPrev": "上一张",
+    "cardNext": "下一张",
+    "saveCurrentCard": "保存这张卡片",
+    "saveAllCards": "保存全部{n}张",
+    "savingAllCards": "保存中…",
+    "journeyCardKicker": "旅程路线",
+    "journeyAllDays": "全部"
   },
   "memo": {
     "edit": "编辑",

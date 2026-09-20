@@ -75,6 +75,14 @@ export function publicPlace(raw: unknown): Record<string, unknown> {
     // 공식 이미지다. user_spot 의 image 는 사용자 사진일 수 있으므로 canonical 밖에서는
     // 내보내지 않는다. (SHARED-STORY-RICH-EXPERIENCE-V1: 공유 Story 의 일정 뼈대용)
     if (typeof p.image === "string" && p.image.length > 0) out.image = p.image;
+    // 카탈로그 좌표(city_spots.lat/lng) — 공개 /place 페이지·지도에 이미 노출되는
+    // 공식 장소의 공개 정보다. 공개 Story 의 여정 지도(§7-1)가 이 값으로 실지도를
+    // 그린다. **공식 장소만이다** — user_spot·개인 moment GPS 는 계속 나가지
+    // 않는다(STORY-MULTICARD-JOURNEY-MAP-AND-AI-COST-PREVIEW-V1 에서의 계약 확장).
+    if (typeof p.lat === "number" && typeof p.lng === "number") {
+      out.lat = p.lat;
+      out.lng = p.lng;
+    }
   }
   return out;
 }

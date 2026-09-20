@@ -612,7 +612,14 @@
     "journeyOngoing": "여행 중",
     "journeyUpcoming": "여행 준비 중",
     "theJourney": "여행의 여정",
-    "scrollExplore": "스크롤해서 보기"
+    "scrollExplore": "스크롤해서 보기",
+    "cardPrev": "이전 카드",
+    "cardNext": "다음 카드",
+    "saveCurrentCard": "이 카드 저장",
+    "saveAllCards": "전체 {n}장 저장",
+    "savingAllCards": "저장 중…",
+    "journeyCardKicker": "여행의 여정",
+    "journeyAllDays": "전체"
   },
   "memo": {
     "edit": "수정",

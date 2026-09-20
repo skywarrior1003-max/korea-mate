@@ -22,11 +22,23 @@ export type WritingDirection = (typeof WRITING_DIRECTIONS)[number];
  * 제목+본문 한 쌍을 한 번의 provider 호출로 만든다. 방향(3종)별로 클라이언트가
  * 병렬 요청하므로 서버·Worker 의 "요청당 provider 1회·재시도 0" 계약은 그대로다.
  */
-export type WritingTarget = "title" | "memo" | "moment";
+/**
+ * target "moment3" (STORY-MULTICARD-JOURNEY-MAP-AND-AI-COST-PREVIEW-V1 §8-2):
+ * 세 방향(calm/witty/warm)의 제목+본문 쌍을 **한 번의 provider 호출**로 만든다.
+ * 기존 "moment"(방향당 1쌍·클라 3병렬)의 비용을 1/3 로 줄이는 계약이며,
+ * 한 방향이 깨져도 나머지 방향은 살린다(파서가 방향별로 검증).
+ */
+export type WritingTarget = "title" | "memo" | "moment" | "moment3";
 export type WritingLocale = "ko" | "en" | "ja" | "zh";
 
 /** moment 제안 한 쌍 — 두 필드가 모두 있어야 유효하다(§A 계약) */
 export interface MomentSuggestion { title: string; memo: string }
+
+/** moment3 응답 — 방향별 부분 성공 허용(실패 방향은 빠진다) */
+export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
+
+/** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
+export const MOMENT3_PROMPT_VERSION = "moment3-v1";
 
 export const MODEL = "gemini-2.5-flash";     // 저장소에 이미 승인된 모델 그대로
 export const TIMEOUT_MS = 8_000;             // personalize 와 같은 상한 — 늦으면 버린다
@@ -173,7 +185,7 @@ export function isWritingRequest(v: unknown): v is WritingRequest {
   if (!v || typeof v !== "object") return false;
   const r = v as Record<string, unknown>;
   return (
-    (r.target === "title" || r.target === "memo" || r.target === "moment") &&
+    (r.target === "title" || r.target === "memo" || r.target === "moment" || r.target === "moment3") &&
     WRITING_DIRECTIONS.includes(r.direction as WritingDirection) &&
     ["ko", "en", "ja", "zh"].includes(r.locale as string) &&
     !!r.context && typeof r.context === "object" &&
@@ -205,9 +217,11 @@ export function buildWritingPrompt(req: WritingRequest): string {
     ? `one trip title, max ${MAX_TITLE_CHARS} characters`
     : req.target === "moment"
     ? `one moment title (max ${MAX_TITLE_CHARS} characters) AND one short travel memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters) for the SAME moment`
+    : req.target === "moment3"
+    ? `THREE complete diary entries for the SAME single moment — one per direction (calm, witty, warm). Each entry = one moment title (max ${MAX_TITLE_CHARS} characters) AND one short travel memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters)`
     : `one short travel memo of 1-2 sentences, max ${MAX_MEMO_CHARS} characters`;
 
-  const targetCraft = req.target === "moment"
+  const targetCraft = req.target === "moment" || req.target === "moment3"
     ? [
         `Moment-title craft: a short first-person heading for THIS one moment/place — like the top line of a`,
         `diary entry. Never a label ("${clip(c.city, 40)} Day N", place name alone), never a summary of the whole trip.`,
@@ -232,7 +246,9 @@ export function buildWritingPrompt(req: WritingRequest): string {
     `Language: write ONLY in ${LOCALE_NAME[req.locale]}. No other language, no romanization.`,
     LOCALE_ISOLATION[req.locale],
     LOCALE_VOICE[req.locale],
-    DIRECTION_BRIEF[req.direction],
+    ...(req.target === "moment3"
+      ? [DIRECTION_BRIEF.calm, DIRECTION_BRIEF.witty, DIRECTION_BRIEF.warm]
+      : [DIRECTION_BRIEF[req.direction]]),
     targetCraft,
     `ALLOWED FACTS (the ONLY facts that exist — everything else is UNKNOWN):`,
     ...facts.map(f => `- ${f}`),
@@ -273,9 +289,11 @@ export function buildWritingPrompt(req: WritingRequest): string {
     `  Equivalents like "unforgettable memories", "忘れられない思い出", "难忘的回忆" are equally banned.`,
     `- The line must be specific enough that it could NOT be pasted onto a different trip unchanged.`,
     `- Do NOT address the reader, do NOT explain yourself, no hashtags, no quotes around the text.`,
-    `- First person voice of the traveler. Output the ${req.target === "moment" ? "title and memo" : `${req.target} text`} alone.`,
+    `- First person voice of the traveler. Output the ${req.target === "moment" || req.target === "moment3" ? "title and memo" : `${req.target} text`} alone.`,
     `Before you answer: silently list every concrete claim in your line (people, photos, purchases, times, weather, objects, numbers, prior stops) and DELETE any claim not literally present in the facts/draft — replace it with plain being-there observation. Then output.
-${req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
+${req.target === "moment3"
+  ? 'Return JSON: {"calm": {"title": "<title>", "memo": "<memo>"}, "witty": {"title": "<title>", "memo": "<memo>"}, "warm": {"title": "<title>", "memo": "<memo>"}}'
+  : req.target === "moment" ? 'Return JSON: {"title": "<title>", "memo": "<memo>"}' : 'Return JSON: {"suggestion": "<text>"}'}`,
   ].join("\n");
 }
 
@@ -316,6 +334,58 @@ export function extractMomentSuggestion(text: string): MomentSuggestion | null {
   const memo = clean(raw.memo, MAX_MEMO_CHARS + 60);
   if (!title || !memo) return null;
   return { title, memo };
+}
+
+/** moment3 응답 스키마 — 세 방향 모두 요구하되, 파서가 방향별로 재검증한다 */
+export const MOMENT3_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    calm:  { type: "object", properties: { title: { type: "string" }, memo: { type: "string" } }, required: ["title", "memo"] },
+    witty: { type: "object", properties: { title: { type: "string" }, memo: { type: "string" } }, required: ["title", "memo"] },
+    warm:  { type: "object", properties: { title: { type: "string" }, memo: { type: "string" } }, required: ["title", "memo"] },
+  },
+  required: ["calm", "witty", "warm"],
+} as const;
+
+/**
+ * moment3 응답 파서 — PARSER SAFETY GUARD 원칙 그대로.
+ * 방향별로 개별 검증한다: 한 방향이 깨져도(필드 누락·빈 값) 나머지는 살린다.
+ * 전 방향이 무효면 null(전체 실패) — 화면은 기존 실패 안내를 쓴다.
+ */
+export function extractMoment3(text: string): MomentSuggestionSet3 | null {
+  const parse = (t: string): Record<string, unknown> | null => {
+    try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
+    catch { return null; }
+  };
+  const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  const raw = parse(text) ?? parse(fenced);
+  if (raw === null) return null;
+  const clean = (s: string, max: number) => {
+    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    if (v.length > max) v = v.slice(0, max).trim();
+    return v;
+  };
+  const set: MomentSuggestionSet3 = {};
+  for (const d of WRITING_DIRECTIONS) {
+    const e = raw[d] as { title?: unknown; memo?: unknown } | undefined;
+    if (!e || typeof e.title !== "string" || typeof e.memo !== "string") continue;
+    const title = clean(e.title, MAX_TITLE_CHARS + 20);
+    const memo = clean(e.memo, MAX_MEMO_CHARS + 60);
+    if (title && memo) set[d] = { title, memo };
+  }
+  return Object.keys(set).length > 0 ? set : null;
+}
+
+/** moment3 세트에 방향별 guard — 걸린 방향만 빠진다(부분 성공 유지) */
+export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionSet3 | null): MomentSuggestionSet3 | null {
+  if (set === null) return null;
+  const out: MomentSuggestionSet3 = {};
+  for (const d of WRITING_DIRECTIONS) {
+    const pair = set[d];
+    if (!pair) continue;
+    if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
+  }
+  return Object.keys(out).length > 0 ? out : null;
 }
 
 /** moment 쌍에 기존 결정적 guard 를 적용 — 한 필드라도 걸리면 쌍 전체가 실패다. */
@@ -400,7 +470,28 @@ export const DIRECTION_TEMPERATURE: Record<WritingDirection, number> = {
 export const WITTY_THINKING_BUDGET = 1024;
 export const WITTY_MAX_OUTPUT_TOKENS = 1800;
 
+/**
+ * moment3 생성 예산 — 한 호출로 3쌍(JSON)을 낸다. witty 의 thinking 증액 근거를
+ * 그대로 물려받되(1024), 출력은 3쌍 + thinking 이 maxOutputTokens 에 포함되므로
+ * 절단 방지를 위해 상향한다(WITTY 1800=1쌍 기준 → 3쌍 3000).
+ */
+export const MOMENT3_MAX_OUTPUT_TOKENS = 3000;
+export const MOMENT3_THINKING_BUDGET = 1024;
+export const MOMENT3_TEMPERATURE = 0.85;
+
 export function buildProviderBody(prompt: string, direction?: WritingDirection, target?: WritingTarget): unknown {
+  if (target === "moment3") {
+    return {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        maxOutputTokens: MOMENT3_MAX_OUTPUT_TOKENS,
+        temperature: MOMENT3_TEMPERATURE,
+        responseMimeType: "application/json",
+        responseSchema: MOMENT3_RESPONSE_SCHEMA,
+        thinkingConfig: { thinkingBudget: MOMENT3_THINKING_BUDGET },
+      },
+    };
+  }
   const witty = direction === "witty";
   return {
     contents: [{ parts: [{ text: prompt }] }],

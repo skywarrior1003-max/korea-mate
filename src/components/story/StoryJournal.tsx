@@ -230,8 +230,10 @@ export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds, 
     >
       {days.map(day => {
         const total = day.memories.length;
-        // 하루 2곳 이하 = 전부 큰 카드(1열). 3곳 이상 = sm+ 2열(4곳 → 2×2), 모바일 1열.
-        const gridCols = total <= 2 ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2";
+        // 기록 없는 장소는 이야기가 아니라 "이동 경로" 다(§5-2) — 큰 사진을 세로로
+        // 계속 쌓지 않고 모바일에서도 2열 그리드로 접어 Story 길이를 줄인다.
+        // 하루에 stop 이 1곳뿐일 때만 1열(그리드가 절반 폭 카드 하나만 남기지 않게).
+        const gridCols = total <= 1 ? "grid-cols-1" : "grid-cols-2";
         return (
           <div
             key={day.dayNumber}

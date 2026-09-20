@@ -612,7 +612,14 @@
     "journeyOngoing": "Journey in Progress",
     "journeyUpcoming": "Journey Ahead",
     "theJourney": "The Journey",
-    "scrollExplore": "Scroll to explore"
+    "scrollExplore": "Scroll to explore",
+    "cardPrev": "Previous card",
+    "cardNext": "Next card",
+    "saveCurrentCard": "Save this card",
+    "saveAllCards": "Save all {n}",
+    "savingAllCards": "Saving…",
+    "journeyCardKicker": "The Journey",
+    "journeyAllDays": "All days"
   },
   "memo": {
     "edit": "Edit",

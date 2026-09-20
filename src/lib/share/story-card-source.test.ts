@@ -94,18 +94,21 @@ test("R3 사진은 한 장씩 따로 처리한다", () => {
 });
 
 test("R4 사진이 있는데 전부 실패하면 카드를 완성하지 않는다", () => {
+  // MULTICARD V1: 표지 렌더는 drawCoverOn 이 결과("ok"|"photo_error")를 돌려주고
+  // wrapper(render)가 상태를 정한다 — 전부 실패 = photo_error = rendered 아님.
   const blk = CARD.slice(CARD.indexOf("allSettled"), CARD.indexOf("allSettled") + 600);
   assert.match(blk, /imgs\.length === 0/);
-  assert.match(blk, /setPhotoError\(true\)/);
-  assert.match(blk, /setRendered\(false\)/);
-  assert.match(blk, /return;/);
+  assert.match(blk, /return "photo_error";/);
+  const wrap = CARD.slice(CARD.indexOf("const render = useCallback"), CARD.indexOf("const render = useCallback") + 600);
+  assert.match(wrap, /setPhotoError\(r === "photo_error"\)/);
+  assert.match(wrap, /setRendered\(r === "ok"\)/);
 });
 
 test("R5 사진이 원래 0 장이면 정상 진행한다", () => {
-  // 실패 차단은 `srcs.length > 0` 안에만 있다
-  const guard = CARD.slice(CARD.indexOf("if (srcs.length > 0)"), CARD.indexOf("setPhotoError(false)"));
+  // 실패 차단은 `srcs.length > 0` 안에만 있다 — 0 장은 fallback 이미지로 정상 "ok"
+  const guard = CARD.slice(CARD.indexOf("if (srcs.length > 0)"), CARD.indexOf("if (srcs.length > 0)") + 400);
   assert.match(guard, /imgs\.length === 0/);
-  assert.ok(CARD.includes("setPhotoError(false)"), "사진이 없으면 오류 상태가 아니다");
+  assert.match(CARD, /return "ok";/);
 });
 
 test("R6 오류 문구는 locale 을 쓴다 — 영어를 박아 넣지 않는다", () => {
@@ -154,8 +157,9 @@ test("W7 저장소 어디에도 공유용 홈페이지 폴백이 남아 있지 �
 
 // ── P: postcard 재스킨 계약 ─────────────────────────────────────────────────
 
-/** canvas 를 그리는 부분만 — 모달 chrome 색은 이번 재스킨 범위가 아니다 */
-const RENDER = CARD.slice(CARD.indexOf("const render = useCallback"), CARD.indexOf("const pngFilename"));
+/** 표지 canvas 를 그리는 부분만 — 덱 카드(day/place/journey)는 신규 계약(§6)이라
+ *  Day 팔레트·잉크 패널 색을 갖는다. 여기 P 계약은 승인된 표지 렌더 범위다. */
+const RENDER = CARD.slice(CARD.indexOf("const drawCoverOn = useCallback"), CARD.indexOf("const render = useCallback"));
 
 test("P1 카드가 승인 토큰을 읽는다 — 색·여백을 새로 정하지 않는다", () => {
   assert.match(CARD, /from "@\/components\/story\/story-tokens"/);

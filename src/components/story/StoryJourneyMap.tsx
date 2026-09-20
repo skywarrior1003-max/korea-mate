@@ -13,7 +13,9 @@
 //   - 경로: Living Map 의 Day 색(livingMapDayColor)·점선 리듬 재사용.
 // 들어오는 값은 서버가 투영한 0..1 상대 기하뿐이다 — 좌표가 아니다.
 
+import { useEffect, useRef, useState } from "react";
 import type { JourneyScene } from "@/lib/share/journey-scene-core";
+import type { JourneyStop } from "@/lib/share/story-adapter";
 import { livingMapDayColor } from "@/lib/living-map/living-map-core";
 import {
   MARGIN_MOBILE, STACK_LG, STACK_MD, BODY_SM,
@@ -29,9 +31,103 @@ interface Props {
   scene: JourneyScene;
   /** 섹션 제목 — 호출부가 UI locale 로 넘긴다. */
   titleLabel?: string;
+  /**
+   * 실지도 정류장(§7-1) — 공식 장소의 공개 카탈로그 좌표·순번·공개 사진.
+   * 2곳 이상이고 Naver SDK 가 살아 있으면 실지도를 그리고, 아니면 기존
+   * 도식(scene)으로 조용히 내려간다. 비공개 사진은 여기 올 수 없다(어댑터 계약).
+   */
+  stops?: JourneyStop[];
+  /** Day 전환 라벨("전체") — 호출부 locale */
+  allLabel?: string;
 }
 
-export default function StoryJourneyMap({ scene, titleLabel }: Props) {
+// Naver SDK 전역 — layout 이 로드한다. 없거나 인증 실패면 fallback 이 정답이다.
+interface NaverMapsGlobal {
+  maps?: {
+    Map: new (el: HTMLElement, opts: unknown) => unknown;
+    LatLng: new (lat: number, lng: number) => unknown;
+    LatLngBounds: new () => { extend: (p: unknown) => void };
+    Marker: new (opts: unknown) => { setMap: (m: unknown) => void };
+    Polyline: new (opts: unknown) => { setMap: (m: unknown) => void };
+    Size: new (w: number, h: number) => unknown;
+    Point: new (x: number, y: number) => unknown;
+  };
+}
+
+function naverMaps(): NaverMapsGlobal["maps"] | null {
+  if (typeof window === "undefined") return null;
+  const w = window as unknown as { naver?: NaverMapsGlobal; __gkmNaverMapAuthFailed?: boolean };
+  if (w.__gkmNaverMapAuthFailed === true) return null;
+  return w.naver?.maps ?? null;
+}
+
+/** 원형 사진 + 순번 배지 + Day 색 테두리 마커 (HTML 아이콘) */
+function markerHtml(stop: JourneyStop, color: string): string {
+  const photo = stop.photo
+    ? `<img src="${stop.photo.replace(/"/g, "&quot;")}" style="width:100%;height:100%;object-fit:cover" alt=""/>`
+    : `<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#fff;font-weight:800;font-size:13px">${stop.order}</span>`;
+  return [
+    `<div style="position:relative;width:44px;height:44px">`,
+    `<div style="width:44px;height:44px;border-radius:50%;overflow:hidden;border:3px solid ${color};background:#232A33;box-shadow:0 2px 6px rgba(0,0,0,.35)">${photo}</div>`,
+    `<div style="position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:${color};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff">${stop.order}</div>`,
+    `</div>`,
+  ].join("");
+}
+
+export default function StoryJourneyMap({ scene, titleLabel, stops, allLabel }: Props) {
+  const mapEl = useRef<HTMLDivElement>(null);
+  const [liveMapReady, setLiveMapReady] = useState(false);
+  const [dayFilter, setDayFilter] = useState<number | null>(null);
+  const wantLive = Array.isArray(stops) && stops.length >= 2;
+  const dayNumbers = wantLive ? [...new Set(stops!.map(s => s.dayNumber))].sort((a, b) => a - b) : [];
+
+  useEffect(() => {
+    if (!wantLive) return;
+    const el = mapEl.current;
+    const maps = naverMaps();
+    if (!el || !maps) { setLiveMapReady(false); return; }
+    const shown = dayFilter === null ? stops! : stops!.filter(s => s.dayNumber === dayFilter);
+    if (shown.length === 0) return;
+    try {
+      el.innerHTML = "";
+      const bounds = new maps.LatLngBounds();
+      shown.forEach(s => bounds.extend(new maps.LatLng(s.lat, s.lng)));
+      const map = new maps.Map(el, {
+        center: new maps.LatLng(shown[0]!.lat, shown[0]!.lng),
+        zoom: 12,
+        draggable: true,
+        scrollWheel: false,
+        zoomControl: false,
+        mapDataControl: false,
+        logoControlOptions: { position: 0 },
+      });
+      // 전체 경로 fit bounds(§7-1)
+      (map as { fitBounds?: (b: unknown, o?: unknown) => void }).fitBounds?.(bounds, { top: 44, right: 44, bottom: 44, left: 44 });
+      // Day 별 점선 경로 + 마커
+      for (const n of dayNumbers) {
+        if (dayFilter !== null && n !== dayFilter) continue;
+        const dayStops = stops!.filter(s => s.dayNumber === n);
+        const color = livingMapDayColor(n);
+        if (dayStops.length >= 2) {
+          new maps.Polyline({
+            map, path: dayStops.map(s => new maps.LatLng(s.lat, s.lng)),
+            strokeColor: color, strokeWeight: 3, strokeOpacity: 0.85, strokeStyle: "shortdash",
+          }).setMap(map);
+        }
+        for (const s of dayStops) {
+          new maps.Marker({
+            map, position: new maps.LatLng(s.lat, s.lng),
+            title: s.name,
+            icon: { content: markerHtml(s, color), size: new maps.Size(44, 44), anchor: new maps.Point(22, 22) },
+          }).setMap(map);
+        }
+      }
+      setLiveMapReady(true);
+    } catch {
+      // SDK 가 있어도 인증/생성이 깨질 수 있다 — 도식 fallback 으로
+      setLiveMapReady(false);
+    }
+  }, [wantLive, stops, dayFilter, dayNumbers]);
   // 단위 공간(0..1)을 100×100 뷰박스에 얹고 8% 여백을 준다
   const S = 84, O = 8;
   const sx = (x: number) => O + x * S;
@@ -50,6 +146,59 @@ export default function StoryJourneyMap({ scene, titleLabel }: Props) {
         {titleLabel ?? "The Journey"}
       </p>
 
+      {/* 실지도(§7-1) — SDK 가 살아 있고 좌표가 있으면 이쪽, 아니면 아래 도식 */}
+      {wantLive && (
+        <div
+          ref={mapEl}
+          className="relative w-full overflow-hidden aspect-square sm:aspect-[4/3]"
+          style={{
+            borderRadius: RADIUS_PHOTO,
+            backgroundColor: SURFACE_VARIANT,
+            boxShadow: AMBIENT_SHADOW,
+            border: `1px solid ${OUTLINE_VARIANT}4d`,
+            display: liveMapReady ? "block" : "none",
+          }}
+          role="img"
+          aria-label={titleLabel ?? "The Journey"}
+        />
+      )}
+      {/* Day 전환 — 모바일에서 마커 과밀 시 하루씩 본다(§7-1) */}
+      {wantLive && liveMapReady && dayNumbers.length > 1 && (
+        <div className="flex flex-wrap justify-center gap-1.5" style={{ marginTop: STACK_MD }}>
+          {[null, ...dayNumbers].map(n => (
+            <button
+              key={n === null ? "all" : n}
+              type="button"
+              onClick={() => setDayFilter(n)}
+              aria-pressed={dayFilter === n}
+              className="gkm-focus px-3 py-1 rounded-full text-xs font-bold border cursor-pointer"
+              style={dayFilter === n
+                ? { backgroundColor: n === null ? "#131b2e" : livingMapDayColor(n), color: "#fff", borderColor: "transparent" }
+                : { backgroundColor: "transparent", color: ON_SURFACE_VARIANT, borderColor: `${OUTLINE_VARIANT}80` }}
+            >
+              {n === null ? (allLabel ?? "All") : `Day ${n}`}
+            </button>
+          ))}
+        </div>
+      )}
+      {/* 지도 아래 접근 가능한 방문 순서 목록(§7-1) */}
+      {wantLive && liveMapReady && (
+        <ol className="mt-3 space-y-1 max-w-md mx-auto" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>
+          {(dayFilter === null ? stops! : stops!.filter(s => s.dayNumber === dayFilter)).map(s => (
+            <li key={`${s.dayNumber}-${s.order}`} className="flex items-center gap-2">
+              <span
+                aria-hidden
+                className="w-4 h-4 rounded-full inline-flex items-center justify-center text-[10px] font-black text-white shrink-0"
+                style={{ backgroundColor: livingMapDayColor(s.dayNumber) }}
+              >
+                {s.order}
+              </span>
+              <span className="truncate">Day {s.dayNumber} · {s.name}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+
       <div
         className="relative w-full overflow-hidden aspect-square sm:aspect-[4/3] pointer-events-none select-none"
         style={{
@@ -57,6 +206,7 @@ export default function StoryJourneyMap({ scene, titleLabel }: Props) {
           backgroundColor: SURFACE_VARIANT,
           boxShadow: AMBIENT_SHADOW,
           border: `1px solid ${OUTLINE_VARIANT}4d`,
+          display: wantLive && liveMapReady ? "none" : "block",
         }}
         role="img"
         aria-label="Non-interactive overview of the trip route"
@@ -124,8 +274,8 @@ export default function StoryJourneyMap({ scene, titleLabel }: Props) {
         </svg>
       </div>
 
-      {/* Day 범례 — Living Map 의 범례 언어 */}
-      {scene.days.length > 1 && (
+      {/* Day 범례 — Living Map 의 범례 언어 (도식 fallback 전용 — 실지도는 Day 버튼이 범례다) */}
+      {!(wantLive && liveMapReady) && scene.days.length > 1 && (
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1" style={{ marginTop: STACK_MD }}>
           {scene.days.map(d => (
             <span key={d.dayNumber} className="inline-flex items-center gap-1.5" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>

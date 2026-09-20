@@ -21,7 +21,8 @@
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
-  MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion,
+  extractMoment3, groundedMoment3Guard,
+  MODEL, TIMEOUT_MS, type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
 } from "../../../src/lib/mytrip-writing/writing-core";
 
 interface Env {
@@ -39,9 +40,10 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-// moment(제목+본문 쌍) 응답은 moment 필드로 나간다 — 기존 suggestion 소비자는 영향 없다.
-const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null) =>
-  json({ suggestion, moment, ai_status });
+// moment(제목+본문 쌍)는 moment 필드, moment3(3방향 세트)는 set 필드로 나간다 —
+// 기존 suggestion/moment 소비자는 영향 없다.
+const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null, set: MomentSuggestionSet3 | null = null) =>
+  json({ suggestion, moment, set, ai_status });
 
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "mytrip-writing", ...fields }));
@@ -67,14 +69,25 @@ async function viaWorker(
       log({ ok: false, kind: "worker_http", status: res.status, latencyMs: Date.now() - started });
       return reply(null, `fallback_worker_${res.status}`);
     }
-    const out = (await res.json()) as { suggestion?: unknown; moment?: unknown; ai_status?: unknown };
+    const out = (await res.json()) as { suggestion?: unknown; moment?: unknown; set?: unknown; ai_status?: unknown };
     const suggestion = typeof out.suggestion === "string" ? out.suggestion : null;
     const m = out.moment as { title?: unknown; memo?: unknown } | null | undefined;
     const moment = m && typeof m.title === "string" && typeof m.memo === "string"
       ? { title: m.title, memo: m.memo } : null;
+    // moment3 세트 — Worker 가 방향별 검증까지 마친 값이라 shape 만 확인해 통과시킨다
+    const rawSet = out.set as Record<string, { title?: unknown; memo?: unknown }> | null | undefined;
+    let set: MomentSuggestionSet3 | null = null;
+    if (rawSet && typeof rawSet === "object") {
+      const s: MomentSuggestionSet3 = {};
+      for (const d of ["calm", "witty", "warm"] as const) {
+        const e = rawSet[d];
+        if (e && typeof e.title === "string" && typeof e.memo === "string") s[d] = { title: e.title, memo: e.memo };
+      }
+      if (Object.keys(s).length > 0) set = s;
+    }
     const ai_status = typeof out.ai_status === "string" ? out.ai_status : "fallback_worker_shape";
-    log({ ok: suggestion !== null || moment !== null, via: "worker", ai_status, latencyMs: Date.now() - started });
-    return reply(suggestion, ai_status, moment);
+    log({ ok: suggestion !== null || moment !== null || set !== null, via: "worker", ai_status, latencyMs: Date.now() - started });
+    return reply(suggestion, ai_status, moment, set);
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
@@ -111,18 +124,32 @@ async function viaDirect(
       log({ ok: false, kind: "http", status: res.status, latencyMs, err: errSnippet, target: body.target, dir: body.direction, locale: body.locale });
       return reply(null, `fallback_http_${res.status}`);
     }
-    const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+    const raw = (await res.json()) as {
+      candidates?: { content?: { parts?: { text?: string }[] } }[];
+      usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number };
+    };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    // 비용 감사용 usage — 토큰 수만 로그한다(사용자 텍스트·secret 없음)
+    const usage = raw.usageMetadata
+      ? { inTok: raw.usageMetadata.promptTokenCount ?? null, outTok: raw.usageMetadata.candidatesTokenCount ?? null, thinkTok: raw.usageMetadata.thoughtsTokenCount ?? null }
+      : {};
+    if (body.target === "moment3") {
+      const extracted = extractMoment3(text);
+      const set = groundedMoment3Guard(body, extracted);
+      const n = set ? Object.keys(set).length : 0;
+      log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, ...usage });
+      return reply(null, n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty", null, set);
+    }
     if (body.target === "moment") {
       const extracted = extractMomentSuggestion(text);
       const moment = groundedMomentGuard(body, extracted);
-      log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null });
+      log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null, ...usage });
       return reply(null, moment !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty", moment);
     }
     const extracted = extractSuggestion(text, body.target);
     // 좁은 결정적 guard(§11) — 한글 오염/사진행동 발명만. 걸리면 honest fallback.
     const suggestion = groundedSuggestionGuard(body, extracted);
-    log({ ok: suggestion !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: suggestion?.length ?? 0, guarded: extracted !== null && suggestion === null });
+    log({ ok: suggestion !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: suggestion?.length ?? 0, guarded: extracted !== null && suggestion === null, ...usage });
     return reply(suggestion, suggestion !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty");
   } catch (err) {
     clearTimeout(timer);
