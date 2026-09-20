@@ -44,8 +44,30 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v2-multimodal";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v5-creative";
+export const MOMENT3_PROMPT_VERSION = "moment3-v3-trend-witty";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v6-witty-craft";
+
+/**
+ * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
+ * 구 정규식(한쪽만 제거)은 zh 결과의 따옴표 짝을 깨뜨렸다(实측: 月精桥的"克隆).
+ * 내부 인용은 건드리지 않는다.
+ */
+const QUOTE_PAIRS: Record<string, string> = {
+  '"': '"', "'": "'", "“": "”", "‘": "’",
+  "「": "」", "『": "』", "《": "》",
+};
+export function stripWrappingQuotes(s: string): string {
+  let v = s.trim();
+  while (v.length >= 2) {
+    const close = QUOTE_PAIRS[v[0]!];
+    if (!close || v[v.length - 1] !== close) break;
+    // 양끝이 진짜 한 쌍인지 — 여는 쪽이 내부에서 먼저 닫히면(예: "a" b "c") 벗기지 않는다
+    const inner = v.slice(1, -1);
+    if (v[0] !== close && inner.includes(close) && !inner.includes(v[0]!)) break;
+    v = inner.trim();
+  }
+  return v;
+}
 
 // ── 멀티모달 순간 기록 + 창작 계약 (MULTIMODAL-MOMENT-AND-CREATIVE-STORY-AI V1) ──
 // AI 는 DB 문구 조립기가 아니다 — 사진과 여행 정보를 보고 SNS 에 남기고 싶은
@@ -62,6 +84,14 @@ export const CREATIVE_KINDS = [
 ] as const;
 export type CreativeKind = (typeof CREATIVE_KINDS)[number];
 
+/**
+ * 프롬프트에 싣는 Trend 항목의 최소 형태(§G) — trend-packs 모듈이 활성 목록을
+ * 이 모양으로 넘긴다(writing-core 는 pack 데이터에 의존하지 않는다).
+ */
+export interface TrendPromptEntry {
+  id: string; phrase: string; meaning: string; usageExample: string; avoidWhen: string;
+}
+
 /** visual_basis 허용 — 사진의 일반적 시각 요소만(인물·신원·위치 추론 금지) */
 export const VISUAL_BASIS_ALLOWED = [
   "reflection", "symmetry", "night_light", "silhouette",
@@ -70,9 +100,15 @@ export const VISUAL_BASIS_ALLOWED = [
 
 /** 멀티모달 이미지 입력 — 클라이언트 canvas 전처리(재인코딩 JPEG)만 받는다 */
 export interface WritingImage { mimeType: "image/jpeg"; data: string }
-/** base64 상한 — 1024px q0.75 JPEG 여유(≈1.5MB 원본) + 프롬프트 주입/비용 방어 */
-export const MAX_IMAGE_BASE64_CHARS = 2_000_000;
+/**
+ * base64 상한 — 구 2M chars 는 실측(전처리 23~81KB = 31k~110k chars) 대비 과도
+ * (TREND-PACK V1 §I 감사). 400k chars(≈300KB 디코드)로 축소: 정상 fixture 의
+ * 3~10배 여유를 두면서 비용 폭주·프롬프트 주입 표면을 줄인다.
+ */
+export const MAX_IMAGE_BASE64_CHARS = 400_000;
 const BASE64_RE = /^[A-Za-z0-9+/]+={0,2}$/;
+/** base64 "/9j/" = JPEG SOI(FF D8 FF) — canvas 재인코딩 JPEG 만 통과 */
+const JPEG_B64_MAGIC = "/9j/";
 
 /**
  * 요청의 image 필드를 안전하게 꺼낸다. 규칙:
@@ -88,6 +124,7 @@ export function extractRequestImage(v: unknown): WritingImage | null | "invalid"
   if (typeof r.data !== "string" || r.data.length === 0) return "invalid";
   if (r.data.length > MAX_IMAGE_BASE64_CHARS) return "invalid";
   if (!BASE64_RE.test(r.data)) return "invalid";
+  if (!r.data.startsWith(JPEG_B64_MAGIC)) return "invalid"; // JPEG magic(§I)
   return { mimeType: "image/jpeg", data: r.data };
 }
 
@@ -162,7 +199,7 @@ export function extractHeroSuggestion(text: string): HeroSuggestion | null {
   if (typeof raw.title !== "string" || typeof raw.memo !== "string" || !Array.isArray(raw.basis_refs)) return null;
   const refs = raw.basis_refs.filter((r): r is string => typeof r === "string").map(r => r.trim()).filter(Boolean);
   const clean = (s: string, max: number) => {
-    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    let v = stripWrappingQuotes(s);
     if (v.length > max) v = v.slice(0, max).trim();
     return v;
   };
@@ -318,11 +355,14 @@ export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
     "Stay factual: only what the listed facts actually say.",
   ].join(" "),
   witty: [
-    "Tone — light and witty. CREATIVITY IS ALLOWED here: you may pick up and twist a witty phrase the traveler",
-    "saved in a public moment, play the trip numbers (days/places) into a gentle reversal, or use an obvious",
-    "joke or metaphor. The reader must smile at how the REAL trip facts are arranged — never at invented events.",
-    "The wit must clearly come from THIS trip's facts; a line that fits any trip fails.",
+    "Tone — light and witty. The cover must make the reader smile ONCE MORE at this trip — it is a COMEBACK,",
+    "not a summary. FIRST look for a witty line the traveler saved in a public moment (their own joke is the",
+    "best material): pick it up, echo it, or escalate it one step. If none exists, find the one funny pattern",
+    "in the real facts and land it as a short deadpan punchline.",
+    "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), a poetic-pretty line",
+    "(that is the emotional tone's job), or a caption that fits any trip. Deadpan beats exclamation.",
     "Allowed: metaphor, personification of the itinerary/scenes, playful exaggeration that no one could mistake for a real event.",
+    "Keep it tight: title in one short beat, intro 1-2 short sentences.",
     "creative_kind must name the main device you used.",
   ].join(" "),
   warm: [
@@ -532,7 +572,7 @@ export function extractMomentSuggestion(text: string): MomentSuggestion | null {
   const raw = parse(text) ?? parse(fenced);
   if (raw === null) return null;
   const clean = (s: string, max: number) => {
-    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    let v = stripWrappingQuotes(s);
     if (v.length > max) v = v.slice(0, max).trim();
     return v;
   };
@@ -567,7 +607,7 @@ export function extractMoment3(text: string): MomentSuggestionSet3 | null {
   const raw = parse(text) ?? parse(fenced);
   if (raw === null) return null;
   const clean = (s: string, max: number) => {
-    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    let v = stripWrappingQuotes(s);
     if (v.length > max) v = v.slice(0, max).trim();
     return v;
   };
@@ -606,6 +646,7 @@ export const MOMENT3_MULTIMODAL_RESPONSE_SCHEMA = {
     witty: { type: "object", properties: {
       title: { type: "string" }, memo: { type: "string" },
       creative_kind: { type: "string" }, visual_basis: { type: "array", items: { type: "string" } },
+      trend_used_id: { type: "string" },
     }, required: ["title", "memo", "creative_kind", "visual_basis"] },
     warm:  { type: "object", properties: {
       title: { type: "string" }, memo: { type: "string" },
@@ -630,7 +671,7 @@ export const MOMENT3_MULTIMODAL_TIMEOUT_MS = 12_000;
  * 실제로 보는 창작 계약과 정면 충돌한다. 공통 안전 규칙(고유명사·언어 격리·
  * 인물 추론 금지·사건 발명 금지)은 그대로 유지한다.
  */
-export function buildMoment3MultimodalPrompt(req: WritingRequest): string {
+export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?: readonly TrendPromptEntry[]): string {
   const c = req.context;
   const facts: string[] = [`city: ${clip(c.city, 40)}`];
   if (clip(c.placeName)) facts.push(`place: ${clip(c.placeName, 80)}`);
@@ -638,24 +679,41 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest): string {
   if (typeof c.dayNumber === "number" && c.dayNumber >= 1) facts.push(`trip day: Day ${Math.floor(c.dayNumber)}`);
   if (clip(c.dates, 40)) facts.push(`trip dates: ${clip(c.dates, 40)}`);
   const draft = clip(c.draft, MAX_CONTEXT_CHARS);
+  // 길이 목표(§H) — 생성 후 자르지 않고 처음부터 짧게 쓰게 한다
+  const lenGoal = req.locale === "en"
+    ? "Length goal: title within ~45 characters, memo within ~90 characters. Write short FROM THE START — never a long line to be trimmed."
+    : "Length goal: title around 18 characters, memo around 30 characters (CJK). Write short FROM THE START — one beat, not a paragraph.";
+  const trend = (trendEntries ?? []).slice(0, 5);
   return [
     `You help a traveler caption ONE moment of their trip for their own diary/SNS. You are given the traveler's`,
     `own photo of this moment (attached) plus the facts below. Look at the photo carefully — the caption should`,
     `feel like it was written by someone who was actually standing there looking at this exact scene.`,
     `Write THREE complete entries for this SAME moment — one per direction (calm, witty, warm). Each entry =`,
-    `one title (max ${MAX_TITLE_CHARS} characters) AND one short memo of 1-2 sentences (max ${MAX_MEMO_CHARS} characters).`,
+    `one title (max ${MAX_TITLE_CHARS} characters) AND one short memo (max ${MAX_MEMO_CHARS} characters).`,
+    lenGoal,
     `Language: write ONLY in ${LOCALE_NAME[req.locale]}. No other language, no romanization.`,
     LOCALE_ISOLATION[req.locale],
     LOCALE_VOICE[req.locale],
     `DIRECTIONS (each has its OWN creative license — they must be clearly distinguishable):`,
     `- "calm": factual and quiet. Only what is clearly visible in the photo, the place, the traveler's note, the`,
     `  real itinerary. A restrained diary line. No metaphor, no jokes.`,
-    `- "witty": CREATIVE. Use what you actually SEE — visual wordplay, metaphor, personification, a short`,
-    `  twist, playful exaggeration built on the scene (reflections, symmetry, light, composition, object`,
-    `  relations). The joke must come from THIS photo/scene, be obviously playful, and never read as a claim`,
-    `  that a real event happened.`,
+    `- "witty": the goal is a SHORT COMEBACK that makes the viewer smile AGAIN after seeing the photo —`,
+    `  not a pretty description, not a list of trip facts. Find the ONE visual punchline of this photo`,
+    `  (a reflection doubling something, two elements colliding, a shadow, a composition accident) and`,
+    `  land it in one beat. Craft level to aim for (do NOT copy, it is a shape reference): a night bridge`,
+    `  doubled in the water → title "1+1 tonight", memo "came for one bridge, the water threw in another."`,
+    `  Deadpan beats exclamation. If the photo gives nothing, a dry self-aware observation still beats`,
+    `  a scenic description. Never poetic-pretty — that is warm's job.`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
     `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report.`,
+    ...(trend.length > 0 ? [
+      `CURRENT EXPRESSIONS (reviewed list — OPTIONAL, for "witty" ONLY):`,
+      ...trend.map(t => `- [${t.id}] "${t.phrase}" — ${t.meaning} e.g. ${t.usageExample} Avoid: ${t.avoidWhen}`),
+      `Rules for these: use AT MOST ONE, only in "witty", only if it fits the scene NATURALLY in its original`,
+      `language and register. Never force one in, never stack several, never translate one into another language,`,
+      `never bend the sentence to fit it. If none fits, use none. Report which you used in "trend_used_id"`,
+      `(the [id]), or omit the field when unused. calm and warm must NOT use any of these.`,
+    ] : []),
     `FACTS (besides the photo, the ONLY things known):`,
     ...facts.map(f => `- ${f}`),
     draft
@@ -682,8 +740,13 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest): string {
   ].join("\n");
 }
 
-/** 멀티모달 응답의 검증 메타 — 로그 진단용(문자열은 whitelist 값뿐, 저장·노출 0) */
-export interface Moment3CreativeMeta { kinds: Partial<Record<WritingDirection, string>>; dropped: WritingDirection[] }
+/** 멀티모달 응답의 검증 메타 — 로그·캐시 진단용(whitelist 값·pack id 뿐, 화면·공개 API 노출 0) */
+export interface Moment3CreativeMeta {
+  kinds: Partial<Record<WritingDirection, string>>;
+  dropped: WritingDirection[];
+  /** witty 가 실제 사용을 신고하고 검증을 통과한 pack id — 미사용이면 null */
+  trendUsedId: string | null;
+}
 
 /**
  * 멀티모달 moment3 파서+검증 — calm 은 기존과 동일(제목·메모). witty/warm 은
@@ -691,7 +754,11 @@ export interface Moment3CreativeMeta { kinds: Partial<Record<WritingDirection, s
  * 통과한다. 위반 방향만 빠진다(부분 성공 유지). 검증 필드는 클라이언트로
  * 돌려보내지 않는다 — 세트에는 title/memo 만 남긴다.
  */
-export function extractMoment3Creative(text: string): { set: MomentSuggestionSet3; meta: Moment3CreativeMeta } | null {
+export function extractMoment3Creative(
+  text: string,
+  /** 이번 요청 프롬프트에 실은 활성 pack — id→phrase. 없으면 trend 신고 자체가 위반이다(§G). */
+  activeTrend?: ReadonlyMap<string, string>,
+): { set: MomentSuggestionSet3; meta: Moment3CreativeMeta } | null {
   const parse = (t: string): Record<string, unknown> | null => {
     try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
     catch { return null; }
@@ -700,14 +767,14 @@ export function extractMoment3Creative(text: string): { set: MomentSuggestionSet
   const raw = parse(text) ?? parse(fenced);
   if (raw === null) return null;
   const clean = (s: string, max: number) => {
-    let v = s.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+    let v = stripWrappingQuotes(s);
     if (v.length > max) v = v.slice(0, max).trim();
     return v;
   };
   const set: MomentSuggestionSet3 = {};
-  const meta: Moment3CreativeMeta = { kinds: {}, dropped: [] };
+  const meta: Moment3CreativeMeta = { kinds: {}, dropped: [], trendUsedId: null };
   for (const d of WRITING_DIRECTIONS) {
-    const e = raw[d] as { title?: unknown; memo?: unknown; creative_kind?: unknown; visual_basis?: unknown } | undefined;
+    const e = raw[d] as { title?: unknown; memo?: unknown; creative_kind?: unknown; visual_basis?: unknown; trend_used_id?: unknown } | undefined;
     if (!e || typeof e.title !== "string" || typeof e.memo !== "string") { meta.dropped.push(d); continue; }
     const title = clean(e.title, MAX_TITLE_CHARS + 20);
     const memo = clean(e.memo, MAX_MEMO_CHARS + 60);
@@ -723,6 +790,15 @@ export function extractMoment3Creative(text: string): { set: MomentSuggestionSet
         continue;
       }
       meta.kinds[d] = kind;
+    }
+    // Trend 검증(§G) — witty 만 신고 가능. 활성 목록 밖 id·미반영 신고는 witty 폐기.
+    if (d === "witty") {
+      const claimed = typeof e.trend_used_id === "string" ? e.trend_used_id.trim() : "";
+      if (claimed) {
+        const phrase = activeTrend?.get(claimed);
+        if (!phrase || !(title + "\n" + memo).includes(phrase)) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
+        meta.trendUsedId = claimed;
+      }
     }
     set[d] = { title, memo };
   }
@@ -757,7 +833,7 @@ export function extractSuggestion(text: string, target: WritingTarget): string |
   const fenced = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
   const raw = parse(text) ?? parse(fenced);
   if (raw === null) return null;
-  let s = raw.trim().replace(/^["'“」『]+|["'”」』]+$/g, "").trim();
+  let s = stripWrappingQuotes(raw);
   if (!s) return null;
   const max = target === "title" ? MAX_TITLE_CHARS + 20 : MAX_MEMO_CHARS + 60;
   if (s.length > max) s = s.slice(0, max).trim();

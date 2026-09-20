@@ -633,6 +633,7 @@
     "heroRegenNote": "문체를 바꾸면 AI가 한 번 더 생성해요.",
     "heroBusy": "AI가 쓰는 중…",
     "heroFailed": "생성에 실패했어요. 아래 문구를 직접 적거나 다시 시도해 주세요.",
+    "heroLimited": "지금은 생성 한도에 걸렸어요. {sec}초 후 다시 시도할 수 있어요 — 직접 수정·저장은 그대로 가능해요.",
     "heroEditHeading": "여행 Story 표지",
     "heroChangeTone": "문체 바꾸기",
     "heroRegen": "다시 제안받기",
@@ -1467,7 +1468,8 @@
     "suggestBusy": "세 가지 제안을 만드는 중…",
     "suggestFailed": "지금은 제안을 만들 수 없어요. 직접 적거나 잠시 후 다시 눌러 주세요.",
     "pickHint": "마음에 드는 안을 누르면 아래 제목·메모에 채워져요 — 그대로 고칠 수 있어요.",
-    "photoUseNotice": "AI 제안을 만들기 위해 이 사진과 장소 정보를 사용합니다."
+    "photoUseNotice": "AI 제안을 만들기 위해 이 사진과 장소 정보를 사용합니다.",
+    "suggestLimited": "지금은 새 제안 횟수를 다 썼어요. {sec}초 후 다시 시도할 수 있어요 — 직접 작성은 계속 가능해요."
   },
   "guide": {
     "gotIt": "알겠어요",

@@ -29,22 +29,40 @@ export async function apiSuggestWriting(args: {
  * 사용자가 문체를 **먼저 고른 뒤** 그 방향으로 정확히 1요청 — 세 문체를 미리
  * 만들지 않는다. 실패는 null(화면은 fallback 유지, 재시도 없음).
  */
+/** 제한(429) 정보 — 화면은 남은 시간을 안내하고 직접 작성은 계속 허용한다(§I) */
+export interface RateLimitInfo { rateLimited: true; retryAfterSec: number }
+
+async function parseRateLimit(res: Response): Promise<RateLimitInfo | null> {
+  if (res.status !== 429) return null;
+  try {
+    const j = (await res.json()) as { retryAfterSec?: unknown };
+    return { rateLimited: true, retryAfterSec: typeof j.retryAfterSec === "number" ? j.retryAfterSec : 60 };
+  } catch { return { rateLimited: true, retryAfterSec: 60 }; }
+}
+
 export async function apiSuggestStoryHero(args: {
   direction: WritingDirection;
   locale: string;
   context: WritingContext;
+  /** 영구 캐시·소유 검증(§C·§D) — 서버가 entity 경계로 후보를 보관한다 */
+  itineraryId?: string;
+  deviceId?: string;
+  forceFresh?: boolean;
   signal?: AbortSignal;
-}): Promise<{ title: string; intro: string } | null> {
+}): Promise<{ title: string; intro: string } | RateLimitInfo | null> {
   const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
   try {
     const timeout = AbortSignal.timeout(12_000);
     const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ target: "storyHero", direction: args.direction, locale, context: args.context }),
+      headers: { "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) },
+      body: JSON.stringify({ target: "storyHero", direction: args.direction, locale, context: args.context,
+        ...(args.itineraryId ? { itineraryId: args.itineraryId } : {}), ...(args.forceFresh ? { forceFresh: true } : {}) }),
       signal,
     });
+    const limited = await parseRateLimit(res.clone());
+    if (limited) return limited;
     if (!res.ok) return null;
     const j = (await res.json()) as { moment?: { title?: unknown; memo?: unknown } | null };
     const m = j.moment;
@@ -65,28 +83,48 @@ export async function apiSuggestStoryHero(args: {
  */
 export type MomentSuggestionSet = Partial<Record<WritingDirection, { title: string; memo: string }>>;
 
+export interface MomentSetResult {
+  set: MomentSuggestionSet;
+  /** 서버 영구 캐시의 generation id — 선택·저장 메타 보고(§E)에 쓴다 */
+  generationId: string | null;
+  /** "cache_server"(서버 캐시 hit) 등 서버 ai_status — 계측·표시용 */
+  aiStatus: string | null;
+  rateLimited?: RateLimitInfo;
+}
+
 export async function apiSuggestMomentSet(args: {
   locale: string;
   context: WritingContext;
   /** 멀티모달(§A-1) — 클라 canvas 전처리 JPEG. 서버는 URL 을 fetch 하지 않는다. */
   image?: WritingImage | null;
+  itineraryId?: string;
+  deviceId?: string;
+  forceFresh?: boolean;
   signal?: AbortSignal;
-}): Promise<MomentSuggestionSet> {
+}): Promise<MomentSetResult> {
   const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
+  const empty: MomentSetResult = { set: {}, generationId: null, aiStatus: null };
   try {
     // 멀티모달은 서버 timeout(12s)보다 넉넉히 — 사진 업로드 왕복 포함
     const timeout = AbortSignal.timeout(args.image ? 20_000 : 12_000);
     const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) },
       // direction 은 요청 형식상 필수 — moment3 에서는 서버가 무시한다
       body: JSON.stringify({ target: "moment3", direction: "calm", locale, context: args.context,
-        ...(args.image ? { image: args.image } : {}) }),
+        ...(args.image ? { image: args.image } : {}),
+        ...(args.itineraryId ? { itineraryId: args.itineraryId } : {}),
+        ...(args.forceFresh ? { forceFresh: true } : {}) }),
       signal,
     });
-    if (!res.ok) return {};
-    const j = (await res.json()) as { set?: Partial<Record<WritingDirection, { title?: unknown; memo?: unknown }>> | null };
+    const limited = await parseRateLimit(res.clone());
+    if (limited) return { ...empty, rateLimited: limited };
+    if (!res.ok) return empty;
+    const j = (await res.json()) as {
+      set?: Partial<Record<WritingDirection, { title?: unknown; memo?: unknown }>> | null;
+      generation_id?: unknown; ai_status?: unknown;
+    };
     const set: MomentSuggestionSet = {};
     for (const d of ["calm", "witty", "warm"] as const) {
       const m = j.set?.[d];
@@ -94,8 +132,37 @@ export async function apiSuggestMomentSet(args: {
         set[d] = { title: m.title.trim(), memo: m.memo.trim() };
       }
     }
-    return set;
+    return {
+      set,
+      generationId: typeof j.generation_id === "string" ? j.generation_id : null,
+      aiStatus: typeof j.ai_status === "string" ? j.ai_status : null,
+    };
   } catch {
-    return {};
+    return empty;
   }
+}
+
+/**
+ * 선택·저장 행동 메타(§E) — best-effort, 실패 무시. 사용자 문장 원문은 보내지
+ * 않는다(글자 수 변화만).
+ */
+export function apiWritingMeta(args: {
+  itineraryId: string; deviceId: string; generationId: string;
+  event: "select" | "save"; style?: WritingDirection;
+  edited?: boolean; titleLenDelta?: number; memoLenDelta?: number;
+}): void {
+  try {
+    void fetch("/api/mytrip/writing-meta", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-device-id": args.deviceId },
+      body: JSON.stringify({
+        itineraryId: args.itineraryId, generationId: args.generationId, event: args.event,
+        ...(args.style ? { style: args.style } : {}),
+        ...(typeof args.edited === "boolean" ? { edited: args.edited } : {}),
+        ...(typeof args.titleLenDelta === "number" ? { titleLenDelta: args.titleLenDelta } : {}),
+        ...(typeof args.memoLenDelta === "number" ? { memoLenDelta: args.memoLenDelta } : {}),
+      }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch { /* ignore */ }
 }

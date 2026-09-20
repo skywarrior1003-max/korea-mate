@@ -93,7 +93,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   // 관리자가 가렸으면 없는 것처럼 답한다. 왜 막혔는지 구분해 주지 않는다 —
   // 비공개와 미존재와 가려짐을 나눠 알려 주면 그것도 정보가 된다.
-  if (isModerationHidden(data as { moderation_hidden_at: string | null })) {
+  if (isModerationHidden(data as unknown as { moderation_hidden_at: string | null })) {
     return json({ error: "Not found" }, 404);
   }
 

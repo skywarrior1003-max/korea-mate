@@ -7,9 +7,11 @@ import { join } from "node:path";
 import {
   buildWritingPrompt, deriveTripWritingFacts, buildProviderBody,
   DIRECTION_TEMPERATURE, WRITING_DIRECTIONS, MAX_TRIP_FACTS,
-  extractSuggestion, groundedSuggestionGuard, extractRequestImage, MOMENT3_MULTIMODAL_RESPONSE_SCHEMA, MOMENT3_RESPONSE_SCHEMA, MOMENT3_MULTIMODAL_MAX_OUTPUT_TOKENS, MAX_IMAGE_BASE64_CHARS, extractMoment3Creative, extractHeroSuggestion, validateHeroRefs, buildMoment3MultimodalPrompt, VISUAL_BASIS_ALLOWED, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
+  extractSuggestion, groundedSuggestionGuard, extractRequestImage, MOMENT3_MULTIMODAL_RESPONSE_SCHEMA, MOMENT3_RESPONSE_SCHEMA, MOMENT3_MULTIMODAL_MAX_OUTPUT_TOKENS, MAX_IMAGE_BASE64_CHARS, extractMoment3Creative, extractHeroSuggestion, validateHeroRefs, buildMoment3MultimodalPrompt, VISUAL_BASIS_ALLOWED, stripWrappingQuotes, WITTY_THINKING_BUDGET, WITTY_MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS,
   type WritingRequest,
 } from "./writing-core.ts";
+import { activeTrendEntries, trendPackVersionFor } from "./trend-packs.ts";
+import { computeCacheKey, normalizedContextString, resolveLimits } from "./generation-cache.ts";
 
 const req = (over: Partial<WritingRequest> = {}): WritingRequest => ({
   target: "title", direction: "witty", locale: "ko",
@@ -215,8 +217,10 @@ test("groundedSuggestionGuard — 한글 오염/사진행동 발명만 좁게 �
 // ── MULTIMODAL-MOMENT-AND-CREATIVE-STORY-AI V1 계약 ─────────────────────────
 
 test("이미지 입력 계약 — JPEG base64 만, URL·타 포맷·초과 크기는 invalid", () => {
-  const ok = extractRequestImage({ mimeType: "image/jpeg", data: "aGVsbG8=" });
-  assert.ok(ok !== "invalid" && ok !== null && ok.data === "aGVsbG8=");
+  const ok = extractRequestImage({ mimeType: "image/jpeg", data: "/9j/4AAQSkZJRg==" });
+  assert.ok(ok !== "invalid" && ok !== null && ok.data.startsWith("/9j/"));
+  // JPEG magic 없는 base64 는 invalid(§I)
+  assert.equal(extractRequestImage({ mimeType: "image/jpeg", data: "aGVsbG8=" }), "invalid");
   assert.equal(extractRequestImage({ mimeType: "image/png", data: "aGVsbG8=" }), "invalid");
   assert.equal(extractRequestImage({ mimeType: "image/jpeg", data: "https://evil.example/x.jpg" }), "invalid"); // URL 은 base64 형식 위반
   assert.equal(extractRequestImage({ mimeType: "image/jpeg", data: "" }), "invalid");
@@ -295,7 +299,8 @@ test("hero 프롬프트 — 자유 창작(템플릿 금지)·문체별 브리프
   });
   const w = buildWritingPrompt(req("witty"));
   assert.match(w, /You write the FINAL title and intro yourself/);
-  assert.match(w, /CREATIVITY IS ALLOWED/);
+  assert.match(w, /COMEBACK/); // TREND V1 §H — 재치 표지는 되받기
+  assert.match(w, /HARD FAILURES for this tone/); // 나열·감성 오분류 = 실패 명시
   assert.match(w, /basis_refs/);
   assert.match(w, /creative_kind/);
   assert.ok(!w.includes("WORDING ONLY")); // V3 의 사실-나열 제한 문구 제거
@@ -311,10 +316,106 @@ test("멀티모달 프롬프트 — 문체별 창작 면허·인물 추론 금�
   };
   const p = buildMoment3MultimodalPrompt(req);
   assert.match(p, /Look at the photo carefully/);
-  assert.match(p, /"witty": CREATIVE/);
+  assert.match(p, /"witty": the goal is a SHORT COMEBACK/); // §H 재치 = 짧은 되받기
   assert.match(p, /"warm": POETIC/);
   assert.match(p, /NEVER guess or mention the identity, relationship, age, race, nationality/);
   assert.match(p, /NEVER invent real-sounding events/);
   for (const b of VISUAL_BASIS_ALLOWED) assert.ok(p.includes(b), b);
   assert.match(p, /IMMUTABLE PROPER NOUNS/);
+});
+
+// ── AI-TREND-PACK-PERSISTENT-CACHE V1 계약 ──────────────────────────────────
+
+test("따옴표 쌍 보존 — 감싼 쌍만 벗기고 한쪽 따옴표는 깨뜨리지 않는다(§K zh 수정)", () => {
+  assert.equal(stripWrappingQuotes('"전체 감쌈"'), "전체 감쌈");
+  assert.equal(stripWrappingQuotes("“中文引号”"), "中文引号");
+  assert.equal(stripWrappingQuotes("「日本語」"), "日本語");
+  // 구 버그 재현 입력: 끝만 닫는 따옴표 — 이제 그대로 보존된다(짝 안 깨짐)
+  assert.equal(stripWrappingQuotes("月精桥的“克隆”"), "月精桥的“克隆”");
+  assert.equal(stripWrappingQuotes('제목에 "인용" 포함'), '제목에 "인용" 포함');
+  assert.equal(stripWrappingQuotes('"시작만'), '"시작만');
+});
+
+test("trend pack — 배포 기본은 Owner 승인만, QA 플래그는 검수 완료분까지, 브랜드 연관 제외", () => {
+  // 현재 pack 은 전부 ownerApproved=false → 배포 기본 활성 0
+  assert.equal(activeTrendEntries("ko").length, 0);
+  assert.equal(trendPackVersionFor("ko"), null);
+  // QA 허용 시 verified_active 만 — owner_candidate·브랜드 연관은 여전히 제외
+  const koQA = activeTrendEntries("ko", { allowPendingOwner: true });
+  assert.ok(koQA.length >= 1);
+  assert.ok(koQA.every(e => e.status === "verified_active" && !e.brandOrArtistRelated));
+  assert.ok(!koQA.some(e => e.phrase.includes("두아") || e.phrase.includes("오이쉬")));
+  // zh 는 지역 미구분 → 항상 비활성(§F)
+  assert.equal(activeTrendEntries("zh", { allowPendingOwner: true }).length, 0);
+  assert.equal(trendPackVersionFor("zh", { allowPendingOwner: true }), null);
+  // 유효기간 밖이면 제외(만료 pack 미사용 §O)
+  assert.equal(activeTrendEntries("ko", { allowPendingOwner: true, now: new Date("2027-06-01") }).length, 0);
+});
+
+test("trend 검증(§G) — 활성 목록 밖 신고·미반영 신고는 witty 만 폐기", () => {
+  const resp = (trendId, wittyTitle) => JSON.stringify({
+    calm: { title: "밤의 월정교", memo: "물에 다리가 비쳤다." },
+    witty: { title: wittyTitle, memo: "물속에 하나 더 있네.", creative_kind: "visual_wordplay", visual_basis: ["reflection"], ...(trendId ? { trend_used_id: trendId } : {}) },
+    warm: { title: "밤이 머문 자리", memo: "밤이 물 위에 머물렀다.", creative_kind: "poetic_imagery", visual_basis: ["reflection"] },
+  });
+  const active = new Map([["ko-neujoh-2026", "느좋"]]);
+  // 신고 없음 → 통과, trendUsedId null
+  const r0 = extractMoment3Creative(resp(null, "야간엔 1+1"), active);
+  assert.ok(r0?.set.witty && r0.meta.trendUsedId === null);
+  // 활성 id + 실제 반영 → 통과 + 기록
+  const r1 = extractMoment3Creative(resp("ko-neujoh-2026", "다리 반영 느좋"), active);
+  assert.ok(r1?.set.witty && r1.meta.trendUsedId === "ko-neujoh-2026");
+  // 활성 목록 밖 id → witty 폐기(다른 방향 유지)
+  const r2 = extractMoment3Creative(resp("ko-fake-id", "야간엔 1+1"), active);
+  assert.ok(r2 && !r2.set.witty && r2.set.calm && r2.set.warm);
+  // 신고했는데 문구 미반영 → witty 폐기
+  const r3 = extractMoment3Creative(resp("ko-neujoh-2026", "야간엔 1+1"), active);
+  assert.ok(r3 && !r3.set.witty);
+  // 활성 목록이 아예 없으면 신고 자체가 위반
+  const r4 = extractMoment3Creative(resp("ko-neujoh-2026", "다리 반영 느좋"), new Map());
+  assert.ok(r4 && !r4.set.witty);
+});
+
+test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {
+  const base = { feature: "moment3", direction: null, itineraryId: "11111111-2222-4333-8444-555555555555", locale: "ko",
+    contextHash: "ctx1", imageSha: "img1", promptVersion: "v1", trendPackVersion: null };
+  const k1 = await computeCacheKey(base);
+  assert.equal(await computeCacheKey({ ...base }), k1); // 결정적
+  assert.notEqual(await computeCacheKey({ ...base, imageSha: "img2" }), k1);
+  assert.notEqual(await computeCacheKey({ ...base, contextHash: "ctx2" }), k1);
+  assert.notEqual(await computeCacheKey({ ...base, promptVersion: "v2" }), k1);
+  assert.notEqual(await computeCacheKey({ ...base, trendPackVersion: "tp1" }), k1);
+  assert.notEqual(await computeCacheKey({ ...base, itineraryId: "99999999-2222-4333-8444-555555555555" }), k1);
+  // storyHero 는 문체별 키 분리(QA 실측 결함 수정 검증)
+  assert.notEqual(await computeCacheKey({ ...base, feature: "storyHero", direction: "witty" }), await computeCacheKey({ ...base, feature: "storyHero", direction: "warm" }));
+  // 문맥 정규화 — 공백·순서 차이는 같은 입력이다
+  const c1 = normalizedContextString({ city: " gyeongju ", placeName: "월정교", tripFacts: ["a", " b "] });
+  const c2 = normalizedContextString({ tripFacts: ["a", "b"], placeName: "월정교", city: "gyeongju" });
+  assert.equal(c1, c2);
+  // draft(메모)·사진 유무 변경은 다른 입력
+  assert.notEqual(normalizedContextString({ city: "g", draft: "메모A" }), normalizedContextString({ city: "g", draft: "메모B" }));
+});
+
+test("호출 제한 설정(§I) — 기본값 + env 덮어쓰기, 잘못된 값은 기본 유지", () => {
+  const d = resolveLimits({});
+  assert.deepEqual(d, { regenCooldownSec: 20, entityRegenPerHour: 3, deviceCallsPerDay: 20, globalCallsPerDay: 100 });
+  const o = resolveLimits({ MYTRIP_AI_REGEN_COOLDOWN_SEC: "5", MYTRIP_AI_DEVICE_CALLS_PER_DAY: "abc", MYTRIP_AI_GLOBAL_CALLS_PER_DAY: "2" });
+  assert.equal(o.regenCooldownSec, 5);
+  assert.equal(o.deviceCallsPerDay, 20);
+  assert.equal(o.globalCallsPerDay, 2);
+});
+
+test("멀티모달 프롬프트 — trend 블록은 활성 항목이 있을 때만, witty 전용·최대 1개 지시(§G)", () => {
+  const req = { target: "moment3", direction: "calm", locale: "ko",
+    context: { city: "gyeongju", placeName: "월정교", hasPhoto: true } };
+  const noTrend = buildMoment3MultimodalPrompt(req, []);
+  assert.ok(!noTrend.includes("CURRENT EXPRESSIONS"));
+  const withTrend = buildMoment3MultimodalPrompt(req, [{ id: "x1", phrase: "느좋", meaning: "m", usageExample: "u", avoidWhen: "a" }]);
+  assert.match(withTrend, /CURRENT EXPRESSIONS/);
+  assert.match(withTrend, /AT MOST ONE, only in "witty"/);
+  assert.match(withTrend, /never translate one into another language/);
+  assert.match(withTrend, /trend_used_id/);
+  // 길이 목표(§H) — 처음부터 짧게
+  assert.match(withTrend, /around 18 characters/);
+  assert.match(buildMoment3MultimodalPrompt({ ...req, locale: "en" }, []), /~45 characters/);
 });

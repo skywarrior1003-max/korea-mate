@@ -59,6 +59,7 @@ export default function StoryHeroEditor({
   const [intro, setIntro] = useState(storyIntro ?? "");
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [limitedSec, setLimitedSec] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
   const inflight = useRef<AbortController | null>(null);
@@ -91,10 +92,17 @@ export default function StoryHeroEditor({
     const controller = new AbortController();
     inflight.current = controller;
     setBusy(true);
-    const out = await apiSuggestStoryHero({ direction: dir, locale, context, signal: controller.signal });
+    setLimitedSec(null);
+    const out = await apiSuggestStoryHero({
+      direction: dir, locale, context, itineraryId, deviceId,
+      forceFresh: opts?.forceFresh, signal: controller.signal,
+    });
     if (controller.signal.aborted) return;
     setBusy(false);
-    if (out) {
+    if (out && "rateLimited" in out) {
+      // 제한(§I) — 남은 시간만 안내. 직접 작성·저장은 계속 가능하다.
+      setLimitedSec(out.retryAfterSec);
+    } else if (out) {
       setTitle(out.title);
       setIntro(out.intro);
       try { sessionStorage.setItem(key, JSON.stringify(out)); } catch { /* private mode */ }
@@ -103,7 +111,7 @@ export default function StoryHeroEditor({
       setFailed(true);
     }
     setMode("edit");
-  }, [busy, buildContext, locale]);
+  }, [busy, buildContext, locale, itineraryId, deviceId]);
 
   const save = useCallback(async () => {
     if (saving || !title.trim()) return;
@@ -185,6 +193,7 @@ export default function StoryHeroEditor({
         {mode === "edit" && (
           <div className="mt-2 space-y-2.5">
             {failed && <p role="alert" className="text-[12.5px] font-bold text-red-600">{t("heroFailed")}</p>}
+            {limitedSec !== null && <p role="status" className="text-[12.5px] font-bold text-[#8A919B]">{t("heroLimited", { sec: Math.ceil(limitedSec) })}</p>}
             <label className="block">
               <span className="text-[11.5px] font-bold text-[#8A919B]">{t("heroTitleLabel")}</span>
               <input

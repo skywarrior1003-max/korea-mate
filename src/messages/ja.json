@@ -633,6 +633,7 @@
     "heroRegenNote": "雰囲気を変えると、AIがもう一度生成します。",
     "heroBusy": "AIが作成中…",
     "heroFailed": "生成に失敗しました。直接入力するか、もう一度お試しください。",
+    "heroLimited": "生成の上限に達しました。{sec}秒後に再試行できます — 直接編集・保存は可能です。",
     "heroEditHeading": "旅のStory表紙",
     "heroChangeTone": "雰囲気を変える",
     "heroRegen": "もう一度提案",
@@ -1467,7 +1468,8 @@
     "suggestBusy": "3つの提案を作成中…",
     "suggestFailed": "いま提案を作成できません。自分で書くか、少し後で再度お試しください。",
     "pickHint": "気に入った案をタップすると下のタイトルとメモに入ります — 自由に編集できます。",
-    "photoUseNotice": "AI提案を作るために、この写真と場所の情報を使用します。"
+    "photoUseNotice": "AI提案を作るために、この写真と場所の情報を使用します。",
+    "suggestLimited": "提案の回数上限に達しました。{sec}秒後に再試行できます — 直接入力はそのまま使えます。"
   },
   "guide": {
     "gotIt": "わかった",

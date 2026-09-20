@@ -19,7 +19,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { WRITING_DIRECTIONS, MOMENT3_PROMPT_VERSION, type WritingDirection, type WritingContext, type WritingImage } from "@/lib/mytrip-writing/writing-core";
-import { apiSuggestMomentSet, type MomentSuggestionSet } from "@/lib/mytrip-writing/api";
+import { apiSuggestMomentSet, apiWritingMeta, type MomentSuggestionSet } from "@/lib/mytrip-writing/api";
 
 const ORANGE = "#FF4A2D";
 
@@ -64,22 +64,27 @@ function cachePut(key: string, set: MomentSuggestionSet): void {
   try { if (Object.keys(set).length > 0) sessionStorage.setItem(key, JSON.stringify(set)); } catch { /* private mode */ }
 }
 
-export default function MomentAiSuggest({ ready, buildContext, onPick, photoDataUrl }: {
+export default function MomentAiSuggest({ ready, buildContext, onPick, photoDataUrl, itineraryId, deviceId }: {
   /** 자동 제안을 시작할 만큼 정보가 준비됐는가(장소·사진·메모 중 하나) */
   ready: boolean;
   /** 요청 시점의 실제 편집 맥락 — 미리 굳히지 않는다 */
   buildContext: () => WritingContext;
-  /** 사용자가 3안 중 하나를 골랐다 — 편집 필드에 채운다 */
-  onPick: (pick: { title: string; memo: string }) => void;
+  /** 사용자가 3안 중 하나를 골랐다 — 편집 필드에 채운다(메타 보고용 정보 포함) */
+  onPick: (pick: { title: string; memo: string; style: WritingDirection; generationId: string | null }) => void;
   /** 전처리된 미리보기 사진(data URL, canvas 재인코딩 JPEG) — 있으면 멀티모달 */
   photoDataUrl?: string | null;
+  /** 서버 영구 캐시·소유 검증(§C·§D) — 없으면 레거시(캐시 없는) 경로 */
+  itineraryId?: string;
+  deviceId?: string;
 }) {
   const t = useTranslations("aiWrite");
   const locale = useLocale();
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [limitedSec, setLimitedSec] = useState<number | null>(null);
   const [set, setSet] = useState<MomentSuggestionSet | null>(null);
   const [picked, setPicked] = useState<WritingDirection | null>(null);
+  const genIdRef = useRef<string | null>(null);
   const autoRan = useRef(false);
   const inflight = useRef<AbortController | null>(null);
   const cache = useRef<Map<string, MomentSuggestionSet>>(new Map());
@@ -93,23 +98,31 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
     const imgSha = b64 ? await sha256Hex16(b64) : null;
     const key = cacheKey(locale, context, imgSha);
     // 명시적 "다시 제안"(forceFresh)만 캐시를 지나친다 — 새 결과가 목적이므로.
+    // sessionStorage 는 빠른 로컬 캐시일 뿐이고, 다른 브라우저·세션은 서버
+    // 영구 캐시(§C)가 같은 입력을 provider 0 회로 돌려준다.
     if (!opts?.forceFresh && (b64 === null || imgSha !== null)) {
       const cached = cache.current.get(key) ?? cacheGet(key);
-      if (cached && Object.keys(cached).length > 0) { setSet(cached); setFailed(false); return; }
+      if (cached && Object.keys(cached).length > 0) { setSet(cached); setFailed(false); setLimitedSec(null); return; }
     }
     inflight.current?.abort();
     const controller = new AbortController();
     inflight.current = controller;
-    setBusy(true); setFailed(false);
-    const out = await apiSuggestMomentSet({ locale, context, image, signal: controller.signal });
+    setBusy(true); setFailed(false); setLimitedSec(null);
+    const out = await apiSuggestMomentSet({ locale, context, image, itineraryId, deviceId, forceFresh: opts?.forceFresh, signal: controller.signal });
     if (controller.signal.aborted) return;
     setBusy(false);
-    cache.current.set(key, out);
-    cachePut(key, out);
-    setSet(out);
+    if (out.rateLimited) {
+      // 제한(§I) — 남은 시간을 안내한다. 직접 작성·수정·저장은 그대로 가능하다.
+      setLimitedSec(out.rateLimited.retryAfterSec);
+      return;
+    }
+    genIdRef.current = out.generationId;
+    cache.current.set(key, out.set);
+    cachePut(key, out.set);
+    setSet(out.set);
     setPicked(null);
-    setFailed(Object.keys(out).length === 0);
-  }, [buildContext, locale, photoDataUrl]);
+    setFailed(Object.keys(out.set).length === 0);
+  }, [buildContext, locale, photoDataUrl, itineraryId, deviceId]);
 
   // 자동 제안 — 준비 조건 최초 충족 시 1회, 900ms 디바운스(연속 입력 흡수).
   // run 은 ref 로 본다 — buildContext 가 렌더마다 새 함수라 run 을 deps 에 두면
@@ -154,6 +167,9 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       {!busy && failed && (
         <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestFailed")}</p>
       )}
+      {!busy && limitedSec !== null && (
+        <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestLimited", { sec: Math.ceil(limitedSec) })}</p>
+      )}
 
       {!busy && set && Object.keys(set).length > 0 && (
         <>
@@ -165,7 +181,14 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
               return (
                 <button
                   key={d} type="button"
-                  onClick={() => { setPicked(d); onPick(s); }}
+                  onClick={() => {
+                    setPicked(d);
+                    // 선택 메타(§E — 문체·시각만, 원문 없음). best-effort.
+                    if (genIdRef.current && itineraryId && deviceId) {
+                      apiWritingMeta({ itineraryId, deviceId, generationId: genIdRef.current, event: "select", style: d });
+                    }
+                    onPick({ ...s, style: d, generationId: genIdRef.current });
+                  }}
                   aria-pressed={active}
                   className={`w-full text-left rounded-2xl border px-3.5 py-3 transition-colors ${
                     active ? "bg-white/15" : "bg-white/5 hover:bg-white/10"

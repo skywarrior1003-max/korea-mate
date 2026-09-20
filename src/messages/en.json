@@ -633,6 +633,7 @@
     "heroRegenNote": "Changing the mood asks the AI to write once more.",
     "heroBusy": "Writing…",
     "heroFailed": "Generation failed. Write your own or try again.",
+    "heroLimited": "Generation limit reached. Try again in {sec}s — you can still edit and save directly.",
     "heroEditHeading": "Trip story cover",
     "heroChangeTone": "Change mood",
     "heroRegen": "Suggest again",
@@ -1467,7 +1468,8 @@
     "suggestBusy": "Writing three suggestions…",
     "suggestFailed": "Suggestions are unavailable right now. Write your own, or try again shortly.",
     "pickHint": "Tap one to fill the title and memo below — you can edit freely.",
-    "photoUseNotice": "This photo and the place info are used to create the AI suggestions."
+    "photoUseNotice": "This photo and the place info are used to create the AI suggestions.",
+    "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself."
   },
   "guide": {
     "gotIt": "Got it",

@@ -27,12 +27,16 @@ import {
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
   extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
   MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS, type MomentSuggestion, type MomentSuggestionSet3, type HeroSuggestion,
-  type WritingImage, type WritingRequest, type Moment3CreativeMeta,
+  type WritingImage, type WritingRequest, type Moment3CreativeMeta, type TrendPromptEntry,
+  // eslint 없음 — 계약: functions 와 동일 배선
 } from "../../../src/lib/mytrip-writing/writing-core";
+import { activeTrendEntries } from "../../../src/lib/mytrip-writing/trend-packs";
 
 export interface Env {
   GEMINI_API_KEY?: string;
   INTERNAL_KEY?: string;
+  /** QA 전용 — Owner 승인 대기 trend 항목까지 활성(배포 기본 미설정) */
+  MYTRIP_TREND_QA?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -76,7 +80,7 @@ interface ProviderOutcome {
 /** provider 1회 호출. 재시도 0, timeout 8s, 실패는 전부 무해 상태 문자열로. */
 async function callProvider(
   apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3" | "storyHero",
-  direction?: "calm" | "witty" | "warm", image?: WritingImage | null,
+  direction?: "calm" | "witty" | "warm", image?: WritingImage | null, trendEntries: readonly TrendPromptEntry[] = [],
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
   const started = Date.now();
@@ -104,7 +108,7 @@ async function callProvider(
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     if (target === "moment3") {
       // 사진 경로는 창작 검증 파서 — 이미지 데이터는 이 함수 밖으로 나가지 않는다.
-      const creative = isMultimodal ? extractMoment3Creative(text) : null;
+      const creative = isMultimodal ? extractMoment3Creative(text, new Map(trendEntries.map(e => [e.id, e.phrase]))) : null;
       const set = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       return {
         suggestion: null, moment: null, hero: null, set, creativeMeta: creative?.meta ?? null,
@@ -240,11 +244,13 @@ export default {
       image = img;
     }
     const isMultimodal = body.target === "moment3" && image !== null;
-    const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body) : buildWritingPrompt(body);
+    // Trend Pack(§G) — 사전 검수 활성 목록만, 별도 provider 호출 없이 같은 1회 요청에 싣는다
+    const trendEntries = isMultimodal ? activeTrendEntries(body.locale, { allowPendingOwner: (env.MYTRIP_TREND_QA ?? "") === "1" }) : [];
+    const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body, trendEntries) : buildWritingPrompt(body);
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, prompt, body.target, body.direction, image),
+      callProvider(apiKey, prompt, body.target, body.direction, image, trendEntries),
       executionColo(),
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.

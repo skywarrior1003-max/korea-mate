@@ -11,6 +11,7 @@ import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
 import MomentAiSuggest from "@/components/MomentAiSuggest";
+import { apiWritingMeta } from "@/lib/mytrip-writing/api";
 
 interface Props {
   itineraryId: string;
@@ -148,6 +149,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
   /** setState 는 이 콜백 안에서 즉시 반영되지 않는다 — 첫 장 여부는 ref 로 본다 */
   const photoDataRef = useRef<string | null>(null);
   useEffect(() => { photoDataRef.current = photoData; }, [photoData]);
+  // 마지막으로 고른 AI 후보 — 저장 메타(§E: 수정 여부·글자 수 변화)에만 쓴다
+  const aiPickRef = useRef<{ title: string; memo: string; generationId: string | null } | null>(null);
 
   const totalPhotos = (photoData ? 1 : 0) + extraPhotos.length;
 
@@ -184,6 +187,16 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
       const ok = await onSave(moment);
       // 로컬 저장 자체가 실패했을 때만 오류다. 서버 동기화 대기는 오류가 아니다.
       if (!ok) setErrorKey("localSaveFailed");
+      // AI 후보를 골라 저장했다면 저장 메타(§E — 원문 없이 수정 여부·글자 수 변화만)
+      const pick = aiPickRef.current;
+      if (ok && pick?.generationId) {
+        apiWritingMeta({
+          itineraryId, deviceId, generationId: pick.generationId, event: "save",
+          edited: title.trim() !== pick.title || memo.trim() !== pick.memo,
+          titleLenDelta: title.trim().length - pick.title.length,
+          memoLenDelta: memo.trim().length - pick.memo.length,
+        });
+      }
       // 성공 시 모달을 닫는 책임은 상위(onSave)에 있다
     } catch {
       setErrorKey("localSaveFailed");
@@ -379,6 +392,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
               <MomentAiSuggest
                 ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}
                 photoDataUrl={photoData}
+                itineraryId={itineraryId}
+                deviceId={deviceId}
                 buildContext={() => ({
                   city: (city ?? "").trim() || "Korea",
                   // 결합 순간 = DB canonical locale 이름(aiPlaceName), 자유 순간 =
@@ -390,7 +405,10 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
                   draft: memo.trim() || null,
                   tripTitle: (tripTitle ?? "").trim() || null,
                 })}
-                onPick={pick => { setTitle(pick.title.slice(0, 60)); setMemo(pick.memo.slice(0, 300)); }}
+                onPick={pick => {
+                  aiPickRef.current = { title: pick.title, memo: pick.memo, generationId: pick.generationId };
+                  setTitle(pick.title.slice(0, 60)); setMemo(pick.memo.slice(0, 300));
+                }}
               />
             </div>
             <label className="block text-xs font-bold text-white/50 mb-1.5" htmlFor="moment-title">{t("titleLabel")}</label>

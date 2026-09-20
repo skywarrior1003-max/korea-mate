@@ -633,6 +633,7 @@
     "heroRegenNote": "更换语气会让AI再生成一次。",
     "heroBusy": "AI创作中…",
     "heroFailed": "生成失败。可以自己填写，或再试一次。",
+    "heroLimited": "生成已达上限。{sec}秒后可重试 — 仍可直接编辑并保存。",
     "heroEditHeading": "旅行Story封面",
     "heroChangeTone": "更换语气",
     "heroRegen": "再次建议",
@@ -1467,7 +1468,8 @@
     "suggestBusy": "正在生成三条建议…",
     "suggestFailed": "暂时无法生成建议。可以自己填写，或稍后再试。",
     "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。",
-    "photoUseNotice": "为生成AI建议，会使用这张照片和地点信息。"
+    "photoUseNotice": "为生成AI建议，会使用这张照片和地点信息。",
+    "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。"
   },
   "guide": {
     "gotIt": "知道了",
