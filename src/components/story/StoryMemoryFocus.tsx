@@ -18,13 +18,38 @@
 //
 // 닫으면 Journal 의 원래 자리로 돌아간다. 그 복귀는 여는 쪽의 책임이다.
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { FocusSlide } from "@/lib/share/story-focus-core";
 import { crossesMemory, neighborUrls } from "@/lib/share/story-focus-core";
 import {
   MARGIN_MOBILE, STACK_LG, STACK_MD, BASE,
-  DISPLAY_MEMORY, TITLE_MD, BODY_SM, LABEL_CAPS_WIDE,
+  FONT_SERIF, TITLE_MD, BODY_SM, LABEL_CAPS_WIDE,
 } from "./story-tokens";
+
+// ── 메모 반응형 크기 (STORY-FULLSCREEN-SWIPE-RESPONSIVE-TYPOGRAPHY V1) ────────
+// 원인: 예전에는 고정 48px 표시 토큰을 모든 폭에 그대로 써서, 모바일에서
+// 메모가 5~6줄로 사진 중앙을 덮었고, 넘침은 내부 세로 스크롤로 숨겼다.
+// 이제 모바일/데스크톱을 별도 단계로 나누고, **실제 렌더 높이**를 재서
+// 텍스트 그룹이 화면 하단 예산 안에 들어올 때까지 단계적으로만 줄인다.
+// 글은 자르지도, 스크롤하지도 않는다 — 최소 크기에서도 넘치는 극단 입력은
+// 넘친 채 그대로 보이게 두고(숨김 0) 별도 보고 대상으로 삼는다.
+const MEMO_STEPS_MOBILE  = [30, 26, 23, 20, 17] as const; // 48px 대비 첫 단계 -37%
+const MEMO_STEPS_DESKTOP = [40, 36, 32, 28] as const;     // 48px 대비 첫 단계 -17%
+/** 텍스트 그룹(칩+장소명+메모)이 차지할 수 있는 화면 높이 비율(§3-2: 하단 25~30%) */
+const GROUP_BUDGET_MOBILE  = 0.30;
+const GROUP_BUDGET_DESKTOP = 0.34;
+
+function useIsDesktop(): boolean {
+  const [desktop, setDesktop] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const on = () => setDesktop(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return desktop;
+}
 
 interface Props {
   /** 여행 전체 순서 (buildFocusSequence). 비어 있으면 그리지 않는다 */
@@ -92,10 +117,29 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
     onClose();
   }, [onClose]);
 
+  const isDesktop = useIsDesktop();
+  const steps = isDesktop ? MEMO_STEPS_DESKTOP : MEMO_STEPS_MOBILE;
+  const [memoStep, setMemoStep] = useState(0);
+  const groupRef = useRef<HTMLDivElement>(null);
+  const total0 = total === 0;
+  const currentMemo = total0 ? "" : slides[Math.min(i, total - 1)]!.memo;
+  // 슬라이드·레이아웃이 바뀌면 최대 크기부터 다시 잰다(§5: 글자 수가 아니라 실측)
+  useLayoutEffect(() => { setMemoStep(0); }, [i, isDesktop, currentMemo]);
+  useLayoutEffect(() => {
+    const el = groupRef.current;
+    if (!el || total0) return;
+    const budget = window.innerHeight * (isDesktop ? GROUP_BUDGET_DESKTOP : GROUP_BUDGET_MOBILE);
+    // 예산을 넘고 더 줄일 단계가 남았으면 한 단계 축소 — effect 가 다시 돌며 재측정
+    if (el.scrollHeight > budget && memoStep < steps.length - 1) {
+      setMemoStep(s => s + 1);
+    }
+  }, [memoStep, i, isDesktop, steps.length, total0]);
+
   if (total === 0) return null;
   const current = slides[i]!;
   const hasMemo = current.memo.trim() !== "";
   const atStart = i === 0, atEnd = i === total - 1;
+  const memoPx = steps[memoStep]!;
 
   return (
     <div
@@ -193,8 +237,10 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
             읽기 전용 캡션이므로 터치를 통과시키고, 스크롤이 필요한 인용문만
             pointer-events 를 되살린다. 스와이프는 루트 핸들러라 영향 없다. */}
         <div
+          ref={groupRef}
           className="relative z-20 w-full max-w-2xl mx-auto pointer-events-none"
-          style={{ paddingLeft: MARGIN_MOBILE, paddingRight: MARGIN_MOBILE, paddingBottom: 48 }}
+          /* 하단 안전영역(§3-3): iPhone home indicator·Android 내비 위로 SWIPE 가 밀려나지 않게 */
+          style={{ paddingLeft: MARGIN_MOBILE, paddingRight: MARGIN_MOBILE, paddingBottom: "calc(32px + env(safe-area-inset-bottom, 0px))" }}
           aria-live="polite"
         >
           {regionLabel && (
@@ -214,13 +260,23 @@ export default function StoryMemoryFocus({ slides, startIndex = 0, regionLabel, 
                 {current.placeName}
               </h2>
             )}
-            {/* 긴 글도 자르지 않는다. 넘치면 이 칸 안에서 스크롤한다. */}
+            {/* 긴 글도 자르지 않는다 — 내부 스크롤도 만들지 않는다(§5). 실측 높이가
+                하단 예산을 넘으면 위 effect 가 단계적으로 글자만 줄인다. 최소 단계에서도
+                넘치는 극단 입력은 숨기지 않고 그대로 보인다(별도 보고 대상). */}
             {/* 적은 글이 없으면 빈 제목 칸을 만들지 않는다 — Journal 과 같은 규칙 */}
             {hasMemo && (
             <h1
-              className="text-white leading-tight overflow-y-auto pointer-events-auto"
-              /* 줄간격 1.25 — 시안이 leading-tight 를 얹어 48px×1.25 = 60px 로 렌더한다 */
-              style={{ ...DISPLAY_MEMORY, lineHeight: 1.25, maxHeight: "45vh" }}
+              className="text-white"
+              style={{
+                fontFamily: FONT_SERIF,
+                fontWeight: 700,
+                letterSpacing: "-0.02em",
+                fontSize: `${memoPx}px`,
+                lineHeight: 1.3,
+                /* 데스크톱에서 메모가 한 줄로 길게 퍼지지 않게(§4) */
+                maxWidth: isDesktop ? "34rem" : undefined,
+                overflowWrap: "break-word",
+              }}
             >
               {current.memo}
             </h1>

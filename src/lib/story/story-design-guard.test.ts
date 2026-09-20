@@ -41,8 +41,13 @@ test("★독립 QA 에서 잡은 실측값이 되돌아가지 않는다", () => 
   assert.match(JOURNAL, /aspect-\[16\/10\]/);
   // ② Journey Complete 칩 글자색. 팔레트에서 눈으로 고르면 #370e00 을 집는다.
   assert.equal(T.ON_PRIMARY_CONTAINER, "#692200");
-  // ③ Focus 인용 줄간격 60px (48 × 1.25). 1.2 면 57.6px 이었다.
-  assert.match(FOCUS, /lineHeight: 1\.25/);
+  // ③ Focus 인용 (SWIPE-RESPONSIVE V1): 고정 48px·1.25 를 버리고 모바일/데스크톱
+  //    단계 크기 + 실측 높이 축소로 바뀌었다 — 고정 거대 크기로 되돌아가지 않는다.
+  assert.match(FOCUS, /MEMO_STEPS_MOBILE\s*=\s*\[30, 26, 23, 20, 17\]/);
+  assert.match(FOCUS, /MEMO_STEPS_DESKTOP\s*=\s*\[40, 36, 32, 28\]/);
+  assert.match(FOCUS, /lineHeight: 1\.3/);
+  assert.doesNotMatch(FOCUS, /overflow-y-auto/, "내부 스크롤로 넘침을 숨기지 않는다");
+  assert.doesNotMatch(FOCUS, /DISPLAY_MEMORY/, "고정 48px 토큰으로 되돌아가지 않는다");
   // ④ Focus 의 n/total·SWIPE, Cover eyebrow 자간 1.2px(0.1em)
   assert.equal(T.LABEL_CAPS_WIDE.letterSpacing, "0.1em");
   for (const src of [FOCUS, COVER]) assert.match(src, /LABEL_CAPS_WIDE/);
@@ -168,7 +173,9 @@ test("★Focus 는 좌우 1/3 탭과 스와이프로 넘긴다", () => {
 
 test("★긴 memo 를 데이터에서 잘라내지 않는다", () => {
   assert.match(FOCUS, /\{current\.memo\}/);
-  assert.match(FOCUS, /overflow-y-auto/);
+  // SWIPE-RESPONSIVE V1: 넘침은 스크롤이 아니라 실측 기반 단계 축소로 다룬다.
+  // 원문은 여전히 통째로 렌더된다 — slice 절단이 없음을 계속 지킨다.
+  assert.match(FOCUS, /scrollHeight > budget/);
   assert.doesNotMatch(strip(FOCUS), /memo\.slice\(0,\s*\d+\)\s*\+/);
 });
 
