@@ -1,0 +1,23 @@
+# gokoreamate-trend-curator-staging — 주간 Trend 후보 자동 수집 (V3 §6)
+#
+# ⚠ Staging 전용. Production route/binding 0. 무료 플랜 범위(Cron Triggers 포함).
+#   연결 대상은 Staging Supabase 뿐이다. 삭제: `wrangler delete` 또는
+#   Dashboard → Workers → gokoreamate-trend-curator-staging → Delete.
+#
+# secrets (wrangler secret put):
+#   GEMINI_API_KEY               — grounded research 용(무료 한도 공유, §6 비용 보고)
+#   TREND_SUPABASE_URL           — Staging https://<ref>.supabase.co
+#   TREND_SUPABASE_SERVICE_KEY   — Staging service_role
+#   CURATOR_TRIGGER_SECRET       — 수동 trigger 인증(공개 trigger 금지)
+
+name = "gokoreamate-trend-curator-staging"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+
+# UTC 월 19:00 = KST 화요일 04:00 (트래픽 최저 시간대)
+[triggers]
+crons = ["0 19 * * 1"]
+
+# Gemini 지역 차단(HKG 등) 회피 — ai-writing 과 동일한 서울 리전 고정
+[placement]
+region = "gcp:asia-northeast3"

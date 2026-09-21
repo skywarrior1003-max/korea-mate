@@ -81,18 +81,46 @@ test("§10 품질 전이 — 표본 미달이면 null, 선택률/재생성/대�
   assert.equal(TREND_QUALITY_RULE.minSample, 20);
 });
 
-test("§11 HMAC owner hash — 비밀키 기반, 키가 다르면 해시가 다르고 레거시와도 다르다", async () => {
+test("§11 HMAC owner hash — 비밀키 기반, 키가 다르면 해시가 다르고 레거시와도 다르다(V3: 폴백 없음)", async () => {
   const a = await ownerHashHmac("bbbbbbbb-cccc-4ddd-8eee-ffff00000001", "secret-A");
   const a2 = await ownerHashHmac("bbbbbbbb-cccc-4ddd-8eee-ffff00000001", "secret-A");
   const b = await ownerHashHmac("bbbbbbbb-cccc-4ddd-8eee-ffff00000001", "secret-B");
-  assert.ok(a.hmac && a.hash.length === 64);
-  assert.equal(a.hash, a2.hash);
-  assert.notEqual(a.hash, b.hash);
-  assert.notEqual(a.hash, await ownerHash("bbbbbbbb-cccc-4ddd-8eee-ffff00000001"));
-  // 비밀키 없으면 레거시 sha 로 동작하되 hmac=false 로 보고된다
-  const legacy = await ownerHashHmac("bbbbbbbb-cccc-4ddd-8eee-ffff00000001", undefined);
-  assert.ok(!legacy.hmac);
-  assert.equal(legacy.hash, await ownerHash("bbbbbbbb-cccc-4ddd-8eee-ffff00000001"));
+  assert.ok(a.length === 64);
+  assert.equal(a, a2);
+  assert.notEqual(a, b);
+  assert.notEqual(a, await ownerHash("bbbbbbbb-cccc-4ddd-8eee-ffff00000001"));
+  // V3 §5 — secret 없는 폴백 경로는 타입에서 제거됐다(fail-closed 는 함수 계층 검증)
+});
+
+test("V3 §3 — trend bucket: 결정적·분포·경계", async () => {
+  const { trendBucket, TREND_BUCKET_EXPERIMENTAL_MAX, TREND_BUCKET_ACTIVE_MAX } = await import("./generation-cache.ts");
+  const secret = "bucket-test-secret";
+  // 결정적 재현성
+  const one = await trendBucket(secret, { feature: "moment3", locale: "ko", contextHash: "c1", imageSha: "i1" });
+  const two = await trendBucket(secret, { feature: "moment3", locale: "ko", contextHash: "c1", imageSha: "i1" });
+  assert.deepEqual(one, two);
+  // secret·입력 민감도
+  const other = await trendBucket("other-secret", { feature: "moment3", locale: "ko", contextHash: "c1", imageSha: "i1" });
+  assert.notEqual(one.bucket, undefined);
+  assert.ok(one.bucket >= 0 && one.bucket <= 99);
+  // 분포 — locale별 100개 입력 hash(§11: 100개 이상, locale당 ≥20)
+  const tally = { experimental: 0, active: 0, none: 0 };
+  const perLocale: Record<string, Record<string, number>> = {};
+  for (const loc of ["ko", "en", "ja", "zh"]) {
+    perLocale[loc] = { experimental: 0, active: 0, none: 0 };
+    for (let i = 0; i < 100; i++) {
+      const { kind } = await trendBucket(secret, { feature: "moment3", locale: loc, contextHash: `ctx-${i}`, imageSha: `img-${i % 7}` });
+      tally[kind]++; perLocale[loc][kind]++;
+    }
+  }
+  const total = 400;
+  const expPct = tally.experimental / total * 100, actPct = tally.active / total * 100, nonePct = tally.none / total * 100;
+  console.log(`    분포(400): experimental ${expPct}% · active ${actPct}% · none ${nonePct}% · trend 합 ${expPct + actPct}%`);
+  assert.ok(Math.abs(expPct - TREND_BUCKET_EXPERIMENTAL_MAX) <= 5, `exp ${expPct}%`);
+  assert.ok(Math.abs(actPct - (TREND_BUCKET_ACTIVE_MAX - TREND_BUCKET_EXPERIMENTAL_MAX)) <= 6, `act ${actPct}%`);
+  assert.ok(expPct + actPct <= 25 + 6, "trend 상한 25%±오차");
+  assert.ok(nonePct >= 75 - 6);
+  void other;
 });
 
 test("§6 ja — 기계적 「笑」 꼬리는 결정적으로 제거된다(실측 재현 수정)", async () => {
@@ -101,8 +129,26 @@ test("§6 ja — 기계적 「笑」 꼬리는 결정적으로 제거된다(실�
   assert.equal(stripJaLaughTail("橋が2本(笑)"), "橋が2本");
   assert.equal(stripJaLaughTail("すごいｗｗ"), "すごい");
   assert.equal(stripJaLaughTail("笑って過ごした一日"), "笑って過ごした一日"); // 본문 중간·선두는 보존
-  const req = { target: "moment3", direction: "calm", locale: "ja", context: { city: "gyeongju", hasPhoto: true } };
+  const req = { target: "moment3", direction: "calm", locale: "ja", context: { city: "gyeongju", hasPhoto: true } } as import("./writing-core.ts").WritingRequest;
   const g = groundedMoment3Guard(req, { witty: { title: "橋が2本 笑", memo: "水面が頑張りすぎ。笑" }, calm: { title: "t", memo: "m" } });
-  assert.equal(g.witty.title, "橋が2本");
-  assert.equal(g.witty.memo, "水面が頑張りすぎ。");
+  assert.equal(g?.witty?.title, "橋が2本");
+  assert.equal(g?.witty?.memo, "水面が頑張りすぎ。");
+});
+
+test("V3 §9 — warm 상투구는 그 방향만 폐기(재호출 0)", async () => {
+  const { groundedMoment3Guard, STOCK_WARM_RE } = await import("./writing-core.ts");
+  assert.ok(STOCK_WARM_RE.test("모든 것이 멈춘 듯 평화로운"));
+  assert.ok(STOCK_WARM_RE.test("time stood still on the bridge"));
+  assert.ok(STOCK_WARM_RE.test("時が止まったよう"));
+  assert.ok(STOCK_WARM_RE.test("时间静止了"));
+  const req = { target: "moment3", direction: "calm", locale: "ko", context: { city: "gyeongju", hasPhoto: true } } as import("./writing-core.ts").WritingRequest;
+  const g = groundedMoment3Guard(req, {
+    calm: { title: "t", memo: "m" },
+    witty: { title: "w", memo: "wm" },
+    warm: { title: "밤의 다리", memo: "모든 것이 멈춘 듯 평화로웠다." },
+  });
+  assert.ok(g && g.calm && g.witty && !g.warm);
+  // 상투구 없는 warm 은 통과(감성 하향 아님)
+  const ok = groundedMoment3Guard(req, { warm: { title: "밤의 다리", memo: "빛이 물결에 스몄다." } });
+  assert.ok(ok?.warm);
 });

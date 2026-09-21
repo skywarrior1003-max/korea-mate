@@ -25,13 +25,13 @@ import {
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
   extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
   MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS,
-  MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION,
+  MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION, STOCK_WARM_RE,
   type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
   type WritingImage, type Moment3CreativeMeta, type TrendPromptEntry,
 } from "../../../src/lib/mytrip-writing/writing-core";
 import {
   AI_CACHE_TTL_DAYS, resolveLimits, sha256Hex, ownerHashHmac, normalizedContextString,
-  computeCacheKey, rateLimitedBody,
+  computeCacheKey, rateLimitedBody, trendBucket,
 } from "../../../src/lib/mytrip-writing/generation-cache";
 import {
   selectTrendForRequest, trendVersionOf, UI_TO_DB_LOCALE, type TrendRow,
@@ -202,7 +202,8 @@ async function runDirect(
       const extracted = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       const set = groundedMoment3Guard(body, extracted);
       const n = set ? Object.keys(set).length : 0;
-      log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n,
+      const warmStock = !!extracted?.warm && !set?.warm && STOCK_WARM_RE.test(extracted.warm.title + extracted.warm.memo);
+      log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, warmStock,
             multimodal: isMultimodal, ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: creative?.meta.kinds ?? null, dropped: creative?.meta.dropped ?? null, trend: creative?.meta.trendUsedId ?? null } : {}), ...usage });
       return { ai_status: n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty",
                suggestion: null, moment: null, set, meta: creative?.meta ?? null, usage: usageOut, latencyMs };
@@ -294,6 +295,13 @@ export async function onRequestPost(
   if ((ctx.env.MYTRIP_AI_WRITING_MODE ?? "").toLowerCase() === "off") {
     return reply(null, "off");
   }
+  // V3 §5 fail-closed — HMAC 비밀키가 없으면 약한 hash 로 대체하지 않는다:
+  // provider 호출 0·row 0. 직접 작성·수정·저장은 이 API 와 무관하게 정상이다.
+  if (!ctx.env.MYTRIP_HASH_SECRET) {
+    log({ ok: false, kind: "hash_secret_missing" });
+    return reply(null, "ai_unavailable");
+  }
+  const hashSecret = ctx.env.MYTRIP_HASH_SECRET;
 
   let body: unknown;
   try { body = await ctx.request.json(); }
@@ -343,15 +351,27 @@ export async function onRequestPost(
   const { data: owned } = await admin!.from("itineraries").select("id").eq("id", itineraryId!).eq("device_id", deviceId).maybeSingle();
   if (!owned) return json({ error: "Not found" }, 404);
 
-  // Trend Pack — DB(mytrip_trend_packs)가 SSOT(§3): 코드 재배포 없이 상태 변경.
-  // active/experimental_active·재검증 기한 내·저위험만 최대 5개(§9). 추가 provider 호출 0.
+  const feature = body.target as "moment3" | "storyHero";
+  const promptVersion = feature === "moment3" ? MOMENT3_PROMPT_VERSION : STORY_HERO_PROMPT_VERSION;
+  const contextHash = await sha256Hex(normalizedContextString(body.context));
+  const imageSha = image ? await sha256Hex(image.data) : null;
+
+  // Trend Pack(§3 V3) — 결정적 bucket 이 먼저 사용 여부·대상 상태를 정한다:
+  // 0~9 experimental(10%) · 10~24 active(15%) · 25~99 미사용(75%). 같은 입력은
+  // 항상 같은 결정을 받는다(HMAC — pack_version 은 bucket 입력에 없다).
+  // 해당 상태에 맞는 row 가 없거나 사진에 안 맞으면 다른 상태로 fallback 하지
+  // 않고 trend 없이 생성한다. DB 가 SSOT — 재배포 없이 상태 변경이 반영된다.
   let trendRows: TrendRow[] = [];
+  let bucketKind: "experimental" | "active" | "none" = "none";
   if (body.target === "moment3" && image !== null) {
+    const { kind } = await trendBucket(hashSecret, { feature, locale: body.locale, contextHash, imageSha });
+    bucketKind = kind;
     const dbLocale = UI_TO_DB_LOCALE[body.locale] ?? null;
-    if (dbLocale) {
+    if (dbLocale && kind !== "none") {
+      const wantStatus = kind === "experimental" ? "experimental_active" : "active";
       const { data: tr } = await admin!.from(TREND_TABLE)
         .select("id, locale, region_scope, phrase, canonical_form, meaning, safe_example, avoid_context, status, lifecycle_type, next_review_at, confidence_score, risk_score, brand_or_artist_related, pack_version")
-        .eq("locale", dbLocale).in("status", ["active", "experimental_active"]);
+        .eq("locale", dbLocale).eq("status", wantStatus);
       trendRows = selectTrendForRequest(
         (tr ?? []).map(r => {
           const row = r as Record<string, unknown>;
@@ -368,15 +388,12 @@ export async function onRequestPost(
     }
   }
   const trendEntries: TrendPromptEntry[] = trendRows.map(r => ({ id: r.id, phrase: r.phrase, meaning: r.meaning, usageExample: r.usageExample, avoidWhen: r.avoidWhen }));
-  const trendVer = trendVersionOf(trendRows);
+  // §3 cache key — 미사용 bucket 은 항상 null("none"): pack 이 갱신돼도 미사용
+  // 캐시는 무효화되지 않는다. 사용 bucket 만 보낸 row 집합의 버전을 쓴다.
+  const trendVer = trendRows.length > 0 ? trendVersionOf(trendRows) : null;
 
-  const feature = body.target as "moment3" | "storyHero";
-  const promptVersion = feature === "moment3" ? MOMENT3_PROMPT_VERSION : STORY_HERO_PROMPT_VERSION;
-  const contextHash = await sha256Hex(normalizedContextString(body.context));
-  const imageSha = image ? await sha256Hex(image.data) : null;
   const cacheKey = await computeCacheKey({ feature, direction: feature === "storyHero" ? body.direction : null, itineraryId: itineraryId!, locale: body.locale, contextHash, imageSha, promptVersion, trendPackVersion: trendVer });
-  // §11 — HMAC owner hash(비밀키 없으면 레거시 sha, 보고 대상)
-  const { hash: oHash, hmac: hmacUsed } = await ownerHashHmac(deviceId, ctx.env.MYTRIP_HASH_SECRET);
+  const oHash = await ownerHashHmac(deviceId, hashSecret);
   const limits = resolveLimits(ctx.env as Record<string, string | undefined>);
   const notExpired = (r: GenRow) => new Date(r.expires_at).getTime() > Date.now();
 
@@ -493,7 +510,7 @@ export async function onRequestPost(
       status: "failed", fail_code: outcome.ai_status,
       latency_ms: outcome.latencyMs,
     }).eq("id", genId);
-    log({ ok: false, kind: "ledger_failed", target: feature, locale: body.locale, fail: outcome.ai_status, hmac: hmacUsed });
+    log({ ok: false, kind: "ledger_failed", target: feature, locale: body.locale, fail: outcome.ai_status });
     return outcomeReply(outcome);
   }
   const u = outcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };

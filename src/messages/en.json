@@ -1469,7 +1469,8 @@
     "suggestFailed": "Suggestions are unavailable right now. Write your own, or try again shortly.",
     "pickHint": "Tap one to fill the title and memo below — you can edit freely.",
     "photoUseNotice": "This photo and the place info are used to create the AI suggestions.",
-    "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself."
+    "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself.",
+    "suggestUnavailable": "AI suggestions are temporarily unavailable. You can still write it yourself."
   },
   "guide": {
     "gotIt": "Got it",

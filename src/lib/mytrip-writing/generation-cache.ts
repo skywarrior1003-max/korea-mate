@@ -58,19 +58,42 @@ export function ownerHash(deviceId: string): Promise<string> {
   return sha256Hex(`gkm-owner-v1|${deviceId}`);
 }
 
-/**
- * V2 §11 — 서버 비밀키 기반 HMAC-SHA256 owner hash. 단순 결합 SHA 는 device id
- * 후보 대입으로 역산 시도가 가능하다. 비밀키(MYTRIP_HASH_SECRET)가 없으면
- * 레거시 sha 로 동작하되 호출부가 그 사실을 보고한다. Production 영향 0
- * (Staging rows 는 QA 정리로 0 이었다 — 교체 migration 불필요).
- */
-export async function ownerHashHmac(deviceId: string, secret: string | undefined): Promise<{ hash: string; hmac: boolean }> {
-  if (!secret) return { hash: await ownerHash(deviceId), hmac: false };
+async function hmacSha256(secret: string, message: string): Promise<Uint8Array> {
   const key = await crypto.subtle.importKey(
     "raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"],
   );
-  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`gkm-owner-v2|${deviceId}`));
-  return { hash: [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join(""), hmac: true };
+  return new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message)));
+}
+
+/**
+ * V2 §11 — 서버 비밀키 기반 HMAC-SHA256 owner hash.
+ * V3 §5 fail-closed: secret 없는 폴백을 제거했다 — secret 이 없으면 호출부가
+ * provider 호출·row 생성 없이 정직하게 거절한다(약한 레거시 sha 로 통과 금지).
+ */
+export async function ownerHashHmac(deviceId: string, secret: string): Promise<string> {
+  const sig = await hmacSha256(secret, `gkm-owner-v2|${deviceId}`);
+  return [...sig].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// ── V3 §3 — 결정적 trend 사용 bucket ─────────────────────────────────────────
+// 전체 재치 생성 중 trend 사용을 최대 25%로 제한한다. 일반 random 이 아니라
+// 서버 HMAC 기반 결정적 bucket — 같은 입력은 재열기마다 같은 결정을 받는다.
+// pack_version 은 bucket 입력에 넣지 않는다(§3 — pack 갱신이 같은 사진의
+// 사용 여부까지 흔들면 안 된다).
+export const TREND_BUCKET_EXPERIMENTAL_MAX = 10; // 0~9  → experimental_active 후보
+export const TREND_BUCKET_ACTIVE_MAX = 25;       // 10~24 → active 후보 · 25~99 → 미사용
+export type TrendBucketKind = "experimental" | "active" | "none";
+
+export async function trendBucket(
+  secret: string,
+  p: { feature: string; locale: string; contextHash: string; imageSha: string | null },
+): Promise<{ bucket: number; kind: TrendBucketKind }> {
+  const sig = await hmacSha256(secret, `gkm-trend-bucket-v1|${p.feature}|${p.locale}|${p.contextHash}|${p.imageSha ?? "noimg"}`);
+  const n = ((sig[0]! << 24) | (sig[1]! << 16) | (sig[2]! << 8) | sig[3]!) >>> 0;
+  const bucket = n % 100;
+  const kind: TrendBucketKind = bucket < TREND_BUCKET_EXPERIMENTAL_MAX ? "experimental"
+    : bucket < TREND_BUCKET_ACTIVE_MAX ? "active" : "none";
+  return { bucket, kind };
 }
 
 /**

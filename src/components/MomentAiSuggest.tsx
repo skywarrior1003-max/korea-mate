@@ -82,6 +82,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [limitedSec, setLimitedSec] = useState<number | null>(null);
+  const [unavailable, setUnavailable] = useState(false);
   const [set, setSet] = useState<MomentSuggestionSet | null>(null);
   const [picked, setPicked] = useState<WritingDirection | null>(null);
   const genIdRef = useRef<string | null>(null);
@@ -107,13 +108,18 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
     inflight.current?.abort();
     const controller = new AbortController();
     inflight.current = controller;
-    setBusy(true); setFailed(false); setLimitedSec(null);
+    setBusy(true); setFailed(false); setLimitedSec(null); setUnavailable(false);
     const out = await apiSuggestMomentSet({ locale, context, image, itineraryId, deviceId, forceFresh: opts?.forceFresh, signal: controller.signal });
     if (controller.signal.aborted) return;
     setBusy(false);
     if (out.rateLimited) {
       // 제한(§I) — 남은 시간을 안내한다. 직접 작성·수정·저장은 그대로 가능하다.
       setLimitedSec(out.rateLimited.retryAfterSec);
+      return;
+    }
+    if (out.aiStatus === "ai_unavailable") {
+      // V3 §5 fail-closed — 일시 사용 불가 안내(직접 작성은 그대로)
+      setFailed(false); setSet(null); setUnavailable(true);
       return;
     }
     genIdRef.current = out.generationId;
@@ -166,6 +172,9 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       )}
       {!busy && failed && (
         <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestFailed")}</p>
+      )}
+      {!busy && unavailable && (
+        <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestUnavailable")}</p>
       )}
       {!busy && limitedSec !== null && (
         <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestLimited", { sec: Math.ceil(limitedSec) })}</p>

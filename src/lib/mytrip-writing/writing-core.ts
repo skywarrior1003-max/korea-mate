@@ -44,7 +44,7 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v4-locale-craft";
+export const MOMENT3_PROMPT_VERSION = "moment3-v5-locale-polish";
 export const STORY_HERO_PROMPT_VERSION = "storyHero-v6-witty-craft";
 
 /**
@@ -95,10 +95,10 @@ export interface TrendPromptEntry {
 // ── 언어별 재치·감성 문법 (MULTILOCALE V2 §7·§8) — 한국어 결과의 번역이 아니라
 // locale 별 유머·감성 문법으로 처음부터 쓴다. 감성은 V1 품질 유지가 우선이다.
 const WITTY_LOCALE_CRAFT: Record<WritingLocale, string> = {
-  ko: "KO witty craft: 짧은 밈 문법·되받기·생활형 반전. 감탄사 남발 대신 한 박자 반전으로 끝낸다.",
-  ja: "JA witty craft: 抑えたツッコミ・リズム・オノマトペ・予想外の締め。「笑」を機械的に付けてユーモアの代わりにしない — 文そのものが可笑しいこと。",
-  en: "EN witty craft: visual pun, understatement, self-aware caption energy. No forced Gen-Z buzzwords; the brand-trying-too-hard voice is a failure.",
-  zh: "ZH witty craft: 简体中文网络语感 — 短对比、谐音、情境反转。像本地人随手发的一句，不要翻译腔。",
+  ko: "KO witty craft: 짧은 밈 문법·되받기·생활형 반전. 유머 장치는 한 결과에 정확히 1개 — 1+1류 숫자 개그·유행어·의인화를 한 카드에 겹쳐 쓰지 않는다.",
+  ja: "JA witty craft: 抑えたツッコミ・間・オノマトペ・予想外の締め。「笑」を機械的に付けない。韓国式の割引ネタ（1+1 等）の直訳や「お得感」の繰り返しは失敗 — 「水面が頑張りすぎ」のように日本語としてそのまま可笑しい観察を優先する。",
+  en: "EN witty craft: visual pun, understatement, self-aware caption energy. Do NOT default to a literal '1+1'; 'BOGO' only if a retail joke truly fits this photo. Never reuse 'main character energy' on every photo. Think shapes like: the river making a copy / one bridge, two appearances — but write your own.",
+  zh: "ZH witty craft: 简体中文网络语感 — 短对比、谐音、情境反转，像本地人随手发的一句。幽默手法一次只用一个：不要把“买一送一”和“出片”放进同一条，不要堆形容词像广告文案。",
 };
 const WARM_LOCALE_CRAFT: Record<WritingLocale, string> = {
   ko: "KO warm craft: 짧은 여운과 이미지 중심 — 설명하지 말고 남긴다.",
@@ -642,6 +642,13 @@ export function extractMoment3(text: string): MomentSuggestionSet3 | null {
  * 프롬프트 지시에도 붙는 사례가 실측돼 결정적으로 벗긴다. 문장 끝의
  * 笑/(笑)/ｗ/w 꼬리만 — 본문 중간의 표현은 건드리지 않는다.
  */
+/**
+ * V3 §9 — 감성 상투구 검출(4locale). 걸리면 그 warm 방향만 폐기한다(자동
+ * 재호출 0 — 직접 작성·다른 방향은 유지). 발생 빈도는 로그로 집계한다.
+ */
+export const STOCK_WARM_RE =
+  /모든 것이 멈춘|시간이 멈춘|잊지 못할|마음속에 오래|꿈처럼|꿈결처럼|time (?:stood|stands) still|unforgettable|like a dream|時が止ま|夢のよう|忘れられない|仿佛静止|时间静止|如梦|难忘/i;
+
 export function stripJaLaughTail(s: string): string {
   return s.replace(/[\s]*(?:\(笑\)|（笑）|笑|ｗ+|w{1,3})$/u, "").trim();
 }
@@ -658,6 +665,8 @@ export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionS
       if (!title || !memo) continue;
       pair = { title, memo };
     }
+    // V3 §9 — warm 상투구는 그 방향만 폐기(재호출 0·다른 방향 유지)
+    if (d === "warm" && STOCK_WARM_RE.test(pair.title + "\n" + pair.memo)) continue;
     if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
   }
   return Object.keys(out).length > 0 ? out : null;
@@ -732,10 +741,13 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `  land it in one beat. Craft level to aim for (do NOT copy, it is a shape reference): a night bridge`,
     `  doubled in the water → title "1+1 tonight", memo "came for one bridge, the water threw in another."`,
     `  Deadpan beats exclamation. If the photo gives nothing, a dry self-aware observation still beats`,
-    `  a scenic description. Never poetic-pretty — that is warm's job.`,
+    `  a scenic description. Never poetic-pretty — that is warm's job. ONE comic device per result:`,
+    `  never stack two gags. The title is the SETUP and the memo is the PAYOFF — never repeat the same`,
+    `  joke or number-gag in both lines.`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
     `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report. Never reuse`,
-    `  the same stock line for every place (no universal "time stood still" caption).`,
+    `  the same stock line for every place. BANNED warm clichés (any language): "time stood still",`,
+    `  "모든 것이 멈춘 듯"·"시간이 멈춘 듯"·"잊지 못할"·"마음속에 오래"·"꿈처럼"·"時が止まった"·"夢のよう"·"仿佛静止"·"如梦"·"难忘".`,
     // §7·§8 — 이 locale 의 유머·감성 문법으로 처음부터 쓴다(한국어 번역체 금지)
     WITTY_LOCALE_CRAFT[req.locale],
     WARM_LOCALE_CRAFT[req.locale],

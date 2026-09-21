@@ -1469,7 +1469,8 @@
     "suggestFailed": "暂时无法生成建议。可以自己填写，或稍后再试。",
     "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。",
     "photoUseNotice": "为生成AI建议，会使用这张照片和地点信息。",
-    "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。"
+    "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。",
+    "suggestUnavailable": "AI建议暂时不可用。你仍可直接输入。"
   },
   "guide": {
     "gotIt": "知道了",
