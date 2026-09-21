@@ -26,8 +26,10 @@ import {
   extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
   MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS,
   MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION, STOCK_WARM_RE, seasonViolation,
+  suggestionGuardReason, emptyValidation,
   type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
   type WritingImage, type Moment3CreativeMeta, type TrendPromptEntry,
+  type Moment3Validation, type DropReason,
 } from "../../../src/lib/mytrip-writing/writing-core";
 import {
   AI_CACHE_TTL_DAYS, resolveLimits, sha256Hex, ownerHashHmac, normalizedContextString,
@@ -143,6 +145,8 @@ interface DirectOutcome {
   moment: MomentSuggestion | null;
   set: MomentSuggestionSet3 | null;
   meta: Moment3CreativeMeta | null;
+  /** V5-3 §B — 방향별 판정 진단(reason code 만). 원장 result._validation 저장 전용, 공개 응답 0. */
+  validation: Moment3Validation | { hero: { status: string; reasons: DropReason[] } } | null;
   usage: { inTok: number | null; outTok: number | null; thinkTok: number | null } | Record<string, never>;
   latencyMs: number;
 }
@@ -159,7 +163,7 @@ async function runDirect(
   const isMultimodal = body.target === "moment3" && image !== null;
   const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body, trendEntries) : buildWritingPrompt(body);
   const fail = (ai_status: string, latencyMs: number): DirectOutcome =>
-    ({ ai_status, suggestion: null, moment: null, set: null, meta: null, usage: {}, latencyMs });
+    ({ ai_status, suggestion: null, moment: null, set: null, meta: null, validation: null, usage: {}, latencyMs });
   const controller = new AbortController();
   // 멀티모달은 12s(QA 실측 ja 8.0s 초과) — 재시도 0 계약은 그대로다.
   const timer = setTimeout(() => controller.abort(), isMultimodal ? MOMENT3_MULTIMODAL_TIMEOUT_MS : TIMEOUT_MS);
@@ -202,44 +206,59 @@ async function runDirect(
       const trendMap = new Map<string, readonly string[]>(
         trendEntries.map(t => [t.id, [t.phrase, ...(t.variants ?? [])]]));
       const creative = isMultimodal ? extractMoment3Creative(text, trendMap, body.locale) : null;
+      // V5-3 §B — 방향별 판정(reason code 만): 파서가 채우고 guard 가 이어 쓴다.
+      // 멀티모달인데 파서가 null 이면 JSON 자체가 깨진 것이다.
+      const validation: Moment3Validation = creative?.meta.validation
+        ?? (isMultimodal
+          ? { calm: { status: "dropped", reasons: ["json_parse_invalid"] }, witty: { status: "dropped", reasons: ["json_parse_invalid"] }, warm: { status: "dropped", reasons: ["json_parse_invalid"] } }
+          : emptyValidation());
       const extracted = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
-      const set = groundedMoment3Guard(body, extracted);
+      const set = groundedMoment3Guard(body, extracted, validation);
       const n = set ? Object.keys(set).length : 0;
       const warmStock = !!extracted?.warm && !set?.warm && STOCK_WARM_RE.test(extracted.warm.title + extracted.warm.memo);
       // V4 §F — 계절 위반으로 폐기된 방향(구조화 사유만, 원문 로그 0)
       const seasonDrop = (["calm", "witty", "warm"] as const).filter(d => !!extracted?.[d] && !set?.[d] && seasonViolation(body.context, extracted[d]!.title + " " + extracted[d]!.memo));
       log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, warmStock,
             ...(seasonDrop.length ? { seasonDrop } : {}),
-            multimodal: isMultimodal, ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: creative?.meta.kinds ?? null, dropped: creative?.meta.dropped ?? null, trend: creative?.meta.trendUsedId ?? null } : {}), ...usage });
+            multimodal: isMultimodal, ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: creative?.meta.kinds ?? null, dropped: creative?.meta.dropped ?? null, trend: creative?.meta.trendUsedId ?? null,
+              validation: Object.fromEntries((["calm", "witty", "warm"] as const).map(d => [d, validation[d]])) } : {}), ...usage });
       return { ai_status: n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty",
-               suggestion: null, moment: null, set, meta: creative?.meta ?? null, usage: usageOut, latencyMs };
+               suggestion: null, moment: null, set, meta: creative?.meta ?? null, validation: isMultimodal ? validation : null, usage: usageOut, latencyMs };
     }
     if (body.target === "storyHero") {
       // 표지는 AI 가 최종 문장을 직접 쓴다(§J). basis_refs 는 확인 용도 —
       // 제공 키 밖이면 거부. witty/warm 은 creative_kind whitelist 필수.
       const hero = extractHeroSuggestion(text);
-      const grounded = validateHeroRefs(body, hero);
+      // V5-3 §B — hero 폐기 사유 코드 수집(원문 0)
+      const heroReasons: DropReason[] = hero === null ? ["json_parse_invalid"] : [];
+      const grounded = validateHeroRefs(body, hero, heroReasons);
       const moment = groundedMomentGuard(body, grounded);
+      if (grounded !== null && moment === null) {
+        const r = suggestionGuardReason(body, grounded.title) ?? suggestionGuardReason(body, grounded.memo);
+        if (r) heroReasons.push(r);
+      }
       const refsRejected = hero !== null && grounded === null;
+      const heroValidation = { hero: { status: moment !== null ? "accepted" : "dropped", reasons: heroReasons } };
       log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale,
-            refs: hero?.sourceRefs.length ?? 0, kind: hero?.creativeKind ?? null, refsRejected, guarded: grounded !== null && moment === null, ...usage });
+            refs: hero?.sourceRefs.length ?? 0, kind: hero?.creativeKind ?? null, refsRejected, guarded: grounded !== null && moment === null,
+            reasons: heroReasons, ...usage });
       // basis_refs·creative_kind 는 저장·노출하지 않는다 — 검증에만 쓰고 버린다.
       return { ai_status: moment !== null ? "live" : refsRejected ? "fallback_refs" : hero !== null ? "fallback_guard" : "fallback_empty",
-               suggestion: null, moment, set: null, meta: null, usage: usageOut, latencyMs };
+               suggestion: null, moment, set: null, meta: null, validation: heroValidation, usage: usageOut, latencyMs };
     }
     if (body.target === "moment") {
       const extracted = extractMomentSuggestion(text);
       const moment = groundedMomentGuard(body, extracted);
       log({ ok: moment !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: (moment?.title.length ?? 0) + (moment?.memo.length ?? 0), guarded: extracted !== null && moment === null, ...usage });
       return { ai_status: moment !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty",
-               suggestion: null, moment, set: null, meta: null, usage: usageOut, latencyMs };
+               suggestion: null, moment, set: null, meta: null, validation: null, usage: usageOut, latencyMs };
     }
     const extracted = extractSuggestion(text, body.target);
     // 좁은 결정적 guard(§11) — 한글 오염/사진행동 발명만. 걸리면 honest fallback.
     const suggestion = groundedSuggestionGuard(body, extracted);
     log({ ok: suggestion !== null, via: "direct", latencyMs, target: body.target, dir: body.direction, locale: body.locale, outLen: suggestion?.length ?? 0, guarded: extracted !== null && suggestion === null, ...usage });
     return { ai_status: suggestion !== null ? "live" : extracted !== null ? "fallback_guard" : "fallback_empty",
-             suggestion, moment: null, set: null, meta: null, usage: usageOut, latencyMs };
+             suggestion, moment: null, set: null, meta: null, validation: null, usage: usageOut, latencyMs };
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
@@ -508,7 +527,8 @@ export async function onRequestPost(
     // Worker 는 DB 를 읽지 않는다 — 함수가 고른 trend 를 내부 전달한다(§9)
     const res = await viaWorker(binding!, internalKey!, { ...(body as object), trendEntries });
     const out = (await res.clone().json()) as { moment?: MomentSuggestion | null; set?: MomentSuggestionSet3 | null; ai_status?: string };
-    outcome = { ai_status: out.ai_status ?? "fallback_worker_shape", suggestion: null, moment: out.moment ?? null, set: out.set ?? null, meta: null, usage: {}, latencyMs: 0 };
+    // V5-3 한계: Worker 경로는 방향별 validation 을 아직 돌려주지 않는다(null).
+    outcome = { ai_status: out.ai_status ?? "fallback_worker_shape", suggestion: null, moment: out.moment ?? null, set: out.set ?? null, meta: null, validation: null, usage: {}, latencyMs: 0 };
   } else {
     outcome = await runDirect(ctx.fetchFn ?? fetch, apiKey!, body, image, trendEntries);
   }
@@ -518,6 +538,8 @@ export async function onRequestPost(
     // 실패도 원장이다 — row 유지·사유 코드만 기록(민감정보 0). 캐시로는 안 쓴다.
     await admin!.from(GEN_TABLE).update({
       status: "failed", fail_code: outcome.ai_status,
+      // V5-3 §B — 전멸 실패도 방향별 사유는 남긴다(원문 0·캐시로 안 쓰는 row)
+      ...(outcome.validation ? { result: { _validation: outcome.validation } } : {}),
       latency_ms: outcome.latencyMs,
     }).eq("id", genId);
     log({ ok: false, kind: "ledger_failed", target: feature, locale: body.locale, fail: outcome.ai_status });
@@ -526,7 +548,11 @@ export async function onRequestPost(
   const u = outcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };
   await admin!.from(GEN_TABLE).update({
     status: "succeeded",
-    result: feature === "moment3" ? outcome.set : { hero: outcome.moment },
+    // V5-3 §B — _validation 은 service-role 원장 진단 전용. rowToReplyParts 가
+    // 방향 키(title/memo)만 추출하므로 공개 응답·캐시 hit 에 노출되지 않는다.
+    result: feature === "moment3"
+      ? { ...outcome.set, ...(outcome.validation ? { _validation: outcome.validation } : {}) }
+      : { hero: outcome.moment, ...(outcome.validation ? { _validation: outcome.validation } : {}) },
     trend_used_id: outcome.meta?.trendUsedId ?? null,
     in_tok: u.inTok ?? null, out_tok: u.outTok ?? null, think_tok: u.thinkTok ?? null,
     latency_ms: outcome.latencyMs,

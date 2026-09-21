@@ -499,7 +499,7 @@ test("V5-2 §B·§C — witty 만 폐기(calm·warm 유지)·hero title/intro �
   const hp = buildWritingPrompt(heroReq);
   assert.match(hp, /WITHIN 3 SECONDS/);
   assert.match(hp, /고요한 유턴/);
-  assert.match(hp, /NEVER just re-explain the title/);
+  assert.match(hp, /must NOT merely explain the title/);
   const mp = buildMoment3MultimodalPrompt({ ...req, locale: "en" });
   assert.match(mp, /real operating information/);
   assert.match(mp, /never "stoned"/i);
@@ -519,10 +519,88 @@ test("V5-1 §H — hero witty 질문형 제목은 결정적으로 거부(나열�
   // calm 은 질문형 가드 비적용(계약은 witty 표지만)
   const calmReq: WritingRequest = { ...req, direction: "calm" };
   assert.ok(validateHeroRefs(calmReq, { title: "사흘의 경주였나", memo: "m", sourceRefs: [], creativeKind: null }));
-  // §H — 프롬프트에 질문형·나열 금지 계약이 실림
+  // §H — 프롬프트에 질문형·나열 금지 계약이 실림(V5-3 §F: 2곳 이상 금지로 강화)
   const p = buildWritingPrompt(req);
   assert.match(p, /NEVER a question/);
-  assert.match(p, /NEVER name three or more places/);
+  assert.match(p, /NEVER name two or more places/);
+});
+
+// ── V5-3 §B·§G — 폐기 사유 reason code(원문 0) ──────────────────────────────
+test("V5-3 §G — 파서 단계 reason code: kind·basis·trend 사유가 정확히 남는다", () => {
+  const active = new Map<string, readonly string[]>([["ko-duahonna-2026", ["혼나볼래?"]], ["ko-oishue-2026", ["오이쉬!"]]]);
+  const mk = (witty: Record<string, unknown>) => JSON.stringify({ calm: { title: "t", memo: "m" }, witty });
+  const reasonsOf = (j: string) => extractMoment3Creative(j, active, "ko")?.meta.validation.witty;
+  assert.deepEqual(reasonsOf(mk({ title: "t2", memo: "m2", visual_basis: ["reflection"] })), { status: "dropped", reasons: ["creative_kind_missing"] });
+  assert.deepEqual(reasonsOf(mk({ title: "t2", memo: "m2", creative_kind: "sarcasm_bomb", visual_basis: ["reflection"] })), { status: "dropped", reasons: ["creative_kind_invalid"] });
+  assert.deepEqual(reasonsOf(mk({ title: "t2", memo: "m2", creative_kind: "comeback" })), { status: "dropped", reasons: ["visual_basis_missing"] });
+  assert.deepEqual(reasonsOf(mk({ title: "t2", memo: "m2", creative_kind: "comeback", visual_basis: ["sunset_vibes"] })), { status: "dropped", reasons: ["visual_basis_invalid"] });
+  assert.deepEqual(reasonsOf(mk({ title: "혼나볼래?", memo: "오이쉬!까지", creative_kind: "comeback", visual_basis: ["reflection"] })), { status: "dropped", reasons: ["trend_multiple_detected"] });
+  assert.deepEqual(reasonsOf(mk({ title: "t2", memo: "m2", creative_kind: "comeback", visual_basis: ["reflection"], trend_used_id: "ko-duahonna-2026" })), { status: "dropped", reasons: ["trend_claim_mismatch"] });
+  // 통과 방향은 accepted·reasons []
+  const okv = extractMoment3Creative(mk({ title: "짧은 훅", memo: "한 번에 이해", creative_kind: "comeback", visual_basis: ["reflection"] }), active, "ko");
+  assert.deepEqual(okv?.meta.validation.calm, { status: "accepted", reasons: [] });
+  assert.deepEqual(okv?.meta.validation.witty, { status: "accepted", reasons: [] });
+});
+
+test("V5-3 §G — guard 단계 reason code: 길이·운영정보·브랜드·계절·flat", async () => {
+  const { emptyValidation, groundedMoment3Guard } = await import("./writing-core.ts");
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "ko",
+    context: { city: "gyeongju", placeName: "월정교", hasPhoto: true } };
+  const run = (witty: { title: string; memo: string }) => {
+    const v = emptyValidation();
+    const out = groundedMoment3Guard(req, { calm: { title: "월정교의 밤", memo: "물에 비쳤다" }, witty }, v);
+    return { out, w: v.witty };
+  };
+  assert.deepEqual(run({ title: "이 제목은 스물두 자를 확실히 넘기는 긴 제목이다", memo: "본문" }).w.reasons, ["title_length_violation"]);
+  assert.deepEqual(run({ title: "제목", memo: "나".repeat(46) }).w.reasons, ["memo_length_violation"]);
+  assert.deepEqual(run({ title: "월정교, 야간 영업 개시", memo: "물에 하나 더" }).w.reasons, ["business_info_violation"]);
+  assert.deepEqual(run({ title: "돌탑은 봤다는데", memo: "나는 뭘 봤을까" }).w.reasons, ["monologue_violation"]);
+  // 계절 — 사용자 근거 없는 계절 단정(witty)
+  const sv = emptyValidation();
+  groundedMoment3Guard(req, { witty: { title: "가을의 월정교", memo: "단풍보다 다리" } }, sv);
+  assert.deepEqual(sv.witty.reasons, ["season_violation"]);
+  // brand — en
+  const enReq: WritingRequest = { ...req, locale: "en", context: { city: "gyeongju", placeName: "Cheomseongdae", hasPhoto: true } };
+  const bv = emptyValidation();
+  groundedMoment3Guard(enReq, { witty: { title: "Stoned and flowered", memo: "old tower, new blooms" } }, bv);
+  assert.deepEqual(bv.witty.reasons, ["brand_safety_violation"]);
+  // V5-3 §C-1 — flat 설명문 고정 실패 fixture ("Old stone..." 실측)
+  const fv = emptyValidation();
+  groundedMoment3Guard(enReq, { witty: { title: "Old stone, new blooms", memo: "A stark contrast, yet peaceful." } }, fv);
+  assert.deepEqual(fv.witty.reasons, ["witty_flat_description"]);
+  // 명확한 되받기 1개는 허용
+  const okv = emptyValidation();
+  const ok = groundedMoment3Guard(req, { witty: { title: "야간엔 1+1", memo: "다리 하나 보러 왔는데 물이 하나 더 줬네" } }, okv);
+  assert.ok(ok?.witty && okv.witty.status !== "dropped");
+});
+
+test("V5-3 §F·§G — hero: 추상 시어·장소 2곳·motif 미사용 사유 + 허용 케이스", async () => {
+  const { validateHeroRefs, HERO_ABSTRACT_RE, heroDistinctPlaceCount, heroMotifMissing } = await import("./writing-core.ts");
+  const ctx = { city: "gyeongju", hasPhoto: true, tripFacts: [
+    "3 day(s), 7 stops", "places include: 월정교, 첨성대, 대릉원",
+    "traveler's public moment notes: \"첨성대의 밤\" / \"다리 위에서 잠시\" / \"고요했다\"" ] };
+  const req: WritingRequest = { target: "storyHero", direction: "witty", locale: "ko", context: ctx };
+  const hero = (title: string, memo: string) => ({ title, memo, sourceRefs: [], creativeKind: "comeback" });
+  const tryHero = (t: string, m: string) => { const rs: string[] = []; const out = validateHeroRefs(req, hero(t, m), rs as never); return { out, rs }; };
+  // V5.2 실측 실패 사례 고정 — 추상 시어
+  assert.ok(HERO_ABSTRACT_RE.test("경주에서 고요함을 '잠시' 빌리다"));
+  const a = tryHero("경주에서 고요함을 '잠시' 빌리다", "다리 위에서 잠시 멈췄다");
+  assert.equal(a.out, null); assert.deepEqual(a.rs, ["hero_abstract_violation"]);
+  // 장소 2곳 나열
+  const b = tryHero("다리 위에서 잠시, 두 배로", "월정교 위에서 멈추자 첨성대 밤도 왔다");
+  assert.equal(b.out, null); assert.deepEqual(b.rs, ["hero_scene_list_violation"]);
+  assert.equal(heroDistinctPlaceCount(ctx, "월정교 위에서 멈추자 첨성대 밤도 왔다"), 2);
+  // 저장 motif 미사용
+  const c = tryHero("경주는 밥이 다 했다", "국밥 세 그릇의 기록이었다");
+  assert.equal(c.out, null); assert.deepEqual(c.rs, ["hero_saved_motif_missing"]);
+  assert.ok(heroMotifMissing(ctx, "경주는 밥이 다 했다 국밥 세 그릇의 기록이었다"));
+  // 저장 witty 한 건("다리 위에서 잠시")을 명확히 되받은 hero — 허용
+  const d = tryHero("다리 위에서 잠시, 라던 사람", "그 잠시가 사흘 중 제일 길었다");
+  assert.ok(d.out && d.rs.length === 0);
+  assert.ok(!heroMotifMissing(ctx, "다리 위에서 잠시, 라던 사람"));
+  // 질문형 사유 코드
+  const e = tryHero("다리 위에서 잠시였을까", "그 잠시가 길었다");
+  assert.equal(e.out, null); assert.deepEqual(e.rs, ["hero_question_violation"]);
 });
 
 test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {

@@ -44,8 +44,32 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v8-brand-safe";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v10-clear-wit";
+export const MOMENT3_PROMPT_VERSION = "moment3-v9-wit-quality";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v11-single-scene";
+
+// ── V5-3 §B — 폐기 사유 reason code ─────────────────────────────────────────
+// 원문을 저장하지 않고도 폐기 단계를 특정한다. 하나의 "invalid" 로 합치지
+// 않는다. 값은 진단 전용 — 공개 API·화면·공유 카드 노출 0(원장 result 내부
+// _validation 과 구조화 로그만).
+export type DropReason =
+  | "json_parse_invalid" | "direction_missing" | "title_missing" | "memo_missing"
+  | "creative_kind_missing" | "creative_kind_invalid"
+  | "visual_basis_missing" | "visual_basis_invalid"
+  | "title_length_violation" | "memo_length_violation" | "monologue_violation"
+  | "trend_multiple_detected" | "trend_claim_mismatch"
+  | "foreign_locale_violation" | "photo_action_violation" | "season_violation"
+  | "business_info_violation" | "brand_safety_violation"
+  | "stock_warm_violation" | "ja_laugh_tail_empty" | "witty_flat_description"
+  | "basis_ref_invalid"
+  | "hero_question_violation" | "hero_abstract_violation"
+  | "hero_scene_list_violation" | "hero_saved_motif_missing";
+export interface DirectionValidation { status: "accepted" | "dropped" | "missing"; reasons: DropReason[] }
+export type Moment3Validation = Record<WritingDirection, DirectionValidation>;
+export const emptyValidation = (): Moment3Validation => ({
+  calm: { status: "missing", reasons: [] },
+  witty: { status: "missing", reasons: [] },
+  warm: { status: "missing", reasons: [] },
+});
 
 /**
  * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
@@ -286,19 +310,28 @@ export function extractHeroSuggestion(text: string): HeroSuggestion | null {
  * 허용 목록에 있어야 한다(§D — 검증에만 쓰고 저장·노출 0). 형식 검증이 창작
  * 품질·완전한 진실성을 보장하지 못한다는 한계는 보고서에 그대로 적는다.
  */
-export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | null): MomentSuggestion | null {
+export function validateHeroRefs(
+  req: WritingRequest, hero: HeroSuggestion | null,
+  /** V5-3 §B — 넘기면 폐기 사유 코드를 push 한다(원문 0). */
+  reasons?: DropReason[],
+): MomentSuggestion | null {
   if (hero === null) return null;
+  const fail = (r: DropReason): null => { reasons?.push(r); return null; };
   const keys = new Set(buildHeroFacts(req.context).map(f => f.key));
-  for (const r of hero.sourceRefs) if (!keys.has(r)) return null;
+  for (const r of hero.sourceRefs) if (!keys.has(r)) return fail("basis_ref_invalid");
   if ((req.direction === "witty" || req.direction === "warm") &&
-      !(CREATIVE_KINDS as readonly string[]).includes(hero.creativeKind ?? "")) return null;
-  // V5-1 §H — witty 표지 제목의 질문형은 결정적으로 거부한다(재호출 0).
-  if (req.direction === "witty" && HERO_QUESTION_RE.test(hero.title)) return null;
-  // V5-2 §E-9 — 표지 title·intro 도 운영정보·브랜드 안전 가드를 지난다(witty).
+      !(CREATIVE_KINDS as readonly string[]).includes(hero.creativeKind ?? "")) return fail("creative_kind_invalid");
   if (req.direction === "witty") {
     const joined = hero.title + "\n" + hero.memo;
     const src = guardSourcesOf(req.context);
-    if (bizInfoViolation(joined, src) || brandSafetyViolation(joined, src)) return null;
+    // V5-1 §H — 질문형 결정 거부 · V5-2 §E-9 — 운영정보·브랜드 가드
+    if (HERO_QUESTION_RE.test(hero.title)) return fail("hero_question_violation");
+    if (bizInfoViolation(joined, src)) return fail("business_info_violation");
+    if (brandSafetyViolation(joined, src)) return fail("brand_safety_violation");
+    // V5-3 §F — 모호 추상 조합·장소 나열(2곳 이상)·저장 모티프 미사용
+    if (HERO_ABSTRACT_RE.test(joined)) return fail("hero_abstract_violation");
+    if (heroDistinctPlaceCount(req.context, joined) >= 2) return fail("hero_scene_list_violation");
+    if (heroMotifMissing(req.context, joined)) return fail("hero_saved_motif_missing");
   }
   return { title: hero.title, memo: hero.memo };
 }
@@ -441,25 +474,26 @@ export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
   ].join(" "),
   witty: [
     "Tone — light and witty. The cover must make the reader smile ONCE MORE at this trip — it is a COMEBACK,",
-    "not a summary. Build the cover around ONE CONCRETE MOTIF taken from the traveler's own public moment",
-    "notes (their own joke or a vivid detail is the best material): pick it up, echo it, or escalate it one",
-    "step — that echo is the ONLY place a current expression may appear; never add a new trend phrase the",
-    "traveler did not use. If no saved joke exists, find the one funny pattern in the real facts and land it",
-    "as a short deadpan punchline.",
-    "TITLE: a short declarative or noun-phrase statement whose comic device is understood WITHIN 3 SECONDS",
-    "— exactly ONE device (a reversal, a contrast, a comeback, light wordplay, or a plain everyday",
-    "analogy). NEVER a question — no question marks, no wondering endings (Korean '~했나/~일까/~였을까'",
-    "style). NEVER a vague poetic pairing the reader must decode ('고요한 유턴', '시간의 결', '빛의 흔적',",
-    "'마음의 파동' and anything of that shape — if the pairing needs interpretation, it is wrong).",
-    "No list of places.",
-    "INTRO: exactly ONE sentence, ONE scene, ONE device. NEVER name three or more places, NEVER walk",
-    "through the itinerary ('did A at X, then B at Y...'), and NEVER just re-explain the title — zoom",
-    "into the one saved scene and let it hint at the whole trip's mood.",
+    "not a summary and NOT a soft emotional line. Pick the SINGLE most witty public moment note the traveler",
+    "saved and build the whole cover on that one scene: echo it or escalate it one step — that echo is the",
+    "ONLY place a current expression may appear; never add a new trend phrase the traveler did not use.",
+    "Mention AT MOST ONE place name directly. If no saved note has any comic spark, land one short deadpan",
+    "punchline from the single most concrete real fact instead — never glue several places together.",
+    "TITLE and INTRO must share the SAME single device (a reversal, a contrast, a comeback, light wordplay,",
+    "or a plain everyday analogy) — the title lands it, the intro replays the same scene once more from a",
+    "slightly different angle. The intro must NOT merely explain the title.",
+    "TITLE: a short declarative or noun-phrase statement whose comic device is understood WITHIN 3 SECONDS.",
+    "NEVER a question — no question marks, no wondering endings (Korean '~했나/~일까/~였을까' style).",
+    "NEVER a vague poetic pairing the reader must decode ('고요한 유턴', '고요함을 빌리다', '시간의 결',",
+    "'빛의 흔적', '마음의 파동', '기억의 조각', '풍경이 말을 걸다', '여행이 머물다', '순간을 품다' and",
+    "anything of that shape — if the pairing needs interpretation, it is wrong). No list of places.",
+    "INTRO: exactly ONE sentence, ONE scene, ONE device. NEVER name two or more places, NEVER walk",
+    "through the itinerary ('did A at X, then B at Y...').",
     "NEVER phrase anything like real operating information (opening hours, 'open now', 영업/휴무) and",
     "NEVER use drug/drunk/violence-flavored slang (stoned, wasted, got high, killer...) — travel brand cover.",
     "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), stringing several",
-    "moments together, a poetic-pretty line (that is the emotional tone's job), or a caption that fits any",
-    "trip. Deadpan beats exclamation. Never invent feelings or plans the traveler did not write.",
+    "moments together, a poetic-pretty or calm-emotional line (that is the emotional tone's job), or a",
+    "caption that fits any trip. Deadpan beats exclamation. Never invent feelings or plans the traveler did not write.",
     "Allowed: metaphor, personification of the itinerary/scenes, playful exaggeration that no one could mistake for a real event.",
     "creative_kind must name the main device you used.",
   ].join(" "),
@@ -847,6 +881,43 @@ export function brandSafetyViolation(text: string, sources: string): boolean {
   return false;
 }
 
+// ── V5-3 §C-1 — witty "안전한 설명문" 검출(좁은 결정 패턴) ──────────────────
+// 알려진 flat 실패형만 잡는다("Old stone, new blooms / A stark contrast, yet
+// peaceful" 실측). 의미 품질 전반은 정규식으로 보장할 수 없다 — 프롬프트와
+// 사람 판독이 본대이고, 이 regex 는 재발 방지 fixture 다.
+export const WITTY_FLAT_RE =
+  /\bstark contrast\b|\byet peaceful\b|\btimeless beauty\b|\bold meets new\b|\ba peaceful moment\b|\bbeautiful view\b|평화로운 순간|아름다운 풍경/i;
+
+// ── V5-3 §F — hero 모호 추상 조합·장면 구조 검증 ────────────────────────────
+export const HERO_ABSTRACT_RE =
+  /고요한 유턴|고요함을[^\n]{0,10}빌리|시간의 결|빛의 흔적|마음의 파동|기억의 조각|풍경이 말을 걸|여행이 머물|순간을 품/;
+
+/** tripFacts 의 "places include: A, B, C" 라인에서 장소명 목록을 꺼낸다(결정적). */
+export function heroPlacesOf(c: WritingContext): string[] {
+  for (const f of c.tripFacts ?? []) {
+    const m = /places include:\s*(.+)$/i.exec(f);
+    if (m) return m[1]!.split(",").map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+/** hero title+intro 에 직접 언급된 서로 다른 장소 수 — 2곳 이상이면 나열형(§F-1-2). */
+export function heroDistinctPlaceCount(c: WritingContext, text: string): number {
+  return heroPlacesOf(c).filter(p => p && text.includes(p)).length;
+}
+/**
+ * 공개 moment notes(따옴표 인용)가 전달됐는데 hero 가 그 어떤 note 의 단어와도
+ * 겹치지 않으면 저장 모티프 미사용으로 본다(§F-1-1). 토큰 겹침 기반의 보수적
+ * 근사 — notes 미전달 시 검사하지 않는다. 의미 수준 판정은 사람 판독 몫.
+ */
+export function heroMotifMissing(c: WritingContext, text: string): boolean {
+  const notesLine = (c.tripFacts ?? []).find(f => /moment notes:/i.test(f));
+  if (!notesLine) return false;
+  const quoted = [...notesLine.matchAll(/"([^"]+)"/g)].map(m => m[1]!);
+  if (quoted.length === 0) return false;
+  const tokens = quoted.flatMap(q => q.split(/\s+/)).map(t => t.replace(/[.,!?'"’]/g, "")).filter(t => t.length >= 2);
+  return !tokens.some(t => text.includes(t));
+}
+
 /** V5-2 — 두 가드 공용 source 문자열(사용자·전달 사실만 — AI 산출물 아님) */
 export function guardSourcesOf(c: WritingContext): string {
   return [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
@@ -856,31 +927,47 @@ export function guardSourcesOf(c: WritingContext): string {
 export const WITTY_MONOLOGUE_RE =
   /(?:뭘|무얼|무엇을)\s*(?:봤|보았|했|느꼈)을까|나는\s*무엇|내가\s*본\s*것?은\s*무엇|what\s+(?:did|do)\s+i\s+(?:even\s+)?(?:see|feel|learn)|何を(?:見|感じ)た(?:の)?(?:だろう|かな)|私は何を|我(?:到底)?(?:看|感受)到了什么/i;
 
-/** moment3 세트에 방향별 guard — 걸린 방향만 빠진다(부분 성공 유지) */
-export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionSet3 | null): MomentSuggestionSet3 | null {
+/**
+ * moment3 세트에 방향별 guard — 걸린 방향만 빠진다(부분 성공 유지).
+ * V5-3 §B — validation 을 넘기면 폐기 사유 코드를 방향별로 기록한다(원문 0).
+ */
+export function groundedMoment3Guard(
+  req: WritingRequest, set: MomentSuggestionSet3 | null, validation?: Moment3Validation,
+): MomentSuggestionSet3 | null {
   if (set === null) return null;
   const out: MomentSuggestionSet3 = {};
+  const drop = (d: WritingDirection, r: DropReason) => {
+    if (validation) validation[d] = { status: "dropped", reasons: [...(validation[d]?.reasons ?? []).filter(x => x !== r), r] };
+  };
   for (const d of WRITING_DIRECTIONS) {
     let pair = set[d];
     if (!pair) continue;
     if (req.locale === "ja" && d === "witty") {
       const title = stripJaLaughTail(pair.title), memo = stripJaLaughTail(pair.memo);
-      if (!title || !memo) continue;
+      if (!title || !memo) { drop(d, "ja_laugh_tail_empty"); continue; }
       pair = { title, memo };
     }
     // V3 §9 — warm 상투구는 그 방향만 폐기(재호출 0·다른 방향 유지)
-    if (d === "warm" && STOCK_WARM_RE.test(pair.title + "\n" + pair.memo)) continue;
-    // V5 §C·§B — witty 길이 계약 위반·철학 독백은 witty 만 폐기(재호출 0)
-    if (d === "witty" && (wittyLenViolation(req.locale, pair.title, pair.memo)
-      || WITTY_MONOLOGUE_RE.test(pair.title + "\n" + pair.memo))) continue;
-    // V5-2 §B·§C — 운영정보 오인·브랜드 위험 표현은 witty 만 폐기(재호출 0).
-    // calm/warm·직접 작성·수정·저장은 그대로 산다.
+    if (d === "warm" && STOCK_WARM_RE.test(pair.title + "\n" + pair.memo)) { drop(d, "stock_warm_violation"); continue; }
     if (d === "witty") {
       const joined = pair.title + "\n" + pair.memo;
+      // V5 §C — 길이 계약(제목·본문 분리 사유)
+      if (wittyLenViolation(req.locale, pair.title, "")) { drop(d, "title_length_violation"); continue; }
+      if (wittyLenViolation(req.locale, "", pair.memo)) { drop(d, "memo_length_violation"); continue; }
+      // V5 §B — 철학 독백·추상 자기질문
+      if (WITTY_MONOLOGUE_RE.test(joined)) { drop(d, "monologue_violation"); continue; }
+      // V5-2 §B·§C — 운영정보 오인·브랜드 위험(witty 만 폐기·재호출 0)
       const src = guardSourcesOf(req.context);
-      if (bizInfoViolation(joined, src) || brandSafetyViolation(joined, src)) continue;
+      if (bizInfoViolation(joined, src)) { drop(d, "business_info_violation"); continue; }
+      if (brandSafetyViolation(joined, src)) { drop(d, "brand_safety_violation"); continue; }
+      // V5-3 §C-1 — 알려진 flat 설명문형은 witty 가 아니다
+      if (WITTY_FLAT_RE.test(joined)) { drop(d, "witty_flat_description"); continue; }
     }
-    if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
+    const rT = suggestionGuardReason(req, pair.title);
+    const rM = rT === null ? suggestionGuardReason(req, pair.memo) : null;
+    const r = rT ?? rM;
+    if (r !== null) { drop(d, r); continue; }
+    out[d] = pair;
   }
   return Object.keys(out).length > 0 ? out : null;
 }
@@ -976,6 +1063,14 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `  NEVER use words whose first casual reading is drugs, drunkenness, or violence (stoned, wasted,`,
     `  "got high", "so lit", killer, sick-as-slang, and their equivalents in any language) — this is a`,
     `  travel brand caption. A stone tower is "stone", never "stoned".`,
+    `  A caption that merely NAMES or DESCRIBES what is in the photo ("old stone, new blooms" /`,
+    `  "a stark contrast, yet peaceful" style) is NOT witty — it is a failed entry. Witty needs exactly`,
+    `  one working device: a reversal, a callback, an everyday-life analogy, an instantly readable pun,`,
+    `  a personification, or an expectation-vs-reality flip.`,
+    `  PROCESS for "witty" (do this INTERNALLY — never output drafts or reasoning): sketch three witty`,
+    `  candidates; keep only those impossible to write without THIS photo; discard any that read like`,
+    `  operating info, risky slang, or plain description; return ONLY the shortest, most instantly`,
+    `  understood survivor as the final JSON.`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
     `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report. Never reuse`,
     `  the same stock line for every place. BANNED warm clichés (any language): "time stood still",`,
@@ -1037,6 +1132,8 @@ export interface Moment3CreativeMeta {
   dropped: WritingDirection[];
   /** witty 가 실제 사용을 신고하고 검증을 통과한 pack id — 미사용이면 null */
   trendUsedId: string | null;
+  /** V5-3 §B — 방향별 파서·가드 판정(reason code 만 — 원문 0). 진단 전용. */
+  validation: Moment3Validation;
 }
 
 /**
@@ -1065,23 +1162,31 @@ export function extractMoment3Creative(
     return v;
   };
   const set: MomentSuggestionSet3 = {};
-  const meta: Moment3CreativeMeta = { kinds: {}, dropped: [], trendUsedId: null };
+  const meta: Moment3CreativeMeta = { kinds: {}, dropped: [], trendUsedId: null, validation: emptyValidation() };
+  // V5-3 §B — 방향별 폐기 사유(reason code)만 남긴다. 원문·부분 문구 저장 0.
+  const drop = (d: WritingDirection, ...reasons: DropReason[]) => {
+    meta.dropped.push(d);
+    meta.validation[d] = { status: "dropped", reasons };
+  };
   for (const d of WRITING_DIRECTIONS) {
     const e = raw[d] as { title?: unknown; memo?: unknown; creative_kind?: unknown; visual_basis?: unknown; trend_used_id?: unknown } | undefined;
-    if (!e || typeof e.title !== "string" || typeof e.memo !== "string") { meta.dropped.push(d); continue; }
+    if (!e) { drop(d, "direction_missing"); continue; }
+    if (typeof e.title !== "string") { drop(d, "title_missing"); continue; }
+    if (typeof e.memo !== "string") { drop(d, "memo_missing"); continue; }
     const title = clean(e.title, MAX_TITLE_CHARS + 20);
     const memo = clean(e.memo, MAX_MEMO_CHARS + 60);
-    if (!title || !memo) { meta.dropped.push(d); continue; }
+    if (!title) { drop(d, "title_missing"); continue; }
+    if (!memo) { drop(d, "memo_missing"); continue; }
     if (d === "witty" || d === "warm") {
-      const kind = typeof e.creative_kind === "string" ? e.creative_kind.trim() : "";
+      const kindRaw = e.creative_kind;
+      const kind = typeof kindRaw === "string" ? kindRaw.trim() : "";
       const basis = Array.isArray(e.visual_basis)
         ? e.visual_basis.filter((b): b is string => typeof b === "string").map(b => b.trim())
         : [];
-      const allAllowed = basis.every(b => (VISUAL_BASIS_ALLOWED as readonly string[]).includes(b));
-      if (!(CREATIVE_KINDS as readonly string[]).includes(kind) || basis.length === 0 || !allAllowed) {
-        meta.dropped.push(d);
-        continue;
-      }
+      if (!kind) { drop(d, "creative_kind_missing"); continue; }
+      if (!(CREATIVE_KINDS as readonly string[]).includes(kind)) { drop(d, "creative_kind_invalid"); continue; }
+      if (!Array.isArray(e.visual_basis) || basis.length === 0) { drop(d, "visual_basis_missing"); continue; }
+      if (!basis.every(b => (VISUAL_BASIS_ALLOWED as readonly string[]).includes(b))) { drop(d, "visual_basis_invalid"); continue; }
       meta.kinds[d] = kind;
     }
     // Trend 판정(V5-1 §C) — SSOT 는 서버 문자열 검사. AI 신고는 참고값:
@@ -1092,10 +1197,15 @@ export function extractMoment3Creative(
       const entries = [...(activeTrend ?? new Map<string, string | readonly string[]>())]
         .map(([id, f]) => ({ id, forms: typeof f === "string" ? [f] : f }));
       const v = resolveTrendUse(locale, title, memo, entries, claimedRaw || null);
-      if (!v.ok) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
+      if (!v.ok) {
+        delete meta.kinds[d];
+        drop(d, v.matched.length >= 2 ? "trend_multiple_detected" : "trend_claim_mismatch");
+        continue;
+      }
       meta.trendUsedId = v.usedId;
     }
     set[d] = { title, memo };
+    meta.validation[d] = { status: "accepted", reasons: [] };
   }
   return Object.keys(set).length > 0 ? { set, meta } : null;
 }
@@ -1149,8 +1259,11 @@ export function extractSuggestion(text: string, target: WritingTarget): string |
  */
 const PHOTO_ACTION_RE = /사진|찍었|찍고|찍은|찍어|카메라|셀카|photo|camera|selfie|snapshot|写真|撮っ|撮り|撮る|シャッター|拍了|拍照|拍下|照片|合影|自拍|镜头/i;
 
-export function groundedSuggestionGuard(req: WritingRequest, suggestion: string | null): string | null {
-  if (suggestion === null) return null;
+/**
+ * V5-3 §B — groundedSuggestionGuard 의 사유 분해형. 걸린 첫 사유 코드를
+ * 돌려준다(null = 통과). 기존 guard 는 이 함수에 위임한다 — 계약 동일.
+ */
+export function suggestionGuardReason(req: WritingRequest, suggestion: string): DropReason | null {
   const c = req.context;
   const sources = [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
     .filter((v): v is string => typeof v === "string").join("\n");
@@ -1159,25 +1272,31 @@ export function groundedSuggestionGuard(req: WritingRequest, suggestion: string 
   if (req.locale === "ja" || req.locale === "zh" || req.locale === "en") {
     const allowed = new Set(sources.match(/[가-힣]/g) ?? []);
     for (const ch of suggestion.match(/[가-힣]/g) ?? []) {
-      if (!allowed.has(ch)) return null; // source 에 없는 한글 = 오염
+      if (!allowed.has(ch)) return "foreign_locale_violation"; // source 에 없는 한글 = 오염
     }
   }
   if (c.hasPhoto === false || c.hasPhoto === undefined) {
     const draftMentionsPhoto = typeof c.draft === "string" && PHOTO_ACTION_RE.test(c.draft);
-    if (!draftMentionsPhoto && PHOTO_ACTION_RE.test(suggestion)) return null;
+    if (!draftMentionsPhoto && PHOTO_ACTION_RE.test(suggestion)) return "photo_action_violation";
   }
   // V4 §F — 근거 없는 계절 단정은 방향 단위로 폐기(사진·날짜는 근거가 아니다).
   // moment/moment3(3방향)/storyHero/title/memo 전부 이 guard 를 지난다 —
   // Functions·AI Worker 가 같은 함수를 쓰므로 계약이 동일하다.
-  if (seasonViolation(c, suggestion)) return null;
+  if (seasonViolation(c, suggestion)) return "season_violation";
   // V5-2 §B·§C — 요청 자체가 witty 방향인 단일 경로(moment·title/memo)도 동일
   // 계약. moment3 는 방향별로 groundedMoment3Guard 가, hero 는 validateHeroRefs
   // 가 잡는다(이 함수의 req.direction 은 그 경로들에선 방향이 아니다).
   if (req.direction === "witty" && req.target !== "moment3" && req.target !== "storyHero") {
     const src = guardSourcesOf(c);
-    if (bizInfoViolation(suggestion, src) || brandSafetyViolation(suggestion, src)) return null;
+    if (bizInfoViolation(suggestion, src)) return "business_info_violation";
+    if (brandSafetyViolation(suggestion, src)) return "brand_safety_violation";
   }
-  return suggestion;
+  return null;
+}
+
+export function groundedSuggestionGuard(req: WritingRequest, suggestion: string | null): string | null {
+  if (suggestion === null) return null;
+  return suggestionGuardReason(req, suggestion) === null ? suggestion : null;
 }
 
 /** 방향별 temperature — witty 는 재생성 다양성이 품질의 일부다(반복 regenerate 검수 계약). */
