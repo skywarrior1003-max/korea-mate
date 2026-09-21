@@ -59,6 +59,21 @@ export function ownerHash(deviceId: string): Promise<string> {
 }
 
 /**
+ * V2 §11 — 서버 비밀키 기반 HMAC-SHA256 owner hash. 단순 결합 SHA 는 device id
+ * 후보 대입으로 역산 시도가 가능하다. 비밀키(MYTRIP_HASH_SECRET)가 없으면
+ * 레거시 sha 로 동작하되 호출부가 그 사실을 보고한다. Production 영향 0
+ * (Staging rows 는 QA 정리로 0 이었다 — 교체 migration 불필요).
+ */
+export async function ownerHashHmac(deviceId: string, secret: string | undefined): Promise<{ hash: string; hmac: boolean }> {
+  if (!secret) return { hash: await ownerHash(deviceId), hmac: false };
+  const key = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`gkm-owner-v2|${deviceId}`));
+  return { hash: [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join(""), hmac: true };
+}
+
+/**
  * 문맥 정규화 — 키 순서·공백 차이로 캐시가 갈라지지 않게 관련 필드만 고정 순서로.
  * (사진은 imgSha 가, draft/메모는 이 해시가 구분한다.)
  */

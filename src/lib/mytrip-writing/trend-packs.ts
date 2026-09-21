@@ -1,4 +1,6 @@
-// 언어·지역별 Trend Pack (AI-TREND-PACK-PERSISTENT-CACHE V1 §F)
+// 언어·지역별 Trend Pack — ⚠ V2(MULTILOCALE-TREND-DB)부터 런타임 SSOT 아님.
+// 런타임은 DB(mytrip_trend_packs)만 읽는다. 이 파일은 V1 조사 기록·타입 참고용으로만
+// 남아 있으며 생성 경로에서 import 되지 않는다(curator seed 는 scripts/trend-candidates-*.json).
 //
 // 원칙
 //  · 런타임 웹 검색 0 — 이 파일은 "주기 조사 → 사람 검수 → Owner 승인 → 활성화"

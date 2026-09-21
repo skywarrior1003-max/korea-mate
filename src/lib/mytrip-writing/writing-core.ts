@@ -44,7 +44,7 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v3-trend-witty";
+export const MOMENT3_PROMPT_VERSION = "moment3-v4-locale-craft";
 export const STORY_HERO_PROMPT_VERSION = "storyHero-v6-witty-craft";
 
 /**
@@ -85,12 +85,27 @@ export const CREATIVE_KINDS = [
 export type CreativeKind = (typeof CREATIVE_KINDS)[number];
 
 /**
- * 프롬프트에 싣는 Trend 항목의 최소 형태(§G) — trend-packs 모듈이 활성 목록을
- * 이 모양으로 넘긴다(writing-core 는 pack 데이터에 의존하지 않는다).
+ * 프롬프트에 싣는 Trend 항목의 최소 형태(§G) — DB(mytrip_trend_packs)에서 고른
+ * 활성 row 를 이 모양으로 넘긴다(writing-core 는 pack 데이터에 의존하지 않는다).
  */
 export interface TrendPromptEntry {
   id: string; phrase: string; meaning: string; usageExample: string; avoidWhen: string;
 }
+
+// ── 언어별 재치·감성 문법 (MULTILOCALE V2 §7·§8) — 한국어 결과의 번역이 아니라
+// locale 별 유머·감성 문법으로 처음부터 쓴다. 감성은 V1 품질 유지가 우선이다.
+const WITTY_LOCALE_CRAFT: Record<WritingLocale, string> = {
+  ko: "KO witty craft: 짧은 밈 문법·되받기·생활형 반전. 감탄사 남발 대신 한 박자 반전으로 끝낸다.",
+  ja: "JA witty craft: 抑えたツッコミ・リズム・オノマトペ・予想外の締め。「笑」を機械的に付けてユーモアの代わりにしない — 文そのものが可笑しいこと。",
+  en: "EN witty craft: visual pun, understatement, self-aware caption energy. No forced Gen-Z buzzwords; the brand-trying-too-hard voice is a failure.",
+  zh: "ZH witty craft: 简体中文网络语感 — 短对比、谐音、情境反转。像本地人随手发的一句，不要翻译腔。",
+};
+const WARM_LOCALE_CRAFT: Record<WritingLocale, string> = {
+  ko: "KO warm craft: 짧은 여운과 이미지 중심 — 설명하지 말고 남긴다.",
+  ja: "JA warm craft: 説明より余白・季節感・残像。言い切らずに残す。",
+  en: "EN warm craft: concise lyrical caption; never inflated ad-copy lyricism.",
+  zh: "ZH warm craft: 以画面为中心的短抒情，不堆古风套话。",
+};
 
 /** visual_basis 허용 — 사진의 일반적 시각 요소만(인물·신원·위치 추론 금지) */
 export const VISUAL_BASIS_ALLOWED = [
@@ -622,13 +637,27 @@ export function extractMoment3(text: string): MomentSuggestionSet3 | null {
   return Object.keys(set).length > 0 ? set : null;
 }
 
+/**
+ * ja 재치의 기계적 「笑」 꼬리 제거 (V2 §6 — 「笑」로 유머를 대신하지 않는다).
+ * 프롬프트 지시에도 붙는 사례가 실측돼 결정적으로 벗긴다. 문장 끝의
+ * 笑/(笑)/ｗ/w 꼬리만 — 본문 중간의 표현은 건드리지 않는다.
+ */
+export function stripJaLaughTail(s: string): string {
+  return s.replace(/[\s]*(?:\(笑\)|（笑）|笑|ｗ+|w{1,3})$/u, "").trim();
+}
+
 /** moment3 세트에 방향별 guard — 걸린 방향만 빠진다(부분 성공 유지) */
 export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionSet3 | null): MomentSuggestionSet3 | null {
   if (set === null) return null;
   const out: MomentSuggestionSet3 = {};
   for (const d of WRITING_DIRECTIONS) {
-    const pair = set[d];
+    let pair = set[d];
     if (!pair) continue;
+    if (req.locale === "ja" && d === "witty") {
+      const title = stripJaLaughTail(pair.title), memo = stripJaLaughTail(pair.memo);
+      if (!title || !memo) continue;
+      pair = { title, memo };
+    }
     if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
   }
   return Object.keys(out).length > 0 ? out : null;
@@ -705,14 +734,19 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `  Deadpan beats exclamation. If the photo gives nothing, a dry self-aware observation still beats`,
     `  a scenic description. Never poetic-pretty — that is warm's job.`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
-    `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report.`,
+    `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report. Never reuse`,
+    `  the same stock line for every place (no universal "time stood still" caption).`,
+    // §7·§8 — 이 locale 의 유머·감성 문법으로 처음부터 쓴다(한국어 번역체 금지)
+    WITTY_LOCALE_CRAFT[req.locale],
+    WARM_LOCALE_CRAFT[req.locale],
     ...(trend.length > 0 ? [
       `CURRENT EXPRESSIONS (reviewed list — OPTIONAL, for "witty" ONLY):`,
       ...trend.map(t => `- [${t.id}] "${t.phrase}" — ${t.meaning} e.g. ${t.usageExample} Avoid: ${t.avoidWhen}`),
       `Rules for these: use AT MOST ONE, only in "witty", only if it fits the scene NATURALLY in its original`,
       `language and register. Never force one in, never stack several, never translate one into another language,`,
-      `never bend the sentence to fit it. If none fits, use none. Report which you used in "trend_used_id"`,
-      `(the [id]), or omit the field when unused. calm and warm must NOT use any of these.`,
+      `never bend the sentence to fit it, and never write a line that merely explains the expression.`,
+      `Never insert artist/group/member names around it. If none fits, use none. Report which you used in`,
+      `"trend_used_id" (the [id]), or omit the field when unused. calm and warm must NOT use any of these.`,
     ] : []),
     `FACTS (besides the photo, the ONLY things known):`,
     ...facts.map(f => `- ${f}`),

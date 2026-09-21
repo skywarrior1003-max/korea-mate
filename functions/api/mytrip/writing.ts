@@ -30,10 +30,12 @@ import {
   type WritingImage, type Moment3CreativeMeta, type TrendPromptEntry,
 } from "../../../src/lib/mytrip-writing/writing-core";
 import {
-  AI_CACHE_TTL_DAYS, resolveLimits, sha256Hex, ownerHash, normalizedContextString,
+  AI_CACHE_TTL_DAYS, resolveLimits, sha256Hex, ownerHashHmac, normalizedContextString,
   computeCacheKey, rateLimitedBody,
 } from "../../../src/lib/mytrip-writing/generation-cache";
-import { activeTrendEntries, trendPackVersionFor } from "../../../src/lib/mytrip-writing/trend-packs";
+import {
+  selectTrendForRequest, trendVersionOf, UI_TO_DB_LOCALE, type TrendRow,
+} from "../../../src/lib/mytrip-writing/trend-curation";
 
 interface Env {
   GEMINI_API_KEY?: string;
@@ -45,8 +47,8 @@ interface Env {
   /** 영구 캐시·rate limit 원장(063 mytrip_ai_generations) — 미설정이면 캐시 없이 동작 */
   NEXT_PUBLIC_SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
-  /** QA 전용 — Owner 승인 대기 trend 항목까지 활성(배포 기본 미설정) */
-  MYTRIP_TREND_QA?: string;
+  /** owner hash HMAC 비밀키(§11) — 미설정이면 레거시 sha(보고 대상) */
+  MYTRIP_HASH_SECRET?: string;
   MYTRIP_AI_REGEN_COOLDOWN_SEC?: string;
   MYTRIP_AI_ENTITY_REGEN_PER_HOUR?: string;
   MYTRIP_AI_DEVICE_CALLS_PER_DAY?: string;
@@ -55,6 +57,19 @@ interface Env {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const GEN_TABLE = "mytrip_ai_generations";
+const TREND_TABLE = "mytrip_trend_packs";
+
+/** §10 익명 집계 +1 — 사용자 원문 없음, 실패해도 본 흐름에 영향 0 */
+async function bumpTrendCounter(
+  admin: NonNullable<ReturnType<typeof adminClient>>, trendId: string,
+  col: "shown_count" | "selected_count" | "saved_count" | "heavily_edited_count" | "regenerated_after_count",
+): Promise<void> {
+  try {
+    const { data } = await admin.from(TREND_TABLE).select(col).eq("id", trendId).maybeSingle();
+    const cown = (data as Record<string, number> | null)?.[col];
+    if (typeof cown === "number") await admin.from(TREND_TABLE).update({ [col]: cown + 1, updated_at: new Date().toISOString() }).eq("id", trendId);
+  } catch { /* best-effort */ }
+}
 
 const json = (b: unknown, status = 200) =>
   new Response(JSON.stringify(b), {
@@ -265,8 +280,10 @@ async function pollReady(admin: NonNullable<ReturnType<typeof adminClient>>, cac
   for (let i = 0; i < tries; i++) {
     await new Promise(r => setTimeout(r, 1000));
     const { data } = await admin.from(GEN_TABLE).select(GEN_COLS).eq("cache_key", cacheKey).eq("superseded", false).maybeSingle();
-    if (data && (data as GenRow).status === "ready") return data as GenRow;
-    if (!data) return null; // 생성 실패로 row 가 지워졌다 — 이번 요청도 정직한 실패
+    const row = data as GenRow | null;
+    if (row?.status === "succeeded") return row;
+    // failed = in-flight 시도가 실패했다(원장 보존) — 대기자도 자동 재호출 없이 실패(§11)
+    if (!row || row.status === "failed") return null;
   }
   return null;
 }
@@ -302,16 +319,11 @@ export async function onRequestPost(
   const useWorker = !!(binding && typeof binding.fetch === "function" && internalKey);
   const apiKey = ctx.env.GEMINI_API_KEY;
 
-  // Trend Pack(§F·§G) — 사전 검수 목록만, 요청당 최대 5개, 런타임 검색 0.
-  // 배포 기본은 Owner 승인 항목만이다(MYTRIP_TREND_QA 는 QA 전용 허용 플래그).
-  const allowPendingOwner = (ctx.env.MYTRIP_TREND_QA ?? "") === "1";
-  const trendEntries = body.target === "moment3" && image !== null
-    ? activeTrendEntries(body.locale, { allowPendingOwner })
-    : [];
-  const trendVer = trendEntries.length > 0 ? trendPackVersionFor(body.locale, { allowPendingOwner }) : null;
-
   // ── 영구 캐시 경로 자격 — entity(itinerary)+device 소유 검증이 가능한 요청만 ──
-  const req = body as WritingRequest & { itineraryId?: unknown; forceFresh?: unknown };
+  const req = body as WritingRequest & { itineraryId?: unknown; forceFresh?: unknown; trendEntries?: unknown };
+  // 보안: trendEntries 는 함수→Worker 내부 전달 전용이다. 공개 API 로 들어온
+  // 값은 무조건 버린다(클라이언트가 임의 표현을 주입할 수 없다).
+  delete req.trendEntries;
   const itineraryId = typeof req.itineraryId === "string" && UUID_RE.test(req.itineraryId) ? req.itineraryId : null;
   const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
   const forceFresh = req.forceFresh === true;
@@ -319,52 +331,86 @@ export async function onRequestPost(
   const cacheable = (body.target === "moment3" || body.target === "storyHero") &&
     itineraryId !== null && UUID_RE.test(deviceId) && admin !== null;
 
-  // 캐시 불가 요청(레거시 target·id 미제공·저장소 미설정)은 기존 경로 그대로
+  // 캐시 불가 요청(레거시 target·id 미제공·저장소 미설정)은 기존 경로 그대로 —
+  // Trend 는 DB SSOT 라 admin 없는 경로에서는 항상 빈 목록이다.
   if (!cacheable) {
     if (useWorker) return viaWorker(binding!, internalKey!, body);
     if (!apiKey) return reply(null, "no_key");
-    return outcomeReply(await runDirect(ctx.fetchFn ?? fetch, apiKey, body, image, trendEntries));
+    return outcomeReply(await runDirect(ctx.fetchFn ?? fetch, apiKey, body, image, []));
   }
 
   // 소유 검증(§D) — entity 소유자가 아니면 후보를 읽을 수도, 만들 수도 없다
   const { data: owned } = await admin!.from("itineraries").select("id").eq("id", itineraryId!).eq("device_id", deviceId).maybeSingle();
   if (!owned) return json({ error: "Not found" }, 404);
 
+  // Trend Pack — DB(mytrip_trend_packs)가 SSOT(§3): 코드 재배포 없이 상태 변경.
+  // active/experimental_active·재검증 기한 내·저위험만 최대 5개(§9). 추가 provider 호출 0.
+  let trendRows: TrendRow[] = [];
+  if (body.target === "moment3" && image !== null) {
+    const dbLocale = UI_TO_DB_LOCALE[body.locale] ?? null;
+    if (dbLocale) {
+      const { data: tr } = await admin!.from(TREND_TABLE)
+        .select("id, locale, region_scope, phrase, canonical_form, meaning, safe_example, avoid_context, status, lifecycle_type, next_review_at, confidence_score, risk_score, brand_or_artist_related, pack_version")
+        .eq("locale", dbLocale).in("status", ["active", "experimental_active"]);
+      trendRows = selectTrendForRequest(
+        (tr ?? []).map(r => {
+          const row = r as Record<string, unknown>;
+          return {
+            id: String(row.id), phrase: String(row.phrase), meaning: String(row.meaning),
+            usageExample: String(row.safe_example), avoidWhen: String(row.avoid_context),
+            locale: String(row.locale), region_scope: String(row.region_scope),
+            status: row.status as TrendRow["status"], lifecycle_type: row.lifecycle_type as TrendRow["lifecycle_type"],
+            next_review_at: String(row.next_review_at), confidence_score: Number(row.confidence_score),
+            risk_score: Number(row.risk_score), brand_or_artist_related: row.brand_or_artist_related === true,
+            pack_version: String(row.pack_version),
+          };
+        }), body.locale);
+    }
+  }
+  const trendEntries: TrendPromptEntry[] = trendRows.map(r => ({ id: r.id, phrase: r.phrase, meaning: r.meaning, usageExample: r.usageExample, avoidWhen: r.avoidWhen }));
+  const trendVer = trendVersionOf(trendRows);
+
   const feature = body.target as "moment3" | "storyHero";
   const promptVersion = feature === "moment3" ? MOMENT3_PROMPT_VERSION : STORY_HERO_PROMPT_VERSION;
   const contextHash = await sha256Hex(normalizedContextString(body.context));
   const imageSha = image ? await sha256Hex(image.data) : null;
   const cacheKey = await computeCacheKey({ feature, direction: feature === "storyHero" ? body.direction : null, itineraryId: itineraryId!, locale: body.locale, contextHash, imageSha, promptVersion, trendPackVersion: trendVer });
-  const oHash = await ownerHash(deviceId);
+  // §11 — HMAC owner hash(비밀키 없으면 레거시 sha, 보고 대상)
+  const { hash: oHash, hmac: hmacUsed } = await ownerHashHmac(deviceId, ctx.env.MYTRIP_HASH_SECRET);
   const limits = resolveLimits(ctx.env as Record<string, string | undefined>);
   const notExpired = (r: GenRow) => new Date(r.expires_at).getTime() > Date.now();
 
-  // 1) 캐시 조회(§C) — forceFresh(다시 제안받기)만 지나친다
+  // 1) 캐시 조회(§C) — forceFresh(다시 제안받기)만 지나친다. 실패 row 는 캐시가
+  //    아니다(§11 — 실패 응답을 정상 cache 결과로 쓰지 않는다).
   const { data: current } = await admin!.from(GEN_TABLE).select(GEN_COLS).eq("cache_key", cacheKey).eq("superseded", false).maybeSingle();
   const cur = current as GenRow | null;
   if (!forceFresh && cur) {
-    if (cur.status === "ready" && notExpired(cur)) {
+    if (cur.status === "succeeded" && notExpired(cur)) {
       await admin!.from(GEN_TABLE).update({ hit_count: cur.hit_count + 1 }).eq("id", cur.id);
       const parts = rowToReplyParts(feature, cur.result);
       log({ ok: true, target: feature, locale: body.locale, cache: "server_hit", genId: cur.id, hits: cur.hit_count + 1 });
       return reply(null, "cache_server", parts.moment, parts.set, { generation_id: cur.id, cache: "server" });
     }
-    if (cur.status === "pending") {
+    if (cur.status === "reserved" || cur.status === "provider_started") {
       const ready = await pollReady(admin!, cacheKey);
       if (ready) {
         const parts = rowToReplyParts(feature, ready.result);
         return reply(null, "cache_server", parts.moment, parts.set, { generation_id: ready.id, cache: "server" });
       }
-      // in-flight 가 안 끝났다 — provider 를 추가로 부르지 않는 정직한 대기 실패
+      // in-flight 가 안 끝났거나 실패했다 — 자동 재호출 없이 정직한 대기 실패
       return reply(null, "fallback_busy");
     }
+    // status === 'failed' → 아래에서 supersede 후 새 시도(새 시도도 원장·한도에 계산)
   }
 
-  // 2) rate limit(§I) — provider 호출이 임박했을 때만 검사한다(cache hit 는 위에서 끝)
+  // 2) rate limit(§I·§11) — provider 를 시작한 attempt(성공·실패 포함)만 센다.
+  //    cache hit·invalid image·429 는 row 를 만들지 않아 자연 제외된다.
+  const BILLABLE = ["provider_started", "succeeded", "failed"];
   const dayStart = new Date(); dayStart.setUTCHours(0, 0, 0, 0);
   const hourAgo = new Date(Date.now() - 3_600_000).toISOString();
   const cnt = async (q: { owner?: boolean; entity?: boolean; regenOnly?: boolean; since: string }): Promise<number> => {
-    let sel = admin!.from(GEN_TABLE).select("id", { count: "exact", head: true }).gte("created_at", q.since);
+    let sel = admin!.from(GEN_TABLE).select("id", { count: "exact", head: true })
+      .gte("created_at", q.since).in("status", BILLABLE);
     if (q.owner) sel = sel.eq("owner_hash", oHash);
     if (q.entity) sel = sel.eq("itinerary_id", itineraryId!);
     if (q.regenOnly) sel = sel.not("regenerated_from", "is", null); // 재생성 한도는 재생성만 센다(§I)
@@ -395,15 +441,21 @@ export async function onRequestPost(
   }
 
   // 3) single-flight 예약(§O) — 부분 유니크(cache_key, superseded=false)가 잠금이다
-  if (cur && (forceFresh || !notExpired(cur))) {
+  if (cur && (forceFresh || cur.status === "failed" || !notExpired(cur))) {
     await admin!.from(GEN_TABLE).update({ superseded: true }).eq("id", cur.id);
+    // §10 — trend 를 쓴 제안 직후의 명시적 재생성은 그 표현의 품질 신호다
+    if (forceFresh && cur.status === "succeeded") {
+      const { data: prevTrend } = await admin!.from(GEN_TABLE).select("trend_used_id").eq("id", cur.id).maybeSingle();
+      const tId = (prevTrend as { trend_used_id?: string | null } | null)?.trend_used_id;
+      if (tId) await bumpTrendCounter(admin!, tId, "regenerated_after_count");
+    }
   }
   const genId = crypto.randomUUID();
   const { error: insErr } = await admin!.from(GEN_TABLE).insert({
     id: genId, cache_key: cacheKey, feature, itinerary_id: itineraryId, owner_hash: oHash,
     locale: body.locale, context_hash: contextHash, image_sha: imageSha,
     prompt_version: promptVersion, model: MODEL, trend_pack_version: trendVer,
-    status: "pending", regenerated_from: forceFresh ? cur?.id ?? null : null,
+    status: "reserved", regenerated_from: forceFresh ? cur?.id ?? null : null,
     expires_at: new Date(Date.now() + AI_CACHE_TTL_DAYS * 86_400_000).toISOString(),
   });
   if (insErr) {
@@ -416,31 +468,43 @@ export async function onRequestPost(
     return reply(null, "fallback_busy");
   }
 
-  // 4) provider 정확 1회 — 실패 시 pending row 를 지운다(깨진 캐시 미저장, §O)
+  // 4) provider 정확 1회(§11 원장) — 시작 시점을 기록하고, 실패 row 는 삭제하지
+  //    않는다(과금 가능 호출이 한도에서 빠지는 V1 결함 수정). no_key 는 provider
+  //    시작 전 종료라 reserved row 를 지운다(rejected_before_provider — 과금 제외).
   let outcome: DirectOutcome;
-  if (useWorker) {
-    const res = await viaWorker(binding!, internalKey!, body);
-    const out = (await res.clone().json()) as { moment?: MomentSuggestion | null; set?: MomentSuggestionSet3 | null; ai_status?: string };
-    outcome = { ai_status: out.ai_status ?? "fallback_worker_shape", suggestion: null, moment: out.moment ?? null, set: out.set ?? null, meta: null, usage: {}, latencyMs: 0 };
-  } else if (!apiKey) {
+  if (!useWorker && !apiKey) {
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
     return reply(null, "no_key");
+  }
+  await admin!.from(GEN_TABLE).update({ status: "provider_started" }).eq("id", genId);
+  if (useWorker) {
+    // Worker 는 DB 를 읽지 않는다 — 함수가 고른 trend 를 내부 전달한다(§9)
+    const res = await viaWorker(binding!, internalKey!, { ...(body as object), trendEntries });
+    const out = (await res.clone().json()) as { moment?: MomentSuggestion | null; set?: MomentSuggestionSet3 | null; ai_status?: string };
+    outcome = { ai_status: out.ai_status ?? "fallback_worker_shape", suggestion: null, moment: out.moment ?? null, set: out.set ?? null, meta: null, usage: {}, latencyMs: 0 };
   } else {
-    outcome = await runDirect(ctx.fetchFn ?? fetch, apiKey, body, image, trendEntries);
+    outcome = await runDirect(ctx.fetchFn ?? fetch, apiKey!, body, image, trendEntries);
   }
 
   const ok = feature === "moment3" ? outcome.set !== null : outcome.moment !== null;
   if (!ok) {
-    await admin!.from(GEN_TABLE).delete().eq("id", genId);
+    // 실패도 원장이다 — row 유지·사유 코드만 기록(민감정보 0). 캐시로는 안 쓴다.
+    await admin!.from(GEN_TABLE).update({
+      status: "failed", fail_code: outcome.ai_status,
+      latency_ms: outcome.latencyMs,
+    }).eq("id", genId);
+    log({ ok: false, kind: "ledger_failed", target: feature, locale: body.locale, fail: outcome.ai_status, hmac: hmacUsed });
     return outcomeReply(outcome);
   }
   const u = outcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };
   await admin!.from(GEN_TABLE).update({
-    status: "ready",
+    status: "succeeded",
     result: feature === "moment3" ? outcome.set : { hero: outcome.moment },
     trend_used_id: outcome.meta?.trendUsedId ?? null,
     in_tok: u.inTok ?? null, out_tok: u.outTok ?? null, think_tok: u.thinkTok ?? null,
     latency_ms: outcome.latencyMs,
   }).eq("id", genId);
+  // §10 — 이 표현이 실린 제안이 사용자에게 표시된다
+  if (outcome.meta?.trendUsedId) await bumpTrendCounter(admin!, outcome.meta.trendUsedId, "shown_count");
   return outcomeReply(outcome, { generation_id: genId, cache: "miss" });
 }

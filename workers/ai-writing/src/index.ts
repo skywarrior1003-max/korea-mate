@@ -30,13 +30,10 @@ import {
   type WritingImage, type WritingRequest, type Moment3CreativeMeta, type TrendPromptEntry,
   // eslint 없음 — 계약: functions 와 동일 배선
 } from "../../../src/lib/mytrip-writing/writing-core";
-import { activeTrendEntries } from "../../../src/lib/mytrip-writing/trend-packs";
 
 export interface Env {
   GEMINI_API_KEY?: string;
   INTERNAL_KEY?: string;
-  /** QA 전용 — Owner 승인 대기 trend 항목까지 활성(배포 기본 미설정) */
-  MYTRIP_TREND_QA?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -244,8 +241,12 @@ export default {
       image = img;
     }
     const isMultimodal = body.target === "moment3" && image !== null;
-    // Trend Pack(§G) — 사전 검수 활성 목록만, 별도 provider 호출 없이 같은 1회 요청에 싣는다
-    const trendEntries = isMultimodal ? activeTrendEntries(body.locale, { allowPendingOwner: (env.MYTRIP_TREND_QA ?? "") === "1" }) : [];
+    // Trend(V2 §9) — DB SSOT 는 함수 계층이 읽고, 이 Worker 에는 내부 인증을 거친
+    // 함수가 고른 목록만 body.trendEntries 로 들어온다(외부 직접 호출은 401).
+    const rawTrend = (body as { trendEntries?: unknown }).trendEntries;
+    const trendEntries: TrendPromptEntry[] = Array.isArray(rawTrend)
+      ? rawTrend.filter((e): e is TrendPromptEntry => !!e && typeof (e as TrendPromptEntry).id === "string" && typeof (e as TrendPromptEntry).phrase === "string").slice(0, 5)
+      : [];
     const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body, trendEntries) : buildWritingPrompt(body);
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.

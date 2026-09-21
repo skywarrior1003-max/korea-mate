@@ -353,7 +353,7 @@ test("trend pack — 배포 기본은 Owner 승인만, QA 플래그는 검수 �
 });
 
 test("trend 검증(§G) — 활성 목록 밖 신고·미반영 신고는 witty 만 폐기", () => {
-  const resp = (trendId, wittyTitle) => JSON.stringify({
+  const resp = (trendId: string | null, wittyTitle: string) => JSON.stringify({
     calm: { title: "밤의 월정교", memo: "물에 다리가 비쳤다." },
     witty: { title: wittyTitle, memo: "물속에 하나 더 있네.", creative_kind: "visual_wordplay", visual_basis: ["reflection"], ...(trendId ? { trend_used_id: trendId } : {}) },
     warm: { title: "밤이 머문 자리", memo: "밤이 물 위에 머물렀다.", creative_kind: "poetic_imagery", visual_basis: ["reflection"] },
@@ -377,7 +377,7 @@ test("trend 검증(§G) — 활성 목록 밖 신고·미반영 신고는 witty 
 });
 
 test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {
-  const base = { feature: "moment3", direction: null, itineraryId: "11111111-2222-4333-8444-555555555555", locale: "ko",
+  const base = { feature: "moment3" as const, direction: null, itineraryId: "11111111-2222-4333-8444-555555555555", locale: "ko",
     contextHash: "ctx1", imageSha: "img1", promptVersion: "v1", trendPackVersion: null };
   const k1 = await computeCacheKey(base);
   assert.equal(await computeCacheKey({ ...base }), k1); // 결정적
@@ -406,7 +406,7 @@ test("호출 제한 설정(§I) — 기본값 + env 덮어쓰기, 잘못된 값�
 });
 
 test("멀티모달 프롬프트 — trend 블록은 활성 항목이 있을 때만, witty 전용·최대 1개 지시(§G)", () => {
-  const req = { target: "moment3", direction: "calm", locale: "ko",
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "ko",
     context: { city: "gyeongju", placeName: "월정교", hasPhoto: true } };
   const noTrend = buildMoment3MultimodalPrompt(req, []);
   assert.ok(!noTrend.includes("CURRENT EXPRESSIONS"));

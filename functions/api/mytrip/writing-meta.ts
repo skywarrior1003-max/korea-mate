@@ -9,6 +9,7 @@
 // 소유 검증에서 끊긴다(§L).
 
 import { createClient } from "@supabase/supabase-js";
+import { HEAVY_EDIT_TITLE_DELTA, HEAVY_EDIT_MEMO_DELTA } from "../../../src/lib/mytrip-writing/trend-curation";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL?: string;
@@ -17,6 +18,16 @@ interface Env {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const GEN_TABLE = "mytrip_ai_generations";
+const TREND_TABLE = "mytrip_trend_packs";
+
+/** §10 익명 집계 +1 — best-effort(사용자 흐름 무영향) */
+async function bumpTrend(admin: ReturnType<typeof createClient>, trendId: string, col: string): Promise<void> {
+  try {
+    const { data } = await admin.from(TREND_TABLE).select(col).eq("id", trendId).maybeSingle();
+    const cur = (data as Record<string, number> | null)?.[col];
+    if (typeof cur === "number") await admin.from(TREND_TABLE).update({ [col]: cur + 1, updated_at: new Date().toISOString() }).eq("id", trendId);
+  } catch { /* ignore */ }
+}
 
 const json = (b: unknown, status = 200) =>
   new Response(JSON.stringify(b), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
@@ -60,5 +71,20 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   }
   // generation 이 이 itinerary 소속일 때만 갱신된다 — 추측 ID 차단(§L)
   const { error } = await admin.from(GEN_TABLE).update(patch).eq("id", generationId).eq("itinerary_id", itineraryId);
+
+  // §10 — 이 generation 이 trend 표현을 썼다면 익명 집계에 반영한다
+  if (!error) {
+    const { data: gen } = await admin.from(GEN_TABLE).select("trend_used_id").eq("id", generationId).maybeSingle();
+    const trendId = (gen as { trend_used_id?: string | null } | null)?.trend_used_id;
+    if (trendId) {
+      if (event === "select" && patch.chosen_style === "witty") await bumpTrend(admin, trendId, "selected_count");
+      if (event === "save") {
+        await bumpTrend(admin, trendId, "saved_count");
+        const heavy = (typeof patch.title_len_delta === "number" && Math.abs(patch.title_len_delta) >= HEAVY_EDIT_TITLE_DELTA) ||
+                      (typeof patch.memo_len_delta === "number" && Math.abs(patch.memo_len_delta) >= HEAVY_EDIT_MEMO_DELTA);
+        if (patch.edited === true && heavy) await bumpTrend(admin, trendId, "heavily_edited_count");
+      }
+    }
+  }
   return json({ ok: !error });
 }
