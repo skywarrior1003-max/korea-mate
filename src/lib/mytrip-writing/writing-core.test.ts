@@ -441,6 +441,70 @@ test("V5-1 §E-8 — EN 결과에 source 에 없는 한글(KO phrase 등) → �
   assert.equal(groundedSuggestionGuard(req2, "월정교 doubled itself"), "월정교 doubled itself");
 });
 
+test("V5-2 §B — 운영정보 오인 조합만 차단·비유/야경은 통과·source 인용 허용", async () => {
+  const { bizInfoViolation } = await import("./writing-core.ts");
+  // 고정 회귀 — 차단
+  assert.ok(bizInfoViolation("월정교, 야간 영업 개시\n수면에 다리가 하나 더", ""));
+  assert.ok(bizInfoViolation("stone bridge\nopen 24/7 apparently", ""));
+  assert.ok(bizInfoViolation("첨성대는 오늘 휴무\n라고 꽃이 말했다", ""));
+  assert.ok(bizInfoViolation("橋の夜\n本日休業みたい", ""));
+  assert.ok(bizInfoViolation("月精桥\n全天开放的样子", ""));
+  assert.ok(bizInfoViolation("입장 가능해 보이는 밤", ""));
+  // 오탐 금지 — 허용
+  assert.ok(!bizInfoViolation("월정교의 야간 풍경\n물이 다리를 복사했다", ""));
+  assert.ok(!bizInfoViolation("open sky above the tower\nflowers steal the scene", ""));
+  assert.ok(!bizInfoViolation("the bridge opened my eyes\nto reflections", ""));
+  assert.ok(!bizInfoViolation("야경이 두 배\n밤이 일을 잘한다", ""));
+  // 사용자·공식 입력에 그대로 있으면 사실 인용 — 허용
+  assert.ok(!bizInfoViolation("여긴 24시간 개방이라던데\n밤에 또 왔다", "안내판에 24시간 개방이라 적혀 있었다"));
+});
+
+test("V5-2 §C — 브랜드 위험 이중 의미만 차단·정상 용례 통과·source 인용 허용", async () => {
+  const { brandSafetyViolation } = await import("./writing-core.ts");
+  // 고정 회귀 — 차단
+  assert.ok(brandSafetyViolation("Stoned and flowered\nan old tower, new blooms", ""));
+  assert.ok(brandSafetyViolation("bridge night\nwe got high at the tower", ""));
+  assert.ok(brandSafetyViolation("This view is killer\nno survivors", ""));
+  assert.ok(brandSafetyViolation("so wasted after the walk\nbut worth it", ""));
+  assert.ok(brandSafetyViolation("tower night\nthis place is sick honestly", ""));
+  assert.ok(brandSafetyViolation("완전 꽐라 감성\n밤의 다리", ""));
+  // 오탐 금지 — 허용
+  assert.ok(!brandSafetyViolation("An old stone tower among flowers\nspring did the styling", ""));
+  assert.ok(!brandSafetyViolation("A high tower under the open sky\nflowers photobombing", ""));
+  assert.ok(!brandSafetyViolation("The lanterns were lit across the bridge\ntwice, thanks to the water", ""));
+  assert.ok(!brandSafetyViolation("high above the city\nthe tower keeps watch", ""));
+  assert.ok(!brandSafetyViolation("wasted no time finding the bridge\nneither did its reflection", ""));
+  // 사용자 원문 인용 — 허용
+  assert.ok(!brandSafetyViolation("sick leave 내고 온 여행\n다리는 출근 중", "sick leave 내고 왔다"));
+});
+
+test("V5-2 §B·§C — witty 만 폐기(calm·warm 유지)·hero title/intro 에도 적용", async () => {
+  const { groundedMoment3Guard, validateHeroRefs } = await import("./writing-core.ts");
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "ko",
+    context: { city: "gyeongju", placeName: "월정교", hasPhoto: true } };
+  const g = groundedMoment3Guard(req, {
+    calm: { title: "월정교의 밤", memo: "물에 다리가 비쳤다" },
+    witty: { title: "월정교, 야간 영업 개시", memo: "수면에 비친 다리까지 두 개" },
+    warm: { title: "밤의 강", memo: "빛이 물 위에 오래 머물렀다" },
+  });
+  assert.ok(g && g.calm && g.warm && !g.witty);
+  const heroReq: WritingRequest = { target: "storyHero", direction: "witty", locale: "en",
+    context: { city: "gyeongju", hasPhoto: true, tripFacts: ["3 day(s), 7 stops"] } };
+  const hero = (title: string, memo: string) => ({ title, memo, sourceRefs: [], creativeKind: "comeback" });
+  assert.equal(validateHeroRefs(heroReq, hero("Stoned and flowered", "an old tower, new blooms")), null);
+  assert.equal(validateHeroRefs(heroReq, hero("Gyeongju, open 24/7", "the night shift bridge")), null);
+  assert.ok(validateHeroRefs(heroReq, hero("The bridge clocked in twice", "once on land, once on water.")));
+  // §E 프롬프트 계약 — 모호 시어·3초 이해·운영정보/브랜드 금지 지시
+  const { buildWritingPrompt, buildMoment3MultimodalPrompt } = await import("./writing-core.ts");
+  const hp = buildWritingPrompt(heroReq);
+  assert.match(hp, /WITHIN 3 SECONDS/);
+  assert.match(hp, /고요한 유턴/);
+  assert.match(hp, /NEVER just re-explain the title/);
+  const mp = buildMoment3MultimodalPrompt({ ...req, locale: "en" });
+  assert.match(mp, /real operating information/);
+  assert.match(mp, /never "stoned"/i);
+});
+
 test("V5-1 §H — hero witty 질문형 제목은 결정적으로 거부(나열형은 프롬프트+사람 판독)", async () => {
   const { HERO_QUESTION_RE, validateHeroRefs, buildWritingPrompt } = await import("./writing-core.ts");
   for (const bad of ["경주, 고요해서 더 좋았나", "다시 갈까?", "여긴 어디였을까", "was it worth it?"])

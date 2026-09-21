@@ -44,8 +44,8 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v7-social-caption";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v9-cover-motif";
+export const MOMENT3_PROMPT_VERSION = "moment3-v8-brand-safe";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v10-clear-wit";
 
 /**
  * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
@@ -294,6 +294,12 @@ export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | nul
       !(CREATIVE_KINDS as readonly string[]).includes(hero.creativeKind ?? "")) return null;
   // V5-1 §H — witty 표지 제목의 질문형은 결정적으로 거부한다(재호출 0).
   if (req.direction === "witty" && HERO_QUESTION_RE.test(hero.title)) return null;
+  // V5-2 §E-9 — 표지 title·intro 도 운영정보·브랜드 안전 가드를 지난다(witty).
+  if (req.direction === "witty") {
+    const joined = hero.title + "\n" + hero.memo;
+    const src = guardSourcesOf(req.context);
+    if (bizInfoViolation(joined, src) || brandSafetyViolation(joined, src)) return null;
+  }
   return { title: hero.title, memo: hero.memo };
 }
 
@@ -440,12 +446,17 @@ export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
     "step — that echo is the ONLY place a current expression may appear; never add a new trend phrase the",
     "traveler did not use. If no saved joke exists, find the one funny pattern in the real facts and land it",
     "as a short deadpan punchline.",
-    "TITLE: a short declarative or noun-phrase statement. NEVER a question — no question marks, no",
-    "wondering endings (Korean '~했나/~일까/~였을까' style), no abstract musing without a concrete image,",
-    "and no list of places.",
-    "INTRO: ideally ONE short sentence (at most two short clauses). NEVER name three or more places, and",
-    "NEVER walk through the itinerary ('did A at X, then B at Y...') — zoom into the one saved scene and",
-    "let it hint at the whole trip's mood.",
+    "TITLE: a short declarative or noun-phrase statement whose comic device is understood WITHIN 3 SECONDS",
+    "— exactly ONE device (a reversal, a contrast, a comeback, light wordplay, or a plain everyday",
+    "analogy). NEVER a question — no question marks, no wondering endings (Korean '~했나/~일까/~였을까'",
+    "style). NEVER a vague poetic pairing the reader must decode ('고요한 유턴', '시간의 결', '빛의 흔적',",
+    "'마음의 파동' and anything of that shape — if the pairing needs interpretation, it is wrong).",
+    "No list of places.",
+    "INTRO: exactly ONE sentence, ONE scene, ONE device. NEVER name three or more places, NEVER walk",
+    "through the itinerary ('did A at X, then B at Y...'), and NEVER just re-explain the title — zoom",
+    "into the one saved scene and let it hint at the whole trip's mood.",
+    "NEVER phrase anything like real operating information (opening hours, 'open now', 영업/휴무) and",
+    "NEVER use drug/drunk/violence-flavored slang (stoned, wasted, got high, killer...) — travel brand cover.",
     "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), stringing several",
     "moments together, a poetic-pretty line (that is the emotional tone's job), or a caption that fits any",
     "trip. Deadpan beats exclamation. Never invent feelings or plans the traveler did not write.",
@@ -791,6 +802,57 @@ export function wittyLenViolation(locale: WritingLocale, title: string, memo: st
  * 사례("나는 뭘 봤을까…")의 형태만 잡는다 — 자연어 전반을 심사하지 않는다.
  * 걸리면 witty 만 폐기(재호출 0).
  */
+// ── V5-2 §B — 운영정보 오인 방지 가드 ────────────────────────────────────────
+// witty 캡션이 실제 영업시간·개장 상태·입장 가능처럼 읽히면 안 된다("월정교,
+// 야간 영업 개시" 실측). 단어 하나의 전역 blocklist 가 아니라 운영정보로
+// 읽히는 조합만 잡는다 — "야간/야경/open sky/opened my eyes"는 통과. 사용자
+// 원문·전달 사실(sources)에 같은 표현이 있으면 인용으로 허용한다.
+const BIZ_INFO_RES: RegExp[] = [
+  /영업\s*(?:중|개시|시작|종료|시간|재개)|(?:오늘|본일|금일)\s*휴무|휴무일|24\s*시간\s*(?:개방|영업|운영)|입장\s*(?:가능|불가|마감)|개장\s*(?:중|시간)|폐장|개관\s*시간|휴관/,
+  /\bopen(?:s|ed)?\s+(?:now|today|24\/?7|daily)\b|\bnow\s+open\b|\bopen\s+24\/?7\b|\bopening\s+hours?\b|\bclosed\s+(?:today|now)\b|\badmission\s+(?:available|free|open)\b|\bbusiness\s+hours\b/i,
+  /営業中|営業時間|開店|閉店|本日休業|休業日|24時間開放|入場可|入場不可|開館時間|閉館/,
+  /正在营业|营业中|营业时间|全天开放|今日闭馆|闭馆|开放时间|可入场|不可入场|今日休息/,
+];
+export function bizInfoViolation(text: string, sources: string): boolean {
+  for (const re of BIZ_INFO_RES) {
+    const m = text.match(new RegExp(re.source, re.flags.includes("i") ? "gi" : "g"));
+    if (!m) continue;
+    // 사용자·공식 입력에 그대로 있는 표현은 사실 인용 — 허용
+    if (m.some(x => !sources.includes(x))) return true;
+  }
+  return false;
+}
+
+// ── V5-2 §C — 브랜드 안전성 가드(위험 이중 의미) ─────────────────────────────
+// 관광 브랜드 캡션에서 약물·만취·폭력 의미가 우선 해석되는 표현만 문맥으로
+// 잡는다 — "a high tower"·"high above"·"stone tower"·"lanterns were lit"은
+// 통과. sources 에 그대로 있는 표현(사용자 원문 인용)은 허용.
+const BRAND_RISK_RES: RegExp[] = [
+  /\bstoned\b/i,                                                      // stone/stone tower 는 통과
+  /\b(?:got|get|gets|getting|so|totally|we(?:'re| are)|i(?:'m| am)|feeling)\s+high\b/i,
+  /\bwasted\b(?!\s+no\b)/i,                                           // "wasted no time" 관용구 예외
+  /\b(?:got|so|totally|we(?:'re| are)|i(?:'m| am))\s+lit\b|\blit\s+af\b/i, // "were lit"(점등)은 통과
+  /\bkiller\b/i,
+  /\b(?:is|was|so|totally|that's|this\s+(?:view|place)\s+is)\s+sick\b/i, // "sick leave" 인용은 sources 로 허용
+  /만취|꽐라|약\s*빨|마약/,
+  /泥酔|キマっ(?:た|てる)/,
+  /嗑药|喝挂|磕嗨/,
+];
+export function brandSafetyViolation(text: string, sources: string): boolean {
+  for (const re of BRAND_RISK_RES) {
+    const m = text.match(new RegExp(re.source, re.flags.includes("i") ? "gi" : "g"));
+    if (!m) continue;
+    if (m.some(x => !sources.includes(x))) return true;
+  }
+  return false;
+}
+
+/** V5-2 — 두 가드 공용 source 문자열(사용자·전달 사실만 — AI 산출물 아님) */
+export function guardSourcesOf(c: WritingContext): string {
+  return [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
+    .filter((v): v is string => typeof v === "string").join("\n");
+}
+
 export const WITTY_MONOLOGUE_RE =
   /(?:뭘|무얼|무엇을)\s*(?:봤|보았|했|느꼈)을까|나는\s*무엇|내가\s*본\s*것?은\s*무엇|what\s+(?:did|do)\s+i\s+(?:even\s+)?(?:see|feel|learn)|何を(?:見|感じ)た(?:の)?(?:だろう|かな)|私は何を|我(?:到底)?(?:看|感受)到了什么/i;
 
@@ -811,6 +873,13 @@ export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionS
     // V5 §C·§B — witty 길이 계약 위반·철학 독백은 witty 만 폐기(재호출 0)
     if (d === "witty" && (wittyLenViolation(req.locale, pair.title, pair.memo)
       || WITTY_MONOLOGUE_RE.test(pair.title + "\n" + pair.memo))) continue;
+    // V5-2 §B·§C — 운영정보 오인·브랜드 위험 표현은 witty 만 폐기(재호출 0).
+    // calm/warm·직접 작성·수정·저장은 그대로 산다.
+    if (d === "witty") {
+      const joined = pair.title + "\n" + pair.memo;
+      const src = guardSourcesOf(req.context);
+      if (bizInfoViolation(joined, src) || brandSafetyViolation(joined, src)) continue;
+    }
     if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
   }
   return Object.keys(out).length > 0 ? out : null;
@@ -901,6 +970,12 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `  bolted onto the end of the sentence, poetic-pretty lines (that is warm's job), or a caption that`,
     `  would fit any photo. Deadpan beats exclamation. If the photo gives nothing, one dry concrete`,
     `  observation about what IS in the frame still beats all of the above.`,
+    `  NEVER write anything a reader could mistake for real operating information — no "open now",`,
+    `  opening hours, "closed today", 영업/휴무/개장, 営業中, 营业中 style phrasing. You caption a memory,`,
+    `  not a listing; even if hours are known, a witty caption has no business stating them.`,
+    `  NEVER use words whose first casual reading is drugs, drunkenness, or violence (stoned, wasted,`,
+    `  "got high", "so lit", killer, sick-as-slang, and their equivalents in any language) — this is a`,
+    `  travel brand caption. A stone tower is "stone", never "stoned".`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
     `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report. Never reuse`,
     `  the same stock line for every place. BANNED warm clichés (any language): "time stood still",`,
@@ -1095,6 +1170,13 @@ export function groundedSuggestionGuard(req: WritingRequest, suggestion: string 
   // moment/moment3(3방향)/storyHero/title/memo 전부 이 guard 를 지난다 —
   // Functions·AI Worker 가 같은 함수를 쓰므로 계약이 동일하다.
   if (seasonViolation(c, suggestion)) return null;
+  // V5-2 §B·§C — 요청 자체가 witty 방향인 단일 경로(moment·title/memo)도 동일
+  // 계약. moment3 는 방향별로 groundedMoment3Guard 가, hero 는 validateHeroRefs
+  // 가 잡는다(이 함수의 req.direction 은 그 경로들에선 방향이 아니다).
+  if (req.direction === "witty" && req.target !== "moment3" && req.target !== "storyHero") {
+    const src = guardSourcesOf(c);
+    if (bizInfoViolation(suggestion, src) || brandSafetyViolation(suggestion, src)) return null;
+  }
   return suggestion;
 }
 
