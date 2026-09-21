@@ -603,6 +603,42 @@ test("V5-3 §F·§G — hero: 추상 시어·장소 2곳·motif 미사용 사유
   assert.equal(e.out, null); assert.deepEqual(e.rs, ["hero_question_violation"]);
 });
 
+test("SINGLE-ANCHOR V1 — anchor 선택 결정성·우선순위·비자격 제외·facts 격리", async () => {
+  const { selectHeroAnchor, buildAnchorHeroFacts, stripMultiMomentFacts } = await import("./writing-core.ts");
+  const base = { place_name: "장소", has_photo: true, day_number: 1, captured_at: "2026-09-15T10:00:00Z" };
+  const rows = [
+    { ...base, moment_id: "m3", title: "대릉원 오후", memo: "산책로", place_name: "대릉원", day_number: 3 },
+    { ...base, moment_id: "m1", title: "첨성대의 밤", memo: "밤 조명", place_name: "첨성대", day_number: 1 },
+    { ...base, moment_id: "m2", title: "다리 위에서 잠시", memo: "물에 비친", place_name: "월정교", day_number: 2 },
+  ];
+  // 사진+제목+메모 동점 → day 빠른 항목, 입력 순서와 무관(결정성)
+  assert.equal(selectHeroAnchor(rows)?.moment_id, "m1");
+  assert.equal(selectHeroAnchor([...rows].reverse())?.moment_id, "m1");
+  // 사진이 문구 완전성보다 우선(계약 2>3)
+  const photoWins = selectHeroAnchor([
+    { ...base, moment_id: "a", title: "제목만", memo: null, has_photo: true, day_number: 3 },
+    { ...base, moment_id: "b", title: "둘 다", memo: "있음", has_photo: false, day_number: 1 },
+  ]);
+  assert.equal(photoWins?.moment_id, "a");
+  // 제목·메모 전무 moment 는 자격 없음 → 공백뿐이면 null(→ provider 0 fallback)
+  assert.equal(selectHeroAnchor([{ ...base, moment_id: "x", title: "  ", memo: null }]), null);
+  assert.equal(selectHeroAnchor([]), null);
+  // facts 격리 — 다중 moment 문구·장소 나열 제거 + anchor 만 주입
+  const facts = ["3 day(s), 7 stops", "places include: 월정교, 첨성대, 대릉원",
+    "traveler's public moment notes: \"고요했다\" / \"대릉원 오후\""];
+  assert.deepEqual(stripMultiMomentFacts(facts), ["3 day(s), 7 stops"]);
+  const built = buildAnchorHeroFacts(facts, rows[1]!);
+  assert.deepEqual(built, ["3 day(s), 7 stops", "anchor place: 첨성대", "anchor moment notes: \"첨성대의 밤\" / \"밤 조명\""]);
+  // AI 요청에 다른 moment 문구·다른 장소명 0
+  const joined = built.join("\n");
+  for (const bad of ["월정교", "대릉원", "고요했다"]) assert.ok(!joined.includes(bad), bad);
+  // anchor 라인은 기존 motif 검증(/moment notes:/)이 그대로 작동한다
+  const { heroMotifMissing } = await import("./writing-core.ts");
+  const ctx = { city: "gyeongju", tripFacts: built };
+  assert.ok(!heroMotifMissing(ctx, "첨성대의 밤을 표지가 가져갔다"));
+  assert.ok(heroMotifMissing(ctx, "국밥 세 그릇의 기록"));
+});
+
 test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {
   const base = { feature: "moment3" as const, direction: null, itineraryId: "11111111-2222-4333-8444-555555555555", locale: "ko",
     contextHash: "ctx1", imageSha: "img1", promptVersion: "v1", trendPackVersion: null };

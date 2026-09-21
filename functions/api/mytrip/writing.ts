@@ -27,6 +27,7 @@ import {
   MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS,
   MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION, STOCK_WARM_RE, seasonViolation,
   suggestionGuardReason, emptyValidation,
+  selectHeroAnchor, buildAnchorHeroFacts, stripMultiMomentFacts, heroPlacesOf,
   type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
   type WritingImage, type Moment3CreativeMeta, type TrendPromptEntry,
   type Moment3Validation, type DropReason,
@@ -367,6 +368,11 @@ export async function onRequestPost(
   // 캐시 불가 요청(레거시 target·id 미제공·저장소 미설정)은 기존 경로 그대로 —
   // Trend 는 DB SSOT 라 admin 없는 경로에서는 항상 빈 목록이다.
   if (!cacheable) {
+    // SINGLE-ANCHOR V1 — admin 이 없어 anchor 를 고를 수 없는 경로에서도 다중
+    // moment 문구·장소 나열은 AI 로 나가지 않는다(중립 메타만).
+    if (body.target === "storyHero") {
+      body.context = { ...body.context, tripFacts: stripMultiMomentFacts(body.context.tripFacts ?? []) };
+    }
     if (useWorker) return viaWorker(binding!, internalKey!, body);
     if (!apiKey) return reply(null, "no_key");
     return outcomeReply(await runDirect(ctx.fetchFn ?? fetch, apiKey, body, image, []));
@@ -378,6 +384,39 @@ export async function onRequestPost(
 
   const feature = body.target as "moment3" | "storyHero";
   const promptVersion = feature === "moment3" ? MOMENT3_PROMPT_VERSION : STORY_HERO_PROMPT_VERSION;
+
+  // ── SINGLE-ANCHOR V1 §2 — hero 는 서버가 공개 moment 한 건을 결정적으로 골라
+  // 그 anchor 의 장소·제목·메모만 AI 에 전달한다(다른 moment 문구·장소명 0).
+  // anchor 가 없으면 provider 호출·원장 row 없이 정직하게 fallback(§3).
+  // contextHash 는 재구성 후 계산 — anchor 가 바뀌면 캐시 키도 갈린다.
+  let heroOtherPlaces: string[] = [];
+  if (feature === "storyHero") {
+    const { data: mrows } = await admin!.from("trip_moments")
+      .select("moment_id, title, memo, place_name, storage_path, day_number, captured_at")
+      .eq("itinerary_id", itineraryId!).eq("is_public", true);
+    const anchor = selectHeroAnchor((mrows ?? []).map(r => {
+      const row = r as Record<string, unknown>;
+      return {
+        moment_id: String(row.moment_id),
+        title: typeof row.title === "string" ? row.title : null,
+        memo: typeof row.memo === "string" ? row.memo : null,
+        place_name: typeof row.place_name === "string" ? row.place_name : null,
+        has_photo: row.storage_path !== null && row.storage_path !== undefined,
+        day_number: typeof row.day_number === "number" ? row.day_number : null,
+        captured_at: String(row.captured_at ?? ""),
+      };
+    }));
+    if (!anchor) {
+      // 공개 moment(문구 보유)가 없다 — 표지는 기존 사실 기반 기본값으로 간다.
+      log({ action: "hero-anchor", ok: false, kind: "no_anchor" });
+      return reply(null, "fallback_no_anchor");
+    }
+    // 사후 가드용 — 클라가 보낸 전체 장소 목록에서 anchor 외 장소(§5).
+    heroOtherPlaces = heroPlacesOf(body.context).filter(p => p && p !== (anchor.place_name ?? "").trim());
+    body.context = { ...body.context, tripFacts: buildAnchorHeroFacts(body.context.tripFacts ?? [], anchor) };
+    log({ action: "hero-anchor", ok: true, day: anchor.day_number, hasPhoto: anchor.has_photo, otherPlaces: heroOtherPlaces.length });
+  }
+
   const contextHash = await sha256Hex(normalizedContextString(body.context));
   const imageSha = image ? await sha256Hex(image.data) : null;
 
@@ -531,6 +570,16 @@ export async function onRequestPost(
     outcome = { ai_status: out.ai_status ?? "fallback_worker_shape", suggestion: null, moment: out.moment ?? null, set: out.set ?? null, meta: null, validation: null, usage: {}, latencyMs: 0 };
   } else {
     outcome = await runDirect(ctx.fetchFn ?? fetch, apiKey!, body, image, trendEntries);
+  }
+
+  // SINGLE-ANCHOR V1 §5 — hero 가 anchor 외 다른 장소명을 만들어내면 폐기
+  // (재호출 0 — 기존 가드 계약 그대로, 사유 코드만 남긴다).
+  if (feature === "storyHero" && outcome.moment !== null && heroOtherPlaces.length > 0) {
+    const joined = outcome.moment.title + "\n" + outcome.moment.memo;
+    if (heroOtherPlaces.some(p => joined.includes(p))) {
+      outcome = { ...outcome, moment: null, ai_status: "fallback_guard",
+        validation: { hero: { status: "dropped", reasons: ["hero_scene_list_violation"] } } };
+    }
   }
 
   const ok = feature === "moment3" ? outcome.set !== null : outcome.moment !== null;

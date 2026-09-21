@@ -918,6 +918,52 @@ export function heroMotifMissing(c: WritingContext, text: string): boolean {
   return !tokens.some(t => text.includes(t));
 }
 
+// ── SINGLE-ANCHOR V1 §2 — Story Hero 는 서버가 고른 공개 moment 한 건만 본다 ──
+export interface HeroAnchorCandidate {
+  moment_id: string;
+  title: string | null; memo: string | null; place_name: string | null;
+  has_photo: boolean; day_number: number | null; captured_at: string;
+}
+/**
+ * 공개 moment 중 anchor 한 건을 결정적으로 고른다(비공개 필터는 쿼리 책임).
+ * 우선순위: 사진 → 제목+메모 → 둘 중 하나 → day/시각/id 오름차순(완전 결정성).
+ * 제목·메모가 모두 없는 moment 는 모티프가 없어 anchor 자격이 없다.
+ */
+export function selectHeroAnchor(rows: readonly HeroAnchorCandidate[]): HeroAnchorCandidate | null {
+  const t = (s: string | null | undefined) => (s ?? "").trim();
+  const cands = rows.filter(r => t(r.title) || t(r.memo));
+  if (cands.length === 0) return null;
+  const key = (r: HeroAnchorCandidate): [number, number, number, string, string] => [
+    r.has_photo ? 0 : 1,
+    t(r.title) && t(r.memo) ? 0 : 1,
+    typeof r.day_number === "number" ? r.day_number : Number.MAX_SAFE_INTEGER,
+    r.captured_at, r.moment_id,
+  ];
+  return [...cands].sort((a, b) => {
+    const ka = key(a), kb = key(b);
+    for (let i = 0; i < ka.length; i++) { if (ka[i]! < kb[i]!) return -1; if (ka[i]! > kb[i]!) return 1; }
+    return 0;
+  })[0]!;
+}
+/** 클라 tripFacts 에서 다중 moment 문구·장소명 나열 라인을 제거한다(중립 메타만 남김). */
+export function stripMultiMomentFacts(facts: readonly string[]): string[] {
+  return facts.filter(f => !/moment notes:|places include:/i.test(f));
+}
+/**
+ * anchor 한 건만 담은 hero tripFacts — 다른 moment 문구·다른 장소명 0.
+ * "anchor moment notes:" 형식은 heroMotifMissing(/moment notes:/) 검증이
+ * 그대로 작동하게 유지한다.
+ */
+export function buildAnchorHeroFacts(facts: readonly string[], anchor: HeroAnchorCandidate): string[] {
+  const t = (s: string | null) => (s ?? "").trim();
+  const quoted = [t(anchor.title), t(anchor.memo)].filter(Boolean).map(s => `"${s}"`).join(" / ");
+  return [
+    ...stripMultiMomentFacts(facts),
+    ...(t(anchor.place_name) ? [`anchor place: ${t(anchor.place_name)}`] : []),
+    `anchor moment notes: ${quoted}`,
+  ];
+}
+
 /** V5-2 — 두 가드 공용 source 문자열(사용자·전달 사실만 — AI 산출물 아님) */
 export function guardSourcesOf(c: WritingContext): string {
   return [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
