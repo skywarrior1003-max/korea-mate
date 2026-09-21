@@ -380,24 +380,85 @@ test("trend 검증(§G) — 활성 목록 밖 신고·미반영 신고는 witty 
   assert.ok(r4 && !r4.set.witty);
 });
 
-test("V5 §B — 미신고 phrase 혼입·유행어 2개는 witty 폐기(QA C2 실측 결함 수정)", () => {
-  const active = new Map([["ko-duahonna-2026", "혼나볼래?"], ["ko-oishue-2026", "오이쉬!"]]);
+// ── V5-1 §C·§E — trend 사용 판정 SSOT = 서버 문자열 검사(14 케이스) ──────────
+test("V5-1 §E — 서버 trend 판정 14 케이스(신고는 참고값·문자열이 SSOT)", async () => {
+  const { resolveTrendUse } = await import("./writing-core.ts");
+  const KO = [
+    { id: "ko-duahonna-2026", forms: ["혼나볼래?", "혼나볼래"] },
+    { id: "ko-oishue-2026", forms: ["오이쉬!", "오이쉬"] },
+  ];
+  const EN = [
+    { id: "en-core-memory-2026", forms: ["core memory unlocked", "core memory"] },
+    { id: "en-understood", forms: ["understood"] },
+  ];
+  // 1. 전달 phrase 0개 사용 + 신고 없음 → 미사용 PASS
+  assert.deepEqual(resolveTrendUse("ko", "꽃이 주연", "탑이 조연.", KO, null), { ok: true, usedId: null, matched: [] });
+  // 2. 1개 사용 + 신고 일치 → PASS + 확정
+  assert.deepEqual(resolveTrendUse("ko", "이 날씨엔", "혼나볼래?", KO, "ko-duahonna-2026"), { ok: true, usedId: "ko-duahonna-2026", matched: ["ko-duahonna-2026"] });
+  // 3. 1개 사용 + 신고 누락 → 서버 자동 확정 PASS(V5 KO 폐기 문제의 해결 경로)
+  assert.deepEqual(resolveTrendUse("ko", "이 날씨엔", "혼나볼래?", KO, null), { ok: true, usedId: "ko-duahonna-2026", matched: ["ko-duahonna-2026"] });
+  // 4. 1개 사용 + 다른 ID 신고 → 폐기
+  assert.equal(resolveTrendUse("ko", "이 날씨엔", "혼나볼래?", KO, "ko-oishue-2026").ok, false);
+  // 5. 0개 사용 + 사용 신고 → 폐기
+  assert.equal(resolveTrendUse("ko", "꽃이 주연", "탑이 조연.", KO, "ko-duahonna-2026").ok, false);
+  // 6. 2개 사용 + 1개만 신고 → 폐기 / 7. 2개 사용 + 신고 없음 → 폐기
+  assert.equal(resolveTrendUse("ko", "너 예쁠래?", "반짝이는 날 혼나볼래? 오이쉬!", KO, "ko-duahonna-2026").ok, false);
+  assert.equal(resolveTrendUse("ko", "너 예쁠래?", "반짝이는 날 혼나볼래? 오이쉬!", KO, null).ok, false);
+  // 9. punctuation variant("혼나볼래"만·물음표 없음) → 정확히 1개로 판정
+  assert.deepEqual(resolveTrendUse("ko", "오늘은", "네가 좀 혼나볼래 싶었다", KO, null).usedId, "ko-duahonna-2026");
+  // 10. 단순 부분 문자열 우연 일치(en) → 미매칭
+  assert.deepEqual(resolveTrendUse("en", "misunderstood bridge", "totally misunderstood.", EN, null), { ok: true, usedId: null, matched: [] });
+  // en 정상 매칭·case 정규화
+  assert.equal(resolveTrendUse("en", "Core Memory unlocked", "night bridge did that.", EN, null).usedId, "en-core-memory-2026");
+  // 11. 전달 목록 밖(expired/candidate) phrase 가 우연히 있어도 통계 미반영
+  assert.deepEqual(resolveTrendUse("ko", "출사 갔다가", "拿捏까지는 아니고", KO, null), { ok: true, usedId: null, matched: [] });
+});
+
+test("V5-1 §C — 파서 통합: 자동 확정·혼입 폐기·확정 ID 만 meta 기록(§E 12·14)", () => {
+  const active = new Map<string, readonly string[]>([
+    ["ko-duahonna-2026", ["혼나볼래?", "혼나볼래"]], ["ko-oishue-2026", ["오이쉬!", "오이쉬"]]]);
   const resp = (trendId: string | null, wittyMemo: string) => JSON.stringify({
     calm: { title: "첨성대, 맑은 날", memo: "꽃가지 사이로 본 첨성대." },
-    witty: { title: "첨성대, 너 너무 예쁠래?", memo: wittyMemo, creative_kind: "comeback", visual_basis: ["flowers"], ...(trendId ? { trend_used_id: trendId } : {}) },
+    witty: { title: "첨성대 앞", memo: wittyMemo, creative_kind: "comeback", visual_basis: ["flowers"], ...(trendId ? { trend_used_id: trendId } : {}) },
   });
-  // QA C2 실측: 신고 1건 + 미신고 phrase 혼입 → 폐기
-  const r1 = extractMoment3Creative(resp("ko-duahonna-2026", "하늘도 꽃도 반짝이는 날 혼나볼래? 오이쉬!"), active);
-  assert.ok(r1 && !r1.set.witty && r1.set.calm);
-  // 미신고인데 phrase 사용 → 폐기(신고 계약 — §10 집계 왜곡 방지)
-  const r2 = extractMoment3Creative(resp(null, "이 날씨엔 혼나볼래?"), active);
-  assert.ok(r2 && !r2.set.witty);
-  // 정확 신고 1개 사용 → 통과
-  const r3 = extractMoment3Creative(resp("ko-duahonna-2026", "이 날씨엔 혼나볼래?"), active);
-  assert.ok(r3?.set.witty && r3.meta.trendUsedId === "ko-duahonna-2026");
-  // 미사용·미신고 → 통과
-  const r4 = extractMoment3Creative(resp(null, "꽃이 주연, 탑이 조연."), active);
-  assert.ok(r4?.set.witty && r4.meta.trendUsedId === null);
+  // 14. V5 고정 실패 문장 — 2개 감지 후 폐기(calm 유지)
+  const r1 = extractMoment3Creative(resp("ko-duahonna-2026", "하늘도 꽃도 반짝이는 날 혼나볼래? 오이쉬!"), active, "ko");
+  assert.ok(r1 && !r1.set.witty && r1.set.calm && r1.meta.trendUsedId === null);
+  // 3·12. 신고 누락 + 실제 1개 → 서버 자동 확정 — meta 에 확정 ID(통계 SSOT)
+  const r2 = extractMoment3Creative(resp(null, "이 날씨엔 혼나볼래?"), active, "ko");
+  assert.ok(r2?.set.witty && r2.meta.trendUsedId === "ko-duahonna-2026");
+  // 13. 공개로 나가는 set 에는 title/memo 만 — trend 내부 ID·검증 필드 0
+  assert.deepEqual(Object.keys(r2!.set.witty!).sort(), ["memo", "title"]);
+});
+
+test("V5-1 §E-8 — EN 결과에 source 에 없는 한글(KO phrase 등) → 폐기", () => {
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "en",
+    context: { city: "gyeongju", placeName: "Woljeonggyo Bridge", hasPhoto: true } };
+  assert.equal(groundedSuggestionGuard(req, "the bridge said 혼나볼래?"), null);
+  assert.equal(groundedSuggestionGuard(req, "1+1 tonight, water's idea"), "1+1 tonight, water's idea");
+  // source(placeName)에 실제로 있는 한글은 허용 — 사용자가 쓴 한글을 뭉개지 않는다
+  const req2: WritingRequest = { ...req, context: { ...req.context, placeName: "월정교" } };
+  assert.equal(groundedSuggestionGuard(req2, "월정교 doubled itself"), "월정교 doubled itself");
+});
+
+test("V5-1 §H — hero witty 질문형 제목은 결정적으로 거부(나열형은 프롬프트+사람 판독)", async () => {
+  const { HERO_QUESTION_RE, validateHeroRefs, buildWritingPrompt } = await import("./writing-core.ts");
+  for (const bad of ["경주, 고요해서 더 좋았나", "다시 갈까?", "여긴 어디였을까", "was it worth it?"])
+    assert.ok(HERO_QUESTION_RE.test(bad), bad);
+  for (const good of ["경주는 고요가 주연", "다리 하나, 두 번 등장", "고요가 이긴 여행"])
+    assert.ok(!HERO_QUESTION_RE.test(good), good);
+  const req: WritingRequest = { target: "storyHero", direction: "witty", locale: "ko",
+    context: { city: "gyeongju", hasPhoto: true, tripFacts: ["3 day(s), 7 stops"] } };
+  const hero = (title: string) => ({ title, memo: "고요했다는 그 말, 표지가 가져갔다.", sourceRefs: [], creativeKind: "comeback" });
+  assert.equal(validateHeroRefs(req, hero("경주, 고요해서 더 좋았나")), null);
+  assert.ok(validateHeroRefs(req, hero("경주는 고요가 주연")));
+  // calm 은 질문형 가드 비적용(계약은 witty 표지만)
+  const calmReq: WritingRequest = { ...req, direction: "calm" };
+  assert.ok(validateHeroRefs(calmReq, { title: "사흘의 경주였나", memo: "m", sourceRefs: [], creativeKind: null }));
+  // §H — 프롬프트에 질문형·나열 금지 계약이 실림
+  const p = buildWritingPrompt(req);
+  assert.match(p, /NEVER a question/);
+  assert.match(p, /NEVER name three or more places/);
 });
 
 test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {

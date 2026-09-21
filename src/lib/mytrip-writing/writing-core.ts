@@ -45,7 +45,7 @@ export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSugges
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
 export const MOMENT3_PROMPT_VERSION = "moment3-v7-social-caption";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v8-social-caption";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v9-cover-motif";
 
 /**
  * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
@@ -95,6 +95,52 @@ export type CreativeKind = (typeof CREATIVE_KINDS)[number];
  */
 export interface TrendPromptEntry {
   id: string; phrase: string; meaning: string; usageExample: string; avoidWhen: string;
+  /** V5-1 §B — DB 에 기록된 공식 surface form(canonical_form 등)만. 임의 생성 변형 금지. */
+  variants?: readonly string[];
+}
+
+// ── V5-1 §B·§C — trend 사용 판정의 SSOT 는 서버 문자열 검사다 ────────────────
+// AI 의 trend_used_id 신고는 참고값일 뿐이다. 이번 요청에서 실제로 전달한
+// entry 의 phrase·저장된 variant 만 검사한다(DB 전체 활성 후보 아님 — 전달하지
+// 않은 표현을 사후에 trend 로 끼워 맞추지 않는다). 정규화는 안전한 범위만:
+// NFC·trim·연속 공백·en 소문자. fuzzy/동의어/타 locale 매칭 금지.
+function normForMatch(s: string, locale: WritingLocale): string {
+  const n = s.normalize("NFC").trim().replace(/\s+/g, " ");
+  return locale === "en" ? n.toLowerCase() : n;
+}
+function formPresent(text: string, form: string, locale: WritingLocale): boolean {
+  if (!form) return false;
+  if (locale !== "en") return text.includes(form);
+  // en 은 단어 경계 필수 — "understood" 가 "misunderstood" 에 오인 매칭되면 안 된다.
+  const esc = form.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|[^a-z0-9])${esc}(?:$|[^a-z0-9])`).test(text);
+}
+export interface TrendUseVerdict {
+  /** witty 를 살릴 수 있는가 — false 면 witty 방향 폐기(재호출 0) */
+  ok: boolean;
+  /** 서버가 확정한 사용 trend id(통계 SSOT) — 미사용·폐기는 null */
+  usedId: string | null;
+  /** 문자열에서 실제 발견된 전달 entry id 들(진단용) */
+  matched: string[];
+}
+export function resolveTrendUse(
+  locale: WritingLocale, title: string, memo: string,
+  entries: ReadonlyArray<{ id: string; forms: readonly string[] }>,
+  claimedId: string | null,
+): TrendUseVerdict {
+  const body = normForMatch(title + "\n" + memo, locale);
+  const matched = entries
+    .filter(e => e.forms.some(f => formPresent(body, normForMatch(f, locale), locale)))
+    .map(e => e.id);
+  // §C-3·6·7 — 2개 이상이면 신고와 무관하게 폐기(유행어 2개 금지)
+  if (matched.length >= 2) return { ok: false, usedId: null, matched };
+  if (matched.length === 0) {
+    // §C-1·4 — 실제 0개: 신고가 있으면 신고 불일치로 폐기, 없으면 미사용 허용
+    return claimedId ? { ok: false, usedId: null, matched } : { ok: true, usedId: null, matched };
+  }
+  // §C-2·5 — 정확히 1개: 무신고면 서버가 자동 확정, 다른 id 신고면 폐기
+  if (claimedId && claimedId !== matched[0]) return { ok: false, usedId: null, matched };
+  return { ok: true, usedId: matched[0]!, matched };
 }
 
 // ── 언어별 재치·감성 문법 (MULTILOCALE V2 §7·§8) — 한국어 결과의 번역이 아니라
@@ -246,8 +292,17 @@ export function validateHeroRefs(req: WritingRequest, hero: HeroSuggestion | nul
   for (const r of hero.sourceRefs) if (!keys.has(r)) return null;
   if ((req.direction === "witty" || req.direction === "warm") &&
       !(CREATIVE_KINDS as readonly string[]).includes(hero.creativeKind ?? "")) return null;
+  // V5-1 §H — witty 표지 제목의 질문형은 결정적으로 거부한다(재호출 0).
+  if (req.direction === "witty" && HERO_QUESTION_RE.test(hero.title)) return null;
   return { title: hero.title, memo: hero.memo };
 }
+
+/**
+ * V5-1 §H — hero witty 제목 질문형 검출(좁은 결정적 패턴). V5 실측 표본
+ * "경주, 고요해서 더 좋았나" 유형: 물음표(전각 포함)·"~했나/~였을까/~일까"류
+ * 어미 종결. 자연어 전반 심사가 아니다 — 나열형은 프롬프트+사람 판독 담당.
+ */
+export const HERO_QUESTION_RE = /[?？]|(?:했나|였나|았나|었나|좋았나|일까|을까|ㄹ까|였을까|았을까|었을까|할까요|인가|는가|던가)\s*$/;
 
 export const MODEL = "gemini-2.5-flash";     // 저장소에 이미 승인된 모델 그대로
 export const TIMEOUT_MS = 8_000;             // personalize 와 같은 상한 — 늦으면 버린다
@@ -380,15 +435,21 @@ export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
   ].join(" "),
   witty: [
     "Tone — light and witty. The cover must make the reader smile ONCE MORE at this trip — it is a COMEBACK,",
-    "not a summary. FIRST look for a witty line the traveler saved in a public moment (their own joke is the",
-    "best material): pick it up, echo it, or escalate it one step — that echo is the ONLY place a current",
-    "expression may appear; never add a new trend phrase the traveler did not use. If no saved joke exists,",
-    "find the one funny pattern in the real facts and land it as a short deadpan punchline.",
+    "not a summary. Build the cover around ONE CONCRETE MOTIF taken from the traveler's own public moment",
+    "notes (their own joke or a vivid detail is the best material): pick it up, echo it, or escalate it one",
+    "step — that echo is the ONLY place a current expression may appear; never add a new trend phrase the",
+    "traveler did not use. If no saved joke exists, find the one funny pattern in the real facts and land it",
+    "as a short deadpan punchline.",
+    "TITLE: a short declarative or noun-phrase statement. NEVER a question — no question marks, no",
+    "wondering endings (Korean '~했나/~일까/~였을까' style), no abstract musing without a concrete image,",
+    "and no list of places.",
+    "INTRO: ideally ONE short sentence (at most two short clauses). NEVER name three or more places, and",
+    "NEVER walk through the itinerary ('did A at X, then B at Y...') — zoom into the one saved scene and",
+    "let it hint at the whole trip's mood.",
     "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), stringing several",
     "moments together, a poetic-pretty line (that is the emotional tone's job), or a caption that fits any",
-    "trip. Deadpan beats exclamation.",
+    "trip. Deadpan beats exclamation. Never invent feelings or plans the traveler did not write.",
     "Allowed: metaphor, personification of the itinerary/scenes, playful exaggeration that no one could mistake for a real event.",
-    "Keep it tight: title in one short beat; the intro is ideally ONE short sentence (two only if truly needed).",
     "creative_kind must name the main device you used.",
   ].join(" "),
   warm: [
@@ -911,8 +972,10 @@ export interface Moment3CreativeMeta {
  */
 export function extractMoment3Creative(
   text: string,
-  /** 이번 요청 프롬프트에 실은 활성 pack — id→phrase. 없으면 trend 신고 자체가 위반이다(§G). */
-  activeTrend?: ReadonlyMap<string, string>,
+  /** 이번 요청 프롬프트에 실은 활성 pack — id→phrase(또는 [phrase, ...variants]). 없으면 trend 신고 자체가 위반이다(§G). */
+  activeTrend?: ReadonlyMap<string, string | readonly string[]>,
+  /** V5-1 §B — en 단어 경계·case 정규화에 필요. 생략 시 CJK 규칙(substring). */
+  locale: WritingLocale = "ko",
 ): { set: MomentSuggestionSet3; meta: Moment3CreativeMeta } | null {
   const parse = (t: string): Record<string, unknown> | null => {
     try { const j = JSON.parse(t); return j && typeof j === "object" ? j as Record<string, unknown> : null; }
@@ -946,21 +1009,16 @@ export function extractMoment3Creative(
       }
       meta.kinds[d] = kind;
     }
-    // Trend 검증(§G·V5 §B) — witty 만 신고 가능. 활성 목록 밖 id·미반영 신고는
-    // witty 폐기. V5 QA 실측 결함 수정: 신고 1건 뒤에 미신고 phrase 가 문구에
-    // 더 끼는 경우("혼나볼래? 오이쉬!")를 못 잡았다 → 전달 phrase 의 실제 포함
-    // 수를 세서, 2개 이상이거나(유행어 2개 금지) 포함≠신고면 witty 폐기.
+    // Trend 판정(V5-1 §C) — SSOT 는 서버 문자열 검사. AI 신고는 참고값:
+    // 실제 1개 + 무신고 → 서버 자동 확정(V5 KO 폐기 문제의 해결 경로),
+    // 실제≠신고·2개 이상·신고했는데 미포함 → witty 폐기(재호출 0).
     if (d === "witty") {
-      const claimed = typeof e.trend_used_id === "string" ? e.trend_used_id.trim() : "";
-      const body = title + "\n" + memo;
-      const present = [...(activeTrend ?? new Map<string, string>())].filter(([, p]) => p && body.includes(p));
-      const bad =
-        present.length >= 2
-        || (claimed !== "" && (!activeTrend?.get(claimed) || !body.includes(activeTrend.get(claimed)!)))
-        || (claimed === "" && present.length > 0)
-        || (claimed !== "" && present.length === 1 && present[0]![0] !== claimed);
-      if (bad) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
-      if (claimed) meta.trendUsedId = claimed;
+      const claimedRaw = typeof e.trend_used_id === "string" ? e.trend_used_id.trim() : "";
+      const entries = [...(activeTrend ?? new Map<string, string | readonly string[]>())]
+        .map(([id, f]) => ({ id, forms: typeof f === "string" ? [f] : f }));
+      const v = resolveTrendUse(locale, title, memo, entries, claimedRaw || null);
+      if (!v.ok) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
+      meta.trendUsedId = v.usedId;
     }
     set[d] = { title, memo };
   }
@@ -1021,7 +1079,9 @@ export function groundedSuggestionGuard(req: WritingRequest, suggestion: string 
   const c = req.context;
   const sources = [c.draft, c.placeName, c.tripTitle, c.city, c.category, ...(c.tripFacts ?? [])]
     .filter((v): v is string => typeof v === "string").join("\n");
-  if (req.locale === "ja" || req.locale === "zh") {
+  // V5-1 §E-8 — en 도 포함: EN 캡션에 source 에 없는 한글(예: KO trend phrase)이
+  // 등장하면 언어 계약 위반으로 폐기한다(전달 목록 밖이라 trend 판정으로는 못 잡는다).
+  if (req.locale === "ja" || req.locale === "zh" || req.locale === "en") {
     const allowed = new Set(sources.match(/[가-힣]/g) ?? []);
     for (const ch of suggestion.match(/[가-힣]/g) ?? []) {
       if (!allowed.has(ch)) return null; // source 에 없는 한글 = 오염

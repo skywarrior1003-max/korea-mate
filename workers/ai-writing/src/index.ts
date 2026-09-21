@@ -78,6 +78,7 @@ interface ProviderOutcome {
 async function callProvider(
   apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3" | "storyHero",
   direction?: "calm" | "witty" | "warm", image?: WritingImage | null, trendEntries: readonly TrendPromptEntry[] = [],
+  locale: "ko" | "en" | "ja" | "zh" = "ko",
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
   const started = Date.now();
@@ -105,7 +106,10 @@ async function callProvider(
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     if (target === "moment3") {
       // 사진 경로는 창작 검증 파서 — 이미지 데이터는 이 함수 밖으로 나가지 않는다.
-      const creative = isMultimodal ? extractMoment3Creative(text, new Map(trendEntries.map(e => [e.id, e.phrase]))) : null;
+      // V5-1 §B — Functions 와 동일 계약: phrase+variants 서버 문자열 판정
+      const creative = isMultimodal
+        ? extractMoment3Creative(text, new Map<string, readonly string[]>(trendEntries.map(e => [e.id, [e.phrase, ...(e.variants ?? [])]])), locale)
+        : null;
       const set = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       return {
         suggestion: null, moment: null, hero: null, set, creativeMeta: creative?.meta ?? null,
@@ -246,12 +250,14 @@ export default {
     const rawTrend = (body as { trendEntries?: unknown }).trendEntries;
     const trendEntries: TrendPromptEntry[] = Array.isArray(rawTrend)
       ? rawTrend.filter((e): e is TrendPromptEntry => !!e && typeof (e as TrendPromptEntry).id === "string" && typeof (e as TrendPromptEntry).phrase === "string").slice(0, 5)
+        // V5-1 §B — variants 는 문자열만 통과(판정 입력 방어)
+        .map(e => ({ ...e, variants: Array.isArray(e.variants) ? e.variants.filter((v): v is string => typeof v === "string") : [] }))
       : [];
     const prompt = isMultimodal ? buildMoment3MultimodalPrompt(body, trendEntries) : buildWritingPrompt(body);
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, prompt, body.target, body.direction, image, trendEntries),
+      callProvider(apiKey, prompt, body.target, body.direction, image, trendEntries, body.locale),
       executionColo(),
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.

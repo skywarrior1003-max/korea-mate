@@ -197,8 +197,11 @@ async function runDirect(
     if (body.target === "moment3") {
       // 사진 경로는 창작 검증 파서(creative_kind·visual_basis whitelist + trend §G) —
       // 위반 방향만 빠진다. 이미지 데이터는 여기서 끝(로그·저장 0, 즉시 폐기).
-      const trendMap = new Map(trendEntries.map(t => [t.id, t.phrase]));
-      const creative = isMultimodal ? extractMoment3Creative(text, trendMap) : null;
+      // V5-1 §B — 판정 대상은 이번 요청에 전달한 entries 뿐. phrase + DB 기록
+      // variant(canonical_form)로 실제 문자열을 검사한다(AI 신고는 참고값).
+      const trendMap = new Map<string, readonly string[]>(
+        trendEntries.map(t => [t.id, [t.phrase, ...(t.variants ?? [])]]));
+      const creative = isMultimodal ? extractMoment3Creative(text, trendMap, body.locale) : null;
       const extracted = isMultimodal ? (creative?.set ?? null) : extractMoment3(text);
       const set = groundedMoment3Guard(body, extracted);
       const n = set ? Object.keys(set).length : 0;
@@ -382,6 +385,9 @@ export async function onRequestPost(
           return {
             id: String(row.id), phrase: String(row.phrase), meaning: String(row.meaning),
             usageExample: String(row.safe_example), avoidWhen: String(row.avoid_context),
+            // V5-1 §B — DB 에 기록된 공식 surface form 만 판정 variant 로 쓴다
+            variants: typeof row.canonical_form === "string" && row.canonical_form.trim() !== "" && row.canonical_form !== row.phrase
+              ? [row.canonical_form.trim()] : [],
             locale: String(row.locale), region_scope: String(row.region_scope),
             status: row.status as TrendRow["status"], lifecycle_type: row.lifecycle_type as TrendRow["lifecycle_type"],
             next_review_at: String(row.next_review_at), confidence_score: Number(row.confidence_score),
@@ -391,7 +397,7 @@ export async function onRequestPost(
         }), body.locale);
     }
   }
-  const trendEntries: TrendPromptEntry[] = trendRows.map(r => ({ id: r.id, phrase: r.phrase, meaning: r.meaning, usageExample: r.usageExample, avoidWhen: r.avoidWhen }));
+  const trendEntries: TrendPromptEntry[] = trendRows.map(r => ({ id: r.id, phrase: r.phrase, meaning: r.meaning, usageExample: r.usageExample, avoidWhen: r.avoidWhen, variants: r.variants ?? [] }));
   // §3 cache key — 미사용 bucket 은 항상 null("none"): pack 이 갱신돼도 미사용
   // 캐시는 무효화되지 않는다. 사용 bucket 만 보낸 row 집합의 버전을 쓴다.
   const trendVer = trendRows.length > 0 ? trendVersionOf(trendRows) : null;
