@@ -189,3 +189,63 @@ export function decideCorroboration(e: CorroborationInput): TrendStatus {
     e.reviewNotPassed;
   return ok ? "experimental_active" : "candidate";
 }
+
+// ── V4-1 §D·§F — 엔티티 분리·KST 주차 ────────────────────────────────────────
+
+export const ENTITY_TYPES = ["phrase", "person", "artist", "group", "brand", "product", "work_title", "event", "unknown"] as const;
+export type EntityType = (typeof ENTITY_TYPES)[number];
+
+/**
+ * §F — KST(UTC+9) 기준 그 주 월요일 날짜("YYYY-MM-DD").
+ * 주간 Search slot 의 파티션 키다. UTC 일요일 15:00 = KST 월요일 00:00 경계.
+ */
+export function kstWeekKey(now: Date): string {
+  const kstMs = now.getTime() + 9 * 3600_000;
+  const kst = new Date(kstMs);
+  const dow = kst.getUTCDay();               // KST 요일(UTC 게터로 읽는다 — 이미 +9h 보정됨)
+  const daysFromMonday = (dow + 6) % 7;      // 월=0 … 일=6
+  const monday = new Date(kstMs - daysFromMonday * 86_400_000);
+  return monday.toISOString().slice(0, 10);
+}
+
+/**
+ * §D — 모델 자기 신고(entity_type)를 그대로 믿지 않는 서버 보조 판정.
+ * 결정적 신호만 본다: 의미·예문 부재(맨 고유명사), 의미문의 인물/그룹/브랜드
+ * 지표 어휘, 출처 제목의 인물 프로필 지표. phrase 로 확정되지 않으면 자동
+ * 활성 경로에 들어갈 수 없다(candidate 도 아님 — manual_review 또는 생략).
+ */
+export interface EntityJudgeInput {
+  claimed: string | undefined;          // 모델 신고값
+  canonical: string;
+  meaning: string;
+  usageExample: string;
+  sourceTitles: readonly string[];
+  artistOrFandomOrigin: boolean;
+}
+const PERSONISH_RE = /멤버|아이돌|배우|가수|선수|인플루언서|인물|프로필|born|member of|idol|actress|actor|singer|メンバー|俳優|歌手|成员|演员|歌手/i;
+const GROUPISH_RE = /걸그룹|보이그룹|그룹|밴드|girl group|boy group|band|グループ|组合/i;
+const BRANDISH_RE = /브랜드|출시|제품|판매|brand|launche?d?|product|发布|新品/i;
+const WORKISH_RE = /드라마|영화|앨범|곡|웹툰|소설|drama|movie|film|album|song|track|漫画|电影/i;
+
+export function judgeEntityType(e: EntityJudgeInput): EntityType {
+  const claimed = (ENTITY_TYPES as readonly string[]).includes(e.claimed ?? "") ? e.claimed as EntityType : "unknown";
+  // 맨 고유명사(의미·예문 실질 부재)는 phrase 신고여도 unknown 으로 강등
+  const bare = !e.meaning.trim() || !e.usageExample.trim();
+  const hay = e.meaning + "\n" + e.sourceTitles.join("\n");
+  if (claimed !== "phrase") return claimed;                    // 비-phrase 신고는 그대로(활성 불가)
+  if (bare) return "unknown";
+  if (GROUPISH_RE.test(hay) && hay.includes(e.canonical)) return "group";
+  if (PERSONISH_RE.test(hay) && e.canonical.length <= 4 && !e.usageExample.includes(e.canonical + "?") ) {
+    // 짧은 한글 이름 + 인물 지표 어휘 → 인물명 의심. 단 예문이 문구로 실사용을
+    // 보여주면(문장 내 활용) phrase 가능성을 남기고 manual 판단은 status 에서.
+    if (!e.usageExample.includes(e.canonical)) return "person";
+  }
+  if (BRANDISH_RE.test(hay) && !e.artistOrFandomOrigin && hay.includes(e.canonical)) return "brand";
+  if (WORKISH_RE.test(hay) && hay.includes(e.canonical) && !e.usageExample.includes(e.canonical)) return "work_title";
+  return "phrase";
+}
+
+/** §D — 자동 활성(candidate 저장·corroboration 진입)이 허용되는 entity 인가 */
+export function entityEligibleForTrend(t: EntityType): boolean {
+  return t === "phrase";
+}

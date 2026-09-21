@@ -14,6 +14,10 @@
 #   TREND_SUPABASE_URL           — Staging https://<ref>.supabase.co
 #   TREND_SUPABASE_SERVICE_KEY   — Staging service_role
 #   CURATOR_TRIGGER_SECRET       — 수동 trigger 인증(공개 trigger 금지)
+#
+# §H 게이트 vars(비밀 아님): SEARCH_ENABLED 미설정=provider 0(fail-closed),
+#   ALLOWED_MODEL/BILLING_UNIT 이 코드 계약과 다르면 provider 0(가격 모델 변경 방어),
+#   WEEKLY cap 은 4를 넘을 수 없다. 주간 하드캡의 원장은 DB(067 slots)다.
 
 name = "gokoreamate-trend-curator-staging"
 main = "src/index.ts"
@@ -27,6 +31,9 @@ crons = ["0 19 * * 1"]
 [placement]
 region = "gcp:asia-northeast3"
 
-# 테스트 훅(§E) — 수동 trigger 의 testDate/mock 허용(운영 cron 경로 무관). Production 전 제거.
+
 [vars]
-CURATOR_ALLOW_MOCK = "1"
+CURATOR_SEARCH_ENABLED = "1"
+CURATOR_WEEKLY_GROUNDED_PROMPT_CAP = "4"
+CURATOR_ALLOWED_MODEL = "gemini-2.5-flash"
+CURATOR_BILLING_UNIT = "grounded_prompt"
