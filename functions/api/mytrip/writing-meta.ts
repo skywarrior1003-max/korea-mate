@@ -21,12 +21,16 @@ const GEN_TABLE = "mytrip_ai_generations";
 const TREND_TABLE = "mytrip_trend_packs";
 
 /** §10 익명 집계 +1 — best-effort(사용자 흐름 무영향) */
-async function bumpTrend(admin: ReturnType<typeof createClient>, trendId: string, col: string): Promise<void> {
+async function bumpTrend(admin: ReturnType<typeof makeAdmin>, trendId: string, col: string): Promise<void> {
   try {
     const { data } = await admin.from(TREND_TABLE).select(col).eq("id", trendId).maybeSingle();
     const cur = (data as Record<string, number> | null)?.[col];
     if (typeof cur === "number") await admin.from(TREND_TABLE).update({ [col]: cur + 1, updated_at: new Date().toISOString() }).eq("id", trendId);
   } catch { /* ignore */ }
+}
+
+function makeAdmin(url: string, key: string) {
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
 const json = (b: unknown, status = 200) =>
@@ -51,7 +55,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const event = body.event === "select" || body.event === "save" ? body.event : null;
   if (!itineraryId || !generationId || !event) return json({ ok: false }, 400);
 
-  const admin = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
+  const admin = makeAdmin(url, key);
   const { data: owned } = await admin.from("itineraries").select("id").eq("id", itineraryId).eq("device_id", deviceId).maybeSingle();
   if (!owned) return json({ ok: false }, 404);
 
