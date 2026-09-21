@@ -76,14 +76,16 @@ export async function ownerHashHmac(deviceId: string, secret: string): Promise<s
 }
 
 // ── V3 §3 — 결정적 trend 사용 bucket ─────────────────────────────────────────
-// 전체 재치 생성 중 trend 사용을 최대 25%로 제한한다. 일반 random 이 아니라
+// 전체 재치 생성 중 trend "전달"을 제한한다(강제 사용이 아니다 — 프롬프트는
+// 자연 결합을 우선 검토하고 안 맞으면 버린다). 일반 random 이 아니라
 // 서버 HMAC 기반 결정적 bucket — 같은 입력은 재열기마다 같은 결정을 받는다.
 // pack_version 은 bucket 입력에 넣지 않는다(§3 — pack 갱신이 같은 사진의
 // 사용 여부까지 흔들면 안 된다).
-export const TREND_BUCKET_EXPERIMENTAL_MAX = 10; // 기본: 0~9 → experimental(10%)
-export const TREND_BUCKET_ACTIVE_MAX = 25;       // 기본: 10~24 → active(15%) · 이후 미사용
+// V5 §D — 전달 상한 25%→60% 상향(experimental 15 / active 45 / none 40).
+export const TREND_BUCKET_EXPERIMENTAL_MAX = 15; // 기본: 0~14 → experimental(15%)
+export const TREND_BUCKET_ACTIVE_MAX = 60;       // 기본: 15~59 → active(45%) · 이후 미전달
 
-/** V4 §G — 비율 env 설정. Preview 는 미설정=기본 25%, Production 초기 권장 5%+10%=15%(보고서 명시, env 는 이번에 변경 안 함). */
+/** V4 §G — 비율 env 설정. Preview 는 미설정=기본 60%(V5 §D). Production 값은 릴리스 시 별도 결정(보고만). */
 export interface TrendBucketCfg { expMax: number; activeMax: number }
 export function resolveTrendBucketCfg(env: Record<string, string | undefined>): TrendBucketCfg {
   const n = (v: string | undefined, d: number): number => {

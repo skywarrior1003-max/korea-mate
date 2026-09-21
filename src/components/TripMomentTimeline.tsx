@@ -238,6 +238,9 @@ export default function TripMomentTimeline({
       {group.items.map((m, i) => {
         const cat      = MOMENT_CATEGORIES.find(c => c.key === m.category) ?? MOMENT_CATEGORIES[4];
         const color    = CAT_COLORS[m.category] ?? "#FF4A2D";
+        // V5 §H — "random" 은 캡처의 내부 기본값이지 사용자가 고른 의미가 아니다.
+        // 배지로 띄우면 raw enum("Random")이 그대로 노출된다 → 표시하지 않는다.
+        const showCat  = cat.key !== "random";
         const isOpen   = expanded === m.moment_id;
         const dateStr  = new Date(m.captured_at).toLocaleString(locale, {
           month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
@@ -291,7 +294,7 @@ export default function TripMomentTimeline({
                       <img
                         key={`${i}-${src.slice(-16)}`}
                         src={src}
-                        alt={i === 0 ? (m.memo || cat.label) : ""}
+                        alt={i === 0 ? (m.memo || (showCat ? cat.label : "")) : ""}
                         className="w-full shrink-0 snap-center object-cover transition-all duration-500"
                         style={{ maxHeight: isOpen ? 400 : 200 }}
                         onError={() => onPhotoError?.(m.moment_id)}
@@ -302,7 +305,7 @@ export default function TripMomentTimeline({
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={m.photo_data}
-                    alt={m.memo || cat.label}
+                    alt={m.memo || (showCat ? cat.label : "")}
                     className="w-full object-cover transition-all duration-500"
                     style={{ maxHeight: isOpen ? 400 : 200 }}
                     onError={() => onPhotoError?.(m.moment_id)}
@@ -314,23 +317,25 @@ export default function TripMomentTimeline({
                   </span>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
-                  <span
-                    className="text-xs font-black px-2.5 py-1 rounded-lg text-white"
-                    style={{ backgroundColor: color }}
-                  >
-                    {cat.emoji} {cat.label}
-                  </span>
-                  {/* Day 배지는 왼쪽 축 마커가 대신한다 — 같은 줄에 두 번 쓰지 않는다 */}
-                </div>
+                {showCat && (
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
+                    <span
+                      className="text-xs font-black px-2.5 py-1 rounded-lg text-white"
+                      style={{ backgroundColor: color }}
+                    >
+                      {cat.emoji} {cat.label}
+                    </span>
+                    {/* Day 배지는 왼쪽 축 마커가 대신한다 — 같은 줄에 두 번 쓰지 않는다 */}
+                  </div>
+                )}
                 <div className="absolute top-3 right-3 text-xs text-white/70 font-medium bg-black/40 px-2 py-1 rounded-lg backdrop-blur-sm">
                   {isOpen ? "collapse ↑" : "expand ↓"}
                 </div>
               </div>
             )}
 
-            {/* 사진 없을 때 카테고리 배지 */}
-            {!m.photo_data && (
+            {/* 사진 없을 때 카테고리 배지 — random(내부 기본값)은 표시하지 않는다 */}
+            {!m.photo_data && showCat && (
               <div
                 className="px-5 pt-4 pb-0 flex items-center gap-2"
               >

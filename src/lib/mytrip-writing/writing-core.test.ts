@@ -316,7 +316,11 @@ test("멀티모달 프롬프트 — 문체별 창작 면허·인물 추론 금�
   };
   const p = buildMoment3MultimodalPrompt(req);
   assert.match(p, /Look at the photo carefully/);
-  assert.match(p, /"witty": the goal is a SHORT COMEBACK/); // §H 재치 = 짧은 되받기
+  // V5 §B — witty = SNS 캡션 계약(즉시 이해 훅·payoff·장치 1개·철학 독백 금지)
+  assert.match(p, /"witty": a SOCIAL-MEDIA CAPTION/);
+  assert.match(p, /Use EXACTLY ONE comic device/);
+  assert.match(p, /philosophical monologue/);
+  assert.match(p, /never repeat or re-explain the title/);
   assert.match(p, /"warm": POETIC/);
   assert.match(p, /NEVER guess or mention the identity, relationship, age, race, nationality/);
   assert.match(p, /NEVER invent real-sounding events/);
@@ -376,6 +380,26 @@ test("trend 검증(§G) — 활성 목록 밖 신고·미반영 신고는 witty 
   assert.ok(r4 && !r4.set.witty);
 });
 
+test("V5 §B — 미신고 phrase 혼입·유행어 2개는 witty 폐기(QA C2 실측 결함 수정)", () => {
+  const active = new Map([["ko-duahonna-2026", "혼나볼래?"], ["ko-oishue-2026", "오이쉬!"]]);
+  const resp = (trendId: string | null, wittyMemo: string) => JSON.stringify({
+    calm: { title: "첨성대, 맑은 날", memo: "꽃가지 사이로 본 첨성대." },
+    witty: { title: "첨성대, 너 너무 예쁠래?", memo: wittyMemo, creative_kind: "comeback", visual_basis: ["flowers"], ...(trendId ? { trend_used_id: trendId } : {}) },
+  });
+  // QA C2 실측: 신고 1건 + 미신고 phrase 혼입 → 폐기
+  const r1 = extractMoment3Creative(resp("ko-duahonna-2026", "하늘도 꽃도 반짝이는 날 혼나볼래? 오이쉬!"), active);
+  assert.ok(r1 && !r1.set.witty && r1.set.calm);
+  // 미신고인데 phrase 사용 → 폐기(신고 계약 — §10 집계 왜곡 방지)
+  const r2 = extractMoment3Creative(resp(null, "이 날씨엔 혼나볼래?"), active);
+  assert.ok(r2 && !r2.set.witty);
+  // 정확 신고 1개 사용 → 통과
+  const r3 = extractMoment3Creative(resp("ko-duahonna-2026", "이 날씨엔 혼나볼래?"), active);
+  assert.ok(r3?.set.witty && r3.meta.trendUsedId === "ko-duahonna-2026");
+  // 미사용·미신고 → 통과
+  const r4 = extractMoment3Creative(resp(null, "꽃이 주연, 탑이 조연."), active);
+  assert.ok(r4?.set.witty && r4.meta.trendUsedId === null);
+});
+
 test("영구 캐시 키(§D) — 사진·문맥·버전·trend 가 다르면 키가 갈린다, 같으면 같다", async () => {
   const base = { feature: "moment3" as const, direction: null, itineraryId: "11111111-2222-4333-8444-555555555555", locale: "ko",
     contextHash: "ctx1", imageSha: "img1", promptVersion: "v1", trendPackVersion: null };
@@ -413,9 +437,73 @@ test("멀티모달 프롬프트 — trend 블록은 활성 항목이 있을 때�
   const withTrend = buildMoment3MultimodalPrompt(req, [{ id: "x1", phrase: "느좋", meaning: "m", usageExample: "u", avoidWhen: "a" }]);
   assert.match(withTrend, /CURRENT EXPRESSIONS/);
   assert.match(withTrend, /AT MOST ONE, only in "witty"/);
-  assert.match(withTrend, /never translate one into another language/);
+  assert.match(withTrend, /never\s+translate one into another language/);
   assert.match(withTrend, /trend_used_id/);
-  // 길이 목표(§H) — 처음부터 짧게
+  // V5 §D — 자연 결합 우선 검토(단순 무시 금지) 지시
+  assert.match(withTrend, /FIRST genuinely check whether ONE of them fits/);
+  // V5 §E — trend 미전달 시 locale-native social caption 강제
+  assert.match(noTrend, /native\s+social-caption grammar/);
+  assert.match(noTrend, /NOT a philosophical line/);
+  // 길이 목표(§H) — 처음부터 짧게 + V5 §C witty 하드 계약
   assert.match(withTrend, /around 18 characters/);
-  assert.match(buildMoment3MultimodalPrompt({ ...req, locale: "en" }, []), /~45 characters/);
+  assert.match(withTrend, /HARD LENGTH CONTRACT for "witty": title within 22 characters/);
+  assert.match(withTrend, /memo within 45 characters/);
+  const enP = buildMoment3MultimodalPrompt({ ...req, locale: "en" }, []);
+  assert.match(enP, /~45 characters/);
+  assert.match(enP, /title 2-7 words \(never more than 10\), memo 5-12 words \(never more than 18\)/);
+  assert.match(buildMoment3MultimodalPrompt({ ...req, locale: "ja" }, []), /title within 22 characters(.|\n)*memo within 42 characters/);
+  assert.match(buildMoment3MultimodalPrompt({ ...req, locale: "zh" }, []), /title within 18 characters(.|\n)*memo within 36 characters/);
+});
+
+test("V5 §C — witty 길이 계약: 위반 witty 만 폐기·재호출 0(자르지 않는다)", async () => {
+  const { wittyLenViolation, groundedMoment3Guard } = await import("./writing-core.ts");
+  // 한도 내 통과
+  assert.equal(wittyLenViolation("ko", "야간엔 1+1", "다리 하나 보러 왔는데 물이 하나 더 줬네"), false);
+  assert.equal(wittyLenViolation("ko", "가".repeat(23), "짧은 본문"), true);
+  assert.equal(wittyLenViolation("ko", "제목", "나".repeat(46)), true);
+  assert.equal(wittyLenViolation("en", "one two three four five six seven eight nine ten eleven", "short memo"), true);
+  assert.equal(wittyLenViolation("en", "1+1 tonight", "came for one bridge, the water threw in another"), false);
+  assert.equal(wittyLenViolation("ja", "夜は1+1", "橋を一本見に来たら水面がもう一本くれた"), false);
+  assert.equal(wittyLenViolation("zh", "夜晚买一送一", "来看一座桥水面又送了一座"), false);
+  // guard 통합 — 길이 위반 witty 만 빠지고 calm/warm 유지
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "ko",
+    context: { city: "gyeongju", placeName: "월정교", hasPhoto: true } };
+  const g = groundedMoment3Guard(req, {
+    calm: { title: "월정교의 밤", memo: "다리 아래 물이 잔잔했다" },
+    witty: { title: "이 제목은 스물두 자를 확실히 넘기는 긴 제목이다", memo: "본문" },
+    warm: { title: "밤의 강", memo: "물 위에 등이 하나 떠 있었다" },
+  });
+  assert.ok(g && g.calm && g.warm && !g.witty);
+});
+
+test("V5 §B — witty 철학 독백·추상 자기질문은 witty 만 폐기", async () => {
+  const { WITTY_MONOLOGUE_RE, groundedMoment3Guard } = await import("./writing-core.ts");
+  assert.ok(WITTY_MONOLOGUE_RE.test("돌탑은 하늘을 봤다는데, 나는 뭘 봤을까"));
+  assert.ok(WITTY_MONOLOGUE_RE.test("what did i even see here"));
+  assert.ok(WITTY_MONOLOGUE_RE.test("私は何を見たのだろう"));
+  assert.ok(WITTY_MONOLOGUE_RE.test("我到底看到了什么"));
+  assert.ok(!WITTY_MONOLOGUE_RE.test("다리 하나 보러 왔는데 물이 하나 더 줬네"));
+  assert.ok(!WITTY_MONOLOGUE_RE.test("첨성대 보러 왔는데 꽃이 주연"));
+  const req: WritingRequest = { target: "moment3", direction: "calm", locale: "ko",
+    context: { city: "gyeongju", placeName: "첨성대", hasPhoto: true } };
+  const g = groundedMoment3Guard(req, {
+    calm: { title: "첨성대 오후", memo: "돌탑 앞이 붐볐다" },
+    witty: { title: "내 관찰은 하늘을 못 봤다", memo: "돌탑은 하늘을 봤다는데, 나는 뭘 봤을까" },
+  });
+  assert.ok(g && g.calm && !g.witty);
+});
+
+test("V5 §F — visual_basis 확장 6종이 파서 whitelist 를 통과한다", async () => {
+  const { extractMoment3Creative } = await import("./writing-core.ts");
+  const mk = (basis: string[]) => JSON.stringify({
+    calm: { title: "t", memo: "m" },
+    witty: { title: "t2", memo: "m2", creative_kind: "visual_contrast", visual_basis: basis },
+  });
+  for (const b of ["flowers", "architecture", "shadow", "crowd", "scale_contrast", "weather_visible"]) {
+    const r = extractMoment3Creative(mk([b]));
+    assert.ok(r && r.set.witty, b);
+  }
+  // 목록 밖 자기신고는 여전히 위반
+  const bad = extractMoment3Creative(mk(["sunset_vibes"]));
+  assert.ok(bad && !bad.set.witty && bad.set.calm);
 });

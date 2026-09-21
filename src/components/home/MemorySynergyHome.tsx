@@ -139,7 +139,8 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
 
                   <div className="p-4">
                     <p className="text-[11px] font-black tracking-wide mb-1.5" style={{ color: DESIGN_OUTLINE }}>
-                      {when} · {cat.emoji} {cat.label}
+                      {/* V5 §H — random 은 캡처의 내부 기본값이라 raw "Random" 라벨을 노출하지 않는다 */}
+                      {cat.key === "random" ? when : <>{when} · {cat.emoji} {cat.label}</>}
                     </p>
                     {/* 사용자가 쓴 글. 번역하지 않고 그대로 둔다 */}
                     {m.memo && (

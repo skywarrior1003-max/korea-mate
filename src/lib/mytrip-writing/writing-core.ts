@@ -44,8 +44,8 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v6-season-truth";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v7-season-truth";
+export const MOMENT3_PROMPT_VERSION = "moment3-v7-social-caption";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v8-social-caption";
 
 /**
  * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
@@ -77,10 +77,15 @@ export function stripWrappingQuotes(s: string): string {
 // 공통 금지: 실제 사건(사고·구매·숙박·음식 경험)·동행자·역사 정보 발명,
 // 사진 속 인물의 신원·관계·나이·인종·국적·건강 추측.
 
-/** witty/warm 창작 응답의 검증용 분류 — DB·공개 API·화면 저장·노출 0 */
+/** witty/warm 창작 응답의 검증용 분류 — DB·공개 API·화면 저장·노출 0.
+ * V5 §B — witty 장치 목록(SNS 캡션 8종)과 whitelist 가 어긋나면 모델이 정직하게
+ * 신고한 witty 가 파서에서 통째로 죽는다(V5 QA 실측: ko/en witty 전멸) → 장치와
+ * 1:1 로 맞춘 6종을 추가한다. */
 export const CREATIVE_KINDS = [
   "visual_wordplay", "metaphor", "personification",
   "playful_exaggeration", "poetic_imagery", "visual_contrast",
+  "comeback", "everyday_analogy", "subject_swap",
+  "dry_observation", "element_flip", "current_expression",
 ] as const;
 export type CreativeKind = (typeof CREATIVE_KINDS)[number];
 
@@ -107,10 +112,14 @@ const WARM_LOCALE_CRAFT: Record<WritingLocale, string> = {
   zh: "ZH warm craft: 以画面为中心的短抒情，不堆古风套话。",
 };
 
-/** visual_basis 허용 — 사진의 일반적 시각 요소만(인물·신원·위치 추론 금지) */
+/** visual_basis 허용 — 사진의 일반적 시각 요소만(인물·신원·위치 추론 금지).
+ * V5 §F 확장: 실제 사진에 흔한 요소 6종 추가 — 목록이 좁아 witty/warm 이
+ * 무관한 값을 자기신고하는 압력을 줄인다. crowd 는 "여러 사람이 장면 요소"
+ * 라는 구도 신고일 뿐, 개별 인물 서술 허용이 아니다(HARD RULES 그대로). */
 export const VISUAL_BASIS_ALLOWED = [
   "reflection", "symmetry", "night_light", "silhouette",
   "color_contrast", "framing", "repeated_shape", "foreground_background",
+  "flowers", "architecture", "shadow", "crowd", "scale_contrast", "weather_visible",
 ] as const;
 
 /** 멀티모달 이미지 입력 — 클라이언트 canvas 전처리(재인코딩 JPEG)만 받는다 */
@@ -372,12 +381,14 @@ export const HERO_CREATIVE_BRIEF: Record<WritingDirection, string> = {
   witty: [
     "Tone — light and witty. The cover must make the reader smile ONCE MORE at this trip — it is a COMEBACK,",
     "not a summary. FIRST look for a witty line the traveler saved in a public moment (their own joke is the",
-    "best material): pick it up, echo it, or escalate it one step. If none exists, find the one funny pattern",
-    "in the real facts and land it as a short deadpan punchline.",
-    "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), a poetic-pretty line",
-    "(that is the emotional tone's job), or a caption that fits any trip. Deadpan beats exclamation.",
+    "best material): pick it up, echo it, or escalate it one step — that echo is the ONLY place a current",
+    "expression may appear; never add a new trend phrase the traveler did not use. If no saved joke exists,",
+    "find the one funny pattern in the real facts and land it as a short deadpan punchline.",
+    "HARD FAILURES for this tone: a plain list of counts/places ('N days, M stops...'), stringing several",
+    "moments together, a poetic-pretty line (that is the emotional tone's job), or a caption that fits any",
+    "trip. Deadpan beats exclamation.",
     "Allowed: metaphor, personification of the itinerary/scenes, playful exaggeration that no one could mistake for a real event.",
-    "Keep it tight: title in one short beat, intro 1-2 short sentences.",
+    "Keep it tight: title in one short beat; the intro is ideally ONE short sentence (two only if truly needed).",
     "creative_kind must name the main device you used.",
   ].join(" "),
   warm: [
@@ -697,6 +708,31 @@ export function stripJaLaughTail(s: string): string {
   return s.replace(/[\s]*(?:\(笑\)|（笑）|笑|ｗ+|w{1,3})$/u, "").trim();
 }
 
+// ── V5 §C — witty 길이 계약(생성부터 짧게, 위반 = witty 만 폐기·재호출 0) ────
+// SNS 캡션은 길면 이미 실패다. 목표(target)는 프롬프트가 요구하고, 여기의
+// max 는 서버 하드 한도다 — 잘라서 살리지 않는다(잘린 개그는 개그가 아니다).
+// en 은 단어 수, CJK 는 문자 수(공백 포함) 기준.
+export const WITTY_LEN_LIMIT: Record<WritingLocale, { titleMax: number; memoMax: number; unit: "chars" | "words" }> = {
+  ko: { titleMax: 22, memoMax: 45, unit: "chars" },
+  en: { titleMax: 10, memoMax: 18, unit: "words" },
+  ja: { titleMax: 22, memoMax: 42, unit: "chars" },
+  zh: { titleMax: 18, memoMax: 36, unit: "chars" },
+};
+export function wittyLenViolation(locale: WritingLocale, title: string, memo: string): boolean {
+  const lim = WITTY_LEN_LIMIT[locale];
+  const len = (s: string): number =>
+    lim.unit === "words" ? s.trim().split(/\s+/).filter(Boolean).length : s.trim().length;
+  return len(title) > lim.titleMax || len(memo) > lim.memoMax;
+}
+
+/**
+ * V5 §B — witty 철학 독백·추상 자기질문 검출(좁은 결정적 패턴만). 실측 실패
+ * 사례("나는 뭘 봤을까…")의 형태만 잡는다 — 자연어 전반을 심사하지 않는다.
+ * 걸리면 witty 만 폐기(재호출 0).
+ */
+export const WITTY_MONOLOGUE_RE =
+  /(?:뭘|무얼|무엇을)\s*(?:봤|보았|했|느꼈)을까|나는\s*무엇|내가\s*본\s*것?은\s*무엇|what\s+(?:did|do)\s+i\s+(?:even\s+)?(?:see|feel|learn)|何を(?:見|感じ)た(?:の)?(?:だろう|かな)|私は何を|我(?:到底)?(?:看|感受)到了什么/i;
+
 /** moment3 세트에 방향별 guard — 걸린 방향만 빠진다(부분 성공 유지) */
 export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionSet3 | null): MomentSuggestionSet3 | null {
   if (set === null) return null;
@@ -711,6 +747,9 @@ export function groundedMoment3Guard(req: WritingRequest, set: MomentSuggestionS
     }
     // V3 §9 — warm 상투구는 그 방향만 폐기(재호출 0·다른 방향 유지)
     if (d === "warm" && STOCK_WARM_RE.test(pair.title + "\n" + pair.memo)) continue;
+    // V5 §C·§B — witty 길이 계약 위반·철학 독백은 witty 만 폐기(재호출 0)
+    if (d === "witty" && (wittyLenViolation(req.locale, pair.title, pair.memo)
+      || WITTY_MONOLOGUE_RE.test(pair.title + "\n" + pair.memo))) continue;
     if (groundedSuggestionGuard(req, pair.title) !== null && groundedSuggestionGuard(req, pair.memo) !== null) out[d] = pair;
   }
   return Object.keys(out).length > 0 ? out : null;
@@ -763,8 +802,14 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
   const draft = clip(c.draft, MAX_CONTEXT_CHARS);
   // 길이 목표(§H) — 생성 후 자르지 않고 처음부터 짧게 쓰게 한다
   const lenGoal = req.locale === "en"
-    ? "Length goal: title within ~45 characters, memo within ~90 characters. Write short FROM THE START — never a long line to be trimmed."
-    : "Length goal: title around 18 characters, memo around 30 characters (CJK). Write short FROM THE START — one beat, not a paragraph.";
+    ? "Length goal (calm/warm): title within ~45 characters, memo within ~90 characters. Write short FROM THE START — never a long line to be trimmed."
+    : "Length goal (calm/warm): title around 18 characters, memo around 30 characters (CJK). Write short FROM THE START — one beat, not a paragraph.";
+  // V5 §C — witty 는 SNS 캡션 길이 계약이 더 엄격하다. 서버가 max 초과 witty 를
+  // 통째로 폐기하므로(자르지 않음) 프롬프트가 처음부터 계약을 알아야 한다.
+  const wl = WITTY_LEN_LIMIT[req.locale];
+  const wittyLen = wl.unit === "words"
+    ? `HARD LENGTH CONTRACT for "witty": title 2-7 words (never more than ${wl.titleMax}), memo 5-12 words (never more than ${wl.memoMax}). A witty line over the limit is DISCARDED whole, not trimmed.`
+    : `HARD LENGTH CONTRACT for "witty": title within ${wl.titleMax} characters (aim shorter), memo within ${wl.memoMax} characters. A witty line over the limit is DISCARDED whole, not trimmed.`;
   const trend = (trendEntries ?? []).slice(0, 5);
   return [
     `You help a traveler caption ONE moment of their trip for their own diary/SNS. You are given the traveler's`,
@@ -773,21 +818,28 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `Write THREE complete entries for this SAME moment — one per direction (calm, witty, warm). Each entry =`,
     `one title (max ${MAX_TITLE_CHARS} characters) AND one short memo (max ${MAX_MEMO_CHARS} characters).`,
     lenGoal,
+    wittyLen,
     `Language: write ONLY in ${LOCALE_NAME[req.locale]}. No other language, no romanization.`,
     LOCALE_ISOLATION[req.locale],
     LOCALE_VOICE[req.locale],
     `DIRECTIONS (each has its OWN creative license — they must be clearly distinguishable):`,
     `- "calm": factual and quiet. Only what is clearly visible in the photo, the place, the traveler's note, the`,
     `  real itinerary. A restrained diary line. No metaphor, no jokes.`,
-    `- "witty": the goal is a SHORT COMEBACK that makes the viewer smile AGAIN after seeing the photo —`,
-    `  not a pretty description, not a list of trip facts. Find the ONE visual punchline of this photo`,
-    `  (a reflection doubling something, two elements colliding, a shadow, a composition accident) and`,
-    `  land it in one beat. Craft level to aim for (do NOT copy, it is a shape reference): a night bridge`,
-    `  doubled in the water → title "1+1 tonight", memo "came for one bridge, the water threw in another."`,
-    `  Deadpan beats exclamation. If the photo gives nothing, a dry self-aware observation still beats`,
-    `  a scenic description. Never poetic-pretty — that is warm's job. ONE comic device per result:`,
-    `  never stack two gags. The title is the SETUP and the memo is the PAYOFF — never repeat the same`,
-    `  joke or number-gag in both lines.`,
+    `- "witty": a SOCIAL-MEDIA CAPTION a funny friend would post under this exact photo. The reader's`,
+    `  path is fixed: see the photo → read the title and INSTANTLY get what it points at → read the short`,
+    `  memo → smile once → done. The title is a concrete hook about THIS scene (never abstract), the memo`,
+    `  is the payoff — it must never repeat or re-explain the title.`,
+    `  Use EXACTLY ONE comic device, chosen from: visual contrast, a comeback/retort, a one-plus-one style`,
+    `  everyday analogy, swapping who is the main subject vs the background, personifying one thing in the`,
+    `  scene, a current casual expression, a single dry observation, or flipping two elements of the photo.`,
+    `  Craft level to aim for (do NOT copy, it is a shape reference): a night bridge doubled in the water →`,
+    `  title "1+1 tonight", memo "came for one bridge, the water threw in another."`,
+    `  HARD FAILURES for witty (any of these = the witty entry is worthless): a philosophical monologue or`,
+    `  abstract self-question ("what did I really see..."), an explanation of the scene, an anticlimax gag`,
+    `  that lands nowhere, two comic devices stacked, two slang expressions in one entry, a trend phrase`,
+    `  bolted onto the end of the sentence, poetic-pretty lines (that is warm's job), or a caption that`,
+    `  would fit any photo. Deadpan beats exclamation. If the photo gives nothing, one dry concrete`,
+    `  observation about what IS in the frame still beats all of the above.`,
     `- "warm": POETIC. Use the photo's light, color, reflection, distance, night, space. Personify the scene,`,
     `  give it mood and emotional imagination. Clearly lyrical — never a fake experience report. Never reuse`,
     `  the same stock line for every place. BANNED warm clichés (any language): "time stood still",`,
@@ -796,14 +848,25 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     WITTY_LOCALE_CRAFT[req.locale],
     WARM_LOCALE_CRAFT[req.locale],
     ...(trend.length > 0 ? [
-      `CURRENT EXPRESSIONS (reviewed list — OPTIONAL, for "witty" ONLY):`,
+      `CURRENT EXPRESSIONS (reviewed list — for "witty" ONLY):`,
       ...trend.map(t => `- [${t.id}] "${t.phrase}" — ${t.meaning} e.g. ${t.usageExample} Avoid: ${t.avoidWhen}`),
-      `Rules for these: use AT MOST ONE, only in "witty", only if it fits the scene NATURALLY in its original`,
-      `language and register. Never force one in, never stack several, never translate one into another language,`,
-      `never bend the sentence to fit it, and never write a line that merely explains the expression.`,
-      `Never insert artist/group/member names around it. If none fits, use none. Report which you used in`,
-      `"trend_used_id" (the [id]), or omit the field when unused. calm and warm must NOT use any of these.`,
-    ] : []),
+      // V5 §D — 전달은 60%로 늘었지만 강제 사용이 아니다. 단, "단순 무시"도
+      // 아니다: 자연 결합 가능성을 먼저 검토하고, 안 맞으면 정직하게 버린다.
+      `Rules for these: FIRST genuinely check whether ONE of them fits this exact scene naturally, in its`,
+      `original language and register — if it does, weaving it in usually makes the caption funnier; if none`,
+      `truly fits, use none (do not force it). Use AT MOST ONE, only in "witty". Never stack several, never`,
+      `translate one into another language, never bend the sentence to fit it, never bolt one onto the end`,
+      `of an already-finished line, and never write a line that merely explains the expression.`,
+      `Never insert artist/group/member names around it. If you weave one in you MUST report its [id] in`,
+      `"trend_used_id" — an unreported use is discarded whole; omit the field when unused. calm and warm`,
+      `must NOT use any of these.`,
+    ] : [
+      // V5 §E — trend 미전달 요청의 witty 가 "일반문"으로 처지지 않게: locale
+      // 원어민 SNS 캡션 문법을 명시적으로 강제한다(철학·감성시·설명문 금지).
+      `No current-expression list is provided for this request. Still write "witty" in the native`,
+      `social-caption grammar of ${LOCALE_NAME[req.locale]} — the rhythm of a funny caption a local would`,
+      `actually post — NOT a philosophical line, NOT a mini-poem, NOT a plain descriptive sentence.`,
+    ]),
     `FACTS (besides the photo, the ONLY things known):`,
     ...facts.map(f => `- ${f}`),
     draft
@@ -883,14 +946,21 @@ export function extractMoment3Creative(
       }
       meta.kinds[d] = kind;
     }
-    // Trend 검증(§G) — witty 만 신고 가능. 활성 목록 밖 id·미반영 신고는 witty 폐기.
+    // Trend 검증(§G·V5 §B) — witty 만 신고 가능. 활성 목록 밖 id·미반영 신고는
+    // witty 폐기. V5 QA 실측 결함 수정: 신고 1건 뒤에 미신고 phrase 가 문구에
+    // 더 끼는 경우("혼나볼래? 오이쉬!")를 못 잡았다 → 전달 phrase 의 실제 포함
+    // 수를 세서, 2개 이상이거나(유행어 2개 금지) 포함≠신고면 witty 폐기.
     if (d === "witty") {
       const claimed = typeof e.trend_used_id === "string" ? e.trend_used_id.trim() : "";
-      if (claimed) {
-        const phrase = activeTrend?.get(claimed);
-        if (!phrase || !(title + "\n" + memo).includes(phrase)) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
-        meta.trendUsedId = claimed;
-      }
+      const body = title + "\n" + memo;
+      const present = [...(activeTrend ?? new Map<string, string>())].filter(([, p]) => p && body.includes(p));
+      const bad =
+        present.length >= 2
+        || (claimed !== "" && (!activeTrend?.get(claimed) || !body.includes(activeTrend.get(claimed)!)))
+        || (claimed === "" && present.length > 0)
+        || (claimed !== "" && present.length === 1 && present[0]![0] !== claimed);
+      if (bad) { delete set[d]; meta.dropped.push(d); delete meta.kinds[d]; continue; }
+      if (claimed) meta.trendUsedId = claimed;
     }
     set[d] = { title, memo };
   }

@@ -359,9 +359,10 @@ export async function onRequestPost(
   const contextHash = await sha256Hex(normalizedContextString(body.context));
   const imageSha = image ? await sha256Hex(image.data) : null;
 
-  // Trend Pack(§3 V3) — 결정적 bucket 이 먼저 사용 여부·대상 상태를 정한다:
-  // 0~9 experimental(10%) · 10~24 active(15%) · 25~99 미사용(75%). 같은 입력은
-  // 항상 같은 결정을 받는다(HMAC — pack_version 은 bucket 입력에 없다).
+  // Trend Pack(§3 V3·V5 §D) — 결정적 bucket 이 먼저 전달 여부·대상 상태를 정한다:
+  // 0~14 experimental(15%) · 15~59 active(45%) · 60~99 미전달(40%). 전달은 강제
+  // 사용이 아니다(프롬프트가 자연 결합을 우선 검토하고 안 맞으면 버린다).
+  // 같은 입력은 항상 같은 결정을 받는다(HMAC — pack_version 은 bucket 입력에 없다).
   // 해당 상태에 맞는 row 가 없거나 사진에 안 맞으면 다른 상태로 fallback 하지
   // 않고 trend 없이 생성한다. DB 가 SSOT — 재배포 없이 상태 변경이 반영된다.
   let trendRows: TrendRow[] = [];

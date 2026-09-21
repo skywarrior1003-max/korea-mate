@@ -119,8 +119,9 @@ test("V3 §3 — trend bucket: 결정적·분포·경계", async () => {
   console.log(`    분포(400): experimental ${expPct}% · active ${actPct}% · none ${nonePct}% · trend 합 ${expPct + actPct}%`);
   assert.ok(Math.abs(expPct - TREND_BUCKET_EXPERIMENTAL_MAX) <= 5, `exp ${expPct}%`);
   assert.ok(Math.abs(actPct - (TREND_BUCKET_ACTIVE_MAX - TREND_BUCKET_EXPERIMENTAL_MAX)) <= 6, `act ${actPct}%`);
-  assert.ok(expPct + actPct <= 25 + 6, "trend 상한 25%±오차");
-  assert.ok(nonePct >= 75 - 6);
+  // V5 §D — 전달 상한 60%(exp 15 + act 45), none 40%
+  assert.ok(expPct + actPct <= 60 + 6, "trend 전달 상한 60%±오차");
+  assert.ok(nonePct >= 40 - 6);
   void other;
 });
 
@@ -209,10 +210,10 @@ test("V4 §F — 계절 사실 가드: 근거 없는 계절 단정만 방향 폐
 
 test("V4 §G — bucket 비율 env 설정(기본 10/15, Production 권장 5/10 은 env 만)", async () => {
   const { resolveTrendBucketCfg, trendBucket } = await import("./generation-cache.ts");
-  assert.deepEqual(resolveTrendBucketCfg({}), { expMax: 10, activeMax: 25 });
+  assert.deepEqual(resolveTrendBucketCfg({}), { expMax: 15, activeMax: 60 });
   assert.deepEqual(resolveTrendBucketCfg({ MYTRIP_TREND_BUCKET_EXPERIMENTAL_PCT: "5", MYTRIP_TREND_BUCKET_ACTIVE_PCT: "10" }), { expMax: 5, activeMax: 15 });
   // 잘못된 값은 기본 유지
-  assert.deepEqual(resolveTrendBucketCfg({ MYTRIP_TREND_BUCKET_EXPERIMENTAL_PCT: "abc" }), { expMax: 10, activeMax: 25 });
+  assert.deepEqual(resolveTrendBucketCfg({ MYTRIP_TREND_BUCKET_EXPERIMENTAL_PCT: "abc" }), { expMax: 15, activeMax: 60 });
   // cfg 가 결정성에 영향 없음(같은 입력·같은 cfg = 같은 결과)
   const a = await trendBucket("s", { feature: "moment3", locale: "ko", contextHash: "c", imageSha: "i" }, { expMax: 5, activeMax: 15 });
   const b = await trendBucket("s", { feature: "moment3", locale: "ko", contextHash: "c", imageSha: "i" }, { expMax: 5, activeMax: 15 });
