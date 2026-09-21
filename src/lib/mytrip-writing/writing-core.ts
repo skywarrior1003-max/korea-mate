@@ -44,8 +44,8 @@ export interface MomentSuggestion { title: string; memo: string }
 export type MomentSuggestionSet3 = Partial<Record<WritingDirection, MomentSuggestion>>;
 
 /** 캐시/재호출 방지 키에 넣는 프롬프트 판본 — 프롬프트가 실질 변경되면 올린다 */
-export const MOMENT3_PROMPT_VERSION = "moment3-v5-locale-polish";
-export const STORY_HERO_PROMPT_VERSION = "storyHero-v6-witty-craft";
+export const MOMENT3_PROMPT_VERSION = "moment3-v6-season-truth";
+export const STORY_HERO_PROMPT_VERSION = "storyHero-v7-season-truth";
 
 /**
  * 감싼 따옴표 제거 — 짝이 맞을 때만 양끝을 벗긴다(TREND-PACK V1 §K).
@@ -509,7 +509,8 @@ export function buildWritingPrompt(req: WritingRequest): string {
 - Your material is the listed facts (places, itinerary, the traveler's saved public moment titles/notes). Creativity means arranging, twisting, or poetically compressing THESE — never inventing new events, companions, purchases, accidents, meals, weather-as-fact, or history.
 - Return in "basis_refs" ONLY the keys (like "f1") of the facts you actually drew from. Do not invent keys. This is a reference list, not a quotation constraint — your sentences do not need to copy the facts verbatim.
 - Return in "creative_kind" the main device you used, one of: ${CREATIVE_KINDS.join(", ")}. For calm you may omit it.
-- Never mock the place, the culture, or people. Never state wrong historical/cultural claims as fact.`,
+- Never mock the place, the culture, or people. Never state wrong historical/cultural claims as fact.
+- NEVER state a season (봄/가을, 春/秋, spring/autumn, seasonal winds) unless a listed public moment note explicitly names it — trip dates are not proof.`,
     ] : []),
     `FACT RULES:
 - You may only state concrete events, actions, foods, and numbers that are supported by the ALLOWED FACTS or the traveler's draft.
@@ -642,6 +643,49 @@ export function extractMoment3(text: string): MomentSuggestionSet3 | null {
  * 프롬프트 지시에도 붙는 사례가 실측돼 결정적으로 벗긴다. 문장 끝의
  * 笑/(笑)/ｗ/w 꼬리만 — 본문 중간의 표현은 건드리지 않는다.
  */
+// ── V4 §F — 계절 사실 가드 ──────────────────────────────────────────────────
+// 사진의 꽃·잎·옷차림이나 여행 날짜만으로 계절을 단정하지 못하게 한다(실측
+// 결함: 봄 목련 사진의 ja 감성에 「秋風」). 계절 표현은 사용자의 제목·메모 등
+// 신뢰 입력에 그 계절이 명시된 경우에만 허용 — 위반한 방향만 폐기(재호출 0).
+// 감성적 비유·유머는 계절 단정이 아니면 그대로 허용한다.
+
+type CanonSeason = "spring" | "summer" | "autumn" | "winter";
+const SEASON_PATTERNS: Record<CanonSeason, RegExp> = {
+  // CJK 는 부분 문자열, EN 은 단어 경계(waterfall/fallback 의 fall 오탐 방지)
+  spring: /봄|春|(?<![a-z])spring(?![a-z])/iu,
+  summer: /여름|夏|(?<![a-z])summer(?![a-z])/iu,
+  autumn: /가을|秋|(?<![a-z])(?:autumn|fall foliage|fall colors)(?![a-z])|(?<!water|rain|night|pit)(?<![a-z])fall(?![a-z])/iu,
+  winter: /겨울|冬|(?<![a-z])winter(?![a-z])/iu,
+};
+
+/** 텍스트에 등장하는 계절(정규화) 집합 */
+export function detectSeasons(text: string): Set<CanonSeason> {
+  const out = new Set<CanonSeason>();
+  for (const [season, re] of Object.entries(SEASON_PATTERNS) as [CanonSeason, RegExp][]) {
+    if (re.test(text)) out.add(season);
+  }
+  return out;
+}
+
+/**
+ * 신뢰 가능한 계절 근거 — 사용자가 직접 쓴 draft(제목·메모)와, hero 의 경우
+ * 사용자가 저장한 공개 moment 문구(tripFacts)만. 여행 날짜(dates)는 근거가
+ * 아니다(§F — 날짜만으로 계절성 감정·바람을 단정하지 않는다).
+ */
+export function allowedSeasonsOf(c: WritingContext): Set<CanonSeason> {
+  const trusted = [c.draft ?? "", ...(c.tripFacts ?? [])].join("\n");
+  return detectSeasons(trusted);
+}
+
+/** 출력이 근거 없는 계절을 단정하면 true(그 방향 폐기 대상) */
+export function seasonViolation(c: WritingContext, output: string): boolean {
+  const used = detectSeasons(output);
+  if (used.size === 0) return false;
+  const allowed = allowedSeasonsOf(c);
+  for (const s of used) if (!allowed.has(s)) return true;
+  return false;
+}
+
 /**
  * V3 §9 — 감성 상투구 검출(4locale). 걸리면 그 warm 방향만 폐기한다(자동
  * 재호출 0 — 직접 작성·다른 방향은 유지). 발생 빈도는 로그로 집계한다.
@@ -772,7 +816,9 @@ export function buildMoment3MultimodalPrompt(req: WritingRequest, trendEntries?:
     `  people, dangerous actions. Creative imagery is allowed; fake experience reports are not.`,
     `- NEVER state wrong history/culture as fact. Never mock the place, local people, or culture.`,
     `- Provided place/business names are IMMUTABLE PROPER NOUNS — copy them exactly as written above.`,
-    `- Do NOT guess the season or weather beyond what the photo clearly shows.`,
+    `- NEVER state or imply a season (spring/summer/autumn/winter, 봄·가을, 春·秋, 春天·秋天, seasonal winds`,
+    `  like 秋風) unless the traveler's own note explicitly names that season. Flowers, leaves, or clothing`,
+    `  in the photo are NOT proof of a season. Trip dates are NOT proof either.`,
     `- No internet slang, no ㅋㅋ/LOL, no emoji, no hashtags. Do not address the reader.`,
     `- NO tourism-marketing clichés in any language (banned Korean examples: ${BANNED_PHRASES}).`,
     `- First person voice of the traveler.`,
@@ -915,6 +961,10 @@ export function groundedSuggestionGuard(req: WritingRequest, suggestion: string 
     const draftMentionsPhoto = typeof c.draft === "string" && PHOTO_ACTION_RE.test(c.draft);
     if (!draftMentionsPhoto && PHOTO_ACTION_RE.test(suggestion)) return null;
   }
+  // V4 §F — 근거 없는 계절 단정은 방향 단위로 폐기(사진·날짜는 근거가 아니다).
+  // moment/moment3(3방향)/storyHero/title/memo 전부 이 guard 를 지난다 —
+  // Functions·AI Worker 가 같은 함수를 쓰므로 계약이 동일하다.
+  if (seasonViolation(c, suggestion)) return null;
   return suggestion;
 }
 

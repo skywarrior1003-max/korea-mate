@@ -122,3 +122,70 @@ export function nextReviewDate(lifecycle: TrendLifecycle, from = new Date()): st
   const d = new Date(from.getTime() + REVIEW_INTERVAL_DAYS[lifecycle] * 86_400_000);
   return d.toISOString().slice(0, 10);
 }
+
+// ── V4 §B·§D — 2단계 자동 승격(discovery → corroboration) ────────────────────
+// 첫 발견은 출처 수·모델 confidence 와 무관하게 candidate 로만 저장한다.
+// 승격은 "다른 시점의 후속 실행"에서, 독립 원본 출처가 확인된 경우에만 한다.
+
+/** 해석된 출처 기록(§D) — source_urls jsonb 에 이 모양으로 저장한다(migration 불필요) */
+export interface SourceRecord {
+  redirect?: string | null;      // grounding redirect 원문(있으면)
+  final_url: string | null;      // 해석된 최종 원본 URL(https)
+  domain: string | null;         // 최종 도메인
+  title?: string | null;
+  published?: string | null;     // 발행일(확인 가능한 경우)
+  evidence?: string | null;      // 표현을 뒷받침하는 짧은 근거(스니펫 아님, 요약)
+  verified_at: string;           // 확인일
+  resolved: boolean;             // redirect 해석 성공 여부
+}
+
+/** 정규화 도메인(www 제거) — 동일 기사 재배포·인용 복제 판별의 1차 기준 */
+export function normalizeDomain(d: string | null | undefined): string | null {
+  if (!d) return null;
+  return d.toLowerCase().replace(/^www\./, "") || null;
+}
+
+/** 독립 출처 수 — 해석 성공(resolved)한 최종 도메인만 센다. 같은 도메인은 1개. */
+export function independentResolvedDomains(sources: readonly SourceRecord[]): number {
+  const set = new Set<string>();
+  for (const s of sources) {
+    const d = normalizeDomain(s.domain);
+    if (s.resolved && s.final_url?.startsWith("https://") && d) set.add(d);
+  }
+  return set.size;
+}
+
+export interface CorroborationInput {
+  firstVerifiedAt: string;       // 최초 발견일(YYYY-MM-DD)
+  runDate: string;               // 이번 실행일 — 최초 발견과 같은 날이면 승격 불가
+  sources: readonly SourceRecord[]; // 누적 출처(이전+이번, 해석 결과 포함)
+  hasPublishedDate: boolean;     // 최근 사용·발행일 확인
+  meaningConsistent: boolean;    // 의미와 사용 예 충돌 없음
+  travelFit: boolean;
+  sensitive: boolean;
+  brandRiskControlled: boolean;  // 브랜드·아티스트 오인 위험 통제됨
+  regionalConflict: boolean;
+  ambiguous: boolean;
+  reviewNotPassed: boolean;      // next_review_at 이 지나지 않음
+}
+
+/**
+ * §B-2 corroboration 판정. 결과:
+ *  experimental_active — 전 조건 충족(같은 실행 내 승격은 구조적으로 불가:
+ *                        firstVerifiedAt < runDate 필수)
+ *  manual_review       — 고위험·출처/지역/브랜드 충돌·모호
+ *  blocked             — 민감
+ *  candidate           — 그 외 전부(조건 하나라도 미충족)
+ */
+export function decideCorroboration(e: CorroborationInput): TrendStatus {
+  if (e.sensitive) return "blocked";
+  if (!e.brandRiskControlled || e.regionalConflict || e.ambiguous) return "manual_review";
+  const ok =
+    e.firstVerifiedAt < e.runDate &&
+    independentResolvedDomains(e.sources) >= 2 &&
+    e.hasPublishedDate &&
+    e.meaningConsistent &&
+    e.travelFit &&
+    e.reviewNotPassed;
+  return ok ? "experimental_active" : "candidate";
+}

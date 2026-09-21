@@ -80,19 +80,31 @@ export async function ownerHashHmac(deviceId: string, secret: string): Promise<s
 // 서버 HMAC 기반 결정적 bucket — 같은 입력은 재열기마다 같은 결정을 받는다.
 // pack_version 은 bucket 입력에 넣지 않는다(§3 — pack 갱신이 같은 사진의
 // 사용 여부까지 흔들면 안 된다).
-export const TREND_BUCKET_EXPERIMENTAL_MAX = 10; // 0~9  → experimental_active 후보
-export const TREND_BUCKET_ACTIVE_MAX = 25;       // 10~24 → active 후보 · 25~99 → 미사용
+export const TREND_BUCKET_EXPERIMENTAL_MAX = 10; // 기본: 0~9 → experimental(10%)
+export const TREND_BUCKET_ACTIVE_MAX = 25;       // 기본: 10~24 → active(15%) · 이후 미사용
+
+/** V4 §G — 비율 env 설정. Preview 는 미설정=기본 25%, Production 초기 권장 5%+10%=15%(보고서 명시, env 는 이번에 변경 안 함). */
+export interface TrendBucketCfg { expMax: number; activeMax: number }
+export function resolveTrendBucketCfg(env: Record<string, string | undefined>): TrendBucketCfg {
+  const n = (v: string | undefined, d: number): number => {
+    const x = Number(v); return Number.isFinite(x) && x >= 0 && x <= 100 ? Math.floor(x) : d;
+  };
+  const exp = n(env.MYTRIP_TREND_BUCKET_EXPERIMENTAL_PCT, TREND_BUCKET_EXPERIMENTAL_MAX);
+  const act = n(env.MYTRIP_TREND_BUCKET_ACTIVE_PCT, TREND_BUCKET_ACTIVE_MAX - TREND_BUCKET_EXPERIMENTAL_MAX);
+  return { expMax: exp, activeMax: Math.min(100, exp + act) };
+}
 export type TrendBucketKind = "experimental" | "active" | "none";
 
 export async function trendBucket(
   secret: string,
   p: { feature: string; locale: string; contextHash: string; imageSha: string | null },
+  cfg: TrendBucketCfg = { expMax: TREND_BUCKET_EXPERIMENTAL_MAX, activeMax: TREND_BUCKET_ACTIVE_MAX },
 ): Promise<{ bucket: number; kind: TrendBucketKind }> {
   const sig = await hmacSha256(secret, `gkm-trend-bucket-v1|${p.feature}|${p.locale}|${p.contextHash}|${p.imageSha ?? "noimg"}`);
   const n = ((sig[0]! << 24) | (sig[1]! << 16) | (sig[2]! << 8) | sig[3]!) >>> 0;
   const bucket = n % 100;
-  const kind: TrendBucketKind = bucket < TREND_BUCKET_EXPERIMENTAL_MAX ? "experimental"
-    : bucket < TREND_BUCKET_ACTIVE_MAX ? "active" : "none";
+  const kind: TrendBucketKind = bucket < cfg.expMax ? "experimental"
+    : bucket < cfg.activeMax ? "active" : "none";
   return { bucket, kind };
 }
 

@@ -25,13 +25,13 @@ import {
   extractMoment3, groundedMoment3Guard, extractHeroSuggestion, validateHeroRefs,
   extractRequestImage, buildMoment3MultimodalPrompt, extractMoment3Creative,
   MODEL, TIMEOUT_MS, MOMENT3_MULTIMODAL_TIMEOUT_MS,
-  MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION, STOCK_WARM_RE,
+  MOMENT3_PROMPT_VERSION, STORY_HERO_PROMPT_VERSION, STOCK_WARM_RE, seasonViolation,
   type WritingRequest, type MomentSuggestion, type MomentSuggestionSet3,
   type WritingImage, type Moment3CreativeMeta, type TrendPromptEntry,
 } from "../../../src/lib/mytrip-writing/writing-core";
 import {
   AI_CACHE_TTL_DAYS, resolveLimits, sha256Hex, ownerHashHmac, normalizedContextString,
-  computeCacheKey, rateLimitedBody, trendBucket,
+  computeCacheKey, rateLimitedBody, trendBucket, resolveTrendBucketCfg,
 } from "../../../src/lib/mytrip-writing/generation-cache";
 import {
   selectTrendForRequest, trendVersionOf, UI_TO_DB_LOCALE, type TrendRow,
@@ -203,7 +203,10 @@ async function runDirect(
       const set = groundedMoment3Guard(body, extracted);
       const n = set ? Object.keys(set).length : 0;
       const warmStock = !!extracted?.warm && !set?.warm && STOCK_WARM_RE.test(extracted.warm.title + extracted.warm.memo);
+      // V4 §F — 계절 위반으로 폐기된 방향(구조화 사유만, 원문 로그 0)
+      const seasonDrop = (["calm", "witty", "warm"] as const).filter(d => !!extracted?.[d] && !set?.[d] && seasonViolation(body.context, extracted[d]!.title + " " + extracted[d]!.memo));
       log({ ok: n > 0, via: "direct", latencyMs, target: body.target, locale: body.locale, styles: n, warmStock,
+            ...(seasonDrop.length ? { seasonDrop } : {}),
             multimodal: isMultimodal, ...(isMultimodal ? { imgB64Len: image!.data.length, kinds: creative?.meta.kinds ?? null, dropped: creative?.meta.dropped ?? null, trend: creative?.meta.trendUsedId ?? null } : {}), ...usage });
       return { ai_status: n === 3 ? "live" : n > 0 ? "live_partial" : extracted !== null ? "fallback_guard" : "fallback_empty",
                suggestion: null, moment: null, set, meta: creative?.meta ?? null, usage: usageOut, latencyMs };
@@ -364,7 +367,7 @@ export async function onRequestPost(
   let trendRows: TrendRow[] = [];
   let bucketKind: "experimental" | "active" | "none" = "none";
   if (body.target === "moment3" && image !== null) {
-    const { kind } = await trendBucket(hashSecret, { feature, locale: body.locale, contextHash, imageSha });
+    const { kind } = await trendBucket(hashSecret, { feature, locale: body.locale, contextHash, imageSha }, resolveTrendBucketCfg(ctx.env as Record<string, string | undefined>));
     bucketKind = kind;
     const dbLocale = UI_TO_DB_LOCALE[body.locale] ?? null;
     if (dbLocale && kind !== "none") {
