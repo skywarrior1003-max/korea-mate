@@ -104,7 +104,8 @@ export default function HomeClient() {
           같은 화면에 겹치지 않고, sheet 를 닫은 뒤 튜토리얼이 시작된다. */}
       {hasTrip === false && !preOpenSheetOpen && (
         <div className="max-w-xl mx-auto px-4 pt-4">
-          <JourneyCoach step="discover" ctx={{ hasTrip }} arrow="down" />
+          {/* V2 — 실제 도시 링크를 눌러야 완료(알겠어요는 닫기만) */}
+          <JourneyCoach step="discover" ctx={{ hasTrip }} complete={{ on: "click", selector: 'a[href^="/city/"]' }} />
         </div>
       )}
       <QuietHome />

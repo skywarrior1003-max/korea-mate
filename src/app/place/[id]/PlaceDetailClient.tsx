@@ -366,7 +366,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
       <main className="flex-1 w-full max-w-[1100px] mx-auto md:px-4 md:py-6 pb-32 md:pb-10">
         {/* First Trip Journey Guide — 발견의 첫 걸음(저장) · 다음 방문엔 내 장소 남기기 */}
         <div className="px-4 md:px-0 pt-3 md:pt-0 md:mb-3 flex flex-col gap-2">
-          <JourneyCoach step="save" />
+          <JourneyCoach step="save" complete={{ on: "click", selector: '[data-tut="tut-save"]' }} />
           <JourneyCoach step="myPlaces" />
         </div>
         <div className="md:grid md:grid-cols-[minmax(0,1fr)_340px] md:gap-6 md:items-start">
@@ -517,6 +517,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   This Trip 으로 보낼 때 한다 — 장소를 처음 본 자리에서 저장과 일정
                   선택을 동시에 묻지 않는다. */}
               <button
+                data-tut="tut-save"
                 onClick={handleSave}
                 aria-pressed={saved}
                 className={`gkm-focus w-full min-h-12 rounded-control text-sm font-bold transition-colors ${
@@ -563,6 +564,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
             이미 쓰는 아이콘+라벨 조합(아래 aside)을 그대로 가져온다.
             aria-label 은 그대로 두고 상태는 aria-pressed 가 함께 알린다. */}
         <button
+          data-tut="tut-save"
           onClick={handleSave}
           aria-pressed={saved}
           aria-label={saved ? t("savedState") : t("save")}

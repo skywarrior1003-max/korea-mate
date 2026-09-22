@@ -564,7 +564,7 @@ export default function PlannerClient() {
                 </button>
               </div>
               {/* First Trip Journey Guide — This Trip with AI 의 의미와 날짜/속도 안내 */}
-              <div className="sm:col-span-2"><JourneyCoach step="planner" /></div>
+              <div className="sm:col-span-2"><JourneyCoach step="planner" complete={{ on: "click", selector: '[data-tut="tut-generate"]' }} /></div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("startDate")}</label>
                 <DatePicker
@@ -785,6 +785,7 @@ export default function PlannerClient() {
 
             <button
               onClick={handleGenerate}
+              data-tut="tut-generate"
               disabled={isNavigating}
               className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ backgroundColor: "#FF4A2D" }}

@@ -387,7 +387,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             {/* AI 3안(제목+본문) — 정보가 준비되면 자동 제안, 고른 안은 아래
                 필드에 채워지고 그대로 고칠 수 있다. 저장값이 Story 의 SSOT 다. */}
-            <div className="mb-2"><JourneyCoach step="aiWriting" /></div>
+            <div className="mb-2"><JourneyCoach step="aiWriting" complete={{ on: "click", selector: '[data-tut="tut-ai-suggest"]' }} /></div>
             <div className="mb-3">
               <MomentAiSuggest
                 ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}

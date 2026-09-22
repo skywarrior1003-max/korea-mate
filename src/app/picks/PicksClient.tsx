@@ -682,7 +682,7 @@ function PicksContent() {
         <p className="md:hidden text-sm text-sub mb-4">{t("subtitle")}</p>
 
         {/* First Trip Journey Guide — Saved → This Trip 의 다음 걸음 안내 */}
-        <JourneyCoach step="thisTrip" className="mb-3" />
+        <JourneyCoach step="thisTrip" className="mb-3" complete={{ on: "click", selector: '[data-tut="tut-this-trip"]' }} />
 
         {/* ── 탭 ── */}
         {/* 밑줄형 탭 — 최종 디자인(my_picks_selected_places) 기준.
@@ -1037,6 +1037,7 @@ function PicksContent() {
                               여기 보이는 항목은 항상 미담김이다. 담기면 카드가
                               This Trip 탭으로 넘어가는 것처럼 보인다. */}
                           <button
+                            data-tut="tut-this-trip"
                             onClick={() => addToSelected(e, "saved")}
                             disabled={savedManaging}
                             className="gkm-focus inline-flex items-center min-h-11 gap-1 text-xs font-black text-action disabled:text-faint disabled:cursor-default"

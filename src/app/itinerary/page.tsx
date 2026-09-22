@@ -3004,6 +3004,7 @@ function ItineraryResult() {
           {isPublic && (
             <button
               type="button"
+              data-tut="tut-share"
               onClick={handleCopyShareLink}
               disabled={!itinId}
               className="gkm-focus text-xs font-black px-3 min-h-9 rounded-full text-white disabled:opacity-40 active:scale-95 transition-transform"
@@ -3053,12 +3054,14 @@ function ItineraryResult() {
         <div className="max-w-xl mx-auto mb-4 flex flex-col gap-2">
           {/* TUTORIAL-V1 §3 — Chapter 문맥: story/share 는 첫 기록이 생기고 나서.
               도착 전 기능을 미리 설명하지 않는다(hasMoment gating). */}
-          <JourneyCoach step="myTripEdit" ctx={{ hasMoment: moments.length > 0 }} />
-          <JourneyCoach step="directions" ctx={{ hasMoment: moments.length > 0 }} />
-          <JourneyCoach step="photo" ctx={{ hasMoment: moments.length > 0 }} />
-          <JourneyCoach step="story" ctx={{ hasMoment: moments.length > 0 }} />
-          <JourneyCoach step="share" ctx={{ hasMoment: moments.length > 0 }} />
-          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} />
+          {/* V2 §3 — 완료 조건 명시: 열람형(arrive)은 도착=완료, 행동형(click)은
+              실제 CTA 클릭=완료("알겠어요"는 닫기일 뿐). */}
+          <JourneyCoach step="myTripEdit" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
+          <JourneyCoach step="directions" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
+          <JourneyCoach step="photo" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-add-record"]' }} />
+          <JourneyCoach step="story" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-story-tab"]' }} />
+          <JourneyCoach step="share" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-share"]' }} />
+          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
         </div>
       )}
 
@@ -3074,6 +3077,7 @@ function ItineraryResult() {
               key={v}
               type="button"
               role="tab"
+              data-tut={v === "story" ? "tut-story-tab" : undefined}
               aria-selected={tripView === v}
               onClick={() => setTripView(v)}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-black transition-all ${
@@ -3098,6 +3102,7 @@ function ItineraryResult() {
             {(!shareId || isOwner) && (
               <button
                 type="button"
+                data-tut="tut-add-record"
                 onClick={() => setCaptureOpen(true)}
                 className="shrink-0 text-xs font-black px-3 py-2 rounded-lg border border-line bg-white text-ink"
               >
@@ -3939,6 +3944,7 @@ function ItineraryResult() {
                                         }}
                                         /* VISUAL-POLISH V2 §4 — 흐린 점선·11px 는 설명문처럼 보였다.
                                               조용하지만 분명한 보조 버튼: 실선 테두리·흰 배경·44px 터치·전폭 클릭. */
+                                        data-tut="tut-add-record"
                                         className="gkm-focus mt-1.5 w-full min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 rounded-xl border border-line bg-white text-xs font-black text-ink/80 hover:text-ink hover:border-ink/30 active:scale-[0.99] transition-all"
                                       >
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

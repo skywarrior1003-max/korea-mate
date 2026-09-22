@@ -151,6 +151,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       <div className="flex items-center justify-between">
         <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">{t("suggestHeading")}</p>
         <button
+          data-tut="tut-ai-suggest"
           type="button" onClick={() => void run({ forceFresh: true })} disabled={busy}
           className="px-2.5 py-1 rounded-full text-[11.5px] font-bold border min-h-8 disabled:opacity-50"
           style={{ borderColor: ORANGE, color: "#ffb3a6" }}
