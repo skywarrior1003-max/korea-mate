@@ -639,7 +639,8 @@
     "heroRegen": "다시 제안받기",
     "heroCostNote": "AI 제안은 문체를 선택하거나 다시 생성할 때만 만들어집니다.",
     "mapLoadFailed": "지도를 불러오지 못했어요.",
-    "mapRetry": "다시 시도"
+    "mapRetry": "다시 시도",
+    "focusRegion": "{city}, 대한민국"
   },
   "memo": {
     "edit": "수정",

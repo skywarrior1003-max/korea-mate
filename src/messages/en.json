@@ -639,7 +639,8 @@
     "heroRegen": "Suggest again",
     "heroCostNote": "AI suggestions are generated only when you pick a mood or ask again.",
     "mapLoadFailed": "Could not load the map.",
-    "mapRetry": "Try again"
+    "mapRetry": "Try again",
+    "focusRegion": "{city}, South Korea"
   },
   "memo": {
     "edit": "Edit",

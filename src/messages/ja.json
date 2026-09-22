@@ -639,7 +639,8 @@
     "heroRegen": "もう一度提案",
     "heroCostNote": "AIの提案は、雰囲気を選ぶか再生成した時だけ作られます。",
     "mapLoadFailed": "地図を読み込めませんでした。",
-    "mapRetry": "再試行"
+    "mapRetry": "再試行",
+    "focusRegion": "{city}、韓国"
   },
   "memo": {
     "edit": "編集",

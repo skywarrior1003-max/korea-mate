@@ -530,7 +530,8 @@ export default function SharedTripPage() {
                들어가는 것은 이미 공개 serializer 를 통과한 storyDays 뿐이다. */
             slides={buildFocusSequence(storyDays)}
             startIndex={findSlideIndex(buildFocusSequence(storyDays), storyFocus.m, storyFocus.i)}
-            regionLabel={`${cityCap}, South Korea`}
+            /* RELEASE-CLOSEOUT V1 §2 — 위치 라벨도 4locale(도시 라벨 + 국가명) */
+            regionLabel={tStory("focusRegion", { city: cityLabel })}
             onClose={() => setStoryFocus(null)}
           />
         )}

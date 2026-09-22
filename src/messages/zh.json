@@ -639,7 +639,8 @@
     "heroRegen": "再次建议",
     "heroCostNote": "只有在选择语气或再次生成时才会调用AI。",
     "mapLoadFailed": "无法加载地图。",
-    "mapRetry": "重试"
+    "mapRetry": "重试",
+    "focusRegion": "{city}，韩国"
   },
   "memo": {
     "edit": "编辑",

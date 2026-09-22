@@ -4064,7 +4064,8 @@ function ItineraryResult() {
             <StoryMemoryFocus
               slides={slides}
               startIndex={findSlideIndex(slides, storyFocus.m, storyFocus.i)}
-              regionLabel={`${city.charAt(0).toUpperCase() + city.slice(1)}, South Korea`}
+              /* RELEASE-CLOSEOUT V1 §2 — 위치 라벨 4locale(도시 라벨 + 국가명) */
+              regionLabel={tStory("focusRegion", { city: cityDisplay })}
               onClose={() => setStoryFocus(null)}
             />
           );
