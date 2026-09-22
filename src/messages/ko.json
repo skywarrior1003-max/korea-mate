@@ -714,7 +714,17 @@
     "publicFailed": "바꾸지 못했습니다. 다시 시도해 주세요.",
     "placeBound": "이 일정 장소에 기록됩니다. 다른 곳은 자유 순간으로 남겨 주세요.",
     "titleLabel": "제목",
-    "titlePlaceholder": "이 순간의 제목 (선택)"
+    "titlePlaceholder": "이 순간의 제목 (선택)",
+    "deleteBtn": "삭제",
+    "confirmDelete": "한 번 더 누르면 삭제",
+    "writtenAt": "작성 {date}",
+    "privateChip": "비공개",
+    "myPhotoChip": "내 사진",
+    "placeImageChip": "장소 이미지",
+    "addStopRecord": "사진·메모 남기기",
+    "noRecordPlaces": "기록 없는 일정 {n}곳",
+    "manageRecords": "기록 관리",
+    "viewInStory": "스토리에서 보기"
   },
   "dayDone": {
     "title": "Day {n} 완주!",

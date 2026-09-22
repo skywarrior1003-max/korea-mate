@@ -412,7 +412,8 @@ export default function TripMomentTimeline({
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-xs text-[#565D66]/60">
-                  <span className="inline-flex items-center gap-1"><GlyphIcon kind="clock" size={12} />{dateStr}</span>
+                  {/* V1 §5 — 작성시각은 여행일(Day 헤더)과 구분되는 "작성 …" 라벨 */}
+                  <span className="inline-flex items-center gap-1"><GlyphIcon kind="clock" size={12} />{t("writtenAt", { date: dateStr })}</span>
                   {/* 사람이 적은 장소 이름이 있으면 그것을 보여 준다. 없을 때만
                       좌표 힌트로 떨어진다 — 좌표는 이름이 아니다. */}
                   {m.place_name
@@ -487,7 +488,7 @@ export default function TripMomentTimeline({
                         : "text-[#565D66]/40 hover:text-red-400 hover:bg-red-50"
                     }`}
                   >
-                    {deleteConfirm === m.moment_id ? "Confirm delete" : "Delete"}
+                    {deleteConfirm === m.moment_id ? t("confirmDelete") : t("deleteBtn")}
                   </button>
                 </div>
               </div>

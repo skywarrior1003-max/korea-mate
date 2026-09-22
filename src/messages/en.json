@@ -714,7 +714,17 @@
     "publicFailed": "Could not change this. Please try again.",
     "placeBound": "Saved to this itinerary stop. To record somewhere else, add a free moment.",
     "titleLabel": "Title",
-    "titlePlaceholder": "A title for this moment (optional)"
+    "titlePlaceholder": "A title for this moment (optional)",
+    "deleteBtn": "Delete",
+    "confirmDelete": "Tap again to delete",
+    "writtenAt": "Written {date}",
+    "privateChip": "Private",
+    "myPhotoChip": "My photo",
+    "placeImageChip": "Place image",
+    "addStopRecord": "Add photo & note",
+    "noRecordPlaces": "{n} places without records",
+    "manageRecords": "Manage records",
+    "viewInStory": "View in Story"
   },
   "dayDone": {
     "title": "Day {n} complete!",

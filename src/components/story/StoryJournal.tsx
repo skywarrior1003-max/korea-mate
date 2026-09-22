@@ -39,6 +39,14 @@ interface Props {
   savedIds?: ReadonlySet<string>;
   /** 사진 로드 실패 — 소유자 화면이 서명 주소를 한 번 다시 받는 데 쓴다. 공개 화면은 넘기지 않는다. */
   onPhotoError?: (memory: StoryMemory, index: number) => void;
+  /**
+   * ROLE-SEPARATION V1 §4 — 소유자 화면 전용(둘 다 공개 화면은 넘기지 않는다 → 기존 렌더 그대로).
+   * · compactStopsLabel: 기록 없는 장소(stop)를 큰 카드 그리드 대신 "기록 없는
+   *   일정 N곳" 접이로 요약한다. 펼치면 순서·장소명만 — 사진을 반복하지 않는다.
+   * · momentMeta: moment 카드 본문 위에 소유자 메타(비공개 배지·작성시각·내 사진)를 그린다.
+   */
+  compactStopsLabel?: (n: number) => string;
+  momentMeta?: (memory: StoryMemory) => React.ReactNode;
 }
 
 function PlaceChip({ name, order }: { name?: string; order?: number }) {
@@ -221,7 +229,7 @@ function daySegments(items: StoryMemory[]): Array<{ type: "moment"; item: StoryM
   return segs;
 }
 
-export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds, onPhotoError }: Props) {
+export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds, onPhotoError, compactStopsLabel, momentMeta }: Props) {
   return (
     <section
       id={id}
@@ -256,11 +264,40 @@ export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds, 
 
             {daySegments(day.memories).map((seg, si) =>
               seg.type === "moment" ? (
-                <MomentBlock
-                  key={seg.item.id} memory={seg.item}
-                  onOpenPhoto={onOpenPhoto} onSave={onSave} onPhotoError={onPhotoError}
-                  saved={savedIds?.has(seg.item.id)}
-                />
+                <div key={seg.item.id}>
+                  {momentMeta?.(seg.item)}
+                  <MomentBlock
+                    memory={seg.item}
+                    onOpenPhoto={onOpenPhoto} onSave={onSave} onPhotoError={onPhotoError}
+                    saved={savedIds?.has(seg.item.id)}
+                  />
+                </div>
+              ) : compactStopsLabel ? (
+                /* 소유자 화면(§4) — 기록 없는 장소는 요약 접이. 사진 카드 반복 0. */
+                <details key={`stops-${day.dayNumber}-${si}`} className="group"
+                         style={{ marginBottom: STACK_MD }}>
+                  <summary
+                    className="cursor-pointer list-none select-none inline-flex items-center gap-2 px-4 py-2.5 rounded-full"
+                    style={{ ...BODY_SM, color: ON_SURFACE_VARIANT, border: `1px solid ${SURFACE_VARIANT}` }}
+                  >
+                    <span aria-hidden className="transition-transform group-open:rotate-90">›</span>
+                    {compactStopsLabel(seg.items.length)}
+                  </summary>
+                  <ul className="mt-2 flex flex-col gap-1.5 pl-1">
+                    {seg.items.map(m => (
+                      <li key={m.id} className="flex items-center gap-2.5" style={{ ...BODY_SM, color: ON_SURFACE }}>
+                        {m.order !== undefined && (
+                          <span
+                            className="flex-none w-5 h-5 rounded-full text-[11px] font-bold flex items-center justify-center"
+                            style={{ backgroundColor: PRIMARY, color: "#fff" }}
+                            aria-hidden
+                          >{m.order}</span>
+                        )}
+                        <span className="truncate">{m.placeName}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
               ) : (
                 <div key={`stops-${day.dayNumber}-${si}`} className={`grid ${gridCols}`}
                      style={{ gap: GUTTER, marginBottom: STACK_MD }}>

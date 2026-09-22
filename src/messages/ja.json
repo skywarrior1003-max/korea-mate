@@ -714,7 +714,17 @@
     "publicFailed": "変更できませんでした。もう一度お試しください。",
     "placeBound": "この旅程の場所に記録されます。別の場所は自由な瞬間として残してください。",
     "titleLabel": "タイトル",
-    "titlePlaceholder": "この瞬間のタイトル（任意）"
+    "titlePlaceholder": "この瞬間のタイトル（任意）",
+    "deleteBtn": "削除",
+    "confirmDelete": "もう一度押すと削除",
+    "writtenAt": "作成 {date}",
+    "privateChip": "非公開",
+    "myPhotoChip": "自分の写真",
+    "placeImageChip": "スポット画像",
+    "addStopRecord": "写真・メモを残す",
+    "noRecordPlaces": "記録のない予定 {n}件",
+    "manageRecords": "記録の管理",
+    "viewInStory": "ストーリーで見る"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

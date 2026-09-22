@@ -129,5 +129,6 @@ test("S2: 출력에는 좌표·device·저장 경로 키가 없다 (표현 타�
   const out = buildPrivateStoryDays(DAYS, moments, { ...CLOCK, isPast: false });
   const json = JSON.stringify(out);
   for (const k of ["lat", "lng", "device_id", "storage_path", "35.1"]) assert.ok(!json.includes(k), k);
-  assert.deepEqual(Object.keys(out[0]!.memories[0]!).sort(), ["id", "memo", "photos", "placeName"]);
+  // kind·order 는 표현 타입의 공개 필드다(b779fae 에서 추가 — 기대 갱신).
+  assert.deepEqual(Object.keys(out[0]!.memories[0]!).sort(), ["id", "kind", "memo", "order", "photos", "placeName"]);
 });

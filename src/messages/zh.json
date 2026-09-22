@@ -714,7 +714,17 @@
     "publicFailed": "无法更改，请重试。",
     "placeBound": "将记录到这个行程地点。其他地点请以自由瞬间记录。",
     "titleLabel": "标题",
-    "titlePlaceholder": "这一刻的标题（可选）"
+    "titlePlaceholder": "这一刻的标题（可选）",
+    "deleteBtn": "删除",
+    "confirmDelete": "再点一次确认删除",
+    "writtenAt": "记录于 {date}",
+    "privateChip": "私密",
+    "myPhotoChip": "我的照片",
+    "placeImageChip": "地点图片",
+    "addStopRecord": "留下照片和笔记",
+    "noRecordPlaces": "{n} 处行程未记录",
+    "manageRecords": "管理记录",
+    "viewInStory": "在故事中查看"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",

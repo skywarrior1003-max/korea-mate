@@ -1541,6 +1541,9 @@ function ItineraryResult() {
     () => (searchParams.get("view") === "story" ? "story" : "itinerary"),
   );
   const [tripViewDefaulted, setTripViewDefaulted] = useState(false);
+  // ROLE-SEPARATION V1 §4 — Story 탭 하단 "기록 관리" 접이(기본 접힘). #memories
+  // 앵커 진입이나 일정 카드의 기록 상태 클릭이 이걸 펼친다.
+  const [manageOpen, setManageOpen] = useState(false);
   const [storyFocus, setStoryFocus] = useState<{ m: StoryMemory; i: number } | null>(null);
   // 오늘 — /my-trips 의 lifecycle 판정과 같은 기준(Asia/Seoul 달력)으로 센다.
   // UTC 날짜를 쓰면 한국 아침에 하루 늦어, Trips 는 Story 인데 여기는 일정이 되는
@@ -2138,6 +2141,10 @@ function ItineraryResult() {
     if (days.length === 0) return;
     if (window.location.hash !== "#memories") return;
     hashScrolled.current = true;
+    // ROLE-SEPARATION V1 §3 — 기록 관리가 Story 탭으로 옮겨졌다: 탭을 바꾸고
+    // 관리 구간을 펼친 뒤 그 자리로 내려간다.
+    setTripView("story");
+    setManageOpen(true);
     // 레이아웃이 한 번 확정된 다음 프레임에 옮긴다
     requestAnimationFrame(() => {
       document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3139,7 +3146,58 @@ function ItineraryResult() {
                     days={storyDays}
                     onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
                     onPhotoError={(m) => handlePhotoError(m.id)}
+                    /* ROLE-SEPARATION V1 §4 — 기록 없는 장소는 compact 요약,
+                       moment 카드에는 소유자 메타(비공개·내 사진·작성시각). */
+                    compactStopsLabel={(n) => tMemo("noRecordPlaces", { n })}
+                    momentMeta={(mem) => {
+                      const src = moments.find(x => x.moment_id === mem.id);
+                      if (!src) return null;
+                      const written = new Date(src.captured_at).toLocaleString(locale, {
+                        month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
+                      });
+                      return (
+                        <div className="flex items-center gap-1.5 flex-wrap mb-2 px-1">
+                          {src.is_public !== true && (
+                            <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-[#FFF1EC] text-[#B33A22]">{tMemo("privateChip")}</span>
+                          )}
+                          {(src.photo_data || src.has_photo === true) && (
+                            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-dim text-sub">{tMemo("myPhotoChip")}</span>
+                          )}
+                          <span className="text-[11px] font-medium text-sub/80">{tMemo("writtenAt", { date: written })}</span>
+                        </div>
+                      );
+                    }}
                   />
+                  {/* ROLE-SEPARATION V1 §4 — 기록 관리(수정·공개 전환·삭제·표지 지정).
+                      일정 탭의 전체 타임라인이 여기로 옮겨졌다 — 기본은 접힘. */}
+                  <details
+                    id="memories"
+                    open={manageOpen}
+                    onToggle={(e) => setManageOpen((e.target as HTMLDetailsElement).open)}
+                    className="mx-4 sm:mx-6 mb-10 scroll-mt-24 rounded-2xl border border-line bg-white"
+                  >
+                    <summary className="cursor-pointer list-none select-none px-5 py-4 text-sm font-black text-ink flex items-center justify-between">
+                      <span>{tMemo("manageRecords")}</span>
+                      <span aria-hidden className="text-sub">{manageOpen ? "−" : "+"}</span>
+                    </summary>
+                    <div className="px-4 pb-4">
+                      <TripMomentTimeline
+                        moments={displayMoments}
+                        onPhotoError={handlePhotoError}
+                        onDelete={handleMomentDelete}
+                        onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
+                        onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}
+                        dayNumbers={days.map(d => d.dayNumber)}
+                        dayDates={Object.fromEntries(days.map(d => [d.dayNumber, d.date]))}
+                        isPublic={isPublic}
+                        currentCoverMomentId={coverKind === "moment" ? coverMomentId : null}
+                        coverBusy={coverBusy}
+                        onUseAsCover={(!shareId || isOwner) ? (mid) => setCoverPickId(mid) : undefined}
+                        onClearCover={(!shareId || isOwner) ? () => void applyCover({ kind: "auto" }) : undefined}
+                        onSetPublic={(!shareId || isOwner) ? handleSetMomentPublic : undefined}
+                      />
+                    </div>
+                  </details>
                   {/* Journey Summary + map context — Living Map 전체 여정을 작게.
                       새 지도가 아니라 같은 Living Map 의 읽기 전용 Whole Trip 이다(§12). */}
                   <StorySummary
@@ -3836,6 +3894,47 @@ function ItineraryResult() {
                                         )}
                                       </span>
                                     </button>
+                                  {/* ROLE-SEPARATION V1 §3 — 장소 카드의 기록 상태:
+                                        기록이 있으면 썸네일·제목 한 줄(→ Story 탭 관리),
+                                        없으면 명시적인 "사진·메모 남기기" 진입. 카메라
+                                        아이콘만 남겨 placeholder 처럼 보이게 하지 않는다. */}
+                                  {(() => {
+                                    if (shareId && !isOwner) return null;
+                                    if (!itinId) return null;
+                                    const sk = stopKeyOf(place);
+                                    if (sk === null) return null;
+                                    const rec = displayMoments.find(m => m.stop_key === sk);
+                                    if (rec) {
+                                      const line = (rec.title ?? "").trim() || (rec.memo ?? "").trim();
+                                      return (
+                                        <button
+                                          type="button"
+                                          onClick={() => { setTripView("story"); setManageOpen(true); requestAnimationFrame(() => document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" })); }}
+                                          className="gkm-focus mt-1.5 w-full text-left flex items-center gap-2 px-2 py-1.5 rounded-xl bg-surface-dim/60 hover:bg-surface-dim transition-colors"
+                                        >
+                                          {rec.photo_data && (
+                                            /* eslint-disable-next-line @next/next/no-img-element */
+                                            <img src={rec.photo_data} alt="" className="w-7 h-7 rounded-lg object-cover shrink-0 border border-line" />
+                                          )}
+                                          <span className="min-w-0 flex-1 text-[11px] font-bold text-ink truncate">{line || tMemo("memoriesTitle")}</span>
+                                          <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>
+                                        </button>
+                                      );
+                                    }
+                                    return (
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setCaptureDay(day.dayNumber);
+                                          setCaptureStop({ placeName: place.name, aiPlaceName: localizedPlaceName(place.name?.trim() || "", l10nOf(place), locale) || null, citySpotId: stopCitySpotId(place), stopKey: sk });
+                                          setCaptureOpen(true);
+                                        }}
+                                        className="gkm-focus mt-1.5 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-dashed border-line text-[11px] font-bold text-sub hover:text-ink hover:border-ink/30 transition-colors"
+                                      >
+                                        + {tMemo("addStopRecord")}
+                                      </button>
+                                    );
+                                  })()}
                                   {/* 수익화 제휴 버튼 스트립 — slotItems.map 내부, 즉
                                       **일정 항목 내부**이므로 Post-Plan 이 아니라
                                       Trip-Flow Commerce (§14-1-A) 로 분류한다. */}
@@ -3940,40 +4039,9 @@ function ItineraryResult() {
         </div>
       )}
 
-      {/* ── TASK-022: Trip Journal — 나만의 여행 기억 타임라인 ──
-            Memory 는 별도 화면이 아니라 이 Trip 안의 한 구간이다. /my-trips 의
-            Memories 진입이 이 앵커로 내려온다 — scroll-mt 는 상단 고정 바에
-            제목이 가려지지 않게 하는 여백이다. */}
-      <div id="memories" className="mb-12 scroll-mt-24">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-2xl font-black text-ink">{tMemo("memoriesTitle")}</h2>
-            <p className="text-sm text-sub mt-0.5">{tMemo("memoriesSubtitle")}</p>
-          </div>
-          <button
-            onClick={() => setCaptureOpen(true)}
-            className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-black text-white transition-all active:scale-95"
-            style={{ backgroundColor: "#1a1a2e" }}
-          >
-            + {tMemo("addMemory")}
-          </button>
-        </div>
-        <TripMomentTimeline
-          moments={displayMoments}
-          onPhotoError={handlePhotoError}
-          onDelete={handleMomentDelete}
-          onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
-          onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}
-          dayNumbers={days.map(d => d.dayNumber)}
-          dayDates={Object.fromEntries(days.map(d => [d.dayNumber, d.date]))}
-          isPublic={isPublic}
-          currentCoverMomentId={coverKind === "moment" ? coverMomentId : null}
-          coverBusy={coverBusy}
-          onUseAsCover={(!shareId || isOwner) ? (mid) => setCoverPickId(mid) : undefined}
-          onClearCover={(!shareId || isOwner) ? () => void applyCover({ kind: "auto" }) : undefined}
-          onSetPublic={(!shareId || isOwner) ? handleSetMomentPublic : undefined}
-        />
-      </div>
+      {/* ROLE-SEPARATION V1 §3 — 일정 탭 하단의 전체 기억 타임라인은 제거했다.
+            같은 기록이 Story 탭(미리보기 + 기록 관리)에서만 보인다. /my-trips 의
+            #memories 진입은 Story 탭의 기록 관리 구간으로 간다. */}
       </div>
 
       {/* Story 의 사진 확대 — 공개 Story 와 같은 Focus. 상호작용은 바꾸지 않는다 */}
