@@ -15,6 +15,7 @@ import AdBanner from "@/components/AdBanner";
 import ContactModal from "@/components/ContactModal";
 import PreOpenNotice from "@/components/PreOpenNotice";
 import QuietHome from "@/components/quiet/QuietHome";
+import JourneyCoach from "@/components/JourneyCoach";
 
 export default function HomeClient() {
   const tn = useTranslations("nav");
@@ -22,6 +23,20 @@ export default function HomeClient() {
   const tFooter = useTranslations("footer");
   const router = useRouter();
   const [contactOpen, setContactOpen] = useState(false);
+  // §7 — 사전 오픈 sheet 가 열려 있는 동안 튜토리얼 coach 를 미룬다(동시 노출 0)
+  const [preOpenSheetOpen, setPreOpenSheetOpen] = useState(false);
+
+  // TUTORIAL-V1 Chapter A — 이 기기에 여행이 하나라도 있으면 "여행 시작" 장은
+  // 지나간 것이다. 판정은 로컬 신호뿐(계정 없는 device 구조 그대로 — 네트워크 0).
+  const [hasTrip, setHasTrip] = useState<boolean | undefined>(undefined);
+  useEffect(() => {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i)?.startsWith("koreamate_itin3_id_")) { setHasTrip(true); return; }
+      }
+      setHasTrip(false);
+    } catch { setHasTrip(undefined); }
+  }, []);
 
   // ── legacy deep-link 호환 ────────────────────────────────────────────────
   //
@@ -84,6 +99,14 @@ export default function HomeClient() {
       </header>
 
       {/* Quiet Travel Editorial — 최종 Home(Cover→Floor). */}
+      {/* TUTORIAL-V1 §3 Chapter A 시작 — 발견을 가리키는 첫 coach.
+          §7 — 사전 오픈 안내 sheet 가 열려 있는 동안은 그리지 않는다: 두 안내가
+          같은 화면에 겹치지 않고, sheet 를 닫은 뒤 튜토리얼이 시작된다. */}
+      {hasTrip === false && !preOpenSheetOpen && (
+        <div className="max-w-xl mx-auto px-4 pt-4">
+          <JourneyCoach step="discover" ctx={{ hasTrip }} arrow="down" />
+        </div>
+      )}
       <QuietHome />
 
       {/* AdBanner — 수익 surface. ID 없으면 null 렌더 */}
@@ -121,7 +144,7 @@ export default function HomeClient() {
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
       {/* 정식 오픈 전 안내 — session 당 한 번, Home 첫 진입 (Owner 결정 2026-09-01) */}
-      <PreOpenNotice />
+      <PreOpenNotice onOpenChange={setPreOpenSheetOpen} />
     </div>
   );
 }

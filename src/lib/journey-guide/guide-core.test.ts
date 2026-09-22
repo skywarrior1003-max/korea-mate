@@ -57,3 +57,48 @@ test("모든 스텝에 4개 locale 의 guide 문구가 존재한다", () => {
     assert.ok(g.gotIt, `${l}:gotIt`);
   }
 });
+
+// ── TUTORIAL-V1 — Chapter·문맥·건너뛰기·계측 상태 ───────────────────────────
+test("V1: Chapter 매핑·진행 표시(discover 포함, myPlaces 는 장 밖)", async () => {
+  const { chapterOf, stepProgress, GUIDE_CHAPTERS } = await import("./guide-core.ts");
+  assert.equal(chapterOf("discover"), "A");
+  assert.equal(chapterOf("photo"), "B");
+  assert.equal(chapterOf("share"), "C");
+  assert.equal(chapterOf("myPlaces"), null);
+  assert.deepEqual(stepProgress("save"), { chapter: "A", index: 2, total: GUIDE_CHAPTERS.A.length });
+});
+
+test("V1: 문맥 gating — 여행이 있으면 A 숨김·기록 전엔 story/share 숨김(photo 는 안내)", async () => {
+  const { defaultGuideState, shouldShowStep } = await import("./guide-core.ts");
+  const s = defaultGuideState();
+  assert.equal(shouldShowStep(s, "discover", { hasTrip: true }), false);
+  assert.equal(shouldShowStep(s, "discover", { hasTrip: false }), true);
+  assert.equal(shouldShowStep(s, "story", { hasMoment: false }), false);
+  assert.equal(shouldShowStep(s, "share", { hasMoment: false }), false);
+  assert.equal(shouldShowStep(s, "photo", { hasMoment: false }), true); // "여기서 남길 수 있어요"
+  assert.equal(shouldShowStep(s, "story", { hasMoment: true }), true);
+  // 문맥 미전달 = 기존 동작(하위호환)
+  assert.equal(shouldShowStep(s, "story"), true);
+});
+
+test("V1: 건너뛰기는 그 Chapter 전체를 seen 처리하고 다른 장은 남긴다", async () => {
+  const { defaultGuideState, skipChapter, shouldShowStep, chapterCompleted } = await import("./guide-core.ts");
+  const s = skipChapter(defaultGuideState(), "save");
+  for (const st of ["discover", "save", "thisTrip", "planner"] as const) assert.equal(shouldShowStep(s, st), false, st);
+  assert.equal(shouldShowStep(s, "myTripEdit"), true);
+  assert.equal(chapterCompleted(s, "A"), true);
+  assert.equal(chapterCompleted(s, "B"), false);
+});
+
+test("V1: 상태 version — write 는 v2 를 기록하고 v1(필드 없음) 데이터도 그대로 읽힌다", async () => {
+  const { readGuideState, writeGuideState, GUIDE_STATE_VERSION, GUIDE_STORAGE_KEY, defaultGuideState } = await import("./guide-core.ts");
+  const mem = new Map<string, string>();
+  const storage = { getItem: (k: string) => mem.get(k) ?? null, setItem: (k: string, v: string) => void mem.set(k, v) };
+  mem.set(GUIDE_STORAGE_KEY, JSON.stringify({ enabled: true, seen: { save: true } })); // v1 형태
+  const s1 = readGuideState(storage);
+  assert.equal(s1.seen.save, true);
+  writeGuideState({ ...defaultGuideState(), started: true }, storage);
+  const written = JSON.parse(mem.get(GUIDE_STORAGE_KEY)!);
+  assert.equal(written.version, GUIDE_STATE_VERSION);
+  assert.equal(readGuideState(storage).started, true);
+});

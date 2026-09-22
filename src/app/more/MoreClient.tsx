@@ -19,7 +19,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
-  readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen,
+  readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen, emitGuideEvent,
 } from "@/lib/journey-guide/guide-core";
 
 /** 아이콘은 이 저장소가 쓰는 방식 그대로 인라인 SVG · currentColor 다 */
@@ -86,6 +86,7 @@ export default function MoreClient() {
     writeGuideState(setGuideEnabled(resetGuideSeen(readGuideState()), true));
     setTipsOn(true);
     setReplayed(true);
+    emitGuideEvent("tutorial_replayed", {});
   };
 
   return (

@@ -16,7 +16,7 @@ function markSeen(): void {
   try { window.sessionStorage.setItem(PREOPEN_NOTICE_SESSION_KEY, "1"); } catch { /* storage unavailable — show again next time */ }
 }
 
-export default function PreOpenNotice() {
+export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: boolean) => void } = {}) {
   const t = useTranslations("preopen");
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -26,11 +26,12 @@ export default function PreOpenNotice() {
       if (window.sessionStorage.getItem(PREOPEN_NOTICE_SESSION_KEY) === "1") return;
     } catch { /* private mode 등 — 그냥 보여 준다 */ }
     // hydration 이 끝난 다음 틱에 연다 — 서버 HTML(닫힘)과 첫 클라이언트 렌더가 같아야 한다.
-    const id = window.setTimeout(() => { setOpen(true); markSeen(); }, 0);
+    const id = window.setTimeout(() => { setOpen(true); markSeen(); onOpenChange?.(true); }, 0);
     return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClose = useCallback(() => { markSeen(); setOpen(false); }, []);
+  const handleClose = useCallback(() => { markSeen(); setOpen(false); onOpenChange?.(false); }, [onOpenChange]);
 
   useEffect(() => {
     if (!open) return;

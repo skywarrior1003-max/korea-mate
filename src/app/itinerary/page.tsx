@@ -3051,12 +3051,14 @@ function ItineraryResult() {
       {/* ── First Trip Journey Guide — 방문마다 다음 한 장만(전역 잠금, 순서 고정) ── */}
       {(!shareId || isOwner) && itinId && (
         <div className="max-w-xl mx-auto mb-4 flex flex-col gap-2">
-          <JourneyCoach step="myTripEdit" />
-          <JourneyCoach step="directions" />
-          <JourneyCoach step="photo" />
-          <JourneyCoach step="story" />
-          <JourneyCoach step="share" />
-          <JourneyCoach step="finale" />
+          {/* TUTORIAL-V1 §3 — Chapter 문맥: story/share 는 첫 기록이 생기고 나서.
+              도착 전 기능을 미리 설명하지 않는다(hasMoment gating). */}
+          <JourneyCoach step="myTripEdit" ctx={{ hasMoment: moments.length > 0 }} />
+          <JourneyCoach step="directions" ctx={{ hasMoment: moments.length > 0 }} />
+          <JourneyCoach step="photo" ctx={{ hasMoment: moments.length > 0 }} />
+          <JourneyCoach step="story" ctx={{ hasMoment: moments.length > 0 }} />
+          <JourneyCoach step="share" ctx={{ hasMoment: moments.length > 0 }} />
+          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} />
         </div>
       )}
 

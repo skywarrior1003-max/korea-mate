@@ -1495,7 +1495,12 @@
     "story": "Your records appear in the Story tab, told like a journey — same content, no extra work.",
     "myPlaces": "Found somewhere only you know? Keep it as My Place with photos and notes.",
     "share": "Sharing publishes only what you choose. Photos and notes stay private until you pick them.",
-    "finale": "You completed a trip! You can turn these tips off or replay them in More (⋯)."
+    "finale": "You completed a trip! You can turn these tips off or replay them in More (⋯).",
+    "discover": "Start by browsing a city that catches your eye.",
+    "skip": "Skip",
+    "chapterA": "Start a trip",
+    "chapterB": "My itinerary",
+    "chapterC": "Story"
   },
   "blog": {
     "title": "Blog",
