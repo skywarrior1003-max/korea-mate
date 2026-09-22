@@ -1410,6 +1410,7 @@ function ItineraryResult() {
   const tStay = useTranslations("stay");
   const tStory = useTranslations("story");
   const tMemo = useTranslations("memo");
+  const tPace = useTranslations("pace");
   const tPlanner = useTranslations("planner");
   // 체류시간 표기 — 값은 스케줄러의 stay_minutes 그대로, 표기만 locale 로
   const durationLabels = {
@@ -3012,7 +3013,11 @@ function ItineraryResult() {
             </button>
           )}
           <span className="text-[11px] font-black bg-surface-dim text-sub px-2 py-0.5 rounded-md uppercase tracking-wider">
-            {travelStyle ? `${travelStyle} Trip` : t("tripTitleFallback")}
+            {/* VISUAL-POLISH V2 §6 — "RELAXED TRIP" 혼합 언어 제거: pace 네임스페이스
+                라벨(4locale)로 렌더. 알 수 없는 값만 기존 영문 fallback 유지. */}
+            {travelStyle
+              ? (["relaxed", "balanced", "active"].includes(travelStyle) ? tPace(travelStyle) : `${travelStyle} Trip`)
+              : t("tripTitleFallback")}
           </span>
 
         </div>
@@ -3104,11 +3109,12 @@ function ItineraryResult() {
               // 공개 Story 와 같은 언어의 몰입형 표지. 사진이 하나도 없으면 표지를
               // 그리지 않는다 — 빈 이미지 상자를 만들지 않는다.
               const coverUrl = storyDays.flatMap(d => d.memories).flatMap(m => m.photos)[0]?.url ?? null;
-              const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), city.charAt(0).toUpperCase() + city.slice(1)].filter(Boolean).join(" · ");
+              // VISUAL-POLISH V2 §6 — 도시명은 locale 라벨(cityDisplay)로.
+              const eyebrow = [[startDate, endDate].filter(Boolean).join(" – "), cityDisplay].filter(Boolean).join(" · ");
               // 표지 정본은 사용자가 저장한 Story 제목(§2). 내부 여행 이름(tripTitle)은
               // 관리용이라 표지·공유 산출물에 쓰지 않는다. 없으면 사실 기반 fallback.
               const storyTitle = (storyHeroTitle ?? "").trim()
-                || tStory("heroFallbackTitle", { city: city.charAt(0).toUpperCase() + city.slice(1), n: days.length });
+                || tStory("heroFallbackTitle", { city: cityDisplay, n: days.length });
               const storyIntroText = (storyHeroIntro ?? "").trim()
                 || tStory("heroFallbackIntro", { days: days.length, places: days.reduce((n, d) => n + d.places.length, 0) });
               const placeTotal = days.reduce((n, d) => n + d.places.length, 0);
@@ -3202,7 +3208,7 @@ function ItineraryResult() {
                       새 지도가 아니라 같은 Living Map 의 읽기 전용 Whole Trip 이다(§12). */}
                   <StorySummary
                     statusChipLabel={isPastTrip ? tStory("journeyDone") : tStory("journeyOngoing")}
-                    data={{ title: storyTitle, stats: `${days.length} Days · ${placeTotal} Places`, description: "" }}
+                    data={{ title: storyTitle, stats: tStory("shareTextStats", { days: days.length, places: placeTotal }), description: "" }}
                     copyLabel=""
                     shareLabel=""
                     mapSlot={
@@ -3910,7 +3916,7 @@ function ItineraryResult() {
                                         <button
                                           type="button"
                                           onClick={() => { setTripView("story"); setManageOpen(true); requestAnimationFrame(() => document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" })); }}
-                                          className="gkm-focus mt-1.5 w-full text-left flex items-center gap-2 px-2 py-1.5 rounded-xl bg-surface-dim/60 hover:bg-surface-dim transition-colors"
+                                          className="gkm-focus mt-1.5 w-full min-h-11 text-left flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-surface-dim/60 hover:bg-surface-dim transition-colors"
                                         >
                                           {rec.photo_data && (
                                             /* eslint-disable-next-line @next/next/no-img-element */
@@ -3929,8 +3935,13 @@ function ItineraryResult() {
                                           setCaptureStop({ placeName: place.name, aiPlaceName: localizedPlaceName(place.name?.trim() || "", l10nOf(place), locale) || null, citySpotId: stopCitySpotId(place), stopKey: sk });
                                           setCaptureOpen(true);
                                         }}
-                                        className="gkm-focus mt-1.5 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-dashed border-line text-[11px] font-bold text-sub hover:text-ink hover:border-ink/30 transition-colors"
+                                        /* VISUAL-POLISH V2 §4 — 흐린 점선·11px 는 설명문처럼 보였다.
+                                              조용하지만 분명한 보조 버튼: 실선 테두리·흰 배경·44px 터치·전폭 클릭. */
+                                        className="gkm-focus mt-1.5 w-full min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 rounded-xl border border-line bg-white text-xs font-black text-ink/80 hover:text-ink hover:border-ink/30 active:scale-[0.99] transition-all"
                                       >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                          <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.2l1.2-2h6.2l1.2 2h2.2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z" /><circle cx="12" cy="13" r="3.4" />
+                                        </svg>
                                         + {tMemo("addStopRecord")}
                                       </button>
                                     );

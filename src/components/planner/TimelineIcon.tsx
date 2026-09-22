@@ -11,8 +11,11 @@ import { timelineIconKind, type TimelineIconKind } from "@/lib/planner/day-windo
 const PATHS: Record<TimelineIconKind, React.ReactNode> = {
   // 나이프·포크
   food: <><path d="M7 3v8M5 3v4a2 2 0 0 0 2 2M9 3v4a2 2 0 0 1-2 2M7 11v10" /><path d="M17 3c-1.7 1.2-2.5 3-2.5 5.5S15.3 13 17 14v7" /></>,
-  // 카메라
-  camera: <><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.2l1.2-2h6.2l1.2 2h2.2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z" /><circle cx="12" cy="13" r="3.4" /></>,
+  // 명소 깃발 — VISUAL-POLISH V2 §3: 관광지 glyph 가 카메라 모양이면 "사진
+  // 업로드 실패 placeholder" 로 오인된다(Owner 실화면 확인). kind 이름은
+  // 배선 호환을 위해 "camera" 그대로 두고 그림만 랜드마크 깃발로 바꾼다 —
+  // 카메라 그림은 이제 "사진·메모 남기기" 행동에만 쓴다.
+  camera: <><path d="M6.5 21V3.5" /><path d="M6.5 4.5h10.2l-2.6 3.8 2.6 3.8H6.5" /></>,
   // 잎사귀
   nature: <><path d="M5 20c0-8 5-13 14-14 .6 7-3 14-10 14-1.6 0-3-.6-4-1.6z" /><path d="M8 17c2.5-3.2 5.5-5.4 9-6.8" /></>,
   // 달력
