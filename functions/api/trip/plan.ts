@@ -380,7 +380,11 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   }
 
   // 5. Affiliate context
-  let affiliate_context: any = (typeof body.affiliate_context === "object" && body.affiliate_context !== null)
+  // LEGACY-CLEANUP-V1: Trip-Flow commerce 가 꺼져 있으면 client 가 body 로
+  // 넣어 보낸 affiliate_context 도 신뢰하지 않는다 — 게이트 OFF 상태에서
+  // 일정 결과에 affiliate 카드가 주입되는 우회 경로를 서버에서 차단한다.
+  let affiliate_context: any = (TRIP_FLOW_COMMERCE_ENABLED
+      && typeof body.affiliate_context === "object" && body.affiliate_context !== null)
     ? body.affiliate_context
     : undefined;
   const _tm0 = Date.now(); const _tm: Record<string, number> = {};

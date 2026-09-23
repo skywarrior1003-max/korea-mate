@@ -35,15 +35,19 @@ interface ProductPolicy {
 //  Viator·Booking 값이 registry 에 남아 있어도 여기서 고르지 않으면
 //  사용자에게 도달하지 않는다. 되살리려면 이 표를 고쳐야 한다.
 export const POLICY: Record<ProductKey, ProductPolicy> = {
-  esim:             { default: { recommended: "klook" } },
-  airport_transfer: { default: { recommended: "klook" } },
-  rail:             { default: { recommended: "klook" } },
-  car_rental:       { default: { recommended: "klook" } },
-  cable_car:        { default: { recommended: "klook" } },
+  // LEGACY-CLEANUP-V1 (2026-09-23): 구세대 시스템에는 승인 파트너가 없다.
+  // Klook 구 AID(41763)·단축링크 링크가 registry 에서 제거되어 고를 것도
+  // 없지만, policy 차원에서도 전 상품 null 로 이중 차단한다. 현재 승인
+  // 파트너(Agoda·Trip.com·Klook 123610·KKday)는 partner-links.ts 소관이다.
+  esim:             { default: null },
+  airport_transfer: { default: null },
+  rail:             { default: null },
+  car_rental:       { default: null },
+  cable_car:        { default: null },
 
   // Viator 는 현재 파트너가 아니다.
   activities:       { default: null },
-  // Booking 도 활성 파트너가 아니다. 일반 숙박은 제품 방향에서도 제외돼 있다.
+  // Booking 은 CJ 신청 거절(2026-09-17) — 활성 파트너가 아니다.
   accommodation:    { default: null },
 };
 

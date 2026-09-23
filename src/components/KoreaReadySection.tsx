@@ -114,6 +114,9 @@ export default function KoreaReadySection({ city, surface }: Props) {
   // 승인된 Editorial 표면이 아니면 상업 anchor 를 생성하지 않는다.
   // CSS 숨김이 아니라 섹션 자체를 렌더하지 않는다.
   if (!isEditorialAffiliateEnabled(surface)) return null;
+  // LEGACY-CLEANUP-V1: 그릴 카드가 없으면 브랜드 헤더만 있는 빈 껍데기
+  // 섹션도 그리지 않는다 — 구세대 policy 가 전 상품 null 인 현재는 항상 0 이다.
+  if (cards.length === 0) return null;
 
   return (
     <section className="max-w-5xl mx-auto px-4 pb-4">

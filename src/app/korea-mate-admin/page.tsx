@@ -489,7 +489,7 @@ export default function AdminPage() {
                     "easy",
                     "120",
                     "Comfortable shoes",
-                    "https://affiliate.klook.com/...",
+                    "https://www.klook.com/...",
                   ].map((v, i) => (
                     <td key={i} className="px-2 py-1 text-[10px] text-gray-500 whitespace-nowrap">{v}</td>
                   ))}

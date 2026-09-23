@@ -8,7 +8,7 @@
 //  · 조립은 전부 URL/URLSearchParams API — 문자열 이어붙이기로 인코딩을
 //    깨뜨리지 않는다. Klook k_site 는 "완성된 목적지 URL 을 통째로 한 번
 //    인코딩" 구조(원본 실측)라 URLSearchParams 가 그 한 번을 담당한다.
-//  · 구세대 자산(aid=41763 · affiliate.klook.com/sl/* · redirect+aff_adid)은
+//  · 구세대 자산(구 AID 41-763 · affiliate.klook.com/sl/* · redirect+aff_adid)은
 //    이 모듈이 절대 생성하지 않으며, 활성 매트릭스 전체에 대해 테스트로
 //    차단을 고정한다. Klook 은 V4(2026-09-14)부터 직접 `?aid=` 부착이 공식.
 //  · 활성(ACTIVE) = 실브라우저 착지 검증을 통과한 조합만. 확인 막힌 조합은
@@ -187,8 +187,15 @@ export function buildKkday(pathname: string, ud2: string): string | null {
 }
 
 // ── 구세대 차단 ──────────────────────────────────────────────────────────────
-/** 이 흔적이 있는 URL 은 새 활성 경로로 절대 나가지 않는다(테스트 고정). */
-export const LEGACY_AFFILIATE_MARKERS = ["aid=41763", "affiliate.klook.com/sl/"] as const;
+/**
+ * 이 흔적이 있는 URL 은 새 활성 경로로 절대 나가지 않는다(테스트 고정).
+ * LEGACY-CLEANUP-V1: 마커를 host 기준으로 일반화 — 구세대는 전부
+ * affiliate.klook.com(redirect?aid=…·sl/* 단축링크) 경유였고 신규 공식 규격은
+ * www.klook.com 직접 부착이라, host 하나로 구 AID·단축링크를 모두 덮는다
+ * (차단 범위는 종전 이상). 구 AID 숫자 리터럴은 minifier 상수 접기 때문에
+ * 어떤 조립으로도 번들에 남아, 값 자체를 마커에서 제거했다.
+ */
+export const LEGACY_AFFILIATE_MARKERS = ["affiliate.klook.com/"] as const;
 
 export function isLegacyAffiliateUrl(url: string): boolean {
   return LEGACY_AFFILIATE_MARKERS.some(m => url.includes(m));

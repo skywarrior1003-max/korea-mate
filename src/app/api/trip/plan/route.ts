@@ -13,6 +13,7 @@ import type { TripPlanInput, TripPlanResponse } from "@/lib/trip-plan/index";
 import { findRouteById } from "@/lib/story-routes";
 import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates";
 import type { AffiliateDisplayMap } from "@/lib/affiliates";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 
 // ─── Cart Hint Map (P0-1 Phase 2: 수익화 데이터 생존 체인) ──────────────────────
 
@@ -223,7 +224,10 @@ function validateInput(
     route_template_stays: Array.isArray(b.route_template_stays)
       ? (b.route_template_stays as TripPlanInput["route_template_stays"])
       : undefined,
-    affiliate_context: typeof b.affiliate_context === "object" && b.affiliate_context !== null
+    // LEGACY-CLEANUP-V1: Trip-Flow OFF 면 client 제공 affiliate_context 무시
+    // (functions/api/trip/plan.ts 운영본과 같은 계약).
+    affiliate_context: TRIP_FLOW_COMMERCE_ENABLED
+      && typeof b.affiliate_context === "object" && b.affiliate_context !== null
       ? (b.affiliate_context as TripPlanInput["affiliate_context"])
       : undefined,
     // 여행 속도. 모르는 값은 아래 core 가 기본값으로 떨어뜨린다.
@@ -263,8 +267,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   // TASK-021: affiliate_links 자동 조회 → affiliate_context 주입
   // city / locale 미제공 시: 전국 공통 + "en" 폴백 적용
+  // LEGACY-CLEANUP-V1: Trip-Flow OFF 면 조회 자체를 건너뛴다(운영본과 동일).
   const locale         = validation.locale ?? "en";
-  const affiliateRows  = await queryAffiliateLinks(validation.city);
+  const affiliateRows  = TRIP_FLOW_COMMERCE_ENABLED ? await queryAffiliateLinks(validation.city) : [];
   if (affiliateRows.length > 0 && !validation.input.affiliate_context) {
     validation.input.affiliate_context = {
       affiliate_link_ids: affiliateRows.map(r => r.affiliate_link_id),

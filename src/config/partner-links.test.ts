@@ -183,7 +183,9 @@ test("★배선 — 두 표면이 PartnerOfferRow 를 쓰고, 고지·sponsored�
   assert.match(hub, /PartnerOfferRow surface="city-hub-essentials"/);
   const it = readFileSync(join(process.cwd(), "src/app/itinerary/page.tsx"), "utf8");
   assert.match(it, /PartnerOfferRow surface="my-trip-prep"/);
-  assert.match(it, /\{!shareId && !isPastTrip && \(/, "본인·미래 여행 한정 조건");
+  // 2026-09-17 Owner: 판별을 shareId → isOwner(owner-only GET 성공)로 강화 +
+  // canonical 도시 확정 시에만 렌더. stale 단언을 현재 계약으로 동기화(LEGACY-CLEANUP-V1).
+  assert.match(it, /\{isOwner && !isPastTrip && citySlugCanonical && \(/, "본인·미래 여행·canonical 도시 한정 조건");
   const row = readFileSync(join(process.cwd(), "src/components/PartnerOfferRow.tsx"), "utf8");
   assert.match(row, /isEditorialAffiliateEnabled\(surface\)/);
   assert.match(row, /partnerSponsored/, "가시 고지 누락");

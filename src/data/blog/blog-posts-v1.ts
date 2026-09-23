@@ -176,10 +176,8 @@ export const BLOG_POSTS: BlogPost[] = [
     sources: [
       { name: "Korea Tourism Organization — VisitKorea", url: "https://english.visitkorea.or.kr" },
     ],
-    affiliateCards: [
-      { id: "esimKlook", emoji: "📶", product: "esim" },
-      { id: "transferTransport", emoji: "🚐", product: "airportTransfer" },
-    ],
+    // LEGACY-CLEANUP-V1: 구세대 Klook 링크(eSIM·공항 이동) 카드를 제거했다.
+    // 이 글과 직접 관련된 제휴 상품은 별도 Editorial 승인 TASK 에서만 추가한다.
   },
 
   // ───────────────────────────────────────────────────────────────────────────

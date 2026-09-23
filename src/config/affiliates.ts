@@ -12,8 +12,12 @@
 
 import { REGISTRY, entryUrl, type OfferContext } from "./affiliate-registry";
 
-const url = (product: keyof typeof REGISTRY, variant: string, ctx: OfferContext = {}) =>
-  entryUrl(REGISTRY[product][variant]!, ctx);
+// LEGACY-CLEANUP-V1: registry 가 전 상품 빈 표라 어떤 variant 도 존재하지
+// 않는다 — 게이트 뒤 호출부가 혹시 평가되어도 throw 대신 빈 문자열이다.
+const url = (product: keyof typeof REGISTRY, variant: string, ctx: OfferContext = {}) => {
+  const entry = REGISTRY[product]?.[variant];
+  return entry ? entryUrl(entry, ctx) : "";
+};
 
 export const VIATOR = {
   searchUrl: (query: string, city = "Busan") => url("activities", "search", { query, city }),
