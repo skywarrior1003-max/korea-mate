@@ -105,3 +105,15 @@ test("V1: 상태 version — write 는 v2 를 기록하고 v1(필드 없음) 데
   assert.equal(written.version, GUIDE_STATE_VERSION);
   assert.equal(readGuideState(storage).started, true);
 });
+
+// ── V5 — reset 계약: 다시 보기는 finale(신규 ack 단계) 포함 전부 지운다 ──
+test("V5: seen.finale=true → 다시 보기 → false·finale 재학습 가능", () => {
+  let s = defaultGuideState();
+  for (const step of ["story", "share", "finale"] as const) s = markStepSeen(s, step);
+  assert.equal(shouldShowStep(s, "finale"), false, "완료 후 일반 재방문 자동 재노출 0");
+  s = resetGuideSeen(s);
+  assert.deepEqual(s.seen, {}, "reset 은 finale 포함 전체를 지운다");
+  assert.equal(shouldShowStep(s, "finale"), false, "reset 직후엔 story·share 미완이라 아직 안 뜬다");
+  s = markStepSeen(markStepSeen(s, "story"), "share");
+  assert.equal(shouldShowStep(s, "finale"), true, "재진행해 share 까지 끝내면 다시 뜬다");
+});
