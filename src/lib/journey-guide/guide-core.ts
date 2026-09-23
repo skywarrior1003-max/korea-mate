@@ -75,8 +75,12 @@ export interface GuideState {
 export const GUIDE_STATE_VERSION = 2;
 export const GUIDE_STORAGE_KEY = "koreamate_journey_guide_v1";
 
-/** finale 는 핵심 여정을 한 바퀴 돈 뒤에만 — 사진과 스토리까지 봤다면 여행 하나가 끝났다 */
-const CORE_FOR_FINALE: GuideStep[] = ["save", "planner", "myTripEdit", "photo", "story"];
+/**
+ * finale(4/4)는 Chapter C 의 마지막 카드다 — 직전 단계(story·share)를 끝냈으면
+ * 뜬다. V4 실측: save·planner 까지 요구하면 "안내 다시 보기 후 기존 여행에서
+ * B/C 만 재진행"한 사용자에게 영원히 나타나지 않았다.
+ */
+const CORE_FOR_FINALE: GuideStep[] = ["story", "share"];
 
 export function defaultGuideState(): GuideState {
   return { enabled: true, seen: {} };

@@ -29,11 +29,14 @@ const ORANGE = "#FF4A2D";
 // 단계가 다음 방문에서 자동 seen 되는 결함으로 이어졌다.)
 let activeStep: GuideStep | null = null;
 const lockWaiters = new Set<() => void>();
+const notifyWaiters = () => {
+  const ws = [...lockWaiters]; lockWaiters.clear();
+  for (const w of ws) w();
+};
 const release = (step: GuideStep) => {
   if (activeStep !== step) return;
   activeStep = null;
-  const ws = [...lockWaiters]; lockWaiters.clear();
-  for (const w of ws) w();
+  notifyWaiters();
 };
 
 /** V2 §4 — "나중에 보기"는 이번 세션에만 적용된다(seen 이 아니다). */
@@ -45,7 +48,12 @@ const markLater = (step: GuideStep) => {
   try { sessionStorage.setItem(laterKey(step), "1"); } catch { /* 조용히 */ }
 };
 
-export type CoachComplete = { on: "click"; selector: string } | { on: "arrive" };
+/**
+ * V4 — "ack": 표시만으로는 완료가 아니다. 사용자가 "알겠어요"를 눌러야 완료
+ * (finale 전용 — 가림·순간 소실로 못 본 안내가 seen 으로 굳지 않는다).
+ * Escape 는 여기서도 닫기(나중에 보기)일 뿐이다.
+ */
+export type CoachComplete = { on: "click"; selector: string } | { on: "arrive" } | { on: "ack" };
 
 interface Props {
   step: GuideStep;
@@ -82,17 +90,17 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
   useEffect(() => {
     // ctx(hasTrip/hasMoment)는 비동기 로드로 바뀐다 — 안 뜬 카드만 재평가.
     if (claimed.current) return;
-    // 한 순간에 하나만 — 잠금 중이면 조건 판정을 미루고 해제 때 재평가한다.
-    // (조건을 먼저 보고 나가면, 앞 단계들이 완료되며 조건이 참이 되는 카드
-    //  — 예: finale — 가 대기 목록에서 빠져 영영 뜨지 않는다. V3 실측.)
-    if (activeStep !== null) {
-      const w = () => setLockTick(t => t + 1);
-      lockWaiters.add(w);
-      return () => { lockWaiters.delete(w); };
-    }
+    // V4 — 아직 뜨지 않은 카드는 조건 충족 여부와 무관하게 항상 구독한다.
+    // 다른 카드의 완료(seen 변화)나 잠금 해제가 이 카드의 조건을 참으로
+    // 만들 수 있다 — 조건 불충족 시 구독 없이 나가면(V3 실측 finale) 그
+    // 변화를 영영 못 듣는다.
+    const w = () => setLockTick(t => t + 1);
+    lockWaiters.add(w);
+    const unsub = () => { lockWaiters.delete(w); };
+    if (activeStep !== null) return unsub;   // 한 순간에 하나만
     const state = readGuideState();
-    if (!shouldShowStep(state, step, ctx)) return;
-    if (complete.on === "click" && laterSeen(step)) return; // 나중에 보기(세션)
+    if (!shouldShowStep(state, step, ctx)) return unsub;
+    if (complete.on !== "arrive" && laterSeen(step)) return unsub; // 나중에 보기(세션)
     activeStep = step;
     claimed.current = true;
     setVisible(true);
@@ -103,6 +111,7 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
     // V2 §3 — arrive 형은 이 화면에 도착한 것 자체가 행동이다: 표시와 동시에
     // 완료로 기록하고(다음 방문 재노출 0) 카드는 이번 화면에서 계속 보여 준다.
     if (complete.on === "arrive") finishStep("complete");
+    return unsub;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, ctx?.hasTrip, ctx?.hasMoment, lockTick]);
   useEffect(() => () => { if (claimed.current) release(step); }, [step]);
@@ -167,6 +176,9 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
         if (el?.closest?.(complete.selector)) {
           doneRef.current = true;
           setVisible(false); release(step); finishStep("complete");
+          // V4 — 카드가 이미 닫혀 잠금이 없던 경우에도, 완료로 조건이 참이 된
+          // 다음 카드(finale)가 즉시 재평가되게 한다.
+          if (activeStep === null) notifyWaiters();
         }
       } catch { /* 잘못된 selector 는 무시 */ }
     };
@@ -174,12 +186,22 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
     return () => document.removeEventListener("click", onClick, true);
   }, [complete, step, finishStep]);
 
-  // §4 — 닫기(알겠어요/Escape): 완료가 아니다. click 형은 세션 동안만 숨긴다.
+  // §4·V4 — 닫기(Escape): 어떤 유형이든 완료가 아니다. arrive 밖 유형은 세션
+  // 동안만 숨긴다(다음 방문에 다시 뜬다).
   const closeOnly = useCallback(() => {
     setVisible(false);
     release(step);
-    if (complete.on === "click") markLater(step);
+    if (complete.on !== "arrive") markLater(step);
   }, [step, complete]);
+  // V4 — "알겠어요": ack 형은 이것이 명시적 완료다. 나머지는 닫기와 같다.
+  const acknowledge = useCallback(() => {
+    if (complete.on === "ack") {
+      setVisible(false); release(step); finishStep("complete");
+      if (activeStep === null) notifyWaiters();
+      return;
+    }
+    closeOnly();
+  }, [complete, step, finishStep, closeOnly]);
   useEffect(() => {
     if (!visible) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeOnly(); };
@@ -228,7 +250,7 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
         <p className="mt-1 text-[13px] leading-relaxed font-medium" style={{ color: "#3a2a24" }}>{t(step)}</p>
         <button
           type="button"
-          onClick={closeOnly}
+          onClick={acknowledge}
           className="gkm-focus mt-1.5 inline-flex items-center min-h-9 text-xs font-bold"
           style={{ color: ORANGE }}
         >

@@ -23,10 +23,13 @@ test("본 스텝은 자동 반복되지 않는다", () => {
   assert.equal(shouldShowStep(s, "thisTrip"), true);
 });
 
-test("finale 는 핵심 여정(저장→플래너→편집→사진→스토리)을 돈 뒤에만 — 그리고 한 번뿐", () => {
+test("finale 는 Chapter C 직전 단계(story·share)를 끝낸 뒤에만 — 그리고 한 번뿐 (V4)", () => {
   let s = defaultGuideState();
-  for (const step of ["save", "planner", "myTripEdit", "photo", "story"] as const) s = markStepSeen(s, step);
+  s = markStepSeen(s, "story");
+  assert.equal(shouldShowStep(s, "finale"), false, "share 전에는 안 뜬다");
+  s = markStepSeen(s, "share");
   assert.equal(shouldShowStep(s, "finale"), true);
+  // V4 실측 경로 — 다시 보기 후 기존 여행에서 B/C 만 재진행(save·planner 없음)해도 뜬다
   s = markStepSeen(s, "finale");
   assert.equal(shouldShowStep(s, "finale"), false);
 });

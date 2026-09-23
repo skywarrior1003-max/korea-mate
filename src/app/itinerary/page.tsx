@@ -3061,7 +3061,8 @@ function ItineraryResult() {
           <JourneyCoach step="photo" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-add-record"]' }} />
           <JourneyCoach step="story" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-story-tab"]' }} />
           <JourneyCoach step="share" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-share"]' }} />
-          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
+          {/* V4 — finale 는 표시만으로 완료되지 않는다: "알겠어요"가 명시적 종료다. */}
+          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "ack" }} />
         </div>
       )}
 
