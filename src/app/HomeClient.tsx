@@ -6,7 +6,7 @@
 // 예전 이 파일에 있던 플래너 폼·draft·clone 처리는 전부
 // src/app/planner/PlannerClient.tsx 로 옮겨졌다 — 동작은 그대로다.
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -16,6 +16,19 @@ import ContactModal from "@/components/ContactModal";
 import PreOpenNotice from "@/components/PreOpenNotice";
 import QuietHome from "@/components/quiet/QuietHome";
 import JourneyCoach from "@/components/JourneyCoach";
+
+// hasTrip 로컬 신호 — 페이지 수명 동안 갱신 이벤트가 없는 일회성 판정이라
+// 구독은 no-op 이다. snapshot 은 원시값(boolean|undefined)이라 캐시 없이 안정.
+const subscribeHasTrip = () => () => {};
+function readHasTrip(): boolean | undefined {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.key(i)?.startsWith("koreamate_itin3_id_")) return true;
+    }
+    return false;
+  } catch { return undefined; }
+}
+const readHasTripServer = (): boolean | undefined => undefined;
 
 export default function HomeClient() {
   const tn = useTranslations("nav");
@@ -28,15 +41,10 @@ export default function HomeClient() {
 
   // TUTORIAL-V1 Chapter A — 이 기기에 여행이 하나라도 있으면 "여행 시작" 장은
   // 지나간 것이다. 판정은 로컬 신호뿐(계정 없는 device 구조 그대로 — 네트워크 0).
-  const [hasTrip, setHasTrip] = useState<boolean | undefined>(undefined);
-  useEffect(() => {
-    try {
-      for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i)?.startsWith("koreamate_itin3_id_")) { setHasTrip(true); return; }
-      }
-      setHasTrip(false);
-    } catch { setHasTrip(undefined); }
-  }, []);
+  // LINT-HOTFIX-V1: effect 내 동기 setState 대신 useSyncExternalStore — 서버
+  // snapshot 은 undefined 라 hydration 은 기존과 동일하게 안전하고, 값 판정
+  // 시점(hydration 직후)도 그대로다.
+  const hasTrip = useSyncExternalStore(subscribeHasTrip, readHasTrip, readHasTripServer);
 
   // ── legacy deep-link 호환 ────────────────────────────────────────────────
   //
