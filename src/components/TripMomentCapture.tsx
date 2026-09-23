@@ -1,6 +1,7 @@
 "use client";
 import GlyphIcon from "@/components/ui/GlyphIcon";
 import JourneyCoach from "@/components/JourneyCoach";
+import { readGuideState, writeGuideState, markStepSeen } from "@/lib/journey-guide/guide-core";
 
 // gokoreamate — Trip Moment Capture Modal
 // TASK-022: photo + GPS + memo + category 캡처
@@ -197,6 +198,13 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
           memoLenDelta: memo.trim().length - pick.memo.length,
         });
       }
+      // TUTORIAL V3 §5 — AI 를 고르지 않고 직접 작성·저장해도 aiWriting 단계에
+      // 막히지 않는다: 저장 성공 시 그 단계를 선택적으로 지난 것으로 기록한다.
+      // (AI 선택 시에는 coach 의 클릭 배선이 이미 완료했으니 no-op 이다.)
+      if (ok) {
+        const g = readGuideState();
+        if (!g.seen.aiWriting) writeGuideState(markStepSeen(g, "aiWriting"));
+      }
       // 성공 시 모달을 닫는 책임은 상위(onSave)에 있다
     } catch {
       setErrorKey("localSaveFailed");
@@ -387,7 +395,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             {/* AI 3안(제목+본문) — 정보가 준비되면 자동 제안, 고른 안은 아래
                 필드에 채워지고 그대로 고칠 수 있다. 저장값이 Story 의 SSOT 다. */}
-            <div className="mb-2"><JourneyCoach step="aiWriting" complete={{ on: "click", selector: '[data-tut="tut-ai-suggest"]' }} /></div>
+            <div className="mb-2"><JourneyCoach step="aiWriting" complete={{ on: "click", selector: '[data-tut="tut-ai-pick"]' }} /></div>
             <div className="mb-3">
               <MomentAiSuggest
                 ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}

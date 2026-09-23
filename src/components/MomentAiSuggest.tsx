@@ -151,7 +151,6 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       <div className="flex items-center justify-between">
         <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">{t("suggestHeading")}</p>
         <button
-          data-tut="tut-ai-suggest"
           type="button" onClick={() => void run({ forceFresh: true })} disabled={busy}
           className="px-2.5 py-1 rounded-full text-[11.5px] font-bold border min-h-8 disabled:opacity-50"
           style={{ borderColor: ORANGE, color: "#ffb3a6" }}
@@ -191,6 +190,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
               return (
                 <button
                   key={d} type="button"
+                  data-tut="tut-ai-pick"
                   onClick={() => {
                     setPicked(d);
                     // 선택 메타(§E — 문체·시각만, 원문 없음). best-effort.

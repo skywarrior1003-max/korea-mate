@@ -24,8 +24,17 @@ import {
 const ORANGE = "#FF4A2D";
 
 // 전역 잠금 — 페이지 안에서 동시에 하나만.
+// V3 — 잠금이 풀리면 같은 화면에서 기다리던 다음 카드가 즉시 재평가된다.
+// (이전에는 재시도가 없어 "1/3 닫음 → 2/3 안 나타남"이 실측됐고, 안 보인
+// 단계가 다음 방문에서 자동 seen 되는 결함으로 이어졌다.)
 let activeStep: GuideStep | null = null;
-const release = (step: GuideStep) => { if (activeStep === step) activeStep = null; };
+const lockWaiters = new Set<() => void>();
+const release = (step: GuideStep) => {
+  if (activeStep !== step) return;
+  activeStep = null;
+  const ws = [...lockWaiters]; lockWaiters.clear();
+  for (const w of ws) w();
+};
 
 /** V2 §4 — "나중에 보기"는 이번 세션에만 적용된다(seen 이 아니다). */
 const laterKey = (step: GuideStep) => `gkm_tut_later_${step}`;
@@ -69,13 +78,21 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
     }
   }, [step]);
 
+  const [lockTick, setLockTick] = useState(0);
   useEffect(() => {
     // ctx(hasTrip/hasMoment)는 비동기 로드로 바뀐다 — 안 뜬 카드만 재평가.
     if (claimed.current) return;
+    // 한 순간에 하나만 — 잠금 중이면 조건 판정을 미루고 해제 때 재평가한다.
+    // (조건을 먼저 보고 나가면, 앞 단계들이 완료되며 조건이 참이 되는 카드
+    //  — 예: finale — 가 대기 목록에서 빠져 영영 뜨지 않는다. V3 실측.)
+    if (activeStep !== null) {
+      const w = () => setLockTick(t => t + 1);
+      lockWaiters.add(w);
+      return () => { lockWaiters.delete(w); };
+    }
     const state = readGuideState();
     if (!shouldShowStep(state, step, ctx)) return;
     if (complete.on === "click" && laterSeen(step)) return; // 나중에 보기(세션)
-    if (activeStep !== null) return;          // 한 순간에 하나만
     activeStep = step;
     claimed.current = true;
     setVisible(true);
@@ -87,7 +104,7 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
     // 완료로 기록하고(다음 방문 재노출 0) 카드는 이번 화면에서 계속 보여 준다.
     if (complete.on === "arrive") finishStep("complete");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, ctx?.hasTrip, ctx?.hasMoment]);
+  }, [step, ctx?.hasTrip, ctx?.hasMoment, lockTick]);
   useEffect(() => () => { if (claimed.current) release(step); }, [step]);
 
   // ── V2 §2 — 실제 대상 CTA 에 화살표·pulse. 못 찾으면 장식 없이 카드만. ──
@@ -137,17 +154,25 @@ export default function JourneyCoach({ step, className = "", complete = { on: "a
   }, [visible, sel]);
 
   // V2 §1·§3 — click 형: 실제 CTA 를 눌러야 완료(capture — CTA 동작은 그대로).
+  // V3 — 카드를 "알겠어요"로 닫아 둔 상태(later)여도, 이 화면에 있는 동안
+  // 실제 CTA 를 누르면 그 행동이 곧 완료다(닫았다고 행동이 무효가 되지 않는다).
+  const doneRef = useRef(false);
   useEffect(() => {
-    if (!visible || complete.on !== "click") return;
+    if (complete.on !== "click") return;
+    if (readGuideState().seen[step]) return;
     const onClick = (e: MouseEvent) => {
+      if (doneRef.current) return;
       const el = e.target as Element | null;
       try {
-        if (el?.closest?.(complete.selector)) { setVisible(false); release(step); finishStep("complete"); }
+        if (el?.closest?.(complete.selector)) {
+          doneRef.current = true;
+          setVisible(false); release(step); finishStep("complete");
+        }
       } catch { /* 잘못된 selector 는 무시 */ }
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
-  }, [visible, complete, step, finishStep]);
+  }, [complete, step, finishStep]);
 
   // §4 — 닫기(알겠어요/Escape): 완료가 아니다. click 형은 세션 동안만 숨긴다.
   const closeOnly = useCallback(() => {
