@@ -1,0 +1,37 @@
+{
+ "artifact": "candidate-corrections-jeonju-776-identity-v1",
+ "task": "JEONJU-776-PLACE-IDENTITY-CORRECTION-V1",
+ "generated_at": "2026-09-24",
+ "status": "RECORD — Production city_spots row 는 본 TASK 의 조건부 SQL 로 교정. Final artifact(jeonju-final-service-catalog-v1)와 intake 산출물(five-city-core-*-v1.jsonl 의 OFF-17463 행)은 Data Track 소유라 무수정 — 재수집·재반입 시 이 기록을 기준으로 아래 오염값을 차단할 것",
+ "target_id": 776,
+ "canonical_id": "OFF-17463",
+ "city": "jeonju",
+ "classification": "AMBIGUOUS_MATCH_CROSS_ENTITY_CONTAMINATION",
+ "contamination": {
+  "address": "전북특별자치도 전주시 완산구 향교길 11 — 인접(≈77m) 게스트하우스 '다나하루'의 주소",
+  "image_url": "https://tong.visitkorea.or.kr/cms/resource/42/2570942_image2_1.jpg — 숙박 계열 KTO 이미지(침대). display_eligible:false·rights KTO_TYPE_UNKNOWN 이었음에도 과거 DB 반영, 2026-09-24 릴리스에서 NULL 처리 완료",
+  "deferred_phone": "063-222-1000 — 전주시청 대표번호(114 등재). city_spots 에 phone 컬럼이 없어 DB 미반영 상태였음. 재반입 금지",
+  "note_lodging_kto_content": "다나하루의 KTO content_id 는 2571938 계열(숙박) — 침대 이미지 리소스와 같은 숙박 축"
+ },
+ "verified_identity": {
+  "name_ko": "메르밀진미집 본점",
+  "category": "restaurant (메밀 소바·콩국수, 3대째)",
+  "address_road": "전북특별자치도 전주시 완산구 전주천동로 94",
+  "address_jibun": "전주시 완산구 전동 237",
+  "phone": "063-288-4020 (컬럼 부재로 DB 미저장 — content_meta.phone 신설 시 이 값 사용)",
+  "official_site_candidate": "http://webmereumil.web4in1.com/ (자체 사이트 — official_url 은 전주 공식 게시물 유지)",
+  "coordinates": [35.8111035497203, 127.150406207841],
+  "coordinate_verdict": "기존 DB 좌표가 실제 음식점 위치 — 트리플(35.8111326,127.1504397)·식신(35.811129,127.150421)과 ±4m 일치라 무수정. 다나하루 좌표(≈35.8117868,127.1502589)와 ≈77m 이격",
+  "sources": [
+   "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000038&menuCd=DOM_000000104003007000&dataSid=17463 (공식 게시물 — 주소 명시)",
+   "https://www.diningcode.com/profile.php?rid=OvHRmpx22D2D (주소·지번·전화)",
+   "https://triple.guide/restaurants/a99710c6-8a4f-430a-855b-041c53674a95 (좌표·전화)",
+   "https://www.siksinhot.com/P/255863 (좌표·전화)"
+  ]
+ },
+ "data_track_followups": [
+  "jeonju-final-service-catalog-v1 의 OFF-17463 매칭에서 address/phone 결합원을 재판정(AMBIGUOUS 매칭이 인접 숙소·시청 값을 끌어온 경로 식별)",
+  "display_eligible:false 이미지가 DB image_url 로 반영된 반입 단계 재점검",
+  "동일 배치에서 restaurant category × 숙박(KTO 32형) 원천이 결합된 다른 행 존재 여부는 이번 제한 검사에서 직접 연결 0건 — 전수 재검증은 별도 결정"
+ ]
+}
