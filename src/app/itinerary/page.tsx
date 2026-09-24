@@ -3160,7 +3160,10 @@ function ItineraryResult() {
                       비공개면 진입점 자체가 없다(서버도 재검증). */}
                   {itinId && isOwner && isPublic && (
                     <div className="max-w-xl mx-auto px-4 mt-4">
-                      <StoryRecommendSubmit itineraryId={itinId} />
+                      <StoryRecommendSubmit
+                        itineraryId={itinId}
+                        onOpenRecords={() => { setManageOpen(true); requestAnimationFrame(() => document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" })); }}
+                      />
                     </div>
                   )}
                   <StoryJournal

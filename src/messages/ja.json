@@ -1607,6 +1607,8 @@
     "submitNoticeNotCopied": "他のユーザーが「+ マイトリップ」を押しても、写真・メモ・Story本文・タイトルはコピーされません。",
     "submitNoticeCopied": "コピーされるのは場所と順番だけです。",
     "submitErrorTooFew": "場所が3か所以上の日程のみ提出できます。",
-    "submitErrorDup": "このStoryはすでに提出されています。"
+    "submitErrorDup": "このStoryはすでに提出されています。",
+    "submitErrorNoMoment": "公開ストーリーに入れた記録がまだありません。記録管理で公開する記録を選んでください。",
+    "submitOpenRecords": "記録管理を開く"
   }
 }

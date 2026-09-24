@@ -1607,6 +1607,8 @@
     "submitNoticeNotCopied": "다른 사용자가 '+ 내 여행'을 눌러도 사진·메모·Story 본문·제목은 복사되지 않아요.",
     "submitNoticeCopied": "일정의 장소와 순서만 복사돼요.",
     "submitErrorTooFew": "장소가 3곳 이상인 일정만 제출할 수 있어요.",
-    "submitErrorDup": "이미 제출된 Story예요."
+    "submitErrorDup": "이미 제출된 Story예요.",
+    "submitErrorNoMoment": "공개 스토리에 넣은 기록이 아직 없어요. 기록 관리에서 공개할 기록을 골라 주세요.",
+    "submitOpenRecords": "기록 관리 열기"
   }
 }

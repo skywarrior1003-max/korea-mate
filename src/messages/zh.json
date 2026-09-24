@@ -1607,6 +1607,8 @@
     "submitNoticeNotCopied": "其他用户点击「+ 我的行程」时，不会复制你的照片、备注、Story正文和标题。",
     "submitNoticeCopied": "只会复制行程中的地点及其顺序。",
     "submitErrorTooFew": "仅可提交包含3个及以上地点的行程。",
-    "submitErrorDup": "该Story已提交过。"
+    "submitErrorDup": "该Story已提交过。",
+    "submitErrorNoMoment": "你的公开Story里还没有任何记录。请在记录管理中选择要公开的记录。",
+    "submitOpenRecords": "打开记录管理"
   }
 }

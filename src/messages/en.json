@@ -1607,6 +1607,8 @@
     "submitNoticeNotCopied": "When someone taps “+ My Trip”, your photos, notes, Story text and title are never copied.",
     "submitNoticeCopied": "Only the places and their order are copied.",
     "submitErrorTooFew": "Only itineraries with at least 3 places can be submitted.",
-    "submitErrorDup": "This Story has already been submitted."
+    "submitErrorDup": "This Story has already been submitted.",
+    "submitErrorNoMoment": "No records are in your public Story yet. Pick records to make public in Manage records.",
+    "submitOpenRecords": "Open Manage records"
   }
 }

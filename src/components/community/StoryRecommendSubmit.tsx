@@ -13,7 +13,12 @@ import { getDeviceId } from "@/lib/deviceId";
 
 type Status = "pending" | "approved" | "rejected" | "withdrawn" | null;
 
-export default function StoryRecommendSubmit({ itineraryId }: { itineraryId: string }) {
+export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
+  itineraryId: string;
+  /** "기록 관리" 접이를 펼치고 그 자리로 스크롤 — 공개 moment 가 없어 제출이
+      막혔을 때의 안내 동선(모바일 포함). */
+  onOpenRecords?: () => void;
+}) {
   const t = useTranslations("community");
   const [status, setStatus] = useState<Status | "unknown">("unknown");
   const [busy, setBusy] = useState(false);
@@ -115,11 +120,21 @@ export default function StoryRecommendSubmit({ itineraryId }: { itineraryId: str
         </>
       )}
       {error && (
-        <p className="mt-1.5 text-[12px] text-red-600" role="alert">
-          {error === "too_few_places" ? t("submitErrorTooFew")
-            : error === "already_submitted" ? t("submitErrorDup")
-            : t("feedbackError")}
-        </p>
+        <div className="mt-1.5" role="alert">
+          <p className="text-[12px] text-red-600">
+            {error === "too_few_places" ? t("submitErrorTooFew")
+              : error === "already_submitted" ? t("submitErrorDup")
+              : error === "no_public_moment" ? t("submitErrorNoMoment")
+              : t("feedbackError")}
+          </p>
+          {/* V2 §3 — 공개 moment 가 없으면 만드는 곳으로 바로 안내한다 */}
+          {error === "no_public_moment" && onOpenRecords && (
+            <button type="button" onClick={onOpenRecords}
+              className="gkm-focus mt-1 text-[12.5px] font-semibold underline underline-offset-2 text-sub min-h-11">
+              {t("submitOpenRecords")}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
