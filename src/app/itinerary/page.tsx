@@ -44,6 +44,7 @@ import PartnerOfferRow from "@/components/PartnerOfferRow";
 import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import StoryHeroEditor from "@/components/StoryHeroEditor";
+import StoryRecommendSubmit from "@/components/community/StoryRecommendSubmit";
 import MapErrorBoundary from "@/components/MapErrorBoundary";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
@@ -3154,6 +3155,13 @@ function ItineraryResult() {
                       storyTone={storyHeroTone}
                       onSaved={v => { setStoryHeroTitle(v.title); setStoryHeroIntro(v.intro); setStoryHeroTone(v.tone); }}
                     />
+                  )}
+                  {/* COMMUNITY-V1 §5-2 — 공개 Story 만 지역 추천에 제출할 수 있다.
+                      비공개면 진입점 자체가 없다(서버도 재검증). */}
+                  {itinId && isOwner && isPublic && (
+                    <div className="max-w-xl mx-auto px-4 mt-4">
+                      <StoryRecommendSubmit itineraryId={itinId} />
+                    </div>
                   )}
                   <StoryJournal
                     id="owner-story-journal"

@@ -1,7 +1,9 @@
 // Cloudflare Pages Function: POST /api/itinerary/copy
 //
 // 공유된 일정을 요청 device의 소유로 복사한다.
-// copy_of에 원본 id를 기록하며, days/trip_title 등 컨텐츠는 그대로 복제.
+// copy_of 에 원본 id 를 기록한다. 복사되는 것은 **일정 구조**뿐이다 —
+// 도시·일수·날짜별 장소·순서·좌표. 원작자의 제목·원 여행 날짜·메모·사진·
+// trip_moments·Story 본문은 복사하지 않는다(COMMUNITY-V1 §2).
 //
 // SECURITY CONTRACT:
 // - x-device-id header 필수 (UUID 형식 검증)
@@ -16,9 +18,10 @@ import {
   readBodyWithLimit,
   isValidUUID,
   str,
-  optStr,
 } from "../../../src/lib/itinerary-validate";
-import { buildCopiedItinerary } from "../../../src/lib/share/copied-itinerary";
+import {
+  buildCopiedItinerary, copiedTripTitle, copiedDateRange, normalizeCopyLocale,
+} from "../../../src/lib/share/copied-itinerary";
 import { resolveCitySlug } from "../../../src/data/cities/identity";
 import { isModerationHidden } from "../../../src/lib/moderation/story-moderation-core";
 
@@ -66,7 +69,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // 원본 일정 조회 (service_role — device_id 포함 전체 행 접근)
   const { data: source, error: fetchErr } = await admin
     .from("itineraries")
-    .select("city, start_date, end_date, travelers, travel_style, days, trip_title, moderation_hidden_at")
+    .select("city, start_date, end_date, travelers, travel_style, days, moderation_hidden_at")
     .eq("id", shareId)
     .eq("is_public", true)
     .maybeSingle();
@@ -85,14 +88,20 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const newId = crypto.randomUUID();
 
   const now = new Date().toISOString();
+  // COMMUNITY-V1 §2: 원작자의 제목과 원 여행 날짜는 복사 금지 항목이다.
+  //  · 제목 — 받은 사람 locale 의 중립 제목(도시 기반). body.locale 은 4locale
+  //    enum 으로만 해석하고 그 밖의 값은 en 이다.
+  //  · 날짜 — 일수만 유지하고 복사 시점(KST 오늘)부터 다시 편다.
+  const locale = normalizeCopyLocale(body.locale);
+  const range  = copiedDateRange(source.start_date, source.end_date);
   const row: Record<string, unknown> = {
     id:           newId,
     device_id:    deviceId,
     // 지원 5도시는 canonical slug 로 저장한다(표시명·과거 라벨 원본 → slug).
     // 해석 불가 값은 원본 유지 — 임의 도시로 바꾸지 않는다(TRIP-CITY-CONTRACT-FINAL-CLOSEOUT-V1).
     city:         resolveCitySlug(source.city) ?? source.city,
-    start_date:   source.start_date,
-    end_date:     source.end_date,
+    start_date:   range.start_date,
+    end_date:     range.end_date,
     travelers:    source.travelers,
     travel_style: source.travel_style,
     // 원본을 그대로 옮기지 않는다. 원작성자가 자기 My Place 에 적어 둔 메모와
@@ -102,7 +111,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     copy_of:      shareId,
     copied_at:    now,
     updated_at:   now,
-    trip_title:   optStr(source.trip_title, 300) ?? "Copied Trip",
+    trip_title:   copiedTripTitle(str(source.city ?? "", 64) || null, locale),
   };
 
   const { error: insertErr } = await admin.from("itineraries").insert(row);

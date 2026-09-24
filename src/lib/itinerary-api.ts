@@ -134,14 +134,17 @@ export async function apiFetchPopularTrips(
 // Throws Error("TRIP_NOT_AVAILABLE") on 404, Error("COPY_FAILED") on all other failures.
 export async function apiCopyItinerary(
   shareId: string,
-  deviceId: string
+  deviceId: string,
+  // COMMUNITY-V1 §2 — 복사본 제목은 받는 사람 locale 의 중립 제목으로 서버가
+  // 만든다. 생략 시 서버 기본(en). 기존 호출부는 그대로 동작한다.
+  locale?: string
 ): Promise<{ id: string }> {
   let res: Response | null = null;
   try {
     res = await fetch("/api/itinerary/copy", {
       method: "POST",
       headers: deviceHeader(deviceId),
-      body: JSON.stringify({ share_id: shareId }),
+      body: JSON.stringify({ share_id: shareId, ...(locale ? { locale } : {}) }),
     });
   } catch {
     throw new Error("COPY_FAILED");

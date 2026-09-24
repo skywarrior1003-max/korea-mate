@@ -21,6 +21,7 @@ import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
 import ContentLikeButton from "@/components/ContentLikeButton";
+import ReactionBar from "@/components/community/ReactionBar";
 import ShareIcon from "@/components/ui/ShareIcon";
 import StoryCover from "@/components/story/StoryCover";
 import StoryNavHide from "@/components/story/StoryNavHide";
@@ -285,7 +286,7 @@ export default function SharedTripPage() {
     setIsCopying(true);
     setCopyError(null);
     try {
-      const { id } = await apiCopyItinerary(shareId, getDeviceId());
+      const { id } = await apiCopyItinerary(shareId, getDeviceId(), locale);
       router.push(`/itinerary?id=${encodeURIComponent(id)}`);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
@@ -485,9 +486,11 @@ export default function SharedTripPage() {
 
         {/* 맨 아래 조용한 신고 자리. 보낸다고 아무것도 가려지지 않는다 —
             사람이 보고 정한다. */}
-        {/* Story 표면의 Like — 같은 여행 id, 다른 표면(story) */}
+        {/* Story 표면의 반응 — 같은 여행 id, 다른 표면(story).
+            COMMUNITY-V1: 좋아요/싫어요 상호 배타 + 싫어요 후 비공개 피드백 sheet.
+            싫어요 수는 어디에도 표시되지 않는다. */}
         <div className="px-4 pt-1 pb-3 flex justify-center">
-          <ContentLikeButton targetType="story" targetKey={trip.id} />
+          <ReactionBar targetType="story" targetKey={trip.id} />
         </div>
 
         <StoryReport shareId={trip.id} deviceId={getDeviceId()} />

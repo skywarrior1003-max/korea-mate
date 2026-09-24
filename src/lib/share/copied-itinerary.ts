@@ -78,7 +78,9 @@ export function copiedDay(raw: unknown): Record<string, unknown> {
     places: Array.isArray(d.places) ? d.places.map(copiedPlace) : [],
   };
   put(out, "dayNumber", typeof d.dayNumber === "number" ? d.dayNumber : undefined);
-  put(out, "date",      typeof d.date === "string" ? d.date : undefined);
+  // COMMUNITY-V1 §2: 원 여행 **날짜**는 복사하지 않는다. 받은 사람의 일정은
+  // 복사 시점 기준으로 다시 시작하고(아래 copiedDateRange), day 안의 원 날짜
+  // 라벨이 남으면 새 날짜와 어긋난 채 노출된다. dayNumber 만으로 충분하다.
   return out;
 }
 
@@ -102,4 +104,58 @@ export function buildCopiedItinerary(raw: unknown): unknown {
     }
   }
   return [];
+}
+
+// ── 복사본의 제목·날짜 (COMMUNITY-RECOMMENDATION-…-V1 §2) ────────────────────
+//
+// 원작자의 Story 제목과 원 여행 날짜는 복사 금지 항목이다.
+//  · 제목: 도시명 기반의 중립 제목을 받은 사람의 locale 로 만든다. 사용자는
+//    자기 일정 화면에서 언제든 바꿀 수 있다(기존 제목 편집 기능 그대로).
+//  · 날짜: 일수(구조)만 유지하고 시작일을 복사 시점(KST 오늘)으로 옮긴다.
+
+import { CITY_DISPLAY_NAMES, resolveCitySlug, type CityLocale } from "../../data/cities/identity.ts";
+
+const COPY_LOCALES: readonly CityLocale[] = ["ko", "en", "ja", "zh"];
+
+export function normalizeCopyLocale(v: unknown): CityLocale {
+  return typeof v === "string" && (COPY_LOCALES as readonly string[]).includes(v)
+    ? (v as CityLocale) : "en";
+}
+
+/** 도시명 기반 중립 제목 — 원 제목을 쓰지 않는다. 도시 해석 실패 시 locale 일반형. */
+export function copiedTripTitle(city: string | null | undefined, locale: CityLocale): string {
+  const slug = resolveCitySlug(city ?? null);
+  const name = slug ? CITY_DISPLAY_NAMES[slug][locale] : null;
+  switch (locale) {
+    case "ko": return name ? `${name} 여행` : "나의 여행";
+    case "ja": return name ? `${name}の旅` : "私の旅";
+    case "zh": return name ? `${name}之旅` : "我的旅行";
+    default:   return name ? `${name} Trip` : "My Trip";
+  }
+}
+
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** KST 기준 오늘 — 한국 여행 서비스라 사용자 체감 날짜와 맞춘다 */
+export function kstToday(now: number = Date.now()): string {
+  return new Date(now + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+/**
+ * 원 기간의 **길이만** 유지해 복사 시점부터 다시 편다.
+ * 원 날짜가 깨져 있으면 1일짜리로 시작한다 — 원 값을 흘려보내지 않는다.
+ */
+export function copiedDateRange(
+  sourceStart: unknown, sourceEnd: unknown, now: number = Date.now(),
+): { start_date: string; end_date: string } {
+  const start = kstToday(now);
+  let durationDays = 0;
+  if (typeof sourceStart === "string" && typeof sourceEnd === "string"
+      && DATE_RE.test(sourceStart) && DATE_RE.test(sourceEnd)) {
+    const diff = Math.round((Date.parse(sourceEnd) - Date.parse(sourceStart)) / DAY_MS);
+    if (Number.isFinite(diff) && diff >= 0 && diff <= 60) durationDays = diff;
+  }
+  const end = new Date(Date.parse(start) + durationDays * DAY_MS).toISOString().slice(0, 10);
+  return { start_date: start, end_date: end };
 }
