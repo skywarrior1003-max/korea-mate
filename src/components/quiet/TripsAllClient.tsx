@@ -16,13 +16,30 @@ import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { tripCoverSpot, tripKindLabelKey } from "./TripCourseClient";
 
+/** COMMUNITY-V1 §6 — 승인 Story 순위(서버 정렬 그대로·점수·싫어요 수는 오지 않는다) */
+interface CommunityTripCard {
+  id: string; title: string | null; days: number; stops: number;
+  likeCount: number; copyCount: number;
+}
+
 export default function TripsAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
   const city = quietCity(slug);
   const [spots, setSpots] = useState<CitySpot[] | null>(null);
+  const [commTrips, setCommTrips] = useState<CommunityTripCard[]>([]);
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  useEffect(() => {
+    let alive = true;
+    fetch(`/api/recommendations/${slug}?limit=50`)
+      .then(r => (r.ok ? r.json() : null))
+      .then((j: { stories?: CommunityTripCard[] } | null) => {
+        if (alive && j && Array.isArray(j.stories)) setCommTrips(j.stories);
+      })
+      .catch(() => { /* seed 만 표시 */ });
+    return () => { alive = false; };
+  }, [slug]);
 
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
@@ -38,6 +55,36 @@ export default function TripsAllClient({ slug }: { slug: string }) {
         </Link>
         <h1 className="mt-1 text-[22px] md:text-[26px] font-semibold text-[var(--qh-ink)]">{t("tripsIn", { city: cityLabel })}</h1>
 
+        {/* 여행자 추천 코스 — 승인된 공개 Story, 서버 점수순(§3-4). 좋아요·복사
+            수만 공개하고 싫어요·score 는 응답 자체에 없다. */}
+        {commTrips.length > 0 && (
+          <>
+            <h2 className="mt-5 text-[11px] font-black tracking-[.14em] uppercase" style={{ color: "var(--qh-blue)" }}>
+              {t("communityTravelerCourses")}
+            </h2>
+            <ul className="mt-1">
+              {commTrips.map(ct => (
+                <li key={ct.id}>
+                  <Link href={`/shared/?id=${ct.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">
+                        {ct.title ?? t("communityTravelerCourse")}
+                      </span>
+                      <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
+                        <span className="font-semibold" style={{ color: "var(--qh-blue)" }}>{t("communityTravelerCourse")}</span>
+                        {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
+                        {ct.likeCount > 0 ? ` · ♥ ${ct.likeCount}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <h2 className="mt-6 text-[11px] font-black tracking-[.14em] uppercase" style={{ color: "var(--qh-faint)" }}>
+              {t("communityEditorialCourses")}
+            </h2>
+          </>
+        )}
         {trips.length === 0 ? (
           <p className="mt-5 text-[13px] text-[var(--qh-faint2)]">{t("tripsSoon", { city: cityLabel })}</p>
         ) : (

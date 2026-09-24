@@ -23,6 +23,13 @@ import PartnerOfferRow from "@/components/PartnerOfferRow";
 import { getRecommendedTrips, recommendedSpotIds, hubEditorialSpotOrder, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
+import SuggestPlaceSheet from "@/components/community/SuggestPlaceSheet";
+
+/** 승인된 여행자 Story 코스 카드(서버 순위 그대로 — 클라이언트 재정렬 없음) */
+interface CommunityTripCard {
+  id: string; title: string | null; days: number; stops: number;
+  likeCount: number; copyCount: number;
+}
 
 // City Hub Fresh 토큰(디자인 SSOT discovery-explore-final-v1 §1) — Home 의 warm
 // --qh-* 를 바꾸지 않고 Hub 화면에만 cool 값을 입힌다.
@@ -47,8 +54,21 @@ export default function CityHubClient({ slug }: { slug: string }) {
   // 현재날씨 `☀️ 26°C` — 보고 있는 도시 기준(GPS 아님). 실패는 조용히 숨긴다
   // (가짜 온도 금지 — POST-ACCEPTANCE-CITY-HUB-WEATHER-V1).
   const [nowWx, setNowWx] = useState<{ temp: number; icon: string | null } | null>(null);
+  // COMMUNITY-V1 §6 — 승인된 공개 Story 코스. 실패는 조용히 seed 만 남는다.
+  const [commTrips, setCommTrips] = useState<CommunityTripCard[]>([]);
+  const [suggestOpen, setSuggestOpen] = useState(false);
 
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  useEffect(() => {
+    let alive = true;
+    fetch(`/api/recommendations/${slug}?limit=3`)
+      .then(r => (r.ok ? r.json() : null))
+      .then((j: { stories?: CommunityTripCard[] } | null) => {
+        if (alive && j && Array.isArray(j.stories)) setCommTrips(j.stories.slice(0, 3));
+      })
+      .catch(() => { /* seed 유지 */ });
+    return () => { alive = false; };
+  }, [slug]);
   useEffect(() => {
     let alive = true;
     setNowWx(null);
@@ -67,7 +87,9 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const cityLabel = tForm(city.labelKey);
   const desc = tLinks(`desc${slug.charAt(0).toUpperCase()}${slug.slice(1)}`);
   const v = cityHubHeroVisual(slug);
-  const trips = getRecommendedTrips(slug).slice(0, 3);
+  const seedTrips = getRecommendedTrips(slug);
+  // 승인 Story 가 먼저, 빈 슬롯은 기존 seed 로 — 총 카드 수는 그대로 3(§6).
+  const trips = seedTrips.slice(0, Math.max(0, 3 - commTrips.length));
   const events = getCityEvents(slug);
   const essentials = getTravelEssentials(slug);
   // 추천 장소: 공식 recommended_now 의 canonical 연결(순서 보존)을 먼저,
@@ -149,16 +171,34 @@ export default function CityHubClient({ slug }: { slug: string }) {
         {/* ── Recommended Trips ── */}
         <div className="mt-6 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedTrips")}</h2>
-          {trips.length > 0 && (
+          {(trips.length > 0 || commTrips.length > 0) && (
             <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
             </Link>
           )}
         </div>
-        {trips.length === 0 ? (
+        {trips.length === 0 && commTrips.length === 0 ? (
           <p className="mt-3 text-[13px] text-[#7C8FB0]">{t("tripsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-1">
+            {/* 승인된 여행자 Story 코스 — 공개 Story 그 자체가 콘텐츠다(복제 없음).
+                작은 출처 라벨로 editorial seed 와 오인되지 않게 한다(§6). */}
+            {commTrips.map(ct => (
+              <li key={`comm-${ct.id}`}>
+                <Link href={`/shared/?id=${ct.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[15px] font-semibold text-[#16233B] truncate">
+                      {ct.title ?? t("communityTravelerCourse")}
+                    </span>
+                    <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
+                      <span className="font-semibold" style={{ color: HUB.eyebrow }}>{t("communityTravelerCourse")}</span>
+                      {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
+                      {ct.likeCount > 0 ? ` · ♥ ${ct.likeCount}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
             {trips.map(trip => (
               <li key={trip.id}>
                 {/* 각 행은 해당 코스의 상세(코스 흐름·stop·장소 진입)로 간다 */}
@@ -204,6 +244,23 @@ export default function CityHubClient({ slug }: { slug: string }) {
             <div key={i} className="aspect-square rounded-[4px] bg-[#E5EDF7] animate-pulse" />
           ))}
         </div>
+
+        {/* COMMUNITY-V1 §5-1 — 조용한 장소 제안 진입점(추천 장소 영역의 자연스러운
+            연장). 유일한 진입점이다 — 중복 배치 금지. */}
+        <button
+          type="button"
+          onClick={() => setSuggestOpen(true)}
+          className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium gkm-focus min-h-11"
+          style={{ color: "var(--qh-blue)" }}
+        >
+          {t("suggestPlaceCta")} <span aria-hidden>→</span>
+        </button>
+        <SuggestPlaceSheet
+          open={suggestOpen}
+          onClose={() => setSuggestOpen(false)}
+          citySlug={slug}
+          cityLabel={cityLabel}
+        />
 
         {/* ── What's happening — 대표 2~3개 · 카드 → 내부 상세(외부 직행 없음) ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">

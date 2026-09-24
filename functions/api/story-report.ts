@@ -26,6 +26,7 @@ import {
   parseStoryReport, STORY_TARGET_TYPE,
 } from "../../src/lib/moderation/story-moderation-core";
 import { isPubliclyVisible } from "../../src/lib/moderation/story-moderation-core";
+import { STORY_FEEDBACK_REASONS } from "../../src/lib/community/community-core";
 import { reporterKey } from "../../src/lib/reports/place-report-core";
 import { readBodyWithLimit, MAX_SMALL_BODY_BYTES, UUID_RE } from "../../src/lib/itinerary-validate";
 
@@ -82,7 +83,8 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   const read = await readBodyWithLimit(ctx.request, MAX_SMALL_BODY_BYTES);
   if (!read.ok) return json({ error: read.error }, read.status);
 
-  const parsed = parseStoryReport(read.body);
+  // 068: 싫어요 후 피드백 시트의 커뮤니티 사유를 추가로 허용한다(054 목록 불변).
+  const parsed = parseStoryReport(read.body, STORY_FEEDBACK_REASONS);
   if (!parsed.ok) return json({ error: parsed.error }, parsed.status);
 
   // 신고자 구분용. 없어도 접수는 받는다 — 로그인 없는 방문자가 신고 주체다.

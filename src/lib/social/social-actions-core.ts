@@ -150,13 +150,13 @@ export function validateShareEventRequest(
 
 // ── 가명 키 — 행동(prefix)·대상별 SHA-256. raw device 저장 금지 ──────────
 export function actorKeyInput(
-  prefix: "like" | "save" | "share", deviceId: string, targetType: string, targetKey: string,
+  prefix: "like" | "save" | "share" | "dislike", deviceId: string, targetType: string, targetKey: string,
 ): string {
   return `${deviceId.trim().toLowerCase()}|${prefix}:${targetType}:${targetKey.trim()}`;
 }
 
 export async function actorKey(
-  prefix: "like" | "save" | "share", deviceId: string, targetType: string, targetKey: string,
+  prefix: "like" | "save" | "share" | "dislike", deviceId: string, targetType: string, targetKey: string,
 ): Promise<string> {
   const data = new TextEncoder().encode(actorKeyInput(prefix, deviceId, targetType, targetKey));
   const digest = await crypto.subtle.digest("SHA-256", data);

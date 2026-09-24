@@ -46,7 +46,7 @@ export function isStoryReportCategory(v: unknown): v is StoryReportCategory {
 }
 
 export type ParsedStoryReport =
-  | { ok: true;  targetKey: string; category: StoryReportCategory; note: string | null }
+  | { ok: true;  targetKey: string; category: StoryReportCategory | (string & {}); note: string | null }
   | { ok: false; status: 400; error: string };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -58,7 +58,12 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  * id 도 받지 않는다 — 이번 신고 단위는 Story 하나 전체다. 관리자가 공개된
  * Story 를 열어 보면 되므로 내부 식별자를 신고에 담을 이유가 없다.
  */
-export function parseStoryReport(body: unknown): ParsedStoryReport {
+export function parseStoryReport(
+  body: unknown,
+  // 068 additive — 커뮤니티 싫어요 시트의 추가 사유. 기본값 [] 이라 기존
+  // 호출·테스트의 동작은 그대로다(054 목록은 이 파일이 계속 소유한다).
+  extraCategories: readonly string[] = [],
+): ParsedStoryReport {
   if (body === null || typeof body !== "object") {
     return { ok: false, status: 400, error: "Invalid body" };
   }
@@ -67,7 +72,8 @@ export function parseStoryReport(body: unknown): ParsedStoryReport {
   const targetKey = typeof b.target_key === "string" ? b.target_key.trim() : "";
   if (!UUID.test(targetKey)) return { ok: false, status: 400, error: "Invalid target" };
 
-  if (!isStoryReportCategory(b.category)) {
+  const extraOk = typeof b.category === "string" && extraCategories.includes(b.category);
+  if (!extraOk && !isStoryReportCategory(b.category)) {
     return { ok: false, status: 400, error: "Invalid category" };
   }
 
@@ -81,7 +87,7 @@ export function parseStoryReport(body: unknown): ParsedStoryReport {
     return { ok: false, status: 400, error: "Note too long" };
   }
 
-  return { ok: true, targetKey, category: b.category, note: note === "" ? null : note };
+  return { ok: true, targetKey, category: b.category as string, note: note === "" ? null : note };
 }
 
 // ── 공개 자격 ────────────────────────────────────────────────────────────────

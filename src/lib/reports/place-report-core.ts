@@ -199,7 +199,7 @@ export type ReportErrorCode =
 export interface ValidReport {
   target_type: ReportTargetType;
   target_key:  string;
-  category:    ReportCategory;
+  category:    ReportCategory | (string & {});
   note:        string | null;
   device_id:   string;
 }
@@ -210,6 +210,8 @@ export interface ValidReport {
  */
 export function validateReportRequest(
   body: unknown, deviceId: unknown,
+  // 068 additive — 커뮤니티 싫어요 시트의 추가 사유. 기본 [] = 기존 동작 불변.
+  extraCategories: readonly string[] = [],
 ): { ok: true; value: ValidReport } | { ok: false; error: ReportErrorCode } {
   if (!isValidDeviceId(deviceId)) return { ok: false, error: "invalid_device" };
   if (typeof body !== "object" || body === null) return { ok: false, error: "invalid_target" };
@@ -217,7 +219,8 @@ export function validateReportRequest(
 
   if (!isValidTargetType(b.target_type)) return { ok: false, error: "invalid_target" };
   if (!isValidTargetKey(b.target_type, b.target_key)) return { ok: false, error: "invalid_target" };
-  if (!isValidCategory(b.category)) return { ok: false, error: "invalid_category" };
+  const extraOk = typeof b.category === "string" && extraCategories.includes(b.category);
+  if (!extraOk && !isValidCategory(b.category)) return { ok: false, error: "invalid_category" };
 
   const note = normalizeNote(b.note);
   if (!note.ok) return { ok: false, error: note.error };
@@ -227,7 +230,7 @@ export function validateReportRequest(
     value: {
       target_type: b.target_type,
       target_key:  String(b.target_key).trim(),
-      category:    b.category,
+      category:    b.category as string,
       note:        note.note,
       device_id:   String(deviceId).trim(),
     },

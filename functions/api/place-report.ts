@@ -12,6 +12,7 @@
 
 import { loadReportRows, notifyReportMilestones, getOrOpenIncident } from "../_lib/admin-notify";
 import { reportNotificationCandidates } from "../../src/lib/notifications/admin-notification-core";
+import { PLACE_FEEDBACK_REASONS } from "../../src/lib/community/community-core";
 import {
   validateReportRequest, reporterKey, acceptedResponse,
   INITIAL_REPORT_STATUS, DUPLICATE_WINDOW_MS, RATE_MAX, RATE_WINDOW_MS,
@@ -88,7 +89,8 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   try { body = JSON.parse(raw); } catch { return fail("invalid_target", 400); }
 
   const deviceId = (request.headers.get("x-device-id") ?? "").trim();
-  const parsed = validateReportRequest(body, deviceId);
+  // 068: 싫어요 후 피드백 시트의 커뮤니티 사유를 추가로 허용한다(042 목록 불변).
+  const parsed = validateReportRequest(body, deviceId, PLACE_FEEDBACK_REASONS);
   if (!parsed.ok) {
     log({ status: "rejected", error: parsed.error });
     return fail(parsed.error, parsed.error === "invalid_device" ? 401 : 400);

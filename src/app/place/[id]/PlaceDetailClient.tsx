@@ -25,7 +25,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
-import PlaceLikeButton from "@/components/PlaceLikeButton";
+import ReactionBar from "@/components/community/ReactionBar";
 import ShareIcon from "@/components/ui/ShareIcon";
 import { reportShareEvent } from "@/lib/social/signals";
 import { togglePlaceSaved, sharePlace } from "@/lib/place-actions/place-actions-core";
@@ -530,8 +530,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 </span>
               </button>
 
-              {/* Heart = Like — 공개 반응. Saved(위)와 다른 축이고 서로를 바꾸지 않는다 */}
-              <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
+              {/* Heart = Like — 공개 반응. Saved(위)와 다른 축이고 서로를 바꾸지 않는다.
+                  COMMUNITY-V1: 싫어요 추가(상호 배타) — 싫어요 직후 비공개 피드백
+                  sheet 로 '사진이 잘못됐어요' 등 문제를 조용히 받는다. */}
+              <ReactionBar targetType="city_spot" targetKey={String(spot.id)} />
 
               {keepAsMyPlaceAction}
 
