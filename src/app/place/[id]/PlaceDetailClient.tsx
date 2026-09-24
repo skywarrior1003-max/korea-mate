@@ -462,6 +462,13 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   Saved 바로 옆에 서면 같은 종류의 행동으로 보인다. */}
               <div className="mt-4 md:hidden">{keepAsMyPlaceAction}</div>
 
+              {/* COMMUNITY-V1 — 모바일 반응. 데스크톱은 사이드바 ReactionBar 가
+                  담당한다(hidden md:block). sticky 바가 아닌 본문 배치인 이유는
+                  위 keepAsMyPlace 와 같다 — Save 와 같은 종류로 보이면 안 된다. */}
+              <div className="mt-3 md:hidden">
+                <ReactionBar targetType="city_spot" targetKey={String(spot.id)} />
+              </div>
+
               {text.description && (
                 <section className="mt-6">
                   <h2 className="text-[11px] font-black text-faint uppercase tracking-[0.14em] mb-2">{tD("whyVisit")}</h2>
