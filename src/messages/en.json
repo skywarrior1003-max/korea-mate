@@ -1468,7 +1468,8 @@
     "communityTravelerCourses": "Traveler-recommended courses",
     "communityEditorialCourses": "Official courses",
     "communityCopied": "Copied by {count}",
-    "suggestPlaceCta": "Suggest a place"
+    "suggestPlaceCta": "Suggest a place",
+    "communityLiked": "{count} likes"
   },
   "aiWrite": {
     "label": "AI writing direction",

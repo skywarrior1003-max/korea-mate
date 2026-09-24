@@ -193,7 +193,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
                       <span className="font-semibold" style={{ color: HUB.eyebrow }}>{t("communityTravelerCourse")}</span>
                       {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
-                      {ct.likeCount > 0 ? ` · ♥ ${ct.likeCount}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
+                      {ct.likeCount > 0 ? ` · ${t("communityLiked", { count: ct.likeCount })}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
                     </span>
                   </span>
                 </Link>

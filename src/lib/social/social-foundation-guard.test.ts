@@ -28,7 +28,9 @@ test("B: Bookmark Save 회귀 없음 — 중앙 toggle 재사용·Saved 목적 �
 });
 
 test("C/D/E: Like 표면 — Place 마운트·Trip/Story 는 content-like·공개 검증", () => {
-  assert.ok(read("src", "app", "place", "[id]", "PlaceDetailClient.tsx").includes('<PlaceLikeButton targetType="city_spot"'));
+  // COMMUNITY-V1: Place 의 Like 는 ReactionBar(city_spot) 가 담당한다 — 저장소는
+  // 종전과 같은 place_likes(서버 content-reaction 이 같은 liker_key 파생을 쓴다).
+  assert.ok(read("src", "app", "place", "[id]", "PlaceDetailClient.tsx").includes('<ReactionBar targetType="city_spot"'));
   const shared = read("src", "app", "shared", "page.tsx");
   assert.ok(shared.includes('targetType="itinerary"') && shared.includes('targetType="story"'));
   const api = read("functions", "api", "content-like.ts");
@@ -107,7 +109,7 @@ test("CLOSEOUT C/D: Story·공유 여행 상세에 Bookmark Save 가 없다", ()
 
 test("CLOSEOUT E: Place Detail = Like + Save + Share", () => {
   const s = read("src", "app", "place", "[id]", "PlaceDetailClient.tsx");
-  assert.ok(s.includes("<PlaceLikeButton"), "Like");
+  assert.ok(s.includes('<ReactionBar targetType="city_spot"'), "Like(ReactionBar)");
   assert.ok(s.includes("togglePlaceSaved"), "Save");
   assert.ok(s.includes("handleShare") && s.includes("reportShareEvent"), "Share");
 });

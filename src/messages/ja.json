@@ -1468,7 +1468,8 @@
     "communityTravelerCourses": "旅行者おすすめコース",
     "communityEditorialCourses": "公式おすすめコース",
     "communityCopied": "{count}人が保存",
-    "suggestPlaceCta": "おすすめの場所を提案"
+    "suggestPlaceCta": "おすすめの場所を提案",
+    "communityLiked": "いいね {count}"
   },
   "aiWrite": {
     "label": "AIの文章スタイル",

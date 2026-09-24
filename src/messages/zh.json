@@ -1468,7 +1468,8 @@
     "communityTravelerCourses": "旅行者推荐路线",
     "communityEditorialCourses": "官方推荐路线",
     "communityCopied": "{count}人已收藏",
-    "suggestPlaceCta": "推荐一个地方"
+    "suggestPlaceCta": "推荐一个地方",
+    "communityLiked": "{count} 个赞"
   },
   "aiWrite": {
     "label": "AI 文字风格",

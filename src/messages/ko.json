@@ -1468,7 +1468,8 @@
     "communityTravelerCourses": "여행자 추천 코스",
     "communityEditorialCourses": "공식 추천 코스",
     "communityCopied": "{count}명이 담음",
-    "suggestPlaceCta": "추천 장소 제안하기"
+    "suggestPlaceCta": "추천 장소 제안하기",
+    "communityLiked": "좋아요 {count}"
   },
   "aiWrite": {
     "label": "AI 글 방향",
