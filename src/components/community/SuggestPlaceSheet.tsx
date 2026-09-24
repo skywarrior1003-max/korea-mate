@@ -14,18 +14,25 @@ interface Props {
   onClose: () => void;
   citySlug: string;
   cityLabel: string;
+  /**
+   * RANKING-UX-HOTFIX §5 — My Places·본인 Story user_spot 진입점의 prefill.
+   * 제출 전 사용자가 이 값들을 화면에서 그대로 보고 명시적으로 확인·수정한다.
+   * 개인 메모·사진은 여기로 오지 않는다(sheet 는 텍스트 필드만 받는다).
+   */
+  initial?: { name?: string; category?: string; address?: string; link?: string };
 }
 
-export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel }: Props) {
+export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, initial }: Props) {
   const t = useTranslations("community");
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState<string>("restaurant");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState(initial?.name ?? "");
+  const [category, setCategory] = useState<string>(
+    initial?.category && (CATEGORIES as readonly string[]).includes(initial.category) ? initial.category : "restaurant");
+  const [address, setAddress] = useState(initial?.address ?? "");
   const [reason, setReason] = useState("");
-  const [link, setLink] = useState("");
+  const [link, setLink] = useState(initial?.link ?? "");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<false | "generic" | "duplicate">(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // reset 은 닫기 핸들러에서 — 입력값(name 등)은 재열람 편의를 위해 남긴다.
@@ -70,9 +77,9 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel }
           official_link: link.trim() || null,
         }),
       });
-      if (!res.ok) { setError(true); return; }
+      if (!res.ok) { setError(res.status === 409 ? "duplicate" : "generic"); return; }
       setDone(true);
-    } catch { setError(true); }
+    } catch { setError("generic"); }
     finally { setBusy(false); }
   }
 
@@ -113,7 +120,11 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel }
               <input value={link} onChange={e => setLink(e.target.value.slice(0, 300))}
                 placeholder={t("suggestLink")} aria-label={t("suggestLink")} className={field} inputMode="url" />
             </div>
-            {error && <p className="mt-2 text-[12.5px] text-red-600" role="alert">{t("feedbackError")}</p>}
+            {error && (
+              <p className="mt-2 text-[12.5px] text-red-600" role="alert">
+                {error === "duplicate" ? t("suggestDuplicate") : t("feedbackError")}
+              </p>
+            )}
             <div className="mt-4 flex gap-2">
               <button type="button" onClick={handleClose}
                 className="gkm-focus flex-1 min-h-11 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600">

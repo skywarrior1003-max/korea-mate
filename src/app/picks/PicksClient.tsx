@@ -12,6 +12,7 @@
 
 import { Suspense, useCallback, useEffect, useState } from "react";
 import JourneyCoach from "@/components/JourneyCoach";
+import MyPlaceSuggestAction from "@/components/community/MyPlaceSuggestAction";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -1161,7 +1162,7 @@ function PicksContent() {
                                 </div>
                                 <Badge kind="editorial" className="shrink-0 inline-flex items-center gap-1"><GlyphIcon kind="lock" size={11} />{t("privateLabel")}</Badge>
                               </div>
-                              <div className="flex items-center gap-1 mt-3">
+                              <div className="flex items-center gap-1 mt-3 flex-wrap">
                                 <button
                                   onClick={() => addToSelected(ev, "mine")}
                                   disabled={already}
@@ -1169,6 +1170,16 @@ function PicksContent() {
                                 >
                                   {already ? `✓ ${t("inSelected")}` : `+ ${t("addToSelected")}`}
                                 </button>
+                                {/* RANKING-UX-HOTFIX §5-1 — 추천 장소 제안의 기본 진입점.
+                                    자격(도시·이름·위치·비연결) 미달이면 컴포넌트가 스스로 숨는다. */}
+                                <MyPlaceSuggestAction
+                                  spot={{
+                                    name: display, city: s.city ?? null, address: s.address ?? null,
+                                    lat: s.lat ?? null, lng: s.lng ?? null, category: s.category ?? null,
+                                    relatedCitySpotId: s.related_city_spot_id ?? null,
+                                  }}
+                                  ctaKey="myPlaceSuggestCta"
+                                />
                                 <span className="flex-1" />
                                 <Button variant="icon" aria-label={`${t("edit")}: ${display}`} onClick={() => openEdit(s)}><GlyphIcon kind="pencil" size={18} /></Button>
                                 {confirmId === s.id ? (

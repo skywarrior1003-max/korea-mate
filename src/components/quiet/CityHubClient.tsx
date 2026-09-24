@@ -23,13 +23,19 @@ import PartnerOfferRow from "@/components/PartnerOfferRow";
 import { getRecommendedTrips, recommendedSpotIds, hubEditorialSpotOrder, tripDisplayTitle, getCityEvents, getTravelEssentials, essentialSummary } from "@/data/regional/regional-recommendations";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { pickEssentialsPreview } from "@/lib/quiet/essentials-preview-core";
-import SuggestPlaceSheet from "@/components/community/SuggestPlaceSheet";
+// RANKING-UX-HOTFIX §4 — 장소 제안 진입점은 Hub 에서 제거됐다(소비 화면 유지).
+// 제안은 Picks > My Places 와 본인 Story 의 user_spot 문맥에서만 연다(§5·§10-2).
 
 /** 승인된 여행자 Story 코스 카드(서버 순위 그대로 — 클라이언트 재정렬 없음) */
 interface CommunityTripCard {
   id: string; title: string | null; days: number; stops: number;
   likeCount: number; copyCount: number;
+  /** 대표 이미지 — 공개 moment 프록시 경로. 없으면 이미지 없이 성립 */
+  cover?: string | null;
 }
+
+/** 서버 순위의 추천 장소 행(§6-1) — 순위는 배열 순서다. 점수·싫어요는 오지 않는다 */
+interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number }
 
 // City Hub Fresh 토큰(디자인 SSOT discovery-explore-final-v1 §1) — Home 의 warm
 // --qh-* 를 바꾸지 않고 Hub 화면에만 cool 값을 입힌다.
@@ -56,15 +62,22 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const [nowWx, setNowWx] = useState<{ temp: number; icon: string | null } | null>(null);
   // COMMUNITY-V1 §6 — 승인된 공개 Story 코스. 실패는 조용히 seed 만 남는다.
   const [commTrips, setCommTrips] = useState<CommunityTripCard[]>([]);
-  const [suggestOpen, setSuggestOpen] = useState(false);
+  // RANKING-UX-HOTFIX §6-1 — 서버 순위의 추천 장소(반응이 실제 있는 장소만 온다).
+  const [commPlaces, setCommPlaces] = useState<CommunityPlaceRank[]>([]);
+  // 응답을 받은 도시를 기억한다 — "준비 중" 안내는 그 도시의 응답 후에만(§8).
+  // 효과 안 동기 setState 금지 규칙에 맞춰 리셋 대신 slug 대조로 판정한다.
+  const [commLoadedSlug, setCommLoadedSlug] = useState<string | null>(null);
 
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
   useEffect(() => {
     let alive = true;
     fetch(`/api/recommendations/${slug}?limit=3`)
       .then(r => (r.ok ? r.json() : null))
-      .then((j: { stories?: CommunityTripCard[] } | null) => {
-        if (alive && j && Array.isArray(j.stories)) setCommTrips(j.stories.slice(0, 3));
+      .then((j: { stories?: CommunityTripCard[]; places?: CommunityPlaceRank[] } | null) => {
+        if (!alive) return;
+        if (j && Array.isArray(j.stories)) setCommTrips(j.stories.slice(0, 3));
+        if (j && Array.isArray(j.places)) setCommPlaces(j.places.slice(0, 3));
+        if (j) setCommLoadedSlug(slug);
       })
       .catch(() => { /* seed 유지 */ });
     return () => { alive = false; };
@@ -96,12 +109,25 @@ export default function CityHubClient({ slug }: { slug: string }) {
   // 부족분만 카탈로그에서 보충 — 임의 매칭·가짜 인기 없음.
   // editorial order(Owner 지정 도시)가 있으면 그 순서를 그대로 쓴다 — 자동 순서가 덮지 않는다.
   const officialIds = hubEditorialSpotOrder(slug) ?? recommendedSpotIds(slug);
+  // RANKING-UX-HOTFIX §6-1·§6-3 — 실제 반응이 있는 장소는 서버 순위 그대로 앞에
+  // 세우고(순위 badge + 좋아요·활용 수), 빈 슬롯만 기존 official/editorial seed 로
+  // 채운다. seed 채움 카드에는 순위 숫자를 붙이지 않는다 — 무신호 장소에 허위
+  // 인기를 만들지 않는다(공식 코스의 무번호 원칙과 동일).
   const places = (() => {
     if (!spots) return [];
     const byId = new Map(spots.map(s => [Number(s.id), s]));
-    const official = officialIds.map(id => byId.get(id)).filter((s): s is CitySpot => Boolean(s));
-    const fill = pickRecommended(spots.filter(s => !official.includes(s)), 3);
-    return [...official, ...fill].slice(0, 3);
+    const ranked = commPlaces
+      .map((r, i) => ({ spot: byId.get(r.id), rank: i + 1, likeCount: r.likeCount, usageCount: r.usageCount }))
+      .filter((x): x is { spot: CitySpot; rank: number; likeCount: number; usageCount: number } => Boolean(x.spot))
+      .slice(0, 3);
+    const taken = new Set(ranked.map(x => Number(x.spot.id)));
+    const official = officialIds.map(id => byId.get(id))
+      .filter((s): s is CitySpot => Boolean(s) && !taken.has(Number(s!.id)));
+    const fill = pickRecommended(spots.filter(s => !taken.has(Number(s.id)) && !official.includes(s)), 3);
+    const seedFill = [...official, ...fill]
+      .slice(0, Math.max(0, 3 - ranked.length))
+      .map(s => ({ spot: s, rank: null as number | null, likeCount: 0, usageCount: 0 }));
+    return [...ranked, ...seedFill];
   })();
 
   return (
@@ -183,17 +209,26 @@ export default function CityHubClient({ slug }: { slug: string }) {
           <ul className="mt-1">
             {/* 승인된 여행자 Story 코스 — 공개 Story 그 자체가 콘텐츠다(복제 없음).
                 작은 출처 라벨로 editorial seed 와 오인되지 않게 한다(§6). */}
-            {commTrips.map(ct => (
+            {commTrips.map((ct, i) => (
               <li key={`comm-${ct.id}`}>
-                <Link href={`/shared/?id=${ct.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
+                <Link href={`/shared/?id=${ct.id}`} className="flex items-center gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
+                  {/* §7-2 대표 이미지 — 공개 moment 프록시. 없으면 이미지 없이 성립 */}
+                  {ct.cover && (
+                    <span className="relative flex-none w-[56px] h-[56px] rounded-[4px] overflow-hidden bg-[#E5EDF7]">
+                      <Image src={ct.cover} alt="" fill sizes="56px" className="object-cover" unoptimized />
+                    </span>
+                  )}
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-[#16233B] truncate">
                       {ct.title ?? t("communityTravelerCourse")}
                     </span>
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
+                      {/* §7-2 조용한 순위 — 여행자 Story 에만 붙는다(공식 코스 무번호) */}
+                      <span className="font-bold" style={{ color: HUB.eyebrow }}>{t("communityRank", { n: i + 1 })}</span>
+                      {" · "}
                       <span className="font-semibold" style={{ color: HUB.eyebrow }}>{t("communityTravelerCourse")}</span>
                       {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
-                      {ct.likeCount > 0 ? ` · ${t("communityLiked", { count: ct.likeCount })}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
+                      {` · ${t("communityLiked", { count: ct.likeCount })} · ${t("communityCopied", { count: ct.copyCount })}`}
                     </span>
                   </span>
                 </Link>
@@ -206,15 +241,21 @@ export default function CityHubClient({ slug }: { slug: string }) {
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-[#16233B] truncate">{tripDisplayTitle(trip, locale)}</span>
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
-                      {trip.days && Number.isInteger(trip.days) && trip.days >= 1
-                        ? `${trip.days}d${trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}`
-                        : trip.stops.length > 0 ? `${t("officialCourse")} · ${trip.stops.length} stops` : t("officialCourse")}
+                      {/* §8 — 여행자 Story 와 섞일 수 있으므로 공식 라벨을 항상 앞에.
+                          숫자 순위는 붙이지 않는다(허위 인기 금지). */}
+                      {t("officialCourse")}
+                      {trip.days && Number.isInteger(trip.days) && trip.days >= 1 ? ` · ${trip.days}d` : ""}
+                      {trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}
                     </span>
                   </span>
                 </Link>
               </li>
             ))}
           </ul>
+        )}
+        {/* §8 — 여행자 Story 0개일 때만의 조용한 안내(공식 3개는 그대로 유지) */}
+        {commLoadedSlug === slug && commTrips.length === 0 && trips.length > 0 && (
+          <p className="mt-2 text-[12px]" style={{ color: HUB.faint }}>{t("communityStoriesSoon")}</p>
         )}
 
         {/* ── Recommended Places ── */}
@@ -225,42 +266,39 @@ export default function CityHubClient({ slug }: { slug: string }) {
           </Link>
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3">
-          {places.map(s => (
-            <Link key={s.id} href={`/place/${s.id}/`} className="min-w-0 gkm-focus rounded-[4px]">
+          {places.map(p => (
+            <Link key={p.spot.id} href={`/place/${p.spot.id}/`} className="min-w-0 gkm-focus rounded-[4px]">
               <span className="relative block aspect-square rounded-[4px] overflow-hidden bg-[#E5EDF7]">
-                {s.image ? (
-                  <Image src={s.image} alt="" fill sizes="33vw" className="object-cover" unoptimized={s.image.startsWith("http")} />
+                {p.spot.image ? (
+                  <Image src={p.spot.image} alt="" fill sizes="33vw" className="object-cover" unoptimized={p.spot.image.startsWith("http")} />
                 ) : (
                   <img src="/images/placeholder-spot.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
                 )}
+                {/* §6-1 조용한 순위 badge — 서버 순위가 실재하는 카드에만 */}
+                {p.rank !== null && (
+                  <span className="absolute top-1 left-1 rounded-[3px] px-1.5 py-0.5 text-[10.5px] font-bold"
+                    style={{ background: "rgba(255,255,255,.92)", color: HUB.eyebrow }}>
+                    {t("communityRank", { n: p.rank })}
+                  </span>
+                )}
               </span>
               <span className="block mt-1.5 text-[13px] font-medium text-[#16233B] truncate">
-                {displayPlaceName(s.name, s.nameL10n, locale)}
+                {displayPlaceName(p.spot.name, p.spot.nameL10n, locale)}
               </span>
-              <span className="block text-[11.5px] text-[#7C8FB0] truncate">{s.district ?? ""}</span>
+              {/* 순위 카드 = 좋아요·활용 수(내부 score·싫어요 없음) / seed 카드 = 기존 메타 */}
+              {p.rank !== null ? (
+                <span className="block text-[11.5px] text-[#7C8FB0] truncate">
+                  {t("communityLiked", { count: p.likeCount })} · {t("communityUsage", { count: p.usageCount })}
+                </span>
+              ) : (
+                <span className="block text-[11.5px] text-[#7C8FB0] truncate">{p.spot.district ?? ""}</span>
+              )}
             </Link>
           ))}
           {spots === null && [0, 1, 2].map(i => (
             <div key={i} className="aspect-square rounded-[4px] bg-[#E5EDF7] animate-pulse" />
           ))}
         </div>
-
-        {/* COMMUNITY-V1 §5-1 — 조용한 장소 제안 진입점(추천 장소 영역의 자연스러운
-            연장). 유일한 진입점이다 — 중복 배치 금지. */}
-        <button
-          type="button"
-          onClick={() => setSuggestOpen(true)}
-          className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium gkm-focus min-h-11"
-          style={{ color: "var(--qh-blue)" }}
-        >
-          {t("suggestPlaceCta")} <span aria-hidden>→</span>
-        </button>
-        <SuggestPlaceSheet
-          open={suggestOpen}
-          onClose={() => setSuggestOpen(false)}
-          citySlug={slug}
-          cityLabel={cityLabel}
-        />
 
         {/* ── What's happening — 대표 2~3개 · 카드 → 내부 상세(외부 직행 없음) ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">

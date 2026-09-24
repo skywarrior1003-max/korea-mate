@@ -18,17 +18,32 @@ import { toEventItem } from "@/components/ExploreCity";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { recommendedSpotIds } from "@/data/regional/regional-recommendations";
 
+/** 서버 순위 행(§6-2) — 순위는 배열 순서. 점수·싫어요는 응답에 없다 */
+interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number }
+
 export default function PlacesAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
   const city = quietCity(slug);
   const [spots, setSpots] = useState<CitySpot[] | null>(null);
+  const [commPlaces, setCommPlaces] = useState<CommunityPlaceRank[]>([]);
   const [savedTick, setSavedTick] = useState(0);
   const [toast, setToast] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  // RANKING-UX-HOTFIX §6-2 — 도시 전체 순위(서버 정렬 그대로·재정렬 없음).
+  useEffect(() => {
+    let alive = true;
+    fetch(`/api/recommendations/${slug}?limit=50`)
+      .then(r => (r.ok ? r.json() : null))
+      .then((j: { places?: CommunityPlaceRank[] } | null) => {
+        if (alive && j && Array.isArray(j.places)) setCommPlaces(j.places);
+      })
+      .catch(() => { /* 순위 없이 기존 목록 유지 */ });
+    return () => { alive = false; };
+  }, [slug]);
   useEffect(() => {
     const bump = () => setSavedTick(n => n + 1);
     window.addEventListener(FAVORITES_EVENT, bump);
@@ -40,13 +55,24 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
   const cityLabel = tForm(city.labelKey);
   // 공식 recommended_now 의 canonical 연결 장소를 먼저, 그 뒤 카탈로그(사진 우선).
   // 배지·순위 숫자는 붙이지 않는다 — 정렬 provenance 만.
+  // §6-2 — 서버 순위가 실재하는 장소가 1위부터 연속 순위로 먼저 온다(도시 전체
+  // 순위). 무신호 장소는 기존 순서(official → 사진 → 무사진) 그대로 뒤에, 순위
+  // 숫자 없이 — 허위 인기를 만들지 않는다(§6-3). 이 화면에는 필터가 없으므로
+  // "필터 후 순위 의미" 문제는 발생하지 않는다.
   const list = (() => {
     const all = spots ?? [];
-    const ids = recommendedSpotIds(slug);
     const byId = new Map(all.map(s => [Number(s.id), s]));
-    const official = ids.map(id => byId.get(id)).filter((s): s is NonNullable<typeof s> => Boolean(s));
-    const rest = all.filter(s => !official.includes(s));
-    return [...official, ...rest.filter(s => s.image), ...rest.filter(s => !s.image)];
+    const ranked = commPlaces
+      .map((r, i) => ({ spot: byId.get(r.id), rank: i + 1 as number | null, likeCount: r.likeCount, usageCount: r.usageCount }))
+      .filter((x): x is { spot: CitySpot; rank: number; likeCount: number; usageCount: number } => Boolean(x.spot));
+    const taken = new Set(ranked.map(x => Number(x.spot.id)));
+    const ids = recommendedSpotIds(slug);
+    const official = ids.map(id => byId.get(id))
+      .filter((s): s is NonNullable<typeof s> => Boolean(s) && !taken.has(Number(s!.id)));
+    const rest = all.filter(s => !official.includes(s) && !taken.has(Number(s.id)));
+    const unranked = [...official, ...rest.filter(s => s.image), ...rest.filter(s => !s.image)]
+      .map(s => ({ spot: s, rank: null as number | null, likeCount: 0, usageCount: 0 }));
+    return [...ranked, ...unranked];
   })();
 
   const onSave = (e: React.MouseEvent, spot: CitySpot) => {
@@ -75,7 +101,7 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
           {spots === null && [0, 1, 2, 3].map(i => (
             <div key={i} className="aspect-square rounded-[4px] bg-[var(--qh-line)] animate-pulse" />
           ))}
-          {list.map(s => {
+          {list.map(({ spot: s, rank, likeCount, usageCount }) => {
             const item = toEventItem(s);
             const saved = isFavorited(item.id, item.sourceKey);
             return (
@@ -88,11 +114,22 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
                     ) : (
                       <img src="/images/placeholder-spot.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
                     )}
+                    {/* §6-2 조용한 순위 badge — 서버 순위가 실재하는 카드에만 */}
+                    {rank !== null && (
+                      <span className="absolute top-1 left-1 rounded-[3px] px-1.5 py-0.5 text-[10.5px] font-bold"
+                        style={{ background: "rgba(255,255,255,.92)", color: "var(--qh-blue)" }}>
+                        {t("communityRank", { n: rank })}
+                      </span>
+                    )}
                   </span>
                   <span className="block mt-1.5 text-[14px] font-medium text-[var(--qh-ink)] truncate">
                     {displayPlaceName(s.name, s.nameL10n, locale)}
                   </span>
-                  <span className="block text-[12px] text-[var(--qh-faint2)] truncate">{s.district ?? s.category}</span>
+                  <span className="block text-[12px] text-[var(--qh-faint2)] truncate">
+                    {rank !== null
+                      ? `${t("communityLiked", { count: likeCount })} · ${t("communityUsage", { count: usageCount })}`
+                      : (s.district ?? s.category)}
+                  </span>
                 </Link>
                 <button
                   type="button"

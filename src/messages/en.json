@@ -1469,6 +1469,10 @@
     "communityEditorialCourses": "Official courses",
     "communityCopied": "Copied by {count}",
     "suggestPlaceCta": "Suggest a place",
+    "communityRank": "#{n}",
+    "communityUsage": "Saved & added {count}",
+    "communityStoriesSoon": "Traveler-recommended courses are coming soon.",
+    "visitOrder": "Stop order",
     "communityLiked": "{count} likes"
   },
   "aiWrite": {
@@ -1587,6 +1591,10 @@
     "suggestSend": "Send suggestion",
     "suggestThanks": "Suggestion received",
     "suggestThanksBody": "We review verifiable places first. Thank you!",
+    "suggestDuplicate": "You already have a pending suggestion for this place.",
+    "myPlaceSuggestCta": "Suggest this place",
+    "storySpotSuggestCta": "Suggest this place for recommendations",
+    "storySpotsSuggestTitle": "My places in this trip",
     "cat_restaurant": "Restaurant",
     "cat_cafe": "Cafe",
     "cat_attraction": "Attraction",

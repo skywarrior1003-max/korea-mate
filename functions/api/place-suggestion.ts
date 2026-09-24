@@ -52,6 +52,21 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   // raw device_id 는 저장하지 않는다 — 도시 축 해시만(같은 사람의 도배 식별용).
   const suggesterKey = await actorKey("share", deviceId.toLowerCase(), "place_suggestion", v.city);
 
+  // RANKING-UX-HOTFIX §5-1 — 같은 사람(도시 축 해시)의 같은 장소명이 이미 검토
+  // 대기(pending)면 접수하지 않는다. 이름 비교는 공백·대소문자 무시.
+  const dupRes = await fetch(
+    `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/place_suggestions` +
+    `?suggester_key=eq.${suggesterKey}&status=eq.pending&select=name&limit=100`,
+    { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
+  if (dupRes.ok) {
+    const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
+    const pending = (await dupRes.json().catch(() => [])) as { name?: unknown }[];
+    if (Array.isArray(pending) &&
+        pending.some(p => typeof p.name === "string" && norm(p.name) === norm(v.name))) {
+      return fail("duplicate_pending", 409);
+    }
+  }
+
   const res = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/place_suggestions`, {
     method: "POST",
     headers: {

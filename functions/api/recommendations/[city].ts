@@ -20,6 +20,57 @@ import {
   compareRanked, type RankInput,
 } from "../../../src/lib/community/community-core";
 import { resolveCitySlug } from "../../../src/data/cities/identity";
+// 대표 이미지(§7-2) — 공개 Story 와 완전히 같은 동의 필터·순서·ref 규칙을 쓴다.
+// 새 규칙을 만들지 않는다: isMemoryPublic(동의 판본)·orderMemories·photoRef 재사용.
+import {
+  isMemoryPublic, orderMemories, photoRef, type InternalMemoryRow, type InternalPhotoRow,
+} from "../../../src/lib/share/public-memory";
+import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../src/lib/trip-moments/public-consent-core";
+import { mergePhotoSet, type ChildPhotoRow } from "../../../src/lib/trip-moments/photo-set";
+
+/** cover 계산 상한 — 카드에 이미지가 필요한 상위권만(비용 방어) */
+const COVER_MAX_STORIES = 12;
+
+/**
+ * 각 Story 의 대표 이미지 ref (`/img/memory/:id/:ref` 로 조립할 값).
+ * 공개 moment(현재 동의 판본) 중 소유자 화면과 같은 순서에서 사진이 있는 첫 장.
+ * 없으면 없는 대로 둔다 — 이미지를 지어내지 않는다.
+ */
+async function coverRefByStory(env: Env, storyIds: string[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (storyIds.length === 0) return out;
+  const inList = storyIds.map(encodeURIComponent).join(",");
+  const moments = rows(await rest(env,
+    `trip_moments?itinerary_id=in.(${inList})&is_public=eq.true` +
+    `&select=moment_id,itinerary_id,day_number,captured_at,storage_path,is_public,public_consent_at,public_consent_version&limit=2000`));
+  const eligible = (moments as unknown as (InternalMemoryRow & { itinerary_id: string })[])
+    .filter(r => isMemoryPublic(r, MEMORY_PUBLIC_CONSENT_VERSION));
+  if (eligible.length === 0) return out;
+  const momentIds = eligible.map(r => r.moment_id).map(encodeURIComponent).join(",");
+  const photos = rows(await rest(env,
+    `trip_moment_photos?moment_id=in.(${momentIds})&select=photo_id,moment_id,storage_path,sort_index,created_at&limit=4000`));
+  const childByMoment = new Map<string, ChildPhotoRow[]>();
+  for (const p of photos as unknown as InternalPhotoRow[]) {
+    const list = childByMoment.get(p.moment_id) ?? [];
+    list.push(p as ChildPhotoRow);
+    childByMoment.set(p.moment_id, list);
+  }
+  const byStory = new Map<string, (InternalMemoryRow & { itinerary_id: string })[]>();
+  for (const r of eligible) {
+    const list = byStory.get(r.itinerary_id) ?? [];
+    list.push(r);
+    byStory.set(r.itinerary_id, list);
+  }
+  for (const [storyId, list] of byStory) {
+    for (const r of orderMemories(list)) {
+      const paths = mergePhotoSet(r.storage_path, childByMoment.get(r.moment_id) ?? []).map(s => s.path);
+      if (paths.length === 0) continue;
+      out.set(storyId, await photoRef(storyId, r.moment_id, paths[0]));
+      break;
+    }
+  }
+  return out;
+}
 
 interface Env { NEXT_PUBLIC_SUPABASE_URL?: string; SUPABASE_SERVICE_ROLE_KEY?: string }
 type Ctx = { request: Request; env: Env; params: { city: string } };
@@ -109,7 +160,9 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
           trip: t,
         };
       }).sort(compareRanked);
-      stories = ranked.slice(0, limit).map(r => {
+      const top = ranked.slice(0, limit);
+      const covers = await coverRefByStory(env, top.slice(0, COVER_MAX_STORIES).map(r => r.id));
+      stories = top.map(r => {
         const days = r.trip.days;
         const dayList = Array.isArray(days) ? days
           : (days && typeof days === "object" && Array.isArray((days as { scheduled?: unknown[] }).scheduled))
@@ -119,6 +172,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
           const p = (d && typeof d === "object") ? (d as { places?: unknown }).places : null;
           if (Array.isArray(p)) stops += p.length;
         }
+        const ref = covers.get(r.id);
         return {
           id: r.id,
           title: typeof r.trip.trip_title === "string" ? r.trip.trip_title : null,
@@ -127,6 +181,8 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
           likeCount: r.likes,
           copyCount: r.usage,
           approvedAt: r.approvedAt,
+          // 되돌릴 수 없는 ref 로 조립한 공개 프록시 경로 — 저장 경로·moment id 비노출
+          cover: ref ? `/img/memory/${r.id}/${ref}` : null,
         };
       });
     }

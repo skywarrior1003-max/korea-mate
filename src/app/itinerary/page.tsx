@@ -45,6 +45,7 @@ import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import StoryHeroEditor from "@/components/StoryHeroEditor";
 import StoryRecommendSubmit from "@/components/community/StoryRecommendSubmit";
+import StoryUserSpotSuggest from "@/components/community/StoryUserSpotSuggest";
 import MapErrorBoundary from "@/components/MapErrorBoundary";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
@@ -3165,6 +3166,11 @@ function ItineraryResult() {
                         onOpenRecords={() => { setManageOpen(true); requestAnimationFrame(() => document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" })); }}
                       />
                     </div>
+                  )}
+                  {/* RANKING-UX-HOTFIX §5-2 — 본인 Story 에 실제 포함된 user_spot 의
+                      보조 제안 진입점. 소유자·공개 Story 문맥에서만, 자격 없으면 무표시. */}
+                  {itinId && isOwner && isPublic && (
+                    <StoryUserSpotSuggest days={days} tripCity={city} />
                   )}
                   <StoryJournal
                     id="owner-story-journal"

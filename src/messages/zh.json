@@ -1469,6 +1469,10 @@
     "communityEditorialCourses": "官方推荐路线",
     "communityCopied": "{count}人已收藏",
     "suggestPlaceCta": "推荐一个地方",
+    "communityRank": "第{n}名",
+    "communityUsage": "收藏·行程使用 {count}",
+    "communityStoriesSoon": "旅行者推荐路线即将上线。",
+    "visitOrder": "游览顺序",
     "communityLiked": "{count} 个赞"
   },
   "aiWrite": {
@@ -1587,6 +1591,10 @@
     "suggestSend": "发送推荐",
     "suggestThanks": "已收到你的推荐",
     "suggestThanksBody": "我们会从可核实的地点开始逐一审核。谢谢！",
+    "suggestDuplicate": "该地点的建议已在审核中。",
+    "myPlaceSuggestCta": "提议为推荐地点",
+    "storySpotSuggestCta": "将此地点提议为推荐地点",
+    "storySpotsSuggestTitle": "本次旅行中的我的地点",
     "cat_restaurant": "餐厅",
     "cat_cafe": "咖啡馆",
     "cat_attraction": "景点",

@@ -1469,6 +1469,10 @@
     "communityEditorialCourses": "公式おすすめコース",
     "communityCopied": "{count}人が保存",
     "suggestPlaceCta": "おすすめの場所を提案",
+    "communityRank": "{n}位",
+    "communityUsage": "保存・旅行活用 {count}",
+    "communityStoriesSoon": "旅行者おすすめコースは準備中です。",
+    "visitOrder": "訪問順",
     "communityLiked": "いいね {count}"
   },
   "aiWrite": {
@@ -1587,6 +1591,10 @@
     "suggestSend": "提案を送る",
     "suggestThanks": "提案を受け付けました",
     "suggestThanksBody": "確認できる場所から順に検討します。ありがとうございます。",
+    "suggestDuplicate": "この場所の提案はすでに確認待ちです。",
+    "myPlaceSuggestCta": "おすすめの場所として提案",
+    "storySpotSuggestCta": "この場所をおすすめとして提案",
+    "storySpotsSuggestTitle": "この旅の自分の場所",
     "cat_restaurant": "レストラン",
     "cat_cafe": "カフェ",
     "cat_attraction": "観光スポット",

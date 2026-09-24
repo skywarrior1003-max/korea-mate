@@ -10,6 +10,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
@@ -20,6 +21,8 @@ import { tripCoverSpot, tripKindLabelKey } from "./TripCourseClient";
 interface CommunityTripCard {
   id: string; title: string | null; days: number; stops: number;
   likeCount: number; copyCount: number;
+  /** 대표 이미지 — 공개 moment 프록시 경로(§7-2). 없으면 이미지 없이 성립 */
+  cover?: string | null;
 }
 
 export default function TripsAllClient({ slug }: { slug: string }) {
@@ -63,27 +66,40 @@ export default function TripsAllClient({ slug }: { slug: string }) {
               {t("communityTravelerCourses")}
             </h2>
             <ul className="mt-1">
-              {commTrips.map(ct => (
+              {commTrips.map((ct, i) => (
                 <li key={ct.id}>
-                  <Link href={`/shared/?id=${ct.id}`} className="flex items-start gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                  <Link href={`/shared/?id=${ct.id}`} className="flex items-center gap-3.5 py-3 border-b border-[var(--qh-line)] gkm-focus min-h-11">
+                    {ct.cover && (
+                      <span className="relative flex-none w-[56px] h-[56px] rounded-[4px] overflow-hidden bg-[var(--qh-line)]">
+                        <Image src={ct.cover} alt="" fill sizes="56px" className="object-cover" unoptimized />
+                      </span>
+                    )}
                     <span className="flex-1 min-w-0">
                       <span className="block text-[15px] font-semibold text-[var(--qh-ink)] truncate">
                         {ct.title ?? t("communityTravelerCourse")}
                       </span>
                       <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
+                        {/* §7-3 — 1위부터 연속된 도시 전체 순위. 좋아요·복사 수는 항상
+                            보여 순위의 근거를 만든다(싫어요·score 는 응답에 없다). */}
+                        <span className="font-bold" style={{ color: "var(--qh-blue)" }}>{t("communityRank", { n: i + 1 })}</span>
+                        {" · "}
                         <span className="font-semibold" style={{ color: "var(--qh-blue)" }}>{t("communityTravelerCourse")}</span>
                         {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
-                        {ct.likeCount > 0 ? ` · ${t("communityLiked", { count: ct.likeCount })}` : ""}{ct.copyCount > 0 ? ` · ${t("communityCopied", { count: ct.copyCount })}` : ""}
+                        {` · ${t("communityLiked", { count: ct.likeCount })} · ${t("communityCopied", { count: ct.copyCount })}`}
                       </span>
                     </span>
                   </Link>
                 </li>
               ))}
             </ul>
-            <h2 className="mt-6 text-[11px] font-black tracking-[.14em] uppercase" style={{ color: "var(--qh-faint)" }}>
-              {t("communityEditorialCourses")}
-            </h2>
           </>
+        )}
+        {/* §7-3 — 공식 코스는 별도 섹션·라벨. 여행자 순위 숫자와 절대 섞지 않는다.
+            여행자 Story 유무와 무관하게 섹션 라벨을 명시한다. */}
+        {trips.length > 0 && (
+          <h2 className="mt-6 text-[11px] font-black tracking-[.14em] uppercase" style={{ color: "var(--qh-faint)" }}>
+            {t("communityEditorialCourses")}
+          </h2>
         )}
         {trips.length === 0 ? (
           <p className="mt-5 text-[13px] text-[var(--qh-faint2)]">{t("tripsSoon", { city: cityLabel })}</p>

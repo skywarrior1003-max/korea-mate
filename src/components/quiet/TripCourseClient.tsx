@@ -123,7 +123,13 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
 
         {/* ── 코스 흐름 — 세로 타임라인, Story 의 이동감 문법 ── */}
         {trip.stops.length > 0 ? (
-          <ol className="mt-5">
+          <>
+          {/* RANKING-UX-HOTFIX §9 — 숫자는 방문 순서다. 인기 순위로 오해되지
+              않도록 작은 설명을 붙인다(번호 자체는 기존 그대로). */}
+          <p className="mt-5 text-[11px] font-semibold tracking-[.08em] uppercase" style={{ color: "var(--qh-faint)" }}>
+            {t("visitOrder")}
+          </p>
+          <ol className="mt-2" aria-label={t("visitOrder")}>
             {trip.stops.map((stop, i) => {
               const spot = stop.spotId !== null ? byId.get(stop.spotId) : undefined;
               const name = spot
@@ -171,6 +177,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
               );
             })}
           </ol>
+          </>
         ) : trip.legacyContent && trip.legacyContent.items.length > 0 ? (
           /* ── 추천 목록/컬렉션/이달 구성 — 억지 일정화하지 않는다(§4B).
              LINKED 항목만 Place Detail 로, 섹션·name-only 는 원문 이름 그대로 ── */
