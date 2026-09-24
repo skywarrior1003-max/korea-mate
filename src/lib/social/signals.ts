@@ -37,6 +37,17 @@ export function reportPlaceSaveSignal(place: EventItem, saved: boolean): void {
   });
 }
 
+/**
+ * "내 여행에 추가"의 고유 활용 신호(COMMUNITY-V2 §2). DB 장소(city_spot)만 —
+ * user_spot·파일 항목은 추천 순위 대상이 아니라 보내지 않는다. 저장 축은
+ * place-save 서버가 같은 place_usage 에 기록하므로 여기서 중복 전송하지 않는다.
+ */
+export function reportPlaceTripAddSignal(place: EventItem): void {
+  const id = parseCitySpotId(getItemSourceKey(place));
+  if (!id) return;
+  fire("/api/place-usage", { target_type: "city_spot", target_key: id });
+}
+
 /** Share 행동 기록 — 공유 UI 에서 share/copy 가 일어났다는 사실만 */
 export function reportShareEvent(
   targetType: ShareTargetType, targetKey: string, method: ShareMethod,

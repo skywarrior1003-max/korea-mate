@@ -6,7 +6,7 @@
 //
 //   GET /api/recommendations/busan?limit=20
 //   → { stories: [{ id, title, days, stops, likeCount, copyCount, approvedAt }],
-//       places:  [{ id, likeCount, saveCount }] }
+//       places:  [{ id, likeCount, usageCount }] }
 //
 // 계약
 //  · stories = story_submissions approved ∩ 지금도 공개·비가림인 Story 만.
@@ -137,10 +137,11 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     `place_likes?target_type=eq.city_spot&select=target_key&limit=10000`));
   const cityDislikes = rows(await rest(env,
     `content_dislikes?target_type=eq.city_spot&select=target_key&limit=10000`));
-  const citySaves = rows(await rest(env,
-    `place_saves?target_type=eq.city_spot&select=target_key&limit=10000`));
+  // COMMUNITY-V2 §2 — 활용 = place_usage(저장 또는 여행 추가, actor 고유·누적형).
+  const cityUsage = rows(await rest(env,
+    `place_usage?target_type=eq.city_spot&select=target_key&limit=10000`));
   const engaged = new Set([
-    ...tally(cityLikes).keys(), ...tally(cityDislikes).keys(), ...tally(citySaves).keys(),
+    ...tally(cityLikes).keys(), ...tally(cityDislikes).keys(), ...tally(cityUsage).keys(),
   ]);
   let places: unknown[] = [];
   if (engaged.size > 0) {
@@ -148,13 +149,13 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     const idList = [...engaged].filter(k => /^\d{1,10}$/.test(k)).join(",");
     const spots = idList ? rows(await rest(env,
       `city_spots?id=in.(${idList})&city=eq.${city}&is_published=eq.true&select=id&limit=200`)) : [];
-    const likeBy = tally(cityLikes); const dislikeBy = tally(cityDislikes); const saveBy = tally(citySaves);
+    const likeBy = tally(cityLikes); const dislikeBy = tally(cityDislikes); const usageBy = tally(cityUsage);
     const ranked: RankInput[] = spots.map(s => {
       const id = String(s.id);
-      return { id, likes: likeBy.get(id) ?? 0, dislikes: dislikeBy.get(id) ?? 0, usage: saveBy.get(id) ?? 0 };
+      return { id, likes: likeBy.get(id) ?? 0, dislikes: dislikeBy.get(id) ?? 0, usage: usageBy.get(id) ?? 0 };
     }).sort(compareRanked);
     places = ranked.slice(0, limit).map(r => ({
-      id: Number(r.id), likeCount: r.likes, saveCount: r.usage,
+      id: Number(r.id), likeCount: r.likes, usageCount: r.usage,
     }));
   }
 

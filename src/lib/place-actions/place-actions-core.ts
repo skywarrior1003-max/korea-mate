@@ -16,7 +16,7 @@ import {
 import {
   cacheSavedSpot, getFavoriteSourceKeys, getFavorites, toggleFavorite, uncacheSavedSpot,
 } from "../favorites.ts";
-import { reportPlaceSaveSignal } from "@/lib/social/signals";
+import { reportPlaceSaveSignal, reportPlaceTripAddSignal } from "@/lib/social/signals";
 import { getItemSourceKey, parseCitySpotId } from "../place-identity.ts";
 import { placeUrl } from "../place-detail/place-detail-core.ts";
 
@@ -81,6 +81,9 @@ export function isInThisTrip(place: EventItem, tripCity: string | null | undefin
 export function addPlaceToThisTrip(place: EventItem, tripCity: string | null | undefined): boolean {
   if (!tripCity) return false;
   addToCart(place, tripCity);
+  // COMMUNITY-V2 §2 — 여행 추가도 저장과 같은 "고유 활용" 신호다(서버 dedupe,
+  // best-effort). trip 에서 빼도 신호는 남는다 — 활용은 발생 사실이다.
+  reportPlaceTripAddSignal(place);
   return true;
 }
 
