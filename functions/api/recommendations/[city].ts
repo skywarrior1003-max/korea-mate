@@ -21,11 +21,12 @@ import {
 } from "../../../src/lib/community/community-core";
 import { resolveCitySlug } from "../../../src/data/cities/identity";
 // COLD-START-RANKING-POLICY-V1 §2-2 — 반응 0 상태의 순위 기준은 기존
-// official/editorial 추천 순서다. Hub 의 Owner 확정 순서(hubEditorialSpotOrder)가
-// 최우선, 그다음 recommended_now 의 canonical 연결 순서. 서버가 이 순서를
-// tie-break 로 써서 **도시 전체 후보의 최종 연속 순위**를 결정한다 —
-// 클라이언트는 재정렬하지 않는다.
-import { hubEditorialSpotOrder, recommendedSpotIds } from "../../../src/data/regional/regional-recommendations";
+// official/editorial 추천 순서다(Hub Owner 확정 순서 → canonical 연결 순서).
+// 서버가 이 순서를 tie-break 로 써서 **도시 전체 후보의 최종 연속 순위**를
+// 결정한다 — 클라이언트는 재정렬하지 않는다.
+// regional-recommendations 를 직접 import 하지 않는 이유는 editorial-order-core 참조
+// (CF CI Functions 번들러가 json import attribute 를 파싱하지 못한다).
+import { editorialSpotOrder } from "../../../src/lib/community/editorial-order-core";
 // 대표 이미지(§7-2) — 공개 Story 와 완전히 같은 동의 필터·순서·ref 규칙을 쓴다.
 // 새 규칙을 만들지 않는다: isMemoryPublic(동의 판본)·orderMemories·photoRef 재사용.
 import {
@@ -208,12 +209,8 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     `city_spots?city=eq.${city}&is_published=eq.true&select=id&limit=2000`));
   let places: unknown[] = [];
   if (spots.length > 0) {
-    // ④ 기존 추천 순서: Hub Owner 확정 순서 → recommended_now canonical 순서.
-    const editorial: number[] = [];
-    for (const eid of [...(hubEditorialSpotOrder(city) ?? []), ...recommendedSpotIds(city)]) {
-      if (!editorial.includes(eid)) editorial.push(eid);
-    }
-    const editorialIdx = new Map(editorial.map((eid, i) => [String(eid), i]));
+    // ④ 기존 추천 순서: Hub Owner 확정 순서 → canonical 연결 순서(스냅숏).
+    const editorialIdx = new Map(editorialSpotOrder(city).map((eid, i) => [String(eid), i]));
     const likeBy = tally(cityLikes); const dislikeBy = tally(cityDislikes); const usageBy = tally(cityUsage);
     const ranked: PlaceRankInput[] = spots.map(s => {
       const id = String(s.id);

@@ -66,8 +66,34 @@ test("COLD-START §2·§6 — 서버가 도시 전체 후보를 순위화하고 
   const src = read("functions/api/recommendations/[city].ts");
   assert.ok(src.includes("is_published=eq.true&select=id&limit=2000"), "도시 전체 후보 조회가 없다");
   assert.ok(src.includes("comparePlaceRanked"), "cold-start 정렬 코어 미사용");
-  assert.ok(src.includes("hubEditorialSpotOrder") && src.includes("recommendedSpotIds"), "editorial tie-break 소실");
+  assert.ok(src.includes("editorialSpotOrder"), "editorial tie-break 소실");
   assert.ok(/rank:\s*i \+ 1/.test(src), "서버 rank 반환이 없다");
+  // CF CI Functions 번들러가 json import attribute 를 못 읽는다 — 함수 쪽에서
+  // regional-recommendations 직접 import 금지(editorial-order-core 경유만).
+  assert.ok(!/import[^;]*regional-recommendations/.test(src), "함수가 attribute-json 모듈을 직접 import");
+});
+
+test("COLD-START — editorial 스냅숏이 원천(regional-places + Hub 확정 순서)과 동기", () => {
+  const snapshot = JSON.parse(read("src/data/regional/editorial-spot-order.json")) as Record<string, number[]>;
+  const places = (JSON.parse(read("src/data/regional/regional-places-v1.json")) as {
+    places: { city: string; spotId: number | null; spotIdsAll?: number[] }[];
+  }).places;
+  // 생성 규칙(editorial-order-core 헤더와 동일): Hub 확정 순서 → 파일 순서
+  // spotId→spotIdsAll dedupe, validTo 무시(고정 tie-break).
+  const HUB: Record<string, number[]> = { gyeongju: [439, 425, 507] };
+  for (const city of ["busan", "seoul", "jeju", "gyeongju", "jeonju"]) {
+    const expected = [...(HUB[city] ?? [])];
+    for (const p of places) {
+      if (p.city !== city) continue;
+      const ids = p.spotId !== null && p.spotId !== undefined ? [p.spotId, ...(p.spotIdsAll ?? [])] : (p.spotIdsAll ?? []);
+      for (const id of ids) if (typeof id === "number" && !expected.includes(id)) expected.push(id);
+    }
+    assert.deepEqual(snapshot[city], expected,
+      `${city}: 스냅숏이 원천과 어긋남 — regional-places 변경 시 editorial-spot-order.json 재생성 필요`);
+  }
+  // HUB 확정 순서 상수는 regional-recommendations 의 값과도 일치해야 한다
+  const rr = read("src/data/regional/regional-recommendations.ts");
+  assert.ok(rr.includes("gyeongju: [439, 425, 507]"), "Hub 확정 순서가 원천에서 변경됨 — 스냅숏·테스트 동기화 필요");
 });
 
 test("COLD-START — 무반응 분리 UI 를 만들지 않았다", () => {
