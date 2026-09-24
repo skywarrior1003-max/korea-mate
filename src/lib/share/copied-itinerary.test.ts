@@ -7,7 +7,9 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { copiedPlace, copiedDay, buildCopiedItinerary } from "./copied-itinerary.ts";
+import { copiedPlace, copiedDay, buildCopiedItinerary,
+  copiedTripTitle, copiedDateRange, normalizeCopyLocale, kstToday,
+} from "./copied-itinerary.ts";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -122,4 +124,36 @@ test("★복사 API 는 trip_moments 를 읽지도 쓰지도 않는다", () => {
   // 원본을 그대로 옮기던 줄이 사라졌다
   assert.doesNotMatch(code, /days:\s*source\.days/, "raw days 를 그대로 복사한다");
   assert.match(code, /days:\s*buildCopiedItinerary\(source\.days\)/);
+});
+
+
+// ── G. COMMUNITY-V1 §2 — 원 제목·원 날짜 미복사 ─────────────────────────────
+test("★day 의 원 날짜 라벨은 복사되지 않는다 — dayNumber 만 남는다", () => {
+  const day = copiedDay({ dayNumber: 2, date: "2026-08-21", places: [] });
+  assert.equal(day.dayNumber, 2);
+  assert.ok(!("date" in day), "원 여행 날짜가 day 에 살아남았다");
+});
+
+test("★복사 제목 — 도시 기반 중립 제목, locale 4종·미해석 도시 fallback", () => {
+  assert.equal(copiedTripTitle("busan", "ko"), "부산 여행");
+  assert.equal(copiedTripTitle("Busan", "en"), "Busan Trip");
+  assert.equal(copiedTripTitle("釜山", "ja"), "釜山の旅");
+  assert.equal(copiedTripTitle("busan", "zh"), "釜山之旅");
+  assert.equal(copiedTripTitle("atlantis", "en"), "My Trip");
+  assert.equal(copiedTripTitle(null, "ko"), "나의 여행");
+  // locale 은 enum 밖 값이면 en
+  assert.equal(normalizeCopyLocale("fr"), "en");
+  assert.equal(normalizeCopyLocale("ja"), "ja");
+});
+
+test("★복사 날짜 — 일수만 유지하고 복사 시점(KST)부터 다시 편다", () => {
+  const now = Date.parse("2026-09-24T00:00:00Z"); // KST 2026-09-24 09:00
+  assert.equal(kstToday(now), "2026-09-24");
+  const r = copiedDateRange("2026-08-20", "2026-08-22", now);
+  assert.deepEqual(r, { start_date: "2026-09-24", end_date: "2026-09-26" });
+  // 깨진 원 날짜 → 1일짜리 — 원 값을 흘려보내지 않는다
+  assert.deepEqual(copiedDateRange("bad", "2026-08-22", now),
+    { start_date: "2026-09-24", end_date: "2026-09-24" });
+  // 원 날짜 문자열이 결과 어디에도 없다
+  assert.ok(!JSON.stringify(r).includes("2026-08-2"));
 });

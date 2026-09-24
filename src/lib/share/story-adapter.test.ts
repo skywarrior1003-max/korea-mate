@@ -249,7 +249,9 @@ test("★Story 일 때만 하단 메뉴를 감춘다 — 경로로 통째 숨기
 test("★Copy 는 기존 것을 그대로 쓴다 — 새 backend 를 만들지 않았다", () => {
   const page = strip(read("src", "app", "shared", "page.tsx"));
   assert.match(page, /onCopy=\{\(\) => void handleCopyTrip\(\)\}/);
-  assert.match(page, /apiCopyItinerary\(shareId, getDeviceId\(\)\)/);
+  // COMMUNITY-V1 §2: 복사본 제목을 받는 사람 locale 로 만들기 위해 locale 이
+  // 추가됐다 — 여전히 기존 copy backend 하나를 그대로 쓴다(의도 보존 동기화).
+  assert.match(page, /apiCopyItinerary\(shareId, getDeviceId\(\), locale\)/);
   // 복사가 Memory 를 옮기지 않는다는 계약은 서버 쪽에 그대로 있다
   const copy = strip(read("functions", "api", "itinerary", "copy.ts"));
   assert.doesNotMatch(copy, /trip_moments|trip_moment_photos/);
