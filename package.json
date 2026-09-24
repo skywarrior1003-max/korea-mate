@@ -7,7 +7,7 @@
     "build": "next build",
     "build:static": "node scripts/build-static.mjs",
     "deploy": "npm run build:static && npx wrangler pages deploy out --project-name=korea-mate",
-    "dev:pages": "npm run build:static && npx wrangler pages dev out",
+    "dev:pages": "node scripts/env-guard/check-local-env.cjs .env.local .dev.vars && npm run build:static && npx wrangler pages dev out",
     "start": "next start",
     "lint": "eslint",
     "test:jpeg": "node --experimental-strip-types src/lib/jpeg-strip-exif.test.ts",
@@ -20,7 +20,9 @@
     "test:memo-patch": "node --experimental-strip-types src/lib/trip-moments/memo-patch-core.test.ts",
     "test:helpful-guard": "node --experimental-strip-types src/lib/helpful-guard-core.test.ts",
     "typecheck": "tsc --noEmit",
-    "typecheck:functions": "tsc --noEmit -p tsconfig.functions.json"
+    "typecheck:functions": "tsc --noEmit -p tsconfig.functions.json",
+    "predev": "node scripts/env-guard/check-local-env.cjs .env.local",
+    "test:env-guard": "node --experimental-strip-types src/lib/env-guard/local-data-env-guard.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",

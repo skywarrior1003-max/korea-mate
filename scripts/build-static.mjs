@@ -7,7 +7,22 @@
  */
 import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import { join } from "node:path";
+
+// 환경 분리 가드 (V2-PRELAUNCH-ENVIRONMENT-ISOLATION-V1)
+// Local 빌드가 Production Supabase 를 가리키면 next build 를 시작하기 전에 실패한다.
+// Cloudflare CI(CF_PAGES=1)만 통과. `next build` 는 .env.local 을 스스로 로드하므로
+// process.env 에 주입된 값(예: preview 빌드 스크립트)이 없으면 .env.local 을 본다.
+const { classifyDataEnv, isCloudflareCi, readEnvFileUrl, BLOCK_MESSAGE } =
+  createRequire(import.meta.url)("./env-guard/data-env.cjs");
+if (!isCloudflareCi(process.env)) {
+  const effectiveUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? readEnvFileUrl(".env.local");
+  if (classifyDataEnv(effectiveUrl) !== "other") {
+    console.error(`${BLOCK_MESSAGE} (checked: build-static)`);
+    process.exit(1);
+  }
+}
 
 process.env.STATIC_EXPORT = "true";
 

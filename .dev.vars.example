@@ -1,0 +1,31 @@
+# .dev.vars.example — `wrangler pages dev` 용 Functions 런타임 변수 템플릿
+# (GOKOREAMATE-V2-PRELAUNCH-ENVIRONMENT-ISOLATION-V1)
+#
+# 실제 파일은 `.dev.vars` 이며 git 에 절대 commit 하지 않는다(.gitignore 포함).
+#
+# ⚠ 환경 역할 규칙 (docs/operations/environment-isolation-v1.md):
+#   · Local(.dev.vars)   = Staging Supabase 또는 완전히 격리된 Local Supabase 만
+#   · Cloudflare Preview = Staging Supabase 만 (대시보드 Preview env)
+#   · Production 만 Production Supabase 를 사용한다 (대시보드 Production env)
+#   · Production 자격증명(URL·anon·service role)을 이 파일에 넣지 않는다.
+#     넣으면 로컬 가드(scripts/env-guard + functions/api/_middleware.ts)가
+#     실행을 차단한다.
+#
+# 아래는 전부 placeholder 다. 실값은 Supabase Staging 프로젝트 대시보드
+# (Settings → API)에서 Owner 가 직접 가져온다.
+
+# ── Supabase (Staging 전용) ─────────────────────────────────────
+NEXT_PUBLIC_SUPABASE_URL=https://your-staging-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-staging-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-staging-service-role-key
+
+# ── AI (로컬 실험용 키 — Production 키 복사 금지) ────────────────
+GEMINI_API_KEY=your-gemini-api-key
+
+# ── admin/internal 엔드포인트 (로컬 전용 임의 값이면 충분) ───────
+ADMIN_KEY=local-only-admin-key
+INTERNAL_KEY=local-only-internal-key
+
+# ── 기타 (필요 시 .env.example 의 동명 항목 참고) ────────────────
+TOUR_API_KEY=your-tour-api-key
+KMA_API_KEY=your-kma-api-key
