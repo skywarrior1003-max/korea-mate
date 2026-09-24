@@ -93,10 +93,16 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
 
   const now = new Date().toISOString();
   const status = action === "approve" ? "approved" : "rejected";
-  const up = await rest(ctx.env, "PATCH", `story_submissions?id=eq.${id}`,
+  // V2 §4-3 — 결정은 pending 에서만 유효하다. approved 재승인·withdrawn 승인 같은
+  // 전이는 조용히 덮지 않고 409 로 거절한다(철회한 제출을 관리자가 되살릴 수 없다).
+  const up = await rest(ctx.env, "PATCH", `story_submissions?id=eq.${id}&status=eq.pending`,
     { status, decided_at: now, decided_note: note, updated_at: now }, "return=representation");
-  if (!up.ok || !Array.isArray(up.data) || up.data.length === 0) {
-    return json({ error: up.ok ? "not_found" : "update_failed" }, up.ok ? 404 : 500);
+  if (!up.ok) return json({ error: "update_failed" }, 500);
+  if (!Array.isArray(up.data) || up.data.length === 0) {
+    const cur = await rest(ctx.env, "GET", `story_submissions?id=eq.${id}&select=status&limit=1`);
+    const row = Array.isArray(cur.data) ? cur.data[0] as { status?: string } | undefined : undefined;
+    if (!row) return json({ error: "not_found" }, 404);
+    return json({ error: "already_decided", status: row.status }, 409);
   }
   return json({ success: true, status });
 }

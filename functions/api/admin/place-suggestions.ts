@@ -60,10 +60,16 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   const action = body.action;
   if (action !== "accept" && action !== "decline") return json({ error: "invalid_action" }, 400);
   const status = action === "accept" ? "accepted" : "declined";
-  const up = await rest(ctx.env, "PATCH", `place_suggestions?id=eq.${id}`,
+  // V2 §4-3 — pending 에서만 전이(중복 결정 409). accepted 는 city_spots SSOT 에
+  // 아무것도 만들지 않는다 — 반영은 기존 카탈로그 파이프라인의 별도 절차다.
+  const up = await rest(ctx.env, "PATCH", `place_suggestions?id=eq.${id}&status=eq.pending`,
     { status }, "return=representation");
-  if (!up.ok || !Array.isArray(up.data) || up.data.length === 0) {
-    return json({ error: up.ok ? "not_found" : "update_failed" }, up.ok ? 404 : 500);
+  if (!up.ok) return json({ error: "update_failed" }, 500);
+  if (!Array.isArray(up.data) || up.data.length === 0) {
+    const cur = await rest(ctx.env, "GET", `place_suggestions?id=eq.${id}&select=status&limit=1`);
+    const row = Array.isArray(cur.data) ? cur.data[0] as { status?: string } | undefined : undefined;
+    if (!row) return json({ error: "not_found" }, 404);
+    return json({ error: "already_decided", status: row.status }, 409);
   }
   return json({ success: true, status });
 }
