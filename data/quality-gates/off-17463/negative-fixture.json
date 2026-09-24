@@ -1,0 +1,21 @@
+{
+  "_comment": "OFF-17463 실사건 재현 negative fixture — 음식점 이름·좌표 + 숙소 주소·침대 이미지 + 기관 대표번호 + AMBIGUOUS + display_eligible:false. 게이트는 이 행을 반드시 quarantine 해야 한다.",
+  "candidate_id": "FIXTURE-OFF-17463-NEG",
+  "source": "OFFICIAL",
+  "match_type": "AMBIGUOUS",
+  "identity_review": false,
+  "domain": "FOOD",
+  "display_name": "메르밀진미집 본점",
+  "lat": "35.8111035497203",
+  "lng": "127.150406207841",
+  "phone": "063-222-1000",
+  "kto_cid": "2571938",
+  "kto_type": "숙박",
+  "kto_title": "다나하루(다나하루 게스트하우스)",
+  "kto_addr": "전북특별자치도 전주시 완산구 향교길 11",
+  "kto_lat": "35.8117868380",
+  "kto_lng": "127.1502588720",
+  "kto_image": "http://tong.visitkorea.or.kr/cms/resource/42/2570942_image2_1.jpg",
+  "display_eligible": false,
+  "rights_status": "KTO_TYPE_UNKNOWN"
+}

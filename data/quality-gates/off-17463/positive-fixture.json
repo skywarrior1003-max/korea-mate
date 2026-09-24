@@ -1,0 +1,20 @@
+{
+  "_comment": "positive fixture — 단일 restaurant entity, 검증된 전화, 이미지 없음. 사진 없이도 승격 가능해야 한다(이미지 없음=정상값).",
+  "candidate_id": "FIXTURE-OFF-17463-POS",
+  "source": "OFFICIAL",
+  "match_type": "OFFICIAL_ONLY",
+  "identity_review": true,
+  "domain": "FOOD",
+  "display_name": "메르밀진미집 본점",
+  "address": "전북특별자치도 전주시 완산구 전주천동로 94",
+  "lat": "35.8111035497203",
+  "lng": "127.150406207841",
+  "phone": "063-288-4020",
+  "kto_cid": "",
+  "kto_title": "",
+  "kto_addr": "",
+  "kto_lat": "",
+  "kto_lng": "",
+  "kto_image": "",
+  "correction_ref": "candidate-corrections-jeonju-776-identity-v1"
+}
