@@ -79,11 +79,10 @@ export default function TripsAllClient({ slug }: { slug: string }) {
                         {ct.title ?? t("communityTravelerCourse")}
                       </span>
                       <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)] truncate">
-                        {/* §7-3 — 1위부터 연속된 도시 전체 순위. 좋아요·복사 수는 항상
-                            보여 순위의 근거를 만든다(싫어요·score 는 응답에 없다). */}
-                        <span className="font-bold" style={{ color: "var(--qh-blue)" }}>{t("communityRank", { n: i + 1 })}</span>
-                        {" · "}
-                        <span className="font-semibold" style={{ color: "var(--qh-blue)" }}>{t("communityTravelerCourse")}</span>
+                        {/* COLD-START §4-1·§7-3 — 여행자 점수 순위는 `여행자 추천 · N위`.
+                            좋아요·복사 수는 항상 보여 순위의 근거를 만든다(싫어요·score 는
+                            응답에 없다). */}
+                        <span className="font-bold" style={{ color: "var(--qh-blue)" }}>{t("communityTravelerRank", { n: i + 1 })}</span>
                         {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
                         {` · ${t("communityLiked", { count: ct.likeCount })} · ${t("communityCopied", { count: ct.copyCount })}`}
                       </span>
@@ -105,7 +104,7 @@ export default function TripsAllClient({ slug }: { slug: string }) {
           <p className="mt-5 text-[13px] text-[var(--qh-faint2)]">{t("tripsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6">
-            {trips.map(trip => {
+            {trips.map((trip, ti) => {
               const cover = tripCoverSpot(trip, byId);
               // preview: stop 순서 → 없으면 공식 추천 항목(목록형) — 제목만 있는 빈 카드를 만들지 않는다
               const previewSource = trip.stops.length > 0
@@ -130,7 +129,10 @@ export default function TripsAllClient({ slug }: { slug: string }) {
                       )}
                     </span>
                     <span className="block mt-0.5 text-[12px] text-[var(--qh-faint)]">
-                      {t(tripKindLabelKey(trip))}
+                      {/* COLD-START §4-4 — 공식 섹션에도 editorial 연속 번호
+                          `공식 추천 · N`. 여행자 `N위` 체계와 구분된다. */}
+                      <span className="font-semibold">{t("communityOfficialRank", { n: ti + 1 })}</span>
+                      {` · ${t(tripKindLabelKey(trip))}`}
                       {!Number.isInteger(trip.days) && trip.durationLabel && locale === "ko" ? ` · ${trip.durationLabel}` : ""}
                     </span>
                     {trip.theme ? (

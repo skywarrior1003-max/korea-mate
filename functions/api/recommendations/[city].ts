@@ -17,9 +17,15 @@
 //    화면은 기존 seed 를 그대로 쓴다(초기 콘텐츠 유지 §1).
 
 import {
-  compareRanked, type RankInput,
+  compareRanked, comparePlaceRanked, type RankInput, type PlaceRankInput,
 } from "../../../src/lib/community/community-core";
 import { resolveCitySlug } from "../../../src/data/cities/identity";
+// COLD-START-RANKING-POLICY-V1 §2-2 — 반응 0 상태의 순위 기준은 기존
+// official/editorial 추천 순서다. Hub 의 Owner 확정 순서(hubEditorialSpotOrder)가
+// 최우선, 그다음 recommended_now 의 canonical 연결 순서. 서버가 이 순서를
+// tie-break 로 써서 **도시 전체 후보의 최종 연속 순위**를 결정한다 —
+// 클라이언트는 재정렬하지 않는다.
+import { hubEditorialSpotOrder, recommendedSpotIds } from "../../../src/data/regional/regional-recommendations";
 // 대표 이미지(§7-2) — 공개 Story 와 완전히 같은 동의 필터·순서·ref 규칙을 쓴다.
 // 새 규칙을 만들지 않는다: isMemoryPublic(동의 판본)·orderMemories·photoRef 재사용.
 import {
@@ -188,7 +194,9 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     }
   }
 
-  // ── 추천 장소 순위 — 반응이 실제로 있는 장소만(없으면 화면은 seed 유지) ──
+  // ── 추천 장소 cold-start 연속 순위 (COLD-START-RANKING-POLICY-V1 §2) ──
+  // 도시의 공개 추천 후보 **전체**를 순위 대상으로 한다 — 반응 0 장소도
+  // 제외·분리하지 않는다. 전부 0인 초기 상태에서는 editorial 순서가 곧 순위다.
   const cityLikes = rows(await rest(env,
     `place_likes?target_type=eq.city_spot&select=target_key&limit=10000`));
   const cityDislikes = rows(await rest(env,
@@ -196,22 +204,33 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
   // COMMUNITY-V2 §2 — 활용 = place_usage(저장 또는 여행 추가, actor 고유·누적형).
   const cityUsage = rows(await rest(env,
     `place_usage?target_type=eq.city_spot&select=target_key&limit=10000`));
-  const engaged = new Set([
-    ...tally(cityLikes).keys(), ...tally(cityDislikes).keys(), ...tally(cityUsage).keys(),
-  ]);
+  const spots = rows(await rest(env,
+    `city_spots?city=eq.${city}&is_published=eq.true&select=id&limit=2000`));
   let places: unknown[] = [];
-  if (engaged.size > 0) {
-    // 이 도시의 공개 장소로 한정한다(다른 도시 반응이 섞이지 않게).
-    const idList = [...engaged].filter(k => /^\d{1,10}$/.test(k)).join(",");
-    const spots = idList ? rows(await rest(env,
-      `city_spots?id=in.(${idList})&city=eq.${city}&is_published=eq.true&select=id&limit=200`)) : [];
+  if (spots.length > 0) {
+    // ④ 기존 추천 순서: Hub Owner 확정 순서 → recommended_now canonical 순서.
+    const editorial: number[] = [];
+    for (const eid of [...(hubEditorialSpotOrder(city) ?? []), ...recommendedSpotIds(city)]) {
+      if (!editorial.includes(eid)) editorial.push(eid);
+    }
+    const editorialIdx = new Map(editorial.map((eid, i) => [String(eid), i]));
     const likeBy = tally(cityLikes); const dislikeBy = tally(cityDislikes); const usageBy = tally(cityUsage);
-    const ranked: RankInput[] = spots.map(s => {
+    const ranked: PlaceRankInput[] = spots.map(s => {
       const id = String(s.id);
-      return { id, likes: likeBy.get(id) ?? 0, dislikes: dislikeBy.get(id) ?? 0, usage: usageBy.get(id) ?? 0 };
-    }).sort(compareRanked);
-    places = ranked.slice(0, limit).map(r => ({
+      return {
+        id,
+        likes:    likeBy.get(id) ?? 0,
+        dislikes: dislikeBy.get(id) ?? 0,
+        usage:    usageBy.get(id) ?? 0,
+        editorialIndex: editorialIdx.get(id) ?? Number.POSITIVE_INFINITY,
+      };
+    }).sort(comparePlaceRanked);
+    // 전체 보기가 도시 전체 연속 순위를 그린다 — 장소 상한은 도시 규모(≤2000).
+    const placeLimit = Math.min(Math.max(Number(u.searchParams.get("limit")) || 20, 1), 2000);
+    places = ranked.slice(0, placeLimit).map((r, i) => ({
       id: Number(r.id), likeCount: r.likes, usageCount: r.usage,
+      // 서버 확정 순위 — 클라이언트는 이 값을 그대로 표시만 한다(§6)
+      rank: i + 1,
     }));
   }
 

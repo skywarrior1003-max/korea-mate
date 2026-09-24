@@ -13,7 +13,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
-import { compareRanked, communityScore, type RankInput } from "./community-core.ts";
+import { compareRanked, comparePlaceRanked, communityScore, type RankInput, type PlaceRankInput } from "./community-core.ts";
 import { suggestEligibleCity, userSpotIdsFromDays } from "./suggest-entry-core.ts";
 
 const ROOT = process.cwd();
@@ -39,6 +39,45 @@ test("§6-3 tie-break 안정 — usage → like → 기준시각 → ID", () => 
   const s2 = [...zeros].reverse().sort(compareRanked).map(r => r.id);
   assert.deepEqual(s1, s2);
   assert.deepEqual(s1, ["a", "b", "c"]);
+});
+
+test("COLD-START §2 — 무반응 장소 연속 순위·editorial tie-break·안정성", () => {
+  const mk = (id: string, likes: number, dislikes: number, usage: number, editorialIndex: number): PlaceRankInput =>
+    ({ id, likes, dislikes, usage, editorialIndex });
+  // ① 전 신호 0 × 5곳 → 기존 editorial 순서가 곧 1~5위
+  const zero = [mk("507", 0, 0, 0, 2), mk("425", 0, 0, 0, 1), mk("439", 0, 0, 0, 0),
+                mk("900", 0, 0, 0, Infinity), mk("800", 0, 0, 0, Infinity)];
+  const order = [...zero].sort(comparePlaceRanked).map(r => r.id);
+  assert.deepEqual(order, ["439", "425", "507", "800", "900"], "editorial→ID 순이어야 한다");
+  // ② like 1 이 editorial 최상위를 앞선다(공식 불변: +1 > 0)
+  assert.deepEqual([...zero, mk("777", 1, 0, 0, Infinity)].sort(comparePlaceRanked)[0].id, "777");
+  // ③ usage 1 = +3 → like 2 보다 위
+  assert.deepEqual([mk("a1", 2, 0, 0, Infinity), mk("a2", 0, 0, 1, Infinity)].sort(comparePlaceRanked)[0].id, "a2");
+  // ④ dislike 로 score 가 음수면 무반응(0점) editorial 장소보다 아래
+  const withDown = [mk("439", 0, 0, 0, 0), mk("666", 0, 1, 0, Infinity)].sort(comparePlaceRanked);
+  assert.deepEqual(withDown.map(r => r.id), ["439", "666"]);
+  // ⑤ 동점 반복 정렬 안정(요청마다 동일)
+  const s1 = [...zero].sort(comparePlaceRanked).map(r => r.id);
+  const s2 = [...zero].reverse().sort(comparePlaceRanked).map(r => r.id);
+  assert.deepEqual(s1, s2);
+});
+
+test("COLD-START §2·§6 — 서버가 도시 전체 후보를 순위화하고 rank 만 반환", () => {
+  const src = read("functions/api/recommendations/[city].ts");
+  assert.ok(src.includes("is_published=eq.true&select=id&limit=2000"), "도시 전체 후보 조회가 없다");
+  assert.ok(src.includes("comparePlaceRanked"), "cold-start 정렬 코어 미사용");
+  assert.ok(src.includes("hubEditorialSpotOrder") && src.includes("recommendedSpotIds"), "editorial tie-break 소실");
+  assert.ok(/rank:\s*i \+ 1/.test(src), "서버 rank 반환이 없다");
+});
+
+test("COLD-START — 무반응 분리 UI 를 만들지 않았다", () => {
+  for (const f of ["src/components/quiet/CityHubClient.tsx", "src/components/quiet/PlacesAllClient.tsx",
+    "src/messages/ko.json", "src/messages/en.json"]) {
+    const s = read(f);
+    for (const banned of ["아직 반응이 없는", "순위 없음", "집계 전", "No reactions yet"]) {
+      assert.ok(!s.includes(banned), `${f}: 금지 문구 "${banned}"`);
+    }
+  }
 });
 
 test("§11 응답 보안 — recommendations 응답 매핑에 dislike·score 필드가 없다", () => {
@@ -71,20 +110,33 @@ test("§6·§7 순위 UI — Hub·전체보기가 서버 순위·badge·수치�
   const placesAll = read("src/components/quiet/PlacesAllClient.tsx");
   assert.ok(placesAll.includes("/api/recommendations/") && placesAll.includes("communityRank"), "장소 전체보기 순위 미연결");
   const tripsAll = read("src/components/quiet/TripsAllClient.tsx");
-  assert.ok(tripsAll.includes("communityRank"), "Story 전체보기 순위 없음");
+  assert.ok(tripsAll.includes("communityTravelerRank"), "Story 전체보기 순위 없음");
   assert.ok(tripsAll.includes("communityEditorialCourses"), "공식 코스 섹션 라벨 없음");
 });
 
-test("§8·§9 공식 코스 — 인기 순위 없음·방문 순서 라벨 존재", () => {
+test("§8·§9·COLD-START §4 — 공식 코스는 `공식 추천 · N`(위 아님)·방문 순서 라벨", () => {
   const hub = read("src/components/quiet/CityHubClient.tsx");
-  // 공식 seed trips 렌더 블록에는 rank 를 넘기지 않는다 — trips.map 안에 communityRank 금지
+  // 공식 seed trips 렌더 블록: 여행자 `N위` 체계(communityRank/TravelerRank) 금지,
+  // editorial 번호 `공식 추천 · N`(communityOfficialRank)만.
   const start = hub.indexOf("trips.map");
   const officialBlock = hub.slice(start, hub.indexOf("Recommended Places", start));
-  assert.ok(!officialBlock.includes("communityRank"), "공식 코스에 순위 badge 가 붙음");
-  assert.ok(officialBlock.includes("officialCourse"), "공식 코스 라벨 소실");
+  assert.ok(!officialBlock.includes("communityTravelerRank"), "공식 코스에 여행자 순위 표기");
+  assert.ok(!/communityRank[^A-Za-z]/.test(officialBlock), "공식 코스에 N위 badge");
+  assert.ok(officialBlock.includes("communityOfficialRank"), "공식 추천 번호 소실");
+  const tripsAll = read("src/components/quiet/TripsAllClient.tsx");
+  assert.ok(tripsAll.includes("communityOfficialRank"), "전체보기 공식 섹션 번호 소실");
   const course = read("src/components/quiet/TripCourseClient.tsx");
   assert.ok(course.includes("visitOrder"), "코스 상세 방문 순서 라벨 없음");
   assert.ok(course.includes("{i + 1}"), "기존 동선 번호가 사라짐");
+  // 4locale 라벨: 여행자는 순위(위·#·位·名), 공식은 순번(그 표기 없음)
+  for (const loc of ["ko", "en", "ja", "zh"]) {
+    const m = JSON.parse(read(`src/messages/${loc}.json`)) as { quiet: Record<string, string> };
+    assert.ok(m.quiet.communityTravelerRank?.includes("{n}"), `${loc} 여행자 순위 키`);
+    assert.ok(m.quiet.communityOfficialRank?.includes("{n}"), `${loc} 공식 순번 키`);
+    for (const rankMark of ["위", "#", "位", "名"]) {
+      assert.ok(!m.quiet.communityOfficialRank.includes(rankMark), `${loc} 공식 순번에 순위 표기 "${rankMark}"`);
+    }
+  }
 });
 
 test("§5·§10-2 진입점 — My Places·본인 Story 존재, 타인·Hub 부재", () => {

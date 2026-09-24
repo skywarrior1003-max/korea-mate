@@ -18,8 +18,8 @@ import { toEventItem } from "@/components/ExploreCity";
 import { loadCitySpots, quietCity } from "./quiet-data";
 import { recommendedSpotIds } from "@/data/regional/regional-recommendations";
 
-/** 서버 순위 행(§6-2) — 순위는 배열 순서. 점수·싫어요는 응답에 없다 */
-interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number }
+/** 서버 확정 도시 전체 순위 행(COLD-START §2) — rank 는 서버 값, 재정렬 금지 */
+interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number; rank: number }
 
 export default function PlacesAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
@@ -33,15 +33,16 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
-  // RANKING-UX-HOTFIX §6-2 — 도시 전체 순위(서버 정렬 그대로·재정렬 없음).
+  // COLD-START §2·§3 — 서버가 도시 전체 후보의 연속 순위를 확정한다(반응 0
+  // 포함). 이 화면은 그 순서를 그대로 그린다 — 클라이언트 재정렬 없음.
   useEffect(() => {
     let alive = true;
-    fetch(`/api/recommendations/${slug}?limit=50`)
+    fetch(`/api/recommendations/${slug}?limit=2000`)
       .then(r => (r.ok ? r.json() : null))
       .then((j: { places?: CommunityPlaceRank[] } | null) => {
         if (alive && j && Array.isArray(j.places)) setCommPlaces(j.places);
       })
-      .catch(() => { /* 순위 없이 기존 목록 유지 */ });
+      .catch(() => { /* 순위 없이 기존 목록 유지(과도기 폴백) */ });
     return () => { alive = false; };
   }, [slug]);
   useEffect(() => {
@@ -55,24 +56,28 @@ export default function PlacesAllClient({ slug }: { slug: string }) {
   const cityLabel = tForm(city.labelKey);
   // 공식 recommended_now 의 canonical 연결 장소를 먼저, 그 뒤 카탈로그(사진 우선).
   // 배지·순위 숫자는 붙이지 않는다 — 정렬 provenance 만.
-  // §6-2 — 서버 순위가 실재하는 장소가 1위부터 연속 순위로 먼저 온다(도시 전체
-  // 순위). 무신호 장소는 기존 순서(official → 사진 → 무사진) 그대로 뒤에, 순위
-  // 숫자 없이 — 허위 인기를 만들지 않는다(§6-3). 이 화면에는 필터가 없으므로
-  // "필터 후 순위 의미" 문제는 발생하지 않는다.
+  // COLD-START §2·§3 — 서버가 준 도시 전체 연속 순위를 그대로 그린다(1위부터
+  // 마지막 후보까지 전부 badge, 반응 0 포함·별도 섹션 없음). 서버 응답에 없는
+  // 카탈로그 행(공개 상태 편차 등 드문 경우)만 맨 뒤에 badge 없이 남긴다.
+  // API 실패 시에는 기존 정적 순서를 badge 없이 보여 준다(과도기 폴백 —
+  // 클라이언트 임의 재정렬이 아니다).
   const list = (() => {
     const all = spots ?? [];
     const byId = new Map(all.map(s => [Number(s.id), s]));
     const ranked = commPlaces
-      .map((r, i) => ({ spot: byId.get(r.id), rank: i + 1 as number | null, likeCount: r.likeCount, usageCount: r.usageCount }))
+      .map(r => ({ spot: byId.get(r.id), rank: r.rank as number | null, likeCount: r.likeCount, usageCount: r.usageCount }))
       .filter((x): x is { spot: CitySpot; rank: number; likeCount: number; usageCount: number } => Boolean(x.spot));
     const taken = new Set(ranked.map(x => Number(x.spot.id)));
+    if (ranked.length > 0) {
+      const leftover = all.filter(s => !taken.has(Number(s.id)))
+        .map(s => ({ spot: s, rank: null as number | null, likeCount: 0, usageCount: 0 }));
+      return [...ranked, ...leftover];
+    }
     const ids = recommendedSpotIds(slug);
-    const official = ids.map(id => byId.get(id))
-      .filter((s): s is NonNullable<typeof s> => Boolean(s) && !taken.has(Number(s!.id)));
-    const rest = all.filter(s => !official.includes(s) && !taken.has(Number(s.id)));
-    const unranked = [...official, ...rest.filter(s => s.image), ...rest.filter(s => !s.image)]
+    const official = ids.map(id => byId.get(id)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+    const rest = all.filter(s => !official.includes(s));
+    return [...official, ...rest.filter(s => s.image), ...rest.filter(s => !s.image)]
       .map(s => ({ spot: s, rank: null as number | null, likeCount: 0, usageCount: 0 }));
-    return [...ranked, ...unranked];
   })();
 
   const onSave = (e: React.MouseEvent, spot: CitySpot) => {

@@ -128,6 +128,37 @@ export function compareRanked(a: RankInput, b: RankInput): number {
   return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 }
 
+// ── 장소 cold-start 순위 (COLD-START-RANKING-POLICY-V1 §2) ─────────────────
+//
+// V2 최초 공개 시점에는 대부분의 장소에 반응이 없다. 무반응 장소를 순위에서
+// 빼지 않고, 도시의 추천 후보 **전체**에 연속 순위를 준다. 정렬 우선순위:
+//   ① score 내림차순(공식 불변)  ② usage  ③ like
+//   ④ 기존 official/editorial 추천 순서(editorialIndex 오름차순 —
+//      목록 밖 장소는 Infinity 로 뒤)  ⑤ 안정적인 숫자 ID
+// 전부 0인 초기 상태에서는 ④가 곧 추천 순위가 된다. 반응이 쌓이면
+// score 가 자연스럽게 순서를 바꾼다. 최소 반응 수·무반응 분리·신뢰도
+// 보정은 이번 정책에서 도입하지 않는다(§5 — 데이터 축적 후 별도 검토).
+
+export interface PlaceRankInput {
+  /** city_spots.id — 숫자 문자열 */
+  id:       string;
+  likes:    number;
+  dislikes: number;
+  usage:    number;
+  /** ④ 기존 추천 순서상의 위치. 목록에 없으면 Number.POSITIVE_INFINITY */
+  editorialIndex: number;
+}
+
+/** §2-2 cold-start 정렬 — 요청이 반복돼도 동점 순서가 흔들리지 않는다 */
+export function comparePlaceRanked(a: PlaceRankInput, b: PlaceRankInput): number {
+  const s = communityScore(b) - communityScore(a);
+  if (s !== 0) return s;
+  if (b.usage !== a.usage) return b.usage - a.usage;
+  if (b.likes !== a.likes) return b.likes - a.likes;
+  if (a.editorialIndex !== b.editorialIndex) return a.editorialIndex - b.editorialIndex;
+  return Number(a.id) - Number(b.id);
+}
+
 // ── Story 추천 제출 ─────────────────────────────────────────────────────────
 
 export const SUBMISSION_STATUSES = ["pending", "approved", "rejected", "withdrawn"] as const;

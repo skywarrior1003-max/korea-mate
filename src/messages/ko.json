@@ -1470,6 +1470,8 @@
     "communityCopied": "{count}명이 담음",
     "suggestPlaceCta": "추천 장소 제안하기",
     "communityRank": "{n}위",
+    "communityTravelerRank": "여행자 추천 · {n}위",
+    "communityOfficialRank": "공식 추천 · {n}",
     "communityUsage": "저장·여행 활용 {count}",
     "communityStoriesSoon": "여행자 추천 코스는 준비 중이에요.",
     "visitOrder": "방문 순서",

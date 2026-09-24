@@ -1470,6 +1470,8 @@
     "communityCopied": "{count}人已收藏",
     "suggestPlaceCta": "推荐一个地方",
     "communityRank": "第{n}名",
+    "communityTravelerRank": "旅行者推荐 · 第{n}名",
+    "communityOfficialRank": "官方推荐 · {n}",
     "communityUsage": "收藏·行程使用 {count}",
     "communityStoriesSoon": "旅行者推荐路线即将上线。",
     "visitOrder": "游览顺序",

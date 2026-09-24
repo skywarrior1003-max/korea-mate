@@ -1470,6 +1470,8 @@
     "communityCopied": "Copied by {count}",
     "suggestPlaceCta": "Suggest a place",
     "communityRank": "#{n}",
+    "communityTravelerRank": "Traveler pick · #{n}",
+    "communityOfficialRank": "Official pick · {n}",
     "communityUsage": "Saved & added {count}",
     "communityStoriesSoon": "Traveler-recommended courses are coming soon.",
     "visitOrder": "Stop order",

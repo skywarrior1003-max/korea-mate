@@ -1470,6 +1470,8 @@
     "communityCopied": "{count}人が保存",
     "suggestPlaceCta": "おすすめの場所を提案",
     "communityRank": "{n}位",
+    "communityTravelerRank": "旅行者おすすめ · {n}位",
+    "communityOfficialRank": "公式おすすめ · {n}",
     "communityUsage": "保存・旅行活用 {count}",
     "communityStoriesSoon": "旅行者おすすめコースは準備中です。",
     "visitOrder": "訪問順",

@@ -34,8 +34,8 @@ interface CommunityTripCard {
   cover?: string | null;
 }
 
-/** 서버 순위의 추천 장소 행(§6-1) — 순위는 배열 순서다. 점수·싫어요는 오지 않는다 */
-interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number }
+/** 서버 확정 도시 전체 순위 행(COLD-START §2) — rank 는 서버 값, 재정렬 금지 */
+interface CommunityPlaceRank { id: number; likeCount: number; usageCount: number; rank: number }
 
 // City Hub Fresh 토큰(디자인 SSOT discovery-explore-final-v1 §1) — Home 의 warm
 // --qh-* 를 바꾸지 않고 Hub 화면에만 cool 값을 입힌다.
@@ -109,25 +109,22 @@ export default function CityHubClient({ slug }: { slug: string }) {
   // 부족분만 카탈로그에서 보충 — 임의 매칭·가짜 인기 없음.
   // editorial order(Owner 지정 도시)가 있으면 그 순서를 그대로 쓴다 — 자동 순서가 덮지 않는다.
   const officialIds = hubEditorialSpotOrder(slug) ?? recommendedSpotIds(slug);
-  // RANKING-UX-HOTFIX §6-1·§6-3 — 실제 반응이 있는 장소는 서버 순위 그대로 앞에
-  // 세우고(순위 badge + 좋아요·활용 수), 빈 슬롯만 기존 official/editorial seed 로
-  // 채운다. seed 채움 카드에는 순위 숫자를 붙이지 않는다 — 무신호 장소에 허위
-  // 인기를 만들지 않는다(공식 코스의 무번호 원칙과 동일).
+  // COLD-START-RANKING-POLICY-V1 §2·§3 — 서버가 도시 전체 후보의 연속 순위를
+  // 확정한다(반응 0 포함·editorial 순서가 cold-start 기준). Hub 는 그 1~3위를
+  // 그대로 그린다 — 클라이언트 재정렬 없음. API 를 못 받은 동안·실패 시에만
+  // 기존 정적 추천을 순위 badge 없이 보여 화면을 비우지 않는다(과도기 폴백).
   const places = (() => {
     if (!spots) return [];
     const byId = new Map(spots.map(s => [Number(s.id), s]));
     const ranked = commPlaces
-      .map((r, i) => ({ spot: byId.get(r.id), rank: i + 1, likeCount: r.likeCount, usageCount: r.usageCount }))
+      .map(r => ({ spot: byId.get(r.id), rank: r.rank as number | null, likeCount: r.likeCount, usageCount: r.usageCount }))
       .filter((x): x is { spot: CitySpot; rank: number; likeCount: number; usageCount: number } => Boolean(x.spot))
       .slice(0, 3);
-    const taken = new Set(ranked.map(x => Number(x.spot.id)));
-    const official = officialIds.map(id => byId.get(id))
-      .filter((s): s is CitySpot => Boolean(s) && !taken.has(Number(s!.id)));
-    const fill = pickRecommended(spots.filter(s => !taken.has(Number(s.id)) && !official.includes(s)), 3);
-    const seedFill = [...official, ...fill]
-      .slice(0, Math.max(0, 3 - ranked.length))
+    if (ranked.length > 0) return ranked;
+    const official = officialIds.map(id => byId.get(id)).filter((s): s is CitySpot => Boolean(s));
+    const fill = pickRecommended(spots.filter(s => !official.includes(s)), 3);
+    return [...official, ...fill].slice(0, 3)
       .map(s => ({ spot: s, rank: null as number | null, likeCount: 0, usageCount: 0 }));
-    return [...ranked, ...seedFill];
   })();
 
   return (
@@ -223,10 +220,8 @@ export default function CityHubClient({ slug }: { slug: string }) {
                       {ct.title ?? t("communityTravelerCourse")}
                     </span>
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
-                      {/* §7-2 조용한 순위 — 여행자 Story 에만 붙는다(공식 코스 무번호) */}
-                      <span className="font-bold" style={{ color: HUB.eyebrow }}>{t("communityRank", { n: i + 1 })}</span>
-                      {" · "}
-                      <span className="font-semibold" style={{ color: HUB.eyebrow }}>{t("communityTravelerCourse")}</span>
+                      {/* COLD-START §4-1 — 여행자 순위(점수 기반)는 `여행자 추천 · N위` */}
+                      <span className="font-bold" style={{ color: HUB.eyebrow }}>{t("communityTravelerRank", { n: i + 1 })}</span>
                       {ct.days >= 1 ? ` · ${ct.days}d` : ""}{ct.stops > 0 ? ` · ${ct.stops} stops` : ""}
                       {` · ${t("communityLiked", { count: ct.likeCount })} · ${t("communityCopied", { count: ct.copyCount })}`}
                     </span>
@@ -234,16 +229,17 @@ export default function CityHubClient({ slug }: { slug: string }) {
                 </Link>
               </li>
             ))}
-            {trips.map(trip => (
+            {trips.map((trip, i) => (
               <li key={trip.id}>
                 {/* 각 행은 해당 코스의 상세(코스 흐름·stop·장소 진입)로 간다 */}
                 <Link href={`/city/${slug}/trips/${trip.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-[#16233B] truncate">{tripDisplayTitle(trip, locale)}</span>
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
-                      {/* §8 — 여행자 Story 와 섞일 수 있으므로 공식 라벨을 항상 앞에.
-                          숫자 순위는 붙이지 않는다(허위 인기 금지). */}
-                      {t("officialCourse")}
+                      {/* COLD-START §4-2·§4-3 — 공식 코스는 `공식 추천 · N`
+                          (editorial 순서 번호). 여행자 `N위`와 다른 체계라
+                          "위"를 붙이지 않고, 인기·여행자 표기를 쓰지 않는다. */}
+                      {t("communityOfficialRank", { n: i + 1 })}
                       {trip.days && Number.isInteger(trip.days) && trip.days >= 1 ? ` · ${trip.days}d` : ""}
                       {trip.stops.length > 0 ? ` · ${trip.stops.length} stops` : ""}
                     </span>
