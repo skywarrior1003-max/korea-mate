@@ -118,7 +118,7 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
 
   // 공개 moment 존재 — Story 표면 자체의 성립 조건(content-like 와 같은 축)
   const pm = await rest(env, "GET",
-    `trip_moments?itinerary_id=eq.${ids.itineraryId}&is_public=eq.true&select=id&limit=1`);
+    `trip_moments?itinerary_id=eq.${ids.itineraryId}&is_public=eq.true&select=moment_id&limit=1`);
   const hasPublicMoment = pm.ok && Array.isArray(pm.data) && pm.data.length > 0;
 
   const check = precheckSubmission({
