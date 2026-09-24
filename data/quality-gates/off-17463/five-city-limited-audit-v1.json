@@ -1,0 +1,2659 @@
+{
+ "generated_at": "2026-09-24T09:53:51.630Z",
+ "scope": "OFF-17463 동형(제한) — 전수 재검증 아님",
+ "jeonju_catalog": {
+  "review_candidates": [
+   {
+    "id": "OFF-10114",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 96.4m 이격 + 이름 불일치('전라 감영') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-10115",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 145.4m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-10116",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-11815",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 261.5m 이격 + 이름 불일치('노랑토랑') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-11923",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 82.9m 이격 + 이름 불일치('불정사(전주)') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-11924",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-11925",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 102.2m 이격 + 이름 불일치('수복회관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-11926",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 55.4m 이격 + 이름 불일치('전북대학교 문회루') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-11927",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 66.4m 이격 + 이름 불일치('장현식고택') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-11928",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-12346",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 305.8m 이격 + 이름 불일치('장수버섯마을') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13612",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13619",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-13620",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13622",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-13658",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13659",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 96.8m 이격 + 이름 불일치('고현당') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13660",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13798",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13844",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 221.9m 이격 + 이름 불일치('참치일번가 중화산본점') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-13964",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 173.5m 이격 + 이름 불일치('전주완산도서관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14336",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 59.0m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14364",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-14365",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-14461",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 69.7m 이격 + 이름 불일치('전주제야축제') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14497",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 102.2m 이격 + 이름 불일치('수복회관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-146",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14617",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 100.6m 이격 + 이름 불일치('남천교 청연루') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14711",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 200.1m 이격 + 이름 불일치('완산공원') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14762",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 128.2m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14805",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-149",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-14916",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15007",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15016",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15042",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-153",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15377",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 94.0m 이격 + 이름 불일치('대동고택') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15443",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15483",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 249.4m 이격 + 이름 불일치('전북특별자치도립국악원') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-155",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15535",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 59.0m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15718",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 291.8m 이격 + 이름 불일치('자만마을 벽화갤러리') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15764",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15861",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 296.5m 이격 + 이름 불일치('한벽굴') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-15945",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15963",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-15964",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-160",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16021",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16022",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 57.8m 이격 + 이름 불일치('자만마을 벽화갤러리') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16024",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 265.8m 이격 + 이름 불일치('객사길') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16025",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16030",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 253.7m 이격 + 이름 불일치('전북특별자치도립국악원') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16054",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 32.7m 이격 + 이름 불일치('전주완산도서관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16084",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16085",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16086",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 90.5m 이격 + 이름 불일치('엔브릿지호텔') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16088",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 52.8m 이격 + 이름 불일치('마이스테이') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16089",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 49.4m 이격 + 이름 불일치('우리 놀이터 마루달') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16091",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 238.1m 이격 + 이름 불일치('2025 전주드론축구월드컵') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16092",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 62.6m 이격 + 이름 불일치('제19회 전북청소년영화제') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16104",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 125.6m 이격 + 이름 불일치('국립전주박물관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16109",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 38.9m 이격 + 이름 불일치('마시랑게') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16133",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16139",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 262.8m 이격 + 이름 불일치('바다꽃게탕 본점') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16220",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 107.3m 이격 + 이름 불일치('전주공예품전시관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16226",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 60.1m 이격 + 이름 불일치('전주공예품전시관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16296",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16310",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16315",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 69.2m 이격 + 이름 불일치('전주전통한지원') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16357",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 93.5m 이격 + 이름 불일치('전라감영양조장(전라감영주식회사)') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16386",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-164",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16429",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 67.6m 이격 + 이름 불일치('엄가네시골집24시얼큰한뼈해장국') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16457",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 39.8m 이격 + 이름 불일치('꽃잠') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16655",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 43.2m 이격 + 이름 불일치('전주 초코파이 체험장') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16660",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16671",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 145.4m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16673",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 91.2m 이격 + 이름 불일치('서학동사진미술관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16674",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16675",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 61.8m 이격 + 이름 불일치('서학동사진미술관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16676",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 267.4m 이격 + 이름 불일치('전주동물원') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16678",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 60.1m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16679",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 181.3m 이격 + 이름 불일치('전주 연화정 도서관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16697",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 216.7m 이격 + 이름 불일치('수복회관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16725",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16734",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16749",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 128.2m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16792",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 136.5m 이격 + 이름 불일치('미술관 솔') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16824",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 267.4m 이격 + 이름 불일치('전주동물원') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16838",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 238.2m 이격 + 이름 불일치('제19회 전북청소년영화제') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16842",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16843",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16869",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 65.1m 이격 + 이름 불일치('사랑나무 한옥펜션') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-16872",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16898",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-16983",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 238.1m 이격 + 이름 불일치('2025 전주드론축구월드컵') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17047",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 248.9m 이격 + 이름 불일치('미술관 솔') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17066",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 200.4m 이격 + 이름 불일치('미술관 솔') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17077",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17081",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17128",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 40.3m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17141",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 52.1m 이격 + 이름 불일치('전주 남부시장') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17151",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17172",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 59.0m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17193",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 117.8m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17213",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 59.0m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17272",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17276",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17286",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 167.8m 이격 + 이름 불일치('화산서원비') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17288",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17322",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 102.2m 이격 + 이름 불일치('수복회관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17333",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17337",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17338",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17342",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17346",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 83.5m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17354",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 109.9m 이격 + 이름 불일치('국립전주박물관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17417",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 254.1m 이격 + 이름 불일치('전주완산도서관') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17433",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17447",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 59.0m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17454",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 213.5m 이격 + 이름 불일치('제19회 전북청소년영화제') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17469",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 60.5m 이격 + 이름 불일치('사랑가득') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17474",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 199.6m 이격 + 이름 불일치('완산공원') — 인접 건물 자동 동일시 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-17496",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17500",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17504",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17508",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17512",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-17516",
+    "city": "jeonju",
+    "active": false,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-93",
+    "city": "jeonju",
+    "active": false,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "LOW(비활성)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9736",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 75.3m 이격 + 이름 불일치('전주전통한지원') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9737",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 98.2m 이격 + 이름 불일치('성미당') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9738",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9740",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 51.2m 이격 + 이름 불일치('알콩달콩 다락방') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9741",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9742",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9746",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 75.7m 이격 + 이름 불일치('전주 남부시장') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9747",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 177.2m 이격 + 이름 불일치('첫마중길 여행자도서관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9750",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 277.7m 이격 + 이름 불일치('옛날팥죽집') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9751",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 66.4m 이격 + 이름 불일치('장현식고택') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9752",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 100.5m 이격 + 이름 불일치('마시랑게') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9755",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9757",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지",
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9758",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-9759",
+    "city": "jeonju",
+    "active": true,
+    "fields": [
+     "phone"
+    ],
+    "verdicts": [
+     "GOVERNMENT_PHONE: 063-222-1000 은 기관 대표번호 — 개별 장소 phone 채택 금지"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "필드 배제 유지"
+   },
+   {
+    "id": "OFF-9761",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9764",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9766",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 158.4m 이격 + 이름 불일치('전주 동문예술거리') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9772",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 102.2m 이격 + 이름 불일치('수복회관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9782",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9783",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 46.8m 이격 + 이름 불일치('전주부채문화관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9785",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "NEAR_BUT_DIFFERENT_NAME: 임계 이내라도 이름·category 다르면 통과 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9789",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 145.4m 이격 + 이름 불일치('예종대왕태실 및 비') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9790",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 100.1m 이격 + 이름 불일치('더 한옥') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9791",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 253.0m 이격 + 이름 불일치('자만마을 벽화갤러리') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9793",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "AMBIGUOUS_UNREVIEWED: match_type=AMBIGUOUS 이며 identity_review 미완 — Final 승격 금지",
+     "COORD_ENTITY_CONFLICT: 결합 원천과 56.0m 이격 + 이름 불일치('사랑가득') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9796",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 93.3m 이격 + 이름 불일치('전주 대사습청') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9797",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 42.1m 이격 + 이름 불일치('전주부채문화관') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9798",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 33.0m 이격 + 이름 불일치('전주전통한지원') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9800",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 88.8m 이격 + 이름 불일치('남천교 청연루') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9810",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 95.5m 이격 + 이름 불일치('우리 놀이터 마루달') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   },
+   {
+    "id": "OFF-9811",
+    "city": "jeonju",
+    "active": true,
+    "fields": [],
+    "verdicts": [
+     "COORD_ENTITY_CONFLICT: 결합 원천과 55.2m 이격 + 이름 불일치('장현식고택') — 인접 건물 자동 동일시 금지"
+    ],
+    "risk": "HIGH(ACTIVE 인데 quarantine 사유)",
+    "recommendation": "사람 검토 queue — 해소 전 재승격·export 금지"
+   }
+  ],
+  "confirmed_contamination": [],
+  "stats": {
+   "total": 423,
+   "confirmed_clean": 259,
+   "review_candidates": 164,
+   "ambiguous_active": 54,
+   "government_phone_rows": 94
+  }
+ },
+ "main_intake_v3": {
+  "review_candidates": [
+   {
+    "id": "OFF-10076",
+    "city": "jeonju",
+    "name": "Jeonju Museum of History",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-11923",
+    "city": "jeonju",
+    "name": "만경대 암각서",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-11925",
+    "city": "jeonju",
+    "name": "덕진공원 3층석탑",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-11926",
+    "city": "jeonju",
+    "name": "전북대 석불입상",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-11927",
+    "city": "jeonju",
+    "name": "박진 효자비",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-13612",
+    "city": "jeonju",
+    "name": "Sebyeong Park",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-13620",
+    "city": "jeonju",
+    "name": "Matnae Lake",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-14617",
+    "city": "jeonju",
+    "name": "A fan museum",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16022",
+    "city": "jeonju",
+    "name": "Jaman Mural Village",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16025",
+    "city": "jeonju",
+    "name": "Yeonhwajeong Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16084",
+    "city": "jeonju",
+    "name": "Nambu Market & Youth Mall",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16085",
+    "city": "jeonju",
+    "name": "Nambu Market Hanok Village Night Market",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16086",
+    "city": "jeonju",
+    "name": "Cheongyeonru & Namcheongyo",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16088",
+    "city": "jeonju",
+    "name": "Dongmun Secondhand Book Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16089",
+    "city": "jeonju",
+    "name": "Donghak Peasant Revolution Memorial Hall",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16092",
+    "city": "jeonju",
+    "name": "Jeonju Cinema Studio & Jeonju Digital Independent Cinema",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16109",
+    "city": "jeonju",
+    "name": "Jeonju Hanok Village",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16220",
+    "city": "jeonju",
+    "name": "White Western-style House",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16357",
+    "city": "jeonju",
+    "name": "짜앤짬이야기",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16673",
+    "city": "jeonju",
+    "name": "Seohak-dong Art Village",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16675",
+    "city": "jeonju",
+    "name": "Seohak Art Village Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16677",
+    "city": "jeonju",
+    "name": "Ajung Lake Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16678",
+    "city": "jeonju",
+    "name": "Hanok Village Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-16680",
+    "city": "jeonju",
+    "name": "Wansan Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-17128",
+    "city": "jeonju",
+    "name": "Tradi-Lounge",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-17463",
+    "city": "jeonju",
+    "name": "메르밀진미집 본점",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "RESOLVED(776 교정 완료)",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9736",
+    "city": "jeonju",
+    "name": "Seunggwangjae",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9737",
+    "city": "jeonju",
+    "name": "Pungpaejigwan (Jeonju Gaeksa)",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9738",
+    "city": "jeonju",
+    "name": "Chimyeongjasan Holy Ground",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9740",
+    "city": "jeonju",
+    "name": "Hakindang House",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9741",
+    "city": "jeonju",
+    "name": "Hanbyeokdang Pavilion",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9742",
+    "city": "jeonju",
+    "name": "Jeonjucheon Stream",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9746",
+    "city": "jeonju",
+    "name": "Pungnammun Gate",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9749",
+    "city": "jeonju",
+    "name": "Haksan Forest Poem Library",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9751",
+    "city": "jeonju",
+    "name": "Jeonjuhyanggyo Local Confucian School",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9752",
+    "city": "jeonju",
+    "name": "Jeondong Catholic Cathedral",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9755",
+    "city": "jeonju",
+    "name": "Jeonbuk Arts Center",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9757",
+    "city": "jeonju",
+    "name": "Gijije Circular Trail",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9761",
+    "city": "jeonju",
+    "name": "National Intangible Heritage Center",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9764",
+    "city": "jeonju",
+    "name": "Jeonju Hanok Rail Bike",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9769",
+    "city": "jeonju",
+    "name": "Palbok Art Factory",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9772",
+    "city": "jeonju",
+    "name": "Deokjin Park",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9781",
+    "city": "jeonju",
+    "name": "Jeonju Eco Museum",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9782",
+    "city": "jeonju",
+    "name": "Jeonju Daesaseupcheong",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9783",
+    "city": "jeonju",
+    "name": "Gyodong Art Gallery",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9785",
+    "city": "jeonju",
+    "name": "Our Playground— Marudal",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9790",
+    "city": "jeonju",
+    "name": "Jeonju Crafts Exhibition Hall",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9793",
+    "city": "jeonju",
+    "name": "Wanpanbon Culture Center",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9794",
+    "city": "jeonju",
+    "name": "Fan Culture Center",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9796",
+    "city": "jeonju",
+    "name": "Jeonju Traditional Liquor Museum",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9797",
+    "city": "jeonju",
+    "name": "Choi Myeong-hui Literary House",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9798",
+    "city": "jeonju",
+    "name": "Jeonju Hanok Village Seonbi Culture Cente",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9800",
+    "city": "jeonju",
+    "name": "Gangam Museum of Calligraphy",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9810",
+    "city": "jeonju",
+    "name": "Jeonju Hanok Village History Museum",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   },
+   {
+    "id": "OFF-9811",
+    "city": "jeonju",
+    "name": "Jeonju Traditional Culture Training Center",
+    "fields": [
+     "provenance.match_type=AMBIGUOUS 인데 반입됨"
+    ],
+    "risk": "MEDIUM",
+    "recommendation": "재반입·재수집 전 identity 재검토"
+   }
+  ],
+  "stats": {
+   "total": 4829,
+   "ambiguous_imported": 55,
+   "review_candidates": 55
+  }
+ }
+}
