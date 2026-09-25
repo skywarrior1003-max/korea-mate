@@ -18,6 +18,7 @@
 // 계약)를 재사용한다. binding 이 없는 로컬 dev 는 직결 fallback(writing/personalize 와
 // 동일 패턴). 어떤 실패도 200 + {ok:false, error} — 클라이언트가 정직하게 보여 준다.
 
+import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
@@ -168,6 +169,8 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
 }
 
 export async function onRequestPost(ctx: { request: Request; env: Env }): Promise<Response> {
+  // V2-ENV-ISOLATION §10 — 환경별 AI 게이트(provider 호출 이전 차단)
+  if (!aiAllowed(ctx.env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
   if ((ctx.env.URL_IMPORT_MODE ?? "").toLowerCase() === "off") return fail("off");
 
   let body: { url?: unknown };

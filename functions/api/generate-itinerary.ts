@@ -1,4 +1,5 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
+import { aiAllowed, aiUnavailableResponse } from "../_lib/app-env";
 interface Env {
   /**
    * 이 레거시 endpoint 전용 게이트. 기본 미설정 = 영구 410.
@@ -731,6 +732,8 @@ export const onRequestPost: (context: {
   request: Request;
   env: Env;
 }) => Promise<Response> = async ({ request, env }) => {
+  // V2-ENV-ISOLATION §10 — 환경별 AI 게이트(provider 호출 이전 차단)
+  if (!aiAllowed(env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
   const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",

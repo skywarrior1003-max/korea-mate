@@ -19,6 +19,7 @@
 //  동작한다 — 계약은 두 경로가 동일하다(Worker 도 writing-core 를 그대로 쓴다).
 
 import { createClient } from "@supabase/supabase-js";
+import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
@@ -318,6 +319,8 @@ async function pollReady(admin: NonNullable<ReturnType<typeof adminClient>>, cac
 export async function onRequestPost(
   ctx: { request: Request; env: Env; fetchFn?: typeof fetch },
 ): Promise<Response> {
+  // V2-ENV-ISOLATION §10 — 환경별 AI 게이트(provider·DB 이전 차단, key fallback 없음)
+  if (!aiAllowed(ctx.env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
   if ((ctx.env.MYTRIP_AI_WRITING_MODE ?? "").toLowerCase() === "off") {
     return reply(null, "off");
   }

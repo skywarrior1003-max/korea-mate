@@ -149,7 +149,12 @@ export default function RootLayout({
       })()}
       {(() => {
         const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
-        const ga4Valid = ga4Id && ga4Id !== "나중에_입력";
+        // V2-ENV-ISOLATION §11-1 — analytics live 는 production 빌드에서만.
+        // 비-production 은 NEXT_PUBLIC_ANALYTICS_MODE=test 로만 별도 property 허용.
+        const appEnv = (process.env.NEXT_PUBLIC_APP_ENV ?? "").toLowerCase();
+        const analyticsMode = (process.env.NEXT_PUBLIC_ANALYTICS_MODE ?? "").toLowerCase();
+        const envAllows = appEnv === "production" ? analyticsMode !== "off" : analyticsMode === "test";
+        const ga4Valid = envAllows && ga4Id && ga4Id !== "나중에_입력";
         return ga4Valid ? (
           <>
             <Script

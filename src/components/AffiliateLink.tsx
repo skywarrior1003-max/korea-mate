@@ -2,6 +2,7 @@
 
 import { trackEvent } from "@/lib/analytics";
 import type { LinkKind } from "@/config/affiliate-registry";
+import { affiliateLive, AFFILIATE_PREVIEW_HREF } from "@/lib/env/app-env-client";
 
 interface AffiliateLinkProps {
   href: string;
@@ -39,21 +40,28 @@ export default function AffiliateLink({
   locale,
 }: AffiliateLinkProps) {
   const isAffiliate = kind === "affiliate";
+  // V2-ENV-ISOLATION §11-2 — 비-production 빌드에서는 실제 외부 이동과
+  // affiliate_click 전송을 모두 막는다. UI·문구·locale 은 그대로 두어
+  // Production 장애처럼 보이지 않게 하고, title 로 테스트 환경임을 알린다.
+  // 실제 파트너 URL·파라미터 SSOT(partner-links)는 변경하지 않는다.
+  const live = affiliateLive();
   return (
     <a
-      href={href}
-      target="_blank"
+      href={live ? href : AFFILIATE_PREVIEW_HREF}
+      target={live ? "_blank" : undefined}
       // sponsored 는 수익 관계가 있을 때만 붙인다.
       rel={isAffiliate ? "noopener noreferrer sponsored" : "noopener noreferrer"}
       className={className}
-      onClick={isAffiliate
+      aria-disabled={live ? undefined : true}
+      title={live ? undefined : "Preview environment: partner links are disabled"}
+      onClick={live && isAffiliate
         ? () => trackEvent("affiliate_click", {
             provider, title, city,
             ...(surface ? { surface } : {}),
             ...(purpose ? { purpose } : {}),
             ...(locale ? { locale } : {}),
           })
-        : undefined}
+        : (live ? undefined : (e) => e.preventDefault())}
     >
       {children}
     </a>

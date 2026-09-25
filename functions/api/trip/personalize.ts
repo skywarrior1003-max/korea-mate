@@ -17,6 +17,7 @@
 //   · secret 은 ctx.env 에서 요청 시점에만 읽는다.
 //   · 어떤 실패도 200 + null profile 로 돌려준다 — 일정 생성이 멈추면 안 된다.
 
+import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import {
   resolveAiMode, modeAllowsProviderCall, validateProfile, buildMockProfile,
   PROFILE_VERSION, PROFILE_CATEGORIES, TIME_PREFERENCES,
@@ -106,6 +107,8 @@ export async function onRequestPost(
     fetchFn?: typeof fetch;
   },
 ): Promise<Response> {
+  // V2-ENV-ISOLATION §10 — 환경별 AI 게이트(provider 호출 이전 차단)
+  if (!aiAllowed(ctx.env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
   const mode = resolveAiMode(ctx.env.AI_PERSONALIZATION_MODE);
 
   let body: Body;
