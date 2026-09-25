@@ -9,6 +9,12 @@ import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+// V2-ENVIRONMENT-ISOLATION §8 — 잘못된 환경 조합이면 next build 이전에 실패한다.
+{
+  const guard = spawnSync(process.execPath, ["scripts/verify-environment.mjs"], { stdio: "inherit" });
+  if ((guard.status ?? 1) !== 0) process.exit(guard.status ?? 1);
+}
+
 process.env.STATIC_EXPORT = "true";
 
 const result = spawnSync("npx", ["next", "build"], {
