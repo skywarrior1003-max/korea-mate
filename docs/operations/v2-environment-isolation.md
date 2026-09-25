@@ -57,6 +57,10 @@ SUPABASE_SERVICE_ROLE_KEY **+ APP_ENV=staging · NEXT_PUBLIC_APP_ENV=staging ·
 SITE_ORIGIN · EXPECTED_SUPABASE_PROJECT_REF · AI_MODE=off · ANALYTICS_MODE=off ·
 AFFILIATE_MODE=test**
 
+> ⚠ Cloudflare 함정(2026-09-25 실측): API 로 `plain_text` 타입으로 넣은 변수는
+> **런타임에는 보이지만 빌드 프로세스에는 주입되지 않는다**. 빌드 가드가 읽어야
+> 하는 변수(APP_ENV 등)는 반드시 `secret_text`(대시보드 기본) 타입으로 설정한다.
+
 ## 4. Production 출시 전 Owner/release TASK 설정 항목 (이 값들이 없으면 Production build 가 의도적으로 실패한다)
 
 Cloudflare **Production** env 에 추가(전부 비밀 아님):
