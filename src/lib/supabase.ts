@@ -8,7 +8,19 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_A
   console.error("[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is not configured — all DB calls will fail at runtime.");
 }
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+// V2-MINIMAL-GOOGLE-AUTH-V1 §4·§7 — Google 로그인은 PKCE authorization-code
+// flow 만 쓴다. detectSessionInUrl 을 끄는 이유: code 교환을 /auth/callback
+// 페이지가 명시적으로 수행하고 URL 에서 일회성 파라미터를 직접 제거하기
+// 위해서다(자동 감지는 어느 화면에서든 교환이 일어나 URL 정리를 보장 못 한다).
+// 세션 저장은 SDK 기본 계약(localStorage)을 그대로 쓴다 — 별도 복제 금지(§7).
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
+  auth: {
+    flowType: "pkce",
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: false,
+  },
+});
 
 // ── AI 생성 7일+ 일정 ────────────────────────────────────────
 export interface ItineraryRow {
