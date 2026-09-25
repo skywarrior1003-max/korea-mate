@@ -9,10 +9,10 @@
 //  · 순위·페이지는 서버가 결정 — 클라이언트 재정렬·score 계산 없음.
 //  · 신규 상태는 URL(?tab=new)로 직접 진입·공유·새로고침·뒤로 가기.
 
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 import { getRecommendedTrips, tripDisplayTitle } from "@/data/regional/regional-recommendations";
@@ -29,15 +29,33 @@ interface StoryPage { items: CommunityTripCard[]; page: number; total: number; h
 
 type Tab = "popular" | "new";
 
+// SSG HTML 은 항상 인기 탭으로 구워진다. 딥링크(?tab=new)에서 첫 클라이언트
+// 렌더가 서버와 달라지면 hydration mismatch(#418)가 난다 — HomeClient hasTrip
+// 선례와 같은 useSyncExternalStore 로 서버 스냅숏("" = 인기)을 첫 렌더에 쓰고,
+// hydration 직후 실제 URL 값으로 갈아탄다(효과 내 동기 setState 없이).
+const subscribeNav = (cb: () => void) => {
+  window.addEventListener("popstate", cb);
+  return () => window.removeEventListener("popstate", cb);
+};
+function useUrlTab(searchFromRouter: string | null): Tab {
+  const search = useSyncExternalStore(
+    subscribeNav,
+    () => window.location.search,
+    () => "",
+  );
+  // 라우터 push 로 바뀐 값은 useSearchParams 재렌더 때 getSnapshot 이 다시 읽는다
+  void searchFromRouter;
+  return new URLSearchParams(search).get("tab") === "new" ? "new" : "popular";
+}
+
 function TripsAllInner({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const city = quietCity(slug);
-  const tab: Tab = searchParams.get("tab") === "new" ? "new" : "popular";
+  const tab = useUrlTab(searchParams.toString());
 
   const [spots, setSpots] = useState<CitySpot[] | null>(null);
   const [cards, setCards] = useState<CommunityTripCard[]>([]);
@@ -75,10 +93,9 @@ function TripsAllInner({ slug }: { slug: string }) {
     setBusy(false);
   };
 
-  const switchTab = (next: Tab) => {
-    if (next === tab) return;
-    router.push(next === "new" ? `${pathname}?tab=new` : pathname, { scroll: false });
-  };
+  // 탭 전환은 Link 내비게이션(정적 export 에서 router.push 의 쿼리 갱신이
+  // 신뢰되지 않는다) — URL 이 상태의 정본이므로 앱의 일반 링크 문법을 쓴다.
+  const tabHref = (m: Tab) => `${pathname}?tab=${m === "new" ? "new" : "popular"}`;
 
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
@@ -121,12 +138,11 @@ function TripsAllInner({ slug }: { slug: string }) {
         {/* §8-2 인기|신규 전환 — URL 이 상태의 정본 */}
         <div role="tablist" aria-label={t("tripsIn", { city: cityLabel })} className="mt-3 inline-flex rounded-full border p-0.5" style={{ borderColor: "var(--qh-line)", background: "#fff" }}>
           {(["popular", "new"] as const).map(m => (
-            <button key={m} type="button" role="tab" aria-selected={tab === m}
-              onClick={() => switchTab(m)}
-              className="gkm-focus rounded-full px-4 min-h-10 text-[13px] font-semibold"
+            <Link key={m} href={tabHref(m)} scroll={false} role="tab" aria-selected={tab === m}
+              className="gkm-focus inline-flex items-center rounded-full px-4 min-h-10 text-[13px] font-semibold"
               style={tab === m ? { background: "var(--qh-ink)", color: "var(--qh-paper)" } : { color: "var(--qh-faint)" }}>
               {t(m === "new" ? "tabNew" : "tabPopular")}
-            </button>
+            </Link>
           ))}
         </div>
 
@@ -135,10 +151,10 @@ function TripsAllInner({ slug }: { slug: string }) {
             /* 신규 0건 — 공식 코스로 채우지 않는다(§8-2) */
             <div className="mt-8 text-center">
               <p className="text-[13.5px] text-[var(--qh-faint)]">{t("newStoriesEmpty")}</p>
-              <button type="button" onClick={() => switchTab("popular")}
+              <Link href={tabHref("popular")} scroll={false}
                 className="gkm-focus mt-3 inline-flex min-h-11 items-center text-[13px] font-semibold" style={{ color: "var(--qh-blue)" }}>
                 {t("backToPopular")} <span aria-hidden className="ml-1">→</span>
-              </button>
+              </Link>
             </div>
           ) : (
             <ul className="mt-2">{cards.map(storyRow)}</ul>
