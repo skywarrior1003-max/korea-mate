@@ -11,3 +11,8 @@ workers_dev = true
 # 서울 GCP 리전(asia-northeast3) 최저 latency 지점에서 실행되도록 고정한다.
 [placement]
 region = "gcp:asia-northeast3"
+
+# CORRECTION-V1 §9 — Worker 자체 kill switch. 'live' 를 명시하지 않는 한
+# provider 호출 금지(코드가 누락도 off 로 처리하지만, 상태를 명시해 둔다).
+[vars]
+AI_WRITING_WORKER_MODE = "off"

@@ -33,6 +33,8 @@ region = "gcp:asia-northeast3"
 
 
 [vars]
+# CORRECTION-V1 §9 — kill switch: 'live' 명시 전 provider 0 (누락도 off)
+CURATOR_MODE = "off"
 CURATOR_SEARCH_ENABLED = "1"
 CURATOR_WEEKLY_GROUNDED_PROMPT_CAP = "4"
 CURATOR_ALLOWED_MODEL = "gemini-2.5-flash"
