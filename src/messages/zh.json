@@ -1638,4 +1638,17 @@
     "submitErrorNoMoment": "你的公开Story里还没有任何记录。请在记录管理中选择要公开的记录。",
     "submitOpenRecords": "打开记录管理"
   }
+  ,"auth": {
+      "accountGroup": "账户",
+      "googleContinue": "使用Google继续",
+      "signingIn": "正在登录…",
+      "signedInFallback": "已登录",
+      "signedInHint": "你的AI使用权将安全地保存在这个账户中。",
+      "signOut": "退出登录",
+      "aiLoginRequiredTitle": "登录后即可使用AI喜好调整",
+      "aiLoginKeepsTrips": "登录用于安全保管你的AI使用权。现有行程会原样保留在当前设备上。",
+      "callbackFailed": "登录未完成，请重试。",
+      "backToHome": "返回首页"
+  }
+
 }

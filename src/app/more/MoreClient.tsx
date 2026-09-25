@@ -21,6 +21,61 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
   readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen, emitGuideEvent,
 } from "@/lib/journey-guide/guide-core";
+import {
+  getCurrentUser, signInWithGoogle, signOutUser, onAuthChange, type AuthUserView,
+} from "@/lib/auth/auth-client";
+
+/** 로그인 상태 영역 (V2-MINIMAL-GOOGLE-AUTH-V1 §12) — More 화면 최소 진입점.
+ *  이메일 전체를 노출하지 않고, Google 프로필 이미지는 쓰지 않는다(외부 이미지
+ *  추적·깨짐 여지). AI 사용 가능을 약속하는 문구·잔여 횟수·크레딧 표시는 없다. */
+function AccountSection() {
+  const tAuth = useTranslations("auth");
+  const [user, setUser] = useState<AuthUserView | null>(null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    void getCurrentUser().then(u => { if (alive) setUser(u); });
+    const off = onAuthChange(u => { if (alive) setUser(u); }); // 멀티탭 동기화 포함
+    return () => { alive = false; off(); };
+  }, []);
+  return (
+    <section className="mb-8">
+      <h2 className="text-[13px] font-black uppercase tracking-[0.14em] text-[#8A7D72] mb-3">{tAuth("accountGroup")}</h2>
+      <div className="rounded-2xl border border-[#E6DFD5] bg-white px-5 py-4">
+        {user ? (
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[15px] font-black text-[#2C2520]">{user.displayName ?? tAuth("signedInFallback")}</p>
+              <p className="text-[12px] text-[#61554D] mt-0.5">{tAuth("signedInHint")}</p>
+            </div>
+            <button
+              onClick={async () => { setBusy(true); await signOutUser(); setBusy(false); }}
+              disabled={busy}
+              className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
+            >
+              {tAuth("signOut")}
+            </button>
+          </div>
+        ) : (
+          <div>
+            <p className="text-[13px] text-[#61554D] mb-3">{tAuth("aiLoginKeepsTrips")}</p>
+            <button
+              onClick={async () => {
+                setBusy(true);
+                const r = await signInWithGoogle("/more");
+                if (!r.ok) setBusy(false); // 성공이면 페이지가 Google 로 이동한다
+              }}
+              disabled={busy}
+              className="gkm-focus px-4 py-2 rounded-xl bg-[#2C2520] text-white text-[13px] font-bold disabled:opacity-50"
+            >
+              {busy ? tAuth("signingIn") : tAuth("googleContinue")}
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 /** 아이콘은 이 저장소가 쓰는 방식 그대로 인라인 SVG · currentColor 다 */
 const ICON = {
@@ -104,6 +159,8 @@ export default function MoreClient() {
       <main className="flex-1 w-full max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-12">
         <h1 className="text-4xl font-black tracking-tight leading-tight">{tShell("more")}</h1>
         <p className="mt-2 mb-8 text-[15px] text-[#61554D] leading-relaxed">{t("subtitle")}</p>
+
+        <AccountSection />
 
         <Group title={t("groupInfo")}>
           <Row

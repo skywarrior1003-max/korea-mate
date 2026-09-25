@@ -1638,4 +1638,17 @@
     "submitErrorNoMoment": "No records are in your public Story yet. Pick records to make public in Manage records.",
     "submitOpenRecords": "Open Manage records"
   }
+  ,"auth": {
+      "accountGroup": "Account",
+      "googleContinue": "Continue with Google",
+      "signingIn": "Signing you in…",
+      "signedInFallback": "Signed in",
+      "signedInHint": "Your AI passes will be kept safely with this account.",
+      "signOut": "Sign out",
+      "aiLoginRequiredTitle": "Sign in to use AI personalization",
+      "aiLoginKeepsTrips": "Signing in keeps your AI passes safe. Your existing trips stay on this device as they are.",
+      "callbackFailed": "Sign-in didn’t finish. Please try again.",
+      "backToHome": "Back to home"
+  }
+
 }

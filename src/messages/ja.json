@@ -1638,4 +1638,17 @@
     "submitErrorNoMoment": "公開ストーリーに入れた記録がまだありません。記録管理で公開する記録を選んでください。",
     "submitOpenRecords": "記録管理を開く"
   }
+  ,"auth": {
+      "accountGroup": "アカウント",
+      "googleContinue": "Googleで続ける",
+      "signingIn": "ログインしています…",
+      "signedInFallback": "ログイン済み",
+      "signedInHint": "AI利用権をこのアカウントに安全に保管します。",
+      "signOut": "ログアウト",
+      "aiLoginRequiredTitle": "AIによる好み反映はログイン後に利用できます",
+      "aiLoginKeepsTrips": "ログインはAI利用権を安全に保管するために使います。今までの旅はこの端末にそのまま残ります。",
+      "callbackFailed": "ログインが完了しませんでした。もう一度お試しください。",
+      "backToHome": "ホームに戻る"
+  }
+
 }
