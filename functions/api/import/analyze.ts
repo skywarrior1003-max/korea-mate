@@ -214,8 +214,10 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
 
   const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, check.url.toString()));
   if (!ai.ok) {
-    // provider HTTP 오류/미도달 계열과 timeout 을 구분할 수 없는 오류 코드는
-    // 보수적으로 unknown_billed(예약 보존). 명확한 사전 차단만 released.
+    // 정산(CORRECTION-V1 §2): "analyze_unavailable" 은 analyzeWithAi 가
+    // key/binding 부재로 **요청을 만들기 전에** 반환하는 유일한 코드다 —
+    // provider 미전송 확정이므로 released. 그 외(analyze_failed/timeout/parse)는
+    // 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
     await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId,
       ai.error === "analyze_unavailable" ? "released" : "unknown_billed");
     log({ ok: false, host: fetched.finalHost, error: ai.error, ms: Date.now() - started });

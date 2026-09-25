@@ -864,12 +864,11 @@ export const onRequestPost: (context: {
   }
 
   // 모든 모델 실패 → fallback 일정 반환 (기술 오류 사용자 노출 금지)
-  // 정산: 모든 시도가 "Gemini NNN"(HTTP 오류 응답 수신)이면 명확한 무과금 —
-  // 예약 반환. 하나라도 timeout·네트워크 계열이면 과금 여부 불명 — 예약 보존
-  // (unknown_billed). 비용 0 을 가정하지 않는다.
-  const allHttpErrors = allErrors.length > 0 && allErrors.every(e => /Gemini \d+/.test(e));
-  await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId,
-    allHttpErrors ? "released" : "unknown_billed");
+  // 정산(CORRECTION-V1 §2): 여기 도달했다는 것은 provider 요청이 실제로
+  // 전송됐다는 뜻이다. HTTP 오류 응답을 받았어도 그것이 무과금이라는 공식
+  // 근거는 없다(4xx·429 포함). 코드로 무과금을 증명할 수 없는 실패는 전부
+  // 예약액 보존 — released 는 provider 이전 차단에만 허용된다.
+  await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "unknown_billed");
   console.error("Gemini all models failed:", allErrors.join(" | "));
   return new Response(
     JSON.stringify(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime)),

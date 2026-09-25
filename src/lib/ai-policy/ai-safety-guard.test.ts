@@ -83,6 +83,22 @@ test("게이트 순서 — writing.ts 는 캐시·레거시 두 경로 모두", 
   assert.ok(firstRunDirect < 0 || firstReserve < firstRunDirect, "runDirect 가 게이트보다 앞 — 우회");
 });
 
+test("정산 매트릭스 — provider 도달 후 release 금지 (CORRECTION-V1 §2)", () => {
+  // released 는 provider 요청을 만들기 전의 확정 무과금에만 허용된다.
+  // HTTP 오류 응답 수신(4xx·429·5xx)은 전송 후의 사건 — unknown_billed.
+  const gi = read("functions/api/generate-itinerary.ts");
+  assert.ok(!gi.includes('"released"'), "generate-itinerary 는 reserve 후 전 실패가 전송 후 — release 금지");
+  const pers = read("functions/api/trip/personalize.ts");
+  assert.ok(!pers.includes('"released"'), "personalize 도 reserve 후 전 실패가 전송 후 — release 금지");
+  const wr = read("functions/api/mytrip/writing.ts");
+  assert.ok(!wr.includes('"released"'), "writing 은 committed/unknown_billed 만");
+  // analyze 의 released 는 정확히 한 곳 — 전송 전 확정 코드(analyze_unavailable) 조건부만
+  const an = read("functions/api/import/analyze.ts");
+  const relLines = an.split("\n").filter(l => l.includes('"released"'));
+  assert.equal(relLines.length, 1, "analyze released 는 1곳이어야 한다");
+  assert.ok(relLines[0]!.includes('analyze_unavailable'), "analyze released 는 전송 전 확정 코드 조건부만");
+});
+
 test("공통 게이트 — AI_MODE(env) 최우선, 스위치는 fail-closed", () => {
   const g = read("functions/_lib/ai-ops-guard.ts");
   // ① aiAllowed(env) 검사가 DB 스위치 조회보다 앞

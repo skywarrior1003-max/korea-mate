@@ -195,8 +195,9 @@ export async function onRequestPost(
   if (!call.ok) {
     if (call.kind === "http") {
       // 400·401·403·404·408·429·5xx 전부 여기로 온다. 재호출하지 않는다.
-      // 명확한 무과금 실패(HTTP 오류 응답 수신) — 예약 반환
-      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "released");
+      // 정산(CORRECTION-V1 §2): 요청은 이미 전송됐다 — HTTP 오류 응답이라는
+      // 사실만으로 무과금을 단정할 공식 근거가 없다. 예약액 보존.
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
       log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: call.httpStatus,
             latency: call.latencyMs, status: "fallback_provider_error" });
       return reply(null, "fallback_provider_error");
