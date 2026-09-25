@@ -10,6 +10,7 @@
 // 재시도는 없다. 여기서도, 서버에서도.
 
 import type { PersonalizationProfile } from "@/lib/scheduler/ai/personalization-profile";
+import { getAccessTokenForApi } from "@/lib/auth/auth-client";
 
 export interface PersonalizeRequest {
   city:                string;
@@ -50,9 +51,16 @@ export async function fetchPersonalizationProfile(
 
   const p = (async (): Promise<PersonalizationProfile | null> => {
     try {
+      // V2-AUTH §9 — 로그인 세션이 있으면 Authorization 으로만 전달한다.
+      // URL·body·로그에 넣지 않는다. 세션이 없으면 헤더 없이 보내고 서버가
+      // 401 로 답한다(호출부가 로그인 안내로 처리).
+      const token = await getAccessTokenForApi();
       const res = await fetch("/api/trip/personalize", {
         method:  "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body:    JSON.stringify({ ...req, request_id: key }),
       });
       if (!res.ok) return null;                       // 재시도하지 않는다

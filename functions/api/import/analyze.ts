@@ -20,6 +20,7 @@
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle } from "../../_lib/ai-ops-guard";
+import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
@@ -201,13 +202,19 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return fail("no_readable_text");
   }
 
+  // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수
+  const auth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+  if (!auth.ok) return auth.response;
+  checkUserEntitlementPlaceholder(auth.userId); // 차감은 후속 TASK
+  const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
+  const actor = actorSecret ? await userActorHash(auth.userId, actorSecret) : null;
   // V2-HARDCAP §7·§8 — DB 스위치 + 원자 비용 예약(provider 이전)
   const idemBuf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(check.url.toString() + ":" + new Date().toISOString().slice(0, 13)));
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
     feature: "import_analyze", model: "gemini-2.5-flash",
     worstUsdMicro: 12_100, // cost-model analyze 최악 ≈$0.0121
     idempotencyKey: "analyze:" + [...new Uint8Array(idemBuf)].slice(0, 16).map(b => b.toString(16).padStart(2, "0")).join(""),
-    actorHash: null,
+    actorHash: actor,
     featureDailyCalls: 100, featureDailyUsdMicro: 1_500_000, // $1.5/day
   });
   if (!gate.ok) return fail("analyze_unavailable");
