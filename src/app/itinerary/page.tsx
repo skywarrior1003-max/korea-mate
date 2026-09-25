@@ -424,7 +424,16 @@ async function generateWithNewApi(
   tripPace?: TripPaceChoice,
   /** 도착 지점 종류(city-presets type). far-airport 판정에만 쓴다. */
   arrivalType?: string,
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; fixedOutOfHoursNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
+  /**
+   * V2-HARDCAP §4·§5 — AI 개인화는 명시 옵트인일 때만.
+   *
+   * 기본 일정 생성은 provider 호출 0 이 계약이다. 예전에는 이 함수가 항상
+   * personalize 를 함께 불렀는데, 그러면 "일정 만들기" 버튼이 곧 AI 비용
+   * 발생 지점이 된다. 이제 기본 경로(false)는 규칙 기반으로만 돌고,
+   * 사용자가 "AI로 내 취향 반영하기" 를 눌렀을 때만 true 로 다시 부른다.
+   */
+  aiPersonalize = false,
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; fixedOutOfHoursNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null; personalizationApplied: boolean }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -556,10 +565,11 @@ async function generateWithNewApi(
   // 밖으로 나가는 것만 여기서 줄인다.
   const personalizableHints = cartHints.filter(h => !isUserSpotSource(h.source_key));
 
-  // ── whole-trip 개인화 프로필 — 여행당 정확히 1회 ──
+  // ── whole-trip 개인화 프로필 — 옵트인일 때만, 여행당 정확히 1회 ──
   // 날짜 루프 "밖"이다. 안에서 부르면 14일 여행에 14번 나간다.
   // 실패하면 null 이고, 그러면 아래 루프는 기존과 완전히 같은 규칙 기반으로 돈다.
-  const personalizationProfile = await fetchPersonalizationProfile({
+  // aiPersonalize=false(기본)면 아예 부르지 않는다 — 네트워크 0, 비용 0.
+  const personalizationProfile = !aiPersonalize ? null : await fetchPersonalizationProfile({
     city, locale,
     start_date:   sd,
     end_date:     ed,
@@ -968,7 +978,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime, personalizationApplied: personalizationProfile != null };
 }
 
 function getCategoryColor(category: string): string {
@@ -1531,6 +1541,11 @@ function ItineraryResult() {
   const [unplacedPicks, setUnplacedPicks] = useState<{ key: string; name: string; hasFixed: boolean }[]>([]);
   // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
   const [tripNotes,        setTripNotes]        = useState<string[]>([]);
+  // ── V2-HARDCAP §5 — AI 개인화 명시 옵트인 ──
+  // 기본 생성은 AI 0 이다. 이 상태 기계가 유일한 AI 진입점이고, busy 이외의
+  // 어떤 전이도 provider 를 부르지 않는다. unavailable 은 "이번에 안 됐다"는
+  // 사실만 담는다 — 잔여 횟수·내부 사유는 화면에 내지 않는다.
+  const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "confirm" | "busy" | "applied" | "unavailable">("idle");
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
@@ -1787,6 +1802,30 @@ function ItineraryResult() {
 
       return { ...day, places: cleaned };
     });
+
+  // ── V2-HARDCAP §5 — AI 개인화 실행(명시 옵트인 전용) ──
+  // 확인(confirm) 단계를 지나야만 실행된다. 실패·차단이면 지금 일정을 그대로
+  // 둔다 — setDays 는 personalizationApplied 일 때만 한다(기본 일정 보존 계약).
+  const applyAiPersonalization = useCallback(async () => {
+    setAiOptInPhase("busy");
+    try {
+      const r = await generateWithNewApi(
+        paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle,
+        paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined,
+        paramArrivalCoord, paramDepartureCoord,
+        buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate),
+        exactStay, paramTripPace, paramArrivalType || undefined,
+        true, // aiPersonalize — 이 한 곳이 유일한 opt-in 진입점
+      );
+      if (!r.personalizationApplied) { setAiOptInPhase("unavailable"); return; }
+      setDays(sanitizeDays(r.days));
+      setCheckinTime(r.checkinTime);
+      setAiOptInPhase("applied");
+    } catch {
+      setAiOptInPhase("unavailable");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime, paramDepartureTime, paramDepartureType, paramStayArea, paramTripPace, paramArrivalType, exactStay]);
 
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → 소유자 전용 API 로드
@@ -2877,6 +2916,54 @@ function ItineraryResult() {
               {t(note)}
             </p>
           ))}
+        </div>
+      )}
+
+      {/* ── V2-HARDCAP §5 — AI 개인화 옵트인 카드 ──
+          기본 일정은 이미 AI 없이 완성돼 있다. 여기서 명시적으로 눌러야만
+          AI 가 개입한다. 공유로 열람 중인 남의 일정에는 내지 않는다. */}
+      {!shareId && days.length > 0 && !loading && aiOptInPhase !== "applied" && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-violet-50 border border-violet-200">
+          {aiOptInPhase === "unavailable" ? (
+            <p className="text-sm text-violet-700 font-medium">{t("aiUnavailableNotice")}</p>
+          ) : aiOptInPhase === "busy" ? (
+            <p className="text-sm text-violet-700 font-medium">{t("aiOptInBusy")}</p>
+          ) : aiOptInPhase === "confirm" ? (
+            <div>
+              <p className="text-sm font-bold text-violet-800 mb-1">{t("aiOptInConfirmTitle")}</p>
+              <p className="text-xs text-violet-600 mb-3">{t("aiOptInConfirmBody")}</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={applyAiPersonalization}
+                  className="px-4 py-2 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700"
+                >
+                  {t("aiOptInConfirmYes")}
+                </button>
+                <button
+                  onClick={() => setAiOptInPhase("idle")}
+                  className="px-4 py-2 rounded-xl bg-white border border-violet-300 text-violet-700 text-sm font-semibold hover:bg-violet-100"
+                >
+                  {t("aiOptInConfirmNo")}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <p className="text-xs text-violet-600">{t("aiOptInNote")}</p>
+              <button
+                onClick={() => setAiOptInPhase("confirm")}
+                className="px-4 py-2 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700"
+              >
+                {t("aiOptInButton")}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {aiOptInPhase === "applied" && (
+        <div className="mb-6 px-5 py-3 rounded-2xl bg-violet-50 border border-violet-200">
+          <p className="text-sm text-violet-700 font-medium">{t("aiOptInApplied")}</p>
         </div>
       )}
 

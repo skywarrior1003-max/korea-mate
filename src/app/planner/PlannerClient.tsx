@@ -339,8 +339,15 @@ export default function PlannerClient() {
       travelers, startLocation, arrivalTime, departurePlace, departureTime,
       stayArea, stayMode, stayDetail, tripPace]);
 
-  // ── AI 일정 생성 ──────────────────────────────
+  // ── 일정 생성(기본 스케줄러 — AI 아님) ──────────────────────────────
   function doNavigate(overrideStyle?: string) {
+    // V2-HARDCAP §4 — 여행 기간 1~14일. 조용히 자르지 않고 여기서 알리고 멈춘다
+    // (서버 AI 경로도 같은 상한을 따로 강제한다 — 이 검사는 UX 용이다).
+    const dayCount = itineraryDayCount(startDate, endDate);
+    if (dayCount < 1 || dayCount > 14) {
+      alert(tf("errTripTooLong"));
+      return;
+    }
     const effectiveStyle = overrideStyle ?? style;
     // 주소 조립은 공용 builder 한 곳에서 한다. This Trip 도 같은 것을 쓴다 —
     // 두 화면이 각자 조립하면 파라미터 하나가 어긋나도 한쪽에서만 티가 난다.

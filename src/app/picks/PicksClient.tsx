@@ -166,6 +166,7 @@ function PicksContent() {
   const tS  = useTranslations("shell");
   const tP  = useTranslations("place");
   const tSetup = useTranslations("tripSetup");
+  const tForm = useTranslations("tripForm"); // V2-HARDCAP §4 — 기간 상한 안내 문구
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -592,6 +593,13 @@ function PicksContent() {
       // 도시·날짜가 없으면 만들지 않는다. 지어내지도, Home 으로 되돌리지도
       // 않는다 — 무엇이 있어야 하는지만 알린다.
       setBuildNotice(true);
+      return;
+    }
+    // V2-HARDCAP §4 — 여행 기간 1~14일. 조용히 자르지 않고 알리고 멈춘다
+    // (서버 AI 경로는 같은 상한을 따로 강제한다 — 이 검사는 UX 용이다).
+    const dayCount = itineraryDayCount(draft.startDate, draft.endDate);
+    if (dayCount < 1 || dayCount > 14) {
+      alert(tForm("errTripTooLong"));
       return;
     }
     setBuildNotice(false);
