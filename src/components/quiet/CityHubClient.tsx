@@ -195,9 +195,15 @@ export default function CityHubClient({ slug }: { slug: string }) {
         <div className="mt-6 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedTrips")}</h2>
           {(trips.length > 0 || commTrips.length > 0) && (
-            <Link href={`/city/${slug}/trips`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
-              {t("viewAll")}
-            </Link>
+            <span className="flex-none inline-flex items-baseline gap-3 whitespace-nowrap">
+              {/* NEW-DISCOVERY §8-3 — 조용한 신규 진입점(배너 아님). top3 는 인기 유지 */}
+              <Link href={`/city/${slug}/trips?tab=new`} className="text-[13px] font-medium gkm-focus" style={{ color: HUB.faint }}>
+                {t("tabNew")}
+              </Link>
+              <Link href={`/city/${slug}/trips`} className="text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
+                {t("viewAll")}
+              </Link>
+            </span>
           )}
         </div>
         {trips.length === 0 && commTrips.length === 0 ? (
@@ -257,9 +263,15 @@ export default function CityHubClient({ slug }: { slug: string }) {
         {/* ── Recommended Places ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("recommendedPlaces")}</h2>
-          <Link href={`/city/${slug}/places`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
-            {t("viewAll")}
-          </Link>
+          <span className="flex-none inline-flex items-baseline gap-3 whitespace-nowrap">
+            {/* NEW-DISCOVERY §8-3 — 조용한 신규 진입점. top3 는 인기 유지 */}
+            <Link href={`/city/${slug}/places?tab=new`} className="text-[13px] font-medium gkm-focus" style={{ color: HUB.faint }}>
+              {t("tabNew")}
+            </Link>
+            <Link href={`/city/${slug}/places`} className="text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
+              {t("viewAll")}
+            </Link>
+          </span>
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3">
           {places.map(p => (
