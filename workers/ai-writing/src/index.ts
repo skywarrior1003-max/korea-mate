@@ -34,6 +34,7 @@ import {
 export interface Env {
   GEMINI_API_KEY?: string;
   INTERNAL_KEY?: string;
+  AI_WRITING_WORKER_MODE?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -161,6 +162,11 @@ export default {
     const provided = request.headers.get("x-internal-auth") ?? "";
     if (!env.INTERNAL_KEY || !provided || !(await keysMatch(provided, env.INTERNAL_KEY))) {
       return json({ error: "unauthorized" }, 401);
+    }
+    // V2-HARDCAP §8 — Worker 자체 kill switch(누락·오타=차단). Pages 게이트와
+    // 독립으로, binding·직접 호출 어느 경로든 이 스위치가 꺼져 있으면 provider 0.
+    if ((env.AI_WRITING_WORKER_MODE ?? "").trim().toLowerCase() !== "live") {
+      return json({ error: "worker_disabled" }, 503);
     }
     const apiKey = env.GEMINI_API_KEY;
     if (!apiKey) return reply(null, "no_key");

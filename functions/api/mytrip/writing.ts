@@ -20,6 +20,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
+import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
@@ -376,9 +377,45 @@ export async function onRequestPost(
     if (body.target === "storyHero") {
       body.context = { ...body.context, tripFacts: stripMultiMomentFacts(body.context.tripFacts ?? []) };
     }
-    if (useWorker) return viaWorker(binding!, internalKey!, body);
-    if (!apiKey) return reply(null, "no_key");
-    return outcomeReply(await runDirect(ctx.fetchFn ?? fetch, apiKey, body, image, []));
+    // provider 로 갈 수 없는 조건을 먼저 자른다 — 못 갈 요청은 예약하지 않는다.
+    if (!useWorker && !apiKey) return reply(null, "no_key");
+    // V2-HARDCAP §7·§8 — 레거시(비캐시) 경로도 같은 게이트를 지난다. 여기가
+    // 뚫려 있으면 target 하나만 바꿔도 스위치·예산을 우회할 수 있었다.
+    const legacyGate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
+      feature: "writing", model: "gemini-2.5-flash",
+      worstUsdMicro: 9_500, // cost-model writing 최악 ≈$0.0095
+      idempotencyKey: `writing-legacy:${crypto.randomUUID()}`,
+      actorHash: null,
+      featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // $1/day — 본 경로와 공유
+    });
+    if (!legacyGate.ok) return reply(null, "fallback_ops_gate");
+    if (useWorker) {
+      const res = await viaWorker(binding!, internalKey!, body);
+      // viaWorker 는 실패도 200 + fallback_* 로 답한다 — 본문 ai_status 로 판정.
+      // Worker 는 usage 를 이 계약으로 돌려주지 않는다: 성공이면 보수적 정액
+      // commit, 실패 계열은 provider 도달 여부를 모르므로 예약 보존.
+      let okBody = false;
+      try {
+        const parsed = (await res.clone().json()) as { ai_status?: unknown };
+        okBody = typeof parsed.ai_status === "string" && !parsed.ai_status.startsWith("fallback");
+      } catch { okBody = false; }
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], legacyGate.ledgerId,
+        okBody ? "committed" : "unknown_billed", okBody ? { inTok: null, outTok: null, usdMicro: 9_500 } : undefined);
+      return res;
+    }
+    const legacyOutcome = await runDirect(ctx.fetchFn ?? fetch, apiKey!, body, image, []);
+    const legacyOk = legacyOutcome.suggestion !== null || legacyOutcome.moment !== null || legacyOutcome.set !== null;
+    if (legacyOk) {
+      const u = legacyOutcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };
+      const hasUsage = typeof u?.inTok === "number" || typeof u?.outTok === "number";
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], legacyGate.ledgerId, "committed",
+        hasUsage
+          ? { inTok: u.inTok ?? null, outTok: (u.outTok ?? 0) + (u.thinkTok ?? 0), usdMicro: usdMicroFromUsage(u.inTok, (u.outTok ?? 0) + (u.thinkTok ?? 0)) }
+          : { inTok: null, outTok: null, usdMicro: 9_500 });
+    } else {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], legacyGate.ledgerId, "unknown_billed");
+    }
+    return outcomeReply(legacyOutcome);
   }
 
   // 소유 검증(§D) — entity 소유자가 아니면 후보를 읽을 수도, 만들 수도 없다
@@ -564,6 +601,20 @@ export async function onRequestPost(
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
     return reply(null, "no_key");
   }
+  // V2-HARDCAP §7·§8 — DB 스위치 + 회사 비용 원자 예약(provider 이전).
+  // 기존 빈도 원장(위 resolveLimits)과 별개의 비용 축이다. 예약 실패 시
+  // provider 를 부르지 않고 reserved row 도 과금 제외로 정리한다.
+  const opsGate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
+    feature: "writing", model: MODEL,
+    worstUsdMicro: 9_500, // cost-model writing 최악 ≈$0.0095
+    idempotencyKey: `writing:${genId}`,
+    actorHash: oHash ?? null,
+    featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // 기존 global 100/day 와 정합·$1/day
+  });
+  if (!opsGate.ok) {
+    await admin!.from(GEN_TABLE).delete().eq("id", genId);
+    return reply(null, "fallback_ops_gate");
+  }
   await admin!.from(GEN_TABLE).update({ status: "provider_started" }).eq("id", genId);
   if (useWorker) {
     // Worker 는 DB 를 읽지 않는다 — 함수가 고른 trend 를 내부 전달한다(§9)
@@ -586,6 +637,20 @@ export async function onRequestPost(
   }
 
   const ok = feature === "moment3" ? outcome.set !== null : outcome.moment !== null;
+  // V2-HARDCAP §7 — 비용 정산. timeout 은 과금 불명(unknown_billed·예약 보존),
+  // 성공은 usage 실비(usage 미상인 Worker 경로는 예약액 그대로 보수 commit),
+  // 그 외 provider 시도 후 실패는 명확 무과금 판별이 어려워 unknown_billed 보수.
+  {
+    const u2 = outcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };
+    const outAll = (u2.outTok ?? 0) + (u2.thinkTok ?? 0);
+    if (ok) {
+      const usd = (u2.inTok ?? null) !== null ? usdMicroFromUsage(u2.inTok, outAll) : 9_500;
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "committed",
+        { inTok: u2.inTok ?? null, outTok: outAll || null, usdMicro: usd });
+    } else {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "unknown_billed");
+    }
+  }
   if (!ok) {
     // 실패도 원장이다 — row 유지·사유 코드만 기록(민감정보 0). 캐시로는 안 쓴다.
     await admin!.from(GEN_TABLE).update({

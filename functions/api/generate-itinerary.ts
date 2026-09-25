@@ -1,5 +1,6 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 import { aiAllowed, aiUnavailableResponse } from "../_lib/app-env";
+import { aiOpsReserve, aiOpsSettle, aiFeatureUnavailable } from "../_lib/ai-ops-guard";
 interface Env {
   /**
    * 이 레거시 endpoint 전용 게이트. 기본 미설정 = 영구 410.
@@ -301,6 +302,9 @@ async function callGemini(
         generationConfig: {
           responseMimeType: "application/json",
           temperature: 0.7,
+          // V2-HARDCAP §6 — 출력 무제한(모델 65,536)이 최악 226원/회의 원인이었다.
+          // 8,192 캡으로 최악 원가를 ≈30원/회로 고정한다(v2-ai-cost-audit §9-1).
+          maxOutputTokens: 8192,
         },
       }),
     }
@@ -734,6 +738,13 @@ export const onRequestPost: (context: {
 }) => Promise<Response> = async ({ request, env }) => {
   // V2-ENV-ISOLATION §10 — 환경별 AI 게이트(provider 호출 이전 차단)
   if (!aiAllowed(env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
+  // V2-HARDCAP §3·§6 — 이 라우트는 legacy/unreachable(UI 소비처 0)이다.
+  // 삭제하지 않되 기본 차단 유지: DB 기능 스위치(feature_itinerary_legacy)가
+  // 'live' 가 아니면 provider 이전에 종료한다. body 512KB 캡.
+  {
+    const len = Number(request.headers.get("content-length") ?? "0");
+    if (len > 512 * 1024) return aiFeatureUnavailable(413);
+  }
   const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
@@ -794,6 +805,21 @@ export const onRequestPost: (context: {
       (new Date(endDate).getTime() - new Date(startDate).getTime()) /
         (1000 * 60 * 60 * 24)
     ) + 1;
+  // V2-HARDCAP §4·§6 — 일정 기간 1~14일 서버 강제(usage-policy TRIP_DAYS_MAX).
+  // 무상한 numDays 가 프롬프트 지시("Days 2–N")로 출력 폭주를 만들던 경로 차단.
+  if (!Number.isFinite(numDays) || numDays < 1 || numDays > 14) {
+    return new Response(JSON.stringify({ error: "trip length must be 1–14 days" }),
+      { status: 400, headers: corsHeaders });
+  }
+  // §7·§8 — DB 스위치 + 원자 비용 예약(provider 이전)
+  const opsGate = await aiOpsReserve(env as Parameters<typeof aiOpsReserve>[0], {
+    feature: "itinerary_legacy", model: "gemini-2.5-flash",
+    worstUsdMicro: 22_000, // 8192 출력캡 반영 최악 ≈$0.022
+    idempotencyKey: `itinerary:${crypto.randomUUID()}`,
+    actorHash: null,
+    featureDailyCalls: 20, featureDailyUsdMicro: 500_000, // 20/day·$0.5/day
+  });
+  if (!opsGate.ok) return opsGate.response;
 
   const arrivalHour = arrivalTime
     ? parseInt(arrivalTime.split(":")[0] ?? "14", 10)
@@ -816,6 +842,7 @@ export const onRequestPost: (context: {
           `[Gemini Live Call] ${new Date().toISOString()} | route=cloudflare-pages-fn | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | mock=false`
         );
         const result = await callGemini(apiKey, model, prompt);
+        await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "committed", { usdMicro: 22_000 }); // usage 미수집 — 보수 commit
         return new Response(JSON.stringify(result), {
           status: 200,
           headers: corsHeaders,
@@ -837,6 +864,12 @@ export const onRequestPost: (context: {
   }
 
   // 모든 모델 실패 → fallback 일정 반환 (기술 오류 사용자 노출 금지)
+  // 정산: 모든 시도가 "Gemini NNN"(HTTP 오류 응답 수신)이면 명확한 무과금 —
+  // 예약 반환. 하나라도 timeout·네트워크 계열이면 과금 여부 불명 — 예약 보존
+  // (unknown_billed). 비용 0 을 가정하지 않는다.
+  const allHttpErrors = allErrors.length > 0 && allErrors.every(e => /Gemini \d+/.test(e));
+  await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId,
+    allHttpErrors ? "released" : "unknown_billed");
   console.error("Gemini all models failed:", allErrors.join(" | "));
   return new Response(
     JSON.stringify(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime)),

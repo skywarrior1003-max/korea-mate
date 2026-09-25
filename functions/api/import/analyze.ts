@@ -19,6 +19,7 @@
 // 동일 패턴). 어떤 실패도 200 + {ok:false, error} — 클라이언트가 정직하게 보여 준다.
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
+import { aiOpsReserve, aiOpsSettle } from "../../_lib/ai-ops-guard";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
@@ -200,11 +201,28 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return fail("no_readable_text");
   }
 
+  // V2-HARDCAP §7·§8 — DB 스위치 + 원자 비용 예약(provider 이전)
+  const idemBuf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(check.url.toString() + ":" + new Date().toISOString().slice(0, 13)));
+  const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
+    feature: "import_analyze", model: "gemini-2.5-flash",
+    worstUsdMicro: 12_100, // cost-model analyze 최악 ≈$0.0121
+    idempotencyKey: "analyze:" + [...new Uint8Array(idemBuf)].slice(0, 16).map(b => b.toString(16).padStart(2, "0")).join(""),
+    actorHash: null,
+    featureDailyCalls: 100, featureDailyUsdMicro: 1_500_000, // $1.5/day
+  });
+  if (!gate.ok) return fail("analyze_unavailable");
+
   const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, check.url.toString()));
   if (!ai.ok) {
+    // provider HTTP 오류/미도달 계열과 timeout 을 구분할 수 없는 오류 코드는
+    // 보수적으로 unknown_billed(예약 보존). 명확한 사전 차단만 released.
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId,
+      ai.error === "analyze_unavailable" ? "released" : "unknown_billed");
     log({ ok: false, host: fetched.finalHost, error: ai.error, ms: Date.now() - started });
     return fail(ai.error);
   }
+  await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
+    { inTok: null, outTok: null, usdMicro: 12_100 }); // usage 미수집 경로 — 보수 commit
 
   log({ ok: true, host: fetched.finalHost, kind: ai.analysis.kind, days: ai.analysis.days.length, places: ai.analysis.places.length, ms: Date.now() - started });
   return json({ ok: true, url: check.url.toString(), pageTitle: page.title, analysis: ai.analysis });

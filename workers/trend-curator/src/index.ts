@@ -39,6 +39,7 @@ export interface Env {
   CURATOR_SEARCH_ENABLED?: string;
   CURATOR_WEEKLY_GROUNDED_PROMPT_CAP?: string;
   CURATOR_ALLOWED_MODEL?: string;
+  CURATOR_MODE?: string;
   CURATOR_BILLING_UNIT?: string;
   TREND_SUPABASE_URL?: string;
   TREND_SUPABASE_SERVICE_KEY?: string;
@@ -260,6 +261,10 @@ async function reserveSlot(env: Env, rest: RestFn, weekKst: string, locale: stri
 }
 
 export async function run(env: Env, trigger: "cron" | "manual", locales: readonly string[], deps: RunDeps = {}): Promise<Record<string, unknown>> {
+  // V2-HARDCAP §8 — cron 포함 전 트리거 공통 kill switch(누락=차단)
+  if ((env.CURATOR_MODE ?? "").trim().toLowerCase() !== "live") {
+    return { skipped: true, reason: "curator_mode_not_live", trigger };
+  }
   const rest = deps.rest ?? restReal;
   const research = deps.research ?? researchReal;
   const nowFn = deps.now ?? (() => new Date());

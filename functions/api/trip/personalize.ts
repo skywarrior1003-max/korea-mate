@@ -18,6 +18,7 @@
 //   · 어떤 실패도 200 + null profile 로 돌려준다 — 일정 생성이 멈추면 안 된다.
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
+import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
 import {
   resolveAiMode, modeAllowsProviderCall, validateProfile, buildMockProfile,
   PROFILE_VERSION, PROFILE_CATEGORIES, TIME_PREFERENCES,
@@ -162,6 +163,30 @@ export async function onRequestPost(
   // 검증한 것과 실제로 나가는 것이 달라지면 검증이 아니다.
   // ctx.fetchFn(canary 주입)이 있으면 그것을 그대로 쓰고, 없으면 서울 Worker
   // binding 경유, 그것도 없으면(로컬) 런타임 기본 fetch 로 직결한다.
+  // ── V2-HARDCAP §7·§8 — 기간 캡 + DB 스위치 + 원자 비용 예약(provider 이전) ──
+  // 기간 14일 초과 프로필 요청 차단(TRIP_DAYS_MAX 계약)
+  {
+    const sd = Date.parse(String(body.start_date ?? "")); const ed = Date.parse(String(body.end_date ?? ""));
+    if (Number.isFinite(sd) && Number.isFinite(ed)) {
+      const days = Math.floor((ed - sd) / 86_400_000) + 1;
+      if (days < 1 || days > 14) {
+        log({ requestId, mode, providerCalled: false, status: "fallback_days_out_of_range" });
+        return reply(null, "fallback_guard");
+      }
+    }
+  }
+  const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
+    feature: "personalize", model: MODEL,
+    worstUsdMicro: 2_500, // cost-model personalize 최악 ≈$0.0025
+    idempotencyKey: `personalize:${requestId}`,
+    actorHash: null,
+    featureDailyCalls: 200, featureDailyUsdMicro: 1_000_000, // $1/day
+  });
+  if (!gate.ok) {
+    log({ requestId, mode, providerCalled: false, status: "fallback_ops_gate" });
+    return reply(null, "fallback_guard");
+  }
+
   const call = await callProfileProvider({
     prompt, apiKey,
     fetchFn: ctx.fetchFn ?? bindingProviderFetch(ctx.env),
@@ -170,16 +195,29 @@ export async function onRequestPost(
   if (!call.ok) {
     if (call.kind === "http") {
       // 400·401·403·404·408·429·5xx 전부 여기로 온다. 재호출하지 않는다.
+      // 명확한 무과금 실패(HTTP 오류 응답 수신) — 예약 반환
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "released");
       log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: call.httpStatus,
             latency: call.latencyMs, status: "fallback_provider_error" });
       return reply(null, "fallback_provider_error");
     }
     const isAbort = call.kind === "timeout";
+    // timeout·network 는 과금 여부 불명 — 예약액 보존(unknown_billed)
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
     // timeout·network 모두 재호출하지 않는다. 늦게 오는 응답도 버린다.
     log({ requestId, mode, providerCalled: true, attempts: 1,
           latency: call.latencyMs, timedOut: isAbort,
           status: isAbort ? "fallback_timeout" : "fallback_provider_error" });
     return reply(null, isAbort ? "fallback_timeout" : "fallback_provider_error");
+  }
+  // 성공 — usage 실비 commit
+  {
+    const u = call.raw.usageMetadata;
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", {
+      inTok: u?.promptTokenCount ?? null,
+      outTok: (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0),
+      usdMicro: usdMicroFromUsage(u?.promptTokenCount, (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0)),
+    });
   }
 
   {
