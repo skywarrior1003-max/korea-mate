@@ -1,6 +1,7 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 import { aiAllowed, aiUnavailableResponse } from "../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, aiFeatureUnavailable } from "../_lib/ai-ops-guard";
+import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../_lib/user-auth";
 interface Env {
   /**
    * 이 레거시 endpoint 전용 게이트. 기본 미설정 = 영구 410.
@@ -812,11 +813,17 @@ export const onRequestPost: (context: {
       { status: 400, headers: corsHeaders });
   }
   // §7·§8 — DB 스위치 + 원자 비용 예약(provider 이전)
+  // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수
+  const userAuth = await requireUser(env as Parameters<typeof requireUser>[0], request);
+  if (!userAuth.ok) return userAuth.response;
+  checkUserEntitlementPlaceholder(userAuth.userId); // 차감은 후속 TASK
+  const actorSecret = (env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
+  const userActor = actorSecret ? await userActorHash(userAuth.userId, actorSecret) : null;
   const opsGate = await aiOpsReserve(env as Parameters<typeof aiOpsReserve>[0], {
     feature: "itinerary_legacy", model: "gemini-2.5-flash",
     worstUsdMicro: 22_000, // 8192 출력캡 반영 최악 ≈$0.022
     idempotencyKey: `itinerary:${crypto.randomUUID()}`,
-    actorHash: null,
+    actorHash: userActor,
     featureDailyCalls: 20, featureDailyUsdMicro: 500_000, // 20/day·$0.5/day
   });
   if (!opsGate.ok) return opsGate.response;

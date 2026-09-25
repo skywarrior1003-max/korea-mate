@@ -21,6 +21,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
+import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
@@ -379,13 +380,18 @@ export async function onRequestPost(
     }
     // provider 로 갈 수 없는 조건을 먼저 자른다 — 못 갈 요청은 예약하지 않는다.
     if (!useWorker && !apiKey) return reply(null, "no_key");
+    // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수(레거시 포함).
+    const legacyAuth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+    if (!legacyAuth.ok) return legacyAuth.response;
+    checkUserEntitlementPlaceholder(legacyAuth.userId); // 차감은 후속 TASK
+    const legacyActor = hashSecret ? await userActorHash(legacyAuth.userId, hashSecret) : null;
     // V2-HARDCAP §7·§8 — 레거시(비캐시) 경로도 같은 게이트를 지난다. 여기가
     // 뚫려 있으면 target 하나만 바꿔도 스위치·예산을 우회할 수 있었다.
     const legacyGate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
       feature: "writing", model: "gemini-2.5-flash",
       worstUsdMicro: 9_500, // cost-model writing 최악 ≈$0.0095
       idempotencyKey: `writing-legacy:${crypto.randomUUID()}`,
-      actorHash: null,
+      actorHash: legacyActor,
       featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // $1/day — 본 경로와 공유
     });
     if (!legacyGate.ok) return reply(null, "fallback_ops_gate");
@@ -601,6 +607,17 @@ export async function onRequestPost(
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
     return reply(null, "no_key");
   }
+  // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수.
+  // 캐시 적중(위에서 이미 반환)·no_key 는 무과금이라 여기 오지 않는다.
+  const userAuth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+  if (!userAuth.ok) {
+    await admin!.from(GEN_TABLE).delete().eq("id", genId);
+    return userAuth.response;
+  }
+  checkUserEntitlementPlaceholder(userAuth.userId); // 차감은 후속 TASK
+  // 원장 actor 는 로그인 사용자 기준(여러 기기 동일) — 캐시 owner_hash(oHash,
+  // device 기반)는 기존 저장 계약 그대로 둔다.
+  const userActor = await userActorHash(userAuth.userId, hashSecret);
   // V2-HARDCAP §7·§8 — DB 스위치 + 회사 비용 원자 예약(provider 이전).
   // 기존 빈도 원장(위 resolveLimits)과 별개의 비용 축이다. 예약 실패 시
   // provider 를 부르지 않고 reserved row 도 과금 제외로 정리한다.
@@ -608,7 +625,7 @@ export async function onRequestPost(
     feature: "writing", model: MODEL,
     worstUsdMicro: 9_500, // cost-model writing 최악 ≈$0.0095
     idempotencyKey: `writing:${genId}`,
-    actorHash: oHash ?? null,
+    actorHash: userActor,
     featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // 기존 global 100/day 와 정합·$1/day
   });
   if (!opsGate.ok) {
