@@ -218,16 +218,16 @@ test("★S2-B 에서 번역한 일반 화면 키가 그대로 남아 있다", ()
 
 // ── 12. migration ──────────────────────────────────────────────────────────
 test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 를 건드리지 않았다", () => {
-  // PLANNER-SPOTS-SEPARATION 이후 migration 은 060(Social Foundation, PROD 미적용)
-  // 까지 60개다. 이 가드의 원 뜻("이 작업이 migration 을 추가하지 않았다")을
+  // CORRECTION-V1 §3: 승인 집합은 061~072 릴리스 반영으로 72개다(마지막 072,
+  // Staging-only·Production 은 PHASE B 에서 1회 적용). 이 가드의 원 뜻("이 작업이 migration 을 추가하지 않았다")을
   // "승인된 집합에서 벗어난 파일이 생기면 걸린다" 로 보존한다 — 파일명 전체
   // 목록의 digest 를 고정하므로 추가·삭제·개명 모두 잡힌다. 정식 목록은
   // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
   const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 60, `migration 수가 변했다: ${files.length}`);
+  assert.equal(files.length, 72, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "060_social_actions_foundation.sql");
+  assert.equal(files[files.length - 1], "072_ai_ops_ledger_and_switches.sql");
   assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
-    "b50b835e61b7e755a0df0c3a0eb572700c7a89351a3aefa4d5b29afd662f5aab",
+    "3ce69c379f264e9577b9fcb3992ea59c023d31862da23219c92d9c2eb423973d",
     "승인 목록 밖의 migration 변경");
 });

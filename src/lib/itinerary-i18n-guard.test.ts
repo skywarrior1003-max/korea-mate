@@ -165,8 +165,13 @@ test("★외부 고유명사를 번역하지 않았다", () => {
 
 // ── 6. 번역 함수 배선 ───────────────────────────────────────────────────────
 test("★itin 번역 훅이 필요한 컴포넌트에 붙어 있다", () => {
-  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 3,
-    "PlaceModal · ItineraryResult · ItineraryPage 세 곳");
+  // 컴포넌트는 여전히 3곳(PlaceModal · ItineraryResult · ItineraryPage)이다.
+  // 호출이 4개인 이유: 115254a(city canonicalization)가 ItineraryResult 에
+  // autoTripTitle 용 `tAutoTitle` 훅을 `t` 선언보다 앞서 추가했다 — 같은
+  // 네임스페이스의 중복 훅은 next-intl 에서 무해하고 locale 계약 위반이 아니다.
+  // (CORRECTION-V1 §3 전수 조사로 판정. 3↔4 가 또 바뀌면 소비처를 다시 세라.)
+  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 4,
+    "PlaceModal 1 · ItineraryResult 2(t + tAutoTitle) · ItineraryPage 1");
 });
 
 // 예전에는 `t("` 리터럴 호출 개수를 품질 지표로 썼다. 그런데 에러 문구를
@@ -242,16 +247,23 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
 // 사라지면 여기서 걸리고, 의도적 DB 작업만 이 스냅숏을 갱신한다.
 // (RELEASE-CLEANUP-V1 보고에서 stale 로 확인되어 PLANNER-SPOTS-SEPARATION-V1
 //  에서 현실 반영 — assertion 약화가 아니라 오히려 파일명 전수 고정이다.)
-test("★migration 집합 스냅숏 — 승인된 60개 그대로, 예상 밖 추가/삭제 없음", () => {
+test("★migration 집합 스냅숏 — 승인된 72개 그대로, 예상 밖 추가/삭제 없음", () => {
+  // CORRECTION-V1 §3: 60→72 는 각 릴리스 TASK 가 승인해 추가한 061~072 의
+  // 현실 반영이다(중복·공백·과거 원문 수정 0 을 전수 확인했다).
+  // 적용 상태 구분(파일 집합과 별개의 운영 원장):
+  //  · 061~067 — 각 릴리스에서 적용 CLOSED (062~067 Production)
+  //  · 068~071 — Staging+Production 적용 CLOSED·재실행 금지
+  //  · 072     — **Staging-only**(sha256 e45de3153fbc201b…), Production 은
+  //              CORRECTION-V1 PHASE B 에서 1회 적용
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 60, `migration 수가 변했다: ${files.length}`);
+  assert.equal(files.length, 72, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "060_social_actions_foundation.sql",
-    "060(Social Actions Foundation, PROD 미적용) 이 마지막이어야 한다");
-  // 번호 공백·중복 금지: 001..060 이 정확히 한 번씩.
+  assert.equal(files[files.length - 1], "072_ai_ops_ledger_and_switches.sql",
+    "072(AI ops ledger/switches) 가 마지막이어야 한다");
+  // 번호 공백·중복 금지: 001..072 가 정확히 한 번씩.
   const nums = files.map(f => f.slice(0, 3));
-  assert.equal(new Set(nums).size, 60, "번호 중복");
+  assert.equal(new Set(nums).size, 72, "번호 중복");
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
     assert.match(f, new RegExp(
       "^(042_place_reports|043_place_likes|044_admin_notification_events|" +
@@ -262,7 +274,12 @@ test("★migration 집합 스냅숏 — 승인된 60개 그대로, 예상 밖 �
       "054_story_reports_and_moderation|055_trip_moments_stop_key|" +
       "056_city_spots_is_published|057_city_spots_drop_city_name_unique|" +
       "058_city_spot_sources_allow_multi_source_keys_per_provider|" +
-      "059_user_spots_related_unique|060_social_actions_foundation)\\.sql$"),
+      "059_user_spots_related_unique|060_social_actions_foundation|" +
+      "061_trip_moments_title|062_itinerary_story_hero|063_mytrip_ai_generations|" +
+      "064_mytrip_trend_packs|065_mytrip_ai_generation_ledger|066_mytrip_curator_ledger|" +
+      "067_curator_search_slots_entity_type|068_community_reactions_submissions|" +
+      "069_place_usage_signal|070_new_discovery_foundations|071_community_ranking_rpcs|" +
+      "072_ai_ops_ledger_and_switches)\\.sql$"),
       `예상치 못한 migration: ${f}`);
   }
 });
