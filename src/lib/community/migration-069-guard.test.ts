@@ -51,11 +51,14 @@ test("② 배선 — 두 원인이 같은 'usage' 해시로 모인다·클라이
 });
 
 test("③ 순위 — place_usage tally, place_saves·itineraries 스캔 아님", () => {
-  const rec = read("functions/api/recommendations/[city].ts");
-  assert.match(rec, /place_usage\?target_type=eq\.city_spot/);
-  assert.ok(!rec.includes("place_saves"), "순위가 place_saves 를 읽지 않는다");
-  assert.match(rec, /usageCount: r\.usage/);
-  assert.ok(!rec.includes("saveCount"), "옛 필드명 잔존 없음");
+  // PAGINATION-V1 이후 장소 활용 집계는 DB RPC(071)가 수행한다 — 계약은 그대로:
+  // usage = place_usage 의 target 별 행 수(actor 고유·누적형), place_saves 스캔 금지.
+  const rpc = read("supabase/migrations/071_community_ranking_rpcs.sql");
+  assert.match(rpc, /FROM public\.place_usage\s*\n\s*WHERE target_type = 'city_spot'/);
+  assert.ok(!rpc.includes("place_saves"), "순위가 place_saves 를 읽지 않는다");
+  const server = read("src/lib/community/recommendations-server.ts");
+  assert.match(server, /usageCount: Number\(x\.usage_count\)/);
+  assert.ok(!server.includes("saveCount"), "옛 필드명 잔존 없음");
 });
 
 test("④ 관리자 결정 — pending 에서만·중복 결정 409", () => {

@@ -15,6 +15,7 @@ import path from "node:path";
 
 import { compareRanked, comparePlaceRanked, communityScore, type RankInput, type PlaceRankInput } from "./community-core.ts";
 import { suggestEligibleCity, userSpotIdsFromDays } from "./suggest-entry-core.ts";
+import { EDITORIAL_SPOT_ORDER } from "../../data/regional/editorial-spot-order.ts";
 
 const ROOT = process.cwd();
 const read = (p: string) => readFileSync(path.join(ROOT, p), "utf8");
@@ -62,19 +63,22 @@ test("COLD-START §2 — 무반응 장소 연속 순위·editorial tie-break·�
   assert.deepEqual(s1, s2);
 });
 
-test("COLD-START §2·§6 — 서버가 도시 전체 후보를 순위화하고 rank 만 반환", () => {
-  const src = read("functions/api/recommendations/[city].ts");
-  assert.ok(src.includes("is_published=eq.true&select=id&limit=2000"), "도시 전체 후보 조회가 없다");
-  assert.ok(src.includes("comparePlaceRanked"), "cold-start 정렬 코어 미사용");
-  assert.ok(src.includes("editorialSpotOrder"), "editorial tie-break 소실");
-  assert.ok(/rank:\s*i \+ 1/.test(src), "서버 rank 반환이 없다");
-  // CF CI Functions 번들러가 json import attribute 를 못 읽는다 — 함수 쪽에서
-  // regional-recommendations 직접 import 금지(editorial-order-core 경유만).
-  assert.ok(!/import[^;]*regional-recommendations/.test(src), "함수가 attribute-json 모듈을 직접 import");
+test("COLD-START §2·§6 — 전체 후보 순위는 DB RPC 가 확정하고 rank 만 반환", () => {
+  // PAGINATION-V1 이후: Worker 는 전 행을 받지 않는다(1000행 절단 구조 제거).
+  const server = read("src/lib/community/recommendations-server.ts");
+  assert.ok(server.includes("community_rank_places"), "인기 순위 RPC 미사용");
+  assert.ok(server.includes("community_rank_new_places"), "신규 순위 RPC 미사용");
+  assert.ok(server.includes("editorialSpotOrder"), "editorial tie-break 소실");
+  const hub = read("functions/api/recommendations/[city].ts");
+  assert.ok(hub.includes("rankPlacesPage"), "hub 가 RPC 페이지를 쓰지 않음");
+  assert.ok(!hub.includes("select=id&limit=2000"), "전 행 REST 수집이 부활함(1000행 절단 위험)");
+  for (const f of ["functions/api/recommendations/[city].ts", "functions/api/recommendations/[city]/places.ts", "functions/api/recommendations/[city]/stories.ts"]) {
+    assert.ok(!/import[^;]*regional-recommendations/.test(read(f)), `${f}: attribute-json 모듈 직접 import`);
+  }
 });
 
 test("COLD-START — editorial 스냅숏이 원천(regional-places + Hub 확정 순서)과 동기", () => {
-  const snapshot = JSON.parse(read("src/data/regional/editorial-spot-order.json")) as Record<string, number[]>;
+  const snapshot = EDITORIAL_SPOT_ORDER;
   const places = (JSON.parse(read("src/data/regional/regional-places-v1.json")) as {
     places: { city: string; spotId: number | null; spotIdsAll?: number[] }[];
   }).places;
@@ -89,7 +93,7 @@ test("COLD-START — editorial 스냅숏이 원천(regional-places + Hub 확정 
       for (const id of ids) if (typeof id === "number" && !expected.includes(id)) expected.push(id);
     }
     assert.deepEqual(snapshot[city], expected,
-      `${city}: 스냅숏이 원천과 어긋남 — regional-places 변경 시 editorial-spot-order.json 재생성 필요`);
+      `${city}: 스냅숏이 원천과 어긋남 — regional-places 변경 시 editorial-spot-order.ts 재생성 필요`);
   }
   // HUB 확정 순서 상수는 regional-recommendations 의 값과도 일치해야 한다
   const rr = read("src/data/regional/regional-recommendations.ts");
@@ -107,14 +111,25 @@ test("COLD-START — 무반응 분리 UI 를 만들지 않았다", () => {
 });
 
 test("§11 응답 보안 — recommendations 응답 매핑에 dislike·score 필드가 없다", () => {
-  const src = read("functions/api/recommendations/[city].ts");
-  // 응답 객체 조립부에 dislikeCount/score 키 금지
-  assert.ok(!/dislikeCount\s*:/.test(src), "dislikeCount 가 응답에 추가됨");
-  assert.ok(!/\bscore\s*:/.test(src), "score 가 응답에 추가됨");
-  assert.ok(!/device_id\s*:/.test(src), "device_id 가 응답에 추가됨");
-  // 대표 이미지는 되돌릴 수 없는 ref 프록시 경로만
-  assert.ok(src.includes("photoRef") && src.includes("/img/memory/"), "cover 는 photoRef 프록시 경로여야 한다");
-  assert.ok(!/storage_path[^,\n]*cover|cover[^,\n]*storage_path/.test(src), "cover 에 저장 경로 노출 금지");
+  // 응답 조립은 공용 서버 모듈 + 3개 endpoint 로 나뉘었다 — 전부 검사한다.
+  for (const f of [
+    "src/lib/community/recommendations-server.ts",
+    "functions/api/recommendations/[city].ts",
+    "functions/api/recommendations/[city]/places.ts",
+    "functions/api/recommendations/[city]/stories.ts",
+  ]) {
+    const src = read(f);
+    assert.ok(!/dislikeCount\s*:/.test(src), `${f}: dislikeCount 가 응답에 추가됨`);
+    assert.ok(!/\bnewScore\s*:/.test(src) && !/\bbaseScore\s*:/.test(src) && !/freshness\w*\s*:/i.test(src.replace(/\/\/[^\n]*/g, "")),
+      `${f}: 내부 점수가 응답에 추가됨`);
+    assert.ok(!/\bscore\s*:/.test(src.replace(/\/\/[^\n]*/g, "")), `${f}: score 가 응답에 추가됨`);
+    assert.ok(!/device_id\s*:\s*[^n]/.test(src.replace(/select=[^`"']*/g, "")), `${f}: device_id 가 응답에 추가됨`);
+  }
+  // 대표 이미지는 되돌릴 수 없는 ref 프록시 경로만(공용 모듈이 소유)
+  const server = read("src/lib/community/recommendations-server.ts");
+  assert.ok(server.includes("photoRef"), "cover 는 photoRef 프록시 경로여야 한다");
+  const hub = read("functions/api/recommendations/[city].ts");
+  assert.ok(hub.includes("/img/memory/"), "cover 프록시 경로 조립 소실");
 });
 
 test("§4 City Hub — 제안 CTA·sheet 제거, 소비 요소는 유지", () => {
