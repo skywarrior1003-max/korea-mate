@@ -49,13 +49,14 @@ export const usdToKrw = (usd: number, fx: number = FX.base): number => usd * fx;
 
 // ── 기능 프로파일 (코드 상수 근거 — audit §3 표와 1:1) ──────────────────────
 export const PROFILES: Record<string, CallProfile> = {
-  // functions/api/generate-itinerary.ts — buildPrompt ≤~12k chars, 출력 캡 없음
+  // functions/api/generate-itinerary.ts — buildPrompt ≤~12k chars,
+  // V2-HARDCAP 에서 maxOutputTokens: 8192 캡 적용(감사 시점엔 UNBOUNDED 였다)
   itinerary: {
     feature: "일정 생성",
     inTokensTypical: tokensFromChars(9_000),
     inTokensMax: tokensFromChars(14_000),
     outTokensTypical: 4_000,
-    outTokensMax: MODEL_MAX_OUTPUT_TOKENS, // UNBOUNDED — 하드캡 TASK 의 1순위
+    outTokensMax: 8_192, // generate-itinerary generationConfig.maxOutputTokens
     billableCallsTypical: 1,
     billableCallsWorst: 1, // 503 재시도만 존재(무과금)·parse 재호출 없음
   },

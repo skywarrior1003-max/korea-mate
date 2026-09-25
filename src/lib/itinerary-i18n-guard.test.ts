@@ -47,6 +47,9 @@ const ADDED = [
   "errLoadFailed", "errGenerateFailed", "errLoadSavedFailed",
   // TASK-MY-TRIP-CONNECT-FIX-V1 — 남아 있던 영어 하드코딩 안내를 키로 옮겼다
   "noteDeferred", "noteNearby", "fixedOutTitle", "fixedOutHint", "fallbackBanner", "sharedNotice",
+  // V2-HARDCAP §5·§11 — AI 개인화 옵트인 문구(내부 용어·잔여 횟수 노출 없음)
+  "aiOptInButton", "aiOptInNote", "aiOptInConfirmTitle", "aiOptInConfirmBody",
+  "aiOptInConfirmYes", "aiOptInConfirmNo", "aiOptInBusy", "aiOptInApplied", "aiUnavailableNotice",
 ];
 
 /**

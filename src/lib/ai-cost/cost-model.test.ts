@@ -22,9 +22,9 @@ test("계산기 — 단가·행동 원가·반올림", () => {
   assert.equal(tokensFromChars(0), 0);
   assert.equal(tokensFromChars(1), 1, "올림(과소평가 금지)");
   assert.equal(tokensFromChars(3000), 1000);
-  // 일정 생성 최악 = 출력 65,536 tok 지배: ≈ $0.164 + 입력
+  // 일정 생성 최악(8192 캡) = 출력 8,192 tok 지배: ≈ $0.022
   const worst = actionCostUSD(PROFILES.itinerary, "worst");
-  assert.ok(worst > 0.16 && worst < 0.18, `itinerary 최악 $${worst.toFixed(4)}`);
+  assert.ok(worst > 0.018 && worst < 0.026, `itinerary 최악 ${worst.toFixed(4)}`);
   const typ = actionCostUSD(PROFILES.itinerary, "typical");
   assert.ok(typ > 0.008 && typ < 0.02, `itinerary 대표 $${typ.toFixed(4)}`);
 });
@@ -32,9 +32,11 @@ test("계산기 — 단가·행동 원가·반올림", () => {
 test("계산기 — 환율 민감도(결론 뒤집힘 여부)", () => {
   const econ = (fx: number) => ({ fxKrwPerUsd: fx, pgFeeRate: 0.033, vatInclusive: true });
   for (const fx of [FX.strongKRW, FX.base, FX.weakKRW]) {
-    const s = ticketScenario(100, PROFILES.itinerary, econ(fx));
-    // 어떤 환율에서도: 출력 무제한 상태의 100회 최악은 적자(음수 마진)
-    assert.ok(s.marginWorstKRW < 0, `fx=${fx}: 최악 마진 ${Math.round(s.marginWorstKRW)}원`);
+    // V2-HARDCAP 이후: 감사 시점의 무캡(UNBOUNDED) 프로파일을 재구성해 그때의
+    // 결론(어떤 환율에서도 100회 최악 적자)이 계속 재현되는지 본다 — 캡의 근거.
+    const uncapped = { ...PROFILES.itinerary, outTokensMax: MODEL_MAX_OUTPUT_TOKENS };
+    const s = ticketScenario(100, uncapped, econ(fx));
+    assert.ok(s.marginWorstKRW < 0, `fx=${fx}: 무캡 최악 마진 ${Math.round(s.marginWorstKRW)}원`);
     // 대표 사용은 어떤 환율에서도 흑자
     assert.ok(s.marginTypicalKRW > 0, `fx=${fx}: 대표 마진`);
   }
@@ -44,13 +46,13 @@ test("경제성 — 가용액·손익분기", () => {
   const econ = { fxKrwPerUsd: FX.base, pgFeeRate: 0.033, vatInclusive: true };
   const usable = usableKrw(econ);
   assert.ok(usable > 5_000 && usable < TICKET_PRICE_KRW, `가용 ${Math.round(usable)}원`);
-  const s = ticketScenario(30, PROFILES.itinerary, econ);
+  const uncapped = { ...PROFILES.itinerary, outTokensMax: MODEL_MAX_OUTPUT_TOKENS };
+  const s = ticketScenario(30, uncapped, econ);
   assert.equal(s.credits, 30);
   assert.ok(s.breakevenActionsWorst >= 20 && s.breakevenActionsWorst <= 30,
     `무캡 최악 손익분기 ${s.breakevenActionsWorst}회(≈22 기대)`);
-  // 하드캡 시나리오: 출력 8,192 캡이면 100회도 안전
-  const capped = { ...PROFILES.itinerary, outTokensMax: 8_192 };
-  const c = ticketScenario(100, capped, econ);
+  // 하드캡(현행 프로파일 = 8,192 캡): 100회도 안전
+  const c = ticketScenario(100, PROFILES.itinerary, econ);
   assert.ok(c.marginWorstKRW > 0, `캡 적용 100회 최악 마진 ${Math.round(c.marginWorstKRW)}원`);
 });
 
@@ -67,10 +69,10 @@ test("프로파일 ↔ 코드 상수 동기(출력 캡·재시도·상한)", () 
   const pc = read("src/lib/scheduler/ai/profile-personalization-core.ts");
   assert.ok(pc.includes("MAX_OUTPUT_TOKENS = 700") && pc.includes("MAX_PROMPT_CHARS = 6_000"));
   assert.equal(PROFILES.personalize.outTokensMax, 700);
-  // itinerary: generationConfig 에 maxOutputTokens 부재 = UNBOUNDED(모델 최대로 계상)
+  // itinerary: V2-HARDCAP — generationConfig.maxOutputTokens 8192 와 동기
   const gi = read("functions/api/generate-itinerary.ts");
-  assert.ok(!/maxOutputTokens/.test(gi), "itinerary 에 출력 캡이 생겼다면 프로파일 갱신 필요");
-  assert.equal(PROFILES.itinerary.outTokensMax, MODEL_MAX_OUTPUT_TOKENS);
+  assert.ok(gi.includes("maxOutputTokens: 8192"), "itinerary 출력 캡(8192)이 사라졌다 — 무캡 회귀");
+  assert.equal(PROFILES.itinerary.outTokensMax, 8_192);
   // 과금 재시도 없음: 503 재시도만·429 즉시 종료
   assert.ok(gi.includes("httpStatus === 429") && gi.includes("503"));
   for (const p of Object.values(PROFILES)) assert.equal(p.billableCallsWorst, 1);
