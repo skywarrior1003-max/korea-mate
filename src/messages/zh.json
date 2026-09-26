@@ -200,7 +200,8 @@
     "pastTripsStory": "过去的旅行在故事里",
     "todayAt": "今天 · {place}",
     "moreActions": "更多",
-    "confirmDelete": "要删除这个行程吗？"
+    "confirmDelete": "要删除这个行程吗？",
+    "deleteScopeNote": "照片、备注和互动也会被永久删除。其他用户已复制的行程将保留。"
   },
   "blogAffiliate": {
     "card": {

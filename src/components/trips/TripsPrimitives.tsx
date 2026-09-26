@@ -124,6 +124,8 @@ export function DashedAction({ href, children }: { href: string; children: React
 
 interface InlineConfirmProps {
   question:  string;
+  /** 결과 범위 고지 — 질문 아래 한 줄(예: 함께 삭제되는 것·유지되는 복사본) */
+  note?:     string;
   confirmLabel: string;
   cancelLabel:  string;
   busy?:     boolean;
@@ -131,10 +133,16 @@ interface InlineConfirmProps {
   onCancel:  () => void;
 }
 
-export function InlineConfirm({ question, confirmLabel, cancelLabel, busy, onConfirm, onCancel }: InlineConfirmProps) {
+export function InlineConfirm({ question, note, confirmLabel, cancelLabel, busy, onConfirm, onCancel }: InlineConfirmProps) {
   return (
     <div className="flex items-center justify-between flex-wrap" style={{ gap: SP.sm, padding: `0 ${SP.mobile}px ${SP.mobile}px`, borderTop: `1px solid ${C.outlineVariant}`, paddingTop: SP.sm }}>
-      <span style={{ ...LABEL_MD, color: C.onSurfaceVariant }}>{question}</span>
+      <span className="min-w-0" style={{ ...LABEL_MD, color: C.onSurfaceVariant }}>
+        {question}
+        {note && (
+          /* 자기 줄을 통째로 차지해 390px 에서도 버튼을 밀지 않는다 */
+          <span className="block" style={{ ...LABEL_MD, fontWeight: 400, color: C.onSurfaceVariant, marginTop: 2 }}>{note}</span>
+        )}
+      </span>
       <span className="flex" style={{ gap: SP.base }}>
         <button type="button" onClick={onCancel} disabled={busy}
                 className="gkm-focus cursor-pointer disabled:opacity-50"

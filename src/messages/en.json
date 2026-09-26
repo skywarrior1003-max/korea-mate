@@ -200,7 +200,8 @@
     "pastTripsStory": "Past trips live in Story",
     "todayAt": "Today · {place}",
     "moreActions": "More actions",
-    "confirmDelete": "Delete this trip?"
+    "confirmDelete": "Delete this trip?",
+    "deleteScopeNote": "Photos, notes, and reactions will also be permanently deleted. Trips copied by others will remain."
   },
   "blogAffiliate": {
     "card": {

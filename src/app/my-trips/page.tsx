@@ -169,6 +169,7 @@ export default function MyTripsPage() {
   const confirmFor = (trip: Trip) => confirmDel === trip.id || deleting === trip.id ? (
     <InlineConfirm
       question={t("confirmDelete")}
+      note={t("deleteScopeNote")}
       confirmLabel={tPicks("delete")}
       cancelLabel={tPicks("cancel")}
       busy={deleting === trip.id}

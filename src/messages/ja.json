@@ -200,7 +200,8 @@
     "pastTripsStory": "過去の旅はストーリーで",
     "todayAt": "今日 · {place}",
     "moreActions": "その他",
-    "confirmDelete": "この旅行を削除しますか？"
+    "confirmDelete": "この旅行を削除しますか？",
+    "deleteScopeNote": "写真、メモ、リアクションも完全に削除されます。他のユーザーがコピーした旅程は残ります。"
   },
   "blogAffiliate": {
     "card": {

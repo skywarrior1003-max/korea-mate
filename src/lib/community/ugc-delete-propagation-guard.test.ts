@@ -75,3 +75,22 @@ test("place_usage — 이번 변경이 손대지 않았다(비소급 계약 유�
   const itin = read("functions/api/itinerary/[id].ts");
   assert.ok(!itin.includes("place_usage"), "itinerary 삭제가 usage 를 소급하지 않는다");
 });
+
+test("삭제 결과 고지 — 여행 삭제 확인창 전용·4locale 고정 문구", () => {
+  const FIXED: Record<string, string> = {
+    en: "Photos, notes, and reactions will also be permanently deleted. Trips copied by others will remain.",
+    ko: "사진·메모·반응도 함께 영구 삭제됩니다. 다른 사용자가 복사한 일정은 유지됩니다.",
+    ja: "写真、メモ、リアクションも完全に削除されます。他のユーザーがコピーした旅程は残ります。",
+    zh: "照片、备注和互动也会被永久删除。其他用户已复制的行程将保留。",
+  };
+  for (const l of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(read(`src/messages/${l}.json`)) as Record<string, Record<string, string>>;
+    assert.equal(m.trips?.deleteScopeNote, FIXED[l], `${l}.trips.deleteScopeNote 고정 문구`);
+    assert.ok(!/Memory/i.test(m.trips.deleteScopeNote), "Memory 개념 도입 금지");
+  }
+  // 진입점: my-trips 삭제 확인에만 — 공개 철회 토글·장소 제보 철회에는 없음
+  const myTrips = read("src/app/my-trips/page.tsx");
+  assert.ok(myTrips.includes('note={t("deleteScopeNote")}'), "my-trips 삭제 확인에 고지");
+  assert.ok(!read("src/app/itinerary/page.tsx").includes("deleteScopeNote"), "공개 철회 토글 화면 미적용");
+  assert.ok(!read("src/components/community/SuggestPlaceSheet.tsx").includes("deleteScopeNote"), "제보 철회 미적용");
+});
