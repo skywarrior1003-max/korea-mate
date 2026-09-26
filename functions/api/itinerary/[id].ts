@@ -294,7 +294,36 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     }
   }
 
-  // 4단계: trip_moments 명시적 DELETE (FK/CASCADE 없는 경우 고아 행 방지)
+  // 4단계: 이 여행에 귀속된 반응·추천 심사 레코드 정리 (UGC-DELETE-PROPAGATION-V1)
+  //
+  // 감사에서 실증된 구멍이다 — 행을 지워도 content_likes(story)·story_submissions
+  // 가 orphan 으로 남았다. 노출은 join 조건이 이미 끊지만, 완전 삭제의 계약은
+  // "귀속 레코드도 남기지 않는다" 다.
+  //
+  // 조건은 계약 그대로만: content_* 는 target_type IN ('itinerary','story')
+  // (068 CHECK 전체 집합) AND target_key = 이 여행의 id(소문자 저장 계약,
+  // content-like.ts). 다른 여행·다른 사용자의 반응은 조건상 닿지 않는다.
+  // 실패 시 개인정보·해시·경로 원문 없이 단계와 코드만 남기고 500 — moments
+  // 단계와 같은 재시도 가능 계약이다(이 단계까지는 몇 번을 다시 호출해도
+  // 같은 조건 DELETE 라 안전하다).
+  const targetKey = id.toLowerCase();
+  for (const [table, col, val] of [
+    ["content_likes",     "target_key",   targetKey],
+    ["content_dislikes",  "target_key",   targetKey],
+    ["story_submissions", "itinerary_id", id],
+  ] as const) {
+    let q = admin.from(table).delete();
+    q = col === "target_key"
+      ? q.in("target_type", ["itinerary", "story"]).eq("target_key", val)
+      : q.eq(col, val);
+    const { error: cleanupErr } = await q;
+    if (cleanupErr) {
+      console.error("[itinerary DELETE] orphan cleanup failed", { step: table, code: cleanupErr.code });
+      return json({ error: "Failed to delete itinerary" }, 500);
+    }
+  }
+
+  // 5단계: trip_moments 명시적 DELETE (FK/CASCADE 없는 경우 고아 행 방지)
   const { error: momDelErr } = await admin
     .from("trip_moments")
     .delete()
@@ -310,7 +339,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to delete moments" }, 500);
   }
 
-  // 5단계: itinerary DB 삭제
+  // 6단계: itinerary DB 삭제
   const { data, error } = await admin
     .from("itineraries")
     .delete()
