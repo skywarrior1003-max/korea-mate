@@ -4,14 +4,14 @@
 //   POST { target_type: "city_spot", target_key } → 204
 //
 // 계약
-//  · 활용 = 저장 또는 여행 추가 — 이 API 는 추가 축의 원인 이벤트를 기록한다.
-//    저장 축은 place-save 가 같은 place_usage 에 기록한다(usage_key 동일 파생
-//    → actor×장소당 1 행, 어떤 조합도 +3 한 번).
+//  · 활용 = **여행 일정 추가만**(V2 §C-2 — 저장·조회·클릭은 활용이 아니다).
+//    place-save 는 더 이상 usage 를 기록하지 않는다. 중복 방지 단위는
+//    actor×장소×KST 연도(usage_key UNIQUE) — 같은 해 반복은 1, 해가 바뀌면 +1.
 //  · 이벤트-누적형: 제거 동작이 없다(GET/DELETE 없음). count 도 공개하지 않는다.
 //  · raw device_id 저장·로그 금지 — 대상별 해시만. best-effort 클라이언트
 //    (fire-and-forget)라 실패해도 사용자 기능에는 영향이 없다.
 
-import { actorKey } from "../../src/lib/social/social-actions-core";
+import { kstYear, usageKeyYearly } from "../../src/lib/social/social-actions-core";
 
 interface Env { NEXT_PUBLIC_SUPABASE_URL?: string; SUPABASE_SERVICE_ROLE_KEY?: string }
 type Ctx = { request: Request; env: Env };
@@ -71,9 +71,13 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   if (!Array.isArray(spotRows)) return json({ error: "server_error" }, 500);
   if (spotRows.length === 0) return json({ error: "not_found" }, 404);
 
-  const ukey = await actorKey("usage", deviceId.toLowerCase(), "city_spot", key);
+  // §C-3 — 중복 방지 단위는 서버 KST 연도다. 클라이언트는 연도·키를 지정할
+  // 수 없다(body 는 target 뿐). first_cause 는 서버 고정 'trip_add' — 저장 축은
+  // 더 이상 usage 를 만들지 않는다(§C-1, place-save.ts 에서 제거됨).
+  const year = kstYear();
+  const ukey = await usageKeyYearly(deviceId.toLowerCase(), "city_spot", key, year);
   const ins = await rest(env, "POST", "place_usage",
-    [{ target_type: "city_spot", target_key: key, usage_key: ukey, first_cause: "trip_add" }],
+    [{ target_type: "city_spot", target_key: key, usage_key: ukey, usage_year: year, first_cause: "trip_add" }],
     "return=minimal");
   // 409(이미 활용) = 성공과 같다 — 멱등
   if (!ins.ok && ins.status !== 409) return json({ error: "server_error" }, 500);

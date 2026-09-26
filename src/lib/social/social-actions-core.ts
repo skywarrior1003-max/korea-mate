@@ -163,6 +163,33 @@ export async function actorKey(
   return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+// ── 연도 범위 활용 키 (PLACE-USAGE-FOUNDATION-V2 §E) ─────────────────────────
+//
+// 활용(place_usage)의 중복 방지 단위를 "평생"에서 "KST 연도"로 바꾼다.
+// 같은 기기·같은 장소라도 해가 바뀌면 다른 키 = 다시 1회 반영. 연도는
+// 클라이언트 입력이 아니라 **서버의 현재 시각**에서만 파생한다 — 조작 불가.
+// 기존 actorKeyInput 의 canonicalization(trim·lowercase device)을 그대로 따르고
+// 연도만 suffix 로 붙인다(구분자 ':' — 기존 입력 문법과 동일).
+
+/** Asia/Seoul(UTC+9, DST 없음) 기준 연도 — 서버 시간대 설정과 무관하게 결정적 */
+export function kstYear(nowMs: number = Date.now()): number {
+  return new Date(nowMs + 9 * 3_600_000).getUTCFullYear();
+}
+
+export function usageKeyYearlyInput(
+  deviceId: string, targetType: string, targetKey: string, year: number,
+): string {
+  return `${actorKeyInput("usage", deviceId, targetType, targetKey)}:${year}`;
+}
+
+export async function usageKeyYearly(
+  deviceId: string, targetType: string, targetKey: string, year: number,
+): Promise<string> {
+  const data = new TextEncoder().encode(usageKeyYearlyInput(deviceId, targetType, targetKey, year));
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 /** 공개 응답 — 숫자와 내 상태뿐. 다른 사람의 키·정체는 절대 내보내지 않는다 */
 export interface LikeStateResponse { count: number; liked: boolean }
 export function likeState(count: number, liked: boolean): LikeStateResponse {

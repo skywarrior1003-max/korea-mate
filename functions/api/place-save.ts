@@ -73,17 +73,11 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     const ins = await rest(env, "POST", "place_saves",
       [{ target_type: r.target_type, target_key: r.target_key, saver_key: skey }], "return=minimal");
     if (!ins.ok && ins.status !== 409) return json({ error: "server_error" }, 500);
-    // COMMUNITY-V2 §2 — 저장은 "고유 활용"의 원인 이벤트이기도 하다(069).
-    // usage_key 는 원인(save/trip_add)과 무관한 actor×장소 해시라, 같은 사람이
-    // 여행에도 추가했든 반복 저장했든 활용은 1 을 넘지 않는다. 누적형이므로
-    // unsave 에서 지우지 않는다. 실패해도 저장 자체는 성공으로 남긴다.
-    const ukey = await actorKey("usage", r.device_id, r.target_type, r.target_key);
-    const use = await rest(env, "POST", "place_usage",
-      [{ target_type: r.target_type, target_key: r.target_key, usage_key: ukey, first_cause: "save" }],
-      "return=minimal");
-    if (!use.ok && use.status !== 409) {
-      console.log(JSON.stringify({ action: "place-save", status: "usage_insert_failed", httpStatus: use.status }));
-    }
+    // PLACE-USAGE-FOUNDATION-V2 §C-1 — 저장은 더 이상 활용(place_usage)을
+    // 만들지 않는다. 저장은 "현재 관심 상태"(place_saves, unsave 로 해제)이고,
+    // 활용은 "여행 일정에 실제로 추가했다"는 사실(/api/place-usage, trip_add
+    // 전용)이다. 두 축을 여기서 섞던 069 의 결합을 걷어냈다 — 클라이언트가
+    // save cause 를 어떤 형태로 보내와도 이 경로에서는 usage 가 생기지 않는다.
   } else {
     const del = await rest(env, "DELETE",
       `place_saves?saver_key=eq.${skey}&target_type=eq.${r.target_type}&target_key=eq.${encodeURIComponent(r.target_key)}`,
