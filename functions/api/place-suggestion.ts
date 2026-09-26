@@ -85,6 +85,31 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   return json({ success: true, status: "received" }, 201);
 }
 
+// ── GET ?city=<slug> — 이 기기가 이 도시에 낸 제보 목록 (§D 철회 UI 재료) ──
+//
+// suggester_key 가 도시 축 해시라 "이 도시의 내 제보"만 조회할 수 있다 —
+// 그 제약이 곧 설계다(도시 간 활동 연결 불가). 응답은 화면에 필요한 것만:
+// id·name·status·created_at. suggester_key·해시는 내보내지 않는다.
+export async function onRequestGet(ctx: Ctx): Promise<Response> {
+  const { request, env } = ctx;
+  if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) return fail("server_error", 503);
+
+  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
+  if (!UUID_RE.test(deviceId)) return fail("invalid_device", 401);
+  const city = (new URL(request.url).searchParams.get("city") ?? "").trim().toLowerCase();
+  if (!/^[a-z]{2,32}$/.test(city)) return fail("invalid_request", 400);
+
+  const suggesterKey = await actorKey("share", deviceId.toLowerCase(), "place_suggestion", city);
+  const res = await fetch(
+    `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/place_suggestions` +
+    `?suggester_key=eq.${suggesterKey}&select=id,name,status,created_at` +
+    `&order=created_at.desc&limit=20`,
+    { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
+  if (!res.ok) return fail("server_error", 500);
+  const rows = (await res.json().catch(() => [])) as unknown[];
+  return json({ success: true, suggestions: Array.isArray(rows) ? rows : [] });
+}
+
 export async function onRequestOptions(): Promise<Response> {
-  return new Response(null, { status: 204, headers: { Allow: "POST, OPTIONS" } });
+  return new Response(null, { status: 204, headers: { Allow: "GET, POST, OPTIONS" } });
 }
