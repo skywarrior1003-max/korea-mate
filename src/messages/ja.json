@@ -9,6 +9,8 @@
     "plan": "計画",
     "home": "ホーム",
     "about": "サービス紹介",
+    "privacy": "プライバシー",
+    "terms": "利用規約",
     "contact": "お問い合わせ"
   },
   "more": {
@@ -18,6 +20,8 @@
     "aboutDesc": "私たちの目標、データの出典、旅程をつくる AI",
     "blogDesc": "旅の記録と都市ガイド",
     "guideDesc": "現金・交通・タクシー・ひとりごはんまで",
+    "privacyDesc": "情報の収集・利用・保護についてのご案内です。",
+    "termsDesc": "gokoreamate の利用に適用されるルールです。",
     "contactDesc": "ご意見を送る・誤りを知らせる",
     "groupTips": "旅のヒント",
     "tipsToggle": "はじめての旅ガイド",

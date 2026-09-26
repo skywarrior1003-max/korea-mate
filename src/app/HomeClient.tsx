@@ -134,6 +134,8 @@ export default function HomeClient() {
               <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("blog")}</Link>
               <Link href="/survival-guide" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("survivalGuide")}</Link>
               <Link href="/about"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("about")}</Link>
+              <Link href="/privacy"        className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("privacy")}</Link>
+              <Link href="/terms"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("terms")}</Link>
               <button
                 onClick={() => setContactOpen(true)}
                 className="text-sm font-semibold text-gray-400 hover:text-white transition-colors"
