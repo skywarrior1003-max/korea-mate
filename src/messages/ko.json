@@ -9,6 +9,8 @@
     "plan": "계획",
     "home": "홈",
     "about": "소개",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
     "contact": "문의"
   },
   "more": {
@@ -18,6 +20,8 @@
     "aboutDesc": "우리의 목표, 데이터 출처, 일정을 만드는 AI",
     "blogDesc": "여행 기록과 도시 가이드",
     "guideDesc": "현금·교통·택시·혼밥까지 한국 여행 준비",
+    "privacyDesc": "정보가 어떻게 수집·이용·보호되는지 안내합니다.",
+    "termsDesc": "gokoreamate 이용에 적용되는 규칙입니다.",
     "contactDesc": "의견을 보내거나 잘못된 정보를 알려 주세요",
     "groupTips": "여행 팁",
     "tipsToggle": "처음 여행 안내",

@@ -181,6 +181,18 @@ export default function MoreClient() {
             desc={t("guideDesc")}
             icon={<svg {...ICON} aria-hidden><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z" /><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z" /></svg>}
           />
+          <Row
+            href="/privacy/"
+            label={tNav("privacy")}
+            desc={t("privacyDesc")}
+            icon={<svg {...ICON} aria-hidden><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /></svg>}
+          />
+          <Row
+            href="/terms/"
+            label={tNav("terms")}
+            desc={t("termsDesc")}
+            icon={<svg {...ICON} aria-hidden><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h5" /><path d="M10 17h5" /></svg>}
+          />
         </Group>
 
         {/* First Trip Journey Guide — 팁 ON/OFF · 다시 보기 (Owner 확정) */}

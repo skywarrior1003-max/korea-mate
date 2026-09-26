@@ -9,6 +9,8 @@
     "plan": "Plan",
     "home": "Home",
     "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
     "contact": "Contact"
   },
   "more": {
@@ -18,6 +20,8 @@
     "aboutDesc": "Our mission, data sources, and the AI behind the plans",
     "blogDesc": "Travel notes and city guides",
     "guideDesc": "Cash, transit, taxis, and eating alone in Korea",
+    "privacyDesc": "How your information is collected, used, and protected.",
+    "termsDesc": "The rules that apply when you use gokoreamate.",
     "contactDesc": "Send feedback or report something wrong",
     "groupTips": "Travel tips",
     "tipsToggle": "First-trip guide",

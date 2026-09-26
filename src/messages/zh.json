@@ -9,6 +9,8 @@
     "plan": "规划",
     "home": "首页",
     "about": "关于",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
     "contact": "联系我们"
   },
   "more": {
@@ -18,6 +20,8 @@
     "aboutDesc": "我们的目标、数据来源，以及规划行程的 AI",
     "blogDesc": "旅行随笔与城市指南",
     "guideDesc": "现金、交通、出租车、一个人吃饭",
+    "privacyDesc": "介绍信息如何被收集、使用与保护。",
+    "termsDesc": "使用 gokoreamate 时适用的规则。",
     "contactDesc": "发送反馈或报告错误信息",
     "groupTips": "旅行提示",
     "tipsToggle": "首次旅程引导",
