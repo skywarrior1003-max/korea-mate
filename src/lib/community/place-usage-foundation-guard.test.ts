@@ -143,3 +143,17 @@ test("073 — 배포 호환 DEFAULT·재적용 안전 (COMPAT-CHECK §D)", () =>
     "073 재적용 안전(constraint 존재 검사)이 없다");
   assert.ok(sql.includes("SET NOT NULL"), "NOT NULL 유지");
 });
+
+test("075 — refresh_open 은 정확 스냅숏(zero-row 정합·잠금·finalized 보호)", () => {
+  const sql = read("supabase/migrations/075_place_usage_monthly_refresh_exact.sql");
+  assert.ok(sql.includes("pg_advisory_xact_lock"), "동시 실행 직렬화");
+  // 삭제→재삽입 순서(N→0 target 의 stale 행 제거) + finalized 제외
+  const delIdx = sql.indexOf("DELETE FROM public.place_usage_monthly");
+  const insIdx = sql.indexOf("INSERT INTO public.place_usage_monthly");
+  assert.ok(delIdx > 0 && delIdx < insIdx, "open 스냅숏 삭제가 재삽입보다 앞");
+  assert.ok(/status = 'open'/.test(sql.slice(delIdx, insIdx)), "삭제는 open 만 — finalized 불가침");
+  assert.ok(sql.includes("ON CONFLICT (target_type, target_key, month_start) DO NOTHING"), "경합·finalized 충돌 흡수");
+  assert.ok(!/usage_count\s*[+\-]/.test(sql.replace(/^\s*--.*$/gm, "")), "수동 증감 금지(주석 제외)");
+  assert.ok(sql.includes("SECURITY DEFINER") && sql.includes("SET search_path = public"), "정의자·search_path");
+  assert.ok(/GRANT EXECUTE ON FUNCTION public\.place_usage_monthly_refresh_open\(\) TO service_role/.test(sql), "service_role 전용");
+});
