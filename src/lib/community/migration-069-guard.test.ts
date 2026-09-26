@@ -32,12 +32,14 @@ test("① 스키마 — UNIQUE actor 해시·원인 CHECK·RLS·REVOKE·정책 0
     "069 실행 SQL 이 068 산출물을 변경한다");
 });
 
-test("② 배선 — 두 원인이 같은 'usage' 해시로 모인다·클라이언트 count 조작 불가", () => {
+test("② 배선 — 활용은 trip_add 전용(V2 분리)·클라이언트 count 조작 불가", () => {
+  // PLACE-USAGE-FOUNDATION-V2 §C 가 069 의 "저장도 활용" 결합을 의도적으로
+  // 폐기했다: 저장은 place_saves 만(현재 상태), 활용은 여행 추가 신호만
+  // (연도 키). 이 가드는 그 새 계약이 되돌아가지 않게 지킨다.
   const save = read("functions/api/place-save.ts");
-  assert.match(save, /actorKey\("usage", r\.device_id, r\.target_type, r\.target_key\)/);
-  assert.match(save, /first_cause: "save"/);
+  assert.ok(!/place_usage/.test(save.replace(/\/\/.*$/gm, "")), "save 가 usage 를 만들면 V2 회귀");
   const usage = read("functions/api/place-usage.ts");
-  assert.match(usage, /actorKey\("usage", deviceId\.toLowerCase\(\), "city_spot", key\)/);
+  assert.match(usage, /usageKeyYearly\(deviceId\.toLowerCase\(\), "city_spot", key, year\)/);
   assert.match(usage, /first_cause: "trip_add"/);
   // 이벤트 누적형 — 제거·조회 경로가 없다
   assert.ok(!usage.includes("onRequestDelete") && !usage.includes("onRequestGet"));
