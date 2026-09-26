@@ -34,6 +34,41 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
   const [done, setDone] = useState(false);
   const [error, setError] = useState<false | "generic" | "duplicate">(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  // ── 내가 보낸 제보 (UGC-DELETE-PROPAGATION-V1 §D — pending 철회) ──
+  // 이력 화면을 새로 만들지 않는다. 제보가 태어나는 이 sheet 가 곧 관리 지점이다.
+  type MySuggestion = { id: string; name: string; status: string; created_at: string };
+  const [mine, setMine] = useState<MySuggestion[]>([]);
+  const [confirmWithdraw, setConfirmWithdraw] = useState<string | null>(null); // 철회 확인 대상 id
+  const [withdrawBusy, setWithdrawBusy] = useState(false);
+
+  async function loadMine() {
+    try {
+      const res = await fetch(`/api/place-suggestion?city=${encodeURIComponent(citySlug)}`,
+        { headers: { "x-device-id": getDeviceId() } });
+      if (!res.ok) return; // 목록 실패는 조용히 — 제출 기능을 막지 않는다
+      const body = await res.json() as { suggestions?: MySuggestion[] };
+      setMine(Array.isArray(body.suggestions) ? body.suggestions : []);
+    } catch { /* 목록은 보조 정보다 */ }
+  }
+
+  async function withdraw(id: string) {
+    if (withdrawBusy) return;
+    setWithdrawBusy(true);
+    try {
+      const res = await fetch(`/api/place-suggestion/${encodeURIComponent(id)}`,
+        { method: "DELETE", headers: { "x-device-id": getDeviceId() } });
+      if (res.ok || res.status === 404) {
+        // 404 = 이미 철회됨(반복 요청) — 목록에서 빼면 그것으로 충분하다
+        setMine(prev => prev.filter(m => m.id !== id));
+        setConfirmWithdraw(null);
+      } else if (res.status === 409) {
+        // 그 사이 검토가 끝났다 — 최신 상태를 다시 가져와 그대로 보여준다
+        setConfirmWithdraw(null);
+        void loadMine();
+      }
+    } catch { /* 실패 시 버튼이 그대로 남아 재시도 가능 */ }
+    finally { setWithdrawBusy(false); }
+  }
 
   // reset 은 닫기 핸들러에서 — 입력값(name 등)은 재열람 편의를 위해 남긴다.
   function handleClose() {
@@ -55,7 +90,9 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
       }
     };
     document.addEventListener("keydown", onKey, true);
-    const id = window.setTimeout(() => panelRef.current?.focus(), 30);
+    // sheet 를 열 때마다 이 도시의 내 제보를 새로 읽는다 — focus 타이머에 실어
+    // effect 동기 실행 밖으로 뺀다(set-state-in-effect 회피, 기존 관행).
+    const id = window.setTimeout(() => { panelRef.current?.focus(); void loadMine(); }, 30);
     return () => { document.removeEventListener("keydown", onKey, true); window.clearTimeout(id); };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- open 전환 시에만 재구독
   }, [open]);
@@ -135,6 +172,47 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
                 {busy ? t("feedbackSending") : t("suggestSend")}
               </button>
             </div>
+            {mine.length > 0 && (
+              <div className="mt-5 border-t border-gray-100 pt-4">
+                <p className="text-[12.5px] font-bold text-gray-700">{t("mySuggestionsTitle")}</p>
+                <ul className="mt-2 flex flex-col gap-2">
+                  {mine.map(m => (
+                    <li key={m.id} className="rounded-xl border border-gray-100 px-3 py-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="min-w-0 truncate text-[13px] font-semibold text-gray-800">{m.name}</span>
+                        {m.status === "pending" ? (
+                          confirmWithdraw === m.id ? null : (
+                            <button type="button" onClick={() => setConfirmWithdraw(m.id)}
+                              className="gkm-focus shrink-0 rounded-lg border border-gray-200 px-2.5 py-1 text-[12px] font-semibold text-gray-600">
+                              {t("suggestWithdraw")}
+                            </button>
+                          )
+                        ) : (
+                          <span className="shrink-0 text-[11.5px] font-semibold text-gray-400">
+                            {t(m.status === "accepted" ? "suggestStatusAccepted" : "suggestStatusDeclined")}
+                          </span>
+                        )}
+                      </div>
+                      {confirmWithdraw === m.id && (
+                        <div className="mt-2 rounded-lg bg-gray-50 px-3 py-2.5">
+                          <p className="text-[12px] text-gray-600">{t("suggestWithdrawConfirmBody")}</p>
+                          <div className="mt-2 flex gap-2">
+                            <button type="button" onClick={() => setConfirmWithdraw(null)} disabled={withdrawBusy}
+                              className="gkm-focus flex-1 min-h-9 rounded-lg border border-gray-200 text-[12px] font-semibold text-gray-600">
+                              {t("feedbackClose")}
+                            </button>
+                            <button type="button" onClick={() => void withdraw(m.id)} disabled={withdrawBusy}
+                              className="gkm-focus flex-1 min-h-9 rounded-lg bg-gray-900 text-white text-[12px] font-bold disabled:opacity-40">
+                              {withdrawBusy ? t("feedbackSending") : t("suggestWithdrawConfirmYes")}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </>
         )}
       </div>
