@@ -132,3 +132,14 @@ test("현재 순위 RPC 원문 무변경 — 071 은 여전히 raw place_usage �
   assert.ok(sql071.includes("FROM public.place_usage"), "071 원천은 raw(다음 TASK 에서 전환)");
   assert.ok(!sql071.includes("place_usage_monthly"), "071 은 이번에 손대지 않았다");
 });
+
+test("073 — 배포 호환 DEFAULT·재적용 안전 (COMPAT-CHECK §D)", () => {
+  const sql = read("supabase/migrations/073_place_usage_annual_key.sql");
+  // migration 이 코드보다 먼저 가도 구버전 INSERT 가 죽지 않는다 — KST 명시 DEFAULT
+  assert.ok(/SET DEFAULT \(EXTRACT\(YEAR FROM \(now\(\) AT TIME ZONE 'Asia\/Seoul'\)\)::smallint\)/.test(sql),
+    "usage_year KST DEFAULT 가 없다 — 무중단 배포 구간에서 usage 조용한 유실");
+  // 재적용 안전 — CHECK 제약은 존재 검사 후 추가
+  assert.ok(sql.includes("IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'place_usage_year_chk')"),
+    "073 재적용 안전(constraint 존재 검사)이 없다");
+  assert.ok(sql.includes("SET NOT NULL"), "NOT NULL 유지");
+});

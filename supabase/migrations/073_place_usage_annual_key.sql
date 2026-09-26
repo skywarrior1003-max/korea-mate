@@ -25,12 +25,26 @@ UPDATE public.place_usage
    SET usage_year = EXTRACT(YEAR FROM (created_at AT TIME ZONE 'Asia/Seoul'))::smallint
  WHERE usage_year IS NULL;
 
+-- 배포 호환 DEFAULT (COMPAT-CHECK §D) — migration 이 코드보다 먼저 적용되는
+-- 구간에 구버전 코드가 usage_year 없이 INSERT 해도 실패하지 않도록, DB 가
+-- KST 현재 연도를 채운다. DB timezone 설정에 의존하지 않고 Asia/Seoul 을
+-- 명시한다. 새 코드는 서버 계산 연도를 명시하므로 DEFAULT 와 항상 일치한다
+-- (둘 다 같은 KST 정의). 클라이언트는 어느 쪽에서도 연도를 정하지 못한다.
+ALTER TABLE public.place_usage
+  ALTER COLUMN usage_year
+  SET DEFAULT (EXTRACT(YEAR FROM (now() AT TIME ZONE 'Asia/Seoul'))::smallint);
+
 ALTER TABLE public.place_usage
   ALTER COLUMN usage_year SET NOT NULL;
 
--- 합리적 연도 범위(서비스 이전·먼 미래 차단)
-ALTER TABLE public.place_usage
-  ADD CONSTRAINT place_usage_year_chk CHECK (usage_year BETWEEN 2024 AND 2100);
+-- 합리적 연도 범위(서비스 이전·먼 미래 차단) — 재적용 안전(존재 시 생략)
+DO $c073$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'place_usage_year_chk') THEN
+    ALTER TABLE public.place_usage
+      ADD CONSTRAINT place_usage_year_chk CHECK (usage_year BETWEEN 2024 AND 2100);
+  END IF;
+END $c073$;
 
 -- 연도별 집계·검증 조회용
 CREATE INDEX IF NOT EXISTS idx_place_usage_target_year
