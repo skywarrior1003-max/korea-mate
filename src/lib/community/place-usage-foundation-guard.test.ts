@@ -157,3 +157,28 @@ test("075 — refresh_open 은 정확 스냅숏(zero-row 정합·잠금·finaliz
   assert.ok(sql.includes("SECURITY DEFINER") && sql.includes("SET search_path = public"), "정의자·search_path");
   assert.ok(/GRANT EXECUTE ON FUNCTION public\.place_usage_monthly_refresh_open\(\) TO service_role/.test(sql), "service_role 전용");
 });
+
+test("076 — 자동 운영 계약(catch-up·1트랜잭션·스케줄 멱등·이력 90일)", () => {
+  const sql = read("supabase/migrations/076_place_usage_monthly_automation.sql");
+  assert.ok(sql.includes("CREATE EXTENSION IF NOT EXISTS pg_cron"), "pg_cron 재적용 안전 설치");
+  // catch-up: open 과거 월 ∪ raw 에만 있는 과거 월
+  assert.ok(sql.includes("UNION"), "누락 월 복구 집합(UNION)이 없다");
+  assert.ok(/status = 'open' AND month_start < v_current/.test(sql), "open 과거 월");
+  assert.ok(/f\.status = 'finalized'\)/.test(sql), "finalized 월 제외");
+  // 1 트랜잭션 — finalize 실패 시 RAISE 로 전체 롤백
+  assert.ok(sql.includes("RAISE EXCEPTION 'place_usage_monthly_maintenance: finalize"), "부분 확정 금지 롤백");
+  assert.ok(sql.includes("pg_advisory_xact_lock(hashtext('place_usage_monthly_maintenance'))"), "상위 maintenance lock");
+  // 스케줄: UTC 식(KST 03:17·일 03:47)·고정 이름·멱등(동일 skip·상이 교체)
+  assert.ok(sql.includes("'17 18 * * *'") && sql.includes("'47 18 * * 6'"), "UTC cron 식");
+  assert.ok(sql.includes("gokoreamate-place-usage-monthly-maintenance-v1") &&
+            sql.includes("gokoreamate-cron-history-retention-90d-v1"), "고정 job 이름");
+  assert.ok(sql.includes("cron.unschedule(v_id)"), "정의 상이 시 교체");
+  // 이력 정리: 종료된 90일 초과만·job 정의 무접촉
+  assert.ok(sql.includes("end_time IS NOT NULL") && sql.includes("interval '90 days'"), "90일·실행중 보존");
+  assert.ok(!/DELETE FROM cron\.job\b/.test(sql), "job 정의 삭제 금지");
+  // 보안: 권한 회수·secret/HTTP 0
+  assert.ok(/REVOKE ALL ON FUNCTION public\.place_usage_monthly_maintenance\(\) FROM PUBLIC, anon, authenticated/.test(sql));
+  assert.equal((sql.match(/SECURITY DEFINER/g) ?? []).length, 2);
+  assert.equal((sql.match(/SET search_path = public/g) ?? []).length, 2);
+  assert.ok(!/http|api\.|vault|secret/i.test(sql.replace(/--.*$/gm, "")), "외부 호출·secret 0");
+});
