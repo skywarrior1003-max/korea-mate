@@ -84,3 +84,17 @@
   권한 회수, endpoint 는 admin 전용).
 - Production 동작 확인을 위해 **실제 제안·장소·연결을 만들지 않는다** —
   상태 전이 검증은 Staging/Preview 에서만 한다.
+
+## 6. 검토·발행 시 사용자 콘텐츠 분리 수칙 (UGC-DELETE-PROPAGATION-V1 §B-4)
+
+관리자가 제보(place_suggestions)를 검토해 `city_spots` 를 만들 때:
+
+- 장소명·주소·좌표·카테고리는 **공식 출처로 독립 검증**한 값만 쓴다.
+  제보 원문은 "무엇을 검증할지"의 단서일 뿐, canonical 필드의 원천이 아니다.
+- 사용자 개인 메모·표현물(reason 문구 포함)·사진을 canonical 데이터에
+  복사하지 않는다. (구조 계약: place_suggestions 에는 애초에 사진·개인 메모
+  필드가 없다 — 이 계약을 유지한다.)
+- accepted 가 `city_spots` 를 **자동 생성하지 않는** 현 구조를 바꾸지 않는다.
+  발행은 언제나 관리자가 별도로 작성한 독립 row 다.
+- 사용자가 pending 제보를 철회(DELETE /api/place-suggestion/:id)해도
+  이미 발행된 canonical 장소에는 어떤 영향도 없다 — 둘은 독립 데이터다.
