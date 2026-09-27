@@ -19,6 +19,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { exploreHrefFor, DEFAULT_EXPLORE_HREF } from "@/lib/explore-href";
 
 export interface BottomNavProps {
   selectedCount?: number; // 실측치만 — 없으면 배지 미표시 (no invented counts)
@@ -35,7 +38,7 @@ const ICON: Record<string, React.ReactNode> = {
 
 const TABS = [
   { key: "home",    href: "/" },
-  { key: "explore", href: "/explore/busan" },
+  { key: "explore", href: "/explore/busan" }, // href 는 렌더 시 현재 여행 도시로 대체된다(CITY-ROUTING-RECOVERY)
   { key: "picks",   href: "/picks" },
   { key: "trips",   href: "/my-trips" },
   { key: "more",    href: "/more" },
@@ -57,6 +60,17 @@ function inSection(pathname: string, base: string): boolean {
 export default function BottomNav({ selectedCount }: BottomNavProps) {
   const t = useTranslations("shell");
   const pathname = usePathname();
+  // CITY-ROUTING-RECOVERY — 둘러보기 탭은 "지금 준비 중인 여행 도시" 의 Explore 로.
+  // 부산 하드코딩이 서울·전주 여행자를 부산으로 보냈다. 마운트 시 draft 를 읽는다
+  // (새로고침/재진입 반영 계약 — 폴링 없음).
+  const [exploreHref, setExploreHref] = useState(DEFAULT_EXPLORE_HREF);
+  useEffect(() => {
+    // 동기 setState-in-effect 회피(레포 lint 계약) — 페인트 뒤 한 프레임에 갱신
+    const id = requestAnimationFrame(() => {
+      try { setExploreHref(exploreHrefFor(readTripDraft()?.city ?? null)); } catch { /* 기본 허브 유지 */ }
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pathname]);
 
   return (
     <nav
@@ -71,10 +85,11 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
           // 되기 전까지 Home 탭이 켜져 있어야 사용자가 스택을 잃지 않는다 (RT-01).
           : tab.href === "/" ? pathname === "/" || inSection(pathname, "/city")
           : pathname.startsWith(tab.href.split("/").slice(0, 2).join("/"));
+        const href = tab.key === "explore" ? exploreHref : tab.href;
         return (
           <Link
             key={tab.key}
-            href={tab.href}
+            href={href}
             aria-current={active ? "page" : undefined}
             className={`gkm-focus relative flex-1 flex flex-col items-center justify-center gap-1 min-h-15 py-2 ${
               active ? "text-action" : "text-faint"
