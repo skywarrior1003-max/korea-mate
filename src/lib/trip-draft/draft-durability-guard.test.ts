@@ -39,7 +39,7 @@ test("unit — reorder 는 membership 불변: 모르는 신규 항목을 결정�
 
 test("080 — 원자성·멱등·경계 계약(정적)", () => {
   const files = readdirSync(join(ROOT, "supabase/migrations"));
-  assert.equal(files.filter(f => f.endsWith(".sql")).length, 80);
+  assert.equal(files.filter(f => f.endsWith(".sql")).length, 81); // +081 RLS hotfix(Production 기적용) 합류
   assert.equal(files.filter(f => f.startsWith("080")).length, 1);
   const s = read("supabase/migrations/080_trip_draft_operations.sql");
   assert.match(s, /FOR UPDATE/);                                   // row lock — 단일 프로세스 메모리 잠금 아님
