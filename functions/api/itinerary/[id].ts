@@ -20,7 +20,7 @@ import {
   isValidDays,
   optStr,
 } from "../../../src/lib/itinerary-validate";
-import { collectItineraryPhotoPaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
+import { purgeItineraryCascade } from "../../_lib/itinerary-purge";
 import { publishGate } from "../../../src/lib/moderation/publish-gate";
 import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 
@@ -253,7 +253,6 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
   const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
   if (!own.ok) return own.response;
-  const deviceId = own.currentDevice;
   const deviceScope = own.devices;
 
   let admin;
@@ -270,110 +269,17 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
 
   if (!itinerary) return json({ error: "Not found or permission denied" }, 404);
 
-  // 2단계: 연결 Storage 파일 경로 수집 — 첫 장 slot 과 자식 사진을 모두 모은다.
-  //
-  // 자식 행(`trip_moment_photos`)은 4단계에서 FK CASCADE 로 함께 사라진다.
-  // 여기서 경로를 미리 챙기지 않으면 그 파일들은 아무도 가리키지 않는 채
-  // Storage 에 남고, 가리키던 행이 없으니 나중에 찾아낼 방법도 없다.
-  //
-  // 둘 중 하나라도 못 읽으면 목록이 불완전하다. 그 상태로 지우면 "지운 줄 알았는데
-  // 남은" 파일이 생기므로, 조용히 넘기지 않고 여기서 멈춘다.
-  const collected = await collectItineraryPhotoPaths({
-    legacy: async () => {
-      const { data, error } = await admin
-        .from("trip_moments")
-        .select("storage_path")
-        .eq("itinerary_id", id)
-        .not("storage_path", "is", null);
-      return { ok: !error, rows: (data ?? []) as { storage_path: string | null }[] };
-    },
-    child: async () => {
-      const { data, error } = await admin
-        .from("trip_moment_photos")
-        .select("storage_path")
-        .eq("itinerary_id", id);
-      return { ok: !error, rows: (data ?? []) as { storage_path: string | null }[] };
-    },
-  }, id);
-
-  if (!collected.ok) {
-    // 경로는 로그에도 남기지 않는다. 어느 쪽 조회가 실패했는지만 적는다.
-    console.error("[itinerary DELETE] photo path collect failed:", collected.stage);
-    return json({ error: "Failed to remove photos" }, 500);
-  }
-  const storagePaths = collected.paths;
-
-  // 3단계: Storage-first 삭제 (Storage 실패 시 DB 미삭제)
-  if (storagePaths.length > 0) {
-    const storageErr = await removeItineraryStorage(admin.storage, storagePaths);
-    if (storageErr) {
-      console.error("[itinerary DELETE] storage remove failed:", storageErr, { count: storagePaths.length });
-      return json({ error: "Failed to remove photos" }, 500);
+  // 2~6단계는 공용 cascade(ACCOUNT-DELETE-V1 에서 계정 삭제와 공유) —
+  // 순서·실패 계약은 아래 원본 주석 그대로 functions/_lib/itinerary-purge.ts 에 있다.
+  {
+    const purged = await purgeItineraryCascade(admin, id);
+    if (!purged.ok) {
+      const msg = purged.stage === "photo_collect" || purged.stage === "storage"
+        ? "Failed to remove photos"
+        : purged.stage === "trip_moments" ? "Failed to delete moments" : "Failed to delete itinerary";
+      return json({ error: msg }, purged.status);
     }
+    return json({ ok: true });
   }
 
-  // 4단계: 이 여행에 귀속된 반응·추천 심사 레코드 정리 (UGC-DELETE-PROPAGATION-V1)
-  //
-  // 감사에서 실증된 구멍이다 — 행을 지워도 content_likes(story)·story_submissions
-  // 가 orphan 으로 남았다. 노출은 join 조건이 이미 끊지만, 완전 삭제의 계약은
-  // "귀속 레코드도 남기지 않는다" 다.
-  //
-  // 조건은 계약 그대로만: content_* 는 target_type IN ('itinerary','story')
-  // (068 CHECK 전체 집합) AND target_key = 이 여행의 id(소문자 저장 계약,
-  // content-like.ts). 다른 여행·다른 사용자의 반응은 조건상 닿지 않는다.
-  // 실패 시 개인정보·해시·경로 원문 없이 단계와 코드만 남기고 500 — moments
-  // 단계와 같은 재시도 가능 계약이다(이 단계까지는 몇 번을 다시 호출해도
-  // 같은 조건 DELETE 라 안전하다).
-  const targetKey = id.toLowerCase();
-  for (const [table, col, val] of [
-    ["content_likes",     "target_key",   targetKey],
-    ["content_dislikes",  "target_key",   targetKey],
-    ["story_submissions", "itinerary_id", id],
-  ] as const) {
-    let q = admin.from(table).delete();
-    q = col === "target_key"
-      ? q.in("target_type", ["itinerary", "story"]).eq("target_key", val)
-      : q.eq(col, val);
-    const { error: cleanupErr } = await q;
-    if (cleanupErr) {
-      console.error("[itinerary DELETE] orphan cleanup failed", { step: table, code: cleanupErr.code });
-      return json({ error: "Failed to delete itinerary" }, 500);
-    }
-  }
-
-  // 5단계: trip_moments 명시적 DELETE (FK/CASCADE 없는 경우 고아 행 방지)
-  const { error: momDelErr } = await admin
-    .from("trip_moments")
-    .delete()
-    .eq("itinerary_id", id);
-
-  if (momDelErr) {
-    // Storage는 이미 삭제됐으나 trip_moments DB 삭제 실패
-    console.error("[itinerary DELETE] CRITICAL: storage deleted but moments db delete failed", {
-      itineraryId: id,
-      pathCount: storagePaths.length,
-      code: momDelErr.code,
-    });
-    return json({ error: "Failed to delete moments" }, 500);
-  }
-
-  // 6단계: itinerary DB 삭제
-  const { data, error } = await admin
-    .from("itineraries")
-    .delete()
-    .eq("id", id)
-    .in("device_id", deviceScope)
-    .select("id");
-
-  if (error) {
-    // Storage·trip_moments 삭제 완료 후 itinerary DB 삭제 실패
-    console.error("[itinerary DELETE] CRITICAL: moments deleted but itinerary db delete failed", {
-      itineraryId: id,
-      code: error.code,
-    });
-    return json({ error: "Failed to delete itinerary" }, 500);
-  }
-  if (!data || data.length === 0) return json({ error: "Not found or permission denied" }, 404);
-
-  return json({ ok: true });
 }
