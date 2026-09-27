@@ -180,13 +180,14 @@ function readStorage(): CartItem[] {
 function writeStorage(items: CartItem[]): void {
   // 저장 직전에도 한 번 더 거른다 — 어느 화면에서 담았든 Cart 에는 상업 문맥이
   // 들어가지 않는다.
+  const prev = readStorage(); // DURABILITY-V1 — diff 용 이전 상태(쓰기 직전)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(stripTripCommerceKeys(items)));
   // CartDrawer 등 구독 컴포넌트에 변경 알림
   window.dispatchEvent(new CustomEvent(CART_EVENT));
-  // THIS-TRIP-SYNC — 모든 카트 쓰기는 서버 스냅숏으로도 흘러간다(디바운스).
-  // 동적 import: SSR 무해·순환 참조 회피. 실패는 best-effort(서버가 진실 수렴).
+  // DURABILITY-V1 — 스냅숏 PUT 폐기. 모든 카트 쓰기를 작업 단위 op(diff)로
+  // 변환해 pending queue 에 기록하고 즉시 전송을 시작한다(700ms 의존 제거).
   void import("@/lib/trip-draft-sync")
-    .then(m => m.scheduleDraftPush(() => readStorage()))
+    .then(m => m.recordCartChange(prev, readStorage()))
     .catch(() => { /* sync 모듈 로드 실패 — 로컬 캐시만 동작 */ });
 }
 
@@ -196,12 +197,24 @@ function writeStorage(items: CartItem[]): void {
  */
 export async function hydrateCartFromServer(): Promise<void> {
   const m = await import("@/lib/trip-draft-sync");
+  const { readTripDraft, writeTripDraft } = await import("@/lib/trip-draft/trip-draft-core");
   await m.hydrateTripDraft(
     items => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(stripTripCommerceKeys(items as CartItem[])));
       window.dispatchEvent(new CustomEvent(CART_EVENT));
     },
     () => readStorage(),
+    // §8 — 확정 여행 조건(city/start/end)도 계정 draft 를 따른다. 로컬의
+    // 다른 선택 필드는 기기 전용으로 유지(서버는 3필드만 안다).
+    ctx => {
+      const cur = readTripDraft();
+      if (!cur || cur.city !== ctx.city || cur.startDate !== ctx.startDate || cur.endDate !== ctx.endDate) {
+        // 서버가 아는 3필드만 갱신 — 나머지 선택 필드는 기기 값 유지
+        const rest = { ...(cur ?? {}) } as Record<string, unknown>;
+        delete rest.updatedAt; delete rest.city; delete rest.startDate; delete rest.endDate;
+        writeTripDraft({ ...rest, city: ctx.city, startDate: ctx.startDate, endDate: ctx.endDate });
+      }
+    },
   );
 }
 

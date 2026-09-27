@@ -285,6 +285,11 @@ export function writeTripDraft(input: {
 
   try {
     window.localStorage.setItem(TRIP_DRAFT_KEY, JSON.stringify(draft));
+  // DURABILITY-V1 §8 — '이 조건으로 시작' 확정값(city/start/end)은 계정 draft 로
+  // 동기화한다(작업 단위 op·hydrate 재적용 중에는 sync 모듈이 스스로 무시).
+  void import("@/lib/trip-draft-sync")
+    .then(m => m.recordTripContext(draft.city, draft.startDate, draft.endDate))
+    .catch(() => { /* sync 미가용 — 로컬 확정값은 유지된다 */ });
   } catch {
     return null;                       // 저장 실패도 조용히 넘긴다. 화면은 계속 돈다
   }

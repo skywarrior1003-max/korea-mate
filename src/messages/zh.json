@@ -1673,7 +1673,8 @@
       "statusChecking": "正在确认账户状态…",
       "consentAutoLink": "登录后，此设备上创建的行程和收藏项目将自动关联到你的账户。",
       "accountLinkedHint": "你的行程和收藏项目已关联到此账户。",
-      "consentLinkConflict": "此设备已关联到其他账户。请退出登录并刷新后重试。"
+      "consentLinkConflict": "此设备已关联到其他账户。请退出登录并刷新后重试。",
+      "logoutSaveFailed": "未能保存你的更改。请检查网络连接后重新退出登录。"
   }
 
 }

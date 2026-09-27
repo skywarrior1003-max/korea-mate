@@ -1673,7 +1673,8 @@
       "statusChecking": "Checking account status…",
       "consentAutoLink": "When you sign in, trips and saved items created on this device are automatically linked to your account.",
       "accountLinkedHint": "Your trips and saved items are linked to this account.",
-      "consentLinkConflict": "This device is already linked to a different account. Please sign out, refresh, and try again."
+      "consentLinkConflict": "This device is already linked to a different account. Please sign out, refresh, and try again.",
+      "logoutSaveFailed": "We couldn't save your changes. Check your connection and try signing out again."
   }
 
 }

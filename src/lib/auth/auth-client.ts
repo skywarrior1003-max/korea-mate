@@ -82,11 +82,18 @@ export async function signOutUser(): Promise<void> {
  * 이후 이 브라우저의 요청은 새 unlinked device 라 이전 계정 데이터가 화면·API
  * 어디에도 남지 않는다. old device 의 서버 mapping 은 유지된다.
  */
-export async function signOutAndReset(): Promise<{ ok: boolean }> {
+export async function signOutAndReset(): Promise<{ ok: boolean; reason?: "unsaved" | "signout" }> {
+  // DURABILITY-V1 §7 — 세션 종료 **전에** 미전송 draft 변경을 flush 한다.
+  // 실패하면 성공 위장 없이 중단: session·device·queue 전부 유지(재시도 가능).
+  try {
+    const { flushDraftOps } = await import("@/lib/trip-draft-sync");
+    const fl = await flushDraftOps();
+    if (!fl.ok) return { ok: false, reason: "unsaved" };
+  } catch { return { ok: false, reason: "unsaved" }; }
   try {
     const { error } = await supabase.auth.signOut();
-    if (error) return { ok: false };
-  } catch { return { ok: false }; }
+    if (error) return { ok: false, reason: "signout" };
+  } catch { return { ok: false, reason: "signout" }; }
   const { rotateDeviceId } = await import("@/lib/deviceId");
   rotateDeviceId();
   try { window.location.reload(); } catch { /* 라우터 밖 — 다음 내비게이션이 새 신원 */ }

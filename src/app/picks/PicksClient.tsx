@@ -582,7 +582,11 @@ function PicksContent() {
     });
   }
 
-  function handleBuild() {
+  async function handleBuild() {
+    // DURABILITY-V1 §T12 — 일정 생성 입력은 서버 draft 가 진실이다.
+    // 이동 전에 미전송 op 를 flush 한다(실패해도 로컬 입력으로 진행 — 서버는
+    // 다음 flush 트리거에서 수렴하고, 생성 화면도 같은 cart 를 읽는다).
+    try { await (await import("@/lib/trip-draft-sync")).flushDraftOps(); } catch { /* 위 주석 참조 */ }
     trackEvent("build_trip_click", {
       city: selected[0]?.city ?? "",
       picked_count: selected.length,

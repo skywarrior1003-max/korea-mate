@@ -96,12 +96,18 @@ function AccountSection() {
               <p className="text-[15px] font-black text-[#2C2520]">{user.displayName ?? tAuth("signedInFallback")}</p>
               <p className="text-[12px] text-[#61554D] mt-0.5">{tAuth("signedInHint")}</p>
               <p className="text-[12px] text-[#61554D] mt-0.5">{tAuth("accountLinkedHint")}</p>
+              {callbackError === "logout_save_failed" && (
+                <p className="text-[12px] font-bold text-[#B3261E] mt-1">{tAuth("logoutSaveFailed")}</p>
+              )}
             </div>
             <button
               onClick={async () => {
                 setBusy(true);
-                const r = await signOutAndReset(); // §9 — 성공 시 reload, 실패 시 초기화하지 않는다
-                if (!r.ok) setBusy(false);
+                const r = await signOutAndReset(); // 성공 시 reload, 실패 시 초기화하지 않는다
+                if (!r.ok) {
+                  setBusy(false);
+                  if (r.reason === "unsaved") setCallbackError("logout_save_failed");
+                }
               }}
               disabled={busy}
               className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
@@ -127,8 +133,11 @@ function AccountSection() {
               <button
                 onClick={async () => {
                 setBusy(true);
-                const r = await signOutAndReset(); // §9 — 성공 시 reload, 실패 시 초기화하지 않는다
-                if (!r.ok) setBusy(false);
+                const r = await signOutAndReset(); // 성공 시 reload, 실패 시 초기화하지 않는다
+                if (!r.ok) {
+                  setBusy(false);
+                  if (r.reason === "unsaved") setCallbackError("logout_save_failed");
+                }
               }}
                 disabled={busy}
                 className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
