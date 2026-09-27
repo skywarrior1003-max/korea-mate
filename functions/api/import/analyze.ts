@@ -20,7 +20,7 @@
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle } from "../../_lib/ai-ops-guard";
-import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
@@ -203,7 +203,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   }
 
   // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수
-  const auth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+  const auth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
   if (!auth.ok) return auth.response;
   checkUserEntitlementPlaceholder(auth.userId); // 차감은 후속 TASK
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";

@@ -12,11 +12,15 @@
 //  · malformed·만료·타 환경 token  → 401 { error: "invalid_session" }
 //  · 내부 검증 장애                → 503 { error: "auth_unavailable" }
 
+import { CURRENT_CONSENT_VERSIONS } from "../../src/lib/auth/consent-contract.ts";
+
 export interface UserAuthEnv {
   NEXT_PUBLIC_SUPABASE_URL?: string;
   NEXT_PUBLIC_SUPABASE_ANON_KEY?: string;
   /** actor hash 용 서버 secret — writing 의 owner hash 와 같은 변수를 쓴다 */
   MYTRIP_HASH_SECRET?: string;
+  /** user_consents 조회·기록 — service_role 전용(077 이 직접 접근을 전면 차단) */
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
 
 export type UserAuthResult =
@@ -89,4 +93,54 @@ export async function userActorHash(userId: string, secret: string): Promise<str
  */
 export function checkUserEntitlementPlaceholder(_userId: string): { ok: true } {
   return { ok: true };
+}
+
+// ── 계정 활성(동의) 판정 (CONSENT-AND-AUTH-ACTIVATION-V1 §F·§H) ────────────
+//
+// "활성 계정" = 현재 3개 문서 버전(user_consents)의 동의 행이 있는 사용자.
+// 판정은 user id 기준이며 이메일은 쓰지 않는다. user id 는 로그에 출력하지
+// 않고, 조회·기록은 service_role 로만 한다(077 이 anon/authenticated 직접
+// 접근을 전면 차단하므로 다른 경로가 없다).
+
+export function consentRequired(): Response { return jsonError("consent_required", 403); }
+
+/** 현재 버전 동의 행 존재 여부 — service_role 조회. 장애는 null(판정 불가). */
+export async function hasCurrentConsent(
+  env: UserAuthEnv, userId: string, fetchFn: typeof fetch = fetch,
+): Promise<boolean | null> {
+  const base = env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!base || !key) return null;
+  const q = new URLSearchParams({
+    select: "id",
+    user_id: `eq.${userId}`,
+    age_gate_version: `eq.${CURRENT_CONSENT_VERSIONS.age_gate_version}`,
+    terms_version: `eq.${CURRENT_CONSENT_VERSIONS.terms_version}`,
+    privacy_version: `eq.${CURRENT_CONSENT_VERSIONS.privacy_version}`,
+    limit: "1",
+  });
+  try {
+    const res = await fetchFn(`${base}/rest/v1/user_consents?${q}`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    if (!res.ok) return null;
+    const rows = (await res.json()) as unknown[];
+    return Array.isArray(rows) && rows.length > 0;
+  } catch { return null; }
+}
+
+/**
+ * requireUser + 현재 버전 동의까지 검증한다.
+ * 동의 없음 → 403 consent_required. 판정 장애 → 503 (성공으로 폴백하지 않음).
+ * 결과의 userId 는 서버 내부 전용 — 응답·로그에 싣지 않는다.
+ */
+export async function requireActiveUser(
+  env: UserAuthEnv, request: Request, fetchFn: typeof fetch = fetch,
+): Promise<UserAuthResult> {
+  const auth = await requireUser(env, request, fetchFn);
+  if (!auth.ok) return auth;
+  const consent = await hasCurrentConsent(env, auth.userId, fetchFn);
+  if (consent === null) return { ok: false, response: jsonError("auth_unavailable", 503) };
+  if (!consent) return { ok: false, response: consentRequired() };
+  return auth;
 }

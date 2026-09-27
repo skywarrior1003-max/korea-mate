@@ -19,7 +19,7 @@
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
-import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
 import {
   resolveAiMode, modeAllowsProviderCall, validateProfile, buildMockProfile,
   PROFILE_VERSION, PROFILE_CATEGORIES, TIME_PREFERENCES,
@@ -179,7 +179,7 @@ export async function onRequestPost(
   // ── V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수 ──
   // 순서: env·AI_MODE(위) → 사용자 인증 → entitlement 자리 → 스위치·예산(reserve).
   // off/mock 은 위에서 이미 반환됐다 — 무과금 경로는 로그인 없이도 동작한다.
-  const auth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+  const auth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
   if (!auth.ok) return auth.response;
   checkUserEntitlementPlaceholder(auth.userId); // 무료/크레딧 차감은 후속 TASK
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";

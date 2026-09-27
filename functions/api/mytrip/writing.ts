@@ -21,7 +21,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
-import { requireUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
@@ -381,7 +381,7 @@ export async function onRequestPost(
     // provider 로 갈 수 없는 조건을 먼저 자른다 — 못 갈 요청은 예약하지 않는다.
     if (!useWorker && !apiKey) return reply(null, "no_key");
     // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수(레거시 포함).
-    const legacyAuth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+    const legacyAuth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
     if (!legacyAuth.ok) return legacyAuth.response;
     checkUserEntitlementPlaceholder(legacyAuth.userId); // 차감은 후속 TASK
     const legacyActor = hashSecret ? await userActorHash(legacyAuth.userId, hashSecret) : null;
@@ -609,7 +609,7 @@ export async function onRequestPost(
   }
   // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수.
   // 캐시 적중(위에서 이미 반환)·no_key 는 무과금이라 여기 오지 않는다.
-  const userAuth = await requireUser(ctx.env as Parameters<typeof requireUser>[0], ctx.request);
+  const userAuth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
   if (!userAuth.ok) {
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
     return userAuth.response;
