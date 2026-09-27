@@ -47,7 +47,9 @@ export default function TopNav({ selectedCount }: TopNavProps) {
           <Link href="/my-trips/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("trips")}
           </Link>
-          <Link href="/about/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+          {/* MORE-NAV-CLOSEOUT — '더보기' 라벨은 계정 More 허브(/more)가 canonical 이다.
+              About 은 More 허브 안의 '소개' Row 와 footer 로 계속 접근된다(라벨 혼용 금지). */}
+          <Link href="/more/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("more")}
           </Link>
           <LanguageSwitcher />
