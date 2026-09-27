@@ -20,6 +20,7 @@
 // 거기를 켠다고 여기가 켜지면 안 된다.
 
 import { createClient } from "@supabase/supabase-js";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 import {
   UUID_RE,
   MAX_USER_SPOT_BODY_BYTES,
@@ -69,8 +70,12 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   // ── mode — 켜져 있지 않으면 아무것도 하지 않는다 ────────────────────────────
   // 소유권 확인보다 먼저 끊는다. 꺼져 있을 때 DB 를 읽을 이유가 없다.
@@ -96,7 +101,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .select("id, name, city, category, lat, lng, note, display_title, display_memo, related_city_spot_id, photo_storage_path")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (spotErr) {
@@ -180,7 +185,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
       .from("user_spots")
       .update({ display_title: title, updated_at: new Date().toISOString() })
       .eq("id", id)
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .is("display_title", null)
       .select("id");
     if (error) console.error("[user-spots/:id/enrich] title write error:", error.code);
@@ -192,7 +197,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
       .from("user_spots")
       .update({ display_memo: memo, updated_at: new Date().toISOString() })
       .eq("id", id)
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .is("display_memo", null)
       .select("id");
     if (error) console.error("[user-spots/:id/enrich] memo write error:", error.code);

@@ -11,6 +11,7 @@
 // - no body spread; all fields individually validated and extracted
 
 import { createClient } from "@supabase/supabase-js";
+import { resolveOwnership, type OwnershipEnv } from "../_lib/ownership.ts";
 import {
   UUID_RE,
   MAX_BODY_BYTES,
@@ -46,11 +47,12 @@ function adminClient(env: Env) {
 }
 
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
-  // device_id from header only
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) {
-    return json({ error: "Invalid device ID" }, 400);
-  }
+  // device_id from header only.
+  // LINKING-V1 deny-only: This Trip 저장은 기기 단위 계약을 유지하되,
+  // linked device 의 무세션/타계정 쓰기는 판정기가 차단한다(§3.2).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
 
   // Early exit on content-length, then real byte check via request.text()
   const cl = ctx.request.headers.get("content-length");

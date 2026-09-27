@@ -25,6 +25,7 @@ import { normalizeMemo, normalizeMomentTitle } from "../../../src/lib/trip-momen
 
 import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-moments/public-consent-core";
 import { normalizeStopKey, isMissingColumnError } from "../../../src/lib/trip-moments/stop-binding";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
@@ -60,21 +61,25 @@ async function verifyItineraryOwner(
   // 다르므로 실제 넘어오는 타입을 그대로 쓴다.
   admin: ReturnType<typeof adminClient>,
   itineraryId: string,
-  deviceId:    string,
+  deviceScope: string[],
 ): Promise<boolean> {
   const { data } = await admin
     .from("itineraries")
     .select("id")
     .eq("id", itineraryId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
   return !!data;
 }
 
 // ── GET — itinerary 소유자의 text moments ────────────────────────────────────
 export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const itineraryId = new URL(ctx.request.url).searchParams.get("itinerary_id") ?? "";
   if (!UUID_RE.test(itineraryId)) return json({ error: "Invalid itinerary_id" }, 400);
@@ -83,7 +88,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const owned = await verifyItineraryOwner(admin, itineraryId, deviceId);
+  const owned = await verifyItineraryOwner(admin, itineraryId, deviceScope);
   if (!owned) return json({ error: "Not found" }, 404);
 
   // storage_path 는 내부 판정에만 쓰고 응답에는 넣지 않는다
@@ -96,7 +101,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .select(cols)
     .eq("itinerary_id", itineraryId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .order("captured_at", { ascending: false });
   let { data, error } = await listMoments(MOMENT_COLS_061);
   if (error && isMissingColumnError(error)) ({ data, error } = await listMoments(MOMENT_COLS_055));
@@ -118,8 +123,12 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
 // ── POST — 새 text moment 생성 ────────────────────────────────────────────────
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const read = await readBodyWithLimit(ctx.request, MAX_MOMENT_BODY_BYTES);
   if (!read.ok) return json({ error: read.error }, read.status);
@@ -147,7 +156,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   catch { return json({ error: "Server configuration error" }, 503); }
 
   // 부모 itinerary 소유권 확인 (FK 부재 보완)
-  const owned = await verifyItineraryOwner(admin, itineraryId, deviceId);
+  const owned = await verifyItineraryOwner(admin, itineraryId, deviceScope);
   if (!owned) return json({ error: "Not found" }, 404);
 
   // 장소 표시명 — 선택 사항이다. 없어도 저장을 막지 않는다.

@@ -17,6 +17,7 @@ import { createClient } from "@supabase/supabase-js";
 import { UUID_RE, MAX_SMALL_BODY_BYTES, readBodyWithLimit } from "../../../../src/lib/itinerary-validate";
 import { assetById } from "../../../../src/lib/trip-cover/assets.data";
 import { parseCoverRequest, buildCoverPatch, coverWriteBlock } from "../../../../src/lib/trip-cover/cover-state-core";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -51,8 +52,12 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   const id  = typeof raw === "string" ? raw : (raw?.[0] ?? "");
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_SMALL_BODY_BYTES) return json({ error: "Request too large" }, 413);
@@ -72,7 +77,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("id, device_id, is_public")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (itinErr) {
@@ -123,7 +128,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .update(patch)
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (upErr) {

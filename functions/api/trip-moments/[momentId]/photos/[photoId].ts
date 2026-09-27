@@ -27,6 +27,7 @@ import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../../src/lib/itinerary-validate";
 import { PHOTO_BUCKET } from "../../../../../src/lib/photo-validate";
 import { removeMomentStorage } from "../../../../../src/lib/photo-delete";
+import { resolveOwnership, type OwnershipEnv } from "../../../../_lib/ownership.ts";
 import {
   planLegacyPhotoDelete, LEGACY_PHOTO_ID, type ChildPhotoRow,
 } from "../../../../../src/lib/trip-moments/photo-set";
@@ -64,8 +65,12 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   const isLegacy = photoId === LEGACY_PHOTO_ID;
   if (!isLegacy && !UUID_RE.test(photoId)) return json({ error: "Invalid photo ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -76,7 +81,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .select("moment_id, itinerary_id, storage_path")
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!moment) return json({ error: "Not found" }, 404);
@@ -89,7 +94,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
       .select("photo_id, storage_path")
       .eq("photo_id", photoId)
       .eq("moment_id", momentId)
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .maybeSingle();
 
     if (!row) return json({ error: "Not found" }, 404);
@@ -136,7 +141,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .update({ storage_path: plan.nextLegacy })
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId);
+    .in("device_id", deviceScope);
 
   if (updErr) {
     console.error("[moment photo DELETE] promote error:", updErr.code);

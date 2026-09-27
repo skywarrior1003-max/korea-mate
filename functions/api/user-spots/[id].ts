@@ -19,6 +19,7 @@ import {
   nullableStr,
 } from "../../../src/lib/itinerary-validate";
 import { removeUserSpotPhoto, toPhotoMeta } from "../../../src/lib/user-spots/photo-core";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -52,8 +53,12 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -63,7 +68,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public, related_city_spot_id, display_title, display_memo")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (error) {
@@ -84,8 +89,12 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_USER_SPOT_BODY_BYTES) {
@@ -152,7 +161,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .select("name, lat, lng, photo_storage_path")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (readErr) {
@@ -184,7 +193,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .update(row)
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (error) {
@@ -203,8 +212,12 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -215,7 +228,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .select("id, photo_storage_path, photo_public")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (readErr) {
@@ -232,7 +245,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
         .from("user_spots")
         .update({ photo_public: false, updated_at: new Date().toISOString() })
         .eq("id", id)
-        .eq("device_id", deviceId);
+        .in("device_id", deviceScope);
       if (consentErr) {
         console.error("[user-spots/:id DELETE] consent off failed:", consentErr.code);
         return json({ error: "Failed to delete spot" }, 500);
@@ -252,7 +265,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .delete()
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (error) {

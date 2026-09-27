@@ -8,6 +8,7 @@
 import { validateSuggestion } from "../../src/lib/community/community-core";
 import { actorKey } from "../../src/lib/social/social-actions-core";
 
+import { resolveOwnership, type OwnershipEnv } from "../_lib/ownership.ts";
 interface Env { NEXT_PUBLIC_SUPABASE_URL?: string; SUPABASE_SERVICE_ROLE_KEY?: string }
 type Ctx = { request: Request; env: Env };
 
@@ -41,22 +42,24 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   let body: unknown;
   try { body = JSON.parse(raw); } catch { return fail("invalid_request", 400); }
 
-  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return fail("invalid_device", 401);
-  if (!underRateLimit(deviceId.toLowerCase())) return fail("rate_limited", 429);
+  const own = await resolveOwnership(env as OwnershipEnv, request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  if (!underRateLimit(deviceId)) return fail("rate_limited", 429);
 
   const parsed = validateSuggestion(body);
   if (!parsed.ok) return fail(parsed.error, 400);
   const v = parsed.value;
 
   // raw device_id 는 저장하지 않는다 — 도시 축 해시만(같은 사람의 도배 식별용).
-  const suggesterKey = await actorKey("share", deviceId.toLowerCase(), "place_suggestion", v.city);
+  const suggesterKey = await actorKey("share", deviceId, "place_suggestion", v.city);
+  const scopeKeys = await Promise.all(own.devices.map(d => actorKey("share", d, "place_suggestion", v.city)));
 
   // RANKING-UX-HOTFIX §5-1 — 같은 사람(도시 축 해시)의 같은 장소명이 이미 검토
   // 대기(pending)면 접수하지 않는다. 이름 비교는 공백·대소문자 무시.
   const dupRes = await fetch(
     `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/place_suggestions` +
-    `?suggester_key=eq.${suggesterKey}&status=eq.pending&select=name&limit=100`,
+    `?suggester_key=in.(${scopeKeys.map(k => `"${k}"`).join(",")})&status=eq.pending&select=name&limit=100`,
     { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
   if (dupRes.ok) {
     const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
@@ -94,15 +97,15 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
   const { request, env } = ctx;
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) return fail("server_error", 503);
 
-  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return fail("invalid_device", 401);
+  const own = await resolveOwnership(env as OwnershipEnv, request);
+  if (!own.ok) return own.response;
   const city = (new URL(request.url).searchParams.get("city") ?? "").trim().toLowerCase();
   if (!/^[a-z]{2,32}$/.test(city)) return fail("invalid_request", 400);
 
-  const suggesterKey = await actorKey("share", deviceId.toLowerCase(), "place_suggestion", city);
+  const scopeKeys = await Promise.all(own.devices.map(d => actorKey("share", d, "place_suggestion", city)));
   const res = await fetch(
     `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/place_suggestions` +
-    `?suggester_key=eq.${suggesterKey}&select=id,name,status,created_at` +
+    `?suggester_key=in.(${scopeKeys.map(k => `"${k}"`).join(",")})&select=id,name,status,created_at` +
     `&order=created_at.desc&limit=20`,
     { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
   if (!res.ok) return fail("server_error", 500);

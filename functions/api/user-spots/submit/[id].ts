@@ -11,6 +11,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -43,8 +44,12 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const id = (ctx.params.id ?? "").trim();
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -55,7 +60,7 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .select("id, name, submission_status")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (fetchErr) {
@@ -86,7 +91,7 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const { count, error: countErr } = await admin
     .from("user_spots")
     .select("*", { count: "exact", head: true })
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .eq("submission_status", "pending");
 
   if (countErr) {
@@ -106,7 +111,7 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
       updated_at:        new Date().toISOString(),
     })
     .eq("id", id)
-    .eq("device_id", deviceId);
+    .in("device_id", deviceScope);
 
   if (updateErr) {
     console.error("[user-spots/submit PATCH] update error:", updateErr.code);

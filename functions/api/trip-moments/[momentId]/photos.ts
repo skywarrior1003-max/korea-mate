@@ -24,6 +24,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { stripJpegApp1 } from "../../../../src/lib/jpeg-strip-exif";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 import {
   MAX_PHOTO_BYTES,
   DEVICE_PHOTO_LIMIT,
@@ -69,12 +70,12 @@ function adminClient(env: Env) {
 type Admin = ReturnType<typeof adminClient>;
 
 /** moment 와 그 itinerary 가 이 기기 것인지 확인한다. photo.ts 와 같은 두 단계. */
-async function ownedMoment(admin: Admin, momentId: string, deviceId: string) {
+async function ownedMoment(admin: Admin, momentId: string, deviceScope: string[]) {
   const { data: moment } = await admin
     .from("trip_moments")
     .select("moment_id, itinerary_id, storage_path")
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
   if (!moment) return null;
 
@@ -82,7 +83,7 @@ async function ownedMoment(admin: Admin, momentId: string, deviceId: string) {
     .from("itineraries")
     .select("id")
     .eq("id", moment.itinerary_id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
   if (!itinerary) return null;
 
@@ -102,14 +103,18 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.momentId as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin: Admin;
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const moment = await ownedMoment(admin, momentId, deviceId);
+  const moment = await ownedMoment(admin, momentId, deviceScope);
   if (!moment) return json({ error: "Not found" }, 404);
 
   const set = mergePhotoSet(moment.storage_path, await childRows(admin, momentId));
@@ -145,8 +150,12 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.momentId as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl) {
@@ -185,7 +194,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const moment = await ownedMoment(admin, momentId, deviceId);
+  const moment = await ownedMoment(admin, momentId, deviceScope);
   if (!moment) return json({ error: "Not found" }, 404);
 
   // ── 한도 — 실제 사진 개수로 센다 ─────────────────────────────────────────
@@ -194,9 +203,9 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // Memory 에 스무 장을 넣어도 카운터가 1 이다.
   const [devLegacy, devChild, itinLegacy, itinChild] = await Promise.all([
     admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
-      .eq("device_id", deviceId).not("storage_path", "is", null),
+      .in("device_id", deviceScope).not("storage_path", "is", null),
     admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
-      .eq("device_id", deviceId),
+      .in("device_id", deviceScope),
     admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
       .eq("itinerary_id", moment.itinerary_id).not("storage_path", "is", null),
     admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
@@ -233,7 +242,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
       .from("trip_moments")
       .update({ storage_path: storagePath })
       .eq("moment_id", momentId)
-      .eq("device_id", deviceId);
+      .in("device_id", deviceScope);
 
     if (error) {
       // 기록하지 못한 파일은 즉시 되돌린다 — 남기면 아무도 모르는 orphan 이다

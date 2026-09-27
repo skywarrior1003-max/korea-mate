@@ -18,6 +18,7 @@ import { removeItineraryStorage } from "../../../src/lib/photo-delete";
 import { photoPathsToRemove, type ChildPhotoRow } from "../../../src/lib/trip-moments/photo-set";
 import { buildResetPatch } from "../../../src/lib/trip-cover/cover-state-core";
 import { patchMomentMemo, type MomentAdminLike } from "../../../src/lib/trip-moments/memo-patch-core";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text only, no photo_data
 
@@ -50,8 +51,12 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.id as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -62,7 +67,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .select("moment_id, itinerary_id, storage_path")
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!moment) return json({ error: "Not found" }, 404);
@@ -72,7 +77,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("id")
     .eq("id", moment.itinerary_id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!itinerary) return json({ error: "Not found" }, 404);
@@ -100,7 +105,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .delete()
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId);
+    .in("device_id", deviceScope);
 
   if (error) {
     console.error("[trip-moments/:id DELETE] db error:", error.code);
@@ -121,7 +126,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .update(buildResetPatch(new Date().toISOString()))
     .eq("id", moment.itinerary_id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .eq("cover_kind", "moment");
 
   if (cleanupErr) {
@@ -139,8 +144,12 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.id as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const read = await readBodyWithLimit(ctx.request, MAX_MOMENT_BODY_BYTES);
   if (!read.ok) return json({ error: read.error }, read.status);

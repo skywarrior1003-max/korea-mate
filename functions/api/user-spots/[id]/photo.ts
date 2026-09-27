@@ -17,6 +17,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { stripJpegApp1 } from "../../../../src/lib/jpeg-strip-exif";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 import {
   MAX_PHOTO_BYTES,
   PHOTO_BUCKET,
@@ -68,12 +69,16 @@ type SpotPhotoRow = {
 /** id·device 검증 후 소유한 행의 사진 상태를 읽는다. 실패하면 Response 를 준다. */
 async function loadOwnedSpot(
   ctx: PagesCtx,
-): Promise<{ admin: ReturnType<typeof adminClient>; spot: SpotPhotoRow; deviceId: string } | Response> {
+): Promise<{ admin: ReturnType<typeof adminClient>; spot: SpotPhotoRow; deviceId: string; deviceScope: string[] } | Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -83,7 +88,7 @@ async function loadOwnedSpot(
     .from("user_spots")
     .select("id, photo_storage_path, photo_public, lat, lng")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (error) {
@@ -93,7 +98,7 @@ async function loadOwnedSpot(
   // 남의 행과 없는 행을 같은 응답으로 돌려준다 — 존재 여부가 새면 안 된다.
   if (!data) return json({ error: "Not found" }, 404);
 
-  return { admin, spot: data as SpotPhotoRow, deviceId };
+  return { admin, spot: data as SpotPhotoRow, deviceId, deviceScope };
 }
 
 // ── POST — 업로드 / 교체 ──────────────────────────────────────────────────────
@@ -110,7 +115,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // ── 2. 소유권 ───────────────────────────────────────────────────────────────
   const owned = await loadOwnedSpot(ctx);
   if (owned instanceof Response) return owned;
-  const { admin, spot, deviceId } = owned;
+  const { admin, spot, deviceId, deviceScope } = owned;
 
   // ── 3. multipart 파싱 ───────────────────────────────────────────────────────
   let formData: FormData;
@@ -163,7 +168,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     const { count, error: countErr } = await admin
       .from("user_spots")
       .select("id", { count: "exact", head: true })
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .not("photo_storage_path", "is", null);
 
     if (countErr) {
@@ -198,7 +203,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
       updated_at:         new Date().toISOString(),
     })
     .eq("id", spot.id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (dbError || !updated || updated.length === 0) {
@@ -234,7 +239,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
 export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   const owned = await loadOwnedSpot(ctx);
   if (owned instanceof Response) return owned;
-  const { admin, spot, deviceId } = owned;
+  const { admin, spot, deviceId, deviceScope } = owned;
 
   // 사진이 없으면 할 일이 없다. 없는 것을 지우는 요청은 오류가 아니다 —
   // 재시도와 중복 클릭이 같은 결과를 내야 한다.
@@ -261,7 +266,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
       .from("user_spots")
       .update({ photo_public: false, updated_at: new Date().toISOString() })
       .eq("id", spot.id)
-      .eq("device_id", deviceId);
+      .in("device_id", deviceScope);
 
     if (consentErr) {
       console.error("[user-spots/:id/photo DELETE] consent off failed:", consentErr.code);
@@ -282,7 +287,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("user_spots")
     .update({ photo_storage_path: null, photo_public: false, updated_at: new Date().toISOString() })
     .eq("id", spot.id)
-    .eq("device_id", deviceId);
+    .in("device_id", deviceScope);
 
   if (clearErr) {
     // 파일은 없는데 경로만 남은 좁은 구간이다. 성공으로 덮지 않는다.

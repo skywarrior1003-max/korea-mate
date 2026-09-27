@@ -18,6 +18,7 @@ import {
   optStr,
 } from "../../src/lib/itinerary-validate";
 import { toPhotoMeta } from "../../src/lib/user-spots/photo-core";
+import { resolveOwnership, type OwnershipEnv } from "../_lib/ownership.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -47,8 +48,12 @@ const VALID_CATEGORIES = ["attraction", "nature", "restaurant", "event", "accomm
 
 // ── GET — device의 My Picks 목록 ─────────────────────────────────────────────
 export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -57,7 +62,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const { data, error } = await admin
     .from("user_spots")
     .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public, related_city_spot_id, display_title, display_memo")
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .order("created_at", { ascending: false })
     .limit(200);
 
@@ -78,8 +83,12 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
 // ── POST — 새 My Pick 등록 ────────────────────────────────────────────────────
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_USER_SPOT_BODY_BYTES) {

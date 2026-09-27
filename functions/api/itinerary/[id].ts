@@ -22,6 +22,7 @@ import {
 } from "../../../src/lib/itinerary-validate";
 import { collectItineraryPhotoPaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
 import { publishGate } from "../../../src/lib/moderation/publish-gate";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 
 /**
  * 가려졌는지 읽어 오는 함수. PUT·PATCH 가 같은 것을 쓴다.
@@ -29,13 +30,14 @@ import { publishGate } from "../../../src/lib/moderation/publish-gate";
  * 소유자 조건을 함께 건다 — 남의 여행 상태를 알려 주는 통로가 되면 안 된다.
  * `error` 는 조회 자체가 실패한 것이라 판정 불가로 넘긴다(공개를 켜 주지 않는다).
  */
-function moderationReader(admin: ReturnType<typeof adminClient>) {
-  return async (id: string, deviceId: string) => {
+function moderationReader(admin: ReturnType<typeof adminClient>, deviceScope: string[]) {
+  // publishGate 의 reader 시그니처(id, deviceId)는 유지하고 scope 는 closure 로 받는다
+  return async (id: string, _deviceId: string) => {
     const { data, error } = await admin
       .from("itineraries")
       .select("moderation_hidden_at")
       .eq("id", id)
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .maybeSingle();
     if (error) return { ok: false, row: null };
     return { ok: true, row: (data ?? null) as { moderation_hidden_at: string | null } | null };
@@ -72,8 +74,12 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -86,7 +92,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select(cols)
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
   // 공개 Story 표지 제목·소개문·문체(062) — 미적용 DB 는 기존 목록으로 내려간다
   let { data, error } = await sel(`${BASE_COLS}, story_title, story_intro, story_tone`);
@@ -106,8 +112,12 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_BODY_BYTES) return json({ error: "Request too large" }, 413);
@@ -139,14 +149,14 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   // 그러면 가린 의미가 없어진다. **끄는 것은 언제나 허용한다** — 공개를 줄이는
   // 방향이다. 제목 수정도 막지 않는다.
   // 왜 막혔는지는 알려 주되 누가 신고했는지·관리자 메모는 알려 주지 않는다
-  const putGate = await publishGate(moderationReader(admin), id, deviceId, row.is_public);
+  const putGate = await publishGate(moderationReader(admin, deviceScope), id, deviceId, row.is_public);
   if (!putGate.allowed) return json({ error: putGate.error }, putGate.status);
 
   const { data, error } = await admin
     .from("itineraries")
     .update(row)
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (error) {
@@ -163,8 +173,12 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_SMALL_BODY_BYTES) return json({ error: "Request too large" }, 413);
@@ -202,14 +216,14 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
 
   // 사람이 실제로 쓰는 공개 토글이 이 경로다. 규칙을 PUT 에만 적어 두면
   // 여기로 그대로 우회할 수 있다 — 같은 판정을 건다.
-  const gate = await publishGate(moderationReader(admin), id, deviceId, row.is_public);
+  const gate = await publishGate(moderationReader(admin, deviceScope), id, deviceId, row.is_public);
   if (!gate.allowed) return json({ error: gate.error }, gate.status);
 
   const runUpdate = (r: Record<string, unknown>) => admin
     .from("itineraries")
     .update(r)
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   let { data, error } = await runUpdate(row);
@@ -235,8 +249,12 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -247,7 +265,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("id")
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!itinerary) return json({ error: "Not found or permission denied" }, 404);
@@ -344,7 +362,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .delete()
     .eq("id", id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .select("id");
 
   if (error) {

@@ -15,6 +15,7 @@ import {
   validateSaveSignalRequest, actorKey,
 } from "../../src/lib/social/social-actions-core";
 
+import { resolveOwnership, type OwnershipEnv } from "../_lib/ownership.ts";
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
@@ -57,7 +58,10 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   let body: unknown = null;
   try { body = JSON.parse(raw); } catch { return json({ error: "invalid_target" }, 400); }
 
-  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
+  // LINKING-V1 — linked device 의 무세션/타계정 요청은 여기서 거부(§3.2)
+  const own = await resolveOwnership(env as OwnershipEnv, request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
   const parsed = validateSaveSignalRequest(body, deviceId);
   if (!parsed.ok) return json({ error: parsed.error }, parsed.error === "invalid_device" ? 401 : 400);
   const r = parsed.value;
@@ -79,8 +83,13 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     // 전용)이다. 두 축을 여기서 섞던 069 의 결합을 걷어냈다 — 클라이언트가
     // save cause 를 어떤 형태로 보내와도 이 경로에서는 usage 가 생기지 않는다.
   } else {
+    // LINKING-V1 §7.3 — account 는 이 장소의 저장을 "계정 전체"에서 해제한다:
+    // 각 linked device 의 기존 saver_key 를 같은 계약으로 재계산해 함께 지운다.
+    // guest scope(=자기 device 하나)면 기존 단일 키 삭제와 동일하다.
+    const keys: string[] = [];
+    for (const d of own.devices) keys.push(await actorKey("save", d, r.target_type, r.target_key));
     const del = await rest(env, "DELETE",
-      `place_saves?saver_key=eq.${skey}&target_type=eq.${r.target_type}&target_key=eq.${encodeURIComponent(r.target_key)}`,
+      `place_saves?saver_key=in.(${keys.map(k => `"${k}"`).join(",")})&target_type=eq.${r.target_type}&target_key=eq.${encodeURIComponent(r.target_key)}`,
       undefined, "return=minimal");
     if (!del.ok) return json({ error: "server_error" }, 500);
   }

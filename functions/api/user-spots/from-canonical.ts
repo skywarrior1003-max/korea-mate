@@ -19,6 +19,7 @@
 // (functions/api/user-spots/with-photo.ts 와 같은 형태).
 
 import { createClient } from "@supabase/supabase-js";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 import {
   UUID_RE,
   MAX_USER_SPOT_BODY_BYTES,
@@ -56,8 +57,12 @@ function adminClient(env: Env) {
 
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // ── 1. device ───────────────────────────────────────────────────────────────
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   const cl = ctx.request.headers.get("content-length");
   if (cl && parseInt(cl, 10) > MAX_USER_SPOT_BODY_BYTES) {
@@ -115,7 +120,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     const { data } = await admin
       .from("user_spots")
       .select(EXISTING_SELECT)
-      .eq("device_id", deviceId)
+      .in("device_id", deviceScope)
       .eq("related_city_spot_id", citySpotId)
       .order("created_at", { ascending: true })
       .limit(1)

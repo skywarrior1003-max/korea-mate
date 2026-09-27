@@ -24,6 +24,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE, str, optStr } from "../../../src/lib/itinerary-validate";
 import { stripJpegApp1 } from "../../../src/lib/jpeg-strip-exif";
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 import {
   MAX_PHOTO_BYTES,
   PHOTO_BUCKET,
@@ -75,8 +76,12 @@ function coord(v: FormDataEntryValue | null, min: number, max: number): number |
 
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // ── 1. device ───────────────────────────────────────────────────────────────
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   // Content-Length 조기 거부 (multipart 오버헤드 256KB 허용)
   const cl = ctx.request.headers.get("content-length");
@@ -154,7 +159,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const { count, error: countErr } = await admin
     .from("user_spots")
     .select("id", { count: "exact", head: true })
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .not("photo_storage_path", "is", null);
 
   if (countErr) {

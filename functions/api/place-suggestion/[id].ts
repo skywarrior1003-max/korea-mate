@@ -15,6 +15,7 @@
 
 import { actorKey } from "../../../src/lib/social/social-actions-core";
 
+import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL?:  string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
@@ -45,8 +46,9 @@ export async function onRequestDelete(ctx: Ctx): Promise<Response> {
 
   const id = String(ctx.params.id ?? "");
   if (!SUGGESTION_ID_RE.test(id)) return fail("not_found", 404);
-  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return fail("invalid_device", 401);
+  // LINKING-V1 — 계정 scope: 어느 linked device 에서 제출한 제보든 같은 계정이면 철회 가능
+  const own = await resolveOwnership(env as OwnershipEnv, request);
+  if (!own.ok) return own.response;
 
   // 소유 판정 재료(city)는 행에서 읽는다 — suggester_key 는 도시 축 해시라
   // city 없이는 재계산할 수 없다.
@@ -60,8 +62,8 @@ export async function onRequestDelete(ctx: Ctx): Promise<Response> {
   const row = Array.isArray(rows) ? rows[0] : undefined;
   if (!row) return fail("not_found", 404);
 
-  const mine = await actorKey("share", deviceId.toLowerCase(), "place_suggestion", row.city);
-  if (mine !== row.suggester_key) return fail("not_found", 404); // 타인 것 — 존재를 알리지 않는다
+  const scopeKeys = await Promise.all(own.devices.map(d => actorKey("share", d, "place_suggestion", row.city)));
+  if (!scopeKeys.includes(row.suggester_key)) return fail("not_found", 404); // 타인 것 — 존재를 알리지 않는다
 
   if (row.status !== "pending") return fail("already_decided", 409);
 

@@ -28,6 +28,7 @@ import {
   makeStoragePath,
 } from "../../../../src/lib/photo-validate";
 import { totalPhotoCount } from "../../../../src/lib/trip-moments/photo-set";
+import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -59,8 +60,12 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.momentId as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
-  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
-  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+  // LINKING-V1 — 소유권은 공통 판정기 하나로: guest=자기 device, account=연결된 전 기기,
+  // linked device 의 무세션/타계정 접근은 여기서 즉시 거부된다(§3.2 direct fallback 금지).
+  const own = await resolveOwnership(ctx.env as OwnershipEnv, ctx.request);
+  if (!own.ok) return own.response;
+  const deviceId = own.currentDevice;
+  const deviceScope = own.devices;
 
   // Content-Length 조기 거부 (multipart 오버헤드 최대 256KB 허용)
   const cl = ctx.request.headers.get("content-length");
@@ -122,7 +127,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .select("moment_id, itinerary_id, storage_path")
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!moment) return json({ error: "Not found" }, 404);
@@ -132,7 +137,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("id")
     .eq("id", moment.itinerary_id)
-    .eq("device_id", deviceId)
+    .in("device_id", deviceScope)
     .maybeSingle();
 
   if (!itinerary) return json({ error: "Not found" }, 404);
@@ -149,9 +154,9 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   if (!isReplacement) {
     const [devLegacy, devChild, itinLegacy, itinChild] = await Promise.all([
       admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
-        .eq("device_id", deviceId).not("storage_path", "is", null),
+        .in("device_id", deviceScope).not("storage_path", "is", null),
       admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
-        .eq("device_id", deviceId),
+        .in("device_id", deviceScope),
       admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
         .eq("itinerary_id", moment.itinerary_id).not("storage_path", "is", null),
       admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
@@ -184,7 +189,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("trip_moments")
     .update({ storage_path: storagePath })
     .eq("moment_id", momentId)
-    .eq("device_id", deviceId);
+    .in("device_id", deviceScope);
 
   if (dbError) {
     // 롤백: 방금 올린 파일 삭제
