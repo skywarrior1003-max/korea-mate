@@ -14,6 +14,7 @@ import {
   PLACE_FEEDBACK_REASONS, STORY_FEEDBACK_REASONS,
 } from "@/lib/community/community-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 type TargetType = "city_spot" | "story";
 
 interface Props {
@@ -74,7 +75,7 @@ export default function FeedbackSheet({ open, onClose, targetType, targetKey }: 
             note: note.trim() || null, device_id: getDeviceId() };
       const res = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify(body),
       });
       // 409(최근 중복)도 사용자에게는 접수 완료와 같다 — 같은 문제를 두 번

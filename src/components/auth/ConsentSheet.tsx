@@ -88,6 +88,9 @@ export default function ConsentSheet({ open, onClose, onProceed }: {
           </CheckRow>
         </div>
 
+        {/* LINKING-V1 §10 — 자동 연결 고지(동의 항목 아님·정보 캡션) */}
+        <p className="mt-3 text-[12px] leading-snug text-[#61554D]">{t("consentAutoLink")}</p>
+
         {failed && (
           <p className="mt-2 text-[12px] font-bold text-[#B3261E]">{t("consentError")}</p>
         )}

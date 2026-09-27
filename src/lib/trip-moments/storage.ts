@@ -15,6 +15,7 @@
 
 import type { TripMoment } from "./types";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 const LS_KEY = (itinId: string) => `koreamate_moments_${itinId}`;
 
 // ── localStorage ─────────────────────────────────────────────────────────────
@@ -97,7 +98,7 @@ export async function loadMomentsFromServer(
   try {
     const res = await fetch(
       `/api/trip-moments?itinerary_id=${encodeURIComponent(itinId)}`,
-      { headers: { "x-device-id": deviceId } },
+      { headers: await withAuthHeader({ "x-device-id": deviceId }) },
     );
     if (!res.ok) return local;
     const rows = (await res.json()) as Array<Record<string, unknown>>;
@@ -145,7 +146,7 @@ export async function uploadMomentPhoto(
     fd.append("photo", blob, `${momentId}.jpg`);
     const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photo`, {
       method:  "POST",
-      headers: { "x-device-id": deviceId },
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
       body:    fd,
     });
     return res.ok;
@@ -174,7 +175,7 @@ export async function uploadMomentExtraPhoto(
     fd.append("photo", blob, `${momentId}.jpg`);
     const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photos`, {
       method:  "POST",
-      headers: { "x-device-id": deviceId },
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
       body:    fd,
     });
     return res.ok;
@@ -197,7 +198,7 @@ export async function updateMomentPlace(
   try {
     const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}`, {
       method:  "PATCH",
-      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
       body:    JSON.stringify({ place_name: placeName }),
     });
     return res.ok;
@@ -220,7 +221,7 @@ export async function setMomentPublic(
   try {
     const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/public`, {
       method:  "PUT",
-      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
       body:    JSON.stringify(isPublic
         ? { is_public: true, consent: true, consentVersion }
         : { is_public: false }),
@@ -251,7 +252,7 @@ async function postMomentMeta(m: TripMoment, deviceId: string): Promise<boolean>
   try {
     const res = await fetch("/api/trip-moments", {
       method:  "POST",
-      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
       body: JSON.stringify({
         moment_id:      m.moment_id,
         itinerary_id:   m.itinerary_id,
@@ -404,7 +405,7 @@ export async function deleteMoment(
   try {
     const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}`, {
       method:  "DELETE",
-      headers: { "x-device-id": deviceId },
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
     });
     if (res.ok) return optimistic;
     saveMomentsLocal(itinId, before);
@@ -440,7 +441,7 @@ export async function updateMomentMemo(
   try {
     res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}`, {
       method:  "PATCH",
-      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
       body:    JSON.stringify({ memo: trimmed }),
     });
   } catch {

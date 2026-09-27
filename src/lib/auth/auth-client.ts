@@ -75,6 +75,24 @@ export async function signOutUser(): Promise<void> {
   try { await supabase.auth.signOut(); } catch { /* 세션이 이미 없어도 무해 */ }
 }
 
+/**
+ * 로그아웃 + 기기 신원 교체 (LINKING-V1 §2.4·§9) — 계정 UI 의 유일한 로그아웃 경로.
+ * 순서: ①세션 종료(실패하면 rotation·초기화를 하지 않는다 — 성공 위장 금지)
+ * ②새 익명 device 발급+개인 로컬 캐시 제거 ③전체 reload 로 새 게스트 상태 재조회.
+ * 이후 이 브라우저의 요청은 새 unlinked device 라 이전 계정 데이터가 화면·API
+ * 어디에도 남지 않는다. old device 의 서버 mapping 은 유지된다.
+ */
+export async function signOutAndReset(): Promise<{ ok: boolean }> {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) return { ok: false };
+  } catch { return { ok: false }; }
+  const { rotateDeviceId } = await import("@/lib/deviceId");
+  rotateDeviceId();
+  try { window.location.reload(); } catch { /* 라우터 밖 — 다음 내비게이션이 새 신원 */ }
+  return { ok: true };
+}
+
 /** 로그인 상태 변화 구독(멀티탭 동기화 포함 — SDK 계약) */
 export function onAuthChange(cb: (user: AuthUserView | null) => void): () => void {
   const { data } = supabase.auth.onAuthStateChange((_evt, session) => {

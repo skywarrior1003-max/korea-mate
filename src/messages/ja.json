@@ -1670,7 +1670,10 @@
       "consentExpired": "確認の有効時間が切れました。最初からやり直してください。",
       "consentRequiredNotice": "続行するには同意の確認が必要です。",
       "consentReconsent": "同意して続行",
-      "statusChecking": "アカウント状態を確認しています…"
+      "statusChecking": "アカウント状態を確認しています…",
+      "consentAutoLink": "ログインすると、この端末で作成した旅行と保存項目がアカウントに自動的に連携されます。",
+      "accountLinkedHint": "旅行と保存項目はこのアカウントに連携されています。",
+      "consentLinkConflict": "この端末はすでに別のアカウントに連携されています。ログアウトして再読み込みし、もう一度お試しください。"
   }
 
 }

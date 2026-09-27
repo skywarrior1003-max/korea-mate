@@ -3,6 +3,7 @@
 
 import { getDeviceId } from "@/lib/deviceId";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 /**
@@ -93,12 +94,13 @@ export interface UpdateUserSpotInput {
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
-function deviceHeader(deviceId: string): HeadersInit {
-  return { "Content-Type": "application/json", "x-device-id": deviceId };
+async function deviceHeader(deviceId: string): Promise<HeadersInit> {
+  // LINKING-V1 — 세션이 있으면 Bearer 동봉(linked device 는 무세션이 거부된다)
+  return withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId });
 }
 
-function getHeader(deviceId: string): HeadersInit {
-  return { "x-device-id": deviceId };
+async function getHeader(deviceId: string): Promise<HeadersInit> {
+  return withAuthHeader({ "x-device-id": deviceId });
 }
 
 function safeError(res: Response): Error {
@@ -116,7 +118,7 @@ export async function apiGetUserSpots(): Promise<UserSpot[]> {
   const deviceId = getDeviceId();
   let res: Response | null = null;
   try {
-    res = await fetch("/api/user-spots", { headers: getHeader(deviceId) });
+    res = await fetch("/api/user-spots", { headers: await getHeader(deviceId) });
   } catch {
     throw new Error("Network error");
   }
@@ -151,7 +153,7 @@ export async function apiCreateUserSpot(
   try {
     res = await fetch("/api/user-spots", {
       method:  "POST",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body:    JSON.stringify(body),
     });
   } catch {
@@ -200,7 +202,7 @@ export async function apiUpdateUserSpot(
   try {
     res = await fetch(`/api/user-spots/${encodeURIComponent(id)}`, {
       method:  "PUT",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body:    JSON.stringify(body),
     });
   } catch {
@@ -224,7 +226,7 @@ export async function apiSubmitUserSpot(
   try {
     res = await fetch(`/api/user-spots/submit/${encodeURIComponent(id)}`, {
       method:  "PATCH",
-      headers: { "x-device-id": deviceId },
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
     });
   } catch {
     return { ok: false, error: "Network error" };
@@ -247,7 +249,7 @@ export async function apiDeleteUserSpot(id: string): Promise<boolean> {
   try {
     res = await fetch(`/api/user-spots/${encodeURIComponent(id)}`, {
       method:  "DELETE",
-      headers: getHeader(deviceId),
+      headers: await getHeader(deviceId),
     });
   } catch {
     throw new Error("Network error");
@@ -299,7 +301,7 @@ export async function apiCreateUserSpotWithPhoto(
   let res: Response;
   try {
     res = await fetch("/api/user-spots/with-photo", {
-      method: "POST", headers: getHeader(deviceId), body: fd,
+      method: "POST", headers: await getHeader(deviceId), body: fd,
     });
   } catch {
     return { ok: false, error: "Network error" };
@@ -320,7 +322,7 @@ export async function apiUploadUserSpotPhoto(
   let res: Response;
   try {
     res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo`, {
-      method: "POST", headers: getHeader(deviceId), body: photoBody(photo),
+      method: "POST", headers: await getHeader(deviceId), body: photoBody(photo),
     });
   } catch {
     return { ok: false, error: "Network error" };
@@ -336,7 +338,7 @@ export async function apiGetUserSpotPhotoUrl(
   const deviceId = getDeviceId();
   try {
     const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo-url`, {
-      headers: getHeader(deviceId),
+      headers: await getHeader(deviceId),
     });
     if (!res.ok) return null;
     return (await res.json()) as { signedUrl: string; expiresAt: string };
@@ -358,7 +360,7 @@ export async function apiDeleteUserSpotPhoto(
   let res: Response;
   try {
     res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo`, {
-      method: "DELETE", headers: getHeader(deviceId),
+      method: "DELETE", headers: await getHeader(deviceId),
     });
   } catch {
     return { ok: false, error: "Network error" };
@@ -404,7 +406,7 @@ export async function apiCreateUserSpotFromCanonical(
   try {
     res = await fetch("/api/user-spots/from-canonical", {
       method:  "POST",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body:    JSON.stringify({ city_spot_id: citySpotId }),
     });
   } catch {
@@ -434,7 +436,7 @@ export async function apiGetUserSpotCanonicalImage(
   const deviceId = getDeviceId();
   try {
     const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/canonical-image`, {
-      headers: getHeader(deviceId),
+      headers: await getHeader(deviceId),
     });
     if (!res.ok) return { imageUrl: null, sourceUrl: null };
     const body = (await res.json()) as { imageUrl?: string | null; sourceUrl?: string | null };
@@ -463,7 +465,7 @@ export async function apiEnrichUserSpot(
   try {
     const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/enrich`, {
       method:  "POST",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body:    JSON.stringify({ locale }),
     });
     if (!res.ok) return { status: "error", updated: { title: false, memo: false } };

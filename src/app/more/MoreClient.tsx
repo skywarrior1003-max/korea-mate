@@ -22,7 +22,7 @@ import {
   readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen, emitGuideEvent,
 } from "@/lib/journey-guide/guide-core";
 import {
-  getCurrentUser, signInWithGoogle, signOutUser, onAuthChange, type AuthUserView,
+  getCurrentUser, signInWithGoogle, signOutAndReset, onAuthChange, type AuthUserView,
 } from "@/lib/auth/auth-client";
 import { fetchAuthStatus, activateAccount } from "@/lib/auth/consent-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
@@ -47,7 +47,7 @@ function AccountSection() {
     if (typeof window === "undefined") return null;
     try {
       const r = new URL(window.location.href).searchParams.get("auth");
-      return r === "consent_required" || r === "consent_expired" ? r : null;
+      return r === "consent_required" || r === "consent_expired" || r === "link_conflict" ? r : null;
     } catch { return null; }
   });
 
@@ -95,9 +95,14 @@ function AccountSection() {
             <div>
               <p className="text-[15px] font-black text-[#2C2520]">{user.displayName ?? tAuth("signedInFallback")}</p>
               <p className="text-[12px] text-[#61554D] mt-0.5">{tAuth("signedInHint")}</p>
+              <p className="text-[12px] text-[#61554D] mt-0.5">{tAuth("accountLinkedHint")}</p>
             </div>
             <button
-              onClick={async () => { setBusy(true); await signOutUser(); setBusy(false); }}
+              onClick={async () => {
+                setBusy(true);
+                const r = await signOutAndReset(); // §9 — 성공 시 reload, 실패 시 초기화하지 않는다
+                if (!r.ok) setBusy(false);
+              }}
               disabled={busy}
               className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
             >
@@ -120,7 +125,11 @@ function AccountSection() {
                 {tAuth("consentReconsent")}
               </button>
               <button
-                onClick={async () => { setBusy(true); await signOutUser(); setBusy(false); }}
+                onClick={async () => {
+                setBusy(true);
+                const r = await signOutAndReset(); // §9 — 성공 시 reload, 실패 시 초기화하지 않는다
+                if (!r.ok) setBusy(false);
+              }}
                 disabled={busy}
                 className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
               >
@@ -132,7 +141,9 @@ function AccountSection() {
           <div>
             {callbackError && (
               <p className="text-[12px] font-bold text-[#B3261E] mb-2">
-                {callbackError === "consent_expired" ? tAuth("consentExpired") : tAuth("consentRequiredNotice")}
+                {callbackError === "consent_expired" ? tAuth("consentExpired")
+                  : callbackError === "link_conflict" ? tAuth("consentLinkConflict")
+                  : tAuth("consentRequiredNotice")}
               </p>
             )}
             <p className="text-[13px] text-[#61554D] mb-3">{tAuth("aiLoginKeepsTrips")}</p>

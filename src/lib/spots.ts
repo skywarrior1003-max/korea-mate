@@ -8,6 +8,7 @@ export type SpotCategory =
   | "cultural"
   | "market"
   | "shopping";
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 
 export type HikingDifficulty = "easy" | "moderate" | "hard";
 
@@ -88,7 +89,7 @@ export async function dislikeSpot(placeId: string, deviceId?: string): Promise<b
   try {
     const res = await fetch("/api/spots/reactions", {
       method:  "POST",
-      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
       body:    JSON.stringify({ place_id: placeId, reaction: "dislike" }),
     });
     // 201 recorded / 200 already_recorded 둘 다 사용자에겐 성공이다

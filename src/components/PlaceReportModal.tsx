@@ -19,6 +19,7 @@ import {
   type ReportCategory, type ReportTargetType,
 } from "@/lib/reports/place-report-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 interface Props {
   onClose:     () => void;
   targetType:  ReportTargetType;
@@ -51,7 +52,7 @@ export default function PlaceReportModal({ onClose, targetType, targetKey, place
     try {
       const res = await fetch("/api/place-report", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify({
           target_type: targetType, target_key: targetKey,
           category, note: note.trim() || undefined,

@@ -4,10 +4,12 @@
 
 import type { ItineraryRow, PopularTrip } from "@/lib/supabase";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 // ── helpers ──────────────────────────────────────────────────────────────────
 
-function deviceHeader(deviceId: string): HeadersInit {
-  return { "Content-Type": "application/json", "x-device-id": deviceId };
+async function deviceHeader(deviceId: string): Promise<HeadersInit> {
+  // LINKING-V1 — 세션이 있으면 Bearer 동봉(linked device 는 무세션이 거부된다)
+  return withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId });
 }
 
 // ── Save: tries PUT (update existing), falls back to POST (insert new) ───────
@@ -33,7 +35,7 @@ export async function apiSaveItinerary(
   // 1. Try UPDATE (conditional on id + device_id)
   const putRes = await fetch(`/api/itinerary/${row.id}`, {
     method:  "PUT",
-    headers: deviceHeader(deviceId),
+    headers: await deviceHeader(deviceId),
     body:    JSON.stringify(body),
   }).catch(() => null);
 
@@ -43,7 +45,7 @@ export async function apiSaveItinerary(
   if (putRes?.status === 404) {
     const postRes = await fetch("/api/itinerary", {
       method:  "POST",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body:    JSON.stringify(body),
     }).catch(() => null);
     return postRes?.status === 201;
@@ -60,7 +62,7 @@ export async function apiFetchItinerary(
   deviceId: string
 ): Promise<ItineraryRow | null> {
   const res = await fetch(`/api/itinerary/${id}`, {
-    headers: { "x-device-id": deviceId },
+    headers: await withAuthHeader({ "x-device-id": deviceId }),
   }).catch(() => null);
   if (!res || !res.ok) return null;
   return (await res.json()) as ItineraryRow;
@@ -74,7 +76,7 @@ export async function apiSetPublic(
 ): Promise<boolean> {
   const res = await fetch(`/api/itinerary/${id}`, {
     method:  "PATCH",
-    headers: deviceHeader(deviceId),
+    headers: await deviceHeader(deviceId),
     body:    JSON.stringify({ is_public: isPublic }),
   }).catch(() => null);
   return !!res?.ok;
@@ -87,7 +89,7 @@ export async function apiUpdateItineraryTitle(
 ): Promise<boolean> {
   const res = await fetch(`/api/itinerary/${id}`, {
     method:  "PATCH",
-    headers: deviceHeader(deviceId),
+    headers: await deviceHeader(deviceId),
     body:    JSON.stringify({ trip_title: title }),
   }).catch(() => null);
   return !!res?.ok;
@@ -98,7 +100,7 @@ export async function apiFetchItinerariesByDevice(
   deviceId: string
 ): Promise<ItineraryRow[]> {
   const res = await fetch("/api/itineraries", {
-    headers: { "x-device-id": deviceId },
+    headers: await withAuthHeader({ "x-device-id": deviceId }),
   }).catch(() => null);
   if (!res || !res.ok) return [];
   return (await res.json()) as ItineraryRow[];
@@ -111,7 +113,7 @@ export async function apiDeleteItinerary(
 ): Promise<boolean> {
   const res = await fetch(`/api/itinerary/${id}`, {
     method:  "DELETE",
-    headers: { "x-device-id": deviceId },
+    headers: await withAuthHeader({ "x-device-id": deviceId }),
   }).catch(() => null);
   return !!res?.ok;
 }
@@ -143,7 +145,7 @@ export async function apiCopyItinerary(
   try {
     res = await fetch("/api/itinerary/copy", {
       method: "POST",
-      headers: deviceHeader(deviceId),
+      headers: await deviceHeader(deviceId),
       body: JSON.stringify({ share_id: shareId, ...(locale ? { locale } : {}) }),
     });
   } catch {
@@ -179,7 +181,7 @@ export async function apiHelpfulStatus(
   deviceId:    string,
 ): Promise<{ eligible: boolean; sent: boolean } | null> {
   const res = await fetch(`/api/itinerary/helpful/${itineraryId}`, {
-    headers: { "x-device-id": deviceId },
+    headers: await withAuthHeader({ "x-device-id": deviceId }),
   }).catch(() => null);
   if (!res || !res.ok) return null;
   const d = (await res.json().catch(() => null)) as { eligible?: boolean; sent?: boolean } | null;
@@ -193,7 +195,7 @@ export async function apiHelpfulVote(
 ): Promise<{ added: boolean; helpful_count: number } | null> {
   const res = await fetch(`/api/itinerary/helpful/${itineraryId}`, {
     method:  "PATCH",
-    headers: { "x-device-id": deviceId },
+    headers: await withAuthHeader({ "x-device-id": deviceId }),
   }).catch(() => null);
   if (!res || !res.ok) return null;
   return (await res.json()) as { added: boolean; helpful_count: number };

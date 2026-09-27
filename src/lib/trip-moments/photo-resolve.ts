@@ -23,6 +23,7 @@
 
 import type { TripMoment } from "./types";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 export interface ResolvedPhoto { url: string; isFirst: boolean }
 
 export interface ResolvedPhotos {
@@ -107,7 +108,7 @@ export async function fetchMomentPhotoUrls(
 ): Promise<ResolvedPhotos | null> {
   try {
     const res = await fetchImpl(`/api/trip-moments/${encodeURIComponent(momentId)}/photos`, {
-      headers: { "x-device-id": deviceId },
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
     });
     if (!res.ok) return null;
     const body = (await res.json()) as PhotosResponse;

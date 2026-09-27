@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getDeviceId } from "@/lib/deviceId";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 type Status = "pending" | "approved" | "rejected" | "withdrawn" | null;
 
 export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
@@ -30,7 +31,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
     (async () => {
       try {
         const res = await fetch(`/api/story-submission?itinerary_id=${itineraryId}`,
-          { headers: { "x-device-id": getDeviceId() } });
+          { headers: await withAuthHeader({ "x-device-id": getDeviceId() }) });
         if (!alive) return;
         if (!res.ok) { setStatus(null); return; }
         const b = await res.json() as { status: Status };
@@ -46,7 +47,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
     try {
       const res = await fetch("/api/story-submission", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify({ itinerary_id: itineraryId }),
       });
       const b = await res.json().catch(() => ({})) as { status?: Status; error?: string };
@@ -61,7 +62,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
     setBusy(true); setError(null);
     try {
       const res = await fetch(`/api/story-submission?itinerary_id=${itineraryId}`, {
-        method: "DELETE", headers: { "x-device-id": getDeviceId() },
+        method: "DELETE", headers: await withAuthHeader({ "x-device-id": getDeviceId() }),
       });
       if (!res.ok) { setError("server_error"); return; }
       setStatus("withdrawn");

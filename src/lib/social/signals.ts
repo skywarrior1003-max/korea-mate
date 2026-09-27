@@ -11,16 +11,13 @@ import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { getDeviceId } from "@/lib/deviceId";
 import type { ShareMethod, ShareTargetType } from "./social-actions-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 function fire(path: string, body: unknown): void {
   if (typeof window === "undefined" || typeof fetch === "undefined") return;
-  try {
-    void fetch(path, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
-      body: JSON.stringify(body),
-      keepalive: true,
-    }).catch(() => { /* best-effort — 조용히 무시 */ });
-  } catch { /* 동일 */ }
+  void (async () => {
+    const headers = await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() });
+    await fetch(path, { method: "POST", headers, body: JSON.stringify(body), keepalive: true });
+  })().catch(() => { /* best-effort — 조용히 무시 */ });
 }
 
 /**

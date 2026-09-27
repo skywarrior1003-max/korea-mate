@@ -11,11 +11,12 @@
 // same-origin 요청으로만 오간다. token·cookie·PII 를 로그에 남기지 않는다.
 
 import { getAccessTokenForApi } from "./auth-client";
+import { getDeviceId } from "@/lib/deviceId";
 import type { ConsentLocale } from "./consent-contract";
 
 export type AuthActivation =
   | { state: "active" }
-  | { state: "inactive"; reason: "consent_required" | "consent_expired" | "reconsent_required" }
+  | { state: "inactive"; reason: "consent_required" | "consent_expired" | "reconsent_required" | "link_conflict" }
   | { state: "error" };
 
 /** 동의 intent 발급 — 성공(204)일 때만 OAuth 를 시작한다 */
@@ -41,10 +42,15 @@ export async function activateAccount(): Promise<AuthActivation> {
     const res = await fetch("/api/auth/activate", {
       method: "POST",
       credentials: "same-origin",
-      headers: { Authorization: `Bearer ${token}` },
+      // LINKING-V1 §6.1 — 활성화가 현재 기기 자동 연결까지 수행한다
+      headers: { Authorization: `Bearer ${token}`, "x-device-id": getDeviceId() },
     });
     if (res.ok) return { state: "active" };
-    if (res.status === 409) return { state: "inactive", reason: "reconsent_required" };
+    if (res.status === 409) {
+      let code = "";
+      try { code = String(((await res.json()) as { error?: string }).error ?? ""); } catch { /* 기본 */ }
+      return { state: "inactive", reason: code === "device_already_linked" ? "link_conflict" : "reconsent_required" };
+    }
     if (res.status === 403) {
       let code = "";
       try { code = String(((await res.json()) as { error?: string }).error ?? ""); } catch { /* 사유 없으면 기본 */ }

@@ -70,7 +70,9 @@ export default function AuthCallbackClient() {
         } else {
           try { await supabase.auth.signOut(); } catch { /* 이미 없어도 무해 */ }
           const reason = activation.state === "inactive" && activation.reason === "consent_expired"
-            ? "consent_expired" : "consent_required";
+            ? "consent_expired"
+            : activation.state === "inactive" && activation.reason === "link_conflict"
+              ? "link_conflict" : "consent_required";
           router.replace(`/more?auth=${reason}`);
         }
       } else if (oauthError) {

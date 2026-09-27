@@ -49,6 +49,7 @@ import TripCover from "@/components/TripCover";
 import { resolveTheme } from "@/lib/trip-cover/cover-core";
 import { pickAsset } from "@/lib/trip-cover/assets.data";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {
   name:         string;
@@ -265,10 +266,11 @@ export default function SharedTripPage() {
     const key = `viewed_${trip.id}`;
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
-    fetch(`/api/itinerary/view/${trip.id}`, {
-      method:  "POST",
-      headers: { "x-device-id": getDeviceId() },
-    }).catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
+    void (async () =>
+      fetch(`/api/itinerary/view/${trip.id}`, {
+        method:  "POST",
+        headers: await withAuthHeader({ "x-device-id": getDeviceId() }),
+      }))().catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
   }, [trip?.id]);
 
   // TASK-HELPFUL-GUARD: 서버 성공 전에 카운트를 올리고 sessionStorage 로 잠그던

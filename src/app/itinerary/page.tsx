@@ -108,6 +108,7 @@ import { collectLikedSignals } from "@/lib/planner/saved-signals";
 import { getSavedSpotsData, getFavorites, getFavoriteSourceKeys, removeFavorite } from "@/lib/favorites";
 import { savedSelectionsToRelease } from "@/lib/trip-plan/saved-promotion";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
   name: string;
@@ -2276,7 +2277,7 @@ function ItineraryResult() {
     try {
       const res = await fetch(`/api/itinerary/${encodeURIComponent(itinId)}/cover`, {
         method:  "PUT",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body:    JSON.stringify(body),
       });
       if (!res.ok) {
@@ -2369,7 +2370,7 @@ function ItineraryResult() {
         try {
           const res = await fetch(
             `/api/trip-moments?itinerary_id=${encodeURIComponent(itinId)}`,
-            { headers: { "x-device-id": deviceId } },
+            { headers: await withAuthHeader({ "x-device-id": deviceId }) },
           );
           if (!res.ok) return { ok: false, rows: [] };
           const rows = (await res.json()) as Array<Record<string, unknown>>;

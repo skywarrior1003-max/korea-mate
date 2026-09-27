@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getDeviceId } from "@/lib/deviceId";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 const CATEGORIES = ["restaurant", "cafe", "attraction", "nature", "culture", "shopping", "activity", "other"] as const;
 
 interface Props {
@@ -44,7 +45,7 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
   async function loadMine() {
     try {
       const res = await fetch(`/api/place-suggestion?city=${encodeURIComponent(citySlug)}`,
-        { headers: { "x-device-id": getDeviceId() } });
+        { headers: await withAuthHeader({ "x-device-id": getDeviceId() }) });
       if (!res.ok) return; // 목록 실패는 조용히 — 제출 기능을 막지 않는다
       const body = await res.json() as { suggestions?: MySuggestion[] };
       setMine(Array.isArray(body.suggestions) ? body.suggestions : []);
@@ -56,7 +57,7 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
     setWithdrawBusy(true);
     try {
       const res = await fetch(`/api/place-suggestion/${encodeURIComponent(id)}`,
-        { method: "DELETE", headers: { "x-device-id": getDeviceId() } });
+        { method: "DELETE", headers: await withAuthHeader({ "x-device-id": getDeviceId() }) });
       if (res.ok || res.status === 404) {
         // 404 = 이미 철회됨(반복 요청) — 목록에서 빼면 그것으로 충분하다
         setMine(prev => prev.filter(m => m.id !== id));
@@ -107,7 +108,7 @@ export default function SuggestPlaceSheet({ open, onClose, citySlug, cityLabel, 
     try {
       const res = await fetch("/api/place-suggestion", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify({
           city: citySlug, name: name.trim(), category,
           address: address.trim(), reason: reason.trim(),

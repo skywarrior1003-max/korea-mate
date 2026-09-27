@@ -30,6 +30,7 @@ import {
 import { summarizeSelection } from "@/lib/trip-moments/publish-reconcile-core";
 import type { PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 interface PreviewDay {
   dayNumber: number;
   places: { name: string; category?: string; location?: string }[];
@@ -189,7 +190,7 @@ export default function PublishPreviewModal({
     try {
       const res = await fetch(`/api/itinerary/${encodeURIComponent(itineraryId)}/cover`, {
         method:  "PUT",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body:    JSON.stringify({
           kind: "moment", momentId, consent: true, consentVersion: CONSENT_VERSION,
         }),

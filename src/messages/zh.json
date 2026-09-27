@@ -1670,7 +1670,10 @@
       "consentExpired": "确认已超时，请重新开始。",
       "consentRequiredNotice": "继续前需要完成同意确认。",
       "consentReconsent": "同意并继续",
-      "statusChecking": "正在确认账户状态…"
+      "statusChecking": "正在确认账户状态…",
+      "consentAutoLink": "登录后，此设备上创建的行程和收藏项目将自动关联到你的账户。",
+      "accountLinkedHint": "你的行程和收藏项目已关联到此账户。",
+      "consentLinkConflict": "此设备已关联到其他账户。请退出登录并刷新后重试。"
   }
 
 }

@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { getDeviceId } from "@/lib/deviceId";
 import type { LikeTargetType } from "@/lib/likes/place-like-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 interface Props {
   targetType: LikeTargetType;
   targetKey:  string;
@@ -34,7 +35,7 @@ export default function PlaceLikeButton({ targetType, targetKey, className }: Pr
     void (async () => {
       try {
         const q = new URLSearchParams({ target_type: targetType, target_key: targetKey });
-        const res = await fetch(`/api/place-like?${q}`, { headers: { "x-device-id": getDeviceId() } });
+        const res = await fetch(`/api/place-like?${q}`, { headers: await withAuthHeader({ "x-device-id": getDeviceId() }) });
         if (!res.ok || cancelled) return;
         const b = await res.json() as { count: number; liked: boolean };
         if (cancelled) return;
@@ -56,7 +57,7 @@ export default function PlaceLikeButton({ targetType, targetKey, className }: Pr
     try {
       const res = await fetch("/api/place-like", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify({ target_type: targetType, target_key: targetKey,
                                action: next ? "like" : "unlike" }),
       });

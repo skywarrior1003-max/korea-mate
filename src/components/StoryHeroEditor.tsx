@@ -21,6 +21,7 @@ import {
 } from "@/lib/mytrip-writing/writing-core";
 import { apiSuggestStoryHero } from "@/lib/mytrip-writing/api";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 const ORANGE = "#FF4A2D";
 
 function djb2(s: string): string {
@@ -119,7 +120,7 @@ export default function StoryHeroEditor({
     try {
       const res = await fetch(`/api/itinerary/${encodeURIComponent(itineraryId)}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": deviceId }),
         body: JSON.stringify({
           story_title: title.trim().slice(0, 80),
           story_intro: intro.trim().slice(0, 300),

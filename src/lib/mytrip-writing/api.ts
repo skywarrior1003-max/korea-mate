@@ -2,6 +2,7 @@
 // 실패는 전부 null — 편집기는 사용자가 쓰던 그대로 남는다.
 import type { WritingDirection, WritingTarget, WritingLocale, WritingContext, WritingImage } from "./writing-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 export async function apiSuggestWriting(args: {
   target: WritingTarget;
   direction: WritingDirection;
@@ -56,7 +57,7 @@ export async function apiSuggestStoryHero(args: {
     const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) },
+      headers: await withAuthHeader({ "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) }),
       body: JSON.stringify({ target: "storyHero", direction: args.direction, locale, context: args.context,
         ...(args.itineraryId ? { itineraryId: args.itineraryId } : {}), ...(args.forceFresh ? { forceFresh: true } : {}) }),
       signal,
@@ -110,7 +111,7 @@ export async function apiSuggestMomentSet(args: {
     const signal = args.signal ? AbortSignal.any([args.signal, timeout]) : timeout;
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) },
+      headers: await withAuthHeader({ "Content-Type": "application/json", ...(args.deviceId ? { "x-device-id": args.deviceId } : {}) }),
       // direction 은 요청 형식상 필수 — moment3 에서는 서버가 무시한다
       body: JSON.stringify({ target: "moment3", direction: "calm", locale, context: args.context,
         ...(args.image ? { image: args.image } : {}),
@@ -152,9 +153,9 @@ export function apiWritingMeta(args: {
   edited?: boolean; titleLenDelta?: number; memoLenDelta?: number;
 }): void {
   try {
-    void fetch("/api/mytrip/writing-meta", {
+    void (async () => fetch("/api/mytrip/writing-meta", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-device-id": args.deviceId },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": args.deviceId }),
       body: JSON.stringify({
         itineraryId: args.itineraryId, generationId: args.generationId, event: args.event,
         ...(args.style ? { style: args.style } : {}),
@@ -163,6 +164,6 @@ export function apiWritingMeta(args: {
         ...(typeof args.memoLenDelta === "number" ? { memoLenDelta: args.memoLenDelta } : {}),
       }),
       keepalive: true,
-    }).catch(() => {});
+    }))().catch(() => {});
   } catch { /* ignore */ }
 }

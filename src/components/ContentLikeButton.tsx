@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { getDeviceId } from "@/lib/deviceId";
 import type { ContentLikeTargetType } from "@/lib/social/social-actions-core";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 interface Props {
   targetType: ContentLikeTargetType;
   /** itineraries.id (Story 도 같은 여행 id — 표면이 다를 뿐) */
@@ -33,7 +34,7 @@ export default function ContentLikeButton({ targetType, targetKey, className }: 
       try {
         const res = await fetch(
           `/api/content-like?target_type=${targetType}&target_key=${encodeURIComponent(targetKey)}`,
-          { headers: { "x-device-id": getDeviceId() } },
+          { headers: await withAuthHeader({ "x-device-id": getDeviceId() }) },
         );
         if (cancelled) return;
         if (!res.ok) { if (res.status === 404) setGone(true); return; }
@@ -55,7 +56,7 @@ export default function ContentLikeButton({ targetType, targetKey, className }: 
     try {
       const res = await fetch("/api/content-like", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
         body: JSON.stringify({ target_type: targetType, target_key: targetKey,
                                action: next ? "like" : "unlike" }),
       });

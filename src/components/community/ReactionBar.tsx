@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { getDeviceId } from "@/lib/deviceId";
 import FeedbackSheet from "@/components/community/FeedbackSheet";
 
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 type TargetType = "city_spot" | "story";
 type MyReaction = "like" | "dislike" | null;
 
@@ -40,7 +41,7 @@ export default function ReactionBar({ targetType, targetKey, className = "", ton
       try {
         const res = await fetch(
           `/api/content-reaction?target_type=${targetType}&target_key=${encodeURIComponent(targetKey)}`,
-          { headers: { "x-device-id": getDeviceId() } },
+          { headers: await withAuthHeader({ "x-device-id": getDeviceId() }) },
         );
         if (cancelled) return;
         if (!res.ok) { if (res.status === 404) setGone(true); return; }
@@ -54,7 +55,7 @@ export default function ReactionBar({ targetType, targetKey, className = "", ton
   async function send(action: "like" | "dislike" | "clear") {
     const res = await fetch("/api/content-reaction", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": getDeviceId() }),
       body: JSON.stringify({ target_type: targetType, target_key: targetKey, action }),
     });
     if (!res.ok) throw new Error(String(res.status));
