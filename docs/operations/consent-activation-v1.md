@@ -69,3 +69,28 @@ lock·service_role 전용)로만 일어난다. **계정 삭제 정리 순서에 
 클라 pending queue(`koreamate_draft_ops_v1`)는 `koreamate_` prefix 라
 로그아웃 rotation 의 로컬 정리 계약에 이미 포함된다(단, 로그아웃은 flush
 성공 후에만 진행 — 실패 시 rotation·queue 삭제 없이 중단·안내).
+
+## 8. ACCOUNT-DELETE-V1(2026-09-28) — 사용자 직접 계정 삭제
+
+경로: More 활성 카드 하단 "계정 영구 삭제…" → 결과 설명 → [영구 삭제].
+서버 2단계 — ①`/api/account/delete-intent`: 공통 판정기(account)+GoTrue
+`last_sign_in_at`(서버 기록) 5분 이내만 통과, 아니면 `reauth_required`(클라는
+기존 PKCE OAuth 재로그인 후 복귀). 통과 시 HMAC 의사 토큰
+(`gkm-account-delete-v1`, TTL 10분, 상태 저장 없음). ②`/api/account/delete`:
+유효 세션+토큰(계정 일치·서명·TTL) → 삭제. **auth 사용자까지 지워져야 200**
+(성공 위장 금지) — 실패는 `delete_failed`+stage, 같은 요청 재시도는 남은
+단계부터 이어진다(각 단계 멱등).
+
+삭제 순서(§6 RESTRICT 계약의 실행): 여행 전부(단건 DELETE 와 동일 cascade
+`functions/_lib/itinerary-purge.ts`: Storage-first→반응/제출→moments→행) →
+user_spots(사진 Storage 먼저) → 저장/좋아요/싫어요(기기×대상 해시 재계산
+매칭) → 장소 제보(기기×도시 키, published 연결 행은 FK 시 잔존 보고) →
+trip_drafts(user+기기 축) → account_devices → auth user(consents CASCADE).
+
+유지(계약): 타인이 만든 독립 복사본(copy_of 만 NULL) · place_usage /
+share_events 익명 집계 · 타 계정 데이터 일체.
+
+기기 매핑 운영 계약: 로그아웃/재로그인은 매핑을 지우지 않고 새 기기 연결만
++1 (old 매핑 유지 = 익명 재사용 금지·감사 추적). 정리 시점은 ①계정 삭제
+(전량) ②향후 inactive-cleanup TASK 에서 "마지막 사용 오래된 매핑"의 보존
+기간을 Owner 가 정한 뒤 — 근거 없는 일괄 삭제 금지.
