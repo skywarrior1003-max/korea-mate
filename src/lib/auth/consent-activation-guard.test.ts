@@ -194,7 +194,7 @@ test("③ sheet — 기본 미선택·일괄 선택 없음·생년월일/마케�
   assert.ok(strippedSheet.includes("postConsentIntent"), "intent 성공 후에만 진행");
 });
 
-test("③ 금지 구조 — 연결·삭제·device 소유권 변경 0", () => {
+test("③ 금지 구조 — 계정 삭제 0(연결은 LINKING-V1 에서 도입)", () => {
   const targets: string[] = [];
   const walk = (dir: string) => {
     for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
@@ -207,7 +207,7 @@ test("③ 금지 구조 — 연결·삭제·device 소유권 변경 0", () => {
   for (const p of targets) {
     if (p.endsWith("consent-activation-guard.test.ts")) continue; // 자기 자신 제외
     const s = read(p);
-    assert.ok(!/account_devices|account_deletions/.test(s), p);
+    assert.ok(!/account_deletions/.test(s), p); // account_devices 는 LINKING-V1 에서 도입됨
   }
   // 소유권 API 는 여전히 device 기준(변경 0)
   assert.match(read("functions/api/itinerary/[id].ts"), /x-device-id/);
