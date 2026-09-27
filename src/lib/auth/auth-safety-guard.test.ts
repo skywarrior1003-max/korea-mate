@@ -141,22 +141,25 @@ test("actor hash — 결정적·기기 무관·device namespace 와 분리", asy
 
 // ── §9 — AI 사용자 경로 인증 배선(정적) ─────────────────────────────────────
 
-test("AI 4 route — requireUser 가 reserve 이전에 배선되어 있다", () => {
+test("AI 4 route — requireActiveUser 가 reserve 이전에 배선되어 있다", () => {
+  // CONSENT-V1 계약 갱신: session 만 보는 requireUser 게이트는 동의 검증이
+  // 없는 구계약이다 — 4 route 전부 requireActiveUser(동의 포함)여야 한다.
   for (const f of [
     "functions/api/trip/personalize.ts",
     "functions/api/import/analyze.ts",
     "functions/api/generate-itinerary.ts",
   ]) {
     const s = read(f);
-    const authIdx = s.indexOf("await requireUser(");
+    const authIdx = s.indexOf("await requireActiveUser(");
     const reserveIdx = s.indexOf("await aiOpsReserve(");
-    assert.ok(authIdx > 0, `${f}: requireUser 없음`);
+    assert.ok(authIdx > 0, `${f}: requireActiveUser 없음`);
+    assert.ok(!/await requireUser\(/.test(s), `${f}: 동의 없는 requireUser 게이트 금지`);
     assert.ok(authIdx < reserveIdx, `${f}: 인증이 예산 reserve 뒤에 있다`);
     assert.ok(s.includes("checkUserEntitlementPlaceholder("), `${f}: entitlement 자리 없음`);
   }
   const w = read("functions/api/mytrip/writing.ts");
-  assert.equal((w.match(/await requireUser\(/g) ?? []).length, 2, "writing 은 레거시·본 2경로 모두");
-  assert.ok(w.indexOf("await requireUser(") < w.indexOf("await aiOpsReserve("), "writing 순서");
+  assert.equal((w.match(/await requireActiveUser\(/g) ?? []).length, 2, "writing 은 레거시·본 2경로 모두");
+  assert.ok(w.indexOf("await requireActiveUser(") < w.indexOf("await aiOpsReserve("), "writing 순서");
 });
 
 test("비AI 기본 경로 — /api/trip/plan 은 인증 불요", () => {
