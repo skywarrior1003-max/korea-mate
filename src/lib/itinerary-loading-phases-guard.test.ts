@@ -224,10 +224,10 @@ test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 
   // 목록의 digest 를 고정하므로 추가·삭제·개명 모두 잡힌다. 정식 목록은
   // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
   const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 78, `migration 수가 변했다: ${files.length}`);
+  assert.equal(files.length, 79, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "078_account_devices.sql");
+  assert.equal(files[files.length - 1], "079_trip_drafts.sql");
   assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
-    "2edce5ed54414a9ac5a5107523c57fdb2fbda6c8b7723128829ea5daa8c8a3ca",
+    "dc033fef612b4d51483ead57257cf08c58b14960b4bfe4656f86bf245ea9cf20",
     "승인 목록 밖의 migration 변경");
 });
