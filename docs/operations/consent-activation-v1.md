@@ -57,3 +57,15 @@ fallback 없음(fail closed)**. 로그아웃은 `signOutAndReset()` 하나: 세�
 mapping 은 서버에 유지(익명 재사용 금지). 078 FK 는 **ON DELETE RESTRICT** —
 auth user 를 먼저 지울 수 없고, 계정 삭제 기능이 콘텐츠→mapping→user 순서로
 명시 정리해야 한다(Staging 실측: mapping 보유 user admin delete = 500 거부).
+
+## 7. DURABILITY-V1 확장(2026-09-27) — trip_drafts 작업 단위 동기화
+
+This Trip 서버 draft(079 `trip_drafts`)는 이제 080 으로 `revision`(서버만
+증가)·`applied_ops`(최근 64개 op_id — 멱등 판정용)·`context`(city/start/end)
+를 갖고, 모든 변경이 `trip_draft_apply`/`trip_draft_merge_guest` RPC(row
+lock·service_role 전용)로만 일어난다. **계정 삭제 정리 순서에 trip_drafts
+의 owner_type='user' 행도 콘텐츠 단계에 포함**할 것 — applied_ops 는 행과
+함께 지워지는 열이라 별도 파기 절차는 없다(op_id 는 무작위 UUID, PII 아님).
+클라 pending queue(`koreamate_draft_ops_v1`)는 `koreamate_` prefix 라
+로그아웃 rotation 의 로컬 정리 계약에 이미 포함된다(단, 로그아웃은 flush
+성공 후에만 진행 — 실패 시 rotation·queue 삭제 없이 중단·안내).
