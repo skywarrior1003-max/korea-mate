@@ -16,6 +16,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import DatePicker from "@/components/DatePicker";
 import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT } from "@/lib/cart";
+import { hydrateCartFromServer } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
 import { useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
@@ -76,7 +77,11 @@ export default function PlannerClient() {
 
   const [contactOpen,     setContactOpen]     = useState(false);
 
+  // THIS-TRIP-SYNC §7 — 진입 시 서버 draft 로 로컬 카트 정렬(타 기기 변경 반영)
+  useEffect(() => { void hydrateCartFromServer(); }, []);
+
   useEffect(() => {
+
     if (!style) return;
     try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
   }, [style]);

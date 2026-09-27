@@ -183,6 +183,26 @@ function writeStorage(items: CartItem[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(stripTripCommerceKeys(items)));
   // CartDrawer 등 구독 컴포넌트에 변경 알림
   window.dispatchEvent(new CustomEvent(CART_EVENT));
+  // THIS-TRIP-SYNC — 모든 카트 쓰기는 서버 스냅숏으로도 흘러간다(디바운스).
+  // 동적 import: SSR 무해·순환 참조 회피. 실패는 best-effort(서버가 진실 수렴).
+  void import("@/lib/trip-draft-sync")
+    .then(m => m.scheduleDraftPush(() => readStorage()))
+    .catch(() => { /* sync 모듈 로드 실패 — 로컬 캐시만 동작 */ });
+}
+
+/**
+ * This Trip 표면 진입 시 서버 draft 로 로컬을 맞춘다 (THIS-TRIP-SYNC §7).
+ * 같은 계정의 다른 기기에서 바꾼 내용이 재진입/새로고침으로 반영된다.
+ */
+export async function hydrateCartFromServer(): Promise<void> {
+  const m = await import("@/lib/trip-draft-sync");
+  await m.hydrateTripDraft(
+    items => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(stripTripCommerceKeys(items as CartItem[])));
+      window.dispatchEvent(new CustomEvent(CART_EVENT));
+    },
+    () => readStorage(),
+  );
 }
 
 // ── 핵심 CRUD 함수들 ───────────────────────────

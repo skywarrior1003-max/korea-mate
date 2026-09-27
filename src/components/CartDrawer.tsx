@@ -9,6 +9,7 @@ import {
   type CartItem,
   type EventItem,
 } from "@/lib/cart";
+import { hydrateCartFromServer } from "@/lib/cart";
 import { getItemSourceKey } from "@/lib/place-identity";
 import EventDetailModal from "@/components/EventDetailModal";
 import { useRouter } from "next/navigation";
@@ -27,7 +28,11 @@ export default function CartDrawer() {
     setItems(getCart());
   }, []);
 
+  // THIS-TRIP-SYNC §7 — 진입 시 서버 draft 로 로컬 카트 정렬(타 기기 변경 반영)
+  useEffect(() => { void hydrateCartFromServer(); }, []);
+
   useEffect(() => {
+
     refresh();
     window.addEventListener(CART_EVENT, refresh);
     return () => window.removeEventListener(CART_EVENT, refresh);

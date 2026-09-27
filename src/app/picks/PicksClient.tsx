@@ -20,6 +20,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import { getCityCart, lastAddedTripCity, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
+import { hydrateCartFromServer } from "@/lib/cart";
 import { readTripDraft, tripDraftDates, writeTripDraft, type TripDraft }
   from "@/lib/trip-draft/trip-draft-core";
 import TripSetupPanel, { type TripSetupPatch } from "@/components/TripSetupPanel";
@@ -186,7 +187,11 @@ function PicksContent() {
   const viewCity = tripCity ?? pendingCity;
   /** 방금 담은 장소 이름 — Saved/My Places 탭에서도 담김이 보이도록 잠깐 띄운다. */
   const [addedToast, setAddedToast] = useState<string | null>(null);
+  // THIS-TRIP-SYNC §7 — 진입 시 서버 draft 로 로컬 카트 정렬(타 기기 변경 반영)
+  useEffect(() => { void hydrateCartFromServer(); }, []);
+
   useEffect(() => {
+
     if (!addedToast) return;
     const t = setTimeout(() => setAddedToast(null), 2600);
     return () => clearTimeout(t);
