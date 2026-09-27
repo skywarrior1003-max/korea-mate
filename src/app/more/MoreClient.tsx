@@ -24,6 +24,7 @@ import {
 import {
   getCurrentUser, signInWithGoogle, signOutAndReset, onAuthChange, type AuthUserView,
 } from "@/lib/auth/auth-client";
+import { requestDeleteIntent, executeAccountDelete } from "@/lib/auth/account-delete-client";
 import { fetchAuthStatus, activateAccount } from "@/lib/auth/consent-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
 
@@ -41,6 +42,8 @@ function AccountSection() {
   const [busy, setBusy] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [reconsent, setReconsent] = useState(false); // sheet 성공 후 OAuth 대신 activate
+  // 계정 삭제 위험 존 단계 — idle(접힘)→confirm(설명+확인)→busy / reauth·error 는 confirm 화면 위 안내
+  const [delStep, setDelStep] = useState<"idle" | "confirm" | "busy" | "reauth" | "error">("idle");
   // callback 실패 복귀 안내(?auth=…) — 렌더 시점에 1회 읽는다(PII 없는 사유 코드).
   // effect 내 동기 setState 를 피하고, URL 정리는 아래 effect 가 담당한다.
   const [callbackError, setCallbackError] = useState<string | null>(() => {
@@ -91,6 +94,7 @@ function AccountSection() {
       <h2 className="text-[13px] font-black uppercase tracking-[0.14em] text-[#8A7D72] mb-3">{tAuth("accountGroup")}</h2>
       <div className="rounded-2xl border border-[#E6DFD5] bg-white px-5 py-4">
         {user && activation === "active" ? (
+          <div>
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[15px] font-black text-[#2C2520]">{user.displayName ?? tAuth("signedInFallback")}</p>
@@ -114,6 +118,61 @@ function AccountSection() {
             >
               {tAuth("signOut")}
             </button>
+          </div>
+          {/* ── 계정 영구 삭제 (ACCOUNT-DELETE-V1 §2) — 2단계 명시 확인 ──
+              1단계는 조용한 텍스트 버튼(실수 클릭 무해), 펼치면 무엇이
+              사라지는지 먼저 설명하고 나서야 위험 버튼이 나온다. */}
+          <div className="mt-4 pt-3 border-t border-[#E6DFD5]">
+            {delStep === "idle" ? (
+              <button
+                onClick={() => setDelStep("confirm")}
+                className="gkm-focus text-[12px] font-bold text-[#8A7D72] hover:text-[#B3261E]"
+              >
+                {tAuth("deleteAccount")}
+              </button>
+            ) : (
+              <div>
+                <p className="text-[13px] font-black text-[#B3261E]">{tAuth("deleteAccountTitle")}</p>
+                <p className="text-[12px] text-[#61554D] mt-1 whitespace-pre-line">{tAuth("deleteAccountBody")}</p>
+                {delStep === "reauth" && (
+                  <p className="text-[12px] font-bold text-[#B3261E] mt-2">{tAuth("deleteReauthNotice")}</p>
+                )}
+                {delStep === "error" && (
+                  <p className="text-[12px] font-bold text-[#B3261E] mt-2">{tAuth("deleteFailed")}</p>
+                )}
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={async () => {
+                      setDelStep("busy");
+                      const intent = await requestDeleteIntent();
+                      if (!intent.ok) {
+                        if (intent.reason === "reauth") {
+                          // 최근 인증이 아니다 — 기존 PKCE OAuth 로 재로그인 후 복귀(§2)
+                          setDelStep("reauth");
+                          await signInWithGoogle("/more");
+                          return;
+                        }
+                        setDelStep("error"); return;
+                      }
+                      const r = await executeAccountDelete(intent.intent);
+                      if (!r.ok) setDelStep("error"); // 성공이면 reload 로 이 화면이 사라진다
+                    }}
+                    disabled={delStep === "busy"}
+                    className="gkm-focus px-4 py-2 rounded-xl bg-[#B3261E] text-white text-[13px] font-black disabled:opacity-50"
+                  >
+                    {delStep === "busy" ? tAuth("deleteWorking") : tAuth("deleteConfirmAction")}
+                  </button>
+                  <button
+                    onClick={() => setDelStep("idle")}
+                    disabled={delStep === "busy"}
+                    className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
+                  >
+                    {tAuth("deleteCancel")}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           </div>
         ) : user && activation === "checking" ? (
           // 활성 확인 중 — 계정 정보(이름)를 먼저 그리지 않는다(§G)
