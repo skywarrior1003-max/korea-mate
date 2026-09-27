@@ -1659,7 +1659,18 @@
       "aiLoginRequiredTitle": "Sign in to use AI personalization",
       "aiLoginKeepsTrips": "Signing in keeps your AI passes safe. Your existing trips stay on this device as they are.",
       "callbackFailed": "Sign-in didn’t finish. Please try again.",
-      "backToHome": "Back to home"
+      "backToHome": "Back to home",
+      "consentTitle": "Before you continue",
+      "consentAge": "I am 14 years of age or older.",
+      "consentTerms": "I agree to the <link>Terms of Service</link>.",
+      "consentPrivacy": "I have read the <link>Privacy Policy</link>.",
+      "consentProceed": "Agree and continue with Google",
+      "consentCancel": "Cancel",
+      "consentError": "We couldn't confirm this. Please try again in a moment.",
+      "consentExpired": "Your confirmation timed out. Please start again.",
+      "consentRequiredNotice": "Consent confirmation is needed to continue.",
+      "consentReconsent": "Agree and continue",
+      "statusChecking": "Checking account status…"
   }
 
 }

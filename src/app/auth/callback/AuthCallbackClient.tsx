@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { supabase } from "@/lib/supabase";
 import { sanitizeReturnPath, AUTH_RETURN_KEY } from "@/lib/auth/return-path";
+import { activateAccount } from "@/lib/auth/consent-client";
 
 export default function AuthCallbackClient() {
   const router = useRouter();
@@ -60,7 +61,18 @@ export default function AuthCallbackClient() {
       } catch { back = "/"; }
 
       if (sessionOk) {
-        router.replace(back);
+        // CONSENT-V1 §G — code 교환 성공 ≠ 활성 계정. 서버 활성화(동의 검증)를
+        // 통과해야만 로그인 완료로 취급한다. 실패하면 즉시 signOut 하고
+        // PII 없는 사유 코드와 함께 More 로 복귀한다(직접 OAuth 우회 차단).
+        const activation = await activateAccount();
+        if (activation.state === "active") {
+          router.replace(back);
+        } else {
+          try { await supabase.auth.signOut(); } catch { /* 이미 없어도 무해 */ }
+          const reason = activation.state === "inactive" && activation.reason === "consent_expired"
+            ? "consent_expired" : "consent_required";
+          router.replace(`/more?auth=${reason}`);
+        }
       } else if (oauthError) {
         // 취소는 오류가 아니다 — 조용히 원래 화면으로
         router.replace(back);

@@ -24,25 +24,73 @@ import {
 import {
   getCurrentUser, signInWithGoogle, signOutUser, onAuthChange, type AuthUserView,
 } from "@/lib/auth/auth-client";
+import { fetchAuthStatus, activateAccount } from "@/lib/auth/consent-client";
+import ConsentSheet from "@/components/auth/ConsentSheet";
 
-/** 로그인 상태 영역 (V2-MINIMAL-GOOGLE-AUTH-V1 §12) — More 화면 최소 진입점.
+/** 로그인 상태 영역 (V2-MINIMAL-GOOGLE-AUTH-V1 §12 + CONSENT-V1 §G) — More 최소 진입점.
  *  이메일 전체를 노출하지 않고, Google 프로필 이미지는 쓰지 않는다(외부 이미지
- *  추적·깨짐 여지). AI 사용 가능을 약속하는 문구·잔여 횟수·크레딧 표시는 없다. */
+ *  추적·깨짐 여지). AI 사용 가능을 약속하는 문구·잔여 횟수·크레딧 표시는 없다.
+ *
+ *  CONSENT-V1: session 존재 ≠ active. session 이 있으면 서버 status 로 활성
+ *  여부를 확인하고, 확인 전에는 이름 등 계정 정보를 표시하지 않는다(§G).
+ *  미동의(inactive)면 재동의 sheet → intent → activate (재-OAuth 불필요). */
 function AccountSection() {
   const tAuth = useTranslations("auth");
   const [user, setUser] = useState<AuthUserView | null>(null);
+  const [activation, setActivation] = useState<"none" | "checking" | "active" | "inactive">("none");
   const [busy, setBusy] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [reconsent, setReconsent] = useState(false); // sheet 성공 후 OAuth 대신 activate
+  // callback 실패 복귀 안내(?auth=…) — 렌더 시점에 1회 읽는다(PII 없는 사유 코드).
+  // effect 내 동기 setState 를 피하고, URL 정리는 아래 effect 가 담당한다.
+  const [callbackError, setCallbackError] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const r = new URL(window.location.href).searchParams.get("auth");
+      return r === "consent_required" || r === "consent_expired" ? r : null;
+    } catch { return null; }
+  });
+
+  const refreshActivation = async () => {
+    setActivation("checking");
+    const s = await fetchAuthStatus();
+    setActivation(s.state === "active" ? "active" : "inactive");
+  };
+
   useEffect(() => {
     let alive = true;
-    void getCurrentUser().then(u => { if (alive) setUser(u); });
-    const off = onAuthChange(u => { if (alive) setUser(u); }); // 멀티탭 동기화 포함
+    // ?auth=… 사유 코드는 초기 state 가 이미 읽었다 — 여기서는 URL 만 정리
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("auth")) {
+        url.searchParams.delete("auth");
+        window.history.replaceState({}, "", url.pathname + (url.search || ""));
+      }
+    } catch { /* URL 정리는 최선 노력 */ }
+    void getCurrentUser().then(u => {
+      if (!alive) return;
+      setUser(u);
+      if (u) void refreshActivation();
+    });
+    const off = onAuthChange(u => {
+      if (!alive) return;
+      setUser(u);
+      if (u) void refreshActivation(); else setActivation("none");
+    });
     return () => { alive = false; off(); };
   }, []);
+
+  const startConsent = (isReconsent: boolean) => {
+    setReconsent(isReconsent);
+    setCallbackError(null);
+    setSheetOpen(true);
+  };
+
   return (
     <section className="mb-8">
       <h2 className="text-[13px] font-black uppercase tracking-[0.14em] text-[#8A7D72] mb-3">{tAuth("accountGroup")}</h2>
       <div className="rounded-2xl border border-[#E6DFD5] bg-white px-5 py-4">
-        {user ? (
+        {user && activation === "active" ? (
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[15px] font-black text-[#2C2520]">{user.displayName ?? tAuth("signedInFallback")}</p>
@@ -56,15 +104,40 @@ function AccountSection() {
               {tAuth("signOut")}
             </button>
           </div>
+        ) : user && activation === "checking" ? (
+          // 활성 확인 중 — 계정 정보(이름)를 먼저 그리지 않는다(§G)
+          <p className="text-[13px] text-[#61554D]">{tAuth("statusChecking")}</p>
+        ) : user ? (
+          // session 은 있으나 현재 버전 동의 없음 — 재동의로 활성화(§G-7)
+          <div>
+            <p className="text-[13px] font-bold text-[#2C2520] mb-1">{tAuth("consentRequiredNotice")}</p>
+            <p className="text-[12px] text-[#61554D] mb-3">{tAuth("aiLoginKeepsTrips")}</p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => startConsent(true)}
+                className="gkm-focus px-4 py-2 rounded-xl bg-[#2C2520] text-white text-[13px] font-bold"
+              >
+                {tAuth("consentReconsent")}
+              </button>
+              <button
+                onClick={async () => { setBusy(true); await signOutUser(); setBusy(false); }}
+                disabled={busy}
+                className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
+              >
+                {tAuth("signOut")}
+              </button>
+            </div>
+          </div>
         ) : (
           <div>
+            {callbackError && (
+              <p className="text-[12px] font-bold text-[#B3261E] mb-2">
+                {callbackError === "consent_expired" ? tAuth("consentExpired") : tAuth("consentRequiredNotice")}
+              </p>
+            )}
             <p className="text-[13px] text-[#61554D] mb-3">{tAuth("aiLoginKeepsTrips")}</p>
             <button
-              onClick={async () => {
-                setBusy(true);
-                const r = await signInWithGoogle("/more");
-                if (!r.ok) setBusy(false); // 성공이면 페이지가 Google 로 이동한다
-              }}
+              onClick={() => startConsent(false)}
               disabled={busy}
               className="gkm-focus px-4 py-2 rounded-xl bg-[#2C2520] text-white text-[13px] font-bold disabled:opacity-50"
             >
@@ -73,6 +146,23 @@ function AccountSection() {
           </div>
         )}
       </div>
+      <ConsentSheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        onProceed={async () => {
+          if (reconsent) {
+            // session 보유 — OAuth 재시작 없이 intent cookie 로 곧장 활성화
+            const r = await activateAccount();
+            setSheetOpen(false);
+            if (r.state === "active") setActivation("active");
+            return;
+          }
+          setBusy(true);
+          const r = await signInWithGoogle("/more");
+          if (!r.ok) { setBusy(false); setSheetOpen(false); }
+          // 성공이면 페이지가 Google 로 이동한다
+        }}
+      />
     </section>
   );
 }

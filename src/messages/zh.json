@@ -1659,7 +1659,18 @@
       "aiLoginRequiredTitle": "登录后即可使用AI喜好调整",
       "aiLoginKeepsTrips": "登录用于安全保管你的AI使用权。现有行程会原样保留在当前设备上。",
       "callbackFailed": "登录未完成，请重试。",
-      "backToHome": "返回首页"
+      "backToHome": "返回首页",
+      "consentTitle": "继续之前请确认",
+      "consentAge": "我已年满14周岁。",
+      "consentTerms": "我同意<link>服务条款</link>。",
+      "consentPrivacy": "我已阅读<link>隐私政策</link>。",
+      "consentProceed": "同意并使用 Google 继续",
+      "consentCancel": "取消",
+      "consentError": "确认失败，请稍后再试。",
+      "consentExpired": "确认已超时，请重新开始。",
+      "consentRequiredNotice": "继续前需要完成同意确认。",
+      "consentReconsent": "同意并继续",
+      "statusChecking": "正在确认账户状态…"
   }
 
 }

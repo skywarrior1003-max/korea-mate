@@ -94,6 +94,7 @@ import PlannerDayNav from "@/components/planner/PlannerDayNav";
 import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
 import { fetchPersonalizationProfile } from "@/lib/planner/personalize-client";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
+import ConsentSheet from "@/components/auth/ConsentSheet";
 import TimelineIcon from "@/components/planner/TimelineIcon";
 import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildOrderedTimeline } from "@/lib/planner/timeline-core";
@@ -1548,6 +1549,8 @@ function ItineraryResult() {
   // 어떤 전이도 provider 를 부르지 않는다. unavailable 은 "이번에 안 됐다"는
   // 사실만 담는다 — 잔여 횟수·내부 사유는 화면에 내지 않는다.
   const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "login" | "confirm" | "busy" | "applied" | "unavailable">("idle");
+  // CONSENT-V1 §C — Google 로 보내기 전 동의 sheet. intent 성공 후에만 OAuth.
+  const [aiConsentOpen, setAiConsentOpen] = useState(false);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
@@ -2932,11 +2935,16 @@ function ItineraryResult() {
               <p className="text-xs text-violet-600 mb-3">{tAuth("aiLoginKeepsTrips")}</p>
               <div className="flex gap-2">
                 <button
-                  onClick={() => { void signInWithGoogle(window.location.pathname + window.location.search); }}
+                  onClick={() => setAiConsentOpen(true)}
                   className="px-4 py-2 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700"
                 >
                   {tAuth("googleContinue")}
                 </button>
+                <ConsentSheet
+                  open={aiConsentOpen}
+                  onClose={() => setAiConsentOpen(false)}
+                  onProceed={() => { void signInWithGoogle(window.location.pathname + window.location.search); }}
+                />
                 <button
                   onClick={() => setAiOptInPhase("idle")}
                   className="px-4 py-2 rounded-xl bg-white border border-violet-300 text-violet-700 text-sm font-semibold hover:bg-violet-100"
