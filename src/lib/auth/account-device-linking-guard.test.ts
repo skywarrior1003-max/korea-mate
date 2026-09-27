@@ -173,7 +173,7 @@ test("§12-4 — 로그아웃 rotation 필수·서버 mapping 무접촉", () => 
   assert.match(d, /crypto\.randomUUID\(\)/);
   const a = strip(read("src/lib/auth/auth-client.ts"));
   assert.ok(a.includes("signOutAndReset"), "reset 로그아웃 경로");
-  assert.ok(a.indexOf("signOut()") < a.indexOf("rotateDeviceId()"), "세션 종료 성공 후에만 rotation");
+  assert.ok(a.indexOf('signOut({ scope: "local" })') < a.indexOf("rotateDeviceId()"), "세션 종료(local scope) 성공 후에만 rotation");
   assert.ok(!/account_devices/.test(a), "클라이언트가 mapping 을 만지지 않는다");
   const m = strip(read("src/app/more/MoreClient.tsx"));
   assert.ok(m.includes("signOutAndReset"), "More 로그아웃이 reset 경로 사용");

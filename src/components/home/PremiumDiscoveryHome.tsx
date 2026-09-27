@@ -25,6 +25,8 @@ import { useTranslations } from "next-intl";
 import { CITY_ENTRY_CONTENT } from "@/data/cities/entry-content";
 import { CITY_CONFIGS, CITY_SLUGS } from "@/data/cities";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
+import { exploreHrefFor, DEFAULT_EXPLORE_HREF } from "@/lib/explore-href";
+import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { cityVisual } from "@/lib/city-visual";
 import type { PopularTrip } from "@/lib/supabase";
 import CityCardArt from "./CityCardArt";
@@ -53,6 +55,15 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
   const tCityLinks = useTranslations("cityLinks");
   const tCityName = useTranslations("tripForm");
   const [trips, setTrips] = useState<PopularTrip[] | null>(null);
+  // '전체 보기'도 준비 중인 여행 도시의 Explore 로 — 부산 하드코딩 잔여 1곳 교정
+  // (SESSION-PARITY §2). BottomNav 와 같은 패턴: rAF 로 lint 계약 준수.
+  const [exploreHref, setExploreHref] = useState(DEFAULT_EXPLORE_HREF);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      try { setExploreHref(exploreHrefFor(readTripDraft()?.city ?? null)); } catch { /* 기본 허브 유지 */ }
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
   const [asked, setAsked] = useState(false);
 
   // 화면 밖 페이지가 네트워크를 먼저 쓰지 않게 한다. 한 번 부르면 다시 부르지 않는다.
@@ -112,7 +123,7 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
         <section className="pb-9" aria-label={t("exploreCities")}>
           <div className="px-6 flex items-baseline justify-between mb-4">
             <h2 className="text-[22px] font-black" style={{ color: DESIGN_INK }}>{t("exploreCities")}</h2>
-            <Link href="/explore/busan/" className="gkm-focus text-[13.5px] font-bold" style={{ color: DESIGN_PRIMARY }}>
+            <Link href={exploreHref} className="gkm-focus text-[13.5px] font-bold" style={{ color: DESIGN_PRIMARY }}>
               {t("viewAll")}
             </Link>
           </div>

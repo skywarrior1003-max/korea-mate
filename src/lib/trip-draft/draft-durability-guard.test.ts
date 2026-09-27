@@ -94,7 +94,7 @@ test("로그아웃 — flush 성공 후에만 signOut→rotation·실패 시 성
   const whole = strip(read("src/lib/auth/auth-client.ts"));
   const a = whole.slice(whole.indexOf("signOutAndReset")); // reset 경로 안에서만 순서를 본다
   const flushIdx = a.indexOf("flushDraftOps");
-  const signOutIdx = a.indexOf("supabase.auth.signOut()");
+  const signOutIdx = a.indexOf('supabase.auth.signOut({ scope: "local" })'); // 한 기기 로그아웃은 그 기기 세션만(SESSION-PARITY §1)
   const rotateIdx = a.indexOf("rotateDeviceId()");
   assert.ok(flushIdx > 0 && flushIdx < signOutIdx && signOutIdx < rotateIdx, "flush → signOut → rotation 순서");
   assert.match(a, /reason: "unsaved"/);

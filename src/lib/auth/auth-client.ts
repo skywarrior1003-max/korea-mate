@@ -72,7 +72,7 @@ export async function signInWithGoogle(returnPath: string): Promise<{ ok: boolea
 
 /** 로그아웃 — device 데이터는 건드리지 않는다(§11: 로그아웃≠데이터 삭제) */
 export async function signOutUser(): Promise<void> {
-  try { await supabase.auth.signOut(); } catch { /* 세션이 이미 없어도 무해 */ }
+  try { await supabase.auth.signOut({ scope: "local" }); } catch { /* 세션이 이미 없어도 무해 */ }
 }
 
 /**
@@ -91,7 +91,11 @@ export async function signOutAndReset(): Promise<{ ok: boolean; reason?: "unsave
     if (!fl.ok) return { ok: false, reason: "unsaved" };
   } catch { return { ok: false, reason: "unsaved" }; }
   try {
-    const { error } = await supabase.auth.signOut();
+    // scope:"local" — 이 브라우저의 세션만 끝낸다. 기본값(global)은 같은 계정의
+    // 다른 기기 세션(refresh token)까지 전부 revoke 해서, 한 기기의 로그아웃이
+    // 다른 기기를 강제 로그아웃시키는 것이 실측됐다(SESSION-PARITY §1).
+    // "모든 기기에서 로그아웃"은 별도 기능으로만 제공한다.
+    const { error } = await supabase.auth.signOut({ scope: "local" });
     if (error) return { ok: false, reason: "signout" };
   } catch { return { ok: false, reason: "signout" }; }
   const { rotateDeviceId } = await import("@/lib/deviceId");

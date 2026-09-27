@@ -68,7 +68,9 @@ export default function AuthCallbackClient() {
         if (activation.state === "active") {
           router.replace(back);
         } else {
-          try { await supabase.auth.signOut(); } catch { /* 이미 없어도 무해 */ }
+          // scope:"local" — 이 브라우저에서 방금 만든 미활성 세션만 폐기한다.
+          // 기본(global)이면 같은 계정으로 이미 활성인 다른 기기까지 끊는다.
+          try { await supabase.auth.signOut({ scope: "local" }); } catch { /* 이미 없어도 무해 */ }
           const reason = activation.state === "inactive" && activation.reason === "consent_expired"
             ? "consent_expired"
             : activation.state === "inactive" && activation.reason === "link_conflict"
