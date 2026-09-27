@@ -12,6 +12,7 @@ import { requireUser, hasCurrentConsent, type UserAuthEnv } from "../../_lib/use
 import { verifyIntentCookie, intentClearCookie } from "../../_lib/consent-intent.ts";
 import { CURRENT_CONSENT_VERSIONS } from "../../../src/lib/auth/consent-contract.ts";
 import { linkCurrentDevice, OWNERSHIP_UUID_RE, type OwnershipEnv } from "../../_lib/ownership.ts";
+import { mergeGuestDraftIntoAccount } from "../../_lib/trip-draft-merge.ts";
 
 const json = (body: unknown, status: number, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
@@ -40,6 +41,10 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
       }
       return json({ error: "ownership_unavailable" }, 503);
     }
+    // THIS-TRIP-SYNC §5 — link 직후 guest This Trip 을 계정 draft 로 무손실
+    // 병합(합집합·중복 0·타 도시 공존). 실패 시 active 를 반환하지 않는다.
+    const merged = await mergeGuestDraftIntoAccount(env, auth.userId, deviceId);
+    if (!merged) return json({ error: "ownership_unavailable" }, 503);
     return json({ active: true, linked: true, versions: CURRENT_CONSENT_VERSIONS }, 200, {
       "set-cookie": intentClearCookie(request),
     });
