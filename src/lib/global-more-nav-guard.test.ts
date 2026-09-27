@@ -64,6 +64,6 @@ test("④ 범위 가드 — auth/linking·migration 무접촉(이번 TASK)", () 
   // 이 가드 파일이 도입된 커밋의 계약: nav 수정은 셸 컴포넌트에 한정된다.
   // migration 수는 079 까지 그대로(스냅숏 digest 는 3파일 가드가 고정).
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
-  assert.equal(files.length, 79);
+  assert.ok(files.length >= 79); // 080 이후는 스냅숏 3파일 가드가 고정
   assert.match(read("src/lib/legal/privacy-content.ts"), /effectiveDate: null/);
 });

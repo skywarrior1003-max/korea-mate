@@ -26,7 +26,8 @@ test("⑤⑥ — raw device 목록 클라 미반환·클라 다중 device 반복
   assert.ok(!/own\.devices/.test(api), "draft API 는 scope 목록 자체를 쓰지 않는다(owner 축 단일 행)");
   const sync = strip(read("src/lib/trip-draft-sync.ts"));
   assert.ok(!/devices|account_devices/.test(sync), "클라이언트에 device 목록 개념 없음");
-  assert.equal((sync.match(/fetch\("\/api\/trip-draft"/g) ?? []).length, 2, "GET/PUT 각 1곳 — 반복 호출 없음");
+  assert.equal((sync.match(/fetch\("\/api\/trip-draft"/g) ?? []).length, 1, "GET 1곳");
+  assert.equal((sync.match(/fetch\("\/api\/trip-draft\/ops"/g) ?? []).length, 1, "op 전송 1곳 — 반복/다중 device 호출 없음");
 });
 
 test("⑦ — 로그아웃 rotation 이 This Trip 캐시(koreamate_cart)를 제거", () => {
@@ -65,7 +66,7 @@ test("병합 배선 — activate 가 link 성공 후 병합·실패 시 active �
   assert.match(a, /if \(!merged\) return json\(\{ error: "ownership_unavailable" \}, 503\)/);
   const lib = strip(read("functions/_lib/trip-draft-merge.ts"));
   assert.ok(!/console\./.test(lib), "로그 금지");
-  assert.match(lib, /DELETE[\s\S]*owner_type=eq\.device/); // 병합 후 guest 행 제거(유령 부활 방지)
+  assert.match(lib, /rpc\/trip_draft_merge_guest/); // 병합은 DB 원자 RPC(잠금·revision) 하나로
 });
 
 test("⑩ — AI/plan 입력은 카트에서 온다(별도 축 없음) + hydrate 표면 3곳", () => {
@@ -76,12 +77,12 @@ test("⑩ — AI/plan 입력은 카트에서 온다(별도 축 없음) + hydrate
     assert.match(read(p), /hydrateCartFromServer\(\)/, p + ": 진입 hydrate 필요");
   }
   // 카트 쓰기는 전부 서버 push 로 흐른다(단일 깔때기)
-  assert.match(read("src/lib/cart.ts"), /scheduleDraftPush/);
+  assert.match(read("src/lib/cart.ts"), /recordCartChange/); // 스냅숏 push 폐기 — diff→op
 });
 
 test("⑨⑫⑬⑭⑮ — 079 잠금·기존 계약 무변경", () => {
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
-  assert.equal(files.length, 79);
+  assert.ok(files.length >= 79); // 080(durability) 추가는 전용 가드가 고정
   assert.equal(files.filter(f => f.startsWith("079")).length, 1);
   const s = read("supabase/migrations/079_trip_drafts.sql");
   assert.match(s, /PRIMARY KEY \(owner_type, owner_id\)/);

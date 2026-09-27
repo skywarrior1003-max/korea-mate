@@ -204,7 +204,7 @@ test("§12-15·16·17 — 4locale 안내·선택 UI 없음", () => {
 
 test("§12-11·12·13·14 — 기존 계약 무변경", () => {
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
-  assert.equal(files.length, 79);
+  assert.ok(files.length >= 79); // 080(trip_draft_operations, DURABILITY-V1) 추가 — 정확 카운트는 durability guard 가 고정
   // 073~077 무수정은 migration 스냅숏 digest 가드(3파일)가 고정한다 — 여기선 존재만
   for (const n of ["073", "074", "075", "076", "077", "079"]) assert.ok(files.some(f => f.startsWith(n)));
   const rank = read("functions/api/recommendations/[city]/places.ts");
