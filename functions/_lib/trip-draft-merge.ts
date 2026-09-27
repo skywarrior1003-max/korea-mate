@@ -31,14 +31,6 @@ async function rest(env: Env, method: string, pathQ: string, body?: unknown, pre
   return { ok: res.ok, status: res.status, data };
 }
 
-async function readDraft(env: Env, ownerType: "device" | "user", ownerId: string): Promise<DraftItem[] | null | "error"> {
-  const r = await rest(env, "GET", `trip_drafts?owner_type=eq.${ownerType}&owner_id=eq.${ownerId}&select=items&limit=1`);
-  if (!r.ok) return "error";
-  const row = Array.isArray(r.data) ? (r.data[0] as { items?: unknown } | undefined) : undefined;
-  if (!row) return null;
-  return Array.isArray(row.items) ? (row.items as DraftItem[]) : [];
-}
-
 /** 무손실 합집합 — account 우선 순서, guest 신규만 뒤에 추가 */
 export function mergeDraftItems(account: DraftItem[], guest: DraftItem[]): DraftItem[] {
   const seen = new Set(account.map(identityOf).filter(Boolean));
@@ -60,20 +52,10 @@ export function mergeDraftItems(account: DraftItem[], guest: DraftItem[]): Draft
  */
 export async function mergeGuestDraftIntoAccount(env: Env, userId: string, deviceId: string): Promise<boolean> {
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) return false;
-  const guest = await readDraft(env, "device", deviceId);
-  if (guest === "error") return false;
-  if (guest === null || guest.length === 0) {
-    // 빈 guest 행이 남아 있으면 정리만(멱등)
-    if (guest !== null) await rest(env, "DELETE", `trip_drafts?owner_type=eq.device&owner_id=eq.${deviceId}`, undefined, "return=minimal");
-    return true;
-  }
-  const account = await readDraft(env, "user", userId);
-  if (account === "error") return false;
-  const merged = account === null || account.length === 0 ? guest : mergeDraftItems(account, guest);
-  const up = await rest(env, "POST", "trip_drafts?on_conflict=owner_type,owner_id",
-    [{ owner_type: "user", owner_id: userId, items: merged, updated_at: new Date().toISOString() }],
-    "resolution=merge-duplicates,return=minimal");
-  if (!up.ok) return false;
-  const del = await rest(env, "DELETE", `trip_drafts?owner_type=eq.device&owner_id=eq.${deviceId}`, undefined, "return=minimal");
-  return del.ok;
+  // DURABILITY-V1 §4.4 — 병합도 DB 원자 RPC(row FOR UPDATE) 하나로.
+  // 합집합 규칙은 mergeDraftItems 와 동일(SQL 미러) — account 순서 유지·
+  // guest 신규만 뒤에·중복 0·guest 행 제거(멱등). revision 도 서버가 올린다.
+  const r = await rest(env, "POST", "rpc/trip_draft_merge_guest",
+    { p_user: userId, p_device: deviceId });
+  return r.ok && Array.isArray(r.data);
 }
