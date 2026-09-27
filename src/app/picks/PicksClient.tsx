@@ -111,10 +111,12 @@ function PlaceCardMedia({ image, type }: { image: string | null; type: string })
 // ── 여행 starter — Trip Setup 이 아직 없을 때 This Trip 탭에서 바로 시작한다 ──
 // 저장은 기존 TripDraft 하나뿐이다(writeTripDraft). 새 저장소를 만들지 않는다.
 const STARTER_CITIES = ["Busan", "Seoul", "Jeju", "Gyeongju", "Jeonju"];
-function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endLabel, startLabelBtn, onStart }: {
+function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endLabel, startLabelBtn, onStart, onCityChange }: {
   defaultCity: string | null;
   title: string; hint: string; cityLabel: string; startLabel: string; endLabel: string; startLabelBtn: string;
   onStart: (city: string, startDate: string, endDate: string) => void;
+  /** CITY-ROUTING-RECOVERY — 시작 버튼 전에도 선택 도시가 Explore 링크에 반영되게 */
+  onCityChange?: (city: string) => void;
 }) {
   const known = STARTER_CITIES.find(c => c.toLowerCase() === (defaultCity ?? "").toLowerCase());
   const tCityName = useTranslations("tripForm");
@@ -130,7 +132,7 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
         <label className="flex flex-col gap-1 text-xs font-bold text-sub">{cityLabel}
           <select
             value={city}
-            onChange={e => setCity(e.target.value)}
+            onChange={e => { setCity(e.target.value); onCityChange?.(e.target.value); }}
             className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink"
           >
             {STARTER_CITIES.map(c => <option key={c} value={c}>{tCityName(`city_${c}`)}</option>)}
@@ -172,6 +174,8 @@ function PicksContent() {
 
   // 첫 탭만 URL 에서 읽는다. 이후 탭 전환은 URL 을 다시 쓰지 않는다 —
   // 히스토리에 탭 클릭이 쌓이면 뒤로가기가 이전 화면 대신 옆 탭으로 간다.
+  // CITY-ROUTING-RECOVERY — 여행 시작 전 starter 에서 고른 도시(링크 미리 반영용)
+  const [starterPreviewCity, setStarterPreviewCity] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>(() => tabFromParam(searchParams.get("tab")));
 
   // ── Selected (cart) ─────────────────────────────────────────────────────────
@@ -759,6 +763,7 @@ function PicksContent() {
               도시·날짜가 정해지는 순간 TripDraft 가 되고 아래 TripSetupPanel 로 이어진다. */}
           {tab === "selected" && !draft && (
             <TripStarterCard
+              onCityChange={setStarterPreviewCity}
               // defaultCity 는 mount 시 useState 초기값으로만 쓰인다 — pendingCity 가
               // effect 에서 늦게 도착하면(?city= 승계·lastAddedTripCity) 반영이 안 됐다.
               // key 로 재마운트해 초기값을 다시 읽게 한다(시작 전 입력 폼이라 안전).
@@ -784,7 +789,7 @@ function PicksContent() {
               <GlyphIcon kind="map" size={34} className="mx-auto mb-3 text-faint" />
               <p className="font-bold text-ink mb-1">{t("selectedEmpty")}</p>
               <p className="text-sm text-sub mb-5">{t("selectedEmptyHint")}</p>
-              <Link href={exploreHrefFor(tripCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
+              <Link href={exploreHrefFor(tripCity || starterPreviewCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
                 {t("explore")}
               </Link>
             </Card>
@@ -876,7 +881,7 @@ function PicksContent() {
                 })}
               </ul>
 
-              <Link href={exploreHrefFor(tripCity)} className="gkm-focus mt-4 flex items-center justify-center min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold">
+              <Link href={exploreHrefFor(tripCity || starterPreviewCity)} className="gkm-focus mt-4 flex items-center justify-center min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold">
                 + {t("findMore")}
               </Link>
 
@@ -980,7 +985,7 @@ function PicksContent() {
               <p className="text-3xl mb-3" aria-hidden>🔖</p>
               <p className="font-bold text-ink mb-1">{t("savedEmpty")}</p>
               <p className="text-sm text-sub mb-5">{t("savedEmptyHint")}</p>
-              <Link href={exploreHrefFor(tripCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
+              <Link href={exploreHrefFor(tripCity || starterPreviewCity)} className="gkm-focus inline-flex items-center justify-center min-h-11 px-5 rounded-control bg-action text-white text-sm font-semibold hover:bg-action-hover shadow-cta">
                 {t("explore")}
               </Link>
             </Card>

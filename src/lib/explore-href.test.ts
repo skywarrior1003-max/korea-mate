@@ -23,6 +23,27 @@ test("★도시가 없거나 모르는 도시면 기존 기본값(부산) — �
   assert.equal(exploreHrefFor("daegu"), DEFAULT_EXPLORE_HREF);
 });
 
+test("★라벨·별칭도 자기 도시로 간다 — SSOT resolver 재사용 (CITY-ROUTING-RECOVERY)", () => {
+  // Owner 재현: 도시 값이 라벨("전주"·"제주도")이면 부산으로 떨어지던 결함 고정
+  const cases: Array<[string, string]> = [
+    ["서울", "seoul"], ["전주", "jeonju"], ["제주도", "jeju"],
+    ["경주", "gyeongju"], ["부산", "busan"], ["JEONJU", "jeonju"],
+  ];
+  for (const [input, slug] of cases) assert.equal(exploreHrefFor(input), `/explore/${slug}/`, input);
+});
+
+test("★nav 둘러보기 — 하드코딩 부산 리터럴 금지·현재 여행 도시 배선 (CITY-ROUTING-RECOVERY)", () => {
+  for (const rel of ["../components/ui/BottomNav.tsx", "../components/ui/TopNav.tsx"]) {
+    const src = readFileSync(new URL(rel, import.meta.url), "utf8");
+    assert.ok(src.includes("exploreHrefFor(readTripDraft()?.city"), rel + ": draft 도시 배선 필요");
+    assert.ok(!/href="\/explore\/busan\/?"/.test(src.replace(/\/\/.*$/gm, "").replace(/href: "\/explore\/busan"/, "")),
+      rel + ": 렌더 href 부산 리터럴 금지");
+  }
+  const picks = readFileSync(new URL("../app/picks/PicksClient.tsx", import.meta.url), "utf8");
+  assert.ok(picks.includes("starterPreviewCity"), "시작 전 선택 도시도 링크에 반영");
+  assert.equal((picks.match(/exploreHrefFor\(tripCity \|\| starterPreviewCity\)/g) ?? []).length >= 2, true);
+});
+
 test("★Picks 에 /explore/busan/ 하드코딩이 남아 있지 않다", () => {
   const src = readFileSync(new URL("../app/picks/PicksClient.tsx", import.meta.url), "utf8");
   assert.ok(!src.includes('href="/explore/busan/"'), "PicksClient 에 고정 부산 링크");

@@ -6,6 +6,9 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { exploreHrefFor, DEFAULT_EXPLORE_HREF } from "@/lib/explore-href";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export interface TopNavProps {
@@ -14,6 +17,14 @@ export interface TopNavProps {
 
 export default function TopNav({ selectedCount }: TopNavProps) {
   const t = useTranslations("shell");
+  // CITY-ROUTING-RECOVERY — 둘러보기는 현재 여행 도시 Explore 로(하드코딩 부산 제거)
+  const [exploreHref, setExploreHref] = useState(DEFAULT_EXPLORE_HREF);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      try { setExploreHref(exploreHrefFor(readTripDraft()?.city ?? null)); } catch { /* 기본 허브 유지 */ }
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
     <header className="hidden md:block bg-surface border-b border-line sticky top-0 z-40">
@@ -22,7 +33,7 @@ export default function TopNav({ selectedCount }: TopNavProps) {
           <span className="font-black tracking-tight">gokoreamate</span>
         </Link>
         <nav aria-label="Primary desktop" className="flex items-center gap-6">
-          <Link href="/explore/busan/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+          <Link href={exploreHref} className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("explore")}
           </Link>
           <Link href="/picks/" className="gkm-focus relative text-sm font-semibold text-sub hover:text-ink transition-colors">
@@ -36,7 +47,9 @@ export default function TopNav({ selectedCount }: TopNavProps) {
           <Link href="/my-trips/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("trips")}
           </Link>
-          <Link href="/about/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+          {/* MORE-NAV-CLOSEOUT — '더보기' 라벨은 계정 More 허브(/more)가 canonical 이다.
+              About 은 More 허브 안의 '소개' Row 와 footer 로 계속 접근된다(라벨 혼용 금지). */}
+          <Link href="/more/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("more")}
           </Link>
           <LanguageSwitcher />

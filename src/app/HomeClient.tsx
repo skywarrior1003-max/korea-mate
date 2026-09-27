@@ -34,6 +34,8 @@ export default function HomeClient() {
   const tn = useTranslations("nav");
   const th = useTranslations("homeUi");
   const tFooter = useTranslations("footer");
+  // 데스크톱 More 진입점 라벨은 모바일 하단 탭과 같은 shell.more 를 쓴다(NAV-PARITY)
+  const tShell = useTranslations("shell");
   const router = useRouter();
   const [contactOpen, setContactOpen] = useState(false);
   // §7 — 사전 오픈 sheet 가 열려 있는 동안 튜토리얼 coach 를 미룬다(동시 노출 0)
@@ -76,6 +78,9 @@ export default function HomeClient() {
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("survivalGuide")}</Link>
             <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("about")}</Link>
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("myTrips")}</Link>
+            {/* NAV-PARITY — 데스크톱에서 /more 허브 진입 경로가 없던 공백 보완.
+                모바일 하단 탭 More 와 같은 목적지·같은 라벨. 로그인 UI 아님. */}
+            <Link href="/more"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tShell("more")}</Link>
             <LanguageSwitcher variant="icon" className="text-gray-700" />
             {/* 플래너 분리 후 CTA 는 스크롤이 아니라 /planner 로 간다 */}
             <Link
