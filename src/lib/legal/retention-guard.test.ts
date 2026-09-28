@@ -136,12 +136,17 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   for (const k of ["법정대리인 동의 절차를 제공하지 않습니다", "does not offer a parent or guardian consent process", "法定代理人の同意手続きは提供していません", "不提供法定代理人同意程序"]) assert.ok(p.includes(k), k);
   assert.equal((p.match(/제13조 문안 Owner 최종 확인 필요/g) ?? []).length, 4);
   const t = read("src/lib/legal/terms-content.ts");
-  // 개인정보 요청 주소 = Owner 가 2026-09-26 제공·왕복 시험한 공개 주소(재요청 금지), 운영 주체는 두 후보 중 확정 전 마커 유지
+  // 개인정보 요청 주소 = Owner 가 2026-09-26 제공·왕복 시험한 공개 주소(재요청 금지) — 처리방침은 제1조 담당 연락처+제16조, 약관은 제15조
+  assert.equal(p.split("support@gokoreamate.com").length - 1, 8);
+  assert.equal(t.split("support@gokoreamate.com").length - 1, 4);
   for (const f of [p, t]) {
-    assert.equal(f.split("support@gokoreamate.com").length - 1, 4);
     assert.ok(!f.includes("실제 수신 이메일 주소 확인 필요"));
-    assert.equal(f.split("케이이엔지").length - 1, 4);
+    // 운영 주체: 09-26 Owner 공개 후보를 초안에 쓰고 "현재 운영 주체인가" 확인 마커 1건만 남긴다(근거 없는 법인명 금지)
+    assert.equal(f.split("Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가").length - 1, 4);
+    assert.ok(!f.includes("비유피"), "근거 없는 운영 주체 후보 금지");
   }
+  assert.ok(!p.includes("로그와 백업 보관기간 확인 필요"), "인프라 로그 사실 반영");
+  for (const k of ["are not stored, and the database provider (Supabase) keeps API and database logs for 1 day", "실행 로그는 저장하지 않으며", "実行ログは保存せず", "运行日志不予保存"]) assert.ok(p.includes(k), k);
   for (const k of ["대한민국 법을 따릅니다", "laws of the Republic of Korea", "大韓民国の法律に準拠", "受大韩民国法律管辖"]) assert.ok(t.includes(k), k);
   assert.ok(t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "관할은 법률 검토 표시로 남김");
 });
