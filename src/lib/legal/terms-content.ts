@@ -76,7 +76,7 @@ export const TERMS: LegalDocSet = {
       {
         no: 11, title: "Data deletion",
         paragraphs: [
-          "You can delete itineraries, saved places, personal places, photos, and memos in the app at any time; deletion takes effect immediately, including stored photo files. A self-service account deletion feature is not yet available; account deletion requests are handled through the contact channel in Section 15. Deleting content does not retract copies other users lawfully made while the content was public.",
+          "You can delete itineraries, saved places, personal places, photos, and memos in the app at any time; deletion takes effect immediately, including stored photo files. You can also permanently delete your account yourself (More → Delete account permanently); what is deleted and what is kept follows Section 12 of the Privacy Policy. Deleting content does not retract copies other users lawfully made while the content was public.",
         ],
       },
       {
@@ -168,7 +168,7 @@ export const TERMS: LegalDocSet = {
       {
         no: 11, title: "데이터 삭제",
         paragraphs: [
-          "일정·저장 장소·나의 장소·사진·메모는 언제든 앱에서 삭제할 수 있고, 저장된 사진 파일을 포함해 즉시 반영됩니다. 셀프서비스 계정 삭제 기능은 아직 제공되지 않으며, 계정 삭제 요청은 제15조의 문의 채널로 접수합니다. 콘텐츠 삭제는 공개 상태였던 동안 다른 이용자가 적법하게 만든 사본까지 회수하지 않습니다.",
+          "일정·저장 장소·나의 장소·사진·메모는 언제든 앱에서 삭제할 수 있고, 저장된 사진 파일을 포함해 즉시 반영됩니다. 계정은 [더보기 → 계정 영구 삭제]에서 직접 영구 삭제할 수 있으며, 삭제되는 정보와 남는 정보는 개인정보처리방침 제12조를 따릅니다. 콘텐츠 삭제는 공개 상태였던 동안 다른 이용자가 적법하게 만든 사본까지 회수하지 않습니다.",
         ],
       },
       {
@@ -250,7 +250,7 @@ export const TERMS: LegalDocSet = {
       {
         no: 11, title: "データの削除",
         paragraphs: [
-          "スケジュール・保存した場所・自分の場所・写真・メモはいつでもアプリ内で削除でき、保存された写真ファイルを含め直ちに反映されます。セルフサービスのアカウント削除機能はまだ提供されておらず、アカウント削除の依頼は第15条の窓口で受け付けます。コンテンツの削除は、公開中に他の利用者が適法に作成したコピーまでは回収しません。",
+          "スケジュール・保存した場所・自分の場所・写真・メモはいつでもアプリ内で削除でき、保存された写真ファイルを含め直ちに反映されます。アカウントは［その他 → アカウントを完全に削除］から自分で完全に削除でき、削除される情報と残る情報はプライバシーポリシー第12条に従います。コンテンツの削除は、公開中に他の利用者が適法に作成したコピーまでは回収しません。",
         ],
       },
       { no: 12, title: "料金", paragraphs: ["現在すべての機能は無料です。将来有料機能を導入する場合、価格・支払い・返金条件は別途告知し、告知後にのみ適用され、本条も公開前に更新されます。"] },
@@ -325,7 +325,7 @@ export const TERMS: LegalDocSet = {
       {
         no: 11, title: "数据删除",
         paragraphs: [
-          "你可以随时在应用内删除行程、收藏地点、个人地点、照片和备注，删除立即生效，包括已存储的照片文件。自助账户删除功能尚未提供；账户删除请求通过第15条的联系渠道受理。删除内容不会收回其公开期间其他用户依规制作的副本。",
+          "你可以随时在应用内删除行程、收藏地点、个人地点、照片和备注，删除立即生效，包括已存储的照片文件。你也可以在「更多 → 永久删除账户」中自行永久删除账户，删除与保留的信息以隐私政策第 12 条为准。删除内容不会收回其公开期间其他用户依规制作的副本。",
         ],
       },
       { no: 12, title: "费用", paragraphs: ["当前所有功能均为免费。未来如推出付费功能，其价格、支付与退款条款将另行公告，仅在公告后适用，本条也将在上线前更新。"] },

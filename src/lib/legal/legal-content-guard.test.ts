@@ -102,3 +102,23 @@ test("페이지·링크 배선 — canonical·footer·More", () => {
     for (const k of ["privacyDesc", "termsDesc"]) assert.ok(m.more?.[k], `${l}.more.${k}`);
   }
 });
+
+test("사실 정합 — 계정 삭제 구현·신고 수집·법정 통지 기한(LEGAL-RETENTION-FINAL-V1)", () => {
+  const terms = read("src/lib/legal/terms-content.ts");
+  const privacy = read("src/lib/legal/privacy-content.ts");
+  // 셀프서비스 계정 삭제는 구현됐다 — '미제공' 서술 재도입 금지(4locale)
+  for (const bad of ["not yet available", "아직 제공되지 않", "まだ提供されて", "尚未提供"]) {
+    assert.ok(!terms.includes(bad) && !privacy.includes(bad), `계정 삭제 미제공 서술 잔존: ${bad}`);
+  }
+  // 수집 항목·이용 목적에 신고가 있다(4locale)
+  for (const k of ["Reports (optional)", "신고하기(선택)", "通報（任意）", "举报（可选）", "신고 내용:"]) {
+    assert.ok(privacy.includes(k), `신고 항목 누락: ${k}`);
+  }
+  // 신고 키를 익명·복원 불가로 약속하지 않는다(법률 판단 전)
+  for (const over of ["완전 익명", "되돌릴 수 없는 가명", "irreversible pseudonym", "fully anonymous"]) {
+    assert.ok(!privacy.includes(over), `과도한 식별 불가 약속: ${over}`);
+  }
+  // 법정 통지 기한은 '지체 없이' 조치 + 10일 이내 결과 통지로 함께 서술
+  assert.ok(privacy.includes("지체 없이") && privacy.includes("10일 이내"), "ko 법정 기한 서술");
+  assert.ok(privacy.includes("without delay") && privacy.includes("within 10 days"), "en 법정 기한 서술");
+});
