@@ -1679,6 +1679,8 @@
     "deleteAccountTitle": "アカウントを完全に削除しますか？",
     "deleteAccountBody": "削除されるもの: 旅行と写真・メモ、保存した場所、マイプレイス、いいね/よくないね、場所の提案、This Trip の同期データ、端末連携と同意記録、ログインアカウント。\n残るもの: 他の人が既に作成したコピー（リンクは解除）、匿名の統計。\n削除後は元に戻せません。",
     "deleteReauthNotice": "本人確認が必要です — もう一度ログインしてから続けてください。",
+    "deleteVerifyIdentity": "本人確認をする",
+    "deleteIdentityVerified": "本人確認が完了しました — 下のボタンで削除できます（10分間有効）。",
     "deleteFailed": "削除できませんでした。しばらくして同じボタンで再試行すると、残りから続けて削除します。",
     "deleteWorking": "削除中…",
     "deleteConfirmAction": "完全に削除",

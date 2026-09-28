@@ -107,7 +107,8 @@ export const PRIVACY: LegalDocSet = {
         no: 12, title: "Your rights and deletion",
         paragraphs: [
           "You can view, edit, and delete your itineraries, saved places, personal places, photos, and memos directly in the app at any time. Signing out does not delete anything.",
-          "A self-service account deletion feature is not yet available. Until it is, account and data deletion requests are handled manually through the contact channel below.",
+          "You can permanently delete your account yourself in the app (More → Delete account permanently). Deletion requires re-verifying your Google sign-in in the same browser session, and removes your trips with photos and memos, saved places, personal places, reactions, place suggestions, This Trip sync data, device links, consent records, and the sign-in account itself. Copies of your public trips that other users already made remain theirs (only the link to the original is removed), and anonymized aggregate statistics that cannot identify you are retained.",
+          "If deletion is interrupted, no partial success is reported — retrying the same action resumes from what remains. Deletion cannot be undone. Requests that cannot be handled in the app are accepted through the contact channel below.",
         ],
         ownerInput: "삭제 요청 접수 채널(실제 수신 이메일 또는 절차)·처리 기한 확정 필요",
       },
@@ -226,7 +227,8 @@ export const PRIVACY: LegalDocSet = {
         no: 12, title: "이용자의 권리와 삭제",
         paragraphs: [
           "일정·저장 장소·나의 장소·사진·메모는 언제든 앱에서 직접 열람·수정·삭제할 수 있습니다. 로그아웃은 어떤 데이터도 삭제하지 않습니다.",
-          "셀프서비스 계정 삭제 기능은 아직 제공되지 않습니다. 제공 전까지 계정·데이터 삭제 요청은 아래 문의 채널로 접수해 수동 처리합니다.",
+          "계정은 앱에서 직접 영구 삭제할 수 있습니다(더보기 → 계정 영구 삭제). 삭제에는 같은 브라우저 세션에서의 Google 본인 재확인이 필요하며, 여행(사진·메모 포함)·저장 장소·나의 장소·반응·장소 제보·This Trip 동기화 데이터·기기 연결·동의 기록·로그인 계정 자체가 삭제됩니다. 다른 이용자가 이미 만들어 간 공개 여행의 복사본은 그 이용자의 것으로 남고(원본 연결만 해제), 개인을 식별할 수 없는 익명 집계 통계는 보존됩니다.",
+          "삭제가 중단되면 부분 성공으로 표시하지 않으며, 같은 동작을 다시 시도하면 남은 데이터부터 이어서 삭제합니다. 삭제는 되돌릴 수 없습니다. 앱에서 처리할 수 없는 요청은 아래 문의 채널로 접수합니다.",
         ],
         ownerInput: "삭제 요청 접수 채널(실제 수신 이메일 또는 절차)·처리 기한 확정 필요",
       },
@@ -335,7 +337,8 @@ export const PRIVACY: LegalDocSet = {
         no: 12, title: "利用者の権利と削除",
         paragraphs: [
           "スケジュール・保存した場所・自分の場所・写真・メモは、いつでもアプリ内で直接閲覧・修正・削除できます。ログアウトによってデータが削除されることはありません。",
-          "セルフサービスのアカウント削除機能はまだ提供されていません。提供までの間、アカウント・データの削除依頼は下記の窓口で受け付け、手動で対応します。",
+          "アカウントはアプリ内で直接、完全に削除できます（その他 → アカウントを完全に削除）。削除には同じブラウザセッションでの Google 本人再確認が必要で、旅行（写真・メモを含む）・保存した場所・自分の場所・リアクション・場所の提案・This Trip の同期データ・端末連携・同意記録・ログインアカウント自体が削除されます。他の利用者が既に作成した公開旅行のコピーはその利用者のものとして残り（元への連結のみ解除）、個人を識別できない匿名の集計統計は保持されます。",
+          "削除が中断された場合、部分的な成功とは表示されません。同じ操作を再試行すると、残りのデータから続けて削除します。削除は取り消せません。アプリ内で対応できない依頼は下記の窓口で受け付けます。",
         ],
         ownerInput: "삭제 요청 접수 채널·처리 기한 확정 필요",
       },
@@ -441,7 +444,8 @@ export const PRIVACY: LegalDocSet = {
         no: 12, title: "你的权利与删除",
         paragraphs: [
           "你可以随时在应用内直接查看、修改和删除你的行程、收藏地点、个人地点、照片和备注。退出登录不会删除任何数据。",
-          "自助账户删除功能尚未提供。在提供之前，账户及数据删除请求通过下方联系渠道人工处理。",
+          "你可以在应用内直接永久删除账户（更多 → 永久删除账户）。删除需要在同一浏览器会话中重新完成 Google 身份验证，将删除：行程（含照片与备注）、收藏地点、我的地点、点赞/点踩、地点建议、This Trip 同步数据、设备关联、同意记录以及登录账户本身。其他用户已复制的公开行程仍归其所有（仅解除与原件的关联），无法识别个人的匿名汇总统计将被保留。",
+          "删除中断时不会显示为部分成功；重试同一操作会从剩余数据继续删除。删除不可恢复。无法在应用内处理的请求可通过下方联系渠道提交。",
         ],
         ownerInput: "삭제 요청 접수 채널·처리 기한 확정 필요",
       },

@@ -1679,6 +1679,8 @@
     "deleteAccountTitle": "계정을 영구 삭제할까요?",
     "deleteAccountBody": "지워지는 것: 내 여행과 사진·메모, 저장한 장소, 내 장소, 좋아요/싫어요, 장소 제보, This Trip 동기화 데이터, 기기 연결과 동의 기록, 로그인 계정.\n남는 것: 다른 사람이 이미 복사한 여행(연결만 끊김), 익명 통계.\n삭제 후에는 되돌릴 수 없어요.",
     "deleteReauthNotice": "본인 확인이 필요해요 — 다시 로그인한 뒤 이어서 진행해 주세요.",
+    "deleteVerifyIdentity": "본인 확인하기",
+    "deleteIdentityVerified": "본인 확인 완료 — 이제 아래 버튼으로 삭제할 수 있어요(10분간 유효).",
     "deleteFailed": "삭제하지 못했어요. 잠시 후 같은 버튼으로 다시 시도하면 남은 데이터부터 이어서 지워요.",
     "deleteWorking": "삭제 중…",
     "deleteConfirmAction": "영구 삭제",

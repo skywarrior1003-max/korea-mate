@@ -42,8 +42,33 @@ function AccountSection() {
   const [busy, setBusy] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [reconsent, setReconsent] = useState(false); // sheet 성공 후 OAuth 대신 activate
-  // 계정 삭제 위험 존 단계 — idle(접힘)→confirm(설명+확인)→busy / reauth·error 는 confirm 화면 위 안내
-  const [delStep, setDelStep] = useState<"idle" | "confirm" | "busy" | "reauth" | "error">("idle");
+  // 계정 삭제 위험 존 — idle(접힘)→confirm(설명·본인확인·실행)→busy.
+  // REAUTH-V1: 실행 버튼은 서버가 발급한 세션 결속 intent 를 쥔 뒤에만 열린다.
+  const [delStep, setDelStep] = useState<"idle" | "confirm" | "busy" | "error">(() => {
+    // 본인 확인(재로그인) 복귀 — 위험 존을 이어서 연다(자동 실행은 없다)
+    if (typeof window === "undefined") return "idle";
+    try { return new URL(window.location.href).searchParams.get("reauth") === "delete" ? "confirm" : "idle"; }
+    catch { return "idle"; }
+  });
+  const [delIntent, setDelIntent] = useState<string | null>(null); // 메모리만 — 저장 금지
+  const [delNeedsReauth, setDelNeedsReauth] = useState(false);
+  // confirm 이 열릴 때마다 intent 를 시도한다 — 방금 로그인한 세션이면 즉시 열리고,
+  // 오래된 세션이면 '본인 확인' 안내가 남는다. URL 의 reauth 파라미터는 소비 후 정리.
+  useEffect(() => {
+    if (delStep !== "confirm" || delIntent) return;
+    let cancelled = false;
+    void (async () => {
+      const r = await requestDeleteIntent();
+      if (cancelled) return;
+      if (r.ok) { setDelIntent(r.intent); setDelNeedsReauth(false); }
+      else setDelNeedsReauth(r.reason === "reauth");
+    })();
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("reauth")) { url.searchParams.delete("reauth"); window.history.replaceState(null, "", url.toString()); }
+    } catch { /* URL 정리는 편의 — 실패 무해 */ }
+    return () => { cancelled = true; };
+  }, [delStep, delIntent]);
   // callback 실패 복귀 안내(?auth=…) — 렌더 시점에 1회 읽는다(PII 없는 사유 코드).
   // effect 내 동기 setState 를 피하고, URL 정리는 아래 effect 가 담당한다.
   const [callbackError, setCallbackError] = useState<string | null>(() => {
@@ -134,36 +159,41 @@ function AccountSection() {
               <div>
                 <p className="text-[13px] font-black text-[#B3261E]">{tAuth("deleteAccountTitle")}</p>
                 <p className="text-[12px] text-[#61554D] mt-1 whitespace-pre-line">{tAuth("deleteAccountBody")}</p>
-                {delStep === "reauth" && (
+                {delNeedsReauth && !delIntent && (
                   <p className="text-[12px] font-bold text-[#B3261E] mt-2">{tAuth("deleteReauthNotice")}</p>
+                )}
+                {delIntent && (
+                  <p className="text-[12px] font-bold text-[#1B5E20] mt-2">{tAuth("deleteIdentityVerified")}</p>
                 )}
                 {delStep === "error" && (
                   <p className="text-[12px] font-bold text-[#B3261E] mt-2">{tAuth("deleteFailed")}</p>
                 )}
-                <div className="flex gap-2 mt-3">
+                <div className="flex gap-2 mt-3 flex-wrap">
+                  {/* 본인 확인 — 안전 단계(삭제 요청이 전혀 발생하지 않는다). 재로그인
+                      후 /more?reauth=delete 로 복귀해 이 화면이 이어진다. */}
+                  {!delIntent && (
+                    <button
+                      onClick={() => { void signInWithGoogle("/more?reauth=delete"); }}
+                      className="gkm-focus px-4 py-2 rounded-xl bg-[#2C2520] text-white text-[13px] font-bold"
+                    >
+                      {tAuth("deleteVerifyIdentity")}
+                    </button>
+                  )}
+                  {/* 실행 — 세션 결속 intent 를 쥔 뒤에만 열린다(그 전엔 서버도 거부) */}
                   <button
                     onClick={async () => {
+                      if (!delIntent) return;
                       setDelStep("busy");
-                      const intent = await requestDeleteIntent();
-                      if (!intent.ok) {
-                        if (intent.reason === "reauth") {
-                          // 최근 인증이 아니다 — 기존 PKCE OAuth 로 재로그인 후 복귀(§2)
-                          setDelStep("reauth");
-                          await signInWithGoogle("/more");
-                          return;
-                        }
-                        setDelStep("error"); return;
-                      }
-                      const r = await executeAccountDelete(intent.intent);
-                      if (!r.ok) setDelStep("error"); // 성공이면 reload 로 이 화면이 사라진다
+                      const r = await executeAccountDelete(delIntent);
+                      if (!r.ok) { setDelStep("error"); setDelIntent(null); } // 성공이면 reload
                     }}
-                    disabled={delStep === "busy"}
-                    className="gkm-focus px-4 py-2 rounded-xl bg-[#B3261E] text-white text-[13px] font-black disabled:opacity-50"
+                    disabled={!delIntent || delStep === "busy"}
+                    className="gkm-focus px-4 py-2 rounded-xl bg-[#B3261E] text-white text-[13px] font-black disabled:opacity-40"
                   >
                     {delStep === "busy" ? tAuth("deleteWorking") : tAuth("deleteConfirmAction")}
                   </button>
                   <button
-                    onClick={() => setDelStep("idle")}
+                    onClick={() => { setDelStep("idle"); setDelIntent(null); setDelNeedsReauth(false); }}
                     disabled={delStep === "busy"}
                     className="gkm-focus px-4 py-2 rounded-xl border border-[#E6DFD5] text-[13px] font-bold text-[#2C2520] disabled:opacity-50"
                   >

@@ -1679,6 +1679,8 @@
     "deleteAccountTitle": "Delete this account permanently?",
     "deleteAccountBody": "Deleted: your trips with photos & notes, saved places, My Places, likes/dislikes, place suggestions, This Trip sync data, device links and consent records, and the login account.\nKept: copies others already made (link removed) and anonymous statistics.\nThis cannot be undone.",
     "deleteReauthNotice": "Please verify it's you — sign in again, then continue.",
+    "deleteVerifyIdentity": "Verify it's you",
+    "deleteIdentityVerified": "Identity verified — you can delete with the button below (valid for 10 minutes).",
     "deleteFailed": "Couldn't delete. Try the same button again shortly — it resumes from what's left.",
     "deleteWorking": "Deleting…",
     "deleteConfirmAction": "Delete permanently",
