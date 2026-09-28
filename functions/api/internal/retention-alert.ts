@@ -3,7 +3,8 @@
 // 호출자는 DB 의 retention_purge_daily()(pg_net) 하나뿐이다. 인증은 기존 Worker 와
 // 같은 x-internal-auth 헤더 + INTERNAL_KEY 상수 시간 비교다(새 secret 없음).
 // 본문에는 개인정보가 없다 — 실패 오류 코드 또는 30일 넘게 처리 중인 신고 건수만.
-// 메일 설정(RESEND)이 없는 환경(Preview 등)에서는 보내지 않고 sent:false 로 답한다.
+// 메일 설정(RESEND)이 없는 환경(Preview 등)에서는 보내지 않고 502 sent:false 로 답한다.
+// kind=probe 는 메일 없이 인증·메일 설정 존재만 확인한다(200 ready / 503 not_configured).
 
 import { sendAdminEmail, type AdminEmailEnv } from "../../_lib/admin-email";
 
@@ -38,6 +39,15 @@ export function buildRetentionAlert(
       ].join("\n"),
     };
   }
+  if (kind === "selftest") {
+    return {
+      subject: "[gokoreamate Ops] Retention alert test",
+      text: [
+        "This is a test of the retention purge alert path. No action is needed.",
+        "If you received this, failure alerts from the daily purge will reach this inbox.",
+      ].join("\n"),
+    };
+  }
   if (kind === "stale_open_reports") {
     const n = Number(detail.count);
     if (!Number.isFinite(n) || n < 1) return null;
@@ -60,11 +70,19 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   let body: { kind?: unknown; error_code?: unknown; count?: unknown };
   try { body = await ctx.request.json(); } catch { return json({ error: "invalid_body" }, 400); }
 
-  const msg = buildRetentionAlert(String(body.kind ?? ""), body);
+  const kind = String(body.kind ?? "");
+  if (kind === "probe") {
+    const ready = !!(ctx.env.RESEND_API_KEY && ctx.env.ADMIN_NOTIFICATION_EMAIL);
+    return ready ? json({ ready: true }, 200) : json({ ready: false, reason: "not_configured" }, 503);
+  }
+
+  const msg = buildRetentionAlert(kind, body);
   if (!msg) return json({ error: "invalid_kind" }, 400);
 
+  // 202 는 발송 서비스가 메일을 수락했다는 뜻까지만이다. 운영자 수신은 사람이 확인한다.
   const r = await sendAdminEmail(ctx.env, msg);
-  return json({ accepted: true, sent: r.ok === true }, 202);
+  if (r.ok) return json({ accepted: true, sent: true }, 202);
+  return json({ accepted: true, sent: false, reason: r.reason, ...(r.status ? { provider_status: r.status } : {}) }, 502);
 }
 
 export async function onRequestOptions(): Promise<Response> {

@@ -41,6 +41,41 @@ test("082 — 6개월 기준·예외·원장·권한·멱등 스케줄", () => {
   assert.match(s, /cron\.unschedule\(v_id\)/);
 });
 
+test("083 — 시행 전 파기 0·알림 없이 파기 없음·selftest 202 후에만 활성화", () => {
+  const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.startsWith("083"));
+  assert.equal(files.length, 1);
+  const s = strip(read(`supabase/migrations/${files[0]}`));
+  const daily = s.slice(s.indexOf("FUNCTION public.retention_purge_daily()"), s.indexOf("FUNCTION public.retention_purge_reconcile()"));
+  // 관문 3개가 모두 첫 DELETE 앞에 있다
+  const firstDelete = daily.indexOf("DELETE FROM");
+  for (const g of ["'inactive'", "'blocked_no_alert'", "'blocked_alert_unverified'"]) {
+    assert.ok(daily.indexOf(g) > 0 && daily.indexOf(g) < firstDelete, `${g} 관문이 삭제보다 먼저`);
+  }
+  assert.match(daily, /v_from IS NULL OR \(now\(\) AT TIME ZONE 'Asia\/Seoul'\)::date < v_from/);
+  assert.match(daily, /NOT public\.retention_alert_configured\(\)/);
+  assert.match(daily, /interval '36 hours'/);
+  // 활성화는 selftest 응답 202 이후에만
+  const act = s.slice(s.indexOf("FUNCTION public.retention_purge_activate"));
+  assert.match(act, /status_code INTO v_code FROM net\._http_response/);
+  assert.match(act, /IS DISTINCT FROM 202/);
+  // 원장 확장에 원문 컬럼 없음, 082 파일은 그대로(함수 교체만)
+  const ext = s.slice(s.indexOf("ALTER TABLE public.retention_purge_runs"), s.indexOf("DROP FUNCTION IF EXISTS"));
+  assert.ok(!/email|message|note|reporter_key|name/i.test(ext.replace(/DROP CONSTRAINT IF EXISTS \w+|ADD CONSTRAINT \w+/g, "")));
+  assert.ok(!/retention_purge_runs \(\s*id/.test(s), "082 원장을 다시 만들지 않는다");
+  assert.match(s, /'gokoreamate-retention-alert-reconcile-v1',\s*'57 18 \* \* \*'/);
+  for (const f of ["retention_purge_notify", "retention_purge_reconcile", "retention_alert_selftest", "retention_purge_activate"]) {
+    assert.match(s, new RegExp(`REVOKE ALL ON FUNCTION public\\.${f}\\([^)]*\\)\\s+FROM PUBLIC, anon, authenticated`), f);
+  }
+});
+
+test("알림 엔드포인트 — 발송 실패는 202 가 아니다·probe 는 메일 없음", () => {
+  const a = read("functions/api/internal/retention-alert.ts");
+  assert.match(a, /if \(r\.ok\) return json\(\{ accepted: true, sent: true \}, 202\)/);
+  assert.match(a, /sent: false, reason: r\.reason[\s\S]{0,80}\}, 502\)/);
+  const probe = a.slice(a.indexOf('kind === "probe"'), a.indexOf("buildRetentionAlert(kind"));
+  assert.ok(!/sendAdminEmail/.test(probe), "probe 는 메일을 보내지 않는다");
+});
+
 test("문의 알림 메일 — 개인정보 원문 없음·관리자 화면 경유", () => {
   const c = read("functions/api/contact.ts");
   const b = c.slice(c.indexOf("export function buildInquiryNotification"));
