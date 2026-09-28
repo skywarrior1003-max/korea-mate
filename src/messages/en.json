@@ -1677,7 +1677,7 @@
     "logoutSaveFailed": "We couldn't save your changes. Check your connection and try signing out again.",
     "deleteAccount": "Delete account permanently…",
     "deleteAccountTitle": "Delete this account permanently?",
-    "deleteAccountBody": "Deleted: your trips with photos & notes, saved places, My Places, likes/dislikes, place suggestions, This Trip sync data, device links and consent records, and the login account.\nKept: copies others already made (link removed) and anonymous statistics.\nThis cannot be undone.",
+    "deleteAccountBody": "Deleted: your trips with photos & notes, saved places, My Places, likes/dislikes, 'helpful' marks, event reactions, place suggestions under review, This Trip sync data, device links and consent records, and the login account.\nKept: copies others already made (link removed), anonymous statistics, suggestions already adopted as public places, and inquiry/report records (separate retention).\nThis cannot be undone.",
     "deleteReauthNotice": "Please verify it's you — sign in again, then continue.",
     "deleteVerifyIdentity": "Verify it's you",
     "deleteIdentityVerified": "Identity verified — you can delete with the button below (valid for 10 minutes).",

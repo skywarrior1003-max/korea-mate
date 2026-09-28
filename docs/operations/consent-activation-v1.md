@@ -87,6 +87,15 @@ user_spots(사진 Storage 먼저) → 저장/좋아요/싫어요(기기×대상 
 매칭) → 장소 제보(기기×도시 키, published 연결 행은 FK 시 잔존 보고) →
 trip_drafts(user+기기 축) → account_devices → auth user(consents CASCADE).
 
+DELETION-COVERAGE-V1(2026-09-28) 추가: 여행 cascade 가 여행 id 에 매인
+itinerary_helpful_votes·itinerary_view_dedup·mytrip_ai_generations(AI 문구 원문)도
+지운다(단건 삭제와 공유). 계정 단계에서 place_likes(liker_key = likerKey, 입력 형식이
+actorKey("like") 와 같음 — 해시 재계산 매칭), itinerary_helpful_votes·spot_reactions
+(device_id 원문 — 소문자/대문자 두 형태), itinerary_view_dedup(sha256(소문자 기기 ID)),
+mytrip_ai_generations(ownerHashHmac(기기 ID))을 계정 연결 기기로만 한정해 지운다.
+helpful_count 집계 수치는 익명 집계로 남긴다. 계정 삭제 밖(보존·Owner 결정):
+place_reports(신고)·contact_inquiries(문의)·ai_ops_ledger(비용 원장).
+
 유지(계약): 타인이 만든 독립 복사본(copy_of 만 NULL) · place_usage /
 share_events 익명 집계 · 타 계정 데이터 일체.
 
