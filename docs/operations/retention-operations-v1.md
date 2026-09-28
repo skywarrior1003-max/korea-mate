@@ -32,7 +32,7 @@
 | 원장 | `public.retention_purge_runs` — 건수·상태·오류 코드만. 원문·이메일·신고 키 없음 |
 | 알림 | pg_net → `/api/internal/retention-alert`(x-internal-auth). URL·키는 Vault `retention_alert_url`·`retention_alert_key`. 비어 있으면 083 이후에는 **파기하지 않고** `blocked_no_alert`(082 의 `skipped_no_config` 후 파기 계속은 폐기) |
 
-점검: `select id, run_at, status, reports_deleted, inquiries_deleted, error_code, alert, alert_http_status, probe_http_status from public.retention_purge_runs order by id desc limit 7;` — `blocked_*` 가 이틀 이상 이어지면 Vault 값과 알림 엔드포인트를 확인한다(이 상태는 메일로 알릴 수 없다). — 실패가 있으면 오류 코드를 확인해 원인을 고친 뒤 `select public.retention_purge_daily();` 로 즉시 재실행할 수 있다(멱등).
+점검: `select id, run_at, status, reports_deleted, inquiries_deleted, error_code, alert, alert_http_status, probe_http_status from public.retention_purge_runs order by id desc limit 7;` — 메일 경로와 독립된 확인은 `GET /api/health/retention`(200 정상·비활성 / 503 확인 필요, 상태 코드명만)을 외부 가동 감시가 1시간마다 호출하는 방식이다(런북 D-8). `blocked_*` 는 메일로 알릴 수 없으므로 이 경로로만 드러난다. 알림 경로 확인은 매 실행의 probe 와 03:57 대조가 자동으로 갱신한다 — 사람이 매일 시험 메일을 보낼 필요는 없다. probe 는 키·엔드포인트·메일 설정 존재까지만 확인하므로, 발송 서비스 자체의 장애는 실제 알림이 나갈 때 `alert_http_status`(502)로 드러난다. — 실패가 있으면 오류 코드를 확인해 원인을 고친 뒤 `select public.retention_purge_daily();` 로 즉시 재실행할 수 있다(멱등).
 
 ## 2. 문의 보관 예외(진행 중 문의만)
 
@@ -63,9 +63,9 @@
 | 기록 | 오늘 대상 | 처음 파기되는 날 |
 |---|---|---|
 | 신고 9건(모두 종결) | 0 | 2027-02 중 9건 |
-| 문의 2건 | 0 | 2026-12-14(1건, 현재 **처리 중**), 2027-03-26(1건, 현재 **신규·미처리**) |
+| 문의 2건(둘 다 운영 시험 기록) | 0 | 2026-12-14(1건), 2027-03-26(1건) |
 
-⚠ 두 문의 모두 아직 답변이 끝나지 않았다. 각 파기일 전에 답변을 마치거나, 계속 보관이 필요하면 §2 예외를 기록한다.
+정정(FINAL-RELEASE-GATES-V1): 두 문의는 실제 이용자 문의가 아니라 운영 시험 기록이다(06-14 건 관리자 메모 "테스트 문의", 09-26 건 발송 감사 CONTACT-AUDIT-20260926). 답변 대상이 아니며 보관 예외도 쓰지 않는다. 처리 선택지는 런북 E(조기 삭제 SQL 은 Owner 승인 후에만).
 재대조(2026-09-28 13:44 KST, 읽기 전용): 오늘 대상 신고 0·문의 0, 처리 중 신고 0, 신고 첫 파기일 2027-02-08·마지막 2027-02-18 — 위 표와 같다.
 **출시 중단 기준**: 출시일(시행일)이 2026-12-14 이후로 밀리면 첫 실행에서 문의가 파기된다 — 시행 전에 이 표를 다시 계산하고, 대상이 1건이라도 있으면 답변·예외 처리 후 진행한다.
 
