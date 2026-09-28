@@ -16,7 +16,7 @@ export const TERMS: LegalDocSet = {
       "These Terms govern your use of gokoreamate, a travel planning service for exploring Korea, building itineraries, and keeping travel memories. By using the service you agree to these Terms.",
     ],
     sections: [
-      { no: 1, title: "Operator", paragraphs: ["These Terms apply to gokoreamate, operated by 케이이엔지, a sole proprietorship in the Republic of Korea (shown by its registered Korean trade name). Address: 부산시 남구 유엔로 96번길 26-31 (대연동), Busan, Republic of Korea."], ownerInput: "Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "Operator", paragraphs: ["These Terms apply to gokoreamate, operated by 케이이엔지, a sole proprietorship in the Republic of Korea (shown by its registered Korean trade name). Address: 부산시 남구 유엔로 96번길 26-31 (대연동), Busan, Republic of Korea."] },
       {
         no: 2, title: "The service",
         paragraphs: [
@@ -112,7 +112,7 @@ export const TERMS: LegalDocSet = {
       "본 약관은 한국 여행 탐색·일정 만들기·여행 기억 보관을 위한 여행 계획 서비스인 gokoreamate 의 이용에 적용됩니다. 서비스를 이용하면 본 약관에 동의한 것으로 봅니다.",
     ],
     sections: [
-      { no: 1, title: "운영 주체", paragraphs: ["gokoreamate 는 개인사업자 케이이엔지가 운영합니다. 주소: 부산시 남구 유엔로 96번길 26-31 (대연동)."], ownerInput: "Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "운영 주체", paragraphs: ["gokoreamate 는 개인사업자 케이이엔지가 운영합니다. 주소: 부산시 남구 유엔로 96번길 26-31 (대연동)."] },
       {
         no: 2, title: "서비스 내용",
         paragraphs: [
@@ -199,7 +199,7 @@ export const TERMS: LegalDocSet = {
       "本規約は、韓国旅行の探索・スケジュール作成・旅の記憶の保管のための旅行計画サービス gokoreamate の利用に適用されます。サービスを利用することで本規約に同意したものとみなします。",
     ],
     sections: [
-      { no: 1, title: "運営者", paragraphs: ["gokoreamate は大韓民国の個人事業者「케이이엔지」（登録商号の韓国語表記）が運営しています。住所：부산시 남구 유엔로 96번길 26-31 (대연동)（大韓民国釜山）"], ownerInput: "Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "運営者", paragraphs: ["gokoreamate は大韓民国の個人事業者「케이이엔지」（登録商号の韓国語表記）が運営しています。住所：부산시 남구 유엔로 96번길 26-31 (대연동)（大韓民国釜山）"] },
       {
         no: 2, title: "サービス内容",
         paragraphs: [
@@ -274,7 +274,7 @@ export const TERMS: LegalDocSet = {
       "本条款适用于 gokoreamate — 一项用于探索韩国、制定行程并保存旅行记忆的旅行规划服务。使用本服务即表示你同意本条款。",
     ],
     sections: [
-      { no: 1, title: "运营方", paragraphs: ["gokoreamate 由大韩民国个体经营者“케이이엔지”（以韩文登记商号表示）运营。地址：부산시 남구 유엔로 96번길 26-31 (대연동)（大韩民国釜山）"], ownerInput: "Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "运营方", paragraphs: ["gokoreamate 由大韩民国个体经营者“케이이엔지”（以韩文登记商号表示）运营。地址：부산시 남구 유엔로 96번길 26-31 (대연동)（大韩民国釜山）"] },
       {
         no: 2, title: "服务内容",
         paragraphs: [

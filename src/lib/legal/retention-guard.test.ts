@@ -141,8 +141,9 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   assert.equal(t.split("support@gokoreamate.com").length - 1, 4);
   for (const f of [p, t]) {
     assert.ok(!f.includes("실제 수신 이메일 주소 확인 필요"));
-    // 운영 주체: 09-26 Owner 공개 후보를 초안에 쓰고 "현재 운영 주체인가" 확인 마커 1건만 남긴다(근거 없는 법인명 금지)
-    assert.equal(f.split("Owner 확인 1건: 현재 GoKoreaMate 운영 주체가 개인사업자 케이이엔지인가").length - 1, 4);
+    // 운영 주체: Owner 확정(2026-09-28) 개인사업자 케이이엔지·부산 남구 주소, 등록 한글 상호로 4locale 표시(영문 법적 명칭 없음)
+    assert.ok(!f.includes("Owner 확인 1건"), "운영 주체 확인 마커 해소");
+    assert.ok(f.split("부산시 남구 유엔로 96번길 26-31 (대연동)").length - 1 >= 4);
     assert.ok(!f.includes("비유피"), "근거 없는 운영 주체 후보 금지");
   }
   assert.ok(!p.includes("로그와 백업 보관기간 확인 필요"), "인프라 로그 사실 반영");
@@ -171,4 +172,11 @@ test("파기 상태 확인(/api/health/retention) — 알림과 독립·원문 �
   assert.equal(j(act, [run(1, "ok", null), run(29, "ok", null)], now).state, "reconcile_missing");
   assert.equal(j(act, [run(1, "ok", null), run(29, "ok", 401)], now).state, "alert_path_unhealthy");
   assert.equal(j(act, [run(1, "inactive", null), run(29, "inactive")], now).state, "scheduled");
+});
+
+test("Owner 확정값(2026-09-28) — Resend Free=발송 기록 30일, 보호책임자 연락처는 법률 검토 마커만", () => {
+  const p = read("src/lib/legal/privacy-content.ts");
+  for (const k of ["(Resend) are retained for 30 days", "(Resend)에 남는 발송 기록은 현재 요금제에서 그 서비스의 정책에 따라 30일간", "（Resend）に残る配信記録は、現在のプランでは同サービスの方針により30日間", "（Resend）保留的发送记录在当前套餐下依其政策保存 30 天"]) assert.ok(p.includes(k), k);
+  assert.equal(p.split("보호책임자 연락처 표시 — 이메일만으로").length - 1, 4);
+  assert.equal(read("src/lib/legal/terms-content.ts").split("ownerInput: \"관할 법원").length - 1, 4, "약관 남은 마커는 관할뿐");
 });
