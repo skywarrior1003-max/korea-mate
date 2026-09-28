@@ -90,7 +90,7 @@ test("⑨⑫⑬⑭⑮ — 079 잠금·기존 계약 무변경", () => {
   assert.match(s, /REVOKE ALL ON TABLE public\.trip_drafts FROM PUBLIC, anon, authenticated/);
   assert.ok(!/CASCADE/.test(s), "FK/CASCADE 없음(다형 owner)");
   // Legal DRAFT 유지·연결 선택 UI 없음
-  assert.match(read("src/lib/legal/privacy-content.ts"), /effectiveDate: null/);
+  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = null;/); // 게시 전 DRAFT — 시행일 단일 원천
   const sheet = strip(read("src/components/auth/ConsentSheet.tsx"));
   assert.equal((sheet.match(/<CheckRow /g) ?? []).length, 3, "연결 checkbox 추가 금지");
 });

@@ -65,5 +65,5 @@ test("④ 범위 가드 — auth/linking·migration 무접촉(이번 TASK)", () 
   // migration 수는 079 까지 그대로(스냅숏 digest 는 3파일 가드가 고정).
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
   assert.ok(files.length >= 79); // 080 이후는 스냅숏 3파일 가드가 고정
-  assert.match(read("src/lib/legal/privacy-content.ts"), /effectiveDate: null/);
+  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = null;/); // 게시 전 DRAFT — 시행일 단일 원천
 });

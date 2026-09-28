@@ -4,17 +4,19 @@
 // 항목(운영 주체·준거법·문의처)은 ownerInput 마커로만 둔다.
 
 import type { LegalDocSet } from "./legal-types";
+// 시행일은 동의 버전과 한 곳에서 정한다(게시 전 null = DRAFT)
+import { LEGAL_EFFECTIVE_DATE } from "../auth/consent-contract.ts";
 
 export const TERMS: LegalDocSet = {
   en: {
     title: "Terms of Service",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "These Terms govern your use of gokoreamate, a travel planning service for exploring Korea, building itineraries, and keeping travel memories. By using the service you agree to these Terms.",
     ],
     sections: [
-      { no: 1, title: "Operator", paragraphs: [], ownerInput: "운영 주체 표기 확정 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "Operator", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
       {
         no: 2, title: "The service",
         paragraphs: [
@@ -91,26 +93,26 @@ export const TERMS: LegalDocSet = {
           "To the maximum extent permitted by law, the service is provided \"as is\" without warranties of accuracy, availability, or fitness for a particular purpose, and the operator is not liable for indirect or consequential damages arising from use of the service, including reliance on travel information or AI output, or from partner sites. Nothing in these Terms limits liability that cannot be limited under applicable law.",
         ],
       },
-      { no: 14, title: "Governing law and disputes", paragraphs: [], ownerInput: "준거법·관할(분쟁 해결 기준) 확정 필요" },
+      { no: 14, title: "Governing law and disputes", paragraphs: ["These Terms are governed by the laws of the Republic of Korea."], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
       {
         no: 15, title: "Changes to these Terms and contact",
         paragraphs: [
           "If these Terms change, the updated version will be posted on this page with a new revision date, and significant changes will be announced within the service. Continued use after the effective date constitutes acceptance.",
         ],
-        ownerInput: "약관 문의를 실제로 수신할 연락처 확정 필요",
+        ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요",
       },
     ],
   },
 
   ko: {
     title: "이용약관",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "본 약관은 한국 여행 탐색·일정 만들기·여행 기억 보관을 위한 여행 계획 서비스인 gokoreamate 의 이용에 적용됩니다. 서비스를 이용하면 본 약관에 동의한 것으로 봅니다.",
     ],
     sections: [
-      { no: 1, title: "운영 주체", paragraphs: [], ownerInput: "운영 주체 표기 확정 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
       {
         no: 2, title: "서비스 내용",
         paragraphs: [
@@ -181,24 +183,24 @@ export const TERMS: LegalDocSet = {
           "법이 허용하는 최대 범위에서, 서비스는 정확성·가용성·특정 목적 적합성에 대한 보증 없이 \"있는 그대로\" 제공되며, 운영자는 여행 정보나 AI 결과에 대한 의존, 파트너 사이트 이용을 포함해 서비스 이용에서 발생하는 간접·결과적 손해에 책임지지 않습니다. 관련 법상 제한할 수 없는 책임은 본 약관으로 제한되지 않습니다.",
         ],
       },
-      { no: 14, title: "준거법과 분쟁 해결", paragraphs: [], ownerInput: "준거법·관할 확정 필요" },
+      { no: 14, title: "준거법과 분쟁 해결", paragraphs: ["이 약관은 대한민국 법을 따릅니다."], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
       {
         no: 15, title: "약관 변경·고지 및 문의처",
         paragraphs: ["약관이 변경되면 새 개정일과 함께 이 페이지에 게시하고, 중요한 변경은 서비스 내에서 안내합니다. 시행일 이후 계속 이용하면 변경에 동의한 것으로 봅니다."],
-        ownerInput: "약관 문의 실수신 연락처 확정 필요",
+        ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요",
       },
     ],
   },
 
   ja: {
     title: "利用規約",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "本規約は、韓国旅行の探索・スケジュール作成・旅の記憶の保管のための旅行計画サービス gokoreamate の利用に適用されます。サービスを利用することで本規約に同意したものとみなします。",
     ],
     sections: [
-      { no: 1, title: "運営者", paragraphs: [], ownerInput: "운영 주체 표기 확정 필요" },
+      { no: 1, title: "運営者", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
       {
         no: 2, title: "サービス内容",
         paragraphs: [
@@ -260,20 +262,20 @@ export const TERMS: LegalDocSet = {
           "法の許す最大限の範囲で、サービスは正確性・可用性・特定目的適合性の保証なく「現状有姿」で提供され、運営者は旅行情報やAI出力への依拠、パートナーサイトの利用を含むサービス利用から生じる間接・結果的損害について責任を負いません。適用法上制限できない責任は本規約によって制限されません。",
         ],
       },
-      { no: 14, title: "準拠法と紛争解決", paragraphs: [], ownerInput: "준거법·관할 확정 필요" },
-      { no: 15, title: "規約の変更・告知および連絡先", paragraphs: ["本規約を変更する場合は、新しい改定日とともに本ページに掲載し、重要な変更はサービス内で告知します。発効日以降の継続利用は変更への同意とみなします。"], ownerInput: "문의 실수신 연락처 확정 필요" },
+      { no: 14, title: "準拠法と紛争解決", paragraphs: ["本規約は大韓民国の法律に準拠します。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 15, title: "規約の変更・告知および連絡先", paragraphs: ["本規約を変更する場合は、新しい改定日とともに本ページに掲載し、重要な変更はサービス内で告知します。発効日以降の継続利用は変更への同意とみなします。"], ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요" },
     ],
   },
 
   zh: {
     title: "服务条款",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "本条款适用于 gokoreamate — 一项用于探索韩国、制定行程并保存旅行记忆的旅行规划服务。使用本服务即表示你同意本条款。",
     ],
     sections: [
-      { no: 1, title: "运营方", paragraphs: [], ownerInput: "운영 주체 표기 확정 필요" },
+      { no: 1, title: "运营方", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
       {
         no: 2, title: "服务内容",
         paragraphs: [
@@ -335,8 +337,8 @@ export const TERMS: LegalDocSet = {
           "在法律允许的最大范围内，服务按\"现状\"提供，不对准确性、可用性或特定用途适用性作保证；对因使用服务(包括依赖旅行信息或 AI 输出、使用合作方网站)产生的间接或衍生损害，运营方不承担责任。依适用法律不可限制的责任不受本条款限制。",
         ],
       },
-      { no: 14, title: "适用法律与争议解决", paragraphs: [], ownerInput: "준거법·관할 확정 필요" },
-      { no: 15, title: "条款变更、通知与联系方式", paragraphs: ["条款如有变更，将连同新的修订日期发布在本页面，重大变更将在服务内另行通知。生效日后继续使用即视为接受变更。"], ownerInput: "문의 실수신 연락처 확정 필요" },
+      { no: 14, title: "适用法律与争议解决", paragraphs: ["本条款受大韩民国法律管辖。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 15, title: "条款变更、通知与联系方式", paragraphs: ["条款如有变更，将连同新的修订日期发布在本页面，重大变更将在服务内另行通知。生效日后继续使用即视为接受变更。"], ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요" },
     ],
   },
 };

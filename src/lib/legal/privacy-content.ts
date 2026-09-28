@@ -11,11 +11,13 @@
 // Owner 확정 전 항목은 ownerInput 마커로만 둔다(임의 작성 금지).
 
 import type { LegalDocSet } from "./legal-types";
+// 시행일은 동의 버전과 한 곳에서 정한다(게시 전 null = DRAFT)
+import { LEGAL_EFFECTIVE_DATE } from "../auth/consent-contract.ts";
 
 export const PRIVACY: LegalDocSet = {
   en: {
     title: "Privacy Policy",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "This Privacy Policy explains what information gokoreamate collects, how it is used, and the choices you have. gokoreamate is a travel planning service for exploring Korea, building day-by-day itineraries, and keeping travel memories.",
@@ -24,7 +26,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 1, title: "Who operates this service",
         paragraphs: [],
-        ownerInput: "운영 주체(개인/법인 명칭·영문 표기·공개 가능 주소·개인정보 보호책임자) 확정 필요",
+        ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요",
       },
       {
         no: 2, title: "Information we collect",
@@ -102,18 +104,18 @@ export const PRIVACY: LegalDocSet = {
         no: 11, title: "Retention",
         paragraphs: [
           "Content you delete in the app is deleted immediately, including the stored photo files. Content you keep remains stored until you delete it or request deletion; the service does not currently auto-expire your travel data.",
-          "Inquiry records (kept to answer you and track handling) and report records (kept to handle reports and judge repeated reports) are stored separately from your account and are not deleted automatically when you delete your account. They are destroyed once their retention period ends.",
+          "Inquiry records (kept to answer you and track handling) are kept for 6 months from the date received, and report records (kept to handle reports and judge repeated reports) for 6 months from the date handling is completed; they are then destroyed automatically by a daily job. Reports still being handled are kept until handling ends and are reviewed regularly. An inquiry that is still open may be kept past 6 months only when a reason and a review date are recorded, and only until that review date. This period is the service's own operating standard, and records are deleted earlier when their purpose ends or a lawful deletion request is received. Inquiry and report records are stored separately from your account and are not deleted automatically when you delete your account. Inquiry notification emails contain only the inquiry number and type, not your name, email, or message; delivery logs kept by the email delivery service follow that service's own retention policy. Long-inactive accounts are not currently cleaned up automatically.",
         ],
-        ownerInput: "보관기간 정책 확정 필요 — 문의(contact) 기록 보관기간, 미이용 계정 처리, 로그 보관기간",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
       },
       {
         no: 12, title: "Your rights and deletion",
         paragraphs: [
           "You can view, edit, and delete your itineraries, saved places, personal places, photos, and memos directly in the app at any time. Signing out does not delete anything.",
           "You can permanently delete your account yourself in the app (More → Delete account permanently). Deletion proceeds only in the current browser session confirmed by a recent (within 5 minutes) Google sign-in; otherwise you are asked to sign in with Google again first. Deleted: your trips (including photos, memos, and AI-generated text made from them), saved places, personal places (including photos), likes and dislikes on places and trips, 'helpful' marks on trips, event reactions, trip view records, place suggestions still under review, This Trip sync data, device links, consent records, and the sign-in account itself. Kept: copies of your public trips that other users already made (only the link to the original is removed), anonymized aggregate statistics that cannot identify you (such as helpful and usage counts), place suggestions already adopted as public places, and inquiry and report records, which are not part of account deletion and are handled under a separate retention standard.",
-          "If deletion is interrupted, no partial success is reported — retrying the same action resumes from what remains. Deletion cannot be undone. Requests that cannot be handled in the app — including access to, correction of, or deletion of inquiry and report records — are accepted through the contact channel below. We review and act on a request without delay and notify you of the result within 10 days of receiving it.",
+          "If deletion is interrupted, no partial success is reported — retrying the same action resumes from what remains. Deletion cannot be undone. Requests that cannot be handled in the app — including access to, correction of, or deletion of inquiry and report records — are accepted through the contact channel below. We review and act on a request without delay and notify you of the result within 10 days of receiving it. The result is sent to the email address you used for the request, and we may ask for additional confirmation to verify that you are the requester.",
         ],
-        ownerInput: "삭제 요청 접수 채널(실제 수신 이메일 또는 절차)·처리 기한·문의/신고 기록 보관 기간 확정 필요",
+        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       {
         no: 13, title: "Children",
@@ -135,20 +137,20 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 16, title: "Contact",
         paragraphs: ["For privacy questions or requests, contact us at:"],
-        ownerInput: "개인정보 문의를 실제로 수신할 이메일 주소 확정 필요 (앱 내 문의 폼 존재 — 병기 여부 Owner 결정)",
+        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
     ],
   },
 
   ko: {
     title: "개인정보처리방침",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "이 개인정보처리방침은 gokoreamate 가 어떤 정보를 수집하고, 어떻게 사용하며, 이용자가 어떤 선택을 할 수 있는지 설명합니다. gokoreamate 는 한국 여행 탐색, 일자별 일정 만들기, 여행 기억 보관을 위한 여행 계획 서비스입니다.",
     ],
     sections: [
-      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체(개인/법인 명칭·영문 표기·공개 가능 주소·개인정보 보호책임자) 확정 필요" },
+      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
       {
         no: 2, title: "수집하는 개인정보",
         paragraphs: ["서비스 운영에 필요한 정보만 수집합니다:"],
@@ -225,18 +227,18 @@ export const PRIVACY: LegalDocSet = {
         no: 11, title: "보관기간",
         paragraphs: [
           "앱에서 삭제한 콘텐츠는 저장된 사진 파일을 포함해 즉시 삭제됩니다. 삭제하지 않은 콘텐츠는 이용자가 삭제하거나 삭제를 요청할 때까지 보관되며, 현재 여행 데이터를 자동 만료시키지 않습니다.",
-          "문의 기록(답변과 처리 이력 확인 목적)과 신고 기록(신고 처리와 반복 신고 판단 목적)은 계정과 별도로 보관되며 계정을 삭제해도 자동으로 삭제되지 않습니다. 보관 기간이 끝나면 파기합니다.",
+          "문의 기록(답변과 처리 이력 확인 목적)은 접수한 날부터 6개월, 신고 기록(신고 처리와 반복 신고 판단 목적)은 처리가 끝난 날부터 6개월 보관한 뒤 매일 자동으로 파기합니다. 처리 중인 신고는 처리가 끝날 때까지 보관하며 정기적으로 검토합니다. 답변이 끝나지 않은 문의는 사유와 검토일을 기록한 경우에 한해 그 검토일까지만 6개월을 넘겨 보관합니다. 이 기간은 서비스가 정한 운영 기준이며, 보관 목적이 없어지거나 적법한 삭제 요청을 받으면 기간 전이라도 삭제합니다. 문의·신고 기록은 계정과 별도로 보관되어 계정을 삭제해도 자동으로 삭제되지 않습니다. 문의 알림 메일에는 문의 번호와 유형만 담고 이름·이메일·메시지는 담지 않으며, 메일 발송 서비스에 남는 발송 기록은 해당 서비스의 보관 정책을 따릅니다. 현재 장기 미이용 계정을 자동으로 정리하지 않습니다.",
         ],
-        ownerInput: "보관기간 정책 확정 필요 — 문의(contact) 기록 보관기간, 미이용 계정 처리, 로그 보관기간",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
       },
       {
         no: 12, title: "이용자의 권리와 삭제",
         paragraphs: [
           "일정·저장 장소·나의 장소·사진·메모는 언제든 앱에서 직접 열람·수정·삭제할 수 있습니다. 로그아웃은 어떤 데이터도 삭제하지 않습니다.",
           "계정은 앱에서 직접 영구 삭제할 수 있습니다(더보기 → 계정 영구 삭제). 삭제는 최근(5분 이내) Google 로그인으로 확인된 현재 브라우저 세션에서만 진행되며, 그렇지 않으면 먼저 Google 재로그인을 요청합니다. 삭제되는 정보: 여행(사진·메모와 여행으로 만든 AI 문구 포함), 저장 장소, 나의 장소(사진 포함), 장소·여행 좋아요/싫어요, 여행 ‘도움됨’ 표시, 이벤트 반응, 여행 조회 기록, 심사 중인 장소 제보, This Trip 동기화 데이터, 기기 연결, 동의 기록, 로그인 계정. 남는 정보: 다른 이용자가 이미 만든 공개 여행의 복사본(원본 연결만 해제), 개인을 식별할 수 없는 익명 집계 통계(도움됨 수·활용 수 등), 이미 공개 장소로 채택된 장소 제보, 문의·신고 내역 — 문의·신고 내역은 계정 삭제 대상이 아니며 별도 보관 기준에 따라 처리합니다.",
-          "삭제가 중단되면 부분 성공으로 표시하지 않으며, 같은 동작을 다시 시도하면 남은 데이터부터 이어서 삭제합니다. 삭제는 되돌릴 수 없습니다. 앱에서 처리할 수 없는 요청(문의·신고 기록의 열람·정정·삭제 포함)은 아래 문의 채널로 접수하며, 요청을 받으면 지체 없이 확인해 필요한 조치를 하고 요청을 받은 날부터 10일 이내에 결과를 알려드립니다.",
+          "삭제가 중단되면 부분 성공으로 표시하지 않으며, 같은 동작을 다시 시도하면 남은 데이터부터 이어서 삭제합니다. 삭제는 되돌릴 수 없습니다. 앱에서 처리할 수 없는 요청(문의·신고 기록의 열람·정정·삭제 포함)은 아래 문의 채널로 접수하며, 요청을 받으면 지체 없이 확인해 필요한 조치를 하고 요청을 받은 날부터 10일 이내에 결과를 알려드립니다. 결과는 요청하신 이메일 주소로 알려드리며, 요청자 본인 확인을 위해 추가 확인을 요청할 수 있습니다.",
         ],
-        ownerInput: "삭제 요청 접수 채널(실제 수신 이메일 또는 절차)·처리 기한·문의/신고 기록 보관 기간 확정 필요",
+        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "아동·미성년자", paragraphs: [], ownerInput: "미성년자(만 14세 미만 포함) 이용 정책·연령 기준 확정 필요" },
       {
@@ -249,19 +251,19 @@ export const PRIVACY: LegalDocSet = {
         no: 15, title: "방침 변경 고지",
         paragraphs: ["방침이 변경되면 새 개정일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 내에서 안내합니다."],
       },
-      { no: 16, title: "문의처", paragraphs: ["개인정보 관련 문의·요청은 아래로 연락해 주세요:"], ownerInput: "개인정보 문의를 실제로 수신할 이메일 주소 확정 필요 (앱 내 문의 폼 존재 — 병기 여부 Owner 결정)" },
+      { no: 16, title: "문의처", paragraphs: ["개인정보 관련 문의·요청은 아래로 연락해 주세요:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
     ],
   },
 
   ja: {
     title: "プライバシーポリシー",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "本プライバシーポリシーは、gokoreamate が収集する情報、その利用方法、および利用者が選択できる事項を説明します。gokoreamate は、韓国旅行の探索、日別スケジュールの作成、旅の記憶の保管のための旅行計画サービスです。",
     ],
     sections: [
-      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체(명칭·영문 표기·주소·보호책임자) 확정 필요" },
+      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
       {
         no: 2, title: "収集する情報",
         paragraphs: ["サービス運営に必要な情報のみ収集します:"],
@@ -338,18 +340,18 @@ export const PRIVACY: LegalDocSet = {
         no: 11, title: "保存期間",
         paragraphs: [
           "アプリで削除したコンテンツは、保存された写真ファイルを含め直ちに削除されます。削除していないコンテンツは、利用者が削除するか削除を依頼するまで保管され、現在、旅行データを自動的に失効させることはありません。",
-          "お問い合わせの記録（返信と対応履歴の確認のため）と通報の記録（通報の処理と繰り返しの通報の判断のため）はアカウントとは別に保管され、アカウントを削除しても自動では削除されません。保管期間が終了すると破棄します。",
+          "お問い合わせの記録（返信と対応履歴の確認のため）は受付日から6か月、通報の記録（通報の処理と繰り返しの通報の判断のため）は処理完了日から6か月保管した後、毎日の自動処理で破棄します。処理中の通報は処理が終わるまで保管し、定期的に確認します。回答が終わっていないお問い合わせは、理由と確認日を記録した場合に限り、その確認日まで6か月を超えて保管します。この期間はサービスが定めた運用基準であり、保管目的がなくなった場合や適法な削除の依頼を受けた場合は期間前でも削除します。お問い合わせ・通報の記録はアカウントとは別に保管され、アカウントを削除しても自動では削除されません。お問い合わせの通知メールには受付番号と種類のみを記載し、氏名・メールアドレス・メッセージは含めません。メール配信サービスに残る配信記録は同サービスの保管方針に従います。現在、長期間利用のないアカウントを自動で整理することはありません。",
         ],
-        ownerInput: "보관기간 정책 확정 필요 — 문의 기록·미이용 계정·로그",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
       },
       {
         no: 12, title: "利用者の権利と削除",
         paragraphs: [
           "スケジュール・保存した場所・自分の場所・写真・メモは、いつでもアプリ内で直接閲覧・修正・削除できます。ログアウトによってデータが削除されることはありません。",
           "アカウントはアプリ内で直接、完全に削除できます（その他 → アカウントを完全に削除）。削除は、最近（5分以内）の Google ログインで確認された現在のブラウザセッションでのみ行われ、そうでない場合は先に Google への再ログインをお願いします。削除される情報：旅行（写真・メモ、旅行をもとに作成した AI 文章を含む）、保存した場所、自分の場所（写真を含む）、場所・旅行へのいいね／よくないね、旅行への「役に立った」、イベントへのリアクション、旅行の閲覧記録、審査中の場所の提案、This Trip の同期データ、端末連携、同意記録、ログインアカウント。残る情報：他の利用者が既に作成した公開旅行のコピー（元への連結のみ解除）、個人を識別できない匿名の集計統計（役に立った数・活用数など）、既に公開スポットとして採用された場所の提案、お問い合わせ・通報の記録 — お問い合わせ・通報の記録はアカウント削除の対象ではなく、別の保管基準に従って取り扱います。",
-          "削除が中断された場合、部分的な成功とは表示されません。同じ操作を再試行すると、残りのデータから続けて削除します。削除は取り消せません。アプリ内で対応できない依頼（お問い合わせ・通報の記録の閲覧・訂正・削除を含む）は下記の窓口で受け付け、依頼を受けた後は遅滞なく確認して必要な措置を行い、受け付けた日から10日以内に結果をお知らせします。",
+          "削除が中断された場合、部分的な成功とは表示されません。同じ操作を再試行すると、残りのデータから続けて削除します。削除は取り消せません。アプリ内で対応できない依頼（お問い合わせ・通報の記録の閲覧・訂正・削除を含む）は下記の窓口で受け付け、依頼を受けた後は遅滞なく確認して必要な措置を行い、受け付けた日から10日以内に結果をお知らせします。結果はご依頼いただいたメールアドレスにお知らせし、ご本人確認のため追加の確認をお願いする場合があります。",
         ],
-        ownerInput: "삭제 요청 접수 채널·처리 기한·문의/신고 기록 보관 기간 확정 필요",
+        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "子ども・未成年者", paragraphs: [], ownerInput: "미성년자 이용 정책·연령 기준 확정 필요" },
       {
@@ -359,19 +361,19 @@ export const PRIVACY: LegalDocSet = {
         ],
       },
       { no: 15, title: "ポリシーの変更", paragraphs: ["本ポリシーを変更する場合は、新しい改定日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。"] },
-      { no: 16, title: "お問い合わせ", paragraphs: ["プライバシーに関するご質問・ご依頼は下記までご連絡ください:"], ownerInput: "실수신 이메일 확정 필요" },
+      { no: 16, title: "お問い合わせ", paragraphs: ["プライバシーに関するご質問・ご依頼は下記までご連絡ください:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
     ],
   },
 
   zh: {
     title: "隐私政策",
-    effectiveDate: null,
+    effectiveDate: LEGAL_EFFECTIVE_DATE,
     lastUpdated: null,
     intro: [
       "本隐私政策说明 gokoreamate 收集哪些信息、如何使用这些信息，以及你可以做出的选择。gokoreamate 是一项用于探索韩国、制定逐日行程并保存旅行记忆的旅行规划服务。",
     ],
     sections: [
-      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체(명칭·영문 표기·주소·보호책임자) 확정 필요" },
+      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
       {
         no: 2, title: "我们收集的信息",
         paragraphs: ["我们只收集运营服务所需的信息:"],
@@ -448,18 +450,18 @@ export const PRIVACY: LegalDocSet = {
         no: 11, title: "保存期限",
         paragraphs: [
           "你在应用内删除的内容(包括已存储的照片文件)会被立即删除。未删除的内容将保存至你删除或请求删除为止；目前服务不会自动使旅行数据过期。",
-          "咨询记录（用于答复及确认处理经过）和举报记录（用于处理举报及判断重复举报）与账户分开保存，删除账户时不会自动删除，保存期限届满后予以销毁。",
+          "咨询记录（用于答复及确认处理经过）自受理之日起保存 6 个月，举报记录（用于处理举报及判断重复举报）自处理完成之日起保存 6 个月，之后由每日自动任务销毁。处理中的举报保存至处理结束，并定期复核。尚未答复完毕的咨询，仅在记录原因和复核日期时，可保存超过 6 个月直至该复核日期。该期限为本服务自行制定的运营标准；保存目的消失或收到合法删除请求时，即使未到期也会删除。咨询与举报记录与账户分开保存，删除账户时不会自动删除。咨询通知邮件仅包含受理编号和类型，不含姓名、邮箱或内容；邮件发送服务保留的发送记录遵循该服务自身的保存政策。目前不会自动清理长期未使用的账户。",
         ],
-        ownerInput: "보관기간 정책 확정 필요",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
       },
       {
         no: 12, title: "你的权利与删除",
         paragraphs: [
           "你可以随时在应用内直接查看、修改和删除你的行程、收藏地点、个人地点、照片和备注。退出登录不会删除任何数据。",
           "你可以在应用内直接永久删除账户（更多 → 永久删除账户）。删除仅在通过最近（5 分钟内）Google 登录确认的当前浏览器会话中进行；否则会先要求你重新登录 Google。将删除：行程（含照片、备注及基于行程生成的 AI 文字）、收藏地点、我的地点（含照片）、对地点和行程的点赞/点踩、行程“有帮助”标记、活动反应、行程浏览记录、审核中的地点建议、This Trip 同步数据、设备关联、同意记录以及登录账户本身。将保留：其他用户已创建的公开行程副本（仅解除与原件的关联）、无法识别个人的匿名汇总统计（如有帮助数、使用数等）、已被采纳为公开地点的地点建议，以及咨询与举报记录——咨询与举报记录不属于账户删除范围，按单独的保存标准处理。",
-          "删除中断时不会显示为部分成功；重试同一操作会从剩余数据继续删除。删除不可恢复。无法在应用内处理的请求（包括查看、更正或删除咨询与举报记录）可通过下方联系渠道提交；收到请求后我们会立即核实并采取必要措施，并在收到请求之日起 10 日内告知结果。",
+          "删除中断时不会显示为部分成功；重试同一操作会从剩余数据继续删除。删除不可恢复。无法在应用内处理的请求（包括查看、更正或删除咨询与举报记录）可通过下方联系渠道提交；收到请求后我们会立即核实并采取必要措施，并在收到请求之日起 10 日内告知结果。结果将发送至你提出请求时使用的邮箱地址；为核实请求人身份，我们可能要求进一步确认。",
         ],
-        ownerInput: "삭제 요청 접수 채널·처리 기한·문의/신고 기록 보관 기간 확정 필요",
+        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "儿童与未成年人", paragraphs: [], ownerInput: "미성년자 정책 확정 필요" },
       {
@@ -469,7 +471,7 @@ export const PRIVACY: LegalDocSet = {
         ],
       },
       { no: 15, title: "政策变更", paragraphs: ["政策如有变更，将连同新的修订日期发布在本页面。重大变更将在服务内另行通知。"] },
-      { no: 16, title: "联系我们", paragraphs: ["有关隐私的问题或请求，请联系:"], ownerInput: "실수신 이메일 확정 필요" },
+      { no: 16, title: "联系我们", paragraphs: ["有关隐私的问题或请求，请联系:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
     ],
   },
 };

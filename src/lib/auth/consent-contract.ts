@@ -11,9 +11,17 @@
 //   ③ Preview/Staging QA 동의 행은 Production 으로 이전하지 않는다.
 // (운영 문서 docs/operations/consent-activation-v1.md §4 에 동일 계약 명시)
 
-export const TERMS_VERSION = "preview-legal-v1";
-export const PRIVACY_VERSION = "preview-legal-v1";
-export const AGE_GATE_VERSION = "preview-age-14-v1";
+/**
+ * 시행일 — Auth 기능과 Legal 문서를 Production 에 게시하는 날(YYYY-MM-DD).
+ * 게시 전에는 null 이다(DRAFT). 이 값 하나가 ①처리방침·약관의 effectiveDate
+ * ②약관·처리방침·연령 동의 버전을 함께 정한다 — 셋이 어긋날 수 없다.
+ * 출시 절차: 이 줄에 날짜를 넣는 커밋을 Auth 코드와 같은 merge 로 master 에 올린다.
+ */
+export const LEGAL_EFFECTIVE_DATE: string | null = null;
+
+export const TERMS_VERSION = LEGAL_EFFECTIVE_DATE ? `legal-${LEGAL_EFFECTIVE_DATE}-v1` : "preview-legal-v1";
+export const PRIVACY_VERSION = LEGAL_EFFECTIVE_DATE ? `legal-${LEGAL_EFFECTIVE_DATE}-v1` : "preview-legal-v1";
+export const AGE_GATE_VERSION = LEGAL_EFFECTIVE_DATE ? `age-14-${LEGAL_EFFECTIVE_DATE}-v1` : "preview-age-14-v1";
 
 /** intent cookie 이름 — 의미가 드러나되 PII 없음 */
 export const CONSENT_INTENT_COOKIE = "gkm_consent_intent";
