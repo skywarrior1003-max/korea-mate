@@ -28,7 +28,7 @@
 //   · 타인 계정의 모든 데이터, 타인이 만든 독립 복사본.
 
 import { requireUser } from "../../_lib/user-auth";
-import { verifyDeleteIntent } from "./delete-intent";
+import { verifyDeleteIntent, verifiedSessionClaims } from "./delete-intent";
 import { purgeItineraryCascade } from "../../_lib/itinerary-purge";
 import { createClient } from "@supabase/supabase-js";
 import { actorKey } from "../../../src/lib/social/social-actions-core";
@@ -72,7 +72,11 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
 
   let body: { intent?: unknown };
   try { body = JSON.parse(await ctx.request.text()); } catch { return json({ error: "invalid_intent" }, 400); }
-  const okIntent = await verifyDeleteIntent(env.MYTRIP_HASH_SECRET, String(body.intent ?? ""), userId);
+  // 재인증한 **그 세션**만 실행할 수 있다 — intent 의 session_id 와 현재 토큰의
+  // session_id 가 일치해야 한다(REAUTH-V1 세션 결속).
+  const sess = verifiedSessionClaims(ctx.request);
+  if (!sess) return json({ error: "invalid_intent" }, 403);
+  const okIntent = await verifyDeleteIntent(env.MYTRIP_HASH_SECRET, String(body.intent ?? ""), userId, sess.sid);
   if (!okIntent) return json({ error: "invalid_intent" }, 403);
 
   // 계정 기기 목록 — 재시도 시 비어 있을 수 있다(그래도 잔여 단계는 진행)
