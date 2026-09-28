@@ -1,14 +1,14 @@
 // POST /api/internal/retention-alert — 일일 파기 작업의 운영자 알림 (LEGAL-RETENTION-IMPLEMENTATION-V1)
 //
 // 호출자는 DB 의 retention_purge_daily()(pg_net) 하나뿐이다. 인증은 기존 Worker 와
-// 같은 x-internal-auth 헤더 + INTERNAL_KEY 상수 시간 비교다(새 secret 없음).
+// 같은 x-internal-auth 헤더 + 상수 시간 비교다(RETENTION_ALERT_KEY 가 있으면 그것, 없으면 INTERNAL_KEY).
 // 본문에는 개인정보가 없다 — 실패 오류 코드 또는 30일 넘게 처리 중인 신고 건수만.
 // 메일 설정(RESEND)이 없는 환경(Preview 등)에서는 보내지 않고 502 sent:false 로 답한다.
 // kind=probe 는 메일 없이 인증·메일 설정 존재만 확인한다(200 ready / 503 not_configured).
 
 import { sendAdminEmail, type AdminEmailEnv } from "../../_lib/admin-email";
 
-interface Env extends AdminEmailEnv { INTERNAL_KEY?: string; NEXT_PUBLIC_SITE_URL?: string }
+interface Env extends AdminEmailEnv { INTERNAL_KEY?: string; RETENTION_ALERT_KEY?: string; NEXT_PUBLIC_SITE_URL?: string }
 type Ctx = { request: Request; env: Env };
 
 const json = (b: unknown, s = 200) =>
@@ -63,7 +63,9 @@ export function buildRetentionAlert(
 }
 
 export async function onRequestPost(ctx: Ctx): Promise<Response> {
-  const key = ctx.env.INTERNAL_KEY;
+  // 전용 키가 있으면 그것만 받는다. Cloudflare secret 은 읽을 수 없어 기존 INTERNAL_KEY 값을
+  // Vault 에 옮길 수 없는 경우를 위한 것이다(Worker 와 키를 나누지 않게 된다).
+  const key = ctx.env.RETENTION_ALERT_KEY || ctx.env.INTERNAL_KEY;
   const provided = ctx.request.headers.get("x-internal-auth") ?? "";
   if (!key || !provided || !(await keysMatch(provided, key))) return json({ error: "unauthorized" }, 401);
 

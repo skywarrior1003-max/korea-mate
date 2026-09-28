@@ -72,6 +72,7 @@ test("알림 엔드포인트 — 발송 실패는 202 가 아니다·probe 는 �
   const a = read("functions/api/internal/retention-alert.ts");
   assert.match(a, /if \(r\.ok\) return json\(\{ accepted: true, sent: true \}, 202\)/);
   assert.match(a, /sent: false, reason: r\.reason[\s\S]{0,80}\}, 502\)/);
+  assert.match(a, /const key = ctx\.env\.RETENTION_ALERT_KEY \|\| ctx\.env\.INTERNAL_KEY;/);
   const probe = a.slice(a.indexOf('kind === "probe"'), a.indexOf("buildRetentionAlert(kind"));
   assert.ok(!/sendAdminEmail/.test(probe), "probe 는 메일을 보내지 않는다");
 });
@@ -126,6 +127,10 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   for (const k of ["매일 자동으로 파기", "destroyed automatically by a daily job", "毎日の自動処理で破棄", "每日自动任务销毁"]) assert.ok(p.includes(k), k);
   assert.ok(p.includes("서비스가 정한 운영 기준"), "6개월은 운영 기준(법정 기간 아님)");
   assert.ok(p.includes("요청하신 이메일 주소로 알려드리며"), "결과 통지 방법");
+  // 법 제30조①3의2(파기절차·방법)·4(위탁)·시행령 제31조①2(국외 이전) 대조분
+  for (const k of ["How records are destroyed", "파기 절차와 방법", "破棄の手順と方法", "销毁程序与方法"]) assert.ok(p.includes(k), k);
+  assert.equal((p.match(/Resend（|Resend\(|Resend \(/g) ?? []).length, 4, "4locale 처리자 목록에 메일 발송 서비스");
+  assert.equal((p.match(/법 제28조의8제2항\) 확인과 위탁\/국외 이전 분류 법률 검토 필요/g) ?? []).length, 4);
   const t = read("src/lib/legal/terms-content.ts");
   for (const k of ["대한민국 법을 따릅니다", "laws of the Republic of Korea", "大韓民国の法律に準拠", "受大韩民国法律管辖"]) assert.ok(t.includes(k), k);
   assert.ok(t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "관할은 법률 검토 표시로 남김");

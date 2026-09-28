@@ -26,7 +26,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 1, title: "Who operates this service",
         paragraphs: [],
-        ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요",
+        ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요",
       },
       {
         no: 2, title: "Information we collect",
@@ -79,7 +79,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "Your account, travel content, and photos are stored with Supabase on servers located in Seoul, South Korea (AWS ap-northeast-2). Photos are kept in private storage and served through expiring signed links, not public URLs.",
           "The website is delivered through Cloudflare's global network, which processes standard technical logs at edge locations worldwide. Google processes sign-in requests and analytics, and would process AI requests if AI features are enabled; Google may process data outside your country under its own policies.",
+          "Service providers that process data for us: Supabase (database, sign-in authentication, photo storage), Cloudflare (website delivery and running the server API), Google (Google sign-in and usage analytics), and Resend (sending notification emails to the operator — these contain only operational details such as an inquiry number and type, never your name, email, or message). Cloudflare, Google, and Resend are based outside Korea, so information needed for these tasks may be processed outside Korea when you use the service.",
         ],
+        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
       },
       {
         no: 8, title: "Analytics, cookies, and browser storage",
@@ -105,8 +107,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "Content you delete in the app is deleted immediately, including the stored photo files. Content you keep remains stored until you delete it or request deletion; the service does not currently auto-expire your travel data.",
           "Inquiry records (kept to answer you and track handling) are kept for 6 months from the date received, and report records (kept to handle reports and judge repeated reports) for 6 months from the date handling is completed; they are then destroyed automatically by a daily job. Reports still being handled are kept until handling ends and are reviewed regularly. An inquiry that is still open may be kept past 6 months only when a reason and a review date are recorded, and only until that review date. This period is the service's own operating standard, and records are deleted earlier when their purpose ends or a lawful deletion request is received. Inquiry and report records are stored separately from your account and are not deleted automatically when you delete your account. Inquiry notification emails contain only the inquiry number and type, not your name, email, or message; delivery logs kept by the email delivery service follow that service's own retention policy. Long-inactive accounts are not currently cleaned up automatically.",
+          "How records are destroyed: records whose retention period has ended are deleted from the database by the automatic daily job, and photo files you delete are deleted from storage.",
         ],
-        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그와 백업 보관기간 확인 필요",
       },
       {
         no: 12, title: "Your rights and deletion",
@@ -150,7 +153,7 @@ export const PRIVACY: LegalDocSet = {
       "이 개인정보처리방침은 gokoreamate 가 어떤 정보를 수집하고, 어떻게 사용하며, 이용자가 어떤 선택을 할 수 있는지 설명합니다. gokoreamate 는 한국 여행 탐색, 일자별 일정 만들기, 여행 기억 보관을 위한 여행 계획 서비스입니다.",
     ],
     sections: [
-      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
+      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
       {
         no: 2, title: "수집하는 개인정보",
         paragraphs: ["서비스 운영에 필요한 정보만 수집합니다:"],
@@ -202,7 +205,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "계정·여행 콘텐츠·사진은 대한민국 서울 리전(AWS ap-northeast-2)의 Supabase 서버에 저장됩니다. 사진은 비공개 저장소에 보관되며 공개 URL 이 아닌 만료되는 서명 링크로만 제공됩니다.",
           "웹사이트는 Cloudflare 의 글로벌 네트워크로 전송되며, 전 세계 엣지에서 표준 기술 로그가 처리됩니다. Google 은 로그인과 분석을 처리하고, AI 기능 활성화 시 AI 요청도 처리하게 되며, Google 은 자체 정책에 따라 국외에서 데이터를 처리할 수 있습니다.",
+          "개인정보 처리 업무를 맡기는 곳: Supabase(데이터베이스·로그인 인증·사진 저장), Cloudflare(웹사이트 전송과 서버 API 실행), Google(Google 로그인·사용 통계), Resend(운영자에게 보내는 알림 메일 발송 — 문의 번호·유형 등 운영 정보만 담고 이용자의 이름·이메일·메시지는 담지 않음). Cloudflare·Google·Resend 는 국외 사업자로, 서비스를 이용할 때 해당 업무에 필요한 정보가 국외에서 처리될 수 있습니다.",
         ],
+        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
       },
       {
         no: 8, title: "분석 도구·쿠키·브라우저 저장소",
@@ -228,8 +233,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "앱에서 삭제한 콘텐츠는 저장된 사진 파일을 포함해 즉시 삭제됩니다. 삭제하지 않은 콘텐츠는 이용자가 삭제하거나 삭제를 요청할 때까지 보관되며, 현재 여행 데이터를 자동 만료시키지 않습니다.",
           "문의 기록(답변과 처리 이력 확인 목적)은 접수한 날부터 6개월, 신고 기록(신고 처리와 반복 신고 판단 목적)은 처리가 끝난 날부터 6개월 보관한 뒤 매일 자동으로 파기합니다. 처리 중인 신고는 처리가 끝날 때까지 보관하며 정기적으로 검토합니다. 답변이 끝나지 않은 문의는 사유와 검토일을 기록한 경우에 한해 그 검토일까지만 6개월을 넘겨 보관합니다. 이 기간은 서비스가 정한 운영 기준이며, 보관 목적이 없어지거나 적법한 삭제 요청을 받으면 기간 전이라도 삭제합니다. 문의·신고 기록은 계정과 별도로 보관되어 계정을 삭제해도 자동으로 삭제되지 않습니다. 문의 알림 메일에는 문의 번호와 유형만 담고 이름·이메일·메시지는 담지 않으며, 메일 발송 서비스에 남는 발송 기록은 해당 서비스의 보관 정책을 따릅니다. 현재 장기 미이용 계정을 자동으로 정리하지 않습니다.",
+          "파기 절차와 방법: 보관기간이 끝난 기록은 매일 실행되는 자동 파기 작업이 데이터베이스에서 삭제하고, 이용자가 삭제한 사진 파일은 저장소에서 삭제합니다.",
         ],
-        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그와 백업 보관기간 확인 필요",
       },
       {
         no: 12, title: "이용자의 권리와 삭제",
@@ -263,7 +269,7 @@ export const PRIVACY: LegalDocSet = {
       "本プライバシーポリシーは、gokoreamate が収集する情報、その利用方法、および利用者が選択できる事項を説明します。gokoreamate は、韓国旅行の探索、日別スケジュールの作成、旅の記憶の保管のための旅行計画サービスです。",
     ],
     sections: [
-      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
+      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
       {
         no: 2, title: "収集する情報",
         paragraphs: ["サービス運営に必要な情報のみ収集します:"],
@@ -315,7 +321,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "アカウント・旅行コンテンツ・写真は、大韓民国ソウルリージョン(AWS ap-northeast-2)の Supabase サーバーに保存されます。写真は非公開ストレージに保管され、公開URLではなく期限付きの署名リンクでのみ提供されます。",
           "ウェブサイトは Cloudflare のグローバルネットワークで配信され、世界各地のエッジで標準的な技術ログが処理されます。Google はログインと分析を処理し、AI機能が有効化された場合はAIリクエストも処理します。Google は自社の方針に基づき国外でデータを処理することがあります。",
+          "当サービスのためにデータを処理する事業者：Supabase（データベース・ログイン認証・写真の保存）、Cloudflare（ウェブサイトの配信とサーバーAPIの実行）、Google（Googleログイン・利用統計）、Resend（運営者宛て通知メールの送信 — お問い合わせ番号・種類などの運営情報のみを含み、利用者の氏名・メールアドレス・メッセージは含みません）。Cloudflare・Google・Resend は国外の事業者のため、サービス利用時にこれらの業務に必要な情報が国外で処理されることがあります。",
         ],
+        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
       },
       {
         no: 8, title: "分析ツール・Cookie・ブラウザ保存領域",
@@ -341,8 +349,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "アプリで削除したコンテンツは、保存された写真ファイルを含め直ちに削除されます。削除していないコンテンツは、利用者が削除するか削除を依頼するまで保管され、現在、旅行データを自動的に失効させることはありません。",
           "お問い合わせの記録（返信と対応履歴の確認のため）は受付日から6か月、通報の記録（通報の処理と繰り返しの通報の判断のため）は処理完了日から6か月保管した後、毎日の自動処理で破棄します。処理中の通報は処理が終わるまで保管し、定期的に確認します。回答が終わっていないお問い合わせは、理由と確認日を記録した場合に限り、その確認日まで6か月を超えて保管します。この期間はサービスが定めた運用基準であり、保管目的がなくなった場合や適法な削除の依頼を受けた場合は期間前でも削除します。お問い合わせ・通報の記録はアカウントとは別に保管され、アカウントを削除しても自動では削除されません。お問い合わせの通知メールには受付番号と種類のみを記載し、氏名・メールアドレス・メッセージは含めません。メール配信サービスに残る配信記録は同サービスの保管方針に従います。現在、長期間利用のないアカウントを自動で整理することはありません。",
+          "破棄の手順と方法：保存期間が終了した記録は毎日実行される自動処理がデータベースから削除し、利用者が削除した写真ファイルはストレージから削除します。",
         ],
-        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그와 백업 보관기간 확인 필요",
       },
       {
         no: 12, title: "利用者の権利と削除",
@@ -373,7 +382,7 @@ export const PRIVACY: LegalDocSet = {
       "本隐私政策说明 gokoreamate 收集哪些信息、如何使用这些信息，以及你可以做出的选择。gokoreamate 是一项用于探索韩国、制定逐日行程并保存旅行记忆的旅行规划服务。",
     ],
     sections: [
-      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소·개인정보 보호책임자 확인 필요" },
+      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
       {
         no: 2, title: "我们收集的信息",
         paragraphs: ["我们只收集运营服务所需的信息:"],
@@ -425,7 +434,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "你的账户、旅行内容和照片存储在位于韩国首尔区域(AWS ap-northeast-2)的 Supabase 服务器上。照片保存在私有存储中，仅通过有时效的签名链接提供，而非公开 URL。",
           "网站通过 Cloudflare 的全球网络分发，其位于世界各地的边缘节点会处理标准技术日志。Google 处理登录与分析请求；若 AI 功能启用，也会处理 AI 请求。Google 可能依据其自身政策在境外处理数据。",
+          "为本服务处理数据的服务商：Supabase（数据库、登录认证、照片存储）、Cloudflare（网站分发与服务器 API 运行）、Google（Google 登录与使用统计）、Resend（向运营方发送通知邮件——仅包含咨询编号、类型等运营信息，不包含你的姓名、邮箱或留言）。Cloudflare、Google 与 Resend 为境外服务商，你使用服务时，完成上述工作所需的信息可能在境外处理。",
         ],
+        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
       },
       {
         no: 8, title: "分析工具、Cookie 与浏览器存储",
@@ -451,8 +462,9 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "你在应用内删除的内容(包括已存储的照片文件)会被立即删除。未删除的内容将保存至你删除或请求删除为止；目前服务不会自动使旅行数据过期。",
           "咨询记录（用于答复及确认处理经过）自受理之日起保存 6 个月，举报记录（用于处理举报及判断重复举报）自处理完成之日起保存 6 个月，之后由每日自动任务销毁。处理中的举报保存至处理结束，并定期复核。尚未答复完毕的咨询，仅在记录原因和复核日期时，可保存超过 6 个月直至该复核日期。该期限为本服务自行制定的运营标准；保存目的消失或收到合法删除请求时，即使未到期也会删除。咨询与举报记录与账户分开保存，删除账户时不会自动删除。咨询通知邮件仅包含受理编号和类型，不含姓名、邮箱或内容；邮件发送服务保留的发送记录遵循该服务自身的保存政策。目前不会自动清理长期未使用的账户。",
+          "销毁程序与方法：保存期限届满的记录由每日运行的自动任务从数据库中删除，你删除的照片文件会从存储中删除。",
         ],
-        ownerInput: "인프라 제공사(호스팅·DB) 로그 보관기간 확인 필요",
+        ownerInput: "인프라 제공사(호스팅·DB) 로그와 백업 보관기간 확인 필요",
       },
       {
         no: 12, title: "你的权利与删除",
