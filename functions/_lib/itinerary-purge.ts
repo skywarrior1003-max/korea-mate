@@ -57,10 +57,17 @@ export async function purgeItineraryCascade(admin: Q, id: string): Promise<Purge
 
   // 귀속 레코드 — UGC-DELETE-PROPAGATION-V1 계약 그대로
   const targetKey = id.toLowerCase();
+  // 도움됨 투표·조회 중복 방지·AI 생성 기록도 이 여행 id 에만 매인 귀속 레코드다
+  // (FK 없음 — 행을 지워도 남는다). AI 생성 기록은 여행 내용으로 만든 문구
+  // 원문(result)을 담고 있어 여행과 함께 사라져야 한다(DELETION-COVERAGE-V1).
+  // helpful_count 집계 자체는 익명 수치라 되돌리지 않는다(place_usage 와 같은 계약).
   for (const [table, col, val] of [
-    ["content_likes",     "target_key",   targetKey],
-    ["content_dislikes",  "target_key",   targetKey],
-    ["story_submissions", "itinerary_id", id],
+    ["content_likes",           "target_key",   targetKey],
+    ["content_dislikes",        "target_key",   targetKey],
+    ["story_submissions",       "itinerary_id", id],
+    ["itinerary_helpful_votes", "itinerary_id", id],
+    ["itinerary_view_dedup",    "itinerary_id", id],
+    ["mytrip_ai_generations",   "itinerary_id", id],
   ] as const) {
     let q = admin.from(table).delete();
     q = col === "target_key"

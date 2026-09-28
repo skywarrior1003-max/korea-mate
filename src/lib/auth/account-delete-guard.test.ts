@@ -59,12 +59,37 @@ test("delete — 순서·멱등·성공 위장 금지·유지 계약(정적)", (
   assert.ok(!/console\.(log|error)\([^)]*saver_key/.test(s), "키 원문 로그 금지");
 });
 
+test("delete — 기기 흔적 전수(DELETION-COVERAGE-V1): 장소 좋아요·도움됨·이벤트 반응·조회·AI 생성", () => {
+  const code = strip(read("functions/api/account/delete.ts"));
+  // 장소 좋아요는 해시 재계산 매칭 목록에 — likerKey 입력 형식 = actorKey("like")
+  assert.match(code, /\["place_likes",\s*"liker_key",\s*"like"\]/);
+  // 기기 ID 원문 테이블은 계정 기기로만 한정(전체 행·대상 전체 삭제 금지)
+  assert.match(code, /\["itinerary_helpful_votes",\s*`device_id=in\.\(\$\{inRaw\}\)`\]/);
+  assert.match(code, /\["spot_reactions",\s*`device_id=in\.\(\$\{inRaw\}\)`\]/);
+  // 헤더 값이 대소문자 그대로 저장되므로 두 형태 매칭
+  assert.match(code, /d\.toLowerCase\(\), d\.toUpperCase\(\)/);
+  // 조회 해시·AI 소유 해시는 쓰기 경로와 같은 산식으로 재현
+  assert.match(code, /viewer_hash=in\./);
+  assert.match(code, /owner_hash=in\./);
+  assert.match(code, /ownerHashHmac\(/);
+  // 필터 없는 DELETE 금지 — 위 표의 모든 행이 in.(…) 필터를 가진다
+  for (const t of ["itinerary_helpful_votes", "spot_reactions", "itinerary_view_dedup", "mytrip_ai_generations"]) {
+    assert.ok(!new RegExp(`\\["${t}",\\s*\`\``).test(code), `${t}: 빈 필터 금지`);
+  }
+  // 신규 단계도 auth 사용자 삭제보다 앞
+  assert.ok(code.indexOf('"spot_reactions"') < code.indexOf("auth/v1/admin/users/"), "auth 삭제는 마지막");
+});
+
 test("공용 cascade — 단건 API 와 계정 삭제가 같은 모듈을 쓴다", () => {
   const purge = read("functions/_lib/itinerary-purge.ts");
   assert.match(purge, /Storage-first/);
   assert.match(purge, /content_likes/);
   assert.match(purge, /story_submissions/);
   assert.match(purge, /trip_moments/);
+  // 여행 id 에 매인 귀속 기록(FK 없음) — 여행과 함께 사라진다
+  for (const t of ["itinerary_helpful_votes", "itinerary_view_dedup", "mytrip_ai_generations"]) {
+    assert.match(purge, new RegExp(`\\["${t}",\\s*"itinerary_id",\\s*id\\]`), t);
+  }
   const single = read("functions/api/itinerary/[id].ts");
   assert.match(single, /purgeItineraryCascade/);
   assert.ok(!/collectItineraryPhotoPaths/.test(strip(single)), "단건 경로에 중복 구현 잔존 금지");
