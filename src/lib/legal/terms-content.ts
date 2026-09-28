@@ -16,7 +16,7 @@ export const TERMS: LegalDocSet = {
       "These Terms govern your use of gokoreamate, a travel planning service for exploring Korea, building itineraries, and keeping travel memories. By using the service you agree to these Terms.",
     ],
     sections: [
-      { no: 1, title: "Operator", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "Operator", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "The service",
         paragraphs: [
@@ -98,8 +98,8 @@ export const TERMS: LegalDocSet = {
         no: 15, title: "Changes to these Terms and contact",
         paragraphs: [
           "If these Terms change, the updated version will be posted on this page with a new revision date, and significant changes will be announced within the service. Continued use after the effective date constitutes acceptance.",
+          "Questions about these Terms: support@gokoreamate.com",
         ],
-        ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요",
       },
     ],
   },
@@ -112,7 +112,7 @@ export const TERMS: LegalDocSet = {
       "본 약관은 한국 여행 탐색·일정 만들기·여행 기억 보관을 위한 여행 계획 서비스인 gokoreamate 의 이용에 적용됩니다. 서비스를 이용하면 본 약관에 동의한 것으로 봅니다.",
     ],
     sections: [
-      { no: 1, title: "운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "운영 주체", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "서비스 내용",
         paragraphs: [
@@ -186,8 +186,7 @@ export const TERMS: LegalDocSet = {
       { no: 14, title: "준거법과 분쟁 해결", paragraphs: ["이 약관은 대한민국 법을 따릅니다."], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
       {
         no: 15, title: "약관 변경·고지 및 문의처",
-        paragraphs: ["약관이 변경되면 새 개정일과 함께 이 페이지에 게시하고, 중요한 변경은 서비스 내에서 안내합니다. 시행일 이후 계속 이용하면 변경에 동의한 것으로 봅니다."],
-        ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요",
+        paragraphs: ["약관이 변경되면 새 개정일과 함께 이 페이지에 게시하고, 중요한 변경은 서비스 내에서 안내합니다. 시행일 이후 계속 이용하면 변경에 동의한 것으로 봅니다.", "약관에 관한 문의: support@gokoreamate.com"],
       },
     ],
   },
@@ -200,7 +199,7 @@ export const TERMS: LegalDocSet = {
       "本規約は、韓国旅行の探索・スケジュール作成・旅の記憶の保管のための旅行計画サービス gokoreamate の利用に適用されます。サービスを利用することで本規約に同意したものとみなします。",
     ],
     sections: [
-      { no: 1, title: "運営者", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "運営者", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "サービス内容",
         paragraphs: [
@@ -263,7 +262,7 @@ export const TERMS: LegalDocSet = {
         ],
       },
       { no: 14, title: "準拠法と紛争解決", paragraphs: ["本規約は大韓民国の法律に準拠します。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
-      { no: 15, title: "規約の変更・告知および連絡先", paragraphs: ["本規約を変更する場合は、新しい改定日とともに本ページに掲載し、重要な変更はサービス内で告知します。発効日以降の継続利用は変更への同意とみなします。"], ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요" },
+      { no: 15, title: "規約の変更・告知および連絡先", paragraphs: ["本規約を変更する場合は、新しい改定日とともに本ページに掲載し、重要な変更はサービス内で告知します。発効日以降の継続利用は変更への同意とみなします。", "本規約に関するお問い合わせ：support@gokoreamate.com"] },
     ],
   },
 
@@ -275,7 +274,7 @@ export const TERMS: LegalDocSet = {
       "本条款适用于 gokoreamate — 一项用于探索韩国、制定行程并保存旅行记忆的旅行规划服务。使用本服务即表示你同意本条款。",
     ],
     sections: [
-      { no: 1, title: "运营方", paragraphs: [], ownerInput: "운영 주체 법인명·주소 확인 필요(개인정보처리방침 제1조와 동일)" },
+      { no: 1, title: "运营方", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "服务内容",
         paragraphs: [
@@ -338,7 +337,7 @@ export const TERMS: LegalDocSet = {
         ],
       },
       { no: 14, title: "适用法律与争议解决", paragraphs: ["本条款受大韩民国法律管辖。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
-      { no: 15, title: "条款变更、通知与联系方式", paragraphs: ["条款如有变更，将连同新的修订日期发布在本页面，重大变更将在服务内另行通知。生效日后继续使用即视为接受变更。"], ownerInput: "약관 문의를 받는 실제 수신 이메일 주소 확인 필요" },
+      { no: 15, title: "条款变更、通知与联系方式", paragraphs: ["条款如有变更，将连同新的修订日期发布在本页面，重大变更将在服务内另行通知。生效日后继续使用即视为接受变更。", "有关本条款的咨询：support@gokoreamate.com"] },
     ],
   },
 };

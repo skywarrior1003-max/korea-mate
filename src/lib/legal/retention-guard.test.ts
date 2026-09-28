@@ -136,6 +136,12 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   for (const k of ["법정대리인 동의 절차를 제공하지 않습니다", "does not offer a parent or guardian consent process", "法定代理人の同意手続きは提供していません", "不提供法定代理人同意程序"]) assert.ok(p.includes(k), k);
   assert.equal((p.match(/제13조 문안 Owner 최종 확인 필요/g) ?? []).length, 4);
   const t = read("src/lib/legal/terms-content.ts");
+  // 개인정보 요청 주소 = Owner 가 2026-09-26 제공·왕복 시험한 공개 주소(재요청 금지), 운영 주체는 두 후보 중 확정 전 마커 유지
+  for (const f of [p, t]) {
+    assert.equal(f.split("support@gokoreamate.com").length - 1, 4);
+    assert.ok(!f.includes("실제 수신 이메일 주소 확인 필요"));
+    assert.equal(f.split("케이이엔지").length - 1, 4);
+  }
   for (const k of ["대한민국 법을 따릅니다", "laws of the Republic of Korea", "大韓民国の法律に準拠", "受大韩民国法律管辖"]) assert.ok(t.includes(k), k);
   assert.ok(t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "관할은 법률 검토 표시로 남김");
 });

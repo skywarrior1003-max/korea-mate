@@ -26,7 +26,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 1, title: "Who operates this service",
         paragraphs: [],
-        ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요",
+        ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)",
       },
       {
         no: 2, title: "Information we collect",
@@ -124,7 +124,6 @@ export const PRIVACY: LegalDocSet = {
           "You can permanently delete your account yourself in the app (More → Delete account permanently). Deletion proceeds only in the current browser session confirmed by a recent (within 5 minutes) Google sign-in; otherwise you are asked to sign in with Google again first. Deleted: your trips (including photos, memos, and AI-generated text made from them), saved places, personal places (including photos), likes and dislikes on places and trips, 'helpful' marks on trips, event reactions, trip view records, place suggestions still under review, This Trip sync data, device links, consent records, and the sign-in account itself. Kept: copies of your public trips that other users already made (only the link to the original is removed), anonymized aggregate statistics that cannot identify you (such as helpful and usage counts), place suggestions already adopted as public places, and inquiry and report records, which are not part of account deletion and are handled under a separate retention standard.",
           "If deletion is interrupted, no partial success is reported — retrying the same action resumes from what remains. Deletion cannot be undone. Requests that cannot be handled in the app — including access to, correction of, or deletion of inquiry and report records — are accepted through the contact channel below. We review and act on a request without delay and notify you of the result within 10 days of receiving it. The result is sent to the email address you used for the request, and we may ask for additional confirmation to verify that you are the requester.",
         ],
-        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       {
         no: 13, title: "Children",
@@ -147,8 +146,7 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 16, title: "Contact",
-        paragraphs: ["For privacy questions or requests, contact us at:"],
-        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
+        paragraphs: ["For privacy questions or requests, contact us at:", "Email: support@gokoreamate.com, or the in-app Contact form."],
       },
     ],
   },
@@ -161,7 +159,7 @@ export const PRIVACY: LegalDocSet = {
       "이 개인정보처리방침은 gokoreamate 가 어떤 정보를 수집하고, 어떻게 사용하며, 이용자가 어떤 선택을 할 수 있는지 설명합니다. gokoreamate 는 한국 여행 탐색, 일자별 일정 만들기, 여행 기억 보관을 위한 여행 계획 서비스입니다.",
     ],
     sections: [
-      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
+      { no: 1, title: "서비스 운영 주체", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "수집하는 개인정보",
         paragraphs: ["서비스 운영에 필요한 정보만 수집합니다:"],
@@ -258,7 +256,6 @@ export const PRIVACY: LegalDocSet = {
           "계정은 앱에서 직접 영구 삭제할 수 있습니다(더보기 → 계정 영구 삭제). 삭제는 최근(5분 이내) Google 로그인으로 확인된 현재 브라우저 세션에서만 진행되며, 그렇지 않으면 먼저 Google 재로그인을 요청합니다. 삭제되는 정보: 여행(사진·메모와 여행으로 만든 AI 문구 포함), 저장 장소, 나의 장소(사진 포함), 장소·여행 좋아요/싫어요, 여행 ‘도움됨’ 표시, 이벤트 반응, 여행 조회 기록, 심사 중인 장소 제보, This Trip 동기화 데이터, 기기 연결, 동의 기록, 로그인 계정. 남는 정보: 다른 이용자가 이미 만든 공개 여행의 복사본(원본 연결만 해제), 개인을 식별할 수 없는 익명 집계 통계(도움됨 수·활용 수 등), 이미 공개 장소로 채택된 장소 제보, 문의·신고 내역 — 문의·신고 내역은 계정 삭제 대상이 아니며 별도 보관 기준에 따라 처리합니다.",
           "삭제가 중단되면 부분 성공으로 표시하지 않으며, 같은 동작을 다시 시도하면 남은 데이터부터 이어서 삭제합니다. 삭제는 되돌릴 수 없습니다. 앱에서 처리할 수 없는 요청(문의·신고 기록의 열람·정정·삭제 포함)은 아래 문의 채널로 접수하며, 요청을 받으면 지체 없이 확인해 필요한 조치를 하고 요청을 받은 날부터 10일 이내에 결과를 알려드립니다. 결과는 요청하신 이메일 주소로 알려드리며, 요청자 본인 확인을 위해 추가 확인을 요청할 수 있습니다.",
         ],
-        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "아동·미성년자", paragraphs: ["로그인(계정 기능)은 만 14세 이상만 이용할 수 있습니다. 로그인 전에 만 14세 이상임을 직접 확인하는 절차가 있으며, 이 확인이 없으면 계정이 활성화되지 않습니다. 서비스는 생년월일이나 신분증으로 나이를 검증하지 않으며, 법정대리인 동의 절차를 제공하지 않습니다. 로그인하지 않고 둘러보거나 이 기기에서 여행을 만드는 기능은 연령 확인 없이 이용할 수 있고, 이때 이름·이메일 주소는 수집하지 않습니다."], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
@@ -271,7 +268,7 @@ export const PRIVACY: LegalDocSet = {
         no: 15, title: "방침 변경 고지",
         paragraphs: ["방침이 변경되면 새 개정일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 내에서 안내합니다."],
       },
-      { no: 16, title: "문의처", paragraphs: ["개인정보 관련 문의·요청은 아래로 연락해 주세요:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
+      { no: 16, title: "문의처", paragraphs: ["개인정보 관련 문의·요청은 아래로 연락해 주세요:", "이메일: support@gokoreamate.com · 또는 앱 안의 ‘문의하기’ 양식"] },
     ],
   },
 
@@ -283,7 +280,7 @@ export const PRIVACY: LegalDocSet = {
       "本プライバシーポリシーは、gokoreamate が収集する情報、その利用方法、および利用者が選択できる事項を説明します。gokoreamate は、韓国旅行の探索、日別スケジュールの作成、旅の記憶の保管のための旅行計画サービスです。",
     ],
     sections: [
-      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
+      { no: 1, title: "サービス運営者", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "収集する情報",
         paragraphs: ["サービス運営に必要な情報のみ収集します:"],
@@ -380,7 +377,6 @@ export const PRIVACY: LegalDocSet = {
           "アカウントはアプリ内で直接、完全に削除できます（その他 → アカウントを完全に削除）。削除は、最近（5分以内）の Google ログインで確認された現在のブラウザセッションでのみ行われ、そうでない場合は先に Google への再ログインをお願いします。削除される情報：旅行（写真・メモ、旅行をもとに作成した AI 文章を含む）、保存した場所、自分の場所（写真を含む）、場所・旅行へのいいね／よくないね、旅行への「役に立った」、イベントへのリアクション、旅行の閲覧記録、審査中の場所の提案、This Trip の同期データ、端末連携、同意記録、ログインアカウント。残る情報：他の利用者が既に作成した公開旅行のコピー（元への連結のみ解除）、個人を識別できない匿名の集計統計（役に立った数・活用数など）、既に公開スポットとして採用された場所の提案、お問い合わせ・通報の記録 — お問い合わせ・通報の記録はアカウント削除の対象ではなく、別の保管基準に従って取り扱います。",
           "削除が中断された場合、部分的な成功とは表示されません。同じ操作を再試行すると、残りのデータから続けて削除します。削除は取り消せません。アプリ内で対応できない依頼（お問い合わせ・通報の記録の閲覧・訂正・削除を含む）は下記の窓口で受け付け、依頼を受けた後は遅滞なく確認して必要な措置を行い、受け付けた日から10日以内に結果をお知らせします。結果はご依頼いただいたメールアドレスにお知らせし、ご本人確認のため追加の確認をお願いする場合があります。",
         ],
-        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "子ども・未成年者", paragraphs: ["ログイン（アカウント機能）は満14歳以上の方のみご利用いただけます。ログイン前に満14歳以上であることをご本人が確認する手順があり、この確認がない場合アカウントは有効になりません。当サービスは生年月日や身分証で年齢を検証せず、法定代理人の同意手続きは提供していません。ログインせずに閲覧したり、この端末で旅行を作成したりする機能は年齢確認なしで利用でき、その場合氏名・メールアドレスは収集しません。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
@@ -390,7 +386,7 @@ export const PRIVACY: LegalDocSet = {
         ],
       },
       { no: 15, title: "ポリシーの変更", paragraphs: ["本ポリシーを変更する場合は、新しい改定日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。"] },
-      { no: 16, title: "お問い合わせ", paragraphs: ["プライバシーに関するご質問・ご依頼は下記までご連絡ください:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
+      { no: 16, title: "お問い合わせ", paragraphs: ["プライバシーに関するご質問・ご依頼は下記までご連絡ください:", "メール：support@gokoreamate.com、またはアプリ内の「お問い合わせ」フォーム"] },
     ],
   },
 
@@ -402,7 +398,7 @@ export const PRIVACY: LegalDocSet = {
       "本隐私政策说明 gokoreamate 收集哪些信息、如何使用这些信息，以及你可以做出的选择。gokoreamate 是一项用于探索韩国、制定逐日行程并保存旅行记忆的旅行规划服务。",
     ],
     sections: [
-      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체 법인명(Owner 제시 후보 (주)비유피 — 계약·DB·도메인 운영 주체인지 기존 자료로 미확인)·주소, 개인정보 보호책임자(성명 또는 담당 부서)와 전화번호 등 연락처 확인 필요" },
+      { no: 1, title: "服务运营方", paragraphs: [], ownerInput: "운영 주체 확정 필요 — 2026-09-26 Owner 제공 공개 후보(개인사업자 케이이엔지·주소)와 2026-09-28 언급된 (주)비유피 중 실제 개인정보 처리 주체(계약·DB·도메인 운영 주체) 확정, 영문 표기, 보호책임자 표시(담당 부서명+연락처, 전화번호 병기 여부)" },
       {
         no: 2, title: "我们收集的信息",
         paragraphs: ["我们只收集运营服务所需的信息:"],
@@ -499,7 +495,6 @@ export const PRIVACY: LegalDocSet = {
           "你可以在应用内直接永久删除账户（更多 → 永久删除账户）。删除仅在通过最近（5 分钟内）Google 登录确认的当前浏览器会话中进行；否则会先要求你重新登录 Google。将删除：行程（含照片、备注及基于行程生成的 AI 文字）、收藏地点、我的地点（含照片）、对地点和行程的点赞/点踩、行程“有帮助”标记、活动反应、行程浏览记录、审核中的地点建议、This Trip 同步数据、设备关联、同意记录以及登录账户本身。将保留：其他用户已创建的公开行程副本（仅解除与原件的关联）、无法识别个人的匿名汇总统计（如有帮助数、使用数等）、已被采纳为公开地点的地点建议，以及咨询与举报记录——咨询与举报记录不属于账户删除范围，按单独的保存标准处理。",
           "删除中断时不会显示为部分成功；重试同一操作会从剩余数据继续删除。删除不可恢复。无法在应用内处理的请求（包括查看、更正或删除咨询与举报记录）可通过下方联系渠道提交；收到请求后我们会立即核实并采取必要措施，并在收到请求之日起 10 日内告知结果。结果将发送至你提出请求时使用的邮箱地址；为核实请求人身份，我们可能要求进一步确认。",
         ],
-        ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
       { no: 13, title: "儿童与未成年人", paragraphs: ["登录（账户功能）仅限年满 14 周岁的用户使用。登录前需由本人确认已年满 14 周岁，未确认则账户不会启用。本服务不会通过出生日期或身份证件核验年龄，也不提供法定代理人同意程序。不登录即可浏览，或在本设备上创建行程，无需年龄确认，此时我们不会收集你的姓名或邮箱地址。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
@@ -509,7 +504,7 @@ export const PRIVACY: LegalDocSet = {
         ],
       },
       { no: 15, title: "政策变更", paragraphs: ["政策如有变更，将连同新的修订日期发布在本页面。重大变更将在服务内另行通知。"] },
-      { no: 16, title: "联系我们", paragraphs: ["有关隐私的问题或请求，请联系:"], ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)" },
+      { no: 16, title: "联系我们", paragraphs: ["有关隐私的问题或请求，请联系:", "邮箱：support@gokoreamate.com，或使用应用内的“联系我们”表单"] },
     ],
   },
 };
