@@ -79,9 +79,15 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "Your account, travel content, and photos are stored with Supabase on servers located in Seoul, South Korea (AWS ap-northeast-2). Photos are kept in private storage and served through expiring signed links, not public URLs.",
           "The website is delivered through Cloudflare's global network, which processes standard technical logs at edge locations worldwide. Google processes sign-in requests and analytics, and would process AI requests if AI features are enabled; Google may process data outside your country under its own policies.",
-          "Service providers that process data for us: Supabase (database, sign-in authentication, photo storage), Cloudflare (website delivery and running the server API), Google (Google sign-in and usage analytics), and Resend (sending notification emails to the operator — these contain only operational details such as an inquiry number and type, never your name, email, or message). Cloudflare, Google, and Resend are based outside Korea, so information needed for these tasks may be processed outside Korea when you use the service.",
+          "Service providers that process personal data for us, and where it is processed:",
         ],
-        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
+        items: [
+          "Supabase (database, sign-in authentication, photo storage) — stores your account, travel content, and photos in the Seoul region, South Korea (AWS ap-northeast-2). Operator named in its privacy policy: Supabase Pte. Ltd. (Singapore); contact privacy@supabase.com. Kept until you delete the content or your account.",
+          "Cloudflare (website delivery and running the server API) — Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA; contact dpo@cloudflare.com. Each time you use the service, request data (such as IP address and the request itself) may be processed at a nearby Cloudflare location outside Korea.",
+          "Google (Google sign-in and usage analytics) — Google LLC (USA); contact https://support.google.com/policies. At sign-in we receive your Google account identifier, name, email address, and profile image link; usage statistics are sent to Google Analytics (Section 8).",
+          "Resend (sending notification emails to the operator) — Plus Five Five, Inc.; its privacy policy states data is processed in the United States; contact support@resend.com. Notifications to the operator do not contain your name, email, or message.",
+        ],
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·Cloudflare 로그와 Google Analytics 보유기간·이전 거부 방법과 효과, 제공사별 실제 계약 주체(계약서·DPA) 대조 — 법률 검토·Owner 확인 필요",
       },
       {
         no: 8, title: "Analytics, cookies, and browser storage",
@@ -122,8 +128,10 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 13, title: "Children",
-        paragraphs: [],
-        ownerInput: "미성년자(만 14세 미만 포함) 이용 정책·연령 기준 확정 필요",
+        paragraphs: [
+          "Signing in (account features) is available only to people aged 14 or older. Before signing in you confirm that you are 14 or older; without this confirmation the account is not activated. The service does not verify age with a date of birth or ID and does not offer a parent or guardian consent process. Browsing and creating trips on this device without signing in do not require an age check, and in that case we do not collect your name or email address.",
+        ],
+        ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토",
       },
       {
         no: 14, title: "Security",
@@ -205,9 +213,15 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "계정·여행 콘텐츠·사진은 대한민국 서울 리전(AWS ap-northeast-2)의 Supabase 서버에 저장됩니다. 사진은 비공개 저장소에 보관되며 공개 URL 이 아닌 만료되는 서명 링크로만 제공됩니다.",
           "웹사이트는 Cloudflare 의 글로벌 네트워크로 전송되며, 전 세계 엣지에서 표준 기술 로그가 처리됩니다. Google 은 로그인과 분석을 처리하고, AI 기능 활성화 시 AI 요청도 처리하게 되며, Google 은 자체 정책에 따라 국외에서 데이터를 처리할 수 있습니다.",
-          "개인정보 처리 업무를 맡기는 곳: Supabase(데이터베이스·로그인 인증·사진 저장), Cloudflare(웹사이트 전송과 서버 API 실행), Google(Google 로그인·사용 통계), Resend(운영자에게 보내는 알림 메일 발송 — 문의 번호·유형 등 운영 정보만 담고 이용자의 이름·이메일·메시지는 담지 않음). Cloudflare·Google·Resend 는 국외 사업자로, 서비스를 이용할 때 해당 업무에 필요한 정보가 국외에서 처리될 수 있습니다.",
+          "개인정보 처리 업무를 맡기는 곳과 처리 위치:",
         ],
-        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
+        items: [
+          "Supabase(데이터베이스·로그인 인증·사진 저장) — 계정·여행 콘텐츠·사진을 대한민국 서울 리전(AWS ap-northeast-2)에 저장합니다. 제공사 개인정보처리방침상 운영 법인: Supabase Pte. Ltd.(싱가포르), 연락처 privacy@supabase.com. 이용자가 해당 콘텐츠나 계정을 삭제할 때까지 보관합니다.",
+          "Cloudflare(웹사이트 전송·서버 API 실행) — Cloudflare, Inc.(미국, 101 Townsend St, San Francisco, CA 94107), 연락처 dpo@cloudflare.com. 서비스를 이용할 때마다 요청 정보(접속 IP 주소·요청 내용 등)가 네트워크를 통해 가까운 국외 Cloudflare 거점에서 처리될 수 있습니다.",
+          "Google(Google 로그인·사용 통계) — Google LLC(미국), 문의 https://support.google.com/policies. 로그인 시 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받고, 사용 통계는 Google Analytics 로 전송됩니다(제8조).",
+          "Resend(운영자 알림 메일 발송) — Plus Five Five, Inc., 제공사 방침상 미국에서 처리, 연락처 support@resend.com. 운영자에게 보내는 알림에는 이용자의 이름·이메일·메시지를 담지 않습니다.",
+        ],
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·Cloudflare 로그와 Google Analytics 보유기간·이전 거부 방법과 효과, 제공사별 실제 계약 주체(계약서·DPA) 대조 — 법률 검토·Owner 확인 필요",
       },
       {
         no: 8, title: "분석 도구·쿠키·브라우저 저장소",
@@ -246,7 +260,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
-      { no: 13, title: "아동·미성년자", paragraphs: [], ownerInput: "미성년자(만 14세 미만 포함) 이용 정책·연령 기준 확정 필요" },
+      { no: 13, title: "아동·미성년자", paragraphs: ["로그인(계정 기능)은 만 14세 이상만 이용할 수 있습니다. 로그인 전에 만 14세 이상임을 직접 확인하는 절차가 있으며, 이 확인이 없으면 계정이 활성화되지 않습니다. 서비스는 생년월일이나 신분증으로 나이를 검증하지 않으며, 법정대리인 동의 절차를 제공하지 않습니다. 로그인하지 않고 둘러보거나 이 기기에서 여행을 만드는 기능은 연령 확인 없이 이용할 수 있고, 이때 이름·이메일 주소는 수집하지 않습니다."], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
         no: 14, title: "보안조치",
         paragraphs: [
@@ -321,9 +335,15 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "アカウント・旅行コンテンツ・写真は、大韓民国ソウルリージョン(AWS ap-northeast-2)の Supabase サーバーに保存されます。写真は非公開ストレージに保管され、公開URLではなく期限付きの署名リンクでのみ提供されます。",
           "ウェブサイトは Cloudflare のグローバルネットワークで配信され、世界各地のエッジで標準的な技術ログが処理されます。Google はログインと分析を処理し、AI機能が有効化された場合はAIリクエストも処理します。Google は自社の方針に基づき国外でデータを処理することがあります。",
-          "当サービスのためにデータを処理する事業者：Supabase（データベース・ログイン認証・写真の保存）、Cloudflare（ウェブサイトの配信とサーバーAPIの実行）、Google（Googleログイン・利用統計）、Resend（運営者宛て通知メールの送信 — お問い合わせ番号・種類などの運営情報のみを含み、利用者の氏名・メールアドレス・メッセージは含みません）。Cloudflare・Google・Resend は国外の事業者のため、サービス利用時にこれらの業務に必要な情報が国外で処理されることがあります。",
+          "個人情報の処理を委託している事業者と処理の場所：",
         ],
-        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
+        items: [
+          "Supabase（データベース・ログイン認証・写真の保存）— アカウント・旅行コンテンツ・写真を大韓民国ソウルリージョン（AWS ap-northeast-2）に保存します。同社のプライバシーポリシー上の運営法人：Supabase Pte. Ltd.（シンガポール）、連絡先 privacy@supabase.com。利用者がコンテンツまたはアカウントを削除するまで保管します。",
+          "Cloudflare（ウェブサイトの配信とサーバーAPIの実行）— Cloudflare, Inc.（米国、101 Townsend St, San Francisco, CA 94107）、連絡先 dpo@cloudflare.com。サービスを利用するたびに、リクエスト情報（IPアドレス・リクエスト内容など）が国外の近くのCloudflare拠点で処理されることがあります。",
+          "Google（Googleログイン・利用統計）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。ログイン時にGoogleアカウントの識別子・氏名・メールアドレス・プロフィール画像リンクを受け取り、利用統計はGoogle Analyticsに送信されます（第8条）。",
+          "Resend（運営者宛て通知メールの送信）— Plus Five Five, Inc.、同社の方針上米国で処理、連絡先 support@resend.com。運営者宛ての通知には利用者の氏名・メールアドレス・メッセージを含みません。",
+        ],
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·Cloudflare 로그와 Google Analytics 보유기간·이전 거부 방법과 효과, 제공사별 실제 계약 주체(계약서·DPA) 대조 — 법률 검토·Owner 확인 필요",
       },
       {
         no: 8, title: "分析ツール・Cookie・ブラウザ保存領域",
@@ -362,7 +382,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
-      { no: 13, title: "子ども・未成年者", paragraphs: [], ownerInput: "미성년자 이용 정책·연령 기준 확정 필요" },
+      { no: 13, title: "子ども・未成年者", paragraphs: ["ログイン（アカウント機能）は満14歳以上の方のみご利用いただけます。ログイン前に満14歳以上であることをご本人が確認する手順があり、この確認がない場合アカウントは有効になりません。当サービスは生年月日や身分証で年齢を検証せず、法定代理人の同意手続きは提供していません。ログインせずに閲覧したり、この端末で旅行を作成したりする機能は年齢確認なしで利用でき、その場合氏名・メールアドレスは収集しません。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
         no: 14, title: "安全管理措置",
         paragraphs: [
@@ -434,9 +454,15 @@ export const PRIVACY: LegalDocSet = {
         paragraphs: [
           "你的账户、旅行内容和照片存储在位于韩国首尔区域(AWS ap-northeast-2)的 Supabase 服务器上。照片保存在私有存储中，仅通过有时效的签名链接提供，而非公开 URL。",
           "网站通过 Cloudflare 的全球网络分发，其位于世界各地的边缘节点会处理标准技术日志。Google 处理登录与分析请求；若 AI 功能启用，也会处理 AI 请求。Google 可能依据其自身政策在境外处理数据。",
-          "为本服务处理数据的服务商：Supabase（数据库、登录认证、照片存储）、Cloudflare（网站分发与服务器 API 运行）、Google（Google 登录与使用统计）、Resend（向运营方发送通知邮件——仅包含咨询编号、类型等运营信息，不包含你的姓名、邮箱或留言）。Cloudflare、Google 与 Resend 为境外服务商，你使用服务时，完成上述工作所需的信息可能在境外处理。",
+          "受托处理个人信息的服务商及处理地点：",
         ],
-        ownerInput: "처리 위탁·국외 이전 고지 — 수탁자별 연락처, 이전 국가·시기·방법, 보유기간, 이전 거부 방법·효과(법 제28조의8제2항) 확인과 위탁/국외 이전 분류 법률 검토 필요",
+        items: [
+          "Supabase（数据库、登录认证、照片存储）——将你的账户、旅行内容和照片存储在韩国首尔区域（AWS ap-northeast-2）。其隐私政策载明的运营法人：Supabase Pte. Ltd.（新加坡），联系方式 privacy@supabase.com。保存至你删除相关内容或账户为止。",
+          "Cloudflare（网站分发与服务器 API 运行）——Cloudflare, Inc.（美国，101 Townsend St, San Francisco, CA 94107），联系方式 dpo@cloudflare.com。每次使用服务时，请求信息（IP 地址、请求内容等）可能在境外就近的 Cloudflare 节点处理。",
+          "Google（Google 登录与使用统计）——Google LLC（美国），联系 https://support.google.com/policies。登录时我们会收到你的 Google 账户标识符、姓名、邮箱地址和头像链接；使用统计发送至 Google Analytics（第 8 条）。",
+          "Resend（向运营方发送通知邮件）——Plus Five Five, Inc.，其政策载明在美国处理，联系方式 support@resend.com。发给运营方的通知不包含你的姓名、邮箱或留言。",
+        ],
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·Cloudflare 로그와 Google Analytics 보유기간·이전 거부 방법과 효과, 제공사별 실제 계약 주체(계약서·DPA) 대조 — 법률 검토·Owner 확인 필요",
       },
       {
         no: 8, title: "分析工具、Cookie 与浏览器存储",
@@ -475,7 +501,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         ownerInput: "개인정보 요청을 받는 실제 수신 이메일 주소 확인 필요(앱 내 문의 양식 병기)",
       },
-      { no: 13, title: "儿童与未成年人", paragraphs: [], ownerInput: "미성년자 정책 확정 필요" },
+      { no: 13, title: "儿童与未成年人", paragraphs: ["登录（账户功能）仅限年满 14 周岁的用户使用。登录前需由本人确认已年满 14 周岁，未确认则账户不会启用。本服务不会通过出生日期或身份证件核验年龄，也不提供法定代理人同意程序。不登录即可浏览，或在本设备上创建行程，无需年龄确认，此时我们不会收集你的姓名或邮箱地址。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
       {
         no: 14, title: "安全措施",
         paragraphs: [

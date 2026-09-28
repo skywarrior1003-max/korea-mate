@@ -130,8 +130,34 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   // 법 제30조①3의2(파기절차·방법)·4(위탁)·시행령 제31조①2(국외 이전) 대조분
   for (const k of ["How records are destroyed", "파기 절차와 방법", "破棄の手順と方法", "销毁程序与方法"]) assert.ok(p.includes(k), k);
   assert.equal((p.match(/Resend（|Resend\(|Resend \(/g) ?? []).length, 4, "4locale 처리자 목록에 메일 발송 서비스");
-  assert.equal((p.match(/법 제28조의8제2항\) 확인과 위탁\/국외 이전 분류 법률 검토 필요/g) ?? []).length, 4);
+  assert.equal((p.match(/국외 이전 고지 — 이전 근거\(법 제28조의8제1항 해당 호\)/g) ?? []).length, 4);
+  for (const k of ["Supabase Pte. Ltd.", "Cloudflare, Inc.", "Google LLC", "Plus Five Five, Inc."]) assert.equal(p.split(k).length - 1, 4, k);
+  // 제13조: 코드 동작(만 14세 자기 확인·법정대리인 절차 없음)과 일치, 문안은 Owner 최종 확인 마커 유지
+  for (const k of ["법정대리인 동의 절차를 제공하지 않습니다", "does not offer a parent or guardian consent process", "法定代理人の同意手続きは提供していません", "不提供法定代理人同意程序"]) assert.ok(p.includes(k), k);
+  assert.equal((p.match(/제13조 문안 Owner 최종 확인 필요/g) ?? []).length, 4);
   const t = read("src/lib/legal/terms-content.ts");
   for (const k of ["대한민국 법을 따릅니다", "laws of the Republic of Korea", "大韓民国の法律に準拠", "受大韩民国法律管辖"]) assert.ok(t.includes(k), k);
   assert.ok(t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "관할은 법률 검토 표시로 남김");
+});
+
+test("파기 상태 확인(/api/health/retention) — 알림과 독립·원문 없음·막힘 상태는 503", async () => {
+  const a = read("functions/api/health/retention.ts");
+  assert.ok(!/sendAdminEmail|net\.http_post|reporter_key/.test(a), "메일 경로·원문 의존 금지");
+  assert.ok(!/select=[^`]*(email|message|note|error_code)/.test(a), "원장 원문·오류 문자열을 읽지 않는다");
+  const { judgeRetentionHealth: j } = await import("../../../functions/api/health/retention.ts");
+  const now = Date.parse("2026-10-20T00:00:00Z");
+  const at = (h: number) => new Date(now - h * 3_600_000).toISOString();
+  const run = (h: number, status: string, probe: number | null = 200, alert: number | null = null) =>
+    ({ run_at: at(h), status, alert_http_status: alert, probe_request_id: 1, probe_http_status: probe });
+  const act = { effective_from: "2026-10-15", activated_at: at(200) };
+  assert.deepEqual(j(null, [], now), { ok: true, state: "not_active" });
+  assert.equal(j(act, [run(1, "ok", null), run(29, "ok")], now).state, "ok");
+  assert.equal(j(act, [run(31, "ok")], now).state, "no_recent_run");
+  assert.equal(j(act, [run(5, "blocked_no_alert", null)], now).state, "blocked_no_alert");
+  assert.equal(j(act, [run(5, "blocked_alert_unverified")], now).state, "blocked_alert_unverified");
+  assert.equal(j(act, [run(5, "failed", null, 202)], now).state, "last_run_failed");
+  assert.equal(j(act, [run(1, "ok", null), run(29, "ok", 200, 502)], now).state, "alert_delivery_failed");
+  assert.equal(j(act, [run(1, "ok", null), run(29, "ok", null)], now).state, "reconcile_missing");
+  assert.equal(j(act, [run(1, "ok", null), run(29, "ok", 401)], now).state, "alert_path_unhealthy");
+  assert.equal(j(act, [run(1, "inactive", null), run(29, "inactive")], now).state, "scheduled");
 });
