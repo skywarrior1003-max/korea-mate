@@ -224,10 +224,10 @@ test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 
   // 목록의 digest 를 고정하므로 추가·삭제·개명 모두 잡힌다. 정식 목록은
   // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
   const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 81, `migration 수가 변했다: ${files.length}`);
+  assert.equal(files.length, 82, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "081_city_spots_published_read_rls.sql"); // 077~081 합집합 — 081 은 Production 적용 CLOSED(재실행 금지)
+  assert.equal(files[files.length - 1], "082_retention_purge_daily.sql"); // 077~082 — 081 은 Production 적용 CLOSED — 081 은 Production 적용 CLOSED(재실행 금지)
   assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
-    "c46f9e7cd8ff7a6881b489b634bc3cff463b40ab1d8112455e542ab32bc2aaac",
+    "f317142cd26448432d7daf0ced7253cbbb41115e0a05fca632083ebdfa355505",
     "승인 목록 밖의 migration 변경");
 });

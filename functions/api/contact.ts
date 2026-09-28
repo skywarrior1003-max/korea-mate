@@ -145,13 +145,7 @@ export const onRequestPost: (context: {
 
   // Admin email notification — best-effort via waitUntil (non-blocking)
   waitUntil(
-    sendAdminEmail(env, {
-      id, type,
-      name:             name           ?? undefined,
-      email, message,
-      relatedPageUrl:   relatedPageUrl  ?? undefined,
-      relatedPlaceName: relatedPlaceName ?? undefined,
-    })
+    sendAdminEmail(env, { id, type })
   );
 
   return json({ success: true });
@@ -166,35 +160,33 @@ export const onRequest: (context: { request: Request; env: Env }) => Promise<Res
 
 async function sendAdminEmail(
   env: Env,
-  data: {
-    id: string;
-    type: string;
-    name?: string;
-    email: string;
-    message: string;
-    relatedPageUrl?: string;
-    relatedPlaceName?: string;
-  }
+  data: { id: string; type: string },
 ): Promise<void> {
   const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://gokoreamate.com";
-  const subject = `[gokoreamate Inquiry] ${data.type}`;
-  const text = [
-    "A new inquiry has been submitted.",
-    "",
-    `Type:          ${data.type}`,
-    `Name:          ${data.name ?? "(anonymous)"}`,
-    `Email:         ${data.email}`,
-    `Related place: ${data.relatedPlaceName ?? "(none)"}`,
-    `Related page:  ${data.relatedPageUrl   ?? "(none)"}`,
-    "",
-    "Message:",
-    data.message,
-    "",
-    "Admin dashboard:",
-    `${siteUrl}/korea-mate-admin/inquiries/detail?id=${data.id}`,
-  ].join("\n");
+  const { subject, text } = buildInquiryNotification(siteUrl, data.id, data.type);
 
   // 발송은 공통 helper 하나만 쓴다. 복사본을 두지 않는다.
   // 결과를 던지지 않으므로 문의 접수는 메일 실패와 무관하게 성공한 채로 남는다.
   await sendViaResend(env, { subject, text });
+}
+
+/**
+ * 문의 알림 메일 본문 — 개인정보 원문을 넣지 않는다(LEGAL-RETENTION-IMPLEMENTATION-V1).
+ * 이름·이메일·메시지는 권한 있는 관리자 화면(x-admin-key)에서만 본다. 메일함과
+ * 발송 서비스에 남는 사본에는 문의 번호·유형·관리자 링크만 남아, DB 를 파기한
+ * 뒤에도 원문이 메일 쪽에 남지 않는다.
+ */
+export function buildInquiryNotification(siteUrl: string, id: string, type: string): { subject: string; text: string } {
+  return {
+    subject: `[gokoreamate Inquiry] ${type}`,
+    text: [
+      "A new inquiry has been submitted.",
+      "",
+      `Inquiry ID: ${id}`,
+      `Type:       ${type}`,
+      "",
+      "Open it in the admin dashboard (details are shown only there):",
+      `${siteUrl}/korea-mate-admin/inquiries/detail?id=${id}`,
+    ].join("\n"),
+  };
 }

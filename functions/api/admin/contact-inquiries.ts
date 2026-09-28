@@ -121,6 +121,31 @@ export const onRequestPatch: (context: Ctx) => Promise<Response> = async ({ requ
   if (body.adminNote !== undefined) {
     patch.admin_note = String(body.adminNote).slice(0, 2000) || null;
   }
+  // 보관 예외(LEGAL-RETENTION-IMPLEMENTATION-V1) — 진행 중이라 접수 6개월을 넘겨야
+  // 하는 문의만. 사유·책임자·검토일을 모두 적어야 하며, 검토일이 지나면 예외가
+  // 끝나 일일 파기 대상이 된다. null 을 보내면 예외를 해제한다.
+  if (body.retentionHold !== undefined) {
+    const h = body.retentionHold as { until?: unknown; reason?: unknown; by?: unknown } | null;
+    if (h === null) {
+      patch.retention_hold_until = null;
+      patch.retention_hold_reason = null;
+      patch.retention_hold_by = null;
+    } else {
+      const until = String(h?.until ?? "");
+      const reason = String(h?.reason ?? "").trim();
+      const by = String(h?.by ?? "").trim();
+      const today = new Date().toISOString().slice(0, 10);
+      const max = new Date(Date.now() + 366 * 864e5).toISOString().slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(until) || until < today || until > max) {
+        return json({ error: "retentionHold.until must be a date from today up to one year ahead." }, 400);
+      }
+      if (reason.length < 5 || reason.length > 500) return json({ error: "retentionHold.reason is required (5-500 chars)." }, 400);
+      if (by.length < 1 || by.length > 100) return json({ error: "retentionHold.by is required." }, 400);
+      patch.retention_hold_until = until;
+      patch.retention_hold_reason = reason;
+      patch.retention_hold_by = by;
+    }
+  }
 
   const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
 

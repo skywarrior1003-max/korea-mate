@@ -259,13 +259,13 @@ test("★migration 집합 스냅숏 — 승인된 77개 그대로, 예상 밖 �
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
   // 081 통합(AUTH-081-INTEGRATION): Auth 077~080 + RLS hotfix 081 합집합 = 81개.
   // 081 은 Production 적용 CLOSED(2026-09-27·sha 7aa68b9d…) — Auth 릴리스에서 재실행 금지.
-  assert.equal(files.length, 81, `migration 수가 변했다: ${files.length}`);
+  assert.equal(files.length, 82, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "081_city_spots_published_read_rls.sql",
-    "081(RLS hotfix — Production 기적용) 가 마지막이어야 한다");
+  assert.equal(files[files.length - 1], "082_retention_purge_daily.sql",
+    "082(retention purge) 가 마지막이어야 한다 — 081 은 Production 기적용");
   // 번호 공백·중복 금지: 001..072 가 정확히 한 번씩.
   const nums = files.map(f => f.slice(0, 3));
-  assert.equal(new Set(nums).size, 81, "번호 중복");
+  assert.equal(new Set(nums).size, 82, "번호 중복");
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
     assert.match(f, new RegExp(
       "^(042_place_reports|043_place_likes|044_admin_notification_events|" +
@@ -281,7 +281,7 @@ test("★migration 집합 스냅숏 — 승인된 77개 그대로, 예상 밖 �
       "064_mytrip_trend_packs|065_mytrip_ai_generation_ledger|066_mytrip_curator_ledger|" +
       "067_curator_search_slots_entity_type|068_community_reactions_submissions|" +
       "069_place_usage_signal|070_new_discovery_foundations|071_community_ranking_rpcs|" +
-      "072_ai_ops_ledger_and_switches|073_place_usage_annual_key|074_place_usage_monthly|075_place_usage_monthly_refresh_exact|076_place_usage_monthly_automation|077_user_consents|078_account_devices|079_trip_drafts|080_trip_draft_operations|081_city_spots_published_read_rls)\\.sql$"),
+      "072_ai_ops_ledger_and_switches|073_place_usage_annual_key|074_place_usage_monthly|075_place_usage_monthly_refresh_exact|076_place_usage_monthly_automation|077_user_consents|078_account_devices|079_trip_drafts|080_trip_draft_operations|081_city_spots_published_read_rls|082_retention_purge_daily)\\.sql$"),
       `예상치 못한 migration: ${f}`);
   }
 });
