@@ -90,7 +90,7 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
         role="dialog"
         aria-labelledby="gkm-preopen-title"
         aria-describedby="gkm-preopen-body"
-        className="relative w-full sm:max-w-lg min-h-[48vh] sm:min-h-[46vh] max-h-[60vh] flex flex-col bg-white text-gray-900 rounded-t-3xl sm:rounded-3xl shadow-2xl border border-gray-200 px-6 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:p-8"
+        className={`relative w-full sm:max-w-lg min-h-[48vh] sm:min-h-[46vh] ${statsAsk ? "max-h-[82vh]" : "max-h-[60vh]"} flex flex-col bg-white text-gray-900 rounded-t-3xl sm:rounded-3xl shadow-2xl border border-gray-200 px-6 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:p-8`}
       >
         <p className="text-[11px] font-black uppercase tracking-[0.16em] text-orange-600">{t("kicker")}</p>
         <h2 id="gkm-preopen-title" className="mt-3 text-xl sm:text-2xl font-black leading-snug text-balance">{t("title")}</h2>
@@ -99,35 +99,36 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
           {/* 테스트 기간 데이터 보존 안내 (Owner 확정 문구 — PRELAUNCH-DATA-NOTICE V1).
               "초기화될 수 있다" 표현을 유지하고, 공유 링크를 백업 수단으로 안내하지 않는다. */}
           <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-gray-600">{t("dataNotice")}</p>
-          {statsAsk && (
-            <section data-preopen-stats="" aria-labelledby="gkm-preopen-stats-title" className="mt-5 pt-4 border-t border-gray-200">
-              <h3 id="gkm-preopen-stats-title" ref={statsHeadingRef} tabIndex={-1} className="text-[14px] font-black text-gray-900 focus:outline-none">{tStats("noticeTitle")}</h3>
-              <p className="mt-1 text-[13px] leading-relaxed text-gray-600">{tStats("noticeBody")}</p>
-              {stats ? (
-                <p role="status" data-preopen-stats-result={gaAllowed(stats) ? "on" : (stats.collect || stats.transfer) ? "one" : "off"}
-                  className="mt-2 text-[13px] font-bold text-gray-900">
-                  {tStats(gaAllowed(stats) ? "statusOn" : (stats.collect || stats.transfer) ? "statusPartial" : "statusOff")}
-                </p>
-              ) : (
-                <div className="mt-3 grid grid-cols-2 gap-2">
-                  <button type="button" onClick={() => writeConsentState({ collect: false, transfer: false })}
-                    className="h-10 rounded-xl border border-gray-900 bg-white text-[13px] font-bold text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
-                    {tStats("rejectAll")}
-                  </button>
-                  <button type="button" onClick={() => setStatsSheet(true)}
-                    className="h-10 rounded-xl border border-gray-900 bg-white text-[13px] font-bold text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
-                    {tStats("cardChoose")}
-                  </button>
-                </div>
-              )}
+        </div>
+        {/* 통계 선택은 스크롤 영역 밖 — 안내 글이 길어도 두 버튼이 항상 보인다 */}
+        {statsAsk && (
+          <section data-preopen-stats="" aria-labelledby="gkm-preopen-stats-title" className="mt-4 pt-4 border-t border-gray-200 shrink-0">
+            <h3 id="gkm-preopen-stats-title" ref={statsHeadingRef} tabIndex={-1} className="text-[14px] font-black text-gray-900 focus:outline-none">{tStats("noticeTitle")}</h3>
+            <p className="mt-1 text-[13px] leading-relaxed text-gray-600">{tStats("noticeBody")}</p>
+            {stats ? (
+              <p role="status" data-preopen-stats-result={gaAllowed(stats) ? "on" : (stats.collect || stats.transfer) ? "one" : "off"}
+                className="mt-2 text-[13px] font-bold text-gray-900">
+                {tStats(gaAllowed(stats) ? "statusOn" : (stats.collect || stats.transfer) ? "statusPartial" : "statusOff")}
+              </p>
+            ) : (
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => writeConsentState({ collect: false, transfer: false })}
+                  className="h-10 rounded-xl border border-gray-900 bg-white text-[13px] font-bold text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                  {tStats("rejectAll")}
+                </button>
+                <button type="button" onClick={() => setStatsSheet(true)}
+                  className="h-10 rounded-xl border border-gray-900 bg-white text-[13px] font-bold text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                  {tStats("cardChoose")}
+                </button>
+              </div>
+            )}
             </section>
           )}
-        </div>
         <button
           ref={closeRef}
           type="button"
           onClick={handleClose}
-          className="mt-6 w-full rounded-2xl bg-gray-900 text-white font-bold py-3.5 text-base hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+          className="mt-4 w-full rounded-2xl bg-gray-900 text-white font-bold py-3.5 text-base hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           {t("close")}
         </button>
