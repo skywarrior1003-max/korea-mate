@@ -26,7 +26,9 @@
     "tipsDesc": "画面のところどころの小さな案内をオン/オフ",
     "tipsReplay": "ガイドをもう一度",
     "tipsReplayDesc": "最初からもう一度ずつ表示します",
-    "tipsReplayDone": "次の画面からまた表示します"
+    "tipsReplayDone": "次の画面からまた表示します",
+    "analyticsToggle": "利用統計（Google Analytics）",
+    "analyticsDesc": "オンにすると利用統計を Google（米国）へ送信します。オフにすると送信を止め、統計用 Cookie を削除します。"
   },
   "explore": {
     "title": "{city}を探索",
@@ -1647,5 +1649,14 @@
     "submitErrorDup": "このStoryはすでに提出されています。",
     "submitErrorNoMoment": "公開ストーリーに入れた記録がまだありません。記録管理で公開する記録を選んでください。",
     "submitOpenRecords": "記録管理を開く"
+  },
+  "analyticsConsent": {
+    "title": "利用統計の Cookie を許可しますか？",
+    "body": "許可すると、サービス改善のために Google Analytics へ利用統計を送信します。許可しなくても、すべての機能をそのまま使えます。",
+    "details": "送信する情報：Cookie 識別子、閲覧した画面と使った機能（都市・公開場所レベル）、端末・ブラウザ情報、IP アドレス（Google がおおよその地域の推定に使用）。受領者：Google LLC（米国）。時期と方法：利用のたびに暗号化された接続で送信。保存期間：イベント2か月・ユーザー14か月。メールアドレスや氏名は送信しません。",
+    "refuse": "拒否する場合は「許可しない」を、後で撤回する場合は「その他 › 利用統計」をオフにしてください。14歳未満の方は許可しないでください。",
+    "policyLink": "プライバシーポリシー",
+    "accept": "許可する",
+    "decline": "許可しない"
   }
 }

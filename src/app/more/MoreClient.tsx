@@ -21,6 +21,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
   readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen, emitGuideEvent,
 } from "@/lib/journey-guide/guide-core";
+import { readConsent, writeConsent, ANALYTICS_CONSENT_EVENT } from "@/lib/analytics-consent";
 
 /** 아이콘은 이 저장소가 쓰는 방식 그대로 인라인 SVG · currentColor 다 */
 const ICON = {
@@ -89,6 +90,16 @@ export default function MoreClient() {
     emitGuideEvent("tutorial_replayed", {});
   };
 
+  // 사용 통계(GA) 선택 — 동의 철회 경로(GA-CONSENT-V1). 실제 켜고 끄기는 AnalyticsConsent 가 맡는다.
+  const [statsOn, setStatsOn] = useState(false);
+  useEffect(() => {
+    const sync = () => setStatsOn(readConsent() === "granted");
+    sync();
+    window.addEventListener(ANALYTICS_CONSENT_EVENT, sync);
+    return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, sync);
+  }, []);
+  const toggleStats = () => writeConsent(statsOn ? "denied" : "granted");
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
       <header className="border-b border-[#E6DFD5] bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-50">
@@ -130,6 +141,29 @@ export default function MoreClient() {
             desc={t("privacyDesc")}
             icon={<svg {...ICON} aria-hidden><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /></svg>}
           />
+          <div className="flex items-center gap-4 px-5 min-h-16 py-4">
+            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
+              <svg {...ICON} aria-hidden><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span id="gkm-stats-label" className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("analyticsToggle")}</span>
+              <span className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">{t("analyticsDesc")}</span>
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={statsOn}
+              aria-labelledby="gkm-stats-label"
+              onClick={toggleStats}
+              className="gkm-focus relative shrink-0 w-12 h-7 rounded-full transition-colors"
+              style={{ backgroundColor: statsOn ? "#FF4A2D" : "#D9D2C7" }}
+            >
+              <span
+                className="absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-all"
+                style={{ left: statsOn ? "calc(100% - 1.625rem)" : "0.125rem" }}
+              />
+            </button>
+          </div>
         </Group>
 
         {/* First Trip Journey Guide — 팁 ON/OFF · 다시 보기 (Owner 확정) */}

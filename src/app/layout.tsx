@@ -6,6 +6,7 @@ import "./globals.css";
 import SavedSpotsPanel from "@/components/SavedSpotsPanel";
 import I18nProvider from "@/components/I18nProvider";
 import NavShell from "@/components/ui/NavShell";
+import AnalyticsConsent from "@/components/AnalyticsConsent";
 
 
 const geistSans = Geist({
@@ -121,6 +122,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
+  // V2-ENV-ISOLATION §11-1 — analytics live 는 production 빌드에서만.
+  // 비-production 은 NEXT_PUBLIC_ANALYTICS_MODE=test 로만 별도 property 허용.
+  const appEnv = (process.env.NEXT_PUBLIC_APP_ENV ?? "").toLowerCase();
+  const analyticsMode = (process.env.NEXT_PUBLIC_ANALYTICS_MODE ?? "").toLowerCase();
+  const envAllows = appEnv === "production" ? analyticsMode !== "off" : analyticsMode === "test";
+  const ga4Valid = envAllows && ga4Id && ga4Id !== "나중에_입력";
+  // GA-CONSENT-V1 — 게이트를 통과해도 gtag 를 바로 싣지 않는다. 이용자가 배너에서
+  // '동의'를 고른 뒤에만 AnalyticsConsent 가 싣는다(선택 전·거부 시 Google 요청 0).
+  const gaConsentId = ga4Valid ? ga4Id : null;
   return (
     <html
       lang="en"
@@ -146,30 +157,6 @@ export default function RootLayout({
             />
           </>
         );
-      })()}
-      {(() => {
-        const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
-        // V2-ENV-ISOLATION §11-1 — analytics live 는 production 빌드에서만.
-        // 비-production 은 NEXT_PUBLIC_ANALYTICS_MODE=test 로만 별도 property 허용.
-        const appEnv = (process.env.NEXT_PUBLIC_APP_ENV ?? "").toLowerCase();
-        const analyticsMode = (process.env.NEXT_PUBLIC_ANALYTICS_MODE ?? "").toLowerCase();
-        const envAllows = appEnv === "production" ? analyticsMode !== "off" : analyticsMode === "test";
-        const ga4Valid = envAllows && ga4Id && ga4Id !== "나중에_입력";
-        return ga4Valid ? (
-          <>
-            <Script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">{`
-window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());
-gtag('config','${ga4Id}');
-`}</Script>
-          </>
-        ) : null;
       })()}
       {(() => {
         const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
@@ -242,6 +229,7 @@ gtag('config','${ga4Id}');
         <Suspense fallback={null}>
           <NavShell />
         </Suspense>
+        {gaConsentId ? <AnalyticsConsent gaId={gaConsentId} /> : null}
         </I18nProvider>
       </body>
     </html>

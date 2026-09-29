@@ -26,7 +26,9 @@
     "tipsDesc": "Turn the small in-context tips on or off",
     "tipsReplay": "Replay the guide",
     "tipsReplayDesc": "See each tip once more from the start",
-    "tipsReplayDone": "Tips will show again from your next screen"
+    "tipsReplayDone": "Tips will show again from your next screen",
+    "analyticsToggle": "Usage statistics (Google Analytics)",
+    "analyticsDesc": "When on, usage statistics are sent to Google (USA). Turning it off stops sending and deletes the statistics cookies."
   },
   "explore": {
     "title": "Explore {city}",
@@ -1647,5 +1649,14 @@
     "submitErrorDup": "This Story has already been submitted.",
     "submitErrorNoMoment": "No records are in your public Story yet. Pick records to make public in Manage records.",
     "submitOpenRecords": "Open Manage records"
+  },
+  "analyticsConsent": {
+    "title": "Allow usage statistics cookies?",
+    "body": "If you allow it, we send usage statistics to Google Analytics to improve the service. Every feature works the same if you don't.",
+    "details": "What is sent: a cookie identifier, the screens you view and features you use (city and public-place level), device and browser information, and your IP address (used by Google to estimate a rough region). Recipient: Google LLC (USA). When and how: each time you use the service, over an encrypted connection. Kept: events 2 months, user data 14 months. We never send your email or name.",
+    "refuse": "To refuse, choose \"Don't allow\"; to withdraw later, turn off More › Usage statistics. If you are under 14, please don't allow it.",
+    "policyLink": "Privacy Policy",
+    "accept": "Allow",
+    "decline": "Don't allow"
   }
 }
