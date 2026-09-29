@@ -19,32 +19,50 @@
 | 날씨 | 실시간(KMA) | 실시간 | — | 실행 시 API | 정상 | 없음 |
 | Production `events` 테이블 | — | — | **0행**(읽는 곳 없음) | — | — | 없음 |
 
-## 2. 이번에 복구한 게시 경로
+## 2. 운영 계약 — 주간 원천 확인에서 실화면까지
 
-조사 → 원천 확인 → 정식 데이터 반영 → 화면 갱신 → 반영 기록:
+**자동화된 것과 아닌 것**: 자동인 것은 (a) 날짜가 지난 행사를 화면에서 빼는 일(브라우저의 한국 날짜로 방문할 때마다 계산)과 (b) 주간 확인이 밀렸는지 판정하는 일(`/api/health/content`)뿐이다. **원천 확인·데이터 수정·배포는 사람이 한다 — 자동 갱신이 아니다.** 자동 감지가 503 을 내도 누가 보지 않으면 아무 일도 일어나지 않는다(§3).
 
-1. **조사·원천 확인**: 공식 누리집·공식 공지를 직접 연다. 날짜·요금·운영 여부는 공식 원문 또는 공식 원문을 인용한 복수 보도로만 확정한다. 원천이 불확실하면 게시하지 않고 아래 4의 대기 목록에 둔다.
-2. **정식 데이터 반영**: `src/data/regional/regional-places-v1.json`·`regional-essentials-v1.json` 을 고치고 `asOf`·`source`(URL·as_of·freshness_note)를 함께 갱신한다.
-3. **교정 기록**: `data/regional-recommendations/corrections/freshness-YYYY-MM-DD.json` 에 전·후 값, 원천 URL, 확인일, 검토 상태를 남긴다.
-4. **확인 기록**: `src/data/regional/content-freshness-v1.json` 의 `checks` 에 그날 1행을 추가한다(교정이 없어도 추가 — "확인했다"는 기록).
-5. **가드**: `node --experimental-strip-types --test src/lib/regional/regional-content-freshness-guard.test.ts src/data/regional/regional-recommendations.test.ts`
-6. **Preview 확인**: 브랜치 push → Preview 에서 해당 City Hub·Essentials 화면과 `/api/health/content` 확인.
-7. **Production 반영**: Owner 승인 후 master merge → 자동 배포. 데이터가 빌드에 구워지므로 **merge 없이는 화면이 바뀌지 않는다.**
+| 단계 | 담당 | 주기 | 완료 증거(없으면 미완료) |
+|---|---|---|---|
+| ① 원천 확인·변경 제안 | Data Track(조사 담당 — 다른 LLM 포함) | 매주 월요일 | 항목별 공식 URL·확인일·전/후 값을 담은 제안. **조사만 끝난 상태는 '제안'이지 반영이 아니다** |
+| ② 원천 재검증·데이터 반영 | Main(Claude) | ① 수령 후 | 공식 원문을 직접 열어 대조 → JSON 수정 + `data/regional-recommendations/corrections/freshness-YYYY-MM-DD.json`(원천·검토 상태) + `content-freshness-v1.json` checks 1행(status `preview_verified`) + 가드 통과. 원천이 불확실하면 반영하지 않고 `pending` 에 사유를 남긴다 |
+| ③ Preview 확인 | Main(Claude) | ② 직후 | Preview 배포 id, 바뀐 화면 실측(전/후), `/api/health/content` 200 |
+| ④ Production 게시 | Owner 승인 → Main 이 master merge | 승인 즉시 | Production 배포 id(자동 배포). **데이터는 빌드에 구워지므로 merge 없이는 화면이 바뀌지 않는다** |
+| ⑤ 게시 후 실화면 확인 | Main(Claude) | 배포 당일 | Production 에서 바뀐 화면과 `/api/health/content` 200 확인 → 다음 확인 행의 `previous_publish` 에 배포 id·확인 결과를 남긴다(게시 증거는 배포 뒤에야 생기므로) |
+
+미게시 항목은 `content-freshness-v1.json` 의 `pending`(id·대기 이유)에 남는다. 원천 재확인 대기 Essentials 는 `recheckPending` 이 있어 상세 화면에 '다시 확인하는 중' 안내가 붙는다(요금이 최신 확정값처럼 보이지 않게).
+
+### 날짜 경계(자동)
+
+- 기준일은 **한국 날짜**다(`kstToday` — UTC 15:00 = KST 다음 날 00:00).
+- 종료일(`validTo`·`endDate`)·표시 기한(`displayUntil`)은 **당일까지 보이고 다음 날 빠진다**.
+- 달만 적힌 날짜("2026-08 (exact date TBC)")는 **그 달 말일까지** 보인다. 진행 중·예정 상태는 ISO 날짜가 있을 때만 붙인다.
+- City Hub 행사 목록은 **브라우저에서만** 계산한다(정적 HTML·hydration 중에는 목록을 그리지 않음) — 빌드한 날 기준 목록이 HTML 에 남지 않는다. /trending·/all-spots 는 행사 파일을 실행 시 받아 매번 계산한다.
+- 재배포가 필요한 것은 **데이터 내용이 바뀔 때뿐**이다. 날짜가 지나 행사가 빠지는 데는 재배포가 필요 없다.
 
 ## 3. 밀림을 알아차리는 방법
 
-- `GET /api/health/content` — 배포된 빌드의 마지막 확인일이 7+2일을 넘기면 503 `weekly_check_overdue`, 종료일을 계산할 수 없는 행사가 있으면 503 `event_without_end_date`, Essentials `reviewBy` 가 지나면 503 `essentials_review_overdue`. 응답은 상태명·날짜·건수뿐이다.
-- 외부 가동 감시에 `/api/health/retention` 과 함께 등록한다(Auth 런북 D-8 과 같은 서비스).
-- 코드 쪽 재발 방지: 달만 적힌 행사("2026-08 (exact date TBC)")는 그 달 말일에 목록에서 빠진다. /trending·/all-spots 는 `displayUntil`·`endDate` 가 지난 행사를 목록에서 뺀다(공용 `isListableEvent`).
+- `GET https://gokoreamate.com/api/health/content`(콘텐츠 브랜치 게시 후 존재) — 마지막 확인이 7+2일을 넘기면 503 `weekly_check_overdue`, 종료일을 계산할 수 없는 행사가 있으면 503 `event_without_end_date`, Essentials `reviewBy` 초과는 503 `essentials_review_overdue`. 응답은 상태명·날짜·건수뿐이고 5분 캐시된다.
+- **현재 외부 감시는 연결돼 있지 않다**(등록된 감시 서비스 기록 없음). 연결할 때의 설정: 위 URL, 방법 GET, 정상=200, 간격 60분, 연속 2회 실패 시 알림, 알림 채널은 메일 발송 서비스(Resend)와 다른 것(앱 푸시·SMS). Auth 출시 후에는 `/api/health/retention` 도 같은 방식으로 추가한다. 등록은 Owner 계정에서 하는 외부 설정이다.
+- **연결 전 절차**: 매주 월요일 Main 작업 세션을 시작할 때 `curl -s -o /dev/null -w "%{http_code}" https://gokoreamate.com/api/health/content` 와 `content-freshness-v1.json` 의 마지막 확인일을 먼저 본다. 503 이거나 마지막 확인이 7일을 넘었으면 그 주 첫 작업을 ① 로 둔다. 선택: Owner 가 Claude 예약 실행(매주 월 09:00 KST 위 확인 후 결과 보고)을 만들 수 있다.
 
 ## 4. 원천 확인이 필요한 대기 목록(이번에 고치지 않음)
 
 | 위치 | 값 | 이유 |
 |---|---|---|
-| seoul-U-006 T-money Mpass | 15,000~64,500원 | 판매 지속 여부·가격 공식 원문 미확인 |
+| seoul-U-006 T-money Mpass | 15,000~64,500원 | 판매 지속 여부·가격 공식 원문 미확인 — 화면에 재확인 중 안내 |
 | jeju-U-003 버스 기본요금 / jeju-U-004 택시 / jeju-U-006 마라도 | "2025년 기준" 표기 | 2026 공식 요금표 미확인 |
 | jeonju 택시(essentials :825) | "2024년 기준" | 공식 요금 미확인 |
 | 주요 운영시간(busan-U-001 등) | 05:00~23:59 등 | 노선별 변경 여부 미확인 |
 | 가을 이후 행사 | 5도시 모두 신규 행사 0건 추가 | 새 행사는 공식 일정 확인 후 별도 반영(이번 범위는 오표시 교정) |
 | 경주 "이달의 추천" | 1~8월만 | 월별 갱신 약속 여부 Owner 결정 |
 | `public/data/events.json` 레거시 | 종료 23건 | 목록에서는 빠짐. 파일 정리·레거시 화면 존치는 별도 결정 |
+
+## 5. 이번 콘텐츠 교정의 Production 반영 단위
+
+- **단위**: 브랜치 `fix/regional-content-freshness-v1` 을 master 에 merge(= Cloudflare 자동 Production 빌드·배포). DB·환경변수·Auth·Legal 변경 없음(파일 목록은 merge 요청에 첨부).
+- **배포 전 확인**: master 가 브랜치의 base(`1d3334fd`)에서 앞서 나갔으면 merge 충돌·가드를 다시 확인. 가드 `regional-content-freshness-guard`·`regional-recommendations` 통과.
+- **배포 후 확인(10분 안)**: `/trending` 에 부산바다축제 없음 · `/city/jeju/events`·`/city/jeonju/events` 에 관악제·소리축제 없음 · `/city/seoul/essentials/seoul-U-001` 1,550원 · `seoul-U-007` 단기권 문구 · `/api/health/content` 200.
+- **중단 기준**: 빌드 실패(next/font 일시 오류는 같은 커밋 재시도), 위 확인 중 하나라도 다르면 게시 중단.
+- **복구**: Cloudflare Pages 에서 직전 Production 배포로 되돌린다(데이터 변경뿐이라 DB 조치 없음). 원인은 브랜치에서 고친 뒤 다시 merge.

@@ -1,5 +1,5 @@
 {
- "note": "City Hub Events·Travel Essentials 주간 확인 기록(closeout SSOT '각 지역 공식 원천을 매주 확인한다'). 확인할 때마다 checks 끝에 1행을 추가하고, 교정이 있으면 data/regional-recommendations/corrections/ 에 원천과 함께 남긴다. 이 파일은 빌드에 포함되므로 배포된 사이트의 /api/health/content 가 마지막 확인일을 그대로 보고한다.",
+ "note": "City Hub Events·Travel Essentials 주간 확인 기록(closeout SSOT \"각 지역 공식 원천을 매주 확인한다\"). 운영 계약: docs/operations/regional-content-freshness-runbook-v1.md §2. 확인할 때마다 checks 끝에 1행을 추가한다(교정이 없어도). 이 파일은 빌드에 포함되므로 배포된 사이트의 /api/health/content 가 마지막 확인일을 보고한다. 게시 증거(Production 배포 id·실화면 확인)는 배포 뒤에야 생기므로 다음 확인 행의 previous_publish 에 남긴다.",
  "cadence_days": 7,
  "grace_days": 2,
  "checks": [
@@ -13,7 +13,36 @@
    "date": "2026-09-29",
    "scope": "행사 날짜 전수(현재 노출분) + 서울 지하철 요금·기후동행카드",
    "by": "Claude",
-   "record": "data/regional-recommendations/corrections/freshness-2026-09-29.json"
+   "record": "data/regional-recommendations/corrections/freshness-2026-09-29.json",
+   "status": "preview_verified",
+   "preview": "https://4cc8b70e.korea-mate.pages.dev (1차) — 2차 Preview 는 이번 커밋",
+   "production": null
+  }
+ ],
+ "pending": [
+  {
+   "id": "seoul-U-006",
+   "reason": "Mpass 판매 지속 여부·가격 공식 원문 미확인 — 화면에 재확인 중 안내"
+  },
+  {
+   "id": "jeju-U-003",
+   "reason": "2025년 기준 버스 요금 — 2026 공식 요금표 미확인"
+  },
+  {
+   "id": "jeju-U-004",
+   "reason": "2025년 기준 택시 요금 — 2026 공식 요금표 미확인"
+  },
+  {
+   "id": "jeju-U-006",
+   "reason": "2025년 기준 마라도 여객선 요금 — 공식 원문 미확인"
+  },
+  {
+   "id": "jeonju-U-004",
+   "reason": "2024년 기준 택시 요금 — 공식 요금 미확인"
+  },
+  {
+   "id": "new-events-autumn-2026",
+   "reason": "5도시 가을 이후 행사 0건 — 공식 일정 확인 전 게시하지 않음"
   }
  ]
 }

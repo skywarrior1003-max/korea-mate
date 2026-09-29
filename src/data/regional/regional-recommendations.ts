@@ -16,6 +16,12 @@ import essentialsRaw from "./regional-essentials-v1.json" with { type: "json" };
 import legacyStopsRaw from "./gyeongju-legacy-stops-v1.json" with { type: "json" };
 import legacyContentRaw from "./gyeongju-legacy-content-v1.json" with { type: "json" };
 import { curatedTripsForCity } from "../curated-trips.ts";
+import { kstToday } from "../../lib/dates/kst-today.ts";
+
+/** 비교 기준일 — Date 는 한국 날짜로 바꾸고, "YYYY-MM-DD" 문자열은 그대로 쓴다. */
+function dayOf(today: Date | string): string {
+  return typeof today === "string" ? today : kstToday(today.getTime());
+}
 
 export interface RegionalTripStop {
   name: string | null;
@@ -154,9 +160,9 @@ export function tripLinkedSpotIds(trip: RecommendedTrip): number[] {
  * 도시별 공식 추천 장소(recommended_now). 유효기간이 명시된 항목은
  * 기간이 지난 것을 조용히 제외한다 — 철 지난 행사를 추천이라 부르지 않는다.
  */
-export function getRecommendedPlaces(city: string, today = new Date()): RecommendedPlace[] {
+export function getRecommendedPlaces(city: string, today: Date | string = new Date()): RecommendedPlace[] {
   const slug = city.toLowerCase();
-  const iso = today.toISOString().slice(0, 10);
+  const iso = dayOf(today);
   return REGIONAL_PLACES.filter(p => {
     if (p.city !== slug) return false;
     if (p.validTo && p.validTo < iso) return false;
@@ -197,9 +203,9 @@ function listUntil(p: RecommendedPlace): string | null {
   return null;
 }
 
-export function getCityEvents(city: string, today = new Date()): CityEvent[] {
+export function getCityEvents(city: string, today: Date | string = new Date()): CityEvent[] {
   const slug = city.toLowerCase();
-  const iso = today.toISOString().slice(0, 10);
+  const iso = dayOf(today);
   return REGIONAL_PLACES
     .filter(p => p.city === slug && (p.validFrom !== null || p.validTo !== null))
     .filter(p => { const until = listUntil(p); return !(until && until < iso); })
@@ -214,17 +220,18 @@ export function getCityEvents(city: string, today = new Date()): CityEvent[] {
 /**
  * 내부 상세용 단건 조회 — 종료된 행사도 찾는다(공유된 상세 링크가 죽지 않게).
  * 단, 종료분의 status 는 null 로 둔다: 지난 행사에 '진행 예정'을 붙이지 않는다.
+ * today 가 null(아직 날짜를 모름 — 정적 HTML·hydration)이면 status 도 null 이다.
  */
-export function getCityEventById(city: string, id: string, today = new Date()): CityEvent | null {
+export function getCityEventById(city: string, id: string, today: Date | string | null = new Date()): CityEvent | null {
   const slug = city.toLowerCase();
-  const iso = today.toISOString().slice(0, 10);
+  const iso = today === null ? null : dayOf(today);
   const p = REGIONAL_PLACES.find(r => r.city === slug && r.id === id && (r.validFrom !== null || r.validTo !== null));
   if (!p) return null;
   const until = listUntil(p);
-  const expired = Boolean(until && until < iso);
+  const expired = iso === null || Boolean(until && until < iso);
   return {
     ...p,
-    status: !expired && p.validFrom && ISO_DATE.test(p.validFrom)
+    status: !expired && iso !== null && p.validFrom && ISO_DATE.test(p.validFrom)
       ? (p.validFrom > iso ? "upcoming" : "ongoing")
       : null,
   };
@@ -247,6 +254,8 @@ export interface TravelEssential {
   asOf: string | null;
   reviewBy: string | null;
   freshnessNote: string | null;
+  /** 원천 재확인 대기 사유(운영 기록) — 있으면 화면은 '다시 확인 중' 안내만 붙인다(사유 원문은 그리지 않음) */
+  recheckPending?: string | null;
 }
 
 interface EssentialsFile { essentials: TravelEssential[] }
