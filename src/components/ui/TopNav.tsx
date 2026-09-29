@@ -36,7 +36,7 @@ export default function TopNav({ selectedCount }: TopNavProps) {
           <Link href={exploreHref} className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("explore")}
           </Link>
-          <Link href="/picks/" className="gkm-focus relative text-sm font-semibold text-sub hover:text-ink transition-colors">
+          <Link href="/picks/" data-tut="tut-nav-picks" className="gkm-focus relative text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("picks")}
             {typeof selectedCount === "number" && selectedCount > 0 && (
               <span className="ml-1.5 inline-flex min-w-4 h-4 px-1 rounded-full bg-action text-white text-[10px] font-bold items-center justify-center align-middle">

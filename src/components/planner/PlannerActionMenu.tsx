@@ -46,6 +46,7 @@ export default function PlannerActionMenu({ items, label, closeLabel }: Props) {
       <button
         type="button"
         aria-haspopup="menu"
+        data-tut="tut-more-menu"
         aria-expanded={open}
         aria-label={label}
         onClick={() => setOpen(o => !o)}
@@ -67,13 +68,14 @@ export default function PlannerActionMenu({ items, label, closeLabel }: Props) {
             }`;
             if (it.href && !it.disabled) {
               return (
-                <Link key={it.key} role="menuitem" href={it.href} className={cls} onClick={() => setOpen(false)}>{it.label}</Link>
+                <Link key={it.key} role="menuitem" data-tut={`tut-menu-${it.key}`} href={it.href} className={cls} onClick={() => setOpen(false)}>{it.label}</Link>
               );
             }
             return (
               <button
                 key={it.key}
                 role="menuitem"
+                data-tut={`tut-menu-${it.key}`}
                 type="button"
                 disabled={it.disabled}
                 className={cls}

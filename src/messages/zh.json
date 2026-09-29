@@ -24,11 +24,6 @@
     "termsDesc": "使用 gokoreamate 时适用的规则。",
     "contactDesc": "发送反馈或报告错误信息",
     "groupTips": "旅行提示",
-    "tipsToggle": "首次旅程引导",
-    "tipsDesc": "开启或关闭页面中的小提示",
-    "tipsReplay": "重看引导",
-    "tipsReplayDesc": "从头再看一遍各个提示",
-    "tipsReplayDone": "下个页面开始将再次显示",
     "analyticsToggle": "使用统计（Google Analytics）",
     "analyticsDesc": "两项都开启时才会开启统计。关闭任意一项后，将停止此后的发送，并删除本服务在此浏览器中设置的 GA Cookie。已发送的信息不会立即删除，并遵循隐私政策中的 Google Analytics 保留设置。",
     "analyticsChange": "更改统计选择"
@@ -1521,25 +1516,6 @@
     "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。",
     "suggestUnavailable": "AI建议暂时不可用。你仍可直接输入。"
   },
-  "guide": {
-    "gotIt": "知道了",
-    "save": "喜欢的地方先保存 — 都会汇集到 Picks › Saved。",
-    "thisTrip": "在 Saved 里把这次要去的地方选进 This Trip，旅程从这里开始。",
-    "planner": "This Trip with AI — 你选的地点和 AI 一起规划路线，只需定日期和节奏。",
-    "myTripEdit": "这是你的行程：可自由添加、删除地点并调整顺序。",
-    "directions": "每个地点都有 NAVER/Google 地图按钮，一键打开导航。",
-    "photo": "随手记录旅途瞬间 — 一张照片加一句话就够了。",
-    "aiWriting": "不知道怎么写？从三种 AI 文字风格中挑一个开始，随时可以自己修改。",
-    "story": "你的记录会在故事标签里以旅行的方式呈现 — 同样的内容，无需额外操作。",
-    "myPlaces": "只有你知道的地方，用「留为我的地点」收藏，配上照片和笔记。",
-    "share": "分享只公开你选中的内容，照片和笔记在选择前保持私密。",
-    "finale": "完成了一次旅程！这些提示可在更多(⋯)中关闭或重看。",
-    "discover": "先逛逛你感兴趣的城市吧。",
-    "skip": "跳过",
-    "chapterA": "开始旅程",
-    "chapterB": "我的行程",
-    "chapterC": "故事"
-  },
   "blog": {
     "title": "博客",
     "subtitle": "基于官方信息的旅行读物——读懂韩国，自己做选择。",
@@ -1717,5 +1693,195 @@
     "statusUnset": "已关闭 · 尚未选择",
     "noticeTitle": "使用统计（可选）",
     "noticeBody": "你可以选择是否将使用统计发送至 Google Analytics（美国）。拒绝或不作选择都能照常使用全部功能，之后也可在“更多 › 使用统计”中更改。"
+  },
+  "journey": {
+    "startTitle": "想怎样开始你的旅行？",
+    "startLead": "我们会按你选择的方式，逐一指出页面上的实际按钮。随时可以更换或结束。",
+    "optDiscover": "在 gokoreamate 发现",
+    "optDiscoverBody": "从推荐行程开始，或挑选地点自己制作。",
+    "pathCourse": "从推荐行程开始",
+    "pathCourseBody": "城市 → 行程 → 选日期 → 我的旅行",
+    "pathPlaces": "挑选地点自己制作",
+    "pathPlacesBody": "保存地点 → 加入 This Trip → 生成行程",
+    "optImport": "使用已有的行程",
+    "optImportBody": "通过链接导入博客或网页上的行程。",
+    "importCanLabel": "可以导入：",
+    "importCan": "任何人都能打开的公开网页、博客文章链接",
+    "importCannotLabel": "暂不支持：",
+    "importCannot": "粘贴 AI 对话回答（Gemini、ChatGPT 等）、文件、需要登录才能查看的页面",
+    "importNeedLogin": "导入需要登录。如果无法导入，可以立即改为挑选地点制作。",
+    "pathImport": "通过链接导入",
+    "pathImportTextAlt": "如果是 AI 回答 — 挑选地点自己制作",
+    "pathMyTrip": "从我的旅行继续",
+    "later": "以后再说",
+    "phaseStart": "制作旅行",
+    "phaseMyTrip": "我的旅行",
+    "hide": "在此页面隐藏指引",
+    "offRoute": "这一步在另一个页面进行",
+    "missing": "当前页面上没有要指向的按钮",
+    "covered": "被其他窗口遮住了 — 关闭后会继续指引",
+    "importFailed": "无法导入此链接",
+    "importFailedBody": "可以换一个公开链接重试，或改为挑选地点自己制作。",
+    "scrollTo": "前往按钮",
+    "pauseForTrip": "旅行中再继续",
+    "switchToPlaces": "改为挑选地点制作",
+    "skipStep": "跳过这一步",
+    "changePath": "换一种方式",
+    "endJourney": "结束指引",
+    "resumeLine": "有暂停的指引 — {step}",
+    "resume": "继续",
+    "dismissResume": "以后",
+    "moreTitle": "旅行制作指引",
+    "moreActive": "进行中 — {step}",
+    "morePaused": "已暂停 — {step}",
+    "moreDone": "已完成。可以随时重新开始。",
+    "moreIdle": "跟着实际按钮制作一次旅行。",
+    "moreOff": "已关闭。打开后可在首页选择开始方式。",
+    "restart": "从头开始（选择方式）",
+    "target": {
+      "tut-more-menu": "先打开右上角的[更多]菜单",
+      "tut-tab-saved": "先打开[已保存]标签",
+      "tut-dates": "确认旅行日期，不对的话点击修改",
+      "tut-card-create": "点击[制作卡片]",
+      "tut-import-add": "确认导入的地点并添加"
+    },
+    "goto": {
+      "pickCity": "前往首页",
+      "pickCourse": "去选择城市",
+      "pickPlace": "去选择城市",
+      "openPicks": "打开 Picks",
+      "addToThisTrip": "打开 Picks",
+      "openThisTrip": "打开 Picks",
+      "buildTrip": "打开 Picks",
+      "openImport": "打开导入",
+      "pasteLink": "打开导入",
+      "reviewImport": "打开导入",
+      "openMyTrip": "我的旅行列表",
+      "tripSaved": "我的旅行列表",
+      "checkDates": "我的旅行列表",
+      "addRecord": "我的旅行列表",
+      "openStory": "我的旅行列表",
+      "publishOpen": "我的旅行列表",
+      "publishStory": "我的旅行列表",
+      "makeShareCard": "我的旅行列表",
+      "shareCard": "我的旅行列表",
+      "submitRecommend": "我的旅行列表"
+    },
+    "steps": {
+      "pickCity": {
+        "say": "点击想去的城市",
+        "name": "选择城市"
+      },
+      "pickCourse": {
+        "say": "点击喜欢的推荐行程",
+        "name": "选择推荐行程"
+      },
+      "adoptCourse": {
+        "say": "要用此行程创建旅行，请点击此按钮",
+        "name": "采用此行程",
+        "why": "现在还不会保存，下一步设定日期。"
+      },
+      "adoptDates": {
+        "say": "设定日期后点击此按钮",
+        "name": "设定日期并创建"
+      },
+      "pickPlace": {
+        "say": "点击一个感兴趣的地点",
+        "name": "选择地点"
+      },
+      "savePlace": {
+        "say": "喜欢就点击[保存]",
+        "name": "保存地点",
+        "why": "保存的地点会汇集到 Picks，可以保存多个。"
+      },
+      "openPicks": {
+        "say": "点击[Picks]",
+        "name": "打开 Picks"
+      },
+      "addToThisTrip": {
+        "say": "在要加入本次旅行的地点上点击 This Trip 按钮",
+        "name": "加入 This Trip",
+        "missing": "还没有保存的地点 — 先保存一个，或跳过这一步"
+      },
+      "openThisTrip": {
+        "say": "点击 This Trip 标签",
+        "name": "查看 This Trip"
+      },
+      "buildTrip": {
+        "say": "点击此按钮生成行程",
+        "name": "生成行程",
+        "missing": "This Trip 是空的 — 请先加入地点"
+      },
+      "openImport": {
+        "say": "打开导入页面",
+        "name": "打开导入"
+      },
+      "pasteLink": {
+        "say": "在此粘贴公开博客或网页链接并分析",
+        "name": "粘贴链接",
+        "why": "暂不支持导入 AI 对话回答或文件。"
+      },
+      "reviewImport": {
+        "say": "确认导入的地点后点击此按钮",
+        "name": "确认导入内容"
+      },
+      "openMyTrip": {
+        "say": "点击要继续的旅行",
+        "name": "打开我的旅行"
+      },
+      "tripSaved": {
+        "say": "旅行正在保存到我的旅行 — 请查看保存状态",
+        "name": "确认已保存",
+        "why": "没有单独的保存按钮，创建后会自动保存。"
+      },
+      "checkDates": {
+        "say": "确认旅行日期 — 不对就修改并应用",
+        "name": "确认日期"
+      },
+      "addRecord": {
+        "say": "旅行中要留下照片或备忘，请点击这里",
+        "name": "留下照片·备忘",
+        "why": "现在没有照片也没关系。用[旅行中再继续]暂停，之后从这里继续。"
+      },
+      "openStory": {
+        "say": "点击 Story 标签",
+        "name": "查看 Story",
+        "why": "行程和记录会呈现为一篇故事。"
+      },
+      "publishOpen": {
+        "say": "打开公开设置",
+        "name": "打开公开设置"
+      },
+      "publishStory": {
+        "say": "确认公开后会显示什么，再自己决定是否公开",
+        "name": "决定是否公开",
+        "why": "不公开也可以。不公开的话，请跳过分享卡片和炫耀步骤。"
+      },
+      "makeShareCard": {
+        "say": "打开分享卡片",
+        "name": "制作分享卡片",
+        "why": "卡片包含标题、日期、城市和照片，不含精确地址或地图。",
+        "missing": "分享卡片需要公开的旅行 — 可以跳过"
+      },
+      "shareCard": {
+        "say": "直接分享或保存图片 — 是否发布由你决定",
+        "name": "分享或保存卡片",
+        "why": "不会自动发布，请在手机分享面板中自己选择应用。"
+      },
+      "submitRecommend": {
+        "say": "炫耀我的旅行 — 把这次旅行提交到地区推荐",
+        "name": "炫耀我的旅行",
+        "why": "审核后会作为推荐展示给其他旅行者，与分享卡片不同，会发布在网站内。",
+        "missing": "需要公开旅行、3 个以上地点和 1 条公开记录才会显示 — 可以跳过"
+      },
+      "finish": {
+        "say": "就是这些！现在尽情充实这次旅行吧",
+        "name": "完成"
+      }
+    },
+    "confirm": {
+      "checkDates": "日期正确",
+      "finish": "完成指引"
+    }
   }
 }

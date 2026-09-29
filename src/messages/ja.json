@@ -24,11 +24,6 @@
     "termsDesc": "gokoreamate の利用に適用されるルールです。",
     "contactDesc": "ご意見を送る・誤りを知らせる",
     "groupTips": "旅のヒント",
-    "tipsToggle": "はじめての旅ガイド",
-    "tipsDesc": "画面のところどころの小さな案内をオン/オフ",
-    "tipsReplay": "ガイドをもう一度",
-    "tipsReplayDesc": "最初からもう一度ずつ表示します",
-    "tipsReplayDone": "次の画面からまた表示します",
     "analyticsToggle": "利用統計（Google Analytics）",
     "analyticsDesc": "2項目の両方がオンのときだけ統計がオンになります。どちらかをオフにすると、それ以降の送信を止め、このブラウザで当サービスが設定した GA の Cookie を削除します。すでに送信した情報は直ちには削除されず、プライバシーポリシーの Google Analytics の保持設定に従います。",
     "analyticsChange": "統計の選択を変更"
@@ -1521,25 +1516,6 @@
     "suggestLimited": "提案の回数上限に達しました。{sec}秒後に再試行できます — 直接入力はそのまま使えます。",
     "suggestUnavailable": "AI提案は一時的に利用できません。直接入力はそのまま使えます。"
   },
-  "guide": {
-    "gotIt": "わかった",
-    "save": "気に入った場所は保存を。保存した場所はピックのSavedに集まります。",
-    "thisTrip": "SavedからThis Tripへ、今回行く場所を選びましょう。旅はここから始まります。",
-    "planner": "This Trip with AI — 選んだ場所とAIが一緒にルートを作ります。日付とペースを決めるだけ。",
-    "myTripEdit": "ここがあなたの旅。場所の追加・削除も、順番の入れ替えも自由です。",
-    "directions": "各場所のNAVER/Googleマップボタンからすぐ道案内を開けます。",
-    "photo": "旅の瞬間を残しましょう — 写真と一言で十分です。",
-    "aiWriting": "言葉に迷ったら、3つのAI文章スタイルから始めてみて。いつでも自分で直せます。",
-    "story": "記録はストーリータブで旅らしく表示されます — 同じ内容、追加作業なし。",
-    "myPlaces": "自分だけの場所は「マイプレイスに残す」で。写真とメモで自分だけの地図に。",
-    "share": "共有では自分で選んだものだけ公開。写真とメモは選ぶまで非公開です。",
-    "finale": "旅がひとつ完成！この案内はその他(⋯)でオフ/再表示できます。",
-    "discover": "まずは気になる都市をのぞいてみましょう。",
-    "skip": "スキップ",
-    "chapterA": "旅のはじまり",
-    "chapterB": "マイ日程",
-    "chapterC": "ストーリー"
-  },
   "blog": {
     "title": "ブログ",
     "subtitle": "韓国を理解し、自分で選ぶための公式ソースに基づく旅の読み物。",
@@ -1717,5 +1693,195 @@
     "statusUnset": "オフ・未選択",
     "noticeTitle": "利用統計（任意）",
     "noticeBody": "利用統計を Google Analytics（米国）へ送信するか選べます。拒否しても、選ばなくても、すべての機能をそのまま使え、後で「その他 › 利用統計」から変更できます。"
+  },
+  "journey": {
+    "startTitle": "どうやって旅を始めますか？",
+    "startLead": "選んだ方法に合わせて、実際の画面のボタンを一つずつ案内します。いつでも変更・終了できます。",
+    "optDiscover": "gokoreamateで見つける",
+    "optDiscoverBody": "おすすめコースから始めるか、場所を選んで自分で作ります。",
+    "pathCourse": "おすすめコースから始める",
+    "pathCourseBody": "都市 → コース → 日付を決めて自分の旅に",
+    "pathPlaces": "場所を選んで自分で作る",
+    "pathPlacesBody": "場所を保存 → This Trip に追加 → 旅程を作る",
+    "optImport": "作成済みの旅程を使う",
+    "optImportBody": "ブログやウェブページの旅程をリンクで取り込みます。",
+    "importCanLabel": "取り込めるもの：",
+    "importCan": "誰でも開ける公開ウェブページ・ブログ記事のリンク",
+    "importCannotLabel": "まだできないもの：",
+    "importCannot": "AIチャットの回答（Gemini・ChatGPT など）の貼り付け、ファイル、ログインが必要なページ",
+    "importNeedLogin": "取り込みにはログインが必要です。うまくいかない場合は、場所を選んで作る方法にすぐ切り替えられます。",
+    "pathImport": "リンクから取り込む",
+    "pathImportTextAlt": "AIの回答なら — 場所を選んで自分で作る",
+    "pathMyTrip": "自分の旅から続ける",
+    "later": "あとで",
+    "phaseStart": "旅を作る",
+    "phaseMyTrip": "マイトリップ",
+    "hide": "この画面で案内を隠す",
+    "offRoute": "このステップは別の画面で行います",
+    "missing": "案内するボタンが今この画面にありません",
+    "covered": "別のウィンドウに隠れています — 閉じると続けて案内します",
+    "importFailed": "このリンクは取り込めませんでした",
+    "importFailedBody": "別の公開リンクで試すか、場所を選んで自分で作る方法に切り替えられます。",
+    "scrollTo": "ボタンへ移動",
+    "pauseForTrip": "旅行中に続ける",
+    "switchToPlaces": "場所を選んで作る方法に切り替える",
+    "skipStep": "このステップをスキップ",
+    "changePath": "別の方法にする",
+    "endJourney": "案内を終える",
+    "resumeLine": "中断した案内があります — {step}",
+    "resume": "続ける",
+    "dismissResume": "あとで",
+    "moreTitle": "旅づくりガイド",
+    "moreActive": "進行中 — {step}",
+    "morePaused": "一時停止 — {step}",
+    "moreDone": "最後まで終わりました。もう一度始められます。",
+    "moreIdle": "実際のボタンに沿って旅を作ってみましょう。",
+    "moreOff": "オフです。オンにするとホームで始め方を選べます。",
+    "restart": "最初からやり直す（方法を選ぶ）",
+    "target": {
+      "tut-more-menu": "まず右上の[その他]メニューを開いてください",
+      "tut-tab-saved": "まず[保存]タブを開いてください",
+      "tut-dates": "旅行の日付を確認し、違っていればタップして変更してください",
+      "tut-card-create": "[カードを作成]を押してください",
+      "tut-import-add": "取り込んだ場所を確認して追加してください"
+    },
+    "goto": {
+      "pickCity": "ホームへ",
+      "pickCourse": "都市を選びに行く",
+      "pickPlace": "都市を選びに行く",
+      "openPicks": "Picks を開く",
+      "addToThisTrip": "Picks を開く",
+      "openThisTrip": "Picks を開く",
+      "buildTrip": "Picks を開く",
+      "openImport": "取り込みを開く",
+      "pasteLink": "取り込みを開く",
+      "reviewImport": "取り込みを開く",
+      "openMyTrip": "マイトリップ一覧",
+      "tripSaved": "マイトリップ一覧",
+      "checkDates": "マイトリップ一覧",
+      "addRecord": "マイトリップ一覧",
+      "openStory": "マイトリップ一覧",
+      "publishOpen": "マイトリップ一覧",
+      "publishStory": "マイトリップ一覧",
+      "makeShareCard": "マイトリップ一覧",
+      "shareCard": "マイトリップ一覧",
+      "submitRecommend": "マイトリップ一覧"
+    },
+    "steps": {
+      "pickCity": {
+        "say": "行きたい都市を押してください",
+        "name": "都市を選ぶ"
+      },
+      "pickCourse": {
+        "say": "気に入ったおすすめコースを押してください",
+        "name": "コースを選ぶ"
+      },
+      "adoptCourse": {
+        "say": "このコースで旅を作るにはこのボタンを押してください",
+        "name": "コースを使う",
+        "why": "まだ保存されません。次に日付を決めます。"
+      },
+      "adoptDates": {
+        "say": "日付を決めてこのボタンを押してください",
+        "name": "日付を決めて作成"
+      },
+      "pickPlace": {
+        "say": "気になる場所を一つ押してください",
+        "name": "場所を選ぶ"
+      },
+      "savePlace": {
+        "say": "気に入ったら[保存]を押してください",
+        "name": "場所を保存",
+        "why": "保存した場所は Picks に集まります。いくつ保存してもOKです。"
+      },
+      "openPicks": {
+        "say": "[Picks]を押してください",
+        "name": "Picks を開く"
+      },
+      "addToThisTrip": {
+        "say": "今回の旅に入れる場所の This Trip ボタンを押してください",
+        "name": "This Trip に追加",
+        "missing": "保存した場所がまだありません — 先に保存するか、このステップをスキップしてください"
+      },
+      "openThisTrip": {
+        "say": "This Trip タブを押してください",
+        "name": "This Trip を見る"
+      },
+      "buildTrip": {
+        "say": "このボタンで旅程を作ってください",
+        "name": "旅程を作る",
+        "missing": "This Trip が空です — 先に場所を追加してください"
+      },
+      "openImport": {
+        "say": "取り込み画面を開いてください",
+        "name": "取り込みを開く"
+      },
+      "pasteLink": {
+        "say": "ここに公開ブログ・ウェブページのリンクを貼り付けて分析してください",
+        "name": "リンクを貼り付け",
+        "why": "AIチャットの回答やファイルはまだ取り込めません。"
+      },
+      "reviewImport": {
+        "say": "取り込んだ場所を確認してこのボタンを押してください",
+        "name": "取り込み内容を確認"
+      },
+      "openMyTrip": {
+        "say": "続ける旅を押してください",
+        "name": "自分の旅を開く"
+      },
+      "tripSaved": {
+        "say": "旅がマイトリップに保存されています — 保存表示を確認してください",
+        "name": "保存を確認",
+        "why": "保存ボタンはありません。作ると自動で保存されます。"
+      },
+      "checkDates": {
+        "say": "旅行の日付を確認してください — 違えば変更して適用",
+        "name": "日付を確認"
+      },
+      "addRecord": {
+        "say": "旅行中の写真やメモはここから残せます",
+        "name": "写真・メモを残す",
+        "why": "今写真がなくても大丈夫。[旅行中に続ける]で一時停止すると、あとでここから再開できます。"
+      },
+      "openStory": {
+        "say": "Story タブを押してください",
+        "name": "Story を見る",
+        "why": "旅程と記録が一つの物語として見える画面です。"
+      },
+      "publishOpen": {
+        "say": "公開設定を開いてください",
+        "name": "公開設定を開く"
+      },
+      "publishStory": {
+        "say": "公開すると何が表示されるか確認し、公開するかご自身で決めてください",
+        "name": "公開を決める",
+        "why": "公開しなくても大丈夫。公開しない場合は共有カード・自慢のステップをスキップしてください。"
+      },
+      "makeShareCard": {
+        "say": "共有カードを開いてください",
+        "name": "共有カードを作る",
+        "why": "カードにはタイトル・日付・都市・写真が入り、正確な住所や地図は入りません。",
+        "missing": "共有カードは公開した旅で作れます — スキップしても大丈夫です"
+      },
+      "shareCard": {
+        "say": "そのまま共有するか画像を保存してください — 投稿するかはご自身で",
+        "name": "カードを共有・保存",
+        "why": "自動投稿はされません。スマホの共有画面でアプリを選んでください。"
+      },
+      "submitRecommend": {
+        "say": "旅を自慢する — この旅を地域のおすすめに応募してみましょう",
+        "name": "旅を自慢する",
+        "why": "審査後、他の旅行者へのおすすめとして表示されます。共有カードと違いサイト内に掲載されます。",
+        "missing": "公開した旅・3か所以上・公開記録1件があると表示されます — スキップしても大丈夫です"
+      },
+      "finish": {
+        "say": "ここまでです！あとは自由に旅を充実させてください",
+        "name": "おわり"
+      }
+    },
+    "confirm": {
+      "checkDates": "日付は合っています",
+      "finish": "案内を終える"
+    }
   }
 }

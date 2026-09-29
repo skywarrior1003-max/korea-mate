@@ -102,6 +102,7 @@ export default function PlannerCoverHeader({
             type="button"
             onClick={onEditDates}
             aria-label={editDatesLabel}
+            data-tut="tut-dates"
             className="gkm-focus mt-2 inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-bold text-white/80 underline decoration-white/40 underline-offset-4 hover:text-white"
           >
             {dateLine}

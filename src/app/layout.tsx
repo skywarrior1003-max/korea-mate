@@ -7,6 +7,7 @@ import SavedSpotsPanel from "@/components/SavedSpotsPanel";
 import I18nProvider from "@/components/I18nProvider";
 import NavShell from "@/components/ui/NavShell";
 import AnalyticsConsent from "@/components/AnalyticsConsent";
+import GuidedJourney from "@/components/guided-journey/GuidedJourney";
 
 
 const geistSans = Geist({
@@ -230,6 +231,8 @@ export default function RootLayout({
           <NavShell />
         </Suspense>
         {gaConsentId ? <AnalyticsConsent gaId={gaConsentId} /> : null}
+        {/* GUIDED-JOURNEY-V1 — 사용자가 고른 경로를 따라 실제 버튼을 가리키는 안내(진행 중일 때만 보인다) */}
+        <GuidedJourney />
         </I18nProvider>
       </body>
     </html>

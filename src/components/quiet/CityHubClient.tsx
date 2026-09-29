@@ -241,7 +241,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
             {trips.map((trip, i) => (
               <li key={trip.id}>
                 {/* 각 행은 해당 코스의 상세(코스 흐름·stop·장소 진입)로 간다 */}
-                <Link href={`/city/${slug}/trips/${trip.id}`} className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
+                <Link href={`/city/${slug}/trips/${trip.id}`} data-tut="tut-course" className="flex items-start gap-3.5 py-3 border-b border-[#DFE7F2] gkm-focus min-h-11">
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-[#16233B] truncate">{tripDisplayTitle(trip, locale)}</span>
                     <span className="block mt-0.5 text-[12px] text-[#8DA0BF] truncate">
@@ -278,7 +278,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3">
           {places.map(p => (
-            <Link key={p.spot.id} href={`/place/${p.spot.id}/`} className="min-w-0 gkm-focus rounded-[4px]">
+            <Link key={p.spot.id} href={`/place/${p.spot.id}/`} data-tut="tut-place" className="min-w-0 gkm-focus rounded-[4px]">
               <span className="relative block aspect-square rounded-[4px] overflow-hidden bg-[#E5EDF7]">
                 {p.spot.image ? (
                   <Image src={p.spot.image} alt="" fill sizes="33vw" className="object-cover" unoptimized={p.spot.image.startsWith("http")} />

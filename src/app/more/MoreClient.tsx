@@ -18,9 +18,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
-import {
-  readGuideState, writeGuideState, setGuideEnabled, resetGuideSeen, emitGuideEvent,
-} from "@/lib/journey-guide/guide-core";
+import { MoreJourneyControls } from "@/components/guided-journey/JourneyEntry";
 import {
   getCurrentUser, signInWithGoogle, signOutAndReset, onAuthChange, type AuthUserView,
 } from "@/lib/auth/auth-client";
@@ -329,21 +327,6 @@ export default function MoreClient() {
   const tAbout = useTranslations("about");
   const tFooter = useTranslations("footer");
 
-  // First Trip Journey Guide 설정 — 상태는 이 기기(localStorage)뿐이다
-  const [tipsOn, setTipsOn] = useState(true);
-  const [replayed, setReplayed] = useState(false);
-  useEffect(() => { setTipsOn(readGuideState().enabled); }, []);
-  const toggleTips = () => {
-    const next = !tipsOn;
-    setTipsOn(next);
-    writeGuideState(setGuideEnabled(readGuideState(), next));
-  };
-  const replayTips = () => {
-    writeGuideState(setGuideEnabled(resetGuideSeen(readGuideState()), true));
-    setTipsOn(true);
-    setReplayed(true);
-    emitGuideEvent("tutorial_replayed", {});
-  };
 
   // 사용 통계(GA) 선택 — 동의 변경·철회 경로(GA-CONSENT-V1). 실제 켜고 끄기는 AnalyticsConsent 가 맡는다.
   // 동의는 두 개(수집·이용 / 국외 이전)를 따로 켜고 끈다. 둘 다 켜져야 통계가 켜진다.
@@ -433,46 +416,9 @@ export default function MoreClient() {
 
         <AnalyticsConsentSheet open={statsSheet} onClose={() => setStatsSheet(false)} />
 
-        {/* First Trip Journey Guide — 팁 ON/OFF · 다시 보기 (Owner 확정) */}
+        {/* GUIDED-JOURNEY-V1 — 여행 안내: 켜기·끄기 · 이어하기 · 처음부터 다시(경로 선택) */}
         <Group title={t("groupTips")}>
-          <div className="flex items-center gap-4 px-5 min-h-16 py-4">
-            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
-              <svg {...ICON} aria-hidden><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M18.4 5.6L17 7M21 12h-2" /><path d="M9.5 18h5M10.5 21h3M8.5 14.5a4.5 4.5 0 117 0c-.8.8-1.5 1.6-1.5 2.5h-4c0-.9-.7-1.7-1.5-2.5z" /></svg>
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("tipsToggle")}</span>
-              <span className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">{t("tipsDesc")}</span>
-            </span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={tipsOn}
-              onClick={toggleTips}
-              className="gkm-focus relative shrink-0 w-12 h-7 rounded-full transition-colors"
-              style={{ backgroundColor: tipsOn ? "#FF4A2D" : "#D9D2C7" }}
-            >
-              <span
-                className="absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-all"
-                style={{ left: tipsOn ? "calc(100% - 1.625rem)" : "0.125rem" }}
-              />
-            </button>
-          </div>
-          <button
-            type="button"
-            onClick={replayTips}
-            className="gkm-focus w-full text-left flex items-center gap-4 px-5 min-h-16 py-4 hover:bg-[#F3EEE3] transition-colors"
-          >
-            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
-              <svg {...ICON} aria-hidden><path d="M3.5 8a8.5 8.5 0 111.2 8" /><path d="M3.5 3.5V8H8" /></svg>
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("tipsReplay")}</span>
-              <span className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">
-                {replayed ? t("tipsReplayDone") : t("tipsReplayDesc")}
-              </span>
-            </span>
-            {CHEVRON}
-          </button>
+          <MoreJourneyControls />
         </Group>
 
         <Group title={t("groupSupport")}>

@@ -11,7 +11,7 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useState } from "react";
-import JourneyCoach from "@/components/JourneyCoach";
+import { readJourney, JOURNEY_CHANGE_EVENT } from "@/lib/guided-journey/journey-core";
 import MyPlaceSuggestAction from "@/components/community/MyPlaceSuggestAction";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
@@ -209,7 +209,14 @@ function PicksContent() {
 
   // 처음 쓰는 사람에게만 두 걸음. 끝나면 다시 오지 않는다.
   const [coach, setCoach] = useState<CoachStep>("done");
-  useEffect(() => { setCoach(readCoachStep()); }, []);
+  // GUIDED-JOURNEY-V1 — 안내가 진행 중이면 예전 This Trip 코치마크는 숨긴다(같은 행동을 두 번 안내하지 않는다).
+  // 코치마크 자체의 진행 기록은 건드리지 않는다 — 안내가 끝나면 원래대로 보인다.
+  useEffect(() => {
+    const sync = () => setCoach(readJourney().status === "active" ? "done" : readCoachStep());
+    Promise.resolve().then(sync);
+    window.addEventListener(JOURNEY_CHANGE_EVENT, sync);
+    return () => window.removeEventListener(JOURNEY_CHANGE_EVENT, sync);
+  }, []);
   function advanceCoach() {
     setCoach(prev => { const n = nextCoachStep(prev); writeCoachStep(n); return n; });
   }
@@ -704,7 +711,6 @@ function PicksContent() {
         <p className="md:hidden text-sm text-sub mb-4">{t("subtitle")}</p>
 
         {/* First Trip Journey Guide — Saved → This Trip 의 다음 걸음 안내 */}
-        <JourneyCoach step="thisTrip" className="mb-3" complete={{ on: "click", selector: '[data-tut="tut-this-trip"]' }} />
 
         {/* ── 탭 ── */}
         {/* 밑줄형 탭 — 최종 디자인(my_picks_selected_places) 기준.
@@ -722,6 +728,7 @@ function PicksContent() {
               key={k}
               id={tabId(k)}
               role="tab"
+              data-tut={k === "selected" ? "tut-tab-selected" : k === "saved" ? "tut-tab-saved" : undefined}
               aria-selected={tab === k}
               aria-controls={panelId(k)}
               tabIndex={tab === k ? 0 : -1}
@@ -942,6 +949,7 @@ function PicksContent() {
                 {/* 안내는 버튼 옆에 놓일 뿐 버튼을 덮지 않는다.
                     사용자가 바로 눌러도 원래 동작이 그대로 일어나야 한다. */}
                 <button
+                  data-tut="tut-build"
                   onClick={handleBuild}
                   className={`gkm-focus w-full flex items-center justify-center gap-2 min-h-12 rounded-control bg-action text-white font-bold shadow-cta hover:bg-action-hover${coach === "plan" ? ` ${COACH_PULSE}` : ""}`}
                 >

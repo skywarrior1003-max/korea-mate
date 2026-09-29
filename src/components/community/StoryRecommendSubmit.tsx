@@ -81,7 +81,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
     <div className="rounded-xl border border-line bg-white px-4 py-3.5">
       <p className="text-[13.5px] font-bold text-ink">{t("submitTitle")}</p>
       {statusLine ? (
-        <div className="mt-1.5 flex items-center justify-between gap-3">
+        <div data-tut="tut-brag-status" className="mt-1.5 flex items-center justify-between gap-3">
           <p className="text-[12.5px] text-sub">{statusLine}</p>
           {(status === "pending" || status === "approved") && (
             <button type="button" onClick={withdraw} disabled={busy}
@@ -94,7 +94,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
         <>
           <p className="mt-1 text-[12.5px] text-sub">{t("submitBody")}</p>
           {!confirmOpen ? (
-            <button type="button" onClick={() => setConfirmOpen(true)}
+            <button type="button" data-tut="tut-brag" onClick={() => setConfirmOpen(true)}
               className="gkm-focus mt-2.5 min-h-11 px-4 rounded-xl bg-gray-900 text-white text-[13px] font-bold">
               {t("submitCta")}
             </button>
@@ -111,7 +111,7 @@ export default function StoryRecommendSubmit({ itineraryId, onOpenRecords }: {
                   className="gkm-focus flex-1 min-h-11 rounded-xl border border-line text-[13px] font-semibold text-sub">
                   {t("feedbackClose")}
                 </button>
-                <button type="button" onClick={submit} disabled={busy}
+                <button type="button" data-tut="tut-brag-confirm" onClick={submit} disabled={busy}
                   className="gkm-focus flex-1 min-h-11 rounded-xl bg-gray-900 text-white text-[13px] font-bold disabled:opacity-50">
                   {busy ? t("feedbackSending") : t("submitConfirm")}
                 </button>

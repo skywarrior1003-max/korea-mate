@@ -605,6 +605,7 @@ export default function PublishPreviewModal({
             {t("cancel")}
           </button>
           <button
+            data-tut="tut-publish-go"
             onClick={() => void handlePublish()}
             disabled={phase === "publishing" || !consentDone}
             className="gkm-focus flex-1 min-h-12 rounded-full text-white disabled:opacity-40"

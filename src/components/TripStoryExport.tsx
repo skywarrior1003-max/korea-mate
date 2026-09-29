@@ -941,6 +941,7 @@ export default function TripStoryExport({
 
   return (
     <div
+      data-tut="tut-card-modal"
       className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
@@ -1034,6 +1035,7 @@ export default function TripStoryExport({
           {!rendered ? (
             /* 렌더링 전 — 카드 생성 버튼 */
             <button
+              data-tut="tut-card-create"
               onClick={render}
               disabled={rendering}
               className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all disabled:opacity-50 cursor-pointer"
@@ -1045,6 +1047,7 @@ export default function TripStoryExport({
             <>
               {/* Primary: 1탭 공유 (Web Share API) */}
               <button
+                data-tut="tut-card-share"
                 onClick={handleShare}
                 disabled={sharing}
                 className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
@@ -1063,6 +1066,7 @@ export default function TripStoryExport({
               {/* Secondary row: 현재 카드 저장 (+ 전체 저장) + 링크 복사 */}
               <div className="flex gap-2">
                 <button
+                  data-tut="tut-card-save"
                   onClick={handleDownload}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                 >

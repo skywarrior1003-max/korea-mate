@@ -240,6 +240,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
         {trip.stops.length > 0 && (
         <div className="mt-7 rounded-[4px] overflow-hidden" style={{ backgroundColor: "var(--qh-navy)" }}>
           <button
+            data-tut="tut-adopt"
             type="button"
             onClick={() => { setAdoptOpen(v => !v); setAdoptError(false); }}
             aria-expanded={adoptOpen}
@@ -266,6 +267,7 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
                 </label>
               </div>
               <button
+                data-tut="tut-adopt-go"
                 type="button"
                 disabled={adoptBusy || !adoptStart || !adoptEnd || adoptEnd < adoptStart}
                 onClick={async () => {

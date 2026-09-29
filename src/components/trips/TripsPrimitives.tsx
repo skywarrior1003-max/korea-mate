@@ -85,7 +85,7 @@ export function TripRow({ href, title, dates, visual, cityLabel, onMore, moreLab
       style={{ backgroundColor: C.surfaceContainerLowest, border: `1px solid ${C.outlineVariant}`, borderRadius: RADIUS_XL }}
     >
       <div className="flex items-center" style={{ padding: SP.mobile }}>
-        <Link href={href} className="gkm-focus flex items-center flex-1 min-w-0" style={{ gap: SP.mobile, borderRadius: RADIUS_LG }}>
+        <Link href={href} data-tut="tut-trip-row" className="gkm-focus flex items-center flex-1 min-w-0" style={{ gap: SP.mobile, borderRadius: RADIUS_LG }}>
           <TripThumb visual={visual} cityLabel={cityLabel} />
           <div className="min-w-0 flex-1">
             <h3 className="truncate" style={{ ...HEADLINE_MD, color: C.onSurface, marginBottom: SP.xs }}>{title}</h3>

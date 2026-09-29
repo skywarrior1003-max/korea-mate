@@ -135,6 +135,7 @@ export default function QuietHome() {
                 <Link
                   key={c.slug}
                   href={`/city/${c.slug}`}
+                  data-tut="tut-city"
                   className="relative flex-none w-[124px] h-[164px] md:w-auto md:h-[176px] rounded-[4px] overflow-hidden bg-[#3a3f4a] gkm-focus"
                 >
                   {v && (

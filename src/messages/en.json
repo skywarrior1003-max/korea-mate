@@ -24,11 +24,6 @@
     "termsDesc": "The rules that apply when you use gokoreamate.",
     "contactDesc": "Send feedback or report something wrong",
     "groupTips": "Travel tips",
-    "tipsToggle": "First-trip guide",
-    "tipsDesc": "Turn the small in-context tips on or off",
-    "tipsReplay": "Replay the guide",
-    "tipsReplayDesc": "See each tip once more from the start",
-    "tipsReplayDone": "Tips will show again from your next screen",
     "analyticsToggle": "Usage statistics (Google Analytics)",
     "analyticsDesc": "Statistics turn on only if both items are on. Turning either off stops sending from then on and deletes the GA cookies this service set in this browser. Information already sent is not deleted immediately and follows the Google Analytics retention settings in the Privacy Policy.",
     "analyticsChange": "Change statistics choice"
@@ -1521,25 +1516,6 @@
     "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself.",
     "suggestUnavailable": "AI suggestions are temporarily unavailable. You can still write it yourself."
   },
-  "guide": {
-    "gotIt": "Got it",
-    "save": "Save places you like — they gather in Picks › Saved.",
-    "thisTrip": "From Saved, pick what goes into This Trip. That's where your trip begins.",
-    "planner": "This Trip with AI — your picks and AI build the route together. Just set dates and pace.",
-    "myTripEdit": "This is your trip. Add or remove places and reorder them freely.",
-    "directions": "Each place has Naver/Google map buttons for instant directions.",
-    "photo": "Capture moments as you go — a photo and one line is enough.",
-    "aiWriting": "Stuck for words? Start from one of three AI writing directions. You can always edit.",
-    "story": "Your records appear in the Story tab, told like a journey — same content, no extra work.",
-    "myPlaces": "Found somewhere only you know? Keep it as My Place with photos and notes.",
-    "share": "Sharing publishes only what you choose. Photos and notes stay private until you pick them.",
-    "finale": "You completed a trip! You can turn these tips off or replay them in More (⋯).",
-    "discover": "Start by browsing a city that catches your eye.",
-    "skip": "Skip",
-    "chapterA": "Start a trip",
-    "chapterB": "My itinerary",
-    "chapterC": "Story"
-  },
   "blog": {
     "title": "Blog",
     "subtitle": "Official-source travel reading — to understand Korea and choose for yourself.",
@@ -1717,5 +1693,195 @@
     "statusUnset": "Off · not chosen yet",
     "noticeTitle": "Usage statistics (optional)",
     "noticeBody": "You can choose whether to send usage statistics to Google Analytics (USA). Every feature works the same if you refuse or don't choose, and you can change it later under More › Usage statistics."
+  },
+  "journey": {
+    "startTitle": "How do you want to start your trip?",
+    "startLead": "We'll point to the real buttons one at a time for the way you choose. You can switch or stop anytime.",
+    "optDiscover": "Discover on gokoreamate",
+    "optDiscoverBody": "Start from a suggested course, or pick places and build it yourself.",
+    "pathCourse": "Start from a suggested course",
+    "pathCourseBody": "City → course → set dates → your trip",
+    "pathPlaces": "Pick places and build it",
+    "pathPlacesBody": "Save places → add to This Trip → build the trip",
+    "optImport": "Use a plan you already have",
+    "optImportBody": "Bring in a plan from a blog or web page by its link.",
+    "importCanLabel": "Works with:",
+    "importCan": "links to public web pages or blog posts anyone can open",
+    "importCannotLabel": "Not yet:",
+    "importCannot": "pasting an AI chat answer (Gemini, ChatGPT, etc.), files, or pages that need a login to view",
+    "importNeedLogin": "Importing needs you to sign in. If it doesn't work, you can switch to picking places right away.",
+    "pathImport": "Import from a link",
+    "pathImportTextAlt": "Got an AI answer? Pick its places here instead",
+    "pathMyTrip": "Continue from my trip",
+    "later": "Maybe later",
+    "phaseStart": "Making the trip",
+    "phaseMyTrip": "My Trip",
+    "hide": "Hide the guide on this screen",
+    "offRoute": "This step happens on another screen",
+    "missing": "The button isn't on this screen right now",
+    "covered": "It's behind another window — close it and we'll point to it",
+    "importFailed": "We couldn't import this link",
+    "importFailedBody": "Try another public link, or switch to picking places yourself.",
+    "scrollTo": "Go to the button",
+    "pauseForTrip": "Continue during my trip",
+    "switchToPlaces": "Switch to picking places",
+    "skipStep": "Skip this step",
+    "changePath": "Choose another way",
+    "endJourney": "End the guide",
+    "resumeLine": "You paused the guide at: {step}",
+    "resume": "Continue",
+    "dismissResume": "Later",
+    "moreTitle": "Trip guide",
+    "moreActive": "In progress — {step}",
+    "morePaused": "Paused — {step}",
+    "moreDone": "Finished. You can start again anytime.",
+    "moreIdle": "Follow the real buttons to make a trip.",
+    "moreOff": "Off. Turn it on to choose how to start from Home.",
+    "restart": "Start over (choose a way)",
+    "target": {
+      "tut-more-menu": "First, open the [More] menu at the top right",
+      "tut-tab-saved": "First, open the [Saved] tab",
+      "tut-dates": "Check your trip dates — tap to change them if they're wrong",
+      "tut-card-create": "Tap [Create card]",
+      "tut-import-add": "Check the imported places and add them"
+    },
+    "goto": {
+      "pickCity": "Go to Home",
+      "pickCourse": "Go pick a city",
+      "pickPlace": "Go pick a city",
+      "openPicks": "Open Picks",
+      "addToThisTrip": "Open Picks",
+      "openThisTrip": "Open Picks",
+      "buildTrip": "Open Picks",
+      "openImport": "Open import",
+      "pasteLink": "Open import",
+      "reviewImport": "Open import",
+      "openMyTrip": "My trips",
+      "tripSaved": "My trips",
+      "checkDates": "My trips",
+      "addRecord": "My trips",
+      "openStory": "My trips",
+      "publishOpen": "My trips",
+      "publishStory": "My trips",
+      "makeShareCard": "My trips",
+      "shareCard": "My trips",
+      "submitRecommend": "My trips"
+    },
+    "steps": {
+      "pickCity": {
+        "say": "Tap the city you want to visit",
+        "name": "Pick a city"
+      },
+      "pickCourse": {
+        "say": "Tap a suggested course you like",
+        "name": "Pick a course"
+      },
+      "adoptCourse": {
+        "say": "Tap this to make a trip from this course",
+        "name": "Use this course",
+        "why": "Nothing is saved yet — you'll set dates next."
+      },
+      "adoptDates": {
+        "say": "Set your dates and tap this button",
+        "name": "Set dates and create"
+      },
+      "pickPlace": {
+        "say": "Tap a place that interests you",
+        "name": "Pick a place"
+      },
+      "savePlace": {
+        "say": "Like it? Tap [Save]",
+        "name": "Save a place",
+        "why": "Saved places gather in Picks. Save as many as you like."
+      },
+      "openPicks": {
+        "say": "Tap [Picks]",
+        "name": "Open Picks"
+      },
+      "addToThisTrip": {
+        "say": "Tap the This Trip button on a place for this trip",
+        "name": "Add to This Trip",
+        "missing": "No saved places yet — save one first or skip this step"
+      },
+      "openThisTrip": {
+        "say": "Tap the This Trip tab",
+        "name": "Open This Trip"
+      },
+      "buildTrip": {
+        "say": "Tap this to build the trip",
+        "name": "Build the trip",
+        "missing": "This Trip is empty — add places first"
+      },
+      "openImport": {
+        "say": "Open the import screen",
+        "name": "Open import"
+      },
+      "pasteLink": {
+        "say": "Paste a public blog or web page link here and analyze it",
+        "name": "Paste a link",
+        "why": "AI chat answers and files can't be imported yet."
+      },
+      "reviewImport": {
+        "say": "Check the imported places and tap this",
+        "name": "Review the import"
+      },
+      "openMyTrip": {
+        "say": "Tap the trip to continue",
+        "name": "Open my trip"
+      },
+      "tripSaved": {
+        "say": "Your trip is saving to My Trip — check the saved status",
+        "name": "Check it's saved",
+        "why": "There's no separate save button — it saves automatically."
+      },
+      "checkDates": {
+        "say": "Check your trip dates — change and apply if needed",
+        "name": "Check dates"
+      },
+      "addRecord": {
+        "say": "Tap here to add a photo or note during your trip",
+        "name": "Add a photo or note",
+        "why": "No photos yet? That's fine — pause with [Continue during my trip] and pick up here later."
+      },
+      "openStory": {
+        "say": "Tap the Story tab",
+        "name": "Open Story",
+        "why": "Your plan and records shown as one story."
+      },
+      "publishOpen": {
+        "say": "Open the visibility setting",
+        "name": "Open visibility"
+      },
+      "publishStory": {
+        "say": "See what will be shown, then decide yourself whether to publish",
+        "name": "Decide to publish",
+        "why": "You don't have to publish. If you don't, skip the share card and show-off steps."
+      },
+      "makeShareCard": {
+        "say": "Open the share card",
+        "name": "Make a share card",
+        "why": "The card shows title, dates, city and photos — no exact address or map.",
+        "missing": "Share cards are for published trips — you can skip this"
+      },
+      "shareCard": {
+        "say": "Share it or save the image — you decide where it goes",
+        "name": "Share or save the card",
+        "why": "Nothing is posted automatically — you pick the app in your phone's share sheet."
+      },
+      "submitRecommend": {
+        "say": "Show off your trip — submit it to the local recommendations",
+        "name": "Show off your trip",
+        "why": "After review it appears as a recommendation to other travelers — posted on the site, unlike the share card.",
+        "missing": "This appears once the trip is public with 3+ places and one public record — you can skip it"
+      },
+      "finish": {
+        "say": "That's it! Now fill this trip your way",
+        "name": "Finish"
+      }
+    },
+    "confirm": {
+      "checkDates": "Dates are right",
+      "finish": "Finish the guide"
+    }
   }
 }

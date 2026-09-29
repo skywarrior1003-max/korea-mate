@@ -36,7 +36,7 @@ export default function TravelingNowHero({ href, eyebrow, title, chip, visual, c
         className="relative w-full overflow-hidden shadow-sm group"
         style={{ height: 280, borderRadius: RADIUS_XL, border: `1px solid ${C.outlineVariant}4d`, backgroundColor: C.surfaceContainerLow }}
       >
-        <Link href={href} className="gkm-focus absolute inset-0 block" aria-label={title}>
+        <Link href={href} data-tut="tut-trip-row" className="gkm-focus absolute inset-0 block" aria-label={title}>
           {visual ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img

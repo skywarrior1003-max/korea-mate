@@ -19,7 +19,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import JourneyCoach from "@/components/JourneyCoach";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
@@ -366,8 +365,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
       <main className="flex-1 w-full max-w-[1100px] mx-auto md:px-4 md:py-6 pb-32 md:pb-10">
         {/* First Trip Journey Guide — 발견의 첫 걸음(저장) · 다음 방문엔 내 장소 남기기 */}
         <div className="px-4 md:px-0 pt-3 md:pt-0 md:mb-3 flex flex-col gap-2">
-          <JourneyCoach step="save" complete={{ on: "click", selector: '[data-tut="tut-save"]' }} />
-          <JourneyCoach step="myPlaces" />
         </div>
         <div className="md:grid md:grid-cols-[minmax(0,1fr)_340px] md:gap-6 md:items-start">
 

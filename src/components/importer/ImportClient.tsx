@@ -242,6 +242,7 @@ function ImportInner() {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => { if (e.key === "Enter") void analyze(input); }}
                 inputMode="url"
+                data-tut="tut-import-url"
                 placeholder="https://…"
                 className="gkm-focus flex-1 rounded-xl border px-3.5 py-3 text-sm bg-transparent"
                 style={{ ...ui.line, ...ui.ink }}
@@ -255,7 +256,7 @@ function ImportInner() {
               </button>
             </div>
             {phase === "error" && error && (
-              <div className="mt-5 rounded-2xl border p-4" style={ui.line}>
+              <div data-tut="tut-import-error" className="mt-5 rounded-2xl border p-4" style={ui.line}>
                 <p className="text-sm font-bold" style={ui.ink}>
                   {error === "unsupported" ? t("unsupportedTitle") : error === "errBlocked" ? t("errBlocked") : t("errFetch")}
                 </p>
@@ -270,7 +271,7 @@ function ImportInner() {
         )}
 
         {(phase === "preview" || phase === "saving") && analysis && result?.ok && (
-          <div className="mt-5">
+          <div className="mt-5" data-tut="tut-import-preview">
             <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--qh-clay)" }}>
               {analysis.kind === "external_itinerary" ? t("kindItinerary")
                 : analysis.kind === "single_place" ? t("kindPlace") : t("kindMulti")}
@@ -341,6 +342,7 @@ function ImportInner() {
 
                 {doneMsg === "cityRequired" && <p className="text-xs" style={{ color: "var(--qh-clay)" }}>{t("cityRequired")}</p>}
                 <button
+                  data-tut="tut-import-confirm"
                   onClick={() => void importToMyTrip()}
                   disabled={phase === "saving"}
                   className="gkm-focus w-full rounded-xl py-3.5 text-sm font-bold text-white disabled:opacity-50"
@@ -413,6 +415,7 @@ function ImportInner() {
                   })}
                 </ul>
                 <button
+                  data-tut="tut-import-add"
                   onClick={addSelectedToThisTrip}
                   className="gkm-focus mt-4 w-full rounded-xl py-3.5 text-sm font-bold text-white"
                   style={{ backgroundColor: "var(--qh-navy)" }}

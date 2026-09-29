@@ -15,7 +15,7 @@ import AdBanner from "@/components/AdBanner";
 import ContactModal from "@/components/ContactModal";
 import PreOpenNotice from "@/components/PreOpenNotice";
 import QuietHome from "@/components/quiet/QuietHome";
-import JourneyCoach from "@/components/JourneyCoach";
+import { HomeJourneyEntry } from "@/components/guided-journey/JourneyEntry";
 
 // hasTrip 로컬 신호 — 페이지 수명 동안 갱신 이벤트가 없는 일회성 판정이라
 // 구독은 no-op 이다. snapshot 은 원시값(boolean|undefined)이라 캐시 없이 안정.
@@ -112,15 +112,10 @@ export default function HomeClient() {
       </header>
 
       {/* Quiet Travel Editorial — 최종 Home(Cover→Floor). */}
-      {/* TUTORIAL-V1 §3 Chapter A 시작 — 발견을 가리키는 첫 coach.
+      {/* GUIDED-JOURNEY-V1 — "어떻게 여행을 시작할까요?"(아직 여행이 없는 사용자) 또는 멈춘 안내 이어하기.
           §7 — 사전 오픈 안내 sheet 가 열려 있는 동안은 그리지 않는다: 두 안내가
-          같은 화면에 겹치지 않고, sheet 를 닫은 뒤 튜토리얼이 시작된다. */}
-      {hasTrip === false && !preOpenSheetOpen && (
-        <div className="max-w-xl mx-auto px-4 pt-4">
-          {/* V2 — 실제 도시 링크를 눌러야 완료(알겠어요는 닫기만) */}
-          <JourneyCoach step="discover" ctx={{ hasTrip }} complete={{ on: "click", selector: 'a[href^="/city/"]' }} />
-        </div>
-      )}
+          같은 화면에 겹치지 않고, sheet 를 닫은 뒤 안내를 고른다. 페이지 흐름 안의 카드라 화면을 막지 않는다. */}
+      <HomeJourneyEntry hasTrip={hasTrip} blocked={preOpenSheetOpen} />
       <QuietHome />
 
       {/* AdBanner — 수익 surface. ID 없으면 null 렌더 */}

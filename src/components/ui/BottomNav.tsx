@@ -91,6 +91,7 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
             key={tab.key}
             href={href}
             aria-current={active ? "page" : undefined}
+            data-tut={tab.key === "picks" ? "tut-nav-picks" : undefined}
             className={`gkm-focus relative flex-1 flex flex-col items-center justify-center gap-1 min-h-15 py-2 ${
               active ? "text-action" : "text-faint"
             }`}

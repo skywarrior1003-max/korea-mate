@@ -1,7 +1,7 @@
 "use client";
 
 import type { LocalizedText } from "@/data/cities/types";
-import JourneyCoach from "@/components/JourneyCoach";
+import { signalJourney } from "@/lib/guided-journey/journey-core";
 import { useSearchParams, useRouter } from "next/navigation";
 // TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
 import StoryJournal from "@/components/story/StoryJournal";
@@ -1510,6 +1510,7 @@ function ItineraryResult() {
     setPlannerDay(p => Math.min(p, res.days.length));
     setMapDay(m => Math.min(m, res.days.length - 1));
     setEditingDates(false); setDateShrinkNotice(moved > 0 ? moved : null);
+    signalJourney("dates-applied"); // Guided Journey — 날짜를 실제로 적용했다
   }
 
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
@@ -3084,7 +3085,7 @@ function ItineraryResult() {
             </label>
           </div>
           <div className="mt-3 flex gap-2">
-            <button type="button" onClick={applyTripDates}
+            <button type="button" onClick={applyTripDates} data-tut="tut-dates-apply"
               className="gkm-focus inline-flex items-center min-h-11 px-4 rounded-full text-xs font-black text-white"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >{tPlanner("editDatesApply")}</button>
@@ -3105,8 +3106,8 @@ function ItineraryResult() {
           시안(my_trip_planning_final)은 일정이 주인공이다. 예전 헤더 카드의 버튼 무더기(공개/비공개·
           순간 기록·공유 카드·홈·편집·보기 전환)는 기능을 하나도 빼지 않고 "더보기" 메뉴로 접는다.
           동기화 상태와 공개 일정의 링크 복사만 바로 보이게 둔다. */}
-      <div className="flex items-center justify-between gap-3 mb-5">
-        <div className="flex items-center gap-2 flex-wrap min-w-0">
+      <div className="flex items-center justify-between gap-3 mb-5" data-tut-itin={itinId ? "saved" : "draft"} data-tut-public={isPublic ? "1" : "0"}>
+        <div data-tut="tut-sync" className="flex items-center gap-2 flex-wrap min-w-0">
           {syncStatus === "saving" && (
             <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">
               ⟳ {t("syncSaving")}
@@ -3170,23 +3171,6 @@ function ItineraryResult() {
           ]}
         />
       </div>
-
-      {/* ── First Trip Journey Guide — 방문마다 다음 한 장만(전역 잠금, 순서 고정) ── */}
-      {(!shareId || isOwner) && itinId && (
-        <div className="max-w-xl mx-auto mb-4 flex flex-col gap-2">
-          {/* TUTORIAL-V1 §3 — Chapter 문맥: story/share 는 첫 기록이 생기고 나서.
-              도착 전 기능을 미리 설명하지 않는다(hasMoment gating). */}
-          {/* V2 §3 — 완료 조건 명시: 열람형(arrive)은 도착=완료, 행동형(click)은
-              실제 CTA 클릭=완료("알겠어요"는 닫기일 뿐). */}
-          <JourneyCoach step="myTripEdit" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
-          <JourneyCoach step="directions" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "arrive" }} />
-          <JourneyCoach step="photo" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-add-record"]' }} />
-          <JourneyCoach step="story" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-story-tab"]' }} />
-          <JourneyCoach step="share" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "click", selector: '[data-tut="tut-share"]' }} />
-          {/* V4 — finale 는 표시만으로 완료되지 않는다: "알겠어요"가 명시적 종료다. */}
-          <JourneyCoach step="finale" ctx={{ hasMoment: moments.length > 0 }} complete={{ on: "ack" }} />
-        </div>
-      )}
 
       {/* ── 일정 | Story — 같은 여행의 두 view (TASK-STORY-LIVE-BASELINE-V1) ── */}
       {(!shareId || isOwner) && itinId && (
