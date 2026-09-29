@@ -75,11 +75,14 @@ export default function AnalyticsConsent({ gaId }: { gaId: string }) {
   }, [pathname]);
 
   const onMore = /^\/more\/?$/.test(pathname);
+  const cardVisible = undecided && ready && !blocked && !onMore && !sheet;
+  // 카드를 보여 준 순간 '이번 세션에 물었음' — 전체 새로고침·주소 입력으로 떠나도 다른 화면·Home 안내에서 다시 묻지 않는다
+  useEffect(() => { if (cardVisible && !readConsentState()) deferConsent(); }, [cardVisible]);
   const later = () => { deferConsent(); setUndecided(false); };
 
   return (
     <>
-      {undecided && ready && !blocked && !onMore && !sheet && (
+      {cardVisible && (
         <div id="gkm-ga-card" role="region" aria-labelledby="gkm-analytics-consent-title"
           className="fixed inset-x-0 bottom-16 md:bottom-0 z-50 px-3 pb-3 md:px-6 md:pb-6 pointer-events-none">
           <div className="pointer-events-auto mx-auto max-w-md rounded-2xl border border-[#E4DCCF] bg-[#FFFDF9] text-[#2C2520] shadow-[0_8px_30px_rgba(44,37,32,0.16)] p-4">

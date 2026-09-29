@@ -30,6 +30,7 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
   const t = useTranslations("preopen");
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const statsHeadingRef = useRef<HTMLHeadingElement>(null);
   const tStats = useTranslations("analyticsConsent");
   // 통계 선택 구역 — 열릴 때 한 번 정한다(GA 가능 빌드 + 아직 고르지 않음)
   const [statsAsk, setStatsAsk] = useState(false);
@@ -44,7 +45,10 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
     // hydration 이 끝난 다음 틱에 연다 — 서버 HTML(닫힘)과 첫 클라이언트 렌더가 같아야 한다.
     const id = window.setTimeout(() => {
       // 이번 세션에 이미 '나중에'였으면(다른 화면의 카드에서) 안내에서 다시 묻지 않는다 — 한 세션에 한 번만 묻는다
-      setStatsAsk(!!configuredGaId() && !readConsentState() && !consentDeferred());
+      const ask = !!configuredGaId() && !readConsentState() && !consentDeferred();
+      setStatsAsk(ask);
+      // 보여 준 순간 '이번 세션에 물었음' — 어떤 식으로 화면을 떠나도(링크·주소 입력) 다른 곳에서 다시 묻지 않는다
+      if (ask) deferConsent();
       setOpen(true); markSeen(); onOpenChange?.(true);
     }, 0);
     return () => window.clearTimeout(id);
@@ -70,7 +74,8 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
     // 통계 시트가 위에 떠 있으면 Esc 는 시트만 닫는다
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && !statsSheet) handleClose(); };
     window.addEventListener("keydown", onKey);
-    closeRef.current?.focus({ preventScroll: true });
+    // 통계 구역이 있으면 그 제목부터 — Tab 이 읽는 순서대로 [모두 거부]→[허용 선택]→[확인하고 둘러보기]
+    (statsHeadingRef.current ?? closeRef.current)?.focus({ preventScroll: true });
     return () => window.removeEventListener("keydown", onKey);
   }, [open, handleClose, statsSheet]);
 
@@ -96,7 +101,7 @@ export default function PreOpenNotice({ onOpenChange }: { onOpenChange?: (open: 
           <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-gray-600">{t("dataNotice")}</p>
           {statsAsk && (
             <section data-preopen-stats="" aria-labelledby="gkm-preopen-stats-title" className="mt-5 pt-4 border-t border-gray-200">
-              <h3 id="gkm-preopen-stats-title" className="text-[14px] font-black text-gray-900">{tStats("noticeTitle")}</h3>
+              <h3 id="gkm-preopen-stats-title" ref={statsHeadingRef} tabIndex={-1} className="text-[14px] font-black text-gray-900 focus:outline-none">{tStats("noticeTitle")}</h3>
               <p className="mt-1 text-[13px] leading-relaxed text-gray-600">{tStats("noticeBody")}</p>
               {stats ? (
                 <p role="status" data-preopen-stats-result={gaAllowed(stats) ? "on" : (stats.collect || stats.transfer) ? "one" : "off"}

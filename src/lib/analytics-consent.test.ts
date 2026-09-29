@@ -66,11 +66,13 @@ test("첫 방문 카드 — gaAllowed 일 때만 loadGtag·같은 무게의 [모
   assert.match(code, /if \(!noticeSeen\.current\) setReady\(true\)/, "안내가 없는 들어온 화면에서만");
   assert.match(code, /if \(pathname === landingPath\.current\) return;\s*if \(!readConsentState\(\) && !consentDeferred\(\)\) deferConsent\(\);/, "떠나면 이번 세션은 나중에");
   assert.match(code, /setReady\(false\); setUndecided\(false\);/, "이동 후 다시 뜨지 않는다");
+  assert.match(code, /useEffect\(\(\) => \{ if \(cardVisible && !readConsentState\(\)\) deferConsent\(\); \}, \[cardVisible\]\);/, "카드를 보여 준 순간 이번 세션에 물었음(전체 새로고침으로 떠나도 다시 묻지 않음)");
 });
 
 test("첫 방문 안내 — 통계 선택이 같은 화면의 한 구역(GA 가능·미선택·미보류일 때만)·같은 무게 버튼·닫으면 나중에", () => {
   const code = strip(read("src/components/PreOpenNotice.tsx"));
-  assert.match(code, /setStatsAsk\(!!configuredGaId\(\) && !readConsentState\(\) && !consentDeferred\(\)\)/);
+  assert.match(code, /const ask = !!configuredGaId\(\) && !readConsentState\(\) && !consentDeferred\(\);\s*setStatsAsk\(ask\);\s*[^\n]*\n\s*if \(ask\) deferConsent\(\);/, "보여 준 순간 이번 세션에 물었음");
+  assert.match(code, /\(statsHeadingRef\.current \?\? closeRef\.current\)\?\.focus/, "Tab 이 읽는 순서대로(통계 구역 제목부터)");
   assert.match(code, /data-preopen-stats=""/);
   assert.match(code, /writeConsentState\(\{ collect: false, transfer: false \}\)/, "구역의 모두 거부");
   assert.match(code, /onClick=\{\(\) => setStatsSheet\(true\)\}/, "허용은 개별 동의 시트");
