@@ -68,3 +68,12 @@ master `3390b12d` = Production 배포 `05b889b3` · 환경변수 24 · auth.user
 - 21:04 KST 재대조: 배포 `4cc1a4de` · 관문 함수 · cron 4 활성 · 알림 설정 true · effective_from 2026-09-29 · activated · alert_verified · `/api/health/retention` 200 `scheduled` · 오늘 기준 파기 대상 문의 0·신고 0 · 신고 9·문의 2 불변.
 - **첫 예약 실행 전**: 실행 기록은 20:15 수동 검증 1건(`inactive`)뿐. 첫 예약 실행 = 2026-09-30 03:27 KST(파기) · 03:57 KST(대조). **실행 후 결과는 아직 없음** — 다음 확인 때 `retention_purge_runs` 로 기록한다.
 - **외부 상태 감시: 미설정.**
+
+## 첫 방문 동의 흐름 개편·운영 감시 (FIRST-VISIT-CONSENT-UX-AND-RETENTION-OPERATIONS-CLOSEOUT-V1)
+
+- 첫 방문 안내(PreOpenNotice)의 역할: Owner 확정 데이터 초기화 안내(PRELAUNCH-DATA-NOTICE V1) — 필수 안내로 보존. Home 에서 브라우저 세션마다 1회(sessionStorage), 다른 곳에서 다시 읽는 경로는 없다.
+- 개편(master `ecc5bf01`, Production 배포 `049a5a50`, 2026-09-29 21:59 KST): 통계 선택을 안내 **안의 한 구역**으로 통합(스크롤 밖에 항상 보임). 타이머·화면 이동 후 카드 폐기. 안내가 없는 화면으로 들어온 경우에만 들어온 그 화면에서 카드 1개. 보여 준 순간 '이번 세션에 물었음'(전체 새로고침으로 떠나도 다시 묻지 않음). 법적 고지·동의 버전·저장값 무변경.
+- 안전 Preview: `preview-ga-fakeid-v3.korea-mate.pages.dev`(직접 업로드, staging 빌드, 가짜 측정 ID `G-TESTCONSENT1` — Production 속성 `G-C0NG56EH5Q` 문자열 0건 확인). 시험에서 gtag.js 는 로컬 사본·수집 요청은 로컬 204(Google 전달 0).
+- 외부 상태 감시: GitHub Actions `Retention Health Monitor`(매시 17분 UTC, `/api/health/retention` 200·정상 상태가 아니면 실패 → GitHub 실패 알림). 수동 정상 실행 PASS(22:00 KST 전, HTTP 200 scheduled), 강제 실패 실행 22:00:27 KST(알림 경로 시험) — **GitHub 알림 수신은 Owner 확인 대기**. 공개 저장소 예약 워크플로는 저장소 활동이 60일 없으면 GitHub 가 멈춘다.
+- **정정**: 20:44 KST 에 생성된 Production 계정(google, `legal-2026-09-29-v1`, 기기 1, 여행 1, 저장 +2)은 **소유자 미확인 실계정**이다. Owner 확인 전에는 Owner 계정으로 단정하지 않으며, 시험 데이터로 취급하거나 수정·삭제하지 않는다.
+- 파기 첫 예약 실행(2026-09-30 03:27 KST)·대조(03:57): **미실측** — 실행 후 확인 SQL: `select id, status, reports_deleted, inquiries_deleted, alert_http_status, probe_http_status, run_at at time zone 'Asia/Seoul' from public.retention_purge_runs order by id;` · 신고 9·문의 2 보존 · `/api/health/retention` 200.
