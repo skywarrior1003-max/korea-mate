@@ -92,6 +92,18 @@ export function consentDeferred(): boolean {
 /** GA 측정 ID 형식 — 스크립트 URL·전역 플래그 이름에 들어가므로 형식 밖 값은 쓰지 않는다 */
 export const GA_ID_RE = /^G-[A-Z0-9]{4,16}$/;
 
+/**
+ * 이 빌드에서 GA 가 켜질 수 있는가(layout 의 환경 게이트와 같은 규칙) — 켜질 수 없는 빌드(Preview·로컬)에서는
+ * 첫 방문 안내에 통계 선택을 보이지 않는다. NEXT_PUBLIC_* 는 빌드 때 굳는 공개 값이다(비밀 아님).
+ */
+export function configuredGaId(): string | null {
+  const id = process.env.NEXT_PUBLIC_GA4_ID ?? "";
+  const appEnv = (process.env.NEXT_PUBLIC_APP_ENV ?? "").toLowerCase();
+  const mode = (process.env.NEXT_PUBLIC_ANALYTICS_MODE ?? "").toLowerCase();
+  const allows = appEnv === "production" ? mode !== "off" : mode === "test";
+  return allows && id !== "나중에_입력" && GA_ID_RE.test(id) ? id : null;
+}
+
 type GaWindow = Window & { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void } & Record<string, unknown>;
 
 /** 두 동의가 모두 있을 때만 부른다. 두 번 불러도 스크립트는 한 번만 싣는다. */

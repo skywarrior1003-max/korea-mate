@@ -1714,6 +1714,8 @@
     "liveOne": "Only one item is selected — statistics need both, so they stay off even if you save.",
     "liveNone": "Saving keeps statistics off.",
     "statusPartial": "Off · only one item agreed (both are needed)",
-    "statusUnset": "Off · not chosen yet"
+    "statusUnset": "Off · not chosen yet",
+    "noticeTitle": "Usage statistics (optional)",
+    "noticeBody": "You can choose whether to send usage statistics to Google Analytics (USA). Every feature works the same if you refuse or don't choose, and you can change it later under More › Usage statistics."
   }
 }
