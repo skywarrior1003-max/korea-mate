@@ -27,6 +27,7 @@
 
 - 082·083 은 각자 `BEGIN…COMMIT` 이 있는 **별도 트랜잭션**이다. 한 요청으로 이어 보내도 원자적이지 않다 — Staging 실측: 082+실패하는 083 을 한 요청으로 보내면 082 는 커밋되고, 관문 없는 082 함수와 **활성** cron 이 남았다.
 - 그래서 **082 전에 파기 cron 을 비활성으로 먼저 만든다**(`retention-cron-prestage-inactive.sql`). 082 의 멱등 블록은 이름·시각·명령이 같은 작업을 건드리지 않으므로 비활성이 유지된다(실측: 같은 jobid·active=false 유지). 083 적용 후 `retention-cron-enable-after-083.sql` 이 함수 본문에 관문이 있는지 확인하고서만 켠다(실측: 083 실패 상태에서 거부, 083 후 성공).
+- **적용 순서의 단일 기준(D-2)**: 077~080 을 먼저, 파기 묶음(선등록 → 082 → 083 → 활성화)을 뒤에 둔다. 두 묶음은 서로 의존하지 않는다(077~080 은 `auth.users`, 082·083 은 신고·문의 테이블·pg_cron). Auth 코드가 필요로 하는 077~080 을 먼저 끝내고, cron 관문이 있는 파기 묶음은 마지막에 한 번에 처리해 중간 상태를 짧게 한다. 다른 문서의 순서 표기는 이 기준을 따른다.
 - 켜진 뒤에도 083 관문 때문에 활성화 설정·알림 확인 전에는 지우지 않는다.
 - **Production pg_net 신규 설치**(082) — DB 가 외부 HTTP 요청을 보낼 수 있게 된다. 호출 함수는 anon·authenticated 가 실행할 수 없다.
 - **Production cron 작업 2 → 4**: `gokoreamate-retention-purge-daily-v1`(KST 03:27), `gokoreamate-retention-alert-reconcile-v1`(KST 03:57).
