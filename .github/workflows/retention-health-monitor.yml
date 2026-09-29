@@ -1,0 +1,40 @@
+name: Retention Health Monitor
+
+# 파기 작업(pg_cron 03:27 KST)·알림 대조(03:57 KST)가 멈추거나 막힌 것을 Resend 와 다른 경로로 알린다.
+# /api/health/retention 이 200 이 아니거나 예상 밖 상태면 이 실행이 실패하고, GitHub 가 실패 알림
+# (GitHub 계정 알림·메일)을 보낸다. 응답에는 상태 이름만 있다(건수·원문·설정값 없음).
+# 수동 실행 시 force_fail=true 로 알림 경로 자체를 시험할 수 있다.
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # 매시 17분(UTC) — 03:27·03:57 KST 작업과 겹치지 않게
+  workflow_dispatch:
+    inputs:
+      force_fail:
+        description: '알림 경로 시험 — true 면 결과와 무관하게 실패로 끝낸다'
+        required: false
+        default: 'false'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check /api/health/retention
+        run: |
+          BODY=$(curl -s --max-time 20 -w "\n%{http_code}" "https://gokoreamate.com/api/health/retention?t=$(date +%s)")
+          STATUS=$(echo "$BODY" | tail -n1)
+          JSON=$(echo "$BODY" | head -n1)
+          echo "HTTP $STATUS $JSON"
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::retention health HTTP $STATUS — $JSON"
+            exit 1
+          fi
+          case "$JSON" in
+            *'"state":"ok"'*|*'"state":"scheduled"'*|*'"state":"not_active"'*) echo "healthy" ;;
+            *) echo "::error::unexpected retention state — $JSON"; exit 1 ;;
+          esac
+      - name: Alert path test (manual only)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force_fail == 'true' }}
+        run: |
+          echo "::error::force_fail=true — 알림 경로 시험용 실패(서비스 상태와 무관)"
+          exit 1
