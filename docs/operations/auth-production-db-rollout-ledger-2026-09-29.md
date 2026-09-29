@@ -77,3 +77,5 @@ master `3390b12d` = Production 배포 `05b889b3` · 환경변수 24 · auth.user
 - 외부 상태 감시: GitHub Actions `Retention Health Monitor`(매시 17분 UTC, `/api/health/retention` 200·정상 상태가 아니면 실패 → GitHub 실패 알림). 수동 정상 실행 PASS(22:00 KST 전, HTTP 200 scheduled), 강제 실패 실행 22:00:27 KST(알림 경로 시험) — **GitHub 알림 수신은 Owner 확인 대기**. 공개 저장소 예약 워크플로는 저장소 활동이 60일 없으면 GitHub 가 멈춘다.
 - **정정**: 20:44 KST 에 생성된 Production 계정(google, `legal-2026-09-29-v1`, 기기 1, 여행 1, 저장 +2)은 **소유자 미확인 실계정**이다. Owner 확인 전에는 Owner 계정으로 단정하지 않으며, 시험 데이터로 취급하거나 수정·삭제하지 않는다.
 - 파기 첫 예약 실행(2026-09-30 03:27 KST)·대조(03:57): **미실측** — 실행 후 확인 SQL: `select id, status, reports_deleted, inquiries_deleted, alert_http_status, probe_http_status, run_at at time zone 'Asia/Seoul' from public.retention_purge_runs order by id;` · 신고 9·문의 2 보존 · `/api/health/retention` 200.
+- **알림 경로 실수신 확인(Owner, 2026-09-29)**: 22:00 KST 강제 실패 실행의 GitHub 메일 "Run failed: Retention Health Monitor - master (ecc5bf0)"(발신 notifications@github.com)을 Owner 가 받은편지함에서 확인·화면 제공. GitHub 알림함 도착도 확인. → Resend 와 독립된 알림 경로 **PASS**. 매시 예약 실행은 아직 미시작(미실측).
+- 첫 방문 흐름: Owner 가 새 시크릿 창에서 안내 한 화면(안내 문구 + 사용 통계(선택) [모두 거부]·[허용 선택] + [확인하고 둘러보기])을 직접 확인.
