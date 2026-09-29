@@ -97,7 +97,7 @@
 
 ## 9. 출시안(GA 독립 — 별도 적용 지시 후에만)
 
-- 적용 범위: `fix/ga-consent-v1` → master merge = Production 자동 빌드. **DB·환경변수 변경 없음**. 처리방침 시행일 상수 `PUBLIC_PRIVACY_EFFECTIVE_DATE`(현재 "2026-09-30")를 실제 배포일로 맞춘다(한 줄).
+- 적용 범위: `fix/ga-consent-v1` → master merge = Production 자동 빌드. **DB·환경변수 변경 없음**. 처리방침 시행일 상수 `PUBLIC_PRIVACY_EFFECTIVE_DATE` = 실제 게시일 "2026-09-29"(KST). 배포가 늦어지면 이 한 줄을 실제 날짜로 맞춘다.
 - 배포 직후 확인(Owner 또는 Main, 새 시크릿 창·Production 도메인):
   1. 첫 방문 → 개발자도구 Network 에 `googletagmanager`·`google-analytics` 요청 0, 쿠키 `_ga` 0.
   2. 안내 모달 닫기 → 동의 배너 표시, 두 상자 해제 상태.
