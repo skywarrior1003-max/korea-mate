@@ -30,7 +30,8 @@
     "tipsReplayDesc": "最初からもう一度ずつ表示します",
     "tipsReplayDone": "次の画面からまた表示します",
     "analyticsToggle": "利用統計（Google Analytics）",
-    "analyticsDesc": "2項目の両方がオンのときだけ統計がオンになります。どちらかをオフにすると、それ以降の送信を止め、このブラウザで当サービスが設定した GA の Cookie を削除します。すでに送信した情報は直ちには削除されず、プライバシーポリシーの Google Analytics の保持設定に従います。"
+    "analyticsDesc": "2項目の両方がオンのときだけ統計がオンになります。どちらかをオフにすると、それ以降の送信を止め、このブラウザで当サービスが設定した GA の Cookie を削除します。すでに送信した情報は直ちには削除されず、プライバシーポリシーの Google Analytics の保持設定に従います。",
+    "analyticsChange": "統計の選択を変更"
   },
   "explore": {
     "title": "{city}を探索",
@@ -1701,7 +1702,18 @@
     "save": "選択を保存",
     "rejectAll": "すべて拒否",
     "later": "後で決める",
-    "statusOn": "統計送信オン",
-    "statusOff": "統計送信オフ"
+    "statusOn": "オン・2項目とも同意",
+    "statusOff": "オフ・同意なし",
+    "cardTitle": "利用統計を送信するか選んでください",
+    "cardBody": "サービス改善のため、利用統計を Google Analytics（米国）へ送信できます。拒否してもすべての機能をそのまま使えます。",
+    "cardChoose": "許可を選ぶ",
+    "selectAll": "下の2項目にまとめて同意",
+    "showDetails": "内容を見る",
+    "hideDetails": "内容を閉じる",
+    "liveBoth": "保存すると統計送信がオンになります。",
+    "liveOne": "1項目だけ選択しています — 統計には2項目の両方が必要なため、保存してもオフのままです。",
+    "liveNone": "保存しても統計送信はオフのままです。",
+    "statusPartial": "オフ・1項目のみ同意（2項目とも必要）",
+    "statusUnset": "オフ・未選択"
   }
 }

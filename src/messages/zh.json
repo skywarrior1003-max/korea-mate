@@ -30,7 +30,8 @@
     "tipsReplayDesc": "从头再看一遍各个提示",
     "tipsReplayDone": "下个页面开始将再次显示",
     "analyticsToggle": "使用统计（Google Analytics）",
-    "analyticsDesc": "两项都开启时才会开启统计。关闭任意一项后，将停止此后的发送，并删除本服务在此浏览器中设置的 GA Cookie。已发送的信息不会立即删除，并遵循隐私政策中的 Google Analytics 保留设置。"
+    "analyticsDesc": "两项都开启时才会开启统计。关闭任意一项后，将停止此后的发送，并删除本服务在此浏览器中设置的 GA Cookie。已发送的信息不会立即删除，并遵循隐私政策中的 Google Analytics 保留设置。",
+    "analyticsChange": "更改统计选择"
   },
   "explore": {
     "title": "探索{city}",
@@ -1701,7 +1702,18 @@
     "save": "保存选择",
     "rejectAll": "全部拒绝",
     "later": "稍后决定",
-    "statusOn": "统计发送已开启",
-    "statusOff": "统计发送已关闭"
+    "statusOn": "已开启 · 两项均已同意",
+    "statusOff": "已关闭 · 未同意",
+    "cardTitle": "请选择是否发送使用统计",
+    "cardBody": "为改进服务，我们可以将使用统计发送至 Google Analytics（美国）。拒绝也能照常使用全部功能。",
+    "cardChoose": "选择允许",
+    "selectAll": "同意下面两项",
+    "showDetails": "查看内容",
+    "hideDetails": "收起内容",
+    "liveBoth": "保存后将开启统计发送。",
+    "liveOne": "只选择了一项——两项都同意才会开启统计，因此保存后仍保持关闭。",
+    "liveNone": "保存后统计发送保持关闭。",
+    "statusPartial": "已关闭 · 仅同意一项（需两项都同意）",
+    "statusUnset": "已关闭 · 尚未选择"
   }
 }

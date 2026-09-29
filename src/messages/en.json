@@ -30,7 +30,8 @@
     "tipsReplayDesc": "See each tip once more from the start",
     "tipsReplayDone": "Tips will show again from your next screen",
     "analyticsToggle": "Usage statistics (Google Analytics)",
-    "analyticsDesc": "Statistics turn on only if both items are on. Turning either off stops sending from then on and deletes the GA cookies this service set in this browser. Information already sent is not deleted immediately and follows the Google Analytics retention settings in the Privacy Policy."
+    "analyticsDesc": "Statistics turn on only if both items are on. Turning either off stops sending from then on and deletes the GA cookies this service set in this browser. Information already sent is not deleted immediately and follows the Google Analytics retention settings in the Privacy Policy.",
+    "analyticsChange": "Change statistics choice"
   },
   "explore": {
     "title": "Explore {city}",
@@ -1701,7 +1702,18 @@
     "save": "Save choices",
     "rejectAll": "Reject all",
     "later": "Decide later",
-    "statusOn": "Statistics on",
-    "statusOff": "Statistics off"
+    "statusOn": "On · both items agreed",
+    "statusOff": "Off · not agreed",
+    "cardTitle": "Choose whether to send usage statistics",
+    "cardBody": "To improve the service, we can send usage statistics to Google Analytics (USA). Every feature works the same if you refuse.",
+    "cardChoose": "Choose to allow",
+    "selectAll": "Agree to both items below",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "liveBoth": "Saving turns statistics on.",
+    "liveOne": "Only one item is selected — statistics need both, so they stay off even if you save.",
+    "liveNone": "Saving keeps statistics off.",
+    "statusPartial": "Off · only one item agreed (both are needed)",
+    "statusUnset": "Off · not chosen yet"
   }
 }

@@ -30,7 +30,8 @@
     "tipsReplayDesc": "처음부터 다시 한 번씩 보여 드려요",
     "tipsReplayDone": "다음 화면부터 다시 보여 드릴게요",
     "analyticsToggle": "사용 통계(Google Analytics)",
-    "analyticsDesc": "두 항목에 모두 동의해야 통계가 켜집니다. 어느 하나를 끄면 그 이후의 전송을 멈추고 이 브라우저에서 서비스가 설정한 GA 쿠키를 지웁니다. 이미 보낸 정보는 즉시 삭제되지 않으며 처리방침의 Google Analytics 보관 설정을 따릅니다."
+    "analyticsDesc": "두 항목에 모두 동의해야 통계가 켜집니다. 어느 하나를 끄면 그 이후의 전송을 멈추고 이 브라우저에서 서비스가 설정한 GA 쿠키를 지웁니다. 이미 보낸 정보는 즉시 삭제되지 않으며 처리방침의 Google Analytics 보관 설정을 따릅니다.",
+    "analyticsChange": "통계 선택 변경"
   },
   "explore": {
     "title": "{city} 탐험하기",
@@ -1701,7 +1702,18 @@
     "save": "선택 저장",
     "rejectAll": "모두 거부",
     "later": "나중에 결정",
-    "statusOn": "통계 전송 켜짐",
-    "statusOff": "통계 전송 꺼짐"
+    "statusOn": "켜짐 · 두 항목 모두 동의함",
+    "statusOff": "꺼짐 · 동의하지 않음",
+    "cardTitle": "사용 통계를 보낼지 선택해 주세요",
+    "cardBody": "서비스 개선을 위해 Google Analytics(미국)로 이용 통계를 보낼 수 있어요. 거부해도 모든 기능을 그대로 쓸 수 있어요.",
+    "cardChoose": "허용 선택",
+    "selectAll": "모두 동의(아래 두 항목)",
+    "showDetails": "내용 보기",
+    "hideDetails": "내용 접기",
+    "liveBoth": "저장하면 통계 전송이 켜져요.",
+    "liveOne": "한 항목만 선택했어요 — 두 항목 모두 동의해야 통계가 켜지므로, 저장해도 꺼져 있어요.",
+    "liveNone": "저장하면 통계 전송은 꺼진 상태로 남아요.",
+    "statusPartial": "꺼짐 · 한 항목만 동의함(두 항목 모두 필요)",
+    "statusUnset": "꺼짐 · 아직 선택하지 않음"
   }
 }

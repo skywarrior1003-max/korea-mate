@@ -27,7 +27,8 @@ import {
 import { requestDeleteIntent, executeAccountDelete } from "@/lib/auth/account-delete-client";
 import { fetchAuthStatus, activateAccount } from "@/lib/auth/consent-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
-import { readConsentState, writeConsentState, gaAllowed, ANALYTICS_CONSENT_EVENT } from "@/lib/analytics-consent";
+import { readConsentState, gaAllowed, ANALYTICS_CONSENT_EVENT } from "@/lib/analytics-consent";
+import AnalyticsConsentSheet from "@/components/AnalyticsConsentSheet";
 
 /** 로그인 상태 영역 (V2-MINIMAL-GOOGLE-AUTH-V1 §12 + CONSENT-V1 §G) — More 최소 진입점.
  *  이메일 전체를 노출하지 않고, Google 프로필 이미지는 쓰지 않는다(외부 이미지
@@ -346,19 +347,21 @@ export default function MoreClient() {
 
   // 사용 통계(GA) 선택 — 동의 변경·철회 경로(GA-CONSENT-V1). 실제 켜고 끄기는 AnalyticsConsent 가 맡는다.
   // 동의는 두 개(수집·이용 / 국외 이전)를 따로 켜고 끈다. 둘 다 켜져야 통계가 켜진다.
+  // UX-V2: 기본 화면에는 현재 상태 한 줄과 '통계 선택 변경'만 둔다. 개별 확인·수정·철회와 고지 전문은 시트에서.
   const tConsent = useTranslations("analyticsConsent");
-  const [stats, setStats] = useState({ collect: false, transfer: false });
+  const [stats, setStats] = useState<{ collect: boolean; transfer: boolean } | null>(null);
+  const [statsSheet, setStatsSheet] = useState(false);
   useEffect(() => {
     const sync = () => {
       const s = readConsentState();
-      setStats({ collect: !!s?.collect, transfer: !!s?.transfer });
+      setStats(s ? { collect: s.collect, transfer: s.transfer } : null);
     };
     Promise.resolve().then(sync);
     window.addEventListener(ANALYTICS_CONSENT_EVENT, sync);
     return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, sync);
   }, []);
-  const toggleStat = (k: "collect" | "transfer") => writeConsentState({ ...stats, [k]: !stats[k] });
-  const statsLive = gaAllowed({ v: "", at: "", ...stats });
+  const statsLive = gaAllowed(stats ? { v: "", at: "", ...stats } : null);
+  const statsState = statsLive ? "on" : !stats ? "unset" : (stats.collect || stats.transfer) ? "one" : "off";
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
@@ -409,43 +412,26 @@ export default function MoreClient() {
             desc={t("termsDesc")}
             icon={<svg {...ICON} aria-hidden><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h5" /><path d="M10 17h5" /></svg>}
           />
-          <div className="px-5 py-4">
-            <div className="flex items-center gap-4">
-              <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#FFF0EB] text-[#FF4A2D] inline-flex items-center justify-center">
-                <svg {...ICON} aria-hidden><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+          <button
+            type="button"
+            onClick={() => setStatsSheet(true)}
+            className="gkm-focus w-full text-left flex items-center gap-4 px-5 min-h-16 py-4 hover:bg-[#F3EEE3] transition-colors"
+          >
+            <span aria-hidden className="shrink-0 w-11 h-11 rounded-2xl bg-[#F3EEE3] text-[#61554D] inline-flex items-center justify-center">
+              <svg {...ICON} aria-hidden><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("analyticsToggle")}</span>
+              <span data-stats-status={statsState} className="block text-[13px] text-[#61554D] mt-0.5 leading-snug">
+                {tConsent(statsState === "on" ? "statusOn" : statsState === "one" ? "statusPartial" : statsState === "off" ? "statusOff" : "statusUnset")}
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[16px] font-black text-[#2C2520] leading-snug">{t("analyticsToggle")}</span>
-                <span data-stats-status={statsLive ? "on" : "off"} className="block text-[13px] font-bold mt-0.5 leading-snug" style={{ color: statsLive ? "#C2371F" : "#61554D" }}>
-                  {statsLive ? tConsent("statusOn") : tConsent("statusOff")}
-                </span>
-              </span>
-            </div>
-            <p className="mt-2 text-[13px] text-[#61554D] leading-snug">{t("analyticsDesc")}</p>
-            {(["collect", "transfer"] as const).map(k => (
-              <div key={k} className="mt-3 flex items-start gap-3">
-                <span className="min-w-0 flex-1">
-                  <span id={`gkm-stats-${k}`} className="block text-[14px] font-black text-[#2C2520] leading-snug">{tConsent(k === "collect" ? "collectLabel" : "transferLabel")}</span>
-                  <span className="block text-[12px] text-[#61554D] mt-0.5 leading-relaxed">{tConsent(k === "collect" ? "collectDetails" : "transferDetails")}</span>
-                </span>
-                <button
-                  type="button"
-                  role="switch"
-                  aria-checked={stats[k]}
-                  aria-labelledby={`gkm-stats-${k}`}
-                  onClick={() => toggleStat(k)}
-                  className="gkm-focus relative shrink-0 w-12 h-7 rounded-full transition-colors"
-                  style={{ backgroundColor: stats[k] ? "#FF4A2D" : "#D9D2C7" }}
-                >
-                  <span
-                    className="absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-all"
-                    style={{ left: stats[k] ? "calc(100% - 1.625rem)" : "0.125rem" }}
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
+              <span className="block text-[13px] font-bold text-[#8C6239] mt-1 leading-snug">{t("analyticsChange")}</span>
+            </span>
+            {CHEVRON}
+          </button>
         </Group>
+
+        <AnalyticsConsentSheet open={statsSheet} onClose={() => setStatsSheet(false)} />
 
         {/* First Trip Journey Guide — 팁 ON/OFF · 다시 보기 (Owner 확정) */}
         <Group title={t("groupTips")}>

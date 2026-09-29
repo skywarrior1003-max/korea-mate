@@ -48,19 +48,36 @@ test("layout — gtag 를 무조건 싣지 않는다(동의 컴포넌트만)", (
   assert.match(code, /const gaConsentId = ga4Valid \? ga4Id : null/);
 });
 
-test("배너 — 두 체크 상자(기본 해제)·gaAllowed 일 때만 loadGtag·모달 뒤에 뜸·나중에", () => {
+test("첫 방문 카드 — gaAllowed 일 때만 loadGtag·같은 무게의 [모두 거부]/[허용 선택]·나중에·연속으로 가로막지 않음", () => {
   const code = strip(read("src/components/AnalyticsConsent.tsx"));
-  assert.match(code, /useState\(false\);\s*const \[transfer, setTransfer\] = useState\(false\)/, "두 동의 기본값 false");
-  assert.equal((code.match(/type="checkbox"/g) ?? []).length, 2, "동의 상자 2개(한 버튼으로 묶지 않음)");
   assert.equal((code.match(/loadGtag\(/g) ?? []).length, 2);
   assert.match(code, /if \(gaAllowed\(s\)\) loadGtag\(gaId\);/);
   assert.match(code, /if \(gaAllowed\(next\)\) loadGtag\(gaId\); else disableGtag\(gaId\);/);
-  assert.match(code, /writeConsentState\(\{ collect: false, transfer: false \}\)/, "모두 거부");
-  assert.match(code, /writeConsentState\(\{ collect, transfer \}\)/, "선택 저장");
-  assert.match(code, /if \(!open \|\| noticeOpen\) return null;/, "첫 방문 안내 모달이 떠 있으면 그리지 않는다");
-  assert.match(code, /deferConsent\(\)/);
   assert.match(code, /if \(hasStaleConsent\(\)\) \{ clearStaleConsent\(\); disableGtag\(gaId\); \}/, "버전 바뀌면 이전 선택 무효·쿠키 정리");
-  assert.equal((code.match(/h-11 rounded-xl border border-\[#2C2520\] bg-white/g) ?? []).length, 2, "두 버튼 같은 모양");
+  assert.match(code, /writeConsentState\(\{ collect: false, transfer: false \}\)/, "카드의 모두 거부");
+  assert.match(code, /onClick=\{\(\) => setSheet\(true\)\}/, "허용은 개별 동의 시트를 거친다(카드에서 바로 허용하지 않음)");
+  assert.ok(!/writeConsentState\(\{ collect: true/.test(code), "카드에서 두 동의를 한 번에 켜는 경로 금지");
+  assert.equal((code.match(/h-10 rounded-xl border border-\[#2C2520\] bg-white/g) ?? []).length, 2, "두 버튼 같은 모양");
+  assert.match(code, /deferConsent\(\)/, "× = 나중에 결정");
+  assert.match(code, /undecided && ready && !blocked && !onMore && !sheet/, "안내·다른 모달·더보기·시트가 있으면 카드 숨김");
+  assert.match(code, /\[data-preopen-notice\], \[aria-modal=\\"true\\"\]:not\(\[data-gkm-analytics-sheet\]\)/);
+  assert.match(code, /AFTER_NOTICE_MS = 12_000/, "첫 방문 안내 직후 연속 노출 금지");
+});
+
+test("동의 시트 — 두 상자(열 때 저장값, 없으면 해제)·모두 동의는 편의·고지 전문은 동의 전 '내용 보기'·한쪽만이면 꺼짐 안내", () => {
+  const code = strip(read("src/components/AnalyticsConsentSheet.tsx"));
+  assert.match(code, /setPick\(\{ collect: !!s\?\.collect, transfer: !!s\?\.transfer \}\)/, "저장값에서 출발·없으면 false");
+  assert.match(code, /useState\(\{ collect: false, transfer: false \}\)/);
+  for (const n of ["gkm-analytics-${k}", "gkm-analytics-all"]) assert.ok(code.includes(n), n);
+  assert.equal((code.match(/type="checkbox"/g) ?? []).length, 2, "개별 상자 컴포넌트 1(두 번 렌더) + 모두 동의 1");
+  assert.match(code, /item\("collect"\)[\s\S]{0,40}item\("transfer"\)/, "두 동의를 따로 렌더");
+  assert.match(code, /setPick\(\{ collect: e\.target\.checked, transfer: e\.target\.checked \}\)/, "모두 동의 = 두 상자 체크 편의");
+  assert.match(code, /collectDetails[\s\S]{0,20}transferDetails/, "고지 전문 연결");
+  assert.match(code, /aria-expanded=\{shown\[k\]\}/, "내용 보기 펼침");
+  assert.match(code, /both \? t\("liveBoth"\) : one \? t\("liveOne"\) : t\("liveNone"\)/, "한쪽만 선택 결과 안내");
+  assert.match(code, /save\(\{ collect: false, transfer: false \}\)/, "시트의 모두 거부");
+  assert.match(code, /onClick=\{\(\) => save\(pick\)\}/, "선택 저장 = 체크한 그대로(한쪽만이면 GA 꺼짐)");
+  assert.match(code, /\}, \[open\]\);/, "부모 재렌더로 고르던 선택 초기화 금지");
 });
 
 test("trackEvent — production + 두 동의 모두여야 전송", () => {
@@ -71,22 +88,25 @@ test("trackEvent — production + 두 동의 모두여야 전송", () => {
   assert.ok(iEnv > 0 && iConsent > iEnv && iSend > iConsent);
 });
 
-test("더보기 — 두 동의를 따로 켜고 끈다 + 4개 언어 고지 사항(제15조②·제28조의8②)", () => {
+test("더보기 — 상태 한 줄 + '통계 선택 변경'(같은 시트) · 4개 언어 고지 사항(제15조②·제28조의8②)", () => {
   const more = strip(read("src/app/more/MoreClient.tsx"));
-  assert.match(more, /writeConsentState\(\{ \.\.\.stats, \[k\]: !stats\[k\] \}\)/);
-  assert.match(more, /\(\["collect", "transfer"\] as const\)\.map/);
-  assert.match(more, /role="switch"[\s\S]{0,60}aria-checked=\{stats\[k\]\}/);
+  assert.match(more, /onClick=\{\(\) => setStatsSheet\(true\)\}/);
+  assert.match(more, /<AnalyticsConsentSheet open=\{statsSheet\}/);
+  assert.match(more, /statsLive \? "on" : !stats \? "unset" : \(stats\.collect \|\| stats\.transfer\) \? "one" : "off"/, "한쪽만 = 꺼짐(두 항목 필요) 상태");
+  assert.ok(!/collectDetails|transferDetails/.test(more), "기본 화면에 고지 전문을 펼쳐 두지 않는다");
+  assert.ok(!/writeConsentState/.test(more), "변경은 시트에서만");
   for (const l of ["ko", "en", "ja", "zh"]) {
     const m = JSON.parse(read(`src/messages/${l}.json`)) as Record<string, Record<string, string>>;
     const a = m.analyticsConsent;
-    for (const k of ["title", "intro", "collectLabel", "collectDetails", "transferLabel", "transferDetails", "footer", "policyLink", "save", "rejectAll", "later", "statusOn", "statusOff"])
+    for (const k of ["title", "intro", "collectLabel", "collectDetails", "transferLabel", "transferDetails", "footer", "policyLink", "save", "rejectAll", "later", "statusOn", "statusOff",
+      "cardTitle", "cardBody", "cardChoose", "selectAll", "showDetails", "hideDetails", "liveBoth", "liveOne", "liveNone", "statusPartial", "statusUnset"])
       assert.ok((a?.[k] ?? "").length > 1, `${l}.${k}`);
     assert.ok(!("accept" in a) && !("decline" in a), `${l}: 단일 허용 버튼 문구 잔존 금지`);
     assert.match(a.transferDetails, /Google LLC/, `${l}: 받는 자`);
     assert.match(a.transferDetails, /support\.google\.com\/policies/, `${l}: 받는 자 연락처`);
     for (const d of [a.collectDetails, a.transferDetails]) { assert.match(d, /2/); assert.match(d, /14/); }
     assert.match(a.footer, /14/, `${l}: 만 14세 안내`);
-    for (const k of ["analyticsToggle", "analyticsDesc"]) assert.ok((m.more?.[k] ?? "").length > 1, `${l}.more.${k}`);
+    for (const k of ["analyticsToggle", "analyticsDesc", "analyticsChange"]) assert.ok((m.more?.[k] ?? "").length > 1, `${l}.more.${k}`);
   }
 });
 
