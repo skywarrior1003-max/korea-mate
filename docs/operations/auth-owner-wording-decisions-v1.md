@@ -23,6 +23,12 @@
 | `src/app/more/MoreClient.tsx` | 계정 영역(AccountSection)·약관 행·계정 삭제 흐름 | 사용 통계 두 스위치·상태 표시 |
 | `src/lib/legal/public-privacy-guard.test.ts` | Auth 판 기준 테스트(로그인·계정 삭제 서술 확인) | — (GA 쪽 변경은 공개판 금지어 예외라 Auth 판에 해당 없음) |
 
+### GA 최종 문구 합류(2026-09-29, GA-CONSENT-PRODUCTION-RELEASE-V1)
+
+- master=Production 에 `3390b12d`(GA 동의판) 게시. Auth 브랜치는 이 커밋을 merge 해 보존한다 — **Auth 출시 때 이 문구를 되돌리지 않는다.**
+- 보존 대상: 철회=그 이후 전송 중단 + 이 브라우저에서 서비스가 설정한 GA 쿠키 삭제 / 이미 전송된 사용자·이벤트 수준 데이터는 GA 보관 설정(이벤트 2개월·사용자 14개월, 새 활동 시 재설정) / 표준 집계 보고서에는 보관 설정 미적용 / 과거 데이터 즉시 삭제 약속 없음. 배너 footer·고지 항목·더보기 설명·처리방침(Auth 판은 제7·8조) 4개 언어.
+- 충돌 1(`privacy-content.ts`): Auth 판 유지 + 같은 문장을 Auth 판 조항 번호(제8조)로 반영. `PUBLIC_PRIVACY_GA_REVISION_DATE` = 2026-09-29(실제 게시일).
+
 ## 결정 요약(결정 전 자료 — 기록으로 둠)
 
 | # | 권장 | Owner 가 할 일 |

@@ -94,7 +94,16 @@ test("처리방침 — 2단 동의·근거·철회는 그때부터(과거 전송
   const p = read("src/lib/legal/privacy-content.ts");
   assert.ok(!/Google 의 차단 도구로 거부할 수 있으며|Google's opt-out tools, and the service still works|'허용 안 함'|Don't allow/.test(p), "옛 문장 잔존 금지");
   for (const k of ["제28조의8제1항제1호", "Article 28-8(1)(1)", "第28条の8第1項第1号", "第28条之8第1款第1项"]) assert.ok(p.includes(k), k);
-  for (const k of ["철회로 즉시 삭제되지 않고", "not deleted immediately by withdrawing", "直ちに削除されず", "不会因撤回而立即删除"]) assert.ok(p.includes(k), k);
+  // Google 공식 안내(answer/7667196): 보관 설정은 사용자·이벤트 수준 데이터에만, 표준 집계 보고서엔 적용 안 됨, 사용자 기간은 새 활동 시 재설정
+  for (const k of ["철회해도 이미 Google 로 전송된 정보가 즉시 삭제되지는 않습니다", "Withdrawing does not immediately delete information already sent to Google", "すでに Google に送信された情報が直ちに削除されるわけではありません", "撤回并不会立即删除已发送给 Google 的信息"]) assert.ok(p.includes(k), k);
+  for (const k of ["표준 집계 보고서에는 적용되지 않습니다", "not to standard aggregated reports", "標準の集計レポートには適用されません", "不适用于标准汇总报告"]) assert.ok(p.includes(k), k);
+  for (const k of ["사용자 데이터 보관 기간이 새로 시작됩니다", "user-data period restarts when a user is active again", "ユーザーデータの保管期間が改めて始まります", "用户数据的保存期限重新计算"]) assert.ok(p.includes(k), k);
+  assert.ok(!/지나면 삭제됩니다|deleted when the retention periods below end|過ぎると削除されます|届满后删除/.test(p), "보관기간 경과=전부 삭제로 단정하는 문장 금지");
+  for (const l of ["ko", "en", "ja", "zh"]) {
+    const a = (JSON.parse(read(`src/messages/${l}.json`)) as Record<string, Record<string, string>>);
+    for (const t of [a.analyticsConsent.footer, a.more.analyticsDesc]) assert.ok(!/지나야 삭제|deleted only after|過ぎるまで削除されません|届满后才会删除/.test(t), `${l}: 과거 데이터 삭제 단정 금지`);
+    assert.match(a.analyticsConsent.footer, /표준 집계|standard aggregated|標準の集計|标准汇总/, `${l}: 집계 보고서 구분`);
+  }
   for (const k of ["나이를 확인하지는 않습니다", "we do not verify age", "年齢の確認は行っていません", "不核实年龄"]) assert.ok(p.includes(k), k);
   const gaParas = p.split("\n").filter(l => /Google Analytics 4/.test(l));
   assert.equal(gaParas.length, 4);
