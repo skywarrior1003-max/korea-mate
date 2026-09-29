@@ -16,8 +16,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
-  readJourney, writeJourney, completeStep, skipStep, pauseJourney, endJourney, switchToPlacesAt, progressOf,
-  deviceHasTrip, JOURNEY_SIGNAL_EVENT, JOURNEY_CHANGE_EVENT,
+  MERGE_STEPS, readJourney, writeJourney, completeStep, skipStep, pauseJourney, endJourney, switchToPlacesAt, progressOf,
+  JOURNEY_SIGNAL_EVENT, JOURNEY_CHANGE_EVENT,
   type JourneyState, type JourneyStep, type JourneySignal,
 } from "@/lib/guided-journey/journey-core";
 import JourneyStartChooser from "@/components/guided-journey/JourneyStartChooser";
@@ -26,7 +26,9 @@ type Loc = { path: string; search: URLSearchParams };
 const reCityHub = /^\/city\/[^/]+\/?$/;
 const reCityTrips = /^\/city\/[^/]+\/trips\/?$/;
 const reCourse = /^\/city\/[^/]+\/trips\/[^/]+\/?$/;
-const isMyTrip = (l: Loc) => /^\/itinerary\/?$/.test(l.path) && !!l.search.get("id");
+// 저장된 내 여행 화면 — 방금 만든 일정은 주소에 id 가 없을 수 있어 저장 표시(data-tut-itin)로도 판단한다
+const isMyTrip = (l: Loc) => /^\/itinerary\/?$/.test(l.path)
+  && (!!l.search.get("id") || (typeof document !== "undefined" && !!document.querySelector('[data-tut-itin="saved"]')));
 
 interface StepDef {
   /** 이 단계의 행동이 일어나는 화면 */
@@ -48,26 +50,28 @@ const STEPS: Record<JourneyStep, StepDef> = {
   pickCity: { on: l => l.path === "/", goto: "/", targets: ['[data-tut="tut-city"]'], done: { route: l => /^\/city\//.test(l.path) } },
   pickCourse: { on: l => reCityHub.test(l.path) || reCityTrips.test(l.path), goto: "/", targets: ['[data-tut="tut-course"]'], done: { route: l => reCourse.test(l.path) } },
   adoptCourse: { on: l => reCourse.test(l.path), targets: ['[data-tut="tut-adopt"]'], done: { dom: '[data-tut="tut-adopt-go"]' } },
-  adoptDates: { on: l => reCourse.test(l.path), targets: ['[data-tut="tut-adopt-go"]'], done: { route: isMyTrip } },
+  adoptDates: { on: l => reCourse.test(l.path), targets: ['[data-tut="tut-adopt-go"]:not(:disabled)', '[data-tut="tut-adopt-start"][value=""]', '[data-tut="tut-adopt-end"]'], done: { route: isMyTrip } },
   pickPlace: { on: l => reCityHub.test(l.path), goto: "/", targets: ['[data-tut="tut-place"]'], done: { route: l => /^\/place\//.test(l.path) } },
   savePlace: { on: l => /^\/place\//.test(l.path), targets: ['[data-tut="tut-save"]'], done: { dom: '[data-tut="tut-save"][aria-pressed="true"]' } },
   openPicks: { on: () => true, goto: "/picks/", targets: ['[data-tut="tut-nav-picks"]'], done: { route: l => /^\/picks/.test(l.path) } },
   addToThisTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-this-trip"]', '[data-tut="tut-tab-saved"]'], done: { click: ['[data-tut="tut-this-trip"]'] } },
   openThisTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-tab-selected"]'], done: { dom: '[data-tut="tut-tab-selected"][aria-selected="true"]' } },
-  buildTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-build"]'], done: { route: l => /^\/itinerary/.test(l.path) } },
+  buildTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", // 여행 도시·날짜가 아직 없으면(시작 카드) 날짜 → [이 조건으로 시작] 을 먼저 가리킨다
+    targets: ['[data-tut="tut-starter-go"]:not(:disabled)', '[data-tut="tut-starter-start"][value=""]', '[data-tut="tut-starter-end"]', '[data-tut="tut-build"]'], done: { route: l => /^\/itinerary/.test(l.path) } },
   openImport: { on: () => true, goto: "/import/", targets: [], done: { route: l => /^\/import/.test(l.path) } },
   pasteLink: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-url"]'], done: { dom: '[data-tut="tut-import-preview"]' }, failDom: '[data-tut="tut-import-error"]' },
   reviewImport: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-confirm"]', '[data-tut="tut-import-add"]'], done: { route: l => isMyTrip(l) || /^\/picks/.test(l.path) } },
   openMyTrip: { on: () => true, goto: "/my-trips/", targets: ['[data-tut="tut-trip-row"]'], done: { route: isMyTrip } },
   tripSaved: { on: l => /^\/itinerary/.test(l.path), goto: "/my-trips/", targets: ['[data-tut="tut-sync"]'], done: { dom: '[data-tut-itin="saved"]' } },
   checkDates: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-dates-apply"]', '[data-tut="tut-dates"]'], done: { signal: "dates-applied" }, confirm: true },
-  addRecord: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-add-record"]'], done: { signal: "moment-saved" }, pausable: true },
+  // 일정 탭의 장소별 기록 버튼은 여행 기간에만 보인다 — 없으면 늘 기록 버튼이 있는 Story 탭부터 가리킨다
+  addRecord: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-add-record"]', '[data-tut="tut-story-tab"]'], done: { signal: "moment-saved" }, pausable: true },
   openStory: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-story-tab"]'], done: { dom: '[data-tut="tut-story-tab"][aria-selected="true"]' } },
   publishOpen: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-menu-visibility"]', '[data-tut="tut-more-menu"]'], done: { dom: '[data-tut="tut-publish-go"], [data-tut-public="1"]' } },
   publishStory: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-publish-go"]'], done: { dom: '[data-tut-public="1"]' } },
-  makeShareCard: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-menu-storyCard"]', '[data-tut="tut-more-menu"]'], done: { dom: '[data-tut="tut-card-modal"]' } },
+  makeShareCard: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-publish-card"]', '[data-tut="tut-menu-storyCard"]', '[data-tut="tut-more-menu"]'], done: { dom: '[data-tut="tut-card-modal"]' } },
   shareCard: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-card-share"]', '[data-tut="tut-card-create"]'], done: { click: ['[data-tut="tut-card-share"]', '[data-tut="tut-card-save"]'] } },
-  submitRecommend: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-brag-confirm"]', '[data-tut="tut-brag"]'], done: { dom: '[data-tut="tut-brag-status"]' } },
+  submitRecommend: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-brag-confirm"]', '[data-tut="tut-brag"]', '[data-tut="tut-story-tab"][aria-selected="false"]'], done: { dom: '[data-tut="tut-brag-status"]' } },
   finish: { on: () => true, targets: [], done: {}, confirm: true },
 };
 
@@ -96,9 +100,13 @@ export default function GuidedJourney() {
   const pathname = usePathname() || "/";
   const [js, setJs] = useState<JourneyState | null>(null);
   const [rect, setRect] = useState<DOMRect | null>(null);
-  const [mode, setMode] = useState<"target" | "offRoute" | "missing" | "failed" | "floating" | "offscreen" | "covered">("floating");
+  const [mode, setMode] = useState<"target" | "offRoute" | "missing" | "failed" | "floating" | "offscreen" | "covered" | "blocked">("floating");
   /** 지금 가리키는 대상의 data-tut — 말풍선 문장을 대상에 맞춘다(메뉴가 닫혀 있으면 "더보기를 누르세요") */
   const [tutKey, setTutKey] = useState<string | null>(null);
+  /** 대상이 창(공개 미리보기·공유 카드) 안에 있으면 말풍선을 한 줄로 줄인다 — 창의 내용을 덮지 않게.
+      설명·건너뛰기는 '자세히'를 눌러 펼친다. */
+  const [inWindow, setInWindow] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -115,6 +123,9 @@ export default function GuidedJourney() {
   }, []);
   // 화면이 바뀌면 숨김을 풀고 다시 판단
   useEffect(() => { Promise.resolve().then(() => setHidden(false)); }, [pathname]);
+  // 단계가 바뀌면 '자세히'는 다시 접힌다
+  const stepNow = js?.step ?? null;
+  useEffect(() => { Promise.resolve().then(() => setExpanded(false)); }, [stepNow]);
 
   const active = js?.status === "active" && !!js.step;
   const step = active ? (js!.step as JourneyStep) : null;
@@ -134,31 +145,41 @@ export default function GuidedJourney() {
     if (stepStart.current.step !== step) stepStart.current = { step, at: Date.now(), scrolled: false };
     const tick = () => {
       const l = locNow();
+      // 첫 방문 안내(오픈 전 안내·통계 선택)가 열려 있으면 그 위에 겹치지 않는다.
+      // 사용자가 지금 그 행동을 하는 창(기록 쓰기 등, data-journey-quiet)도 가리지 않는다.
+      if (document.querySelector("[data-preopen-notice], [data-journey-quiet]")) { setMode("blocked"); targetRef.current = null; setRect(null); setTutKey(null); return; }
       if ((def.done.route && def.done.route(l)) || (def.done.dom && document.querySelector(def.done.dom))) { advance(step); return; }
-      if (def.failDom && document.querySelector(def.failDom)) { setMode("failed"); targetRef.current = null; setRect(null); return; }
-      if (!def.on(l)) { setMode("offRoute"); targetRef.current = null; setRect(null); return; }
-      if (def.targets.length === 0) { setMode("floating"); setRect(null); return; }
-      const el = findTarget(def.targets);
+      if (def.failDom && document.querySelector(def.failDom)) { setMode("failed"); targetRef.current = null; setRect(null); setTutKey(null); return; }
+      // My Trip 단계인데 여행 목록에 있으면(이어하기·뒤로 가기) 이어 갈 여행을 가리킨다
+      const viaList = !def.on(l) && def.goto === "/my-trips/" && /^\/my-trips\/?$/.test(l.path);
+      if (!def.on(l) && !viaList) { setMode("offRoute"); targetRef.current = null; setRect(null); setTutKey(null); return; }
+      const targets = viaList ? ['[data-tut="tut-trip-row"]'] : def.targets;
+      if (targets.length === 0) { setMode("floating"); setRect(null); setTutKey(null); return; }
+      const el = findTarget(targets);
       if (!el) {
-        targetRef.current = null; setRect(null);
+        targetRef.current = null; setRect(null); setTutKey(null);
         setMode(Date.now() - stepStart.current.at > MISSING_AFTER_MS ? "missing" : "floating");
         return;
       }
       targetRef.current = el;
       setTutKey(el.getAttribute("data-tut"));
+      setInWindow(!!el.closest('[aria-modal="true"], [data-tut="tut-card-modal"]'));
       const r = el.getBoundingClientRect();
-      const off = r.bottom < 56 || r.top > window.innerHeight - 64;
+      // 대상 가운데를 실제로 덮고 있는 것 — 고정 머리글·하단 탭 아래로 들어간 것은 '화면 밖'과 같고,
+      // 그 밖의 창(모달·시트)에 가려진 것은 '가려짐'이다(허공을 가리키지 않고 창을 닫으라고만 한다)
+      const outside = r.bottom <= 0 || r.top >= window.innerHeight;
+      const cx = Math.min(Math.max(r.left + r.width / 2, 1), window.innerWidth - 1), cy = Math.min(Math.max(r.top + r.height / 2, 1), window.innerHeight - 1);
+      const top = !outside ? document.elementFromPoint(cx, cy) : null;
+      const hit = top && !el.contains(top) && !top.closest("[data-journey-bubble]") ? top : null;
+      const underBar = !!hit && !!hit.closest("nav, header");
+      const off = outside || underBar;
       if (off && !stepStart.current.scrolled && !typing()) {
         // 단계가 시작될 때 한 번만 대상을 보이게 한다 — 이후의 스크롤은 사용자의 것이다
         stepStart.current.scrolled = true;
         el.scrollIntoView({ block: "center", behavior: reduceMotion() ? "auto" : "smooth" });
       }
       setRect(r);
-      // 다른 창(모달·시트)에 가려져 있으면 허공을 가리키지 않는다 — 창을 닫으라고만 한다
-      const cx = Math.min(Math.max(r.left + r.width / 2, 1), window.innerWidth - 1), cy = Math.min(Math.max(r.top + r.height / 2, 1), window.innerHeight - 1);
-      const top = !off ? document.elementFromPoint(cx, cy) : null;
-      const covered = !!top && !el.contains(top) && !top.closest("[data-journey-bubble]");
-      setMode(off && stepStart.current.scrolled ? "offscreen" : covered ? "covered" : "target");
+      setMode(off ? (stepStart.current.scrolled ? "offscreen" : "target") : hit ? "covered" : "target");
     };
     tick();
     const id = window.setInterval(tick, 400);
@@ -191,7 +212,7 @@ export default function GuidedJourney() {
     return () => window.removeEventListener("keydown", onKey);
   }, [active]);
 
-  if (!mounted || !active || !step || !def || hidden) return null;
+  if (!mounted || !active || !step || !def || hidden || mode === "blocked") return null;
 
   const set = (next: JourneyState) => setJs(writeJourney(next));
   const prog = progressOf(js!);
@@ -213,9 +234,15 @@ export default function GuidedJourney() {
     arrow = { left: Math.min(Math.max(16, rect.left + rect.width / 2 - left - 7), W - 30), up };
   }
 
+  const compact = inWindow && mode === "target";
   const body = (() => {
     if (mode === "offRoute") return { head: t("offRoute"), text: say, goto: def.goto };
-    if (mode === "missing") return { head: t.has(`steps.${step}.missing`) ? t(`steps.${step}.missing`) : t("missing"), text: t(`steps.${step}.say`), goto: undefined };
+    // 대상이 없으면(예: 데스크톱 도시 화면에는 픽 탭이 없다) 다른 화면에 있을 때에 한해 그 단계의 이동 링크를 준다
+    if (mode === "missing") {
+      const gotoHere = !!def.goto && pathname.startsWith(def.goto.replace(/\/$/, ""));
+      const way = def.goto && !gotoHere && !(MERGE_STEPS as readonly string[]).includes(step) ? def.goto : undefined;
+      return { head: t.has(`steps.${step}.missing`) ? t(`steps.${step}.missing`) : t("missing"), text: t(`steps.${step}.say`), goto: way };
+    }
     if (mode === "covered") return { head: t("covered"), text: say, goto: undefined };
     if (mode === "failed") return { head: t("importFailed"), text: t("importFailedBody"), goto: undefined };
     if (mode === "offscreen") return { head: null, text: say, goto: undefined };
@@ -240,7 +267,7 @@ export default function GuidedJourney() {
             style={arrow.up ? { top: -7, left: arrow.left, borderLeftWidth: 1, borderTopWidth: 1 } : { bottom: -7, left: arrow.left, borderRightWidth: 1, borderBottomWidth: 1 }} />
         )}
         {choosing ? (
-          <JourneyStartChooser compact hasTrip={deviceHasTrip()} onDone={() => setChoosing(false)} />
+          <JourneyStartChooser compact hasTrip onDone={() => setChoosing(false)} />
         ) : (
           <>
             <div className="flex items-center gap-2">
@@ -252,7 +279,8 @@ export default function GuidedJourney() {
             </div>
             {body.head && <p className="mt-0.5 text-[12.5px] font-bold text-sub">{body.head}</p>}
             <p id="gkm-journey-say" aria-live="polite" className="mt-0.5 text-[14.5px] font-black leading-snug">{body.text}</p>
-            {why && mode !== "failed" && <p className="mt-1 text-[12.5px] leading-relaxed text-sub">{why}</p>}
+            {why && mode !== "failed" && (!compact || expanded) && <p className="mt-1 text-[12.5px] leading-relaxed text-sub">{why}</p>}
+            {(body.goto || mode === "offscreen" || (def.confirm && mode !== "offRoute") || def.pausable || mode === "failed") && (
             <div className="mt-2.5 flex flex-wrap gap-2">
               {body.goto && (
                 <Link href={body.goto} className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl bg-ink text-white text-[13px] font-bold">{t(`goto.${step}`)}</Link>
@@ -274,7 +302,11 @@ export default function GuidedJourney() {
                   className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl border border-ink text-[13px] font-bold">{t("switchToPlaces")}</button>
               )}
             </div>
-            {step !== "finish" && (
+            )}
+            {compact && !expanded && (
+              <button type="button" aria-expanded={false} onClick={() => setExpanded(true)} className="gkm-focus mt-1 min-h-9 text-[12px] font-bold text-sub underline underline-offset-2">{t("more")}</button>
+            )}
+            {step !== "finish" && (!compact || expanded) && (
               <div className="mt-2 flex flex-wrap gap-x-3 text-[12px] font-bold text-sub">
                 <button type="button" onClick={() => set(skipStep(js!))} className="gkm-focus min-h-9 underline underline-offset-2">{t("skipStep")}</button>
                 <button type="button" onClick={() => setChoosing(true)} className="gkm-focus min-h-9 underline underline-offset-2">{t("changePath")}</button>

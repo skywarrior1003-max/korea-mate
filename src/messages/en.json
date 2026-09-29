@@ -1722,6 +1722,7 @@
     "covered": "It's behind another window — close it and we'll point to it",
     "importFailed": "We couldn't import this link",
     "importFailedBody": "Try another public link, or switch to picking places yourself.",
+    "more": "Details · skip",
     "scrollTo": "Go to the button",
     "pauseForTrip": "Continue during my trip",
     "switchToPlaces": "Switch to picking places",
@@ -1739,10 +1740,17 @@
     "moreOff": "Off. Turn it on to choose how to start from Home.",
     "restart": "Start over (choose a way)",
     "target": {
-      "tut-more-menu": "First, open the [More] menu at the top right",
+      "tut-more-menu": "First, open the [More actions] menu at the top right",
       "tut-tab-saved": "First, open the [Saved] tab",
       "tut-dates": "Check your trip dates — tap to change them if they're wrong",
       "tut-card-create": "Tap [Create card]",
+      "tut-adopt-start": "Pick the day your trip starts",
+      "tut-adopt-end": "Pick the day your trip ends",
+      "tut-trip-row": "Tap the trip to continue",
+      "tut-publish-card": "Tap [Create share card]",
+      "tut-starter-start": "To build the trip, first pick the start date",
+      "tut-starter-end": "Pick the day your trip ends",
+      "tut-starter-go": "Check the city and dates, then tap this button",
       "tut-import-add": "Check the imported places and add them"
     },
     "goto": {
@@ -1792,19 +1800,19 @@
       "savePlace": {
         "say": "Like it? Tap [Save]",
         "name": "Save a place",
-        "why": "Saved places gather in Picks. Save as many as you like."
+        "why": "Saved places gather in [Picks]. Save as many as you like."
       },
       "openPicks": {
-        "say": "Tap [Picks]",
+        "say": "Tap [Picks] — your saved places are there",
         "name": "Open Picks"
       },
       "addToThisTrip": {
-        "say": "Tap the This Trip button on a place for this trip",
+        "say": "Tap [Add to This Trip] on a place for this trip",
         "name": "Add to This Trip",
         "missing": "No saved places yet — save one first or skip this step"
       },
       "openThisTrip": {
-        "say": "Tap the This Trip tab",
+        "say": "Tap the [This Trip] tab",
         "name": "Open This Trip"
       },
       "buildTrip": {
@@ -1827,7 +1835,8 @@
       },
       "openMyTrip": {
         "say": "Tap the trip to continue",
-        "name": "Open my trip"
+        "name": "Open my trip",
+        "missing": "No trips on this device yet — start one from [Choose another way]"
       },
       "tripSaved": {
         "say": "Your trip is saving to My Trip — check the saved status",
@@ -1841,10 +1850,11 @@
       "addRecord": {
         "say": "Tap here to add a photo or note during your trip",
         "name": "Add a photo or note",
-        "why": "No photos yet? That's fine — pause with [Continue during my trip] and pick up here later."
+        "why": "No photos yet? That's fine — pause with [Continue during my trip] and pick up here later.",
+        "say_tut-story-tab": "Photos and notes live in [Story] — tap the [Story] tab"
       },
       "openStory": {
-        "say": "Tap the Story tab",
+        "say": "Tap the [Story] tab",
         "name": "Open Story",
         "why": "Your plan and records shown as one story."
       },
@@ -1855,7 +1865,7 @@
       "publishStory": {
         "say": "See what will be shown, then decide yourself whether to publish",
         "name": "Decide to publish",
-        "why": "You don't have to publish. If you don't, skip the share card and show-off steps."
+        "why": "You don't have to publish. Only records you tick are shown — show-off needs at least one public record."
       },
       "makeShareCard": {
         "say": "Open the share card",
@@ -1872,7 +1882,8 @@
         "say": "Show off your trip — submit it to the local recommendations",
         "name": "Show off your trip",
         "why": "After review it appears as a recommendation to other travelers — posted on the site, unlike the share card.",
-        "missing": "This appears once the trip is public with 3+ places and one public record — you can skip it"
+        "missing": "This appears once the trip is public with 3+ places and one public record — you can skip it",
+        "say_tut-story-tab": "Show-off lives in [Story] — tap the [Story] tab"
       },
       "finish": {
         "say": "That's it! Now fill this trip your way",

@@ -141,16 +141,17 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
         </label>
         <div className="flex gap-2">
           <label className="flex-1 flex flex-col gap-1 text-xs font-bold text-sub">{startLabel}
-            <input type="date" value={start} onChange={e => setStart(e.target.value)}
+            <input type="date" data-tut="tut-starter-start" value={start} onChange={e => setStart(e.target.value)}
               className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink" />
           </label>
           <label className="flex-1 flex flex-col gap-1 text-xs font-bold text-sub">{endLabel}
-            <input type="date" value={end} min={start || undefined} onChange={e => setEnd(e.target.value)}
+            <input type="date" data-tut="tut-starter-end" value={end} min={start || undefined} onChange={e => setEnd(e.target.value)}
               className="gkm-focus min-h-11 rounded-control border border-line bg-surface px-3 text-sm font-semibold text-ink" />
           </label>
         </div>
         <button
           type="button"
+          data-tut="tut-starter-go"
           onClick={() => canStart && onStart(city, start, end)}
           disabled={!canStart}
           className="gkm-focus min-h-11 rounded-control bg-action text-white text-sm font-bold disabled:opacity-40"

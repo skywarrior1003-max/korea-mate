@@ -327,6 +327,7 @@ export default function PublishPreviewModal({
             {onOpenStoryCard && (
               <div className="mb-4">
                 <button
+                  data-tut="tut-publish-card"
                   onClick={() => void handleOpenStoryCard()}
                   className="gkm-focus w-full min-h-12 rounded-full text-white"
                   style={{ ...TITLE_MD, backgroundColor: PRIMARY }}

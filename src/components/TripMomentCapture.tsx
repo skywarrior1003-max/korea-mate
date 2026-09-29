@@ -218,6 +218,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
 
   return (
     <div
+      data-journey-quiet=""
       className="fixed inset-0 z-50 flex flex-col bg-[#1a1a2e] text-white"
       style={{ animation: "slideUp 0.28s ease-out" }}
     >

@@ -1702,7 +1702,7 @@
     "pathCourse": "从推荐行程开始",
     "pathCourseBody": "城市 → 行程 → 选日期 → 我的旅行",
     "pathPlaces": "挑选地点自己制作",
-    "pathPlacesBody": "保存地点 → 加入 This Trip → 生成行程",
+    "pathPlacesBody": "保存地点 → 加入本次行程 → 生成行程",
     "optImport": "使用已有的行程",
     "optImportBody": "通过链接导入博客或网页上的行程。",
     "importCanLabel": "可以导入：",
@@ -1722,6 +1722,7 @@
     "covered": "被其他窗口遮住了 — 关闭后会继续指引",
     "importFailed": "无法导入此链接",
     "importFailedBody": "可以换一个公开链接重试，或改为挑选地点自己制作。",
+    "more": "详情 · 跳过",
     "scrollTo": "前往按钮",
     "pauseForTrip": "旅行中再继续",
     "switchToPlaces": "改为挑选地点制作",
@@ -1743,16 +1744,23 @@
       "tut-tab-saved": "先打开[已保存]标签",
       "tut-dates": "确认旅行日期，不对的话点击修改",
       "tut-card-create": "点击[制作卡片]",
+      "tut-adopt-start": "选择旅行开始日期",
+      "tut-adopt-end": "选择旅行结束日期",
+      "tut-trip-row": "点击要继续的旅行",
+      "tut-publish-card": "点击[创建分享卡片]",
+      "tut-starter-start": "要生成行程，请先选择旅行开始日期",
+      "tut-starter-end": "选择旅行结束日期",
+      "tut-starter-go": "确认城市和日期后点击此按钮",
       "tut-import-add": "确认导入的地点并添加"
     },
     "goto": {
       "pickCity": "前往首页",
       "pickCourse": "去选择城市",
       "pickPlace": "去选择城市",
-      "openPicks": "打开 Picks",
-      "addToThisTrip": "打开 Picks",
-      "openThisTrip": "打开 Picks",
-      "buildTrip": "打开 Picks",
+      "openPicks": "打开精选",
+      "addToThisTrip": "打开精选",
+      "openThisTrip": "打开精选",
+      "buildTrip": "打开精选",
       "openImport": "打开导入",
       "pasteLink": "打开导入",
       "reviewImport": "打开导入",
@@ -1792,25 +1800,25 @@
       "savePlace": {
         "say": "喜欢就点击[保存]",
         "name": "保存地点",
-        "why": "保存的地点会汇集到 Picks，可以保存多个。"
+        "why": "保存的地点会汇集到[精选]，可以保存多个。"
       },
       "openPicks": {
-        "say": "点击[Picks]",
-        "name": "打开 Picks"
+        "say": "点击[精选] — 保存的地点都在这里",
+        "name": "打开精选"
       },
       "addToThisTrip": {
-        "say": "在要加入本次旅行的地点上点击 This Trip 按钮",
-        "name": "加入 This Trip",
+        "say": "在要加入的地点上点击[加入本次行程]",
+        "name": "加入本次行程",
         "missing": "还没有保存的地点 — 先保存一个，或跳过这一步"
       },
       "openThisTrip": {
-        "say": "点击 This Trip 标签",
-        "name": "查看 This Trip"
+        "say": "点击[本次行程]标签",
+        "name": "查看本次行程"
       },
       "buildTrip": {
         "say": "点击此按钮生成行程",
         "name": "生成行程",
-        "missing": "This Trip 是空的 — 请先加入地点"
+        "missing": "本次行程还是空的 — 请先加入地点"
       },
       "openImport": {
         "say": "打开导入页面",
@@ -1827,7 +1835,8 @@
       },
       "openMyTrip": {
         "say": "点击要继续的旅行",
-        "name": "打开我的旅行"
+        "name": "打开我的旅行",
+        "missing": "此设备上还没有旅行 — 请从[换一种方式]开始"
       },
       "tripSaved": {
         "say": "旅行正在保存到我的旅行 — 请查看保存状态",
@@ -1841,11 +1850,12 @@
       "addRecord": {
         "say": "旅行中要留下照片或备忘，请点击这里",
         "name": "留下照片·备忘",
-        "why": "现在没有照片也没关系。用[旅行中再继续]暂停，之后从这里继续。"
+        "why": "现在没有照片也没关系。用[旅行中再继续]暂停，之后从这里继续。",
+        "say_tut-story-tab": "照片和备忘在[故事]中留下 — 点击[故事]标签"
       },
       "openStory": {
-        "say": "点击 Story 标签",
-        "name": "查看 Story",
+        "say": "点击[故事]标签",
+        "name": "查看故事",
         "why": "行程和记录会呈现为一篇故事。"
       },
       "publishOpen": {
@@ -1855,7 +1865,7 @@
       "publishStory": {
         "say": "确认公开后会显示什么，再自己决定是否公开",
         "name": "决定是否公开",
-        "why": "不公开也可以。不公开的话，请跳过分享卡片和炫耀步骤。"
+        "why": "不公开也可以。只会显示你勾选的记录 — 炫耀需要至少 1 条公开记录。"
       },
       "makeShareCard": {
         "say": "打开分享卡片",
@@ -1872,7 +1882,8 @@
         "say": "炫耀我的旅行 — 把这次旅行提交到地区推荐",
         "name": "炫耀我的旅行",
         "why": "审核后会作为推荐展示给其他旅行者，与分享卡片不同，会发布在网站内。",
-        "missing": "需要公开旅行、3 个以上地点和 1 条公开记录才会显示 — 可以跳过"
+        "missing": "需要公开旅行、3 个以上地点和 1 条公开记录才会显示 — 可以跳过",
+        "say_tut-story-tab": "炫耀在[故事]中 — 点击[故事]标签"
       },
       "finish": {
         "say": "就是这些！现在尽情充实这次旅行吧",

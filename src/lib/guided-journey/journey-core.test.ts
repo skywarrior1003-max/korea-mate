@@ -7,7 +7,7 @@ import path from "node:path";
 import {
   PATH_STEPS, MERGE_STEPS, JOURNEY_KEY, LEGACY_GUIDE_KEY,
   defaultJourney, readJourney, startJourney, completeStep, skipStep, pauseJourney, resumeJourney,
-  switchToPlacesAt, endJourney, progressOf, type JourneyPath, type JourneyStep,
+  switchToPlacesAt, endJourney, progressOf, type JourneyPath, type JourneyStep, type JourneyState,
 } from "./journey-core.ts";
 
 const ROOT = process.cwd();
@@ -46,7 +46,7 @@ test("건너뛰기는 완료와 따로 기록된다", () => {
 });
 
 test("사진 단계 멈춤 → 같은 단계부터 이어하기", () => {
-  let s = { ...startJourney(defaultJourney(), "mytrip"), step: "addRecord" as JourneyStep };
+  let s: JourneyState = { ...startJourney(defaultJourney(), "mytrip"), step: "addRecord" };
   s = pauseJourney(s);
   assert.equal(s.status, "paused");
   assert.equal(completeStep(s, "addRecord"), s, "멈춘 동안에는 진행하지 않는다");

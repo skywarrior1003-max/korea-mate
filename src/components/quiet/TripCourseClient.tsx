@@ -257,12 +257,12 @@ export default function TripCourseClient({ slug, tripId }: { slug: string; tripI
               <div className="grid grid-cols-2 gap-2">
                 <label className="flex flex-col gap-1 text-[11px] font-bold" style={{ color: "rgba(247,243,236,.72)" }}>
                   {t("adoptStart")}
-                  <input type="date" value={adoptStart} onChange={e => setAdoptStart(e.target.value)}
+                  <input type="date" data-tut="tut-adopt-start" value={adoptStart} onChange={e => setAdoptStart(e.target.value)}
                     className="gkm-focus rounded-[4px] px-2.5 py-2 text-[13px] bg-white text-[#16233B]" />
                 </label>
                 <label className="flex flex-col gap-1 text-[11px] font-bold" style={{ color: "rgba(247,243,236,.72)" }}>
                   {t("adoptEnd")}
-                  <input type="date" value={adoptEnd} min={adoptStart || undefined} onChange={e => setAdoptEnd(e.target.value)}
+                  <input type="date" data-tut="tut-adopt-end" value={adoptEnd} min={adoptStart || undefined} onChange={e => setAdoptEnd(e.target.value)}
                     className="gkm-focus rounded-[4px] px-2.5 py-2 text-[13px] bg-white text-[#16233B]" />
                 </label>
               </div>

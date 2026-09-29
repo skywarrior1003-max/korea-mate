@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
-  readJourney, writeJourney, resumeJourney, endJourney, deviceHasTrip, JOURNEY_CHANGE_EVENT, type JourneyState,
+  readJourney, writeJourney, resumeJourney, endJourney, JOURNEY_CHANGE_EVENT, type JourneyState,
 } from "@/lib/guided-journey/journey-core";
 import JourneyStartChooser from "@/components/guided-journey/JourneyStartChooser";
 
@@ -88,7 +88,9 @@ export function MoreJourneyControls() {
         </div>
       )}
       {on && choosing && (
-        <div className="mt-3"><JourneyStartChooser hasTrip={deviceHasTrip()} onDone={() => setChoosing(false)} /></div>
+        // 추천 일정으로 담은 여행은 이 기기 키(koreamate_itin3_id_)를 남기지 않아 기기 판정으로는 알 수 없다 —
+        // 더보기에서 다시 고를 때는 '내 여행에서 이어가기'를 늘 보인다(여행이 없으면 그 단계가 알려 준다)
+        <div className="mt-3"><JourneyStartChooser hasTrip onDone={() => setChoosing(false)} /></div>
       )}
     </div>
   );
