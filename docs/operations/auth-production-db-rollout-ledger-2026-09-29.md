@@ -44,3 +44,19 @@ master `3390b12d` = Production 배포 `05b889b3` · 환경변수 24 · auth.user
 ## 다음(코드 배포 승인 후에만)
 
 실행안 D-4(시행일 한 줄 → Preview → master fast-forward) → D-5a selftest(202 = 발송 서비스 수락) → D-5b Owner 실수신 → D-5c `retention_purge_activate(시행일)`. 오늘 밤 03:27·03:57 작업은 `inactive` 기록·응답 대조만 한다(알림 엔드포인트는 아직 Production 에 없다).
+
+## 코드 배포와 파기 활성화 (AUTH-PRODUCTION-CODE-RELEASE-V1)
+
+| 시각(KST) | 단계 | 결과 |
+|---|---|---|
+| 20:22 | 배포 직전 대조 | master `3390b12d` · Production `05b889b3` · Auth `eeec2eb3` · DB 기준과 동일 · GA 두 동의 코드 master 와 동일 |
+| 20:23 | 시행일 커밋 `7c7e623b` | `LEGAL_EFFECTIVE_DATE = "2026-09-29"` 한 줄 · 가드 95/95 · 앱 tsc 0 · Functions tsc 16(기존) |
+| 20:25 | Preview `aab8bb95` | 4개 언어 DRAFT·OWNER INPUT 0 · 시행일 2026-09-29 · 버전 `legal-2026-09-29-v1`·`age-14-2026-09-29-v1` · Staging 합성 계정 흐름 PASS·잔여 0 |
+| 20:26 | master fast-forward `3390b12d`→`7c7e623b` → Production 배포 `4cc1a4de` 성공 | 소스 커밋 일치 |
+| 20:29 | 배포 직후 확인 | 페이지·API·거부 경로·GA 동의 전/거부 0·문서 4개 언어 정상 · DB 스냅숏 차이 0 |
+| 20:30:59 | 시험 메일 1회(`retention_alert_selftest`) | 발송 서비스 **수락** 202 `{"accepted":true,"sent":true}` |
+| 20:31 | Owner 운영자 메일함 **실수신** 확인(받은편지함, 발신 noreply@gokoreamate.com, 제목 `[gokoreamate Ops] Retention alert test`) | Owner 화면 캡처로 확인 |
+| 20:41 | 활성화 전 재확인 | 파기 대상 문의 0·신고 0 · 알림 설정 true · selftest 202·1시간 이내 · 관문 있음 · cron 4 활성 · 배포·health 정상 |
+| 20:41:55 | `retention_purge_activate('2026-09-29')` | effective_from 2026-09-29 · activated · alert_verified · health 200 `scheduled` · 신고 9·문의 2 불변 |
+
+첫 실제 실행: 2026-09-30 03:27 KST(대상 0건 예상 — 첫 기한 2026-12-14). 외부 상태 감시: **미설정**.
