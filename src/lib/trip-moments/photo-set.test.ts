@@ -162,11 +162,14 @@ test("★사진 경로는 서버가 만든다 — 요청 본문에서 받지 않
 });
 
 test("★새 사진 API 도 device 소유권을 확인한다", () => {
+  const own = strip(read("functions", "_lib", "ownership.ts"));
+  assert.match(own, /request\.headers\.get\("x-device-id"\)/, "ownership.ts: device 헤더를 안 본다");
+  assert.match(own, /OWNERSHIP_UUID_RE\.test\(currentDevice\)/, "ownership.ts: device 형식을 안 본다");
   for (const f of [["photos.ts"], ["photos", "[photoId].ts"]]) {
     const src = strip(read("functions", "api", "trip-moments", "[momentId]", ...f));
-    assert.match(src, /x-device-id/,             `${f.join("/")}: device 헤더를 안 본다`);
-    assert.match(src, /UUID_RE\.test\(deviceId\)/, `${f.join("/")}: device 형식을 안 본다`);
-    assert.match(src, /\.eq\("device_id", deviceId\)/, `${f.join("/")}: 소유권 조건이 없다`);
+    // LINKING-V1 이후 device 헤더·형식 검증은 공용 판정기(ownership.ts)가 하고, 라우트는 그 결과 범위로만 조회한다
+    assert.match(src, /resolveOwnership\(ctx\.env as OwnershipEnv, ctx\.request\)/, `${f.join("/")}: 소유 판정기를 안 부른다`);
+    assert.match(src, /\.in\("device_id", deviceScope\)/, `${f.join("/")}: 소유권 조건이 없다`);
     assert.doesNotMatch(src, /device_id:\s*(moment|row)\./, `${f.join("/")}: device_id 를 응답에 싣는다`);
   }
 });

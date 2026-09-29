@@ -11,23 +11,30 @@ const strip = (s: string) =>
   s.replace(/\/\*[\s\S]*?\*\//g, "").split("\n").filter(l => !l.trimStart().startsWith("//")).join("\n");
 
 test("itinerary DELETE — orphan 정리 3종이 Storage 뒤·행 삭제 앞에 있다", () => {
-  const src = read("functions/api/itinerary/[id].ts");
-  const del = src.slice(src.indexOf("export async function onRequestDelete"));
+  // ACCOUNT-DELETE-V1 이후 cascade 는 공용 모듈(functions/_lib/itinerary-purge.ts)에 있고,
+  // 여행 DELETE 는 소유 확인 뒤 그 모듈을 부른다 — 계약은 모듈 본문에서 검사한다.
+  const route = read("functions/api/itinerary/[id].ts");
+  const handler = route.slice(route.indexOf("export async function onRequestDelete"));
+  const own = handler.indexOf('.in("device_id", deviceScope)');
+  const call = handler.indexOf("purgeItineraryCascade(admin, id)");
+  assert.ok(own > 0 && call > own, "소유 확인 뒤에 공용 cascade 를 부른다");
+  const mod = read("functions/_lib/itinerary-purge.ts");
+  const del = mod.slice(mod.indexOf("export async function purgeItineraryCascade"));
   for (const t of ["content_likes", "content_dislikes", "story_submissions"]) {
     assert.ok(del.includes(`"${t}"`), `${t} 정리 누락`);
   }
   // 순서: Storage 삭제 → 정리 → trip_moments → itineraries
   const storageIdx = del.indexOf("removeItineraryStorage");
   const cleanupIdx = del.indexOf('"content_likes"');
-  const momentsIdx = del.indexOf("momDelErr"); // 4단계 수집 select 가 아니라 삭제 지점
-  const itinIdx = del.lastIndexOf('from("itineraries")');
+  const momentsIdx = del.indexOf('from("trip_moments").delete()');
+  const itinIdx = del.lastIndexOf('from("itineraries").delete()');
   assert.ok(storageIdx > 0 && storageIdx < cleanupIdx, "정리가 Storage-first 계약보다 앞");
   assert.ok(cleanupIdx < momentsIdx && momentsIdx < itinIdx, "정리→moments→itinerary 순서");
   // 대상 조건 — 068 CHECK 전체 집합과 소문자 key 계약
   assert.ok(del.includes('["itinerary", "story"]'), "target_type 집합이 068 CHECK 와 어긋남");
   assert.ok(del.includes("id.toLowerCase()"), "target_key 소문자 저장 계약");
   // 실패 시 원문 미출력 — 단계·코드만
-  assert.ok(!/cleanupErr\.message|storage_path.*console/.test(del), "실패 로그에 원문 금지");
+  assert.ok(!/error\.message|cleanupErr\.message|storage_path.*console/.test(del), "실패 로그에 원문 금지");
 });
 
 test("제보 철회 API — 소유 재계산·pending 전용·경합 재검", () => {

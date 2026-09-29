@@ -122,7 +122,8 @@ test("★공개 전환은 동의를 확인하는 전용 경로에서만 일어�
   assert.match(route, /parsePublicRequest/);
   assert.match(route, /buildPublicPatch/);
   assert.match(route, /new Date\(\)\.toISOString\(\)/);   // 시각은 서버가 만든다
-  assert.match(route, /\.eq\("device_id", deviceId\)/);   // 소유권
+  assert.match(route, /resolveOwnership\(ctx\.env as OwnershipEnv, ctx\.request\)/);   // 소유 판정(LINKING-V1)
+  assert.match(route, /\.in\("device_id", deviceScope\)/);   // 소유권
   assert.doesNotMatch(route, /body\.public_consent_at|body\.consentAt/);
 });
 

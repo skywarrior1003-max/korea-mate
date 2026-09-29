@@ -149,7 +149,9 @@ test("★공개 조회 성공 후에만 호출한다 — 비공개·미존재에
 test("★반환값을 UI 렌더링 조건으로 쓰지 않는다", () => {
   const eff = SHARED.slice(SHARED.indexOf("fetch(`/api/itinerary/view/"),
                            SHARED.indexOf("}, [trip?.id]);"));
-  assert.doesNotMatch(eff, /\.then\(|await |setState|set[A-Z]/);
+  // LINKING-V1: 인증 헤더를 만들려고 withAuthHeader 만 await 한다 — fetch 결과는 기다리지도 쓰지도 않는다
+  assert.doesNotMatch(eff, /\.then\(|setState|set[A-Z]|await\s+fetch|=\s*await/);
+  assert.doesNotMatch(eff.replace(/await withAuthHeader\(/g, ""), /await /);
   assert.match(eff, /\.catch\(/);
 });
 

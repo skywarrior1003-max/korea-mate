@@ -21,7 +21,8 @@ test("★원본 연결은 기존 related_city_spot_id 하나 — 새 컬럼·bac
 });
 
 test("★API: 같은 기기·같은 원본은 기존 행을 돌려준다, 경쟁(23505)도 기존 행", () => {
-  assert.match(API, /\.eq\("device_id", deviceId\)\s*\n?\s*\.eq\("related_city_spot_id", citySpotId\)/, "insert 전 기존 행 조회");
+  // LINKING-V1: 같은 소유 범위(기기 또는 계정의 기기들)에서 같은 원본을 찾는다
+  assert.match(API, /\.in\("device_id", deviceScope\)\s*\r?\n?\s*\.eq\("related_city_spot_id", citySpotId\)/, "insert 전 기존 행 조회");
   assert.match(API, /if \(existing\) \{/, "있으면 새로 만들지 않는다");
   assert.match(API, /insertErr\?\.code === "23505"/, "UNIQUE 충돌 시 기존 행");
   assert.ok(!/related_city_spot_id IS NULL|ilike|similar/i.test(API), "legacy 행 추정 매칭 0");

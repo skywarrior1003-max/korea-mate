@@ -191,8 +191,12 @@ test("signed URL 만료는 Moment 와 같은 600초 상수를 쓴다", () => {
 });
 
 test("소유권은 device_id 로만 판정하고 비소유자에게 존재를 알리지 않는다", () => {
-  assert.ok(PHOTO.includes('.eq("device_id", deviceId)'), "photo.ts device 소유권");
-  assert.ok(URLFN.includes('.eq("device_id", deviceId)'), "photo-url.ts device 소유권");
+  // LINKING-V1 이후: 공용 판정기 결과(기기 또는 로그인 계정에 연결된 기기들)로만 조회한다
+  for (const [name, src] of [["photo.ts", PHOTO], ["photo-url.ts", URLFN]] as const) {
+    assert.ok(src.includes("resolveOwnership(ctx.env as OwnershipEnv, ctx.request)"), `${name} 소유 판정기`);
+    // 소유 확인 조회 자체(id → 소유 범위 → maybeSingle)에 조건이 붙어 있어야 한다 — 다른 쿼리의 같은 조건으로 대신 통과하지 않게
+    assert.match(src, /\.eq\("id", id\)\s*\r?\n\s*\.in\("device_id", deviceScope\)\s*\r?\n\s*\.maybeSingle\(\)/, `${name} device 소유권`);
+  }
   assert.match(PHOTO, /if \(!data\) return json\(\{ error: "Not found" \}, 404\)/);
   assert.match(URLFN, /if \(!data\) return json\(\{ error: "Not found" \}, 404\)/);
 });

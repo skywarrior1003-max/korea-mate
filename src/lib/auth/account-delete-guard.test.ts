@@ -33,10 +33,16 @@ test("intent — 세션 결속 재인증(amr·session_id)·HMAC 도메인 분리
 });
 
 test("delete — 순서·멱등·성공 위장 금지·유지 계약(정적)", () => {
-  const s = read("functions/api/account/delete.ts");
-  assert.match(s, /requireUser/);
-  assert.match(s, /verifyDeleteIntent/);
-  assert.match(s, /verifiedSessionClaims/);                           // 세션 결속: intent 의 sid == 현재 토큰 sid
+  // L2: cascade 본문은 functions/_lib/account-purge.ts 로 옮겨 본인·운영자 경로가 공유한다.
+  // 본인 경로는 인증·intent·세션 결속을 끝낸 뒤에만 purgeAccount 를 부른다.
+  const route = read("functions/api/account/delete.ts");
+  assert.match(route, /requireUser/);
+  assert.match(route, /verifyDeleteIntent/);
+  assert.match(route, /verifiedSessionClaims/);                       // 세션 결속: intent 의 sid == 현재 토큰 sid
+  const rc = strip(route);
+  assert.ok(rc.indexOf("verifyDeleteIntent(") > 0 && rc.indexOf("verifyDeleteIntent(") < rc.indexOf("purgeAccount(env, userId)"),
+    "intent 검증 후에만 삭제");
+  const s = read("functions/_lib/account-purge.ts");
   assert.match(s, /purgeItineraryCascade/);                           // 단건 삭제와 동일 cascade 재사용
   // 순서: 콘텐츠 → mapping(RESTRICT 해소) → auth 사용자 마지막
   const iDevices = s.indexOf("account_devices?user_id=eq.");
@@ -60,7 +66,7 @@ test("delete — 순서·멱등·성공 위장 금지·유지 계약(정적)", (
 });
 
 test("delete — 기기 흔적 전수(DELETION-COVERAGE-V1): 장소 좋아요·도움됨·이벤트 반응·조회·AI 생성", () => {
-  const code = strip(read("functions/api/account/delete.ts"));
+  const code = strip(read("functions/_lib/account-purge.ts"));
   // 장소 좋아요는 해시 재계산 매칭 목록에 — likerKey 입력 형식 = actorKey("like")
   assert.match(code, /\["place_likes",\s*"liker_key",\s*"like"\]/);
   // 기기 ID 원문 테이블은 계정 기기로만 한정(전체 행·대상 전체 삭제 금지)
@@ -93,6 +99,23 @@ test("공용 cascade — 단건 API 와 계정 삭제가 같은 모듈을 쓴다
   const single = read("functions/api/itinerary/[id].ts");
   assert.match(single, /purgeItineraryCascade/);
   assert.ok(!/collectItineraryPhotoPaths/.test(strip(single)), "단건 경로에 중복 구현 잔존 금지");
+});
+
+test("운영자 삭제(L2) — 관리자 키·확인 문구·계정 존재 확인 후 같은 cascade", () => {
+  const s = strip(read("functions/api/admin/account-delete.ts"));
+  assert.match(s, /export async function onRequestPost/);
+  assert.ok(!/onRequestGet|onRequestDelete/.test(s), "POST 전용");
+  const iAuth = s.indexOf("checkAdminAuth(ctx.request, ctx.env.ADMIN_KEY)");
+  const iConfirm = s.indexOf("`DELETE ${userId}`");
+  const iLookup = s.indexOf("auth/v1/admin/users/");
+  const iPurge = s.indexOf("purgeAccount(env, userId)");
+  assert.ok(iAuth > 0 && iAuth < iConfirm && iConfirm < iLookup && iLookup < iPurge, "키→확인 문구→존재 확인→삭제 순서");
+  assert.match(s, /u\.status === 404\) return json\(\{ error: "not_found" \}, 404\)/);
+  assert.match(s, /REASONS = new Set\(\["under_14", "legal_request", "other"\]\)/);
+  // 운영자 경로는 본인 재인증을 우회할 뿐 cascade 를 새로 구현하지 않는다
+  assert.ok(!/purgeItineraryCascade|account_devices|rest\/v1/.test(s), "cascade 중복 구현 금지");
+  // 로그에 사용자 id·이메일 금지
+  for (const m of s.matchAll(/console\.\w+\(([^)]*)\)/g)) assert.doesNotMatch(m[1], /userId|email/);
 });
 
 test("클라 — 2단계 확인 UI·reauth 는 기존 PKCE OAuth 로·성공 후 로컬 초기화", () => {

@@ -10,7 +10,7 @@
 // 재시도는 없다. 여기서도, 서버에서도.
 
 import type { PersonalizationProfile } from "@/lib/scheduler/ai/personalization-profile";
-import { getAccessTokenForApi } from "@/lib/auth/auth-client";
+import { getAccessTokenForApi } from "../auth/auth-client.ts";
 
 export interface PersonalizeRequest {
   city:                string;

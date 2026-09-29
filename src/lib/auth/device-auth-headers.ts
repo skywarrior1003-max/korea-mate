@@ -10,8 +10,8 @@
 // token 이 없으면(비로그인) Authorization 없이 기존 게스트 계약 그대로다.
 // token 값은 로그·URL 에 싣지 않는다.
 
-import { getDeviceId } from "@/lib/deviceId";
-import { getAccessTokenForApi } from "@/lib/auth/auth-client";
+import { getDeviceId } from "../deviceId.ts";
+import { getAccessTokenForApi } from "./auth-client.ts";
 
 /** private API 용: { "x-device-id", Authorization? } */
 export async function deviceAuthHeaders(): Promise<Record<string, string>> {

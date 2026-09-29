@@ -12,8 +12,8 @@
 //  · Google provider token 은 저장·로그·전달하지 않는다.
 //  · 내부 식별자는 Supabase auth.users.id 뿐이다. 이메일은 식별자가 아니다.
 
-import { supabase } from "@/lib/supabase";
-import { sanitizeReturnPath, AUTH_RETURN_KEY } from "./return-path";
+import { supabase } from "../supabase.ts";
+import { sanitizeReturnPath, AUTH_RETURN_KEY } from "./return-path.ts";
 
 export interface AuthUserView {
   /** Supabase auth.users.id — 서버 검증을 거치기 전엔 표시 용도로만 쓴다 */

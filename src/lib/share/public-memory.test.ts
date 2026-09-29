@@ -219,9 +219,12 @@ test("★프록시는 경로를 요청에서 받지 않는다 — 임의 파일�
 test("★프록시는 기기 인증을 요구하지 않고 소유자 API 를 열지도 않는다", () => {
   const px = strip(read("functions", "img", "memory", "[itineraryId]", "[ref].ts"));
   assert.doesNotMatch(px, /x-device-id/);
+  // 소유자 API 는 공용 판정기(ownership.ts — x-device-id 필수)를 거친다
   const owner = strip(read("functions", "api", "trip-moments", "[momentId]", "photos.ts"));
-  assert.match(owner, /x-device-id/);
-  assert.match(owner, /\.eq\("device_id", deviceId\)/);
+  assert.match(owner, /resolveOwnership\(ctx\.env as OwnershipEnv, ctx\.request\)/);
+  assert.match(owner, /\.in\("device_id", deviceScope\)/);
+  assert.match(strip(read("functions", "_lib", "ownership.ts")), /request\.headers\.get\("x-device-id"\)/);
+  assert.doesNotMatch(px, /resolveOwnership/);
 });
 
 test("★프록시는 막힌 이유를 구분해 알려 주지 않는다", () => {

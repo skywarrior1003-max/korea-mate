@@ -23,7 +23,7 @@
 
 import type { TripMoment } from "./types";
 
-import { withAuthHeader } from "@/lib/auth/device-auth-headers";
+import { withAuthHeader } from "../auth/device-auth-headers.ts";
 export interface ResolvedPhoto { url: string; isFirst: boolean }
 
 export interface ResolvedPhotos {

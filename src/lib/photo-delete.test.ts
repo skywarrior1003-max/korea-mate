@@ -327,9 +327,12 @@ test("P9 두 조회 모두 같은 여행 id 로 나간다", async () => {
 // ── 삭제 순서 계약: Storage 가 먼저, 실패하면 DB 로 넘어가지 않는다 ──────────
 
 test("P10 itinerary DELETE 는 경로 수집 실패 시 DB 삭제로 넘어가지 않는다", () => {
-  const src = readFileSync("functions/api/itinerary/[id].ts", "utf8")
+  // 경로 수집·Storage-first 계약은 공용 cascade(functions/_lib/itinerary-purge.ts)에 있다 — 여행 DELETE 와 계정 삭제가 같이 쓴다.
+  const route = readFileSync("functions/api/itinerary/[id].ts", "utf8");
+  assert.match(route.slice(route.indexOf("export async function onRequestDelete")), /purgeItineraryCascade\(admin, id\)/, "여행 DELETE 가 공용 cascade 를 부르지 않는다");
+  const src = readFileSync("functions/_lib/itinerary-purge.ts", "utf8")
     .replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/.*$/gm, "$1");
-  const del = src.slice(src.indexOf("export async function onRequestDelete"));
+  const del = src.slice(src.indexOf("export async function purgeItineraryCascade"));
 
   const collect = del.indexOf("collectItineraryPhotoPaths(");
   const guard   = del.indexOf("if (!collected.ok)");
