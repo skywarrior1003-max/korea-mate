@@ -1,0 +1,46 @@
+# Auth Production DB 적용 원장 — 2026-09-29 (AUTH-PRODUCTION-DB-ROLLOUT-V1)
+
+> Owner 승인 범위: 081 확인 · 077→080 · 파기 cron 비활성 선등록 · 082 → 083 · 관문 확인 후 cron 예정 등록 · 알림 키·URL.
+> 승인 밖(미실행): Auth 코드 master 합류·Production 배포, 파기 활성화(`retention_purge_activate`), 시험 메일(`retention_alert_selftest`).
+> 대상: Supabase `koreamate`(`tfulaxxtorbxhlgupktc`, ap-northeast-2, ACTIVE_HEALTHY). 실행 도구: Management API `database/query`, 파일마다 별도 요청. 원본 = `git show 0490cc75:<경로>`(작업 트리 파일 미사용).
+> Production 은 `supabase_migrations.schema_migrations` 를 쓰지 않는다(001~004 만 존재) — 이 문서가 적용 원장이다. 비밀값은 기록하지 않는다.
+
+## 적용 전(20:12 KST)
+
+master `3390b12d` = Production 배포 `05b889b3` · 환경변수 24 · auth.users 0 · 신고 9 · 문의 2 · 여행 89 · 기록 8 · 나의 장소 10 · 저장 42 · city_spots 5015(공개 4647) · pg_net 0 · cron 2(모두 active) · Vault 0 · 077~083 객체 없음.
+신고 지문 md5 `8abb99311e511835dba43b5905282749` · 문의 지문 md5 `b026201ec1a78a0edefc9e3d53e85f7a`.
+
+## 단계
+
+| # | 시각(KST) | 실행 | git 원본 SHA-256 | 결과 | 적용 후 검증 |
+|---|---|---|---|---|---|
+| 0 | 20:12 | 081 **확인만** | `7aa68b9dc9ca2f4abe2e01a4f06f2d46edb1b4707629d81508f86001b8fbdf5e`(미실행) | — | 정책 1건 `anon_authenticated_read_published_city_spots`, `(is_published = true)` |
+| 1 | 20:13:04 | 077_user_consents | `429041d9ca691bfc8a5cf5df40a7db97ad960d2064a07a92f04020ff106c0db1` | HTTP 201 | RLS on · anon/authenticated select 불가 · 행 0 · 정책 0 · FK ON DELETE CASCADE |
+| 2 | 20:13:20 | 078_account_devices | `0411951c30d18680bea0d2c443a0c36a4aa1ff632ffb2cd543e54c0d6cfa59fe` | HTTP 201 | RLS on · `link_device_to_account` 실행 = service_role 만 · 행 0 · FK RESTRICT |
+| 3 | 20:13:32 | 079_trip_drafts | `ca57871d09eec9f24da690252258499ac96a5f083012561933f544acd08e8428` | HTTP 201 | RLS on · anon/authenticated 불가 · service_role insert · 행 0 |
+| 4 | 20:13:44 | 080_trip_draft_operations | `b03b810c9c1caced01d7efff1324e6ce72e774d0c582781db74452ff26899c2e` | HTTP 201 | 함수 3(`trip_draft_apply`·`trip_draft_merge_guest`·`trip_draft_item_key`) · anon/authenticated 실행 불가 |
+| 5 | 20:13:57 | 파기 cron **비활성 선등록** | `e239271c24bb3d8e122537f234f52e70557744fdfbbc891e5aa5b941ba0ce86f` | HTTP 201 | jobid 4 `gokoreamate-retention-purge-daily-v1` `27 18 * * *` **active=false** |
+| 6 | 20:14:09 | 082_retention_purge_daily | `177ee1276663ea2121a6a86ca58f004d73abe12d3ada3853bee5c692d61a1497` | HTTP 201 | pg_net 1 · **jobid 4 그대로 active=false** · cron 3 · 원장 테이블 행 0 · 파기 함수 anon/authenticated 실행 불가 · 신고 9·문의 2 |
+| 7 | 20:14:22 | 083_retention_purge_activation_gate | `e7deba3c017a64f60d5d876b0782557132fdb76e16018cb29524543ee1bebf0a` | HTTP 201 | 파기 함수에 관문(`blocked_no_alert`·`retention_purge_settings`) · 설정 행 0 · 대조 작업 등록(jobid 5) · 파기 작업 여전히 active=false · 관문 함수 5 · anon 활성화 불가 |
+| 8 | 20:15:06 | 관문 확인 후 cron 예정 등록(enable SQL) | `a04113b6d72ec18b671206fa9bdd3631931cc49445b5b7d5c530506da02947b7` | HTTP 201 | 사전 관문 확인 true·설정 행 0 → cron 4개 모두 active(파기 03:27 KST, 대조 03:57 KST) |
+| 9 | 20:15 | `select public.retention_purge_daily();` 1회(실행안 검증) | — | run_id 1 | `inactive` · 신고·문의 삭제 0 · 알림·probe 요청 없음 · net 대기열 0 |
+| 10 | 20:16 | 알림 키·URL | — | Pages PATCH 200 · Vault 201×2 | Production secret `RETENTION_ALERT_KEY` 존재(환경변수 24→25, 다른 24개 이름 유지, Preview 무변경) · Vault `retention_alert_key`·`retention_alert_url` 존재 · `retention_alert_configured()` = true · 새 배포 발생 0 |
+
+- 10 전 확인: Pages 프로젝트 PATCH 가 환경변수를 **병합**하는지 Preview 에 무해한 평문 변수로 먼저 실측(13→14→13, 다른 이름 유지, Production 무변경, 배포 0) 후 Production 에 적용. 키는 로컬 임시 파일(64 hex)로 만들어 두 곳에 넣고 즉시 삭제.
+
+## 적용 후(20:16 KST)
+
+| 항목 | 값 |
+|---|---|
+| 데이터(불변) | auth.users 0 · 신고 9 · 문의 2 · 여행 89 · 기록 8 · 나의 장소 10 · 저장 42 · city_spots 5015/공개 4647 · 신고·문의 지문 md5 **동일** |
+| 객체 | 077~080·082·083 생성, city_spots 정책 1건 그대로 |
+| pg_net | 1(신규) — 요청 대기열 0·응답 0 |
+| cron | 4 모두 active: 1 place-usage · 2 cron-history · **4 retention-purge-daily(03:27 KST)** · **5 retention-alert-reconcile(03:57 KST)** |
+| 파기 활성화 | **설정 행 0 · effective_from 없음** → 매일 `inactive` 만 기록, 삭제·네트워크 호출 없음 |
+| Vault | 2(이름만 기록) |
+| 환경변수 | Production 25(`RETENTION_ALERT_KEY` 추가), Preview 13 |
+| 코드 | master `3390b12d` · Production 배포 `05b889b3` · Auth `0490cc75` 그대로 |
+
+## 다음(코드 배포 승인 후에만)
+
+실행안 D-4(시행일 한 줄 → Preview → master fast-forward) → D-5a selftest(202 = 발송 서비스 수락) → D-5b Owner 실수신 → D-5c `retention_purge_activate(시행일)`. 오늘 밤 03:27·03:57 작업은 `inactive` 기록·응답 대조만 한다(알림 엔드포인트는 아직 Production 에 없다).
