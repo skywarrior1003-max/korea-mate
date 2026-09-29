@@ -130,7 +130,10 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   // 법 제30조①3의2(파기절차·방법)·4(위탁)·시행령 제31조①2(국외 이전) 대조분
   for (const k of ["How records are destroyed", "파기 절차와 방법", "破棄の手順と方法", "销毁程序与方法"]) assert.ok(p.includes(k), k);
   assert.equal((p.match(/Resend（|Resend\(|Resend \(/g) ?? []).length, 4, "4locale 처리자 목록에 메일 발송 서비스");
-  assert.equal((p.match(/국외 이전 고지 — 이전 근거\(법 제28조의8제1항 해당 호\)/g) ?? []).length, 4);
+  // 법 제28조의8② 사실 항목(시기·방법·보유기간·거부 방법과 효과)은 4locale 반영, 법적 근거 선택만 마커로 남긴다(L1)
+  assert.equal((p.match(/국외 이전의 법적 근거\(법 제28조의8제1항 중 해당 호/g) ?? []).length, 4);
+  for (const k of ["How, when, and how long:", "처리 방법·시기·보유기간:", "処理の方法・時期・保存期間：", "处理方式、时间与保存期限："]) assert.ok(p.includes(k), k);
+  for (const k of ["How to refuse and what happens:", "거부 방법과 효과:", "拒否の方法と影響：", "拒绝方式与后果："]) assert.ok(p.includes(k), k);
   for (const k of ["Supabase Pte. Ltd.", "Cloudflare, Inc.", "Google LLC", "Plus Five Five, Inc."]) assert.equal(p.split(k).length - 1, 4, k);
   // 제13조: 코드 동작(만 14세 자기 확인·법정대리인 절차 없음)과 일치, 문안은 Owner 최종 확인 마커 유지
   for (const k of ["법정대리인 동의 절차를 제공하지 않습니다", "does not offer a parent or guardian consent process", "法定代理人の同意手続きは提供していません", "不提供法定代理人同意程序"]) assert.ok(p.includes(k), k);
