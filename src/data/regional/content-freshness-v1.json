@@ -1,0 +1,19 @@
+{
+ "note": "City Hub Events·Travel Essentials 주간 확인 기록(closeout SSOT '각 지역 공식 원천을 매주 확인한다'). 확인할 때마다 checks 끝에 1행을 추가하고, 교정이 있으면 data/regional-recommendations/corrections/ 에 원천과 함께 남긴다. 이 파일은 빌드에 포함되므로 배포된 사이트의 /api/health/content 가 마지막 확인일을 그대로 보고한다.",
+ "cadence_days": 7,
+ "grace_days": 2,
+ "checks": [
+  {
+   "date": "2026-09-06",
+   "scope": "공식 링크 실측(링크 교체)",
+   "by": "Claude",
+   "record": "regional-essentials-v1.json note·freshnessNote(2026-09-06)"
+  },
+  {
+   "date": "2026-09-29",
+   "scope": "행사 날짜 전수(현재 노출분) + 서울 지하철 요금·기후동행카드",
+   "by": "Claude",
+   "record": "data/regional-recommendations/corrections/freshness-2026-09-29.json"
+  }
+ ]
+}

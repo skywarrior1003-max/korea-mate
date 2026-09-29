@@ -240,15 +240,16 @@
    "linkage": "EVENT_OR_TEMPORARY_CONTENT",
    "spotId": null,
    "spotIdsAll": [],
-   "validFrom": "2026-08 (exact date TBC)",
-   "validTo": null,
+   "validFrom": "2026-08-07",
+   "validTo": "2026-08-15",
    "whyNow": "제주 서귀포를 중심으로 매년 8월에 개최되는 국제 관악 축제. 야외 공연·실내 콘서트 포함. 외국인 관람 무료/저렴한 공연 다수. 수십 년간 지속된 공신력 있는 축제.",
    "source": {
     "provider": "제주국제관악제 조직위원회",
-    "source_url": "https://www.visitjeju.net/en/experience/festival",
-    "as_of": "2026-08-22"
+    "source_url": "https://jiwef.org/ko",
+    "as_of": "2026-09-29",
+    "freshness_note": "2026-09-29 확인: 제31회 제주국제관악제 여름시즌 2026-08-07~08-15(헤드라인제주·경향신문 보도, 공식 누리집 일정표에 08-12~13 콩쿠르) — 종료"
    },
-   "asOf": "2026-08-22"
+   "asOf": "2026-09-29"
   },
   {
    "id": "jeju-RN-R02",
@@ -463,22 +464,22 @@
   {
    "id": "jeonju-RN-R02",
    "city": "jeonju",
-   "name": "전주 세계소리축제 (가을 예고)",
-   "nameEn": "Jeonju World Sound Festival — Autumn Preview",
+   "name": "전주세계소리축제",
+   "nameEn": "Jeonju International Sori Festival",
    "category": "음악·공연 축제",
    "linkage": "EVENT_OR_TEMPORARY_CONTENT",
    "spotId": null,
    "spotIdsAll": [],
-   "validFrom": "2026-09 (exact date TBC)",
-   "validTo": null,
-   "whyNow": "전주 세계소리축제는 매년 9월 말~10월 초 국립민속국악원·한국소리문화의전당 등지에서 개최되는 국제 전통음악 축제. 세계 각국 전통음악·판소리·국악을 무료~저가로 즐길 수 있어 외국인 방문자에게 특히 유익. 기준일(2026-08-22) 아직 미개최이나 9월 방문 예정자에게 유용.",
+   "validFrom": "2026-08-12",
+   "validTo": "2026-08-16",
+   "whyNow": "전주세계소리축제는 한국소리문화의전당과 전북특별자치도 일원에서 열리는 국제 전통음악 축제다. 2026년에는 8월 12일부터 16일까지 열렸다(공식 누리집).",
    "source": {
     "provider": "전주세계소리축제 조직위원회",
-    "source_url": "https://tour.jeonju.go.kr/",
-    "as_of": "2026-08-22",
-    "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+    "source_url": "https://sorifestival.com/",
+    "as_of": "2026-09-29",
+    "freshness_note": "2026-09-29 확인: 공식 누리집 '2026년 8월 12일(수) ~ 16일(일)'. 기존 '가을 예고·9월 말~10월 초' 서술은 2026년 일정과 달라 교정 — 종료"
    },
-   "asOf": "2026-08-22"
+   "asOf": "2026-09-29"
   }
  ]
 }

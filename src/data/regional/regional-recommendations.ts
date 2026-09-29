@@ -178,13 +178,31 @@ export interface CityEvent extends RecommendedPlace {
 }
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const MONTH_ONLY = /^(\d{4})-(\d{2})(?!-\d)/;
+
+/**
+ * 목록에서 빼는 날짜 — validTo(ISO)가 있으면 그것, 없고 validFrom 이 "2026-08 (exact date TBC)"
+ * 처럼 달만 있으면 그 달의 마지막 날. 달만 적힌 행사가 종료일 없이 영원히 남던 문제를 막는다
+ * (상태는 여전히 지어내지 않는다 — status 는 ISO 날짜가 있을 때만).
+ */
+function listUntil(p: RecommendedPlace): string | null {
+  if (p.validTo && ISO_DATE.test(p.validTo)) return p.validTo;
+  if (!p.validTo && p.validFrom && !ISO_DATE.test(p.validFrom)) {
+    const m = MONTH_ONLY.exec(p.validFrom);
+    if (m) {
+      const last = new Date(Date.UTC(+m[1], +m[2], 0)).getUTCDate();
+      return `${m[1]}-${m[2]}-${String(last).padStart(2, "0")}`;
+    }
+  }
+  return null;
+}
 
 export function getCityEvents(city: string, today = new Date()): CityEvent[] {
   const slug = city.toLowerCase();
   const iso = today.toISOString().slice(0, 10);
   return REGIONAL_PLACES
     .filter(p => p.city === slug && (p.validFrom !== null || p.validTo !== null))
-    .filter(p => !(p.validTo && ISO_DATE.test(p.validTo) && p.validTo < iso))
+    .filter(p => { const until = listUntil(p); return !(until && until < iso); })
     .map(p => ({
       ...p,
       status: p.validFrom && ISO_DATE.test(p.validFrom)
@@ -202,7 +220,8 @@ export function getCityEventById(city: string, id: string, today = new Date()): 
   const iso = today.toISOString().slice(0, 10);
   const p = REGIONAL_PLACES.find(r => r.city === slug && r.id === id && (r.validFrom !== null || r.validTo !== null));
   if (!p) return null;
-  const expired = Boolean(p.validTo && ISO_DATE.test(p.validTo) && p.validTo < iso);
+  const until = listUntil(p);
+  const expired = Boolean(until && until < iso);
   return {
     ...p,
     status: !expired && p.validFrom && ISO_DATE.test(p.validFrom)

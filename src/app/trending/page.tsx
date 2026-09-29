@@ -9,6 +9,7 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
+import { isListableEvent } from "@/lib/events/event-visibility";
 import type { PopularTrip } from "@/lib/supabase";
 
 // 필터 상수는 key 와 이모지만 갖는다. 문구는 messages 가 갖는다 —
@@ -108,7 +109,8 @@ function TrendingContent() {
   }, [tripCity, tripStyle]);
 
   const filteredEvents = useMemo(() => {
-    let list = eventsData;
+    const today = new Date().toLocaleDateString("sv-SE");
+    let list = eventsData.filter((e) => isListableEvent(e, today));
     if (eventFilter === "busan")
       list = list.filter((e) => e.city === "Busan");
     else if (eventFilter === "mega")
