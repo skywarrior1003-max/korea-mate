@@ -4,6 +4,7 @@
 > 081 은 Production 기적용(2026-09-27) — **재실행 금지**. 어떤 단계에서도 081 의 구정책(`USING (true)`)으로 되돌리지 않는다.
 > 비밀값(내부 키·Vault 값·수신 주소)은 화면·로그·문서·대화 어디에도 출력하지 않는다.
 > 기준 코드: Auth 브랜치 `feature/device-account-linking-security-v1` 의 최종 커밋(시행일 커밋 포함).
+> **최종 실행 기준(2026-09-29 갱신)**: `auth-production-execution-plan-v1.md` — 현재 기준값(master `3390b12d`·배포 `05b889b3`), 단계별 적용 전·후 확인 SQL·중단 조건, 082 단독 상태 안전 증명. 아래 D-1 의 master·배포 값(`1d3334fd`·`a007c7ac`)은 이전 기준이다.
 
 ## A. 출시 전 결정표
 
