@@ -180,3 +180,9 @@ test("Owner 확정값(2026-09-28) — Resend Free=발송 기록 30일, 보호책
   assert.equal(p.split("보호책임자 연락처 표시 — 이메일만으로").length - 1, 4);
   assert.equal(read("src/lib/legal/terms-content.ts").split("ownerInput: \"관할 법원").length - 1, 4, "약관 남은 마커는 관할뿐");
 });
+
+test("Google Analytics 보관 설정(Owner 화면 확인 2026-09-29) — 이벤트 2개월·사용자 14개월·재활동 시 재설정, 4locale", () => {
+  const p = read("src/lib/legal/privacy-content.ts");
+  for (const k of ["event data is kept for 2 months and user data for 14 months", "이벤트 데이터는 2개월, 사용자 데이터는 14개월", "イベントデータは2か月、ユーザーデータは14か月", "事件数据保存 2 个月，用户数据保存 14 个月"]) assert.ok(p.includes(k), k);
+  assert.ok(!p.includes("Google Analytics 데이터 보관기간 설정값(Owner 확인)"), "GA 보관기간 마커 해소");
+});

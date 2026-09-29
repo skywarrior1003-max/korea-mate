@@ -87,12 +87,12 @@ export const PRIVACY: LegalDocSet = {
           "Google (Google sign-in and usage analytics) — Google LLC (USA); contact https://support.google.com/policies. At sign-in we receive your Google account identifier, name, email address, and profile image link; usage statistics are sent to Google Analytics (Section 8).",
           "Resend (sending notification emails to the operator) — Plus Five Five, Inc.; its privacy policy states data is processed in the United States; contact support@resend.com. Notifications to the operator do not contain your name, email, or message.",
         ],
-        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토), Google Analytics 데이터 보관기간 설정값(Owner 확인)",
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토)",
       },
       {
         no: 8, title: "Analytics, cookies, and browser storage",
         paragraphs: [
-          "We use Google Analytics 4 to collect anonymous usage statistics. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. Google Analytics sets its own cookies; you can block them with browser settings or Google's opt-out tools.",
+          "We use Google Analytics 4 to collect anonymous usage statistics. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. Google Analytics sets its own cookies; you can block them with browser settings or Google's opt-out tools. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again.",
           "The service itself sets no cookies of its own. Your browser's local storage keeps: the device identifier, your trip in progress, saved places, tutorial state, language choice, and — if you sign in — your session managed by our authentication provider. Clearing your browser storage removes these from your device.",
         ],
       },
@@ -219,12 +219,12 @@ export const PRIVACY: LegalDocSet = {
           "Google(Google 로그인·사용 통계) — Google LLC(미국), 문의 https://support.google.com/policies. 로그인 시 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받고, 사용 통계는 Google Analytics 로 전송됩니다(제8조).",
           "Resend(운영자 알림 메일 발송) — Plus Five Five, Inc., 제공사 방침상 미국에서 처리, 연락처 support@resend.com. 운영자에게 보내는 알림에는 이용자의 이름·이메일·메시지를 담지 않습니다.",
         ],
-        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토), Google Analytics 데이터 보관기간 설정값(Owner 확인)",
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토)",
       },
       {
         no: 8, title: "분석 도구·쿠키·브라우저 저장소",
         paragraphs: [
-          "익명 사용 통계 수집에 Google Analytics 4 를 사용합니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. Google Analytics 는 자체 쿠키를 설정하며, 브라우저 설정이나 Google 의 차단 도구로 거부할 수 있습니다.",
+          "익명 사용 통계 수집에 Google Analytics 4 를 사용합니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. Google Analytics 는 자체 쿠키를 설정하며, 브라우저 설정이나 Google 의 차단 도구로 거부할 수 있습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다.",
           "서비스 자체는 쿠키를 설정하지 않습니다. 브라우저 로컬 저장소에는 기기 식별자·작성 중인 여행·저장 장소·튜토리얼 상태·언어 선택, 그리고 로그인 시 인증 제공자가 관리하는 세션이 보관됩니다. 브라우저 저장소를 지우면 이 기기에서 해당 정보가 삭제됩니다.",
         ],
       },
@@ -340,12 +340,12 @@ export const PRIVACY: LegalDocSet = {
           "Google（Googleログイン・利用統計）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。ログイン時にGoogleアカウントの識別子・氏名・メールアドレス・プロフィール画像リンクを受け取り、利用統計はGoogle Analyticsに送信されます（第8条）。",
           "Resend（運営者宛て通知メールの送信）— Plus Five Five, Inc.、同社の方針上米国で処理、連絡先 support@resend.com。運営者宛ての通知には利用者の氏名・メールアドレス・メッセージを含みません。",
         ],
-        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토), Google Analytics 데이터 보관기간 설정값(Owner 확인)",
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토)",
       },
       {
         no: 8, title: "分析ツール・Cookie・ブラウザ保存領域",
         paragraphs: [
-          "匿名の利用統計の収集に Google Analytics 4 を使用します。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。Google Analytics は独自の Cookie を設定し、ブラウザ設定や Google の無効化ツールで拒否できます。",
+          "匿名の利用統計の収集に Google Analytics 4 を使用します。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。Google Analytics は独自の Cookie を設定し、ブラウザ設定や Google の無効化ツールで拒否できます。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。",
           "サービス自体は Cookie を設定しません。ブラウザのローカル保存領域には、端末識別子・作成中の旅行・保存した場所・チュートリアル状態・言語選択、そしてログイン時には認証プロバイダーが管理するセッションが保管されます。ブラウザの保存データを消去すると、この端末から該当情報が削除されます。",
         ],
       },
@@ -458,12 +458,12 @@ export const PRIVACY: LegalDocSet = {
           "Google（Google 登录与使用统计）——Google LLC（美国），联系 https://support.google.com/policies。登录时我们会收到你的 Google 账户标识符、姓名、邮箱地址和头像链接；使用统计发送至 Google Analytics（第 8 条）。",
           "Resend（向运营方发送通知邮件）——Plus Five Five, Inc.，其政策载明在美国处理，联系方式 support@resend.com。发给运营方的通知不包含你的姓名、邮箱或留言。",
         ],
-        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토), Google Analytics 데이터 보관기간 설정값(Owner 확인)",
+        ownerInput: "국외 이전 고지 — 이전 근거(법 제28조의8제1항 해당 호)·이전 시기와 방법 문구·이전 거부 방법과 효과(법률 검토)",
       },
       {
         no: 8, title: "分析工具、Cookie 与浏览器存储",
         paragraphs: [
-          "我们使用 Google Analytics 4 收集匿名使用统计。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。Google Analytics 会设置其自身的 Cookie，你可以通过浏览器设置或 Google 提供的工具拒绝。",
+          "我们使用 Google Analytics 4 收集匿名使用统计。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。Google Analytics 会设置其自身的 Cookie，你可以通过浏览器设置或 Google 提供的工具拒绝。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。",
           "服务本身不设置任何 Cookie。浏览器本地存储中保存: 设备标识、进行中的行程、收藏的地点、引导状态、语言选择，以及登录后由认证服务商管理的会话。清除浏览器存储即可从本设备删除这些信息。",
         ],
       },
