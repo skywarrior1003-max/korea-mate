@@ -43,7 +43,8 @@ test("Production 실측 사실이 4locale 에 있다", () => {
 
 test("접근 경로 — 홈 하단·More·문의 양식에서 /privacy, 존재하지 않는 /terms 링크 없음", () => {
   assert.match(read("src/app/HomeClient.tsx"), /href="\/privacy"[^>]*>\{tn\("privacy"\)\}/);
-  assert.match(read("src/app/more/MoreClient.tsx"), /href="\/privacy\/"[\s\S]{0,80}tNav\("privacy"\)/);
+  // 개인정보처리방침 행은 독립된 <Row> 여야 한다 — 다른 행의 icon 안에 끼면 4×9px 링크가 된다(Preview 4726792e 실측 결함)
+  assert.match(read("src/app/more/MoreClient.tsx"), /<\/svg>\}\s*\/>\s*<Row\s+href="\/privacy\/"\s+label=\{tNav\("privacy"\)\}/);
   assert.match(read("src/components/ContactModal.tsx"), /href="\/privacy\/"/);
   for (const f of ["src/app/HomeClient.tsx", "src/app/more/MoreClient.tsx", "src/components/ContactModal.tsx"]) assert.ok(!/href="\/terms/.test(read(f)), f);
   for (const l of LOCALES) {
