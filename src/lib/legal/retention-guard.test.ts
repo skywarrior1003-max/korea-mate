@@ -132,14 +132,20 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   // 법 제30조①3의2(파기절차·방법)·4(위탁)·시행령 제31조①2(국외 이전) 대조분
   for (const k of ["How records are destroyed", "파기 절차와 방법", "破棄の手順と方法", "销毁程序与方法"]) assert.ok(p.includes(k), k);
   assert.equal((p.match(/Resend（|Resend\(|Resend \(/g) ?? []).length, 4, "4locale 처리자 목록에 메일 발송 서비스");
-  // 법 제28조의8② 사실 항목(시기·방법·보유기간·거부 방법과 효과)은 4locale 반영, 법적 근거 선택만 마커로 남긴다(L1)
-  assert.equal((p.match(/국외 이전의 법적 근거\(법 제28조의8제1항 중 해당 호/g) ?? []).length, 4);
+  // 법 제28조의8② 사실 항목(시기·방법·보유기간·거부 방법과 효과)은 4locale 반영.
+  // L1(Owner 선택 B, 2026-09-29): 필수 처리(Supabase·Cloudflare)는 제3호 가목, GA 는 두 선택 동의 — 마커 해소
+  assert.equal((p.match(/국외 이전의 법적 근거\(법 제28조의8제1항 중 해당 호/g) ?? []).length, 0, "L1 마커 해소");
+  for (const k of ["Article 28-8(1)(3)(a)", "제28조의8제1항제3호가목", "第28条の8第1項第3号イ", "第28条之8第1款第3项甲目"]) assert.equal(p.split(k).length - 1, 1, k);
+  for (const k of ["Article 28-8(1)(1)", "제28조의8제1항제1호", "第28条の8第1項第1号", "第28条之8第1款第1项"]) assert.equal(p.split(k).length - 1, 1, k);
   for (const k of ["How, when, and how long:", "처리 방법·시기·보유기간:", "処理の方法・時期・保存期間：", "处理方式、时间与保存期限："]) assert.ok(p.includes(k), k);
   for (const k of ["How to refuse and what happens:", "거부 방법과 효과:", "拒否の方法と影響：", "拒绝方式与后果："]) assert.ok(p.includes(k), k);
-  for (const k of ["Supabase Pte. Ltd.", "Cloudflare, Inc.", "Google LLC", "Plus Five Five, Inc."]) assert.equal(p.split(k).length - 1, 4, k);
-  // 제13조: 코드 동작(만 14세 자기 확인·법정대리인 절차 없음)과 일치, 문안은 Owner 최종 확인 마커 유지
+  for (const k of ["Supabase Pte. Ltd.", "Cloudflare, Inc.", "Plus Five Five, Inc."]) assert.equal(p.split(k).length - 1, 4, k);
+  // Google LLC 는 처리자 목록 항목(— Google LLC) 4개 + GA 동의 문단(제8조)에도 나온다 — 목록 항목을 센다
+  assert.equal((p.match(/—\s?Google LLC/g) ?? []).length, 4, "처리자 목록의 Google LLC");
+  // 제13조: 코드 동작(만 14세 자기 확인·법정대리인 절차 없음)과 일치. L2(Owner 채택 2026-09-29) — 마커 해소, 삭제 문장 4locale
   for (const k of ["법정대리인 동의 절차를 제공하지 않습니다", "does not offer a parent or guardian consent process", "法定代理人の同意手続きは提供していません", "不提供法定代理人同意程序"]) assert.ok(p.includes(k), k);
-  assert.equal((p.match(/제13조 문안 Owner 최종 확인 필요/g) ?? []).length, 4);
+  assert.equal((p.match(/제13조 문안 Owner 최종 확인 필요/g) ?? []).length, 0, "L2 마커 해소");
+  for (const k of ["If we learn that an account was created by someone under 14, we delete that account and the information linked to it without delay.", "만 14세 미만의 이용자가 계정을 만든 사실을 알게 되면 해당 계정과 계정에 연결된 정보를 지체 없이 삭제합니다.", "満14歳未満の方がアカウントを作成したことが判明した場合、そのアカウントと連携する情報を遅滞なく削除します。", "如果我们得知有未满 14 周岁的用户创建了账户，将及时删除该账户及与其关联的信息。"]) assert.equal(p.split(k).length - 1, 1, k);
   const t = read("src/lib/legal/terms-content.ts");
   // 개인정보 요청 주소 = Owner 가 2026-09-26 제공·왕복 시험한 공개 주소(재요청 금지) — 처리방침은 제1조 담당 연락처+제16조, 약관은 제15조
   assert.equal(p.split("support@gokoreamate.com").length - 1, 8);
@@ -153,8 +159,9 @@ test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원�
   }
   assert.ok(!p.includes("로그와 백업 보관기간 확인 필요"), "인프라 로그 사실 반영");
   for (const k of ["are not stored, and the database provider (Supabase) keeps API and database logs for 1 day", "실행 로그는 저장하지 않으며", "実行ログは保存せず", "运行日志不予保存"]) assert.ok(p.includes(k), k);
-  for (const k of ["대한민국 법을 따릅니다", "laws of the Republic of Korea", "大韓民国の法律に準拠", "受大韩民国法律管辖"]) assert.ok(t.includes(k), k);
-  assert.ok(t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "관할은 법률 검토 표시로 남김");
+  // 준거법 = 대한민국 법(4locale). 관할은 L3=A(Owner 2026-09-29) — 마커 해소, 관계 법령상 관할 법원 문장은 아래 Owner 확정값 테스트가 고정
+  for (const k of ["대한민국 법이 적용되며", "laws of the Republic of Korea", "大韓民国の法律が適用され", "适用大韩民国法律"]) assert.ok(t.includes(k), k);
+  assert.ok(!t.includes("관할 법원(분쟁 해결 기준) — 법률 검토 필요"), "L3 마커 해소");
 });
 
 test("파기 상태 확인(/api/health/retention) — 알림과 독립·원문 없음·막힘 상태는 503", async () => {
@@ -179,11 +186,17 @@ test("파기 상태 확인(/api/health/retention) — 알림과 독립·원문 �
   assert.equal(j(act, [run(1, "inactive", null), run(29, "inactive")], now).state, "scheduled");
 });
 
-test("Owner 확정값(2026-09-28) — Resend Free=발송 기록 30일, 보호책임자 연락처는 법률 검토 마커만", () => {
+test("Owner 확정값(2026-09-28·29) — Resend Free=발송 기록 30일, 보호책임자 연락처(L5=A)·관할(L3=A) 확정", () => {
   const p = read("src/lib/legal/privacy-content.ts");
   for (const k of ["(Resend) are retained for 30 days", "(Resend)에 남는 발송 기록은 현재 요금제에서 그 서비스의 정책에 따라 30일간", "（Resend）に残る配信記録は、現在のプランでは同サービスの方針により30日間", "（Resend）保留的发送记录在当前套餐下依其政策保存 30 天"]) assert.ok(p.includes(k), k);
-  assert.equal(p.split("보호책임자 연락처 표시 — 이메일만으로").length - 1, 4);
-  assert.equal(read("src/lib/legal/terms-content.ts").split("ownerInput: \"관할 법원").length - 1, 4, "약관 남은 마커는 관할뿐");
+  // L5=A: 담당 부서 + 확인된 이메일(마커 해소). 전화번호는 새로 쓰지 않는다
+  assert.equal(p.split("보호책임자 연락처 표시 — 이메일만으로").length - 1, 0, "L5 마커 해소");
+  for (const k of ["Privacy contact: 케이이엔지 privacy team (개인정보보호 담당) · support@gokoreamate.com", "개인정보 보호 담당: 케이이엔지 개인정보보호 담당 · support@gokoreamate.com", "個人情報保護担当：케이이엔지 個人情報保護担当（개인정보보호 담당）・support@gokoreamate.com", "个人信息保护负责窗口：케이이엔지 个人信息保护负责（개인정보보호 담당）· support@gokoreamate.com"]) assert.equal(p.split(k).length - 1, 1, k);
+  // L3=A: 관계 법령에 따른 관할 법원 — 특정 지역 법원 전속 지정 금지(약관법 제14조1호)
+  const terms = read("src/lib/legal/terms-content.ts");
+  assert.equal(terms.split("ownerInput:").length - 1, 0, "약관 마커 해소");
+  for (const k of ["the court that has jurisdiction under the Civil Procedure Act and other applicable laws", "민사소송법 등 관계 법령에 따른 관할 법원", "民事訴訟法その他の関係法令に基づく管轄裁判所", "依《民事诉讼法》等相关法律向有管辖权的法院提起"]) assert.equal(terms.split(k).length - 1, 1, k);
+  assert.ok(!/지방법원|전속\s*관할|exclusive jurisdiction|専属|专属/.test(terms), "특정 법원 전속 지정 없음");
 });
 
 test("Google Analytics 보관 설정(Owner 화면 확인 2026-09-29) — 이벤트 2개월·사용자 14개월·재활동 시 재설정, 4locale", () => {

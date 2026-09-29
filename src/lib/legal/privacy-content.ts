@@ -9,10 +9,17 @@
 //  · AI 는 Production 에서 전면 비활성(2026-09-25 릴리스) — 조건부 서술만
 //  · 계정 삭제 기능 미구현(콘텐츠 개별 삭제는 구현) — 사실대로 기술
 // Owner 확정 전 항목은 ownerInput 마커로만 둔다(임의 작성 금지).
+// GA-CONSENT-AND-AUTH-WORDING-CLOSEOUT-V1(2026-09-29 Owner 선택): L1=B(GA 는 수집·이용 + 국외 이전 두 선택 동의 후에만,
+// 필수 처리 Supabase·Cloudflare 는 제28조의8①3호 가목) · L2 만 14세 미만 계정 삭제 문장 채택 · L5 담당 부서+이메일.
+// 마커는 모두 해소 — DRAFT 는 LEGAL_EFFECTIVE_DATE(출시일) 입력 전까지 유지된다(hasOwnerInput: effectiveDate null).
 
 import type { LegalDocSet } from "./legal-types";
 // 시행일은 동의 버전과 한 곳에서 정한다(게시 전 null = DRAFT)
 import { LEGAL_EFFECTIVE_DATE } from "../auth/consent-contract.ts";
+
+/** 개정 이력 표기 — 공개 서비스판 최초 게시일과 GA 동의 개정일(GA 브랜치 PUBLIC_PRIVACY_EFFECTIVE_DATE 와 같은 값으로 맞춘다) */
+export const PUBLIC_PRIVACY_FIRST_DATE = "2026-09-29";
+export const PUBLIC_PRIVACY_GA_REVISION_DATE = "2026-09-30";
 
 // AUTH-CURRENT-MASTER-INTEGRATION-V1(2026-09-29): 2026-09-29 공개 서비스판(master)의 Production 실측 사실을
 // 이 Auth 판에 합쳤다 — 네이버 지도·Cloudflare Web Analytics·관광 공식 사이트 이미지·기기 식별자 원형 저장·
@@ -30,7 +37,6 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 1, title: "Who operates this service",
         paragraphs: ["gokoreamate is operated by 케이이엔지, a sole proprietorship in the Republic of Korea (shown by its registered Korean trade name). Address: 부산시 남구 유엔로 96번길 26-31 (대연동), Busan, Republic of Korea.", "Privacy contact: 케이이엔지 privacy team (개인정보보호 담당) · support@gokoreamate.com"],
-        ownerInput: "보호책임자 연락처 표시 — 이메일만으로 법 제30조①6호의 \"전화번호 등 연락처\"를 충족하는지 법률 검토 필요(L5)",
       },
       {
         no: 2, title: "Information we collect",
@@ -90,17 +96,17 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase (database, sign-in authentication, photo storage) — stores your account, travel content, and photos in the Seoul region, South Korea (AWS ap-northeast-2). Operator named in its privacy policy: Supabase Pte. Ltd. (Singapore); contact privacy@supabase.com. Kept until you delete the content or your account.",
           "Cloudflare (website delivery, running the server API, and cookie-free visit statistics) — Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA; contact dpo@cloudflare.com. Each time you use the service, request data (such as IP address and the request itself) may be processed at a nearby Cloudflare location outside Korea.",
-          "Google (Google sign-in and usage analytics) — Google LLC (USA); contact https://support.google.com/policies. At sign-in we receive your Google account identifier, name, email address, and profile image link; usage statistics are sent to Google Analytics (Section 8).",
+          "Google (Google sign-in and usage analytics) — Google LLC (USA); contact https://support.google.com/policies. At sign-in we receive your Google account identifier, name, email address, and profile image link; usage statistics are sent to Google Analytics only if you give both optional consents (Section 8).",
           "Resend (sending notification emails to the operator) — Plus Five Five, Inc.; its privacy policy states data is processed in the United States; contact support@resend.com. Notifications to the operator do not contain your name, email, or message.",
           "How, when, and how long: information needed for these tasks is sent over encrypted connections (HTTPS) each time you use the service. Retention: Supabase keeps it until you delete the content or your account; Resend keeps delivery logs for 30 days on our current plan; Google Analytics keeps event data for 2 months and user data for 14 months; Cloudflare does not store execution logs of our server functions (each provider may keep its own logs under its own policies).",
-          "How to refuse and what happens: you can refuse Google Analytics by blocking its cookies in your browser or with Google's opt-out tools, and the service still works. Supabase and Cloudflare are needed to provide the service, so to refuse them you would stop using it (and can ask us to delete what is already stored). Google sign-in is optional — if you do not sign in, no Google account information is sent to us, but account features are not available.",
+          "How to refuse and what happens: Google Analytics is used only if, in the notice shown on your first visit, you give both consents (collection and use, and transfer outside Korea). If you don't, choose \"Reject all\", or later turn either off under More › Usage statistics, nothing is sent to Google Analytics from then on, its cookies on this site are deleted, and every feature still works. Supabase and Cloudflare are needed to provide the service, so to refuse them you would stop using it (and can ask us to delete what is already stored). Google sign-in is optional — if you do not sign in, no Google account information is sent to us, but account features are not available.",
+          "Legal basis: of the processing outside Korea above, Supabase and Cloudflare are entrusted processing and storage needed to perform our service agreement with you, and we disclose these details in this policy under Article 28-8(1)(3)(a) of the Personal Information Protection Act. Google Analytics is used only if you allow it (Section 8).",
         ],
-        ownerInput: "국외 이전의 법적 근거(법 제28조의8제1항 중 해당 호 — 예: 제3호 가목 '처리방침 공개') 선택 — 법률 판단 필요(L1)",
       },
       {
         no: 8, title: "Analytics, cookies, and browser storage",
         paragraphs: [
-          "We use Google Analytics 4 for usage statistics. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. Google Analytics sets its own cookies; you can block them with browser settings or Google's opt-out tools. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again.",
+          "We use Google Analytics 4 for usage statistics only with your consent. We ask for two consents separately — consent to collection and use of personal information (Personal Information Protection Act Article 15(1)(1)) and consent to its transfer outside Korea (Article 28-8(1)(1)) — and load Google Analytics only if you give both. Before you choose, if you choose \"Decide later\", or if you give only one of them, the Google Analytics script is not loaded, nothing is sent to Google, and no Google Analytics cookie is set. With both consents, information about your visit (a cookie identifier, screens viewed and features used, device and browser information, and your IP address, which Google uses to estimate a rough region) is sent to Google LLC in the USA each time you use the service. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. You can change or withdraw your consent at any time under More › Usage statistics; from then on nothing more is sent and this site's Google Analytics cookies are deleted. Statistics already sent are not deleted immediately by withdrawing; they are deleted when the retention periods below end. If what we tell you in the notice changes, we do not apply your earlier choice and ask again. The notice asks people under 14 not to consent, but we do not verify age. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again.",
           "Cloudflare Web Analytics counts visits using browser performance data without cookies; Cloudflare states that it does not collect or use visitors' personal data.",
           "Maps are displayed with NAVER Maps. When a map is shown, your browser connects directly to NAVER's servers, which receive standard connection information such as your IP address. Some images are loaded directly from official tourism websites, which likewise receive connection information.",
           "The only cookie the service itself sets is a temporary one used to confirm your consent while you sign in; it is removed when sign-in finishes, or expires after 10 minutes if it does not. Your browser's local storage keeps: the device identifier, your trip in progress, saved places, tutorial state, language choice, and — if you sign in — your session managed by our authentication provider. Clearing your browser storage removes these from your device.",
@@ -139,8 +145,8 @@ export const PRIVACY: LegalDocSet = {
         no: 13, title: "Children",
         paragraphs: [
           "Signing in (account features) is available only to people aged 14 or older. Before signing in you confirm that you are 14 or older; without this confirmation the account is not activated. The service does not verify age with a date of birth or ID and does not offer a parent or guardian consent process. Browsing and creating trips on this device without signing in do not require an age check, and in that case we do not collect your name or email address.",
+          "If we learn that an account was created by someone under 14, we delete that account and the information linked to it without delay.",
         ],
-        ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토",
       },
       {
         no: 14, title: "Security",
@@ -152,6 +158,7 @@ export const PRIVACY: LegalDocSet = {
         no: 15, title: "Changes to this policy",
         paragraphs: [
           "If this policy changes, the updated version will be posted on this page with a new revision date. For significant changes we will provide notice within the service.",
+          `History: first posted ${PUBLIC_PRIVACY_FIRST_DATE}. Revised ${PUBLIC_PRIVACY_GA_REVISION_DATE} — Google Analytics is used only if you give both optional consents. This version — adds Google sign-in and account features (effective date shown above).`,
         ],
       },
       {
@@ -169,7 +176,7 @@ export const PRIVACY: LegalDocSet = {
       "이 개인정보처리방침은 gokoreamate 가 어떤 정보를 수집하고, 어떻게 사용하며, 이용자가 어떤 선택을 할 수 있는지 설명합니다. gokoreamate 는 한국 여행 탐색, 일자별 일정 만들기, 여행 기억 보관을 위한 여행 계획 서비스입니다.",
     ],
     sections: [
-      { no: 1, title: "서비스 운영 주체", paragraphs: ["gokoreamate 는 개인사업자 케이이엔지가 운영합니다. 주소: 부산시 남구 유엔로 96번길 26-31 (대연동).", "개인정보 보호 담당: 케이이엔지 개인정보보호 담당 · support@gokoreamate.com"], ownerInput: "보호책임자 연락처 표시 — 이메일만으로 법 제30조①6호의 \"전화번호 등 연락처\"를 충족하는지 법률 검토 필요(L5)" },
+      { no: 1, title: "서비스 운영 주체", paragraphs: ["gokoreamate 는 개인사업자 케이이엔지가 운영합니다. 주소: 부산시 남구 유엔로 96번길 26-31 (대연동).", "개인정보 보호 담당: 케이이엔지 개인정보보호 담당 · support@gokoreamate.com"] },
       {
         no: 2, title: "수집하는 개인정보",
         paragraphs: ["서비스 운영에 필요한 정보만 수집합니다:"],
@@ -228,17 +235,17 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase(데이터베이스·로그인 인증·사진 저장) — 계정·여행 콘텐츠·사진을 대한민국 서울 리전(AWS ap-northeast-2)에 저장합니다. 제공사 개인정보처리방침상 운영 법인: Supabase Pte. Ltd.(싱가포르), 연락처 privacy@supabase.com. 이용자가 해당 콘텐츠나 계정을 삭제할 때까지 보관합니다.",
           "Cloudflare(웹사이트 전송·서버 API 실행·쿠키 없는 방문 통계) — Cloudflare, Inc.(미국, 101 Townsend St, San Francisco, CA 94107), 연락처 dpo@cloudflare.com. 서비스를 이용할 때마다 요청 정보(접속 IP 주소·요청 내용 등)가 네트워크를 통해 가까운 국외 Cloudflare 거점에서 처리될 수 있습니다.",
-          "Google(Google 로그인·사용 통계) — Google LLC(미국), 문의 https://support.google.com/policies. 로그인 시 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받고, 사용 통계는 Google Analytics 로 전송됩니다(제8조).",
+          "Google(Google 로그인·사용 통계) — Google LLC(미국), 문의 https://support.google.com/policies. 로그인 시 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받고, 사용 통계는 이용자가 두 가지 선택 동의를 모두 한 경우에만 Google Analytics 로 전송됩니다(제8조).",
           "Resend(운영자 알림 메일 발송) — Plus Five Five, Inc., 제공사 방침상 미국에서 처리, 연락처 support@resend.com. 운영자에게 보내는 알림에는 이용자의 이름·이메일·메시지를 담지 않습니다.",
           "처리 방법·시기·보유기간: 서비스를 이용할 때마다 해당 업무에 필요한 정보가 암호화된 연결(HTTPS)로 전송됩니다. 보유기간은 Supabase 는 이용자가 콘텐츠나 계정을 삭제할 때까지, Resend 발송 기록은 현재 요금제에서 30일, Google Analytics 는 이벤트 데이터 2개월·사용자 데이터 14개월이며, Cloudflare 는 서버 기능 실행 로그를 저장하지 않습니다(각 제공사가 자체 정책에 따라 보관하는 로그는 별도).",
-          "거부 방법과 효과: Google Analytics 는 브라우저에서 쿠키를 차단하거나 Google 의 차단 도구로 거부할 수 있으며, 거부해도 서비스를 이용할 수 있습니다. Supabase·Cloudflare 처리는 서비스 제공에 필요하므로 거부하려면 서비스 이용을 중단해야 하며, 이미 저장된 정보는 삭제를 요청할 수 있습니다. Google 로그인은 선택입니다 — 로그인하지 않으면 Google 계정 정보는 전달되지 않지만 계정 기능은 이용할 수 없습니다.",
+          "거부 방법과 효과: Google Analytics 는 첫 방문 때 보이는 안내에서 수집·이용 동의와 국외 이전 동의를 모두 한 경우에만 사용합니다. 동의하지 않거나 '모두 거부'를 고르거나 나중에 더보기 › 사용 통계에서 어느 하나를 끄면 그때부터 Google Analytics 로 아무것도 보내지 않고 이 사이트의 Google Analytics 쿠키를 지우며, 모든 기능을 그대로 이용할 수 있습니다. Supabase·Cloudflare 처리는 서비스 제공에 필요하므로 거부하려면 서비스 이용을 중단해야 하며, 이미 저장된 정보는 삭제를 요청할 수 있습니다. Google 로그인은 선택입니다 — 로그인하지 않으면 Google 계정 정보는 전달되지 않지만 계정 기능은 이용할 수 없습니다.",
+          "처리 근거: 위 국외 처리 중 Supabase·Cloudflare 는 서비스 이용 계약을 이행하는 데 필요한 처리위탁·보관으로, 개인정보 보호법 제28조의8제1항제3호가목에 따라 이전 사항을 이 처리방침에 공개합니다. Google Analytics 는 이용자가 허용한 경우에만 이용합니다(제8조).",
         ],
-        ownerInput: "국외 이전의 법적 근거(법 제28조의8제1항 중 해당 호 — 예: 제3호 가목 '처리방침 공개') 선택 — 법률 판단 필요(L1)",
       },
       {
         no: 8, title: "분석 도구·쿠키·브라우저 저장소",
         paragraphs: [
-          "사용 통계에 Google Analytics 4 를 사용합니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. Google Analytics 는 자체 쿠키를 설정하며, 브라우저 설정이나 Google 의 차단 도구로 거부할 수 있습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다.",
+          "사용 통계에 Google Analytics 4 를 이용자가 동의한 경우에만 사용합니다. 동의는 개인정보 수집·이용 동의(개인정보 보호법 제15조제1항제1호)와 국외 이전 동의(제28조의8제1항제1호) 두 가지로 따로 받으며, 두 가지에 모두 동의한 경우에만 Google Analytics 를 불러옵니다. 선택하기 전, '나중에 결정'을 고른 경우, 한 가지에만 동의한 경우에는 Google Analytics 스크립트를 불러오지 않아 Google 로 아무것도 전송되지 않고 Google Analytics 쿠키도 설정되지 않습니다. 두 가지에 모두 동의하면 이용할 때마다 방문 정보(쿠키 식별자, 본 화면과 쓴 기능, 기기·브라우저 정보, Google 이 대략적 지역 산출에 쓰는 접속 IP 주소)가 미국의 Google LLC 로 전송됩니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. 더보기 › 사용 통계에서 언제든 바꾸거나 철회할 수 있으며, 철회하면 그때부터 전송을 멈추고 이 사이트의 Google Analytics 쿠키를 지웁니다. 이미 전송된 통계는 철회로 즉시 삭제되지 않고 아래 보관 기간이 지나면 삭제됩니다. 안내 내용이 바뀌면 이전 선택을 적용하지 않고 다시 묻습니다. 만 14세 미만은 동의하지 않도록 안내하지만, 나이를 확인하지는 않습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다.",
           "Cloudflare Web Analytics 는 쿠키 없이 브라우저 성능 정보로 방문을 집계하며, Cloudflare 는 방문자의 개인정보를 수집·이용하지 않는다고 밝히고 있습니다.",
           "지도는 네이버 지도로 표시합니다. 지도가 보일 때 브라우저가 네이버 서버에 직접 접속하므로 네이버는 IP 주소 등 일반적인 접속 정보를 받습니다. 일부 이미지는 관광 공식 사이트에서 직접 불러오며, 해당 사이트도 접속 정보를 받습니다.",
           "서비스 자체가 설정하는 쿠키는 로그인할 때 동의를 확인하기 위한 임시 쿠키 하나뿐이며, 로그인 절차가 끝나면 지우고 끝나지 않으면 10분 뒤 만료됩니다. 브라우저 로컬 저장소에는 기기 식별자·작성 중인 여행·저장 장소·튜토리얼 상태·언어 선택, 그리고 로그인 시 인증 제공자가 관리하는 세션이 보관됩니다. 브라우저 저장소를 지우면 이 기기에서 해당 정보가 삭제됩니다.",
@@ -273,7 +280,7 @@ export const PRIVACY: LegalDocSet = {
           "삭제가 중단되면 부분 성공으로 표시하지 않으며, 같은 동작을 다시 시도하면 남은 데이터부터 이어서 삭제합니다. 삭제는 되돌릴 수 없습니다. 앱에서 처리할 수 없는 요청(문의·신고 기록의 열람·정정·삭제 포함)은 아래 문의 채널로 접수하며, 요청을 받으면 지체 없이 확인해 필요한 조치를 하고 요청을 받은 날부터 10일 이내에 결과를 알려드립니다. 결과는 요청하신 이메일 주소로 알려드리며, 요청자 본인 확인을 위해 추가 확인을 요청할 수 있습니다.",
         ],
       },
-      { no: 13, title: "아동·미성년자", paragraphs: ["로그인(계정 기능)은 만 14세 이상만 이용할 수 있습니다. 로그인 전에 만 14세 이상임을 직접 확인하는 절차가 있으며, 이 확인이 없으면 계정이 활성화되지 않습니다. 서비스는 생년월일이나 신분증으로 나이를 검증하지 않으며, 법정대리인 동의 절차를 제공하지 않습니다. 로그인하지 않고 둘러보거나 이 기기에서 여행을 만드는 기능은 연령 확인 없이 이용할 수 있고, 이때 이름·이메일 주소는 수집하지 않습니다."], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
+      { no: 13, title: "아동·미성년자", paragraphs: ["로그인(계정 기능)은 만 14세 이상만 이용할 수 있습니다. 로그인 전에 만 14세 이상임을 직접 확인하는 절차가 있으며, 이 확인이 없으면 계정이 활성화되지 않습니다. 서비스는 생년월일이나 신분증으로 나이를 검증하지 않으며, 법정대리인 동의 절차를 제공하지 않습니다. 로그인하지 않고 둘러보거나 이 기기에서 여행을 만드는 기능은 연령 확인 없이 이용할 수 있고, 이때 이름·이메일 주소는 수집하지 않습니다.", "만 14세 미만의 이용자가 계정을 만든 사실을 알게 되면 해당 계정과 계정에 연결된 정보를 지체 없이 삭제합니다."] },
       {
         no: 14, title: "보안조치",
         paragraphs: [
@@ -282,7 +289,10 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 15, title: "방침 변경 고지",
-        paragraphs: ["방침이 변경되면 새 개정일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 내에서 안내합니다."],
+        paragraphs: [
+          "방침이 변경되면 새 개정일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 내에서 안내합니다.",
+          `개정 이력: ${PUBLIC_PRIVACY_FIRST_DATE} 최초 게시 · ${PUBLIC_PRIVACY_GA_REVISION_DATE} 개정 — Google Analytics 를 수집·이용과 국외 이전 두 가지 선택 동의를 모두 한 경우에만 사용 · 이 판 — Google 로그인·계정 기능 추가(시행일은 위에 표시).`,
+        ],
       },
       { no: 16, title: "문의처", paragraphs: ["개인정보 관련 문의·요청은 아래로 연락해 주세요:", "이메일: support@gokoreamate.com · 또는 앱 안의 ‘문의하기’ 양식"] },
     ],
@@ -296,7 +306,7 @@ export const PRIVACY: LegalDocSet = {
       "本プライバシーポリシーは、gokoreamate が収集する情報、その利用方法、および利用者が選択できる事項を説明します。gokoreamate は、韓国旅行の探索、日別スケジュールの作成、旅の記憶の保管のための旅行計画サービスです。",
     ],
     sections: [
-      { no: 1, title: "サービス運営者", paragraphs: ["gokoreamate は大韓民国の個人事業者「케이이엔지」（登録商号の韓国語表記）が運営しています。住所：부산시 남구 유엔로 96번길 26-31 (대연동)（大韓民国釜山）", "個人情報保護担当：케이이엔지 個人情報保護担当（개인정보보호 담당）・support@gokoreamate.com"], ownerInput: "보호책임자 연락처 표시 — 이메일만으로 법 제30조①6호의 \"전화번호 등 연락처\"를 충족하는지 법률 검토 필요(L5)" },
+      { no: 1, title: "サービス運営者", paragraphs: ["gokoreamate は大韓民国の個人事業者「케이이엔지」（登録商号の韓国語表記）が運営しています。住所：부산시 남구 유엔로 96번길 26-31 (대연동)（大韓民国釜山）", "個人情報保護担当：케이이엔지 個人情報保護担当（개인정보보호 담당）・support@gokoreamate.com"] },
       {
         no: 2, title: "収集する情報",
         paragraphs: ["サービス運営に必要な情報のみ収集します:"],
@@ -355,17 +365,17 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase（データベース・ログイン認証・写真の保存）— アカウント・旅行コンテンツ・写真を大韓民国ソウルリージョン（AWS ap-northeast-2）に保存します。同社のプライバシーポリシー上の運営法人：Supabase Pte. Ltd.（シンガポール）、連絡先 privacy@supabase.com。利用者がコンテンツまたはアカウントを削除するまで保管します。",
           "Cloudflare（ウェブサイトの配信・サーバーAPIの実行・Cookieを使わない訪問統計）— Cloudflare, Inc.（米国、101 Townsend St, San Francisco, CA 94107）、連絡先 dpo@cloudflare.com。サービスを利用するたびに、リクエスト情報（IPアドレス・リクエスト内容など）が国外の近くのCloudflare拠点で処理されることがあります。",
-          "Google（Googleログイン・利用統計）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。ログイン時にGoogleアカウントの識別子・氏名・メールアドレス・プロフィール画像リンクを受け取り、利用統計はGoogle Analyticsに送信されます（第8条）。",
+          "Google（Googleログイン・利用統計）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。ログイン時にGoogleアカウントの識別子・氏名・メールアドレス・プロフィール画像リンクを受け取り、利用統計は、利用者が2つの任意の同意を両方した場合にのみGoogle Analyticsに送信されます（第8条）。",
           "Resend（運営者宛て通知メールの送信）— Plus Five Five, Inc.、同社の方針上米国で処理、連絡先 support@resend.com。運営者宛ての通知には利用者の氏名・メールアドレス・メッセージを含みません。",
           "処理の方法・時期・保存期間：サービスを利用するたびに、各業務に必要な情報が暗号化された接続（HTTPS）で送信されます。保存期間は、Supabase は利用者がコンテンツまたはアカウントを削除するまで、Resend の配信記録は現在のプランで30日、Google Analytics はイベントデータ2か月・ユーザーデータ14か月で、Cloudflare はサーバー機能の実行ログを保存しません（各事業者が自社の方針で保存するログは別途）。",
-          "拒否の方法と影響：Google Analytics はブラウザで Cookie をブロックするか Google の無効化ツールで拒否でき、拒否してもサービスは利用できます。Supabase・Cloudflare による処理はサービスの提供に必要なため、拒否する場合はサービスの利用を中止する必要があり、既に保存された情報の削除を依頼できます。Google ログインは任意です — ログインしなければ Google アカウント情報は送られませんが、アカウント機能は利用できません。",
+          "拒否の方法と影響：Google Analytics は、初回訪問時に表示される案内で収集・利用への同意と国外移転への同意の両方をした場合にのみ使用します。同意しない、「すべて拒否」を選ぶ、または後で「その他 › 利用統計」でどちらかをオフにすると、その時点から Google Analytics へは何も送信されず、このサイトの Google Analytics の Cookie は削除され、すべての機能をそのまま利用できます。Supabase・Cloudflare による処理はサービスの提供に必要なため、拒否する場合はサービスの利用を中止する必要があり、既に保存された情報の削除を依頼できます。Google ログインは任意です — ログインしなければ Google アカウント情報は送られませんが、アカウント機能は利用できません。",
+          "処理の根拠：上記の国外での処理のうち、Supabase・Cloudflare は利用者とのサービス利用契約の履行に必要な処理の委託・保管であり、個人情報保護法第28条の8第1項第3号イに基づき、移転に関する事項を本ポリシーで公開しています。Google Analytics は利用者が許可した場合にのみ使用します（第8条）。",
         ],
-        ownerInput: "국외 이전의 법적 근거(법 제28조의8제1항 중 해당 호 — 예: 제3호 가목 '처리방침 공개') 선택 — 법률 판단 필요(L1)",
       },
       {
         no: 8, title: "分析ツール・Cookie・ブラウザ保存領域",
         paragraphs: [
-          "利用統計に Google Analytics 4 を使用します。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。Google Analytics は独自の Cookie を設定し、ブラウザ設定や Google の無効化ツールで拒否できます。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。",
+          "利用統計には、利用者が同意した場合にのみ Google Analytics 4 を使用します。同意は、個人情報の収集・利用への同意（個人情報保護法第15条第1項第1号）と国外移転への同意（第28条の8第1項第1号）の2つを別々にいただき、両方に同意した場合にのみ Google Analytics を読み込みます。選択する前、「後で決める」を選んだ場合、どちらか一方にのみ同意した場合は、Google Analytics のスクリプトを読み込まないため、Google へは何も送信されず、Google Analytics の Cookie も設定されません。両方に同意すると、利用のたびに訪問情報（Cookie 識別子、閲覧した画面と使った機能、端末・ブラウザ情報、Google がおおよその地域の推定に使う IP アドレス）が米国の Google LLC に送信されます。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。「その他 › 利用統計」でいつでも変更・撤回でき、撤回するとその時点から送信を止め、このサイトの Google Analytics の Cookie を削除します。すでに送信された統計は撤回によって直ちに削除されず、下記の保管期間が過ぎると削除されます。案内の内容が変わった場合は、以前の選択を適用せず改めてお尋ねします。14歳未満の方には同意しないよう案内していますが、年齢の確認は行っていません。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。",
           "Cloudflare Web Analytics は Cookie を使わずブラウザのパフォーマンス情報で訪問を集計し、Cloudflare は訪問者の個人データを収集・利用しないとしています。",
           "地図は NAVER 地図で表示します。地図が表示されるとき、ブラウザが NAVER のサーバーに直接接続するため、NAVER は IP アドレスなど一般的な接続情報を受け取ります。一部の画像は観光公式サイトから直接読み込まれ、そのサイトも接続情報を受け取ります。",
           "サービス自体が設定する Cookie は、ログイン時に同意を確認するための一時的な Cookie だけで、ログイン手続きが終わると削除し、終わらない場合は10分後に失効します。ブラウザのローカル保存領域には、端末識別子・作成中の旅行・保存した場所・チュートリアル状態・言語選択、そしてログイン時には認証プロバイダーが管理するセッションが保管されます。ブラウザの保存データを消去すると、この端末から該当情報が削除されます。",
@@ -400,14 +410,14 @@ export const PRIVACY: LegalDocSet = {
           "削除が中断された場合、部分的な成功とは表示されません。同じ操作を再試行すると、残りのデータから続けて削除します。削除は取り消せません。アプリ内で対応できない依頼（お問い合わせ・通報の記録の閲覧・訂正・削除を含む）は下記の窓口で受け付け、依頼を受けた後は遅滞なく確認して必要な措置を行い、受け付けた日から10日以内に結果をお知らせします。結果はご依頼いただいたメールアドレスにお知らせし、ご本人確認のため追加の確認をお願いする場合があります。",
         ],
       },
-      { no: 13, title: "子ども・未成年者", paragraphs: ["ログイン（アカウント機能）は満14歳以上の方のみご利用いただけます。ログイン前に満14歳以上であることをご本人が確認する手順があり、この確認がない場合アカウントは有効になりません。当サービスは生年月日や身分証で年齢を検証せず、法定代理人の同意手続きは提供していません。ログインせずに閲覧したり、この端末で旅行を作成したりする機能は年齢確認なしで利用でき、その場合氏名・メールアドレスは収集しません。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
+      { no: 13, title: "子ども・未成年者", paragraphs: ["ログイン（アカウント機能）は満14歳以上の方のみご利用いただけます。ログイン前に満14歳以上であることをご本人が確認する手順があり、この確認がない場合アカウントは有効になりません。当サービスは生年月日や身分証で年齢を検証せず、法定代理人の同意手続きは提供していません。ログインせずに閲覧したり、この端末で旅行を作成したりする機能は年齢確認なしで利用でき、その場合氏名・メールアドレスは収集しません。", "満14歳未満の方がアカウントを作成したことが判明した場合、そのアカウントと連携する情報を遅滞なく削除します。"] },
       {
         no: 14, title: "安全管理措置",
         paragraphs: [
           "すべての接続は暗号化（HTTPS）されます。旅程・写真・場所の変更は、所有（端末またはログインアカウント）を確認するサーバー機能を経由します。ログインセッションは保護されたリクエストごとにサーバー側で検証されます。写真は初期状態で非公開で、短い有効期間の署名リンクでのみ提供されます。",
         ],
       },
-      { no: 15, title: "ポリシーの変更", paragraphs: ["本ポリシーを変更する場合は、新しい改定日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。"] },
+      { no: 15, title: "ポリシーの変更", paragraphs: ["本ポリシーを変更する場合は、新しい改定日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。", `改定履歴：${PUBLIC_PRIVACY_FIRST_DATE} 初回掲載・${PUBLIC_PRIVACY_GA_REVISION_DATE} 改定 — Google Analytics を、収集・利用と国外移転の2つの任意の同意を両方いただいた場合にのみ使用・本版 — Google ログイン・アカウント機能を追加（施行日は上に表示）。`] },
       { no: 16, title: "お問い合わせ", paragraphs: ["プライバシーに関するご質問・ご依頼は下記までご連絡ください:", "メール：support@gokoreamate.com、またはアプリ内の「お問い合わせ」フォーム"] },
     ],
   },
@@ -420,7 +430,7 @@ export const PRIVACY: LegalDocSet = {
       "本隐私政策说明 gokoreamate 收集哪些信息、如何使用这些信息，以及你可以做出的选择。gokoreamate 是一项用于探索韩国、制定逐日行程并保存旅行记忆的旅行规划服务。",
     ],
     sections: [
-      { no: 1, title: "服务运营方", paragraphs: ["gokoreamate 由大韩民国个体经营者“케이이엔지”（以韩文登记商号表示）运营。地址：부산시 남구 유엔로 96번길 26-31 (대연동)（大韩民国釜山）", "个人信息保护负责窗口：케이이엔지 个人信息保护负责（개인정보보호 담당）· support@gokoreamate.com"], ownerInput: "보호책임자 연락처 표시 — 이메일만으로 법 제30조①6호의 \"전화번호 등 연락처\"를 충족하는지 법률 검토 필요(L5)" },
+      { no: 1, title: "服务运营方", paragraphs: ["gokoreamate 由大韩民国个体经营者“케이이엔지”（以韩文登记商号表示）运营。地址：부산시 남구 유엔로 96번길 26-31 (대연동)（大韩民国釜山）", "个人信息保护负责窗口：케이이엔지 个人信息保护负责（개인정보보호 담당）· support@gokoreamate.com"] },
       {
         no: 2, title: "我们收集的信息",
         paragraphs: ["我们只收集运营服务所需的信息:"],
@@ -479,17 +489,17 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase（数据库、登录认证、照片存储）——将你的账户、旅行内容和照片存储在韩国首尔区域（AWS ap-northeast-2）。其隐私政策载明的运营法人：Supabase Pte. Ltd.（新加坡），联系方式 privacy@supabase.com。保存至你删除相关内容或账户为止。",
           "Cloudflare（网站分发、服务器 API 运行、不使用 Cookie 的访问统计）——Cloudflare, Inc.（美国，101 Townsend St, San Francisco, CA 94107），联系方式 dpo@cloudflare.com。每次使用服务时，请求信息（IP 地址、请求内容等）可能在境外就近的 Cloudflare 节点处理。",
-          "Google（Google 登录与使用统计）——Google LLC（美国），联系 https://support.google.com/policies。登录时我们会收到你的 Google 账户标识符、姓名、邮箱地址和头像链接；使用统计发送至 Google Analytics（第 8 条）。",
+          "Google（Google 登录与使用统计）——Google LLC（美国），联系 https://support.google.com/policies。登录时我们会收到你的 Google 账户标识符、姓名、邮箱地址和头像链接；仅在你同时给出两项可选同意时，使用统计才会发送至 Google Analytics（第 8 条）。",
           "Resend（向运营方发送通知邮件）——Plus Five Five, Inc.，其政策载明在美国处理，联系方式 support@resend.com。发给运营方的通知不包含你的姓名、邮箱或留言。",
           "处理方式、时间与保存期限：每次使用服务时，完成相应工作所需的信息都会通过加密连接（HTTPS）传输。保存期限：Supabase 保存至你删除相关内容或账户为止；Resend 的发送记录在当前套餐下保存 30 天；Google Analytics 的事件数据保存 2 个月、用户数据保存 14 个月；Cloudflare 不保存我们服务器功能的运行日志（各服务商依其自身政策保存的日志另计）。",
-          "拒绝方式与后果：你可以在浏览器中屏蔽 Cookie 或使用 Google 提供的工具拒绝 Google Analytics，拒绝后仍可使用服务。Supabase 与 Cloudflare 的处理是提供服务所必需的，如需拒绝则须停止使用服务，并可请求删除已保存的信息。Google 登录为可选——不登录则不会向我们传送 Google 账户信息，但无法使用账户功能。",
+          "拒绝方式与后果：只有在你于首次访问时显示的提示中同时同意收集和使用以及境外转移后，我们才使用 Google Analytics。如果不同意、选择“全部拒绝”，或之后在“更多 › 使用统计”中关闭任意一项，则从那时起不会向 Google Analytics 发送任何信息，本网站的 Google Analytics Cookie 会被删除，且全部功能仍可照常使用。Supabase 与 Cloudflare 的处理是提供服务所必需的，如需拒绝则须停止使用服务，并可请求删除已保存的信息。Google 登录为可选——不登录则不会向我们传送 Google 账户信息，但无法使用账户功能。",
+          "处理依据：上述境外处理中，Supabase 与 Cloudflare 是履行与你之间的服务使用合同所需的委托处理与保管，我们依据《个人信息保护法》第28条之8第1款第3项甲目，在本政策中公开转移事项。Google Analytics 仅在你允许时使用（第 8 条）。",
         ],
-        ownerInput: "국외 이전의 법적 근거(법 제28조의8제1항 중 해당 호 — 예: 제3호 가목 '처리방침 공개') 선택 — 법률 판단 필요(L1)",
       },
       {
         no: 8, title: "分析工具、Cookie 与浏览器存储",
         paragraphs: [
-          "我们使用 Google Analytics 4 进行使用统计。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。Google Analytics 会设置其自身的 Cookie，你可以通过浏览器设置或 Google 提供的工具拒绝。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。",
+          "仅在你同意时，我们才使用 Google Analytics 4 进行使用统计。我们分别征求两项同意——收集和使用个人信息的同意（《个人信息保护法》第15条第1款第1项）以及向境外转移的同意（第28条之8第1款第1项）——只有两项都同意时才会加载 Google Analytics。在你作出选择之前、选择“稍后决定”时，或只同意其中一项时，我们不会加载 Google Analytics 脚本，不会向 Google 发送任何信息，也不会设置 Google Analytics Cookie。两项都同意后，每次使用时，访问信息（Cookie 标识符、浏览的页面和使用的功能、设备与浏览器信息，以及 Google 用于估算大致地区的 IP 地址）会发送至美国的 Google LLC。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。你可随时在“更多 › 使用统计”中更改或撤回；撤回后将从那时起停止发送，并删除本网站的 Google Analytics Cookie。已发送的统计不会因撤回而立即删除，而是在下述保存期限届满后删除。提示内容发生变化时，我们不会沿用你之前的选择，而会重新询问。我们提示未满 14 周岁者不要同意，但不核实年龄。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。",
           "Cloudflare Web Analytics 不使用 Cookie，而是通过浏览器性能信息统计访问；Cloudflare 表示不收集或使用访客的个人数据。",
           "地图通过 NAVER 地图显示。显示地图时，浏览器会直接连接 NAVER 的服务器，NAVER 会收到 IP 地址等一般连接信息。部分图片直接从官方旅游网站加载，这些网站同样会收到连接信息。",
           "服务本身设置的 Cookie 只有一个登录时用于确认同意的临时 Cookie，登录完成后即删除，未完成时 10 分钟后失效。浏览器本地存储中保存: 设备标识、进行中的行程、收藏的地点、引导状态、语言选择，以及登录后由认证服务商管理的会话。清除浏览器存储即可从本设备删除这些信息。",
@@ -524,14 +534,14 @@ export const PRIVACY: LegalDocSet = {
           "删除中断时不会显示为部分成功；重试同一操作会从剩余数据继续删除。删除不可恢复。无法在应用内处理的请求（包括查看、更正或删除咨询与举报记录）可通过下方联系渠道提交；收到请求后我们会立即核实并采取必要措施，并在收到请求之日起 10 日内告知结果。结果将发送至你提出请求时使用的邮箱地址；为核实请求人身份，我们可能要求进一步确认。",
         ],
       },
-      { no: 13, title: "儿童与未成年人", paragraphs: ["登录（账户功能）仅限年满 14 周岁的用户使用。登录前需由本人确认已年满 14 周岁，未确认则账户不会启用。本服务不会通过出生日期或身份证件核验年龄，也不提供法定代理人同意程序。不登录即可浏览，或在本设备上创建行程，无需年龄确认，此时我们不会收集你的姓名或邮箱地址。"], ownerInput: "제13조 문안 Owner 최종 확인 필요(만 14세 미만 계정을 알게 된 경우의 처리 포함) — 법 제22조의2(법정대리인 동의) 비적용 전제는 법률 검토" },
+      { no: 13, title: "儿童与未成年人", paragraphs: ["登录（账户功能）仅限年满 14 周岁的用户使用。登录前需由本人确认已年满 14 周岁，未确认则账户不会启用。本服务不会通过出生日期或身份证件核验年龄，也不提供法定代理人同意程序。不登录即可浏览，或在本设备上创建行程，无需年龄确认，此时我们不会收集你的姓名或邮箱地址。", "如果我们得知有未满 14 周岁的用户创建了账户，将及时删除该账户及与其关联的信息。"] },
       {
         no: 14, title: "安全措施",
         paragraphs: [
           "所有连接均经过加密（HTTPS）。行程、照片和地点的修改须经过确认所有权（设备或登录账户）的服务器功能。登录会话在每个受保护请求上都由服务器验证。照片默认私密，仅通过短时效的签名链接提供。",
         ],
       },
-      { no: 15, title: "政策变更", paragraphs: ["政策如有变更，将连同新的修订日期发布在本页面。重大变更将在服务内另行通知。"] },
+      { no: 15, title: "政策变更", paragraphs: ["政策如有变更，将连同新的修订日期发布在本页面。重大变更将在服务内另行通知。", `修订记录：${PUBLIC_PRIVACY_FIRST_DATE} 首次发布 · ${PUBLIC_PRIVACY_GA_REVISION_DATE} 修订——仅在你同时给出收集和使用以及境外转移两项可选同意时才使用 Google Analytics · 本版——新增 Google 登录与账户功能（生效日期见上方）。`] },
       { no: 16, title: "联系我们", paragraphs: ["有关隐私的问题或请求，请联系:", "邮箱：support@gokoreamate.com，或使用应用内的“联系我们”表单"] },
     ],
   },

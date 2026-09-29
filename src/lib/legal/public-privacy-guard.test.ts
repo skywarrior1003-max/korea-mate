@@ -13,11 +13,14 @@ const read = (p: string) => readFileSync(join(ROOT, p), "utf8");
 const LOCALES: LegalLocale[] = ["en", "ko", "ja", "zh"];
 const all = (l: LegalLocale) => { const d = PRIVACY[l]; return [d.title, ...d.intro, ...d.sections.flatMap(s => [s.title, ...s.paragraphs, ...(s.items ?? [])])].join("\n"); };
 
-test("Auth 판 — 남은 마커는 Owner 결정 항목(§1 L5 · §7 L1 · §13 L2)뿐, 4locale 조항 번호 동일", () => {
+test("Auth 판 — Owner 결정(L1=B·L2·L5=A, 2026-09-29) 반영으로 마커 0, 4locale 조항 번호 동일, DRAFT 는 시행일 입력 전까지", () => {
   const nos = PRIVACY.ko.sections.map(s => s.no).join(",");
   for (const l of LOCALES) {
     assert.equal(PRIVACY[l].sections.map(s => s.no).join(","), nos, `${l}: 조항 번호`);
-    assert.deepEqual(PRIVACY[l].sections.filter(s => s.ownerInput).map(s => s.no), [1, 7, 13], `${l}: 마커 위치`);
+    assert.deepEqual(PRIVACY[l].sections.filter(s => s.ownerInput).map(s => s.no), [], `${l}: 마커 없음`);
+    // §13 L2 문장 — 운영자 삭제 절차(docs/operations/account-operator-deletion-procedure-v1.md)와 짝
+    const s13 = PRIVACY[l].sections.find(s => s.no === 13)!;
+    assert.ok(/under 14|만 14세 미만의 이용자가 계정을 만든|満14歳未満の方がアカウントを作成|未满 14 周岁的用户创建了账户/.test(s13.paragraphs.join(" ")), `${l}: §13 삭제 문장`);
   }
 });
 

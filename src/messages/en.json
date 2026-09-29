@@ -28,7 +28,9 @@
     "tipsDesc": "Turn the small in-context tips on or off",
     "tipsReplay": "Replay the guide",
     "tipsReplayDesc": "See each tip once more from the start",
-    "tipsReplayDone": "Tips will show again from your next screen"
+    "tipsReplayDone": "Tips will show again from your next screen",
+    "analyticsToggle": "Usage statistics (Google Analytics)",
+    "analyticsDesc": "Statistics turn on only if both items are on. Turning either off stops sending from then on and deletes this site's statistics cookies. Statistics already sent are deleted only after the retention period."
   },
   "explore": {
     "title": "Explore {city}",
@@ -1686,5 +1688,20 @@
     "deleteWorking": "Deleting…",
     "deleteConfirmAction": "Delete permanently",
     "deleteCancel": "Cancel"
+  },
+  "analyticsConsent": {
+    "title": "Usage statistics consent (optional)",
+    "intro": "These statistics help us improve the service. Every feature works the same if you don't agree. Statistics turn on only if you agree to both items below.",
+    "collectLabel": "[Optional] Consent to collection and use of personal information",
+    "collectDetails": "Items: a cookie identifier, screens viewed and features used (city and public-place level), device and browser information, IP address · Purpose: usage statistics and service improvement · Kept: events 2 months, user data 14 months · Refusing has no disadvantage.",
+    "transferLabel": "[Optional] Consent to transfer of personal information outside Korea",
+    "transferDetails": "Recipient: Google LLC (USA), contact support.google.com/policies · Items transferred: the items above · When and how: each time you use the service, over an encrypted connection · Recipient's purpose and retention: providing usage statistics, events 2 months, user data 14 months · How to refuse and effect: leave it unchecked or turn it off later and nothing is sent; the service is not affected.",
+    "footer": "If you are under 14, please don't agree. You can change or withdraw your choice at any time under More › Usage statistics. Withdrawing stops sending from then on; statistics already sent are deleted only after the retention periods above.",
+    "policyLink": "Privacy Policy",
+    "save": "Save choices",
+    "rejectAll": "Reject all",
+    "later": "Decide later",
+    "statusOn": "Statistics on",
+    "statusOff": "Statistics off"
   }
 }

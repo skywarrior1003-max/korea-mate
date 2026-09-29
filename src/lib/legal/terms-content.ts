@@ -93,7 +93,7 @@ export const TERMS: LegalDocSet = {
           "To the maximum extent permitted by law, the service is provided \"as is\" without warranties of accuracy, availability, or fitness for a particular purpose, and the operator is not liable for indirect or consequential damages arising from use of the service, including reliance on travel information or AI output, or from partner sites. Nothing in these Terms limits liability that cannot be limited under applicable law.",
         ],
       },
-      { no: 14, title: "Governing law and disputes", paragraphs: ["These Terms are governed by the laws of the Republic of Korea."], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 14, title: "Governing law and disputes", paragraphs: ["These Terms and any dispute about the service are governed by the laws of the Republic of Korea, and a lawsuit may be brought before the court that has jurisdiction under the Civil Procedure Act and other applicable laws."] },
       {
         no: 15, title: "Changes to these Terms and contact",
         paragraphs: [
@@ -183,7 +183,7 @@ export const TERMS: LegalDocSet = {
           "법이 허용하는 최대 범위에서, 서비스는 정확성·가용성·특정 목적 적합성에 대한 보증 없이 \"있는 그대로\" 제공되며, 운영자는 여행 정보나 AI 결과에 대한 의존, 파트너 사이트 이용을 포함해 서비스 이용에서 발생하는 간접·결과적 손해에 책임지지 않습니다. 관련 법상 제한할 수 없는 책임은 본 약관으로 제한되지 않습니다.",
         ],
       },
-      { no: 14, title: "준거법과 분쟁 해결", paragraphs: ["이 약관은 대한민국 법을 따릅니다."], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 14, title: "준거법과 분쟁 해결", paragraphs: ["이 약관과 서비스 이용에 관한 분쟁에는 대한민국 법이 적용되며, 소송은 민사소송법 등 관계 법령에 따른 관할 법원에 제기할 수 있습니다."] },
       {
         no: 15, title: "약관 변경·고지 및 문의처",
         paragraphs: ["약관이 변경되면 새 개정일과 함께 이 페이지에 게시하고, 중요한 변경은 서비스 내에서 안내합니다. 시행일 이후 계속 이용하면 변경에 동의한 것으로 봅니다.", "약관에 관한 문의: support@gokoreamate.com"],
@@ -261,7 +261,7 @@ export const TERMS: LegalDocSet = {
           "法の許す最大限の範囲で、サービスは正確性・可用性・特定目的適合性の保証なく「現状有姿」で提供され、運営者は旅行情報やAI出力への依拠、パートナーサイトの利用を含むサービス利用から生じる間接・結果的損害について責任を負いません。適用法上制限できない責任は本規約によって制限されません。",
         ],
       },
-      { no: 14, title: "準拠法と紛争解決", paragraphs: ["本規約は大韓民国の法律に準拠します。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 14, title: "準拠法と紛争解決", paragraphs: ["本規約およびサービスの利用に関する紛争には大韓民国の法律が適用され、訴訟は民事訴訟法その他の関係法令に基づく管轄裁判所に提起することができます。"] },
       { no: 15, title: "規約の変更・告知および連絡先", paragraphs: ["本規約を変更する場合は、新しい改定日とともに本ページに掲載し、重要な変更はサービス内で告知します。発効日以降の継続利用は変更への同意とみなします。", "本規約に関するお問い合わせ：support@gokoreamate.com"] },
     ],
   },
@@ -336,7 +336,7 @@ export const TERMS: LegalDocSet = {
           "在法律允许的最大范围内，服务按\"现状\"提供，不对准确性、可用性或特定用途适用性作保证；对因使用服务(包括依赖旅行信息或 AI 输出、使用合作方网站)产生的间接或衍生损害，运营方不承担责任。依适用法律不可限制的责任不受本条款限制。",
         ],
       },
-      { no: 14, title: "适用法律与争议解决", paragraphs: ["本条款受大韩民国法律管辖。"], ownerInput: "관할 법원(분쟁 해결 기준) — 법률 검토 필요" },
+      { no: 14, title: "适用法律与争议解决", paragraphs: ["本条款及与服务使用相关的争议适用大韩民国法律，诉讼可依《民事诉讼法》等相关法律向有管辖权的法院提起。"] },
       { no: 15, title: "条款变更、通知与联系方式", paragraphs: ["条款如有变更，将连同新的修订日期发布在本页面，重大变更将在服务内另行通知。生效日后继续使用即视为接受变更。", "有关本条款的咨询：support@gokoreamate.com"] },
     ],
   },

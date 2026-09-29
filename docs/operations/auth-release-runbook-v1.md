@@ -141,7 +141,8 @@
 
 Auth 브랜치 `167e9199` 는 master(`a61ba13e` — 콘텐츠 교정·공개 처리방침)를 이미 포함한다. master 가 그 뒤로 바뀌지 않으면 4단계 merge 는 fast-forward 다.
 
-1. **Owner 문구 결정** — `auth-owner-wording-decisions-v1.md` 의 L1·L2·L3·L5 선택. Claude 가 선택 문장을 4개 언어로 넣고 마커를 지운 뒤, 시행일(`LEGAL_EFFECTIVE_DATE`)과 함께 한 커밋으로 Preview 검증한다(가드·4개 언어 화면·DRAFT 해제 확인). L2 를 채택하면 운영자 계정 삭제 절차서(서버 권한으로 같은 삭제 모듈 실행)를 이 단계에서 함께 둔다.
+0. **GA 독립 출시(별도 승인, Auth 보다 먼저 가능)** — `fix/ga-consent-v1` 을 master 에 merge(Production 자동 배포, DB·환경변수 변경 없음). 배포일이 2026-09-30 이 아니면 GA 브랜치 `PUBLIC_PRIVACY_EFFECTIVE_DATE` 와 Auth 브랜치 `PUBLIC_PRIVACY_GA_REVISION_DATE` 를 같은 날짜로 맞춘다. 배포 직후 확인·실패 대응은 `ga-transfer-basis-and-options-v1.md` §9. Auth 브랜치는 이 GA 변경을 이미 merge 해 두었으므로(2026-09-29) GA 가 먼저 나가도 Auth 출시 때 동의 구조·개정 방침·더보기 선택이 사라지지 않는다 — Auth 출시 전 master 를 다시 합치면 된다.
+1. **Owner 문구 결정 — 2026-09-29 완료(L1=B·L2 채택·L3=A·L5=A)**. 4개 언어 문장 반영·마커 0. 남은 것은 출시일에 시행일(`LEGAL_EFFECTIVE_DATE`)을 넣는 한 줄뿐(그 전까지 DRAFT 유지). 이전 안내: `auth-owner-wording-decisions-v1.md` 의 L1·L2·L3·L5 선택. Claude 가 선택 문장을 4개 언어로 넣고 마커를 지운 뒤, 시행일(`LEGAL_EFFECTIVE_DATE`)과 함께 한 커밋으로 Preview 검증한다(가드·4개 언어 화면·DRAFT 해제 확인). L2 를 채택하면 운영자 계정 삭제 절차서(서버 권한으로 같은 삭제 모듈 실행)를 이 단계에서 함께 둔다.
 2. **Production DB 적용 승인** — D-1 사전 확인 → D-2(081 확인만 → 077→078→079→080 → 파기 cron 비활성 선등록 → 082 → 083 → 관문 확인 후 cron 활성화) → D-3(알림 키·URL). 082·083 은 한 요청으로 보내도 원자적이지 않다(각자 COMMIT — Staging 재현). 083 실패 시 작업은 비활성으로 남고 enable SQL 이 거부한다.
 3. **Auth 코드 배포 승인** — D-4 master merge(자동 Production 배포) → D-5 시험 메일 실수신 확인 후 `retention_purge_activate(시행일)` → D-6·D-7·D-8 확인.
 
