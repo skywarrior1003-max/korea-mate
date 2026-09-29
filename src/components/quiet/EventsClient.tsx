@@ -8,6 +8,7 @@
 // 종료 행사는 목록에서 제외(기존 규칙 재사용), 없는 정보는 만들지 않는다.
 
 import { useEffect, useState } from "react";
+import { useKstToday } from "@/lib/dates/use-kst-today";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
@@ -42,10 +43,11 @@ export function EventsAllClient({ slug }: { slug: string }) {
   const t = useTranslations("quiet");
   const tForm = useTranslations("tripForm");
   const locale = useLocale();
+  const today = useKstToday();
   const city = quietCity(slug);
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
-  const events = getCityEvents(slug);
+  const events = today ? getCityEvents(slug, today) : null;
 
   return (
     <div className="qh min-h-screen pb-20" style={{ backgroundColor: "var(--qh-paper)" }}>
@@ -55,7 +57,7 @@ export function EventsAllClient({ slug }: { slug: string }) {
         </Link>
         <h1 className="mt-1 text-[22px] md:text-[26px] font-semibold text-[var(--qh-ink)]">{t("eventsIn", { city: cityLabel })}</h1>
 
-        {events.length === 0 ? (
+        {events === null ? null : events.length === 0 ? (
           <p className="mt-5 text-[13px] text-[var(--qh-faint2)]">{t("eventsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-3">
@@ -90,11 +92,12 @@ export function EventDetailClient({ slug, eventId }: { slug: string; eventId: st
   const city = quietCity(slug);
   const [spots, setSpots] = useState<CitySpot[] | null>(null);
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  const today = useKstToday();
 
   if (!city) return null;
   const cityLabel = tForm(city.labelKey);
   // 상세는 종료 여부와 무관하게 열린다(공유된 링크가 죽지 않게) — 목록만 걸러진다.
-  const ev = getCityEventById(slug, eventId);
+  const ev = getCityEventById(slug, eventId, today);
   if (!ev) {
     return (
       <div className="qh min-h-screen" style={{ backgroundColor: "var(--qh-paper)" }}>

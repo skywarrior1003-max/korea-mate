@@ -155,22 +155,22 @@
    "eligibility": null,
    "keyInfo": {
     "operating_hours": "약 05:30 ~ 자정 (노선별 상이)",
-    "fare_adult_card": 1400,
-    "fare_adult_ticket": 1500,
-    "fare_teen_13to18_card": 800,
-    "fare_child_6to12": 500,
+    "fare_adult_card": 1550,
+    "fare_adult_ticket": 1650,
+    "fare_teen_13to18_card": 900,
+    "fare_child_6to12": 550,
     "unit": "KRW",
     "transfer_policy": "무료 환승 (30분 이내, 10km 이하)",
     "single_journey_deposit": "1회권 보증금 500원 (반환 가능)",
     "multilingual_signs": "한국어·영어·중국어",
-    "fare_as_of": "2023-10-07"
+    "fare_as_of": "2025-06-28"
    },
    "foreignNote": null,
    "provider": "VisitSeoul / 서울관광재단",
-   "sourceUrl": "https://english.visitseoul.net/transportation",
-   "asOf": "2026-08-21",
+   "sourceUrl": "https://news.seoul.go.kr/traffic/traffic_price",
+   "asOf": "2026-09-29",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
+   "freshnessNote": "2026-09-29 확인: 서울시 '지하철 요금 안내(조정일자 2025.6.28.)' — 교통카드 성인 1,550·청소년 900·어린이 550원, 1회권 성인 1,650원"
   },
   {
    "id": "seoul-U-002",
@@ -308,29 +308,36 @@
    "sourceUrl": "https://english.visitseoul.net/transportation",
    "asOf": "2026-08-21",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
+   "freshnessNote": null,
+   "recheckPending": "Mpass 판매 지속 여부·가격 공식 원문 미확인(2026-09-29)"
   },
   {
    "id": "seoul-U-007",
    "city": "seoul",
    "category": "교통카드 — 기후동행카드 (Climate Card)",
-   "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
-   "summary": "서울시에서 운영하는 월정액 무제한 교통 통합 정기권. 서울 내 지하철·버스(공항버스 제외) 무제한 탑승. 외국인 관광객도 일부 판매채널에서 구매 가능(여권 제출). 30일 기준 약 65,000원(기본형). 단기 여행보다 장기 체류자에게 경제적.",
+   "title": "기후동행카드 — 서울 대중교통 무제한 단기권(1~7일)",
+   "summary": "서울시 대중교통 무제한 교통카드. 30일권은 신규 충전이 2026년 8월 31일(선불)로 끝났다 — 이미 충전한 카드는 만료일까지 쓸 수 있고, 후불 30일권은 9월 30일에 이용이 끝난다. 지금 여행자가 새로 살 수 있는 것은 1·2·3·5·7일 단기권이며, 기간 동안 서울 지하철(인천공항 T1·T2 하차 포함)과 서울시 면허 시내·마을버스를 무제한 이용한다.",
    "eligibility": null,
    "keyInfo": {
-    "coverage": "서울 내 지하철 전 노선 + 서울 시내버스 (공항버스·광역버스 제외)",
-    "duration": "30일 (기간 선택 가능)",
-    "price_approx_krw": 65000,
-    "foreign_eligibility": "외국인 구매 가능 (여권 지참 필요, 판매처 확인)",
-    "purchase": "서울 지하철역 무인발권기, 지정 판매처",
-    "note": "2024년 1월 서울시 도입. 관광 단기 여행자보다 1~4주 이상 체류자에 적합"
+    "coverage": "서울지역 지하철 + 인천국제공항 하차(T1·T2), 서울시 면허 시내·마을버스(심야버스 포함)",
+    "excluded": "신분당선, GTX, 서울지역 외 지하철, 광역·공항버스, 타 지역 면허버스",
+    "short_term_passes_krw": {
+     "1일": 5000,
+     "2일": 8000,
+     "3일": 10000,
+     "5일": 15000,
+     "7일": 20000,
+     "청소년 7일": 13000
+    },
+    "use_period": "사용 개시일 첫차(04시)부터 사용 종료일 막차까지",
+    "pass_30day": "선불: 2026-08-31 충전 종료(이미 충전한 카드는 만료까지 사용 가능) · 후불: 2026-09-30 이용 종료 — 서울시 공지 본문"
    },
    "foreignNote": null,
    "provider": "서울특별시 (Seoul Metropolitan Government)",
-   "sourceUrl": "https://www.seoul.go.kr",
-   "asOf": "2026-08-21",
+   "sourceUrl": "https://news.seoul.go.kr/traffic/archives/510651",
+   "asOf": "2026-09-29",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
+   "freshnessNote": "2026-09-29 확인: 서울시 기후동행카드 안내(권종·단기권 요금)와 '기후동행카드 30일권 종료 안내'(news.seoul.go.kr/traffic/archives/517575)"
   },
   {
    "id": "seoul-U-008",
@@ -579,7 +586,8 @@
    "sourceUrl": "https://bus.jeju.go.kr",
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
+   "freshnessNote": null,
+   "recheckPending": "'2025년 기준' 요금 — 2026 공식 요금표 미확인"
   },
   {
    "id": "jeju-U-004",
@@ -599,7 +607,8 @@
    "sourceUrl": "https://www.intltaxi.co.kr",
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
-   "freshnessNote": null
+   "freshnessNote": null,
+   "recheckPending": "'2025년 기준' 요금 — 2026 공식 요금표 미확인"
   },
   {
    "id": "jeju-U-005",
@@ -640,7 +649,8 @@
    "sourceUrl": "https://www.visitjeju.net/en/see-do/island-tour",
    "asOf": "2026-08-22",
    "reviewBy": "2027-01-01",
-   "freshnessNote": "요금·운항 시간 변동 가능. 출발 전 확인 필수."
+   "freshnessNote": "요금·운항 시간 변동 가능. 출발 전 확인 필수.",
+   "recheckPending": "'2025년 기준' 요금 — 2026 공식 요금표 미확인"
   },
   {
    "id": "jeju-U-007",
@@ -832,7 +842,8 @@
    "sourceUrl": "https://www.kakaomobility.com",
    "asOf": "2026-08-22",
    "reviewBy": "2026-12-01",
-   "freshnessNote": "기본요금은 지자체 결정에 따라 변동 가능. 방문 전 카카오T 또는 현지 안내 확인."
+   "freshnessNote": "기본요금은 지자체 결정에 따라 변동 가능. 방문 전 카카오T 또는 현지 안내 확인.",
+   "recheckPending": "'2024년 기준' 요금 — 공식 요금 미확인"
   },
   {
    "id": "jeonju-U-005",

@@ -125,6 +125,10 @@ export function EssentialDetailClient({ slug, essId }: { slug: string; essId: st
           </a>
         )}
 
+        {es.recheckPending && (
+          <p className="mt-5 text-[12.5px] leading-relaxed text-[var(--qh-ink)]">{t("essRecheckPending")}</p>
+        )}
+
         {/* freshness_note 는 내부 운영 기록이라 사용자에게 그리지 않는다 — 확인일만 */}
         {es.asOf && (
           <p className="mt-5 text-[11.5px] text-[var(--qh-faint2)]">{t("asOfLine", { date: es.asOf })}</p>

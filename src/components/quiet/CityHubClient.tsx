@@ -11,6 +11,7 @@
 // (`☀️ 26°C`) utility — 예보 카드/패널/자체 날씨 페이지는 여전히 금지.
 
 import { useEffect, useState } from "react";
+import { useKstToday } from "@/lib/dates/use-kst-today";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
@@ -69,6 +70,8 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const [commLoadedSlug, setCommLoadedSlug] = useState<string | null>(null);
 
   useEffect(() => { loadCitySpots(slug).then(setSpots); }, [slug]);
+  // 행사 목록은 브라우저의 한국 날짜로만 거른다 — 빌드한 날짜로 구운 목록을 보여 주지 않는다.
+  const today = useKstToday();
   useEffect(() => {
     let alive = true;
     fetch(`/api/recommendations/${slug}?limit=3`)
@@ -103,7 +106,7 @@ export default function CityHubClient({ slug }: { slug: string }) {
   const seedTrips = getRecommendedTrips(slug);
   // 승인 Story 가 먼저, 빈 슬롯은 기존 seed 로 — 총 카드 수는 그대로 3(§6).
   const trips = seedTrips.slice(0, Math.max(0, 3 - commTrips.length));
-  const events = getCityEvents(slug);
+  const events = today ? getCityEvents(slug, today) : null;
   const essentials = getTravelEssentials(slug);
   // 추천 장소: 공식 recommended_now 의 canonical 연결(순서 보존)을 먼저,
   // 부족분만 카탈로그에서 보충 — 임의 매칭·가짜 인기 없음.
@@ -311,13 +314,13 @@ export default function CityHubClient({ slug }: { slug: string }) {
         {/* ── What's happening — 대표 2~3개 · 카드 → 내부 상세(외부 직행 없음) ── */}
         <div className="mt-7 flex items-baseline justify-between gap-3">
           <h2 className="flex-none whitespace-nowrap text-[11px] font-black tracking-[.14em] uppercase" style={{ color: HUB.eyebrow }}>{t("whatsHappening")}</h2>
-          {events.length > 0 && (
+          {events && events.length > 0 && (
             <Link href={`/city/${slug}/events`} className="flex-none whitespace-nowrap text-[13px] font-medium gkm-focus" style={{ color: "var(--qh-blue)" }}>
               {t("viewAll")}
             </Link>
           )}
         </div>
-        {events.length === 0 ? (
+        {events === null ? null : events.length === 0 ? (
           <p className="mt-3 text-[13px] text-[#7C8FB0]">{t("eventsSoon", { city: cityLabel })}</p>
         ) : (
           <ul className="mt-1">

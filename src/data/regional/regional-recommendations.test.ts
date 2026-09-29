@@ -130,10 +130,10 @@ test("Events: 기간 명시 콘텐츠만 · 종료분 제외 · 상태는 ISO �
   assert.equal(ongoing?.status, "ongoing");
   const upcoming = getCityEvents("seoul", new Date("2026-07-01")).find(e => e.id === "seoul-RN-001");
   assert.equal(upcoming?.status, "upcoming");
-  // 원문이 ISO 가 아닌 기간("… TBC")은 상태를 지어내지 않는다
-  const tbc = getCityEvents("jeju", new Date("2026-09-06")).find(e => e.id === "jeju-RN-R01");
-  assert.ok(tbc);
-  assert.equal(tbc!.status, null);
+  // 2026-09-29 교정: 제주국제관악제는 공식 일정(2026-08-07~08-15)으로 확정 — 기간 중 진행, 종료 후 목록 제외.
+  // 달만 적힌 "… TBC" 원문이 종료일 없이 계속 남던 문제는 regional-content-freshness-guard 가 막는다.
+  assert.equal(getCityEvents("jeju", new Date("2026-08-10")).find(e => e.id === "jeju-RN-R01")?.status, "ongoing");
+  assert.ok(!getCityEvents("jeju", new Date("2026-09-06")).some(e => e.id === "jeju-RN-R01"));
   // 모든 이벤트는 상세 이동 경로(내부 place 또는 공식 URL)를 가진다
   for (const c of CITIES) for (const e of getCityEvents(c, new Date("2026-08-22"))) {
     assert.ok(e.spotId !== null || Boolean(e.source && (e.source as { source_url?: string | null }).source_url), `${e.id} detail path`);

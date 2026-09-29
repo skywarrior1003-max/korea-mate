@@ -1465,6 +1465,7 @@
     "essentialsIn": "Travel essentials in {city}",
     "officialLink": "Official information",
     "asOfLine": "Information as of {date}",
+    "essRecheckPending": "We are re-checking these fares and operating details against the latest official information. Please check the official guide before you go.",
     "viewPlace": "View place",
     "typeLink": "Link",
     "urlOpenShared": "Open shared trip",

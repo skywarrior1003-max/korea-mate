@@ -8,6 +8,8 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
+import { isListableEvent } from "@/lib/events/event-visibility";
+import { kstToday } from "@/lib/dates/kst-today";
 
 // ── 레스토랑 타입 + 어댑터 ────────────────────────────────────────────────────
 
@@ -153,14 +155,12 @@ export default function AllSpotsPage() {
     const f = params.get("filter");
     if (f && CATEGORY_FILTERS.some(fi => fi.key === f)) setCategoryFilter(f);
     setPage(1);
-    const today = new Date().toISOString().split("T")[0];
+    const today = kstToday();
     Promise.all([
       fetch("/data/events.json").then(r => r.json()),
       fetch("/data/restaurants.json").then(r => r.json()).catch(() => [] as RestaurantItem[]),
     ]).then(([evtsData, restsData]: [EventItem[], RestaurantItem[]]) => {
-      const visible = (evtsData as EventItem[]).filter(
-        e => !e.hidden && (!e.displayUntil || e.displayUntil >= today)
-      );
+      const visible = (evtsData as EventItem[]).filter(e => isListableEvent(e, today));
       setEvents([...visible, ...restsData.map(restaurantToEventItem)]);
       setLoading(false);
     }).catch(() => setLoading(false));

@@ -14,6 +14,10 @@ import type { LegalDocSet } from "./legal-types";
 // 시행일은 동의 버전과 한 곳에서 정한다(게시 전 null = DRAFT)
 import { LEGAL_EFFECTIVE_DATE } from "../auth/consent-contract.ts";
 
+// AUTH-CURRENT-MASTER-INTEGRATION-V1(2026-09-29): 2026-09-29 공개 서비스판(master)의 Production 실측 사실을
+// 이 Auth 판에 합쳤다 — 네이버 지도·Cloudflare Web Analytics·관광 공식 사이트 이미지·기기 식별자 원형 저장·
+// '내 주변' 위치는 기기 안에서만·문의 알림 사본 삭제. 자동 파기는 활성화 전후 모두 참인 문장으로 쓴다
+// (자동 작업 또는 운영자 직접 삭제). 가드: public-privacy-guard 'Auth 병합 대조 항목'.
 export const PRIVACY: LegalDocSet = {
   en: {
     title: "Privacy Policy",
@@ -34,9 +38,11 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Google sign-in (optional): when you choose to sign in with Google, we receive your Google account identifier, name, email address, and profile image link through our authentication provider (Supabase Auth). We never receive or store your Google password.",
           "Travel content you create: itineraries (city, dates, places, titles), saved places, your own places with the name, notes, location, and photos you add, trip photos and memos, stories, and your sharing settings.",
-          "Contact form: the name, email address, and message you submit when contacting us.",
+          "Contact form: email address, message, optional name, and the page or place the inquiry is about, plus your browser language.",
           "Reports (optional): the report reason, any note you type (up to 500 characters), and a key computed from your browser's device identifier and the reported item, used to prevent duplicate reports from the same device. Please do not include personal information in the note.",
-          "Automatically: a random device identifier created in your browser to keep your trips on your device (it is not derived from your hardware and is not linked to your name), basic technical logs kept by our hosting provider, and anonymous usage statistics (see Section 8).",
+          "Device identifier: a random value created in your browser (not derived from hardware and not linked to your name). It is stored with the content and reactions you create so the service can recognise them as yours; for some records we store a value converted from it instead. If you sign in, this device is linked to your account.",
+          "Likes, dislikes, 'helpful' marks, reactions, saves, and place suggestions you send.",
+          "Collected automatically: basic technical logs kept by our hosting providers (such as IP address and request details) and usage statistics (Section 8).",
         ],
       },
       {
@@ -46,7 +52,7 @@ export const PRIVACY: LegalDocSet = {
           "Passwords — Google sign-in never shares your password with us.",
           "Date of birth, gender, phone number, postal address, or your contact list.",
           "Payment or card details — the service currently has no paid features.",
-          "Background or continuous location tracking — location data exists only for places you explicitly add or select.",
+          "Background or continuous location tracking. When you use 'near me', your browser's location is used on your device to sort nearby places and is not sent to our servers.",
           "Google Drive, Calendar, or any Google data beyond basic sign-in identity.",
         ],
       },
@@ -83,7 +89,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         items: [
           "Supabase (database, sign-in authentication, photo storage) — stores your account, travel content, and photos in the Seoul region, South Korea (AWS ap-northeast-2). Operator named in its privacy policy: Supabase Pte. Ltd. (Singapore); contact privacy@supabase.com. Kept until you delete the content or your account.",
-          "Cloudflare (website delivery and running the server API) — Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA; contact dpo@cloudflare.com. Each time you use the service, request data (such as IP address and the request itself) may be processed at a nearby Cloudflare location outside Korea.",
+          "Cloudflare (website delivery, running the server API, and cookie-free visit statistics) — Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA; contact dpo@cloudflare.com. Each time you use the service, request data (such as IP address and the request itself) may be processed at a nearby Cloudflare location outside Korea.",
           "Google (Google sign-in and usage analytics) — Google LLC (USA); contact https://support.google.com/policies. At sign-in we receive your Google account identifier, name, email address, and profile image link; usage statistics are sent to Google Analytics (Section 8).",
           "Resend (sending notification emails to the operator) — Plus Five Five, Inc.; its privacy policy states data is processed in the United States; contact support@resend.com. Notifications to the operator do not contain your name, email, or message.",
           "How, when, and how long: information needed for these tasks is sent over encrypted connections (HTTPS) each time you use the service. Retention: Supabase keeps it until you delete the content or your account; Resend keeps delivery logs for 30 days on our current plan; Google Analytics keeps event data for 2 months and user data for 14 months; Cloudflare does not store execution logs of our server functions (each provider may keep its own logs under its own policies).",
@@ -94,8 +100,10 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 8, title: "Analytics, cookies, and browser storage",
         paragraphs: [
-          "We use Google Analytics 4 to collect anonymous usage statistics. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. Google Analytics sets its own cookies; you can block them with browser settings or Google's opt-out tools. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again.",
-          "The service itself sets no cookies of its own. Your browser's local storage keeps: the device identifier, your trip in progress, saved places, tutorial state, language choice, and — if you sign in — your session managed by our authentication provider. Clearing your browser storage removes these from your device.",
+          "We use Google Analytics 4 for usage statistics. Analytics events contain feature and place-level information (for example, a city name or a public place identifier) and never contain your email, name, sign-in tokens, or account identifier. Google Analytics sets its own cookies; you can block them with browser settings or Google's opt-out tools. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again.",
+          "Cloudflare Web Analytics counts visits using browser performance data without cookies; Cloudflare states that it does not collect or use visitors' personal data.",
+          "Maps are displayed with NAVER Maps. When a map is shown, your browser connects directly to NAVER's servers, which receive standard connection information such as your IP address. Some images are loaded directly from official tourism websites, which likewise receive connection information.",
+          "The only cookie the service itself sets is a temporary one used to confirm your consent while you sign in; it is removed when sign-in finishes, or expires after 10 minutes if it does not. Your browser's local storage keeps: the device identifier, your trip in progress, saved places, tutorial state, language choice, and — if you sign in — your session managed by our authentication provider. Clearing your browser storage removes these from your device.",
         ],
       },
       {
@@ -107,15 +115,15 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 10, title: "Public sharing",
         paragraphs: [
-          "Trips and stories are private by default. If you set a trip public or share a link, the shared view shows the itinerary content you chose to publish — it does not include your email, your device identifier, or your accommodation arrival time. Other users may copy a public itinerary into their own account; copies do not carry your title or travel dates. Photos attached to a memory appear publicly only after you explicitly mark that memory public.",
+          "Trips and stories are private by default. If you set a trip public or share a link, the shared view shows the itinerary content you chose to publish — it does not include your email, your device identifier, or your accommodation arrival time. Other users may copy a public itinerary to their own device (or account, if signed in); copies do not carry your title or travel dates. Photos attached to a memory appear publicly only after you explicitly mark that memory public.",
         ],
       },
       {
         no: 11, title: "Retention",
         paragraphs: [
           "Content you delete in the app is deleted immediately, including the stored photo files. Content you keep remains stored until you delete it or request deletion; the service does not currently auto-expire your travel data.",
-          "Inquiry records (kept to answer you and track handling) are kept for 6 months from the date received, and report records (kept to handle reports and judge repeated reports) for 6 months from the date handling is completed; they are then destroyed automatically by a daily job. Reports still being handled are kept until handling ends and are reviewed regularly. An inquiry that is still open may be kept past 6 months only when a reason and a review date are recorded, and only until that review date. This period is the service's own operating standard, and records are deleted earlier when their purpose ends or a lawful deletion request is received. Inquiry and report records are stored separately from your account and are not deleted automatically when you delete your account. Inquiry notification emails contain only the inquiry number and type, not your name, email, or message; delivery logs kept by the email delivery service (Resend) are retained for 30 days under that service's policy for our current plan. Long-inactive accounts are not currently cleaned up automatically.",
-          "How records are destroyed: records whose retention period has ended are deleted from the database by the automatic daily job, and photo files you delete are deleted from storage.",
+          "Inquiry records (kept to answer you and track handling) are kept for 6 months from the date received, and report records (kept to handle reports and judge repeated reports) for 6 months from the date handling is completed; they are then destroyed without delay. Reports still being handled are kept until handling ends and are reviewed regularly. An inquiry that is still open may be kept past 6 months only when a reason and a review date are recorded, and only until that review date. This period is the service's own operating standard, and records are deleted earlier when their purpose ends or a lawful deletion request is received. Inquiry and report records are stored separately from your account and are not deleted automatically when you delete your account. Inquiry notification emails contain only the inquiry number and type, not your name, email, or message; delivery logs kept by the email delivery service (Resend) are retained for 30 days under that service's policy for our current plan. Inquiry notification emails in the operator's mailbox are deleted together with the inquiry. Long-inactive accounts are not currently cleaned up automatically.",
+          "How records are destroyed: records whose retention period has ended are deleted from the database (by an automatic job or directly by the operator), and photo files you delete are deleted from storage.",
           "Technical logs at our infrastructure providers: execution logs of the website's server functions (Cloudflare Pages Functions) are not stored, and the database provider (Supabase) keeps API and database logs for 1 day on our current plan. Automatic database backups are not currently used, so deleted information is not restored from backups. Each provider may also keep its own logs under its own policies.",
         ],
       },
@@ -137,7 +145,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 14, title: "Security",
         paragraphs: [
-          "Access to stored data is restricted: the database blocks direct public access and all reads and writes pass through our server APIs, which verify ownership. Sign-in sessions are verified server-side on every protected request. Photos are private by default and served only through short-lived signed links. Where identifiers are used for reactions and statistics, we store one-way hashes instead of raw values.",
+          "Connections are encrypted (HTTPS). Changes to your trips, photos, and places go through server functions that check ownership (the device or the signed-in account). Sign-in sessions are verified server-side on every protected request. Photos are private by default and served only through short-lived signed links.",
         ],
       },
       {
@@ -168,9 +176,11 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Google 로그인(선택): Google 로그인을 선택하면 인증 제공자(Supabase Auth)를 통해 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받습니다. Google 비밀번호는 어떤 경우에도 받거나 저장하지 않습니다.",
           "이용자가 만드는 여행 콘텐츠: 일정(도시·날짜·장소·제목), 저장한 장소, 직접 등록한 나의 장소(이름·메모·위치·사진), 여행 사진과 메모, 스토리, 공개 설정.",
-          "문의하기: 문의 시 입력한 이름·이메일 주소·메시지.",
+          "문의하기: 이메일 주소, 메시지, 선택 입력한 이름, 문의와 관련된 페이지·장소, 브라우저 언어.",
           "신고하기(선택): 신고 사유, 선택 입력한 메모(최대 500자), 같은 기기의 중복 신고를 막기 위해 브라우저 기기 식별자와 신고 대상으로 계산한 키. 메모에는 개인정보를 적지 말아 주세요.",
-          "자동 수집: 여행 데이터를 이 기기에 연결하기 위해 브라우저에서 생성되는 무작위 기기 식별자(하드웨어에서 파생되지 않으며 이름과 결합되지 않음), 호스팅 사업자가 보관하는 기본 기술 로그, 익명 사용 통계(제8조 참조).",
+          "기기 식별자: 브라우저에서 무작위로 만든 값(하드웨어에서 파생되지 않고 이름과 결합되지 않음). 이용자가 만든 콘텐츠와 반응이 이용자의 것임을 알아보기 위해 함께 저장하며, 일부 기록에는 이 값을 변환한 값을 저장합니다. 로그인하면 이 기기가 계정에 연결됩니다.",
+          "이용자가 보낸 좋아요·싫어요·'도움됨' 표시·반응·저장·장소 제보.",
+          "자동 수집: 호스팅 사업자가 보관하는 기본 기술 로그(IP 주소·요청 정보 등)와 사용 통계(제8조).",
         ],
       },
       {
@@ -180,7 +190,7 @@ export const PRIVACY: LegalDocSet = {
           "비밀번호 — Google 로그인은 비밀번호를 저희에게 전달하지 않습니다.",
           "생년월일·성별·전화번호·주소·연락처 목록.",
           "결제·카드 정보 — 현재 유료 기능이 없습니다.",
-          "백그라운드·상시 위치 추적 — 위치 정보는 이용자가 직접 추가·선택한 장소에만 존재합니다.",
+          "백그라운드·상시 위치 추적. '내 주변' 기능을 쓸 때 브라우저 위치는 이 기기 안에서 가까운 장소를 정렬하는 데만 쓰이고 서버로 보내지 않습니다.",
           "Google Drive·캘린더 등 기본 신원 확인 외의 Google 데이터.",
         ],
       },
@@ -217,7 +227,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         items: [
           "Supabase(데이터베이스·로그인 인증·사진 저장) — 계정·여행 콘텐츠·사진을 대한민국 서울 리전(AWS ap-northeast-2)에 저장합니다. 제공사 개인정보처리방침상 운영 법인: Supabase Pte. Ltd.(싱가포르), 연락처 privacy@supabase.com. 이용자가 해당 콘텐츠나 계정을 삭제할 때까지 보관합니다.",
-          "Cloudflare(웹사이트 전송·서버 API 실행) — Cloudflare, Inc.(미국, 101 Townsend St, San Francisco, CA 94107), 연락처 dpo@cloudflare.com. 서비스를 이용할 때마다 요청 정보(접속 IP 주소·요청 내용 등)가 네트워크를 통해 가까운 국외 Cloudflare 거점에서 처리될 수 있습니다.",
+          "Cloudflare(웹사이트 전송·서버 API 실행·쿠키 없는 방문 통계) — Cloudflare, Inc.(미국, 101 Townsend St, San Francisco, CA 94107), 연락처 dpo@cloudflare.com. 서비스를 이용할 때마다 요청 정보(접속 IP 주소·요청 내용 등)가 네트워크를 통해 가까운 국외 Cloudflare 거점에서 처리될 수 있습니다.",
           "Google(Google 로그인·사용 통계) — Google LLC(미국), 문의 https://support.google.com/policies. 로그인 시 Google 계정 식별자·이름·이메일 주소·프로필 이미지 링크를 받고, 사용 통계는 Google Analytics 로 전송됩니다(제8조).",
           "Resend(운영자 알림 메일 발송) — Plus Five Five, Inc., 제공사 방침상 미국에서 처리, 연락처 support@resend.com. 운영자에게 보내는 알림에는 이용자의 이름·이메일·메시지를 담지 않습니다.",
           "처리 방법·시기·보유기간: 서비스를 이용할 때마다 해당 업무에 필요한 정보가 암호화된 연결(HTTPS)로 전송됩니다. 보유기간은 Supabase 는 이용자가 콘텐츠나 계정을 삭제할 때까지, Resend 발송 기록은 현재 요금제에서 30일, Google Analytics 는 이벤트 데이터 2개월·사용자 데이터 14개월이며, Cloudflare 는 서버 기능 실행 로그를 저장하지 않습니다(각 제공사가 자체 정책에 따라 보관하는 로그는 별도).",
@@ -228,8 +238,10 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 8, title: "분석 도구·쿠키·브라우저 저장소",
         paragraphs: [
-          "익명 사용 통계 수집에 Google Analytics 4 를 사용합니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. Google Analytics 는 자체 쿠키를 설정하며, 브라우저 설정이나 Google 의 차단 도구로 거부할 수 있습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다.",
-          "서비스 자체는 쿠키를 설정하지 않습니다. 브라우저 로컬 저장소에는 기기 식별자·작성 중인 여행·저장 장소·튜토리얼 상태·언어 선택, 그리고 로그인 시 인증 제공자가 관리하는 세션이 보관됩니다. 브라우저 저장소를 지우면 이 기기에서 해당 정보가 삭제됩니다.",
+          "사용 통계에 Google Analytics 4 를 사용합니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름·로그인 토큰·계정 식별자는 절대 담기지 않습니다. Google Analytics 는 자체 쿠키를 설정하며, 브라우저 설정이나 Google 의 차단 도구로 거부할 수 있습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다.",
+          "Cloudflare Web Analytics 는 쿠키 없이 브라우저 성능 정보로 방문을 집계하며, Cloudflare 는 방문자의 개인정보를 수집·이용하지 않는다고 밝히고 있습니다.",
+          "지도는 네이버 지도로 표시합니다. 지도가 보일 때 브라우저가 네이버 서버에 직접 접속하므로 네이버는 IP 주소 등 일반적인 접속 정보를 받습니다. 일부 이미지는 관광 공식 사이트에서 직접 불러오며, 해당 사이트도 접속 정보를 받습니다.",
+          "서비스 자체가 설정하는 쿠키는 로그인할 때 동의를 확인하기 위한 임시 쿠키 하나뿐이며, 로그인 절차가 끝나면 지우고 끝나지 않으면 10분 뒤 만료됩니다. 브라우저 로컬 저장소에는 기기 식별자·작성 중인 여행·저장 장소·튜토리얼 상태·언어 선택, 그리고 로그인 시 인증 제공자가 관리하는 세션이 보관됩니다. 브라우저 저장소를 지우면 이 기기에서 해당 정보가 삭제됩니다.",
         ],
       },
       {
@@ -241,15 +253,15 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 10, title: "공개 공유 범위",
         paragraphs: [
-          "여행과 스토리는 기본 비공개입니다. 공개로 설정하거나 링크를 공유하면, 공유 화면에는 이용자가 공개하기로 한 일정 내용만 표시되며 이메일·기기 식별자·숙소 도착 시각은 포함되지 않습니다. 공개 일정은 다른 이용자가 자신의 계정으로 복사할 수 있고, 복사본에는 원래 제목과 여행 날짜가 옮겨지지 않습니다. 기억에 붙인 사진은 그 기억을 명시적으로 공개로 표시한 경우에만 공개 화면에 나타납니다.",
+          "여행과 스토리는 기본 비공개입니다. 공개로 설정하거나 링크를 공유하면, 공유 화면에는 이용자가 공개하기로 한 일정 내용만 표시되며 이메일·기기 식별자·숙소 도착 시각은 포함되지 않습니다. 공개 일정은 다른 이용자가 자신의 기기(로그인했다면 계정)로 복사할 수 있고, 복사본에는 원래 제목과 여행 날짜가 옮겨지지 않습니다. 기억에 붙인 사진은 그 기억을 명시적으로 공개로 표시한 경우에만 공개 화면에 나타납니다.",
         ],
       },
       {
         no: 11, title: "보관기간",
         paragraphs: [
           "앱에서 삭제한 콘텐츠는 저장된 사진 파일을 포함해 즉시 삭제됩니다. 삭제하지 않은 콘텐츠는 이용자가 삭제하거나 삭제를 요청할 때까지 보관되며, 현재 여행 데이터를 자동 만료시키지 않습니다.",
-          "문의 기록(답변과 처리 이력 확인 목적)은 접수한 날부터 6개월, 신고 기록(신고 처리와 반복 신고 판단 목적)은 처리가 끝난 날부터 6개월 보관한 뒤 매일 자동으로 파기합니다. 처리 중인 신고는 처리가 끝날 때까지 보관하며 정기적으로 검토합니다. 답변이 끝나지 않은 문의는 사유와 검토일을 기록한 경우에 한해 그 검토일까지만 6개월을 넘겨 보관합니다. 이 기간은 서비스가 정한 운영 기준이며, 보관 목적이 없어지거나 적법한 삭제 요청을 받으면 기간 전이라도 삭제합니다. 문의·신고 기록은 계정과 별도로 보관되어 계정을 삭제해도 자동으로 삭제되지 않습니다. 문의 알림 메일에는 문의 번호와 유형만 담고 이름·이메일·메시지는 담지 않으며, 메일 발송 서비스(Resend)에 남는 발송 기록은 현재 요금제에서 그 서비스의 정책에 따라 30일간 보관됩니다. 현재 장기 미이용 계정을 자동으로 정리하지 않습니다.",
-          "파기 절차와 방법: 보관기간이 끝난 기록은 매일 실행되는 자동 파기 작업이 데이터베이스에서 삭제하고, 이용자가 삭제한 사진 파일은 저장소에서 삭제합니다.",
+          "문의 기록(답변과 처리 이력 확인 목적)은 접수한 날부터 6개월, 신고 기록(신고 처리와 반복 신고 판단 목적)은 처리가 끝난 날부터 6개월 보관한 뒤 지체 없이 파기합니다. 처리 중인 신고는 처리가 끝날 때까지 보관하며 정기적으로 검토합니다. 답변이 끝나지 않은 문의는 사유와 검토일을 기록한 경우에 한해 그 검토일까지만 6개월을 넘겨 보관합니다. 이 기간은 서비스가 정한 운영 기준이며, 보관 목적이 없어지거나 적법한 삭제 요청을 받으면 기간 전이라도 삭제합니다. 문의·신고 기록은 계정과 별도로 보관되어 계정을 삭제해도 자동으로 삭제되지 않습니다. 문의 알림 메일에는 문의 번호와 유형만 담고 이름·이메일·메시지는 담지 않으며, 메일 발송 서비스(Resend)에 남는 발송 기록은 현재 요금제에서 그 서비스의 정책에 따라 30일간 보관됩니다. 운영자 메일함에 받은 문의 알림 메일도 해당 문의와 함께 삭제합니다. 현재 장기 미이용 계정을 자동으로 정리하지 않습니다.",
+          "파기 절차와 방법: 보관기간이 끝난 기록은 데이터베이스에서 삭제하고(자동 파기 작업 또는 운영자의 직접 삭제), 이용자가 삭제한 사진 파일은 저장소에서 삭제합니다.",
           "인프라 제공사의 기술 로그: 웹사이트 서버 기능(Cloudflare Pages Functions)의 실행 로그는 저장하지 않으며, 데이터베이스 제공사(Supabase)의 API·데이터베이스 로그는 현재 요금제에서 1일간 보관됩니다. 현재 데이터베이스 자동 백업을 사용하지 않아 삭제한 정보가 백업에서 복구되지 않습니다. 이와 별도로 각 제공사가 자체 정책에 따라 보관하는 로그가 있을 수 있습니다.",
         ],
       },
@@ -265,7 +277,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 14, title: "보안조치",
         paragraphs: [
-          "저장 데이터 접근은 제한됩니다: 데이터베이스는 외부 직접 접근을 차단하고 모든 읽기·쓰기는 소유권을 검증하는 서버 API 를 거칩니다. 로그인 세션은 보호된 요청마다 서버에서 검증합니다. 사진은 기본 비공개이며 짧은 유효기간의 서명 링크로만 제공됩니다. 반응·통계에 식별자가 필요한 경우 원본 대신 일방향 해시를 저장합니다.",
+          "모든 연결은 암호화(HTTPS)됩니다. 개인 여행·사진·장소의 변경은 소유(기기 또는 로그인 계정)를 확인하는 서버 기능을 거칩니다. 로그인 세션은 보호된 요청마다 서버에서 검증합니다. 사진은 기본 비공개이며 짧은 유효기간의 서명 링크로만 제공됩니다.",
         ],
       },
       {
@@ -291,9 +303,11 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Googleログイン(任意): Googleログインを選ぶと、認証プロバイダー(Supabase Auth)を通じて Google アカウント識別子・氏名・メールアドレス・プロフィール画像リンクを受け取ります。Google のパスワードを受け取ること・保存することは一切ありません。",
           "利用者が作成する旅行コンテンツ: スケジュール(都市・日付・場所・タイトル)、保存した場所、自分で登録した場所(名前・メモ・位置・写真)、旅行の写真とメモ、ストーリー、公開設定。",
-          "お問い合わせ: 送信時に入力した氏名・メールアドレス・メッセージ。",
+          "お問い合わせ：メールアドレス、メッセージ、任意入力の氏名、お問い合わせに関連するページ・場所、ブラウザの言語。",
           "通報（任意）: 通報理由、任意で入力したメモ（最大500文字）、同じ端末からの重複通報を防ぐため、ブラウザの端末識別子と通報対象から計算したキー。メモには個人情報を書かないでください。",
-          "自動収集: 旅行データをこの端末に紐づけるためブラウザで生成されるランダムな端末識別子(ハードウェア由来ではなく、氏名とは結合されません)、ホスティング事業者が保持する基本的な技術ログ、匿名の利用統計(第8条参照)。",
+          "端末識別子：ブラウザでランダムに作成される値（ハードウェアに由来せず、氏名とも結び付きません）。利用者が作成したコンテンツや反応が利用者のものであることを識別するために一緒に保存し、一部の記録にはこの値を変換した値を保存します。ログインすると、この端末がアカウントに連携されます。",
+          "利用者が送った「いいね」「よくないね」「役に立った」表示・反応・保存・場所の提案。",
+          "自動収集：ホスティング事業者が保管する基本的な技術ログ（IPアドレス・リクエスト情報など）と利用統計（第8条）。",
         ],
       },
       {
@@ -303,7 +317,7 @@ export const PRIVACY: LegalDocSet = {
           "パスワード — Googleログインはパスワードを当方に共有しません。",
           "生年月日・性別・電話番号・住所・連絡先リスト。",
           "決済・カード情報 — 現在有料機能はありません。",
-          "バックグラウンド・常時の位置追跡 — 位置情報は利用者が自ら追加・選択した場所にのみ存在します。",
+          "バックグラウンドや常時の位置追跡。「近く」機能を使うとき、ブラウザの位置はこの端末内で近くの場所を並べ替えるためだけに使われ、サーバーには送られません。",
           "Google ドライブ・カレンダーなど、基本的な本人確認以外の Google データ。",
         ],
       },
@@ -340,7 +354,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         items: [
           "Supabase（データベース・ログイン認証・写真の保存）— アカウント・旅行コンテンツ・写真を大韓民国ソウルリージョン（AWS ap-northeast-2）に保存します。同社のプライバシーポリシー上の運営法人：Supabase Pte. Ltd.（シンガポール）、連絡先 privacy@supabase.com。利用者がコンテンツまたはアカウントを削除するまで保管します。",
-          "Cloudflare（ウェブサイトの配信とサーバーAPIの実行）— Cloudflare, Inc.（米国、101 Townsend St, San Francisco, CA 94107）、連絡先 dpo@cloudflare.com。サービスを利用するたびに、リクエスト情報（IPアドレス・リクエスト内容など）が国外の近くのCloudflare拠点で処理されることがあります。",
+          "Cloudflare（ウェブサイトの配信・サーバーAPIの実行・Cookieを使わない訪問統計）— Cloudflare, Inc.（米国、101 Townsend St, San Francisco, CA 94107）、連絡先 dpo@cloudflare.com。サービスを利用するたびに、リクエスト情報（IPアドレス・リクエスト内容など）が国外の近くのCloudflare拠点で処理されることがあります。",
           "Google（Googleログイン・利用統計）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。ログイン時にGoogleアカウントの識別子・氏名・メールアドレス・プロフィール画像リンクを受け取り、利用統計はGoogle Analyticsに送信されます（第8条）。",
           "Resend（運営者宛て通知メールの送信）— Plus Five Five, Inc.、同社の方針上米国で処理、連絡先 support@resend.com。運営者宛ての通知には利用者の氏名・メールアドレス・メッセージを含みません。",
           "処理の方法・時期・保存期間：サービスを利用するたびに、各業務に必要な情報が暗号化された接続（HTTPS）で送信されます。保存期間は、Supabase は利用者がコンテンツまたはアカウントを削除するまで、Resend の配信記録は現在のプランで30日、Google Analytics はイベントデータ2か月・ユーザーデータ14か月で、Cloudflare はサーバー機能の実行ログを保存しません（各事業者が自社の方針で保存するログは別途）。",
@@ -351,8 +365,10 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 8, title: "分析ツール・Cookie・ブラウザ保存領域",
         paragraphs: [
-          "匿名の利用統計の収集に Google Analytics 4 を使用します。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。Google Analytics は独自の Cookie を設定し、ブラウザ設定や Google の無効化ツールで拒否できます。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。",
-          "サービス自体は Cookie を設定しません。ブラウザのローカル保存領域には、端末識別子・作成中の旅行・保存した場所・チュートリアル状態・言語選択、そしてログイン時には認証プロバイダーが管理するセッションが保管されます。ブラウザの保存データを消去すると、この端末から該当情報が削除されます。",
+          "利用統計に Google Analytics 4 を使用します。分析イベントには機能・場所レベルの情報(例: 都市名、公開されている場所の識別子)のみが含まれ、メール・氏名・ログイントークン・アカウント識別子は一切含まれません。Google Analytics は独自の Cookie を設定し、ブラウザ設定や Google の無効化ツールで拒否できます。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。",
+          "Cloudflare Web Analytics は Cookie を使わずブラウザのパフォーマンス情報で訪問を集計し、Cloudflare は訪問者の個人データを収集・利用しないとしています。",
+          "地図は NAVER 地図で表示します。地図が表示されるとき、ブラウザが NAVER のサーバーに直接接続するため、NAVER は IP アドレスなど一般的な接続情報を受け取ります。一部の画像は観光公式サイトから直接読み込まれ、そのサイトも接続情報を受け取ります。",
+          "サービス自体が設定する Cookie は、ログイン時に同意を確認するための一時的な Cookie だけで、ログイン手続きが終わると削除し、終わらない場合は10分後に失効します。ブラウザのローカル保存領域には、端末識別子・作成中の旅行・保存した場所・チュートリアル状態・言語選択、そしてログイン時には認証プロバイダーが管理するセッションが保管されます。ブラウザの保存データを消去すると、この端末から該当情報が削除されます。",
         ],
       },
       {
@@ -364,15 +380,15 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 10, title: "公開共有の範囲",
         paragraphs: [
-          "旅行とストーリーは初期状態で非公開です。公開に設定するかリンクを共有すると、共有画面には利用者が公開すると選んだスケジュール内容のみが表示され、メール・端末識別子・宿への到着時刻は含まれません。公開スケジュールは他の利用者が自分のアカウントへコピーでき、コピーには元のタイトルと旅行日付は引き継がれません。記憶に添付した写真は、その記憶を明示的に公開にした場合にのみ公開画面に表示されます。",
+          "旅行とストーリーは初期状態で非公開です。公開に設定するかリンクを共有すると、共有画面には利用者が公開すると選んだスケジュール内容のみが表示され、メール・端末識別子・宿への到着時刻は含まれません。公開スケジュールは他の利用者が自分の端末（ログインしている場合はアカウント）へコピーでき、コピーには元のタイトルと旅行日付は引き継がれません。記憶に添付した写真は、その記憶を明示的に公開にした場合にのみ公開画面に表示されます。",
         ],
       },
       {
         no: 11, title: "保存期間",
         paragraphs: [
           "アプリで削除したコンテンツは、保存された写真ファイルを含め直ちに削除されます。削除していないコンテンツは、利用者が削除するか削除を依頼するまで保管され、現在、旅行データを自動的に失効させることはありません。",
-          "お問い合わせの記録（返信と対応履歴の確認のため）は受付日から6か月、通報の記録（通報の処理と繰り返しの通報の判断のため）は処理完了日から6か月保管した後、毎日の自動処理で破棄します。処理中の通報は処理が終わるまで保管し、定期的に確認します。回答が終わっていないお問い合わせは、理由と確認日を記録した場合に限り、その確認日まで6か月を超えて保管します。この期間はサービスが定めた運用基準であり、保管目的がなくなった場合や適法な削除の依頼を受けた場合は期間前でも削除します。お問い合わせ・通報の記録はアカウントとは別に保管され、アカウントを削除しても自動では削除されません。お問い合わせの通知メールには受付番号と種類のみを記載し、氏名・メールアドレス・メッセージは含めません。メール配信サービス（Resend）に残る配信記録は、現在のプランでは同サービスの方針により30日間保管されます。現在、長期間利用のないアカウントを自動で整理することはありません。",
-          "破棄の手順と方法：保存期間が終了した記録は毎日実行される自動処理がデータベースから削除し、利用者が削除した写真ファイルはストレージから削除します。",
+          "お問い合わせの記録（返信と対応履歴の確認のため）は受付日から6か月、通報の記録（通報の処理と繰り返しの通報の判断のため）は処理完了日から6か月保管した後、遅滞なく破棄します。処理中の通報は処理が終わるまで保管し、定期的に確認します。回答が終わっていないお問い合わせは、理由と確認日を記録した場合に限り、その確認日まで6か月を超えて保管します。この期間はサービスが定めた運用基準であり、保管目的がなくなった場合や適法な削除の依頼を受けた場合は期間前でも削除します。お問い合わせ・通報の記録はアカウントとは別に保管され、アカウントを削除しても自動では削除されません。お問い合わせの通知メールには受付番号と種類のみを記載し、氏名・メールアドレス・メッセージは含めません。メール配信サービス（Resend）に残る配信記録は、現在のプランでは同サービスの方針により30日間保管されます。運営者のメールボックスで受け取ったお問い合わせ通知メールも、該当するお問い合わせと一緒に削除します。現在、長期間利用のないアカウントを自動で整理することはありません。",
+          "破棄の手順と方法：保存期間が終了した記録はデータベースから削除し（自動処理または運営者による直接削除）、利用者が削除した写真ファイルはストレージから削除します。",
           "インフラ事業者の技術ログ：ウェブサイトのサーバー機能（Cloudflare Pages Functions）の実行ログは保存せず、データベース事業者（Supabase）のAPI・データベースログは現在のプランで1日間保存されます。現在データベースの自動バックアップは使用しておらず、削除した情報がバックアップから復元されることはありません。これとは別に、各事業者が自社の方針に基づき保存するログがある場合があります。",
         ],
       },
@@ -388,7 +404,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 14, title: "安全管理措置",
         paragraphs: [
-          "保存データへのアクセスは制限されています: データベースは外部からの直接アクセスを遮断し、すべての読み書きは所有権を検証するサーバーAPIを経由します。ログインセッションは保護されたリクエストごとにサーバー側で検証されます。写真は初期状態で非公開で、短い有効期間の署名リンクでのみ提供されます。リアクション・統計に識別子が必要な場合は、生の値の代わりに一方向ハッシュを保存します。",
+          "すべての接続は暗号化（HTTPS）されます。旅程・写真・場所の変更は、所有（端末またはログインアカウント）を確認するサーバー機能を経由します。ログインセッションは保護されたリクエストごとにサーバー側で検証されます。写真は初期状態で非公開で、短い有効期間の署名リンクでのみ提供されます。",
         ],
       },
       { no: 15, title: "ポリシーの変更", paragraphs: ["本ポリシーを変更する場合は、新しい改定日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。"] },
@@ -411,9 +427,11 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Google 登录(可选): 当你选择使用 Google 登录时，我们会通过认证服务商(Supabase Auth)收到你的 Google 账户标识、姓名、电子邮箱和头像链接。我们在任何情况下都不会收到或存储你的 Google 密码。",
           "你创建的旅行内容: 行程(城市、日期、地点、标题)、收藏的地点、你自己添加的地点(名称、备注、位置、照片)、旅行照片与备注、故事，以及公开设置。",
-          "联系表单: 你联系我们时填写的姓名、邮箱和内容。",
+          "联系表单：邮箱地址、留言、选填的姓名、与咨询相关的页面或地点，以及浏览器语言。",
           "举报（可选）: 举报原因、你填写的备注（最多 500 字）、以及为防止同一设备重复举报而由浏览器设备标识符与举报对象计算出的键。请不要在备注中填写个人信息。",
-          "自动收集: 为将旅行数据关联到本设备而在浏览器中生成的随机设备标识(并非来自你的硬件，也不会与你的姓名关联)、托管服务商保存的基础技术日志，以及匿名使用统计(见第8条)。",
+          "设备标识符：在浏览器中随机生成的值（不源自硬件，也不与你的姓名关联）。它与你创建的内容和互动一同保存，以便识别这些内容属于你；部分记录中保存的是由该值转换而来的值。登录后，此设备会关联到你的账户。",
+          "你发送的点赞、不喜欢、“有帮助”标记、互动、收藏和地点提议。",
+          "自动收集：托管服务商保存的基本技术日志（如 IP 地址和请求信息）以及使用统计（第 8 条）。",
         ],
       },
       {
@@ -423,7 +441,7 @@ export const PRIVACY: LegalDocSet = {
           "密码 — Google 登录不会向我们提供你的密码。",
           "出生日期、性别、电话号码、住址或通讯录。",
           "支付或银行卡信息 — 目前服务没有付费功能。",
-          "后台或持续的位置追踪 — 位置信息只存在于你主动添加或选择的地点。",
+          "后台或持续的位置追踪。使用“附近”功能时，浏览器位置只在本设备上用于为附近地点排序，不会发送到我们的服务器。",
           "Google 云端硬盘、日历等基础身份信息以外的任何 Google 数据。",
         ],
       },
@@ -460,7 +478,7 @@ export const PRIVACY: LegalDocSet = {
         ],
         items: [
           "Supabase（数据库、登录认证、照片存储）——将你的账户、旅行内容和照片存储在韩国首尔区域（AWS ap-northeast-2）。其隐私政策载明的运营法人：Supabase Pte. Ltd.（新加坡），联系方式 privacy@supabase.com。保存至你删除相关内容或账户为止。",
-          "Cloudflare（网站分发与服务器 API 运行）——Cloudflare, Inc.（美国，101 Townsend St, San Francisco, CA 94107），联系方式 dpo@cloudflare.com。每次使用服务时，请求信息（IP 地址、请求内容等）可能在境外就近的 Cloudflare 节点处理。",
+          "Cloudflare（网站分发、服务器 API 运行、不使用 Cookie 的访问统计）——Cloudflare, Inc.（美国，101 Townsend St, San Francisco, CA 94107），联系方式 dpo@cloudflare.com。每次使用服务时，请求信息（IP 地址、请求内容等）可能在境外就近的 Cloudflare 节点处理。",
           "Google（Google 登录与使用统计）——Google LLC（美国），联系 https://support.google.com/policies。登录时我们会收到你的 Google 账户标识符、姓名、邮箱地址和头像链接；使用统计发送至 Google Analytics（第 8 条）。",
           "Resend（向运营方发送通知邮件）——Plus Five Five, Inc.，其政策载明在美国处理，联系方式 support@resend.com。发给运营方的通知不包含你的姓名、邮箱或留言。",
           "处理方式、时间与保存期限：每次使用服务时，完成相应工作所需的信息都会通过加密连接（HTTPS）传输。保存期限：Supabase 保存至你删除相关内容或账户为止；Resend 的发送记录在当前套餐下保存 30 天；Google Analytics 的事件数据保存 2 个月、用户数据保存 14 个月；Cloudflare 不保存我们服务器功能的运行日志（各服务商依其自身政策保存的日志另计）。",
@@ -471,8 +489,10 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 8, title: "分析工具、Cookie 与浏览器存储",
         paragraphs: [
-          "我们使用 Google Analytics 4 收集匿名使用统计。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。Google Analytics 会设置其自身的 Cookie，你可以通过浏览器设置或 Google 提供的工具拒绝。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。",
-          "服务本身不设置任何 Cookie。浏览器本地存储中保存: 设备标识、进行中的行程、收藏的地点、引导状态、语言选择，以及登录后由认证服务商管理的会话。清除浏览器存储即可从本设备删除这些信息。",
+          "我们使用 Google Analytics 4 进行使用统计。分析事件仅包含功能和地点层面的信息(例如城市名、公开地点的标识)，绝不包含你的邮箱、姓名、登录令牌或账户标识。Google Analytics 会设置其自身的 Cookie，你可以通过浏览器设置或 Google 提供的工具拒绝。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。",
+          "Cloudflare Web Analytics 不使用 Cookie，而是通过浏览器性能信息统计访问；Cloudflare 表示不收集或使用访客的个人数据。",
+          "地图通过 NAVER 地图显示。显示地图时，浏览器会直接连接 NAVER 的服务器，NAVER 会收到 IP 地址等一般连接信息。部分图片直接从官方旅游网站加载，这些网站同样会收到连接信息。",
+          "服务本身设置的 Cookie 只有一个登录时用于确认同意的临时 Cookie，登录完成后即删除，未完成时 10 分钟后失效。浏览器本地存储中保存: 设备标识、进行中的行程、收藏的地点、引导状态、语言选择，以及登录后由认证服务商管理的会话。清除浏览器存储即可从本设备删除这些信息。",
         ],
       },
       {
@@ -484,15 +504,15 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 10, title: "公开分享的范围",
         paragraphs: [
-          "行程和故事默认私密。当你设为公开或分享链接时，分享页面只显示你选择公开的行程内容 — 不包含你的邮箱、设备标识或住宿到达时间。其他用户可以将公开行程复制到自己的账户，副本不会带走你的标题和旅行日期。附在记忆上的照片，只有当你明确将该记忆设为公开时才会出现在公开页面。",
+          "行程和故事默认私密。当你设为公开或分享链接时，分享页面只显示你选择公开的行程内容 — 不包含你的邮箱、设备标识或住宿到达时间。其他用户可以将公开行程复制到自己的设备（登录时为账户），副本不会带走你的标题和旅行日期。附在记忆上的照片，只有当你明确将该记忆设为公开时才会出现在公开页面。",
         ],
       },
       {
         no: 11, title: "保存期限",
         paragraphs: [
           "你在应用内删除的内容(包括已存储的照片文件)会被立即删除。未删除的内容将保存至你删除或请求删除为止；目前服务不会自动使旅行数据过期。",
-          "咨询记录（用于答复及确认处理经过）自受理之日起保存 6 个月，举报记录（用于处理举报及判断重复举报）自处理完成之日起保存 6 个月，之后由每日自动任务销毁。处理中的举报保存至处理结束，并定期复核。尚未答复完毕的咨询，仅在记录原因和复核日期时，可保存超过 6 个月直至该复核日期。该期限为本服务自行制定的运营标准；保存目的消失或收到合法删除请求时，即使未到期也会删除。咨询与举报记录与账户分开保存，删除账户时不会自动删除。咨询通知邮件仅包含受理编号和类型，不含姓名、邮箱或内容；邮件发送服务（Resend）保留的发送记录在当前套餐下依其政策保存 30 天。目前不会自动清理长期未使用的账户。",
-          "销毁程序与方法：保存期限届满的记录由每日运行的自动任务从数据库中删除，你删除的照片文件会从存储中删除。",
+          "咨询记录（用于答复及确认处理经过）自受理之日起保存 6 个月，举报记录（用于处理举报及判断重复举报）自处理完成之日起保存 6 个月，之后及时销毁。处理中的举报保存至处理结束，并定期复核。尚未答复完毕的咨询，仅在记录原因和复核日期时，可保存超过 6 个月直至该复核日期。该期限为本服务自行制定的运营标准；保存目的消失或收到合法删除请求时，即使未到期也会删除。咨询与举报记录与账户分开保存，删除账户时不会自动删除。咨询通知邮件仅包含受理编号和类型，不含姓名、邮箱或内容；邮件发送服务（Resend）保留的发送记录在当前套餐下依其政策保存 30 天。运营方邮箱中收到的咨询通知邮件也会随相应咨询一并删除。目前不会自动清理长期未使用的账户。",
+          "销毁程序与方法：保存期限届满的记录将从数据库中删除（由自动任务或运营方直接删除），你删除的照片文件会从存储中删除。",
           "基础设施服务商的技术日志：网站服务器功能（Cloudflare Pages Functions）的运行日志不予保存；数据库服务商（Supabase）的 API 与数据库日志在当前套餐下保存 1 天。目前未使用数据库自动备份，已删除的信息不会从备份中恢复。此外，各服务商可能依其自身政策保存日志。",
         ],
       },
@@ -508,7 +528,7 @@ export const PRIVACY: LegalDocSet = {
       {
         no: 14, title: "安全措施",
         paragraphs: [
-          "对存储数据的访问受到限制: 数据库禁止外部直接访问，所有读写都经由验证所有权的服务器 API。登录会话在每个受保护请求上都由服务器验证。照片默认私密，仅通过短时效的签名链接提供。在需要为互动和统计使用标识的场景，我们存储单向哈希而非原始值。",
+          "所有连接均经过加密（HTTPS）。行程、照片和地点的修改须经过确认所有权（设备或登录账户）的服务器功能。登录会话在每个受保护请求上都由服务器验证。照片默认私密，仅通过短时效的签名链接提供。",
         ],
       },
       { no: 15, title: "政策变更", paragraphs: ["政策如有变更，将连同新的修订日期发布在本页面。重大变更将在服务内另行通知。"] },

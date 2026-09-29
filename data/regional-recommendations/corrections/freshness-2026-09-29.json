@@ -1,0 +1,174 @@
+{
+ "check_date": "2026-09-29",
+ "scope": "City Hub Events + Travel Essentials 주간 확인(closeout SSOT §주간 freshness)",
+ "method": "공식 누리집·공식 공지 원문을 직접 열어 대조. 원천이 불확실한 값은 게시하지 않음",
+ "changes": [
+  {
+   "file": "regional-places-v1.json",
+   "id": "jeju-RN-R01",
+   "reason": "달만 적힌 날짜(2026-08, TBC)에 종료일이 없어 9월 이후에도 제주 City Hub 의 유일한 행사로 노출",
+   "before": {
+    "validFrom": "2026-08 (exact date TBC)",
+    "validTo": null,
+    "source": {
+     "provider": "제주국제관악제 조직위원회",
+     "source_url": "https://www.visitjeju.net/en/experience/festival",
+     "as_of": "2026-08-22"
+    },
+    "asOf": "2026-08-22"
+   },
+   "after": {
+    "validFrom": "2026-08-07",
+    "validTo": "2026-08-15",
+    "source": {
+     "provider": "제주국제관악제 조직위원회",
+     "source_url": "https://jiwef.org/ko",
+     "as_of": "2026-09-29",
+     "freshness_note": "2026-09-29 확인: 제31회 제주국제관악제 여름시즌 2026-08-07~08-15(헤드라인제주·경향신문 보도, 공식 누리집 일정표에 08-12~13 콩쿠르) — 종료"
+    },
+    "asOf": "2026-09-29"
+   },
+   "sources": [
+    "https://jiwef.org/ko",
+    "https://headlinejeju.co.kr/news/articleView.html?idxno=594627",
+    "https://www.khan.co.kr/article/202606181214001/"
+   ],
+   "verified_at": "2026-09-29",
+   "verified_by": "Claude (official page fetched)",
+   "review_status": "preview_only — Owner release approval required before Production"
+  },
+  {
+   "file": "regional-places-v1.json",
+   "id": "jeonju-RN-R02",
+   "reason": "'가을 예고(9월 말~10월 초)'로 안내했으나 2026년 축제는 8월 12~16일에 이미 종료. 종료일이 없어 전주 City Hub 에 계속 노출",
+   "before": {
+    "name": "전주 세계소리축제 (가을 예고)",
+    "nameEn": "Jeonju World Sound Festival — Autumn Preview",
+    "validFrom": "2026-09 (exact date TBC)",
+    "validTo": null,
+    "whyNow": "전주 세계소리축제는 매년 9월 말~10월 초 국립민속국악원·한국소리문화의전당 등지에서 개최되는 국제 전통음악 축제. 세계 각국 전통음악·판소리·국악을 무료~저가로 즐길 수 있어 외국인 방문자에게 특히 유익. 기준일(2026-08-22) 아직 미개최이나 9월 방문 예정자에게 유용.",
+    "source": {
+     "provider": "전주세계소리축제 조직위원회",
+     "source_url": "https://tour.jeonju.go.kr/",
+     "as_of": "2026-08-22",
+     "freshness_note": "2026-09-06 주간 freshness 실측: 기존 /kor 경로 404 — 동일 공식 도메인 루트로 교체"
+    },
+    "asOf": "2026-08-22"
+   },
+   "after": {
+    "name": "전주세계소리축제",
+    "nameEn": "Jeonju International Sori Festival",
+    "validFrom": "2026-08-12",
+    "validTo": "2026-08-16",
+    "whyNow": "전주세계소리축제는 한국소리문화의전당과 전북특별자치도 일원에서 열리는 국제 전통음악 축제다. 2026년에는 8월 12일부터 16일까지 열렸다(공식 누리집).",
+    "source": {
+     "provider": "전주세계소리축제 조직위원회",
+     "source_url": "https://sorifestival.com/",
+     "as_of": "2026-09-29",
+     "freshness_note": "2026-09-29 확인: 공식 누리집 '2026년 8월 12일(수) ~ 16일(일)'. 기존 '가을 예고·9월 말~10월 초' 서술은 2026년 일정과 달라 교정 — 종료"
+    },
+    "asOf": "2026-09-29"
+   },
+   "sources": [
+    "https://sorifestival.com/"
+   ],
+   "verified_at": "2026-09-29",
+   "verified_by": "Claude (official page fetched)",
+   "review_status": "preview_only — Owner release approval required before Production"
+  },
+  {
+   "file": "regional-essentials-v1.json",
+   "id": "seoul-U-001",
+   "reason": "2025-06-28 인상 전 요금(1,400·1,500·800·500원) 표시",
+   "before": {
+    "keyInfo": {
+     "operating_hours": "약 05:30 ~ 자정 (노선별 상이)",
+     "fare_adult_card": 1400,
+     "fare_adult_ticket": 1500,
+     "fare_teen_13to18_card": 800,
+     "fare_child_6to12": 500,
+     "unit": "KRW",
+     "transfer_policy": "무료 환승 (30분 이내, 10km 이하)",
+     "single_journey_deposit": "1회권 보증금 500원 (반환 가능)",
+     "multilingual_signs": "한국어·영어·중국어",
+     "fare_as_of": "2023-10-07"
+    },
+    "sourceUrl": "https://english.visitseoul.net/transportation",
+    "asOf": "2026-08-21",
+    "freshnessNote": null
+   },
+   "after": {
+    "keyInfo": {
+     "operating_hours": "약 05:30 ~ 자정 (노선별 상이)",
+     "fare_adult_card": 1550,
+     "fare_adult_ticket": 1650,
+     "fare_teen_13to18_card": 900,
+     "fare_child_6to12": 550,
+     "unit": "KRW",
+     "transfer_policy": "무료 환승 (30분 이내, 10km 이하)",
+     "single_journey_deposit": "1회권 보증금 500원 (반환 가능)",
+     "multilingual_signs": "한국어·영어·중국어",
+     "fare_as_of": "2025-06-28"
+    },
+    "sourceUrl": "https://news.seoul.go.kr/traffic/traffic_price",
+    "asOf": "2026-09-29",
+    "freshnessNote": "2026-09-29 확인: 서울시 '지하철 요금 안내(조정일자 2025.6.28.)' — 교통카드 성인 1,550·청소년 900·어린이 550원, 1회권 성인 1,650원"
+   },
+   "sources": [
+    "https://news.seoul.go.kr/traffic/traffic_price"
+   ],
+   "verified_at": "2026-09-29",
+   "verified_by": "Claude (official page fetched)",
+   "review_status": "preview_only — Owner release approval required before Production"
+  },
+  {
+   "file": "regional-essentials-v1.json",
+   "id": "seoul-U-007",
+   "reason": "운영 종료된 30일권(약 65,000원)을 구매 가능한 상품으로 안내",
+   "before": {
+    "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
+    "summary": "서울시에서 운영하는 월정액 무제한 교통 통합 정기권. 서울 내 지하철·버스(공항버스 제외) 무제한 탑승. 외국인 관광객도 일부 판매채널에서 구매 가능(여권 제출). 30일 기준 약 65,000원(기본형). 단기 여행보다 장기 체류자에게 경제적.",
+    "keyInfo": {
+     "coverage": "서울 내 지하철 전 노선 + 서울 시내버스 (공항버스·광역버스 제외)",
+     "duration": "30일 (기간 선택 가능)",
+     "price_approx_krw": 65000,
+     "foreign_eligibility": "외국인 구매 가능 (여권 지참 필요, 판매처 확인)",
+     "purchase": "서울 지하철역 무인발권기, 지정 판매처",
+     "note": "2024년 1월 서울시 도입. 관광 단기 여행자보다 1~4주 이상 체류자에 적합"
+    },
+    "sourceUrl": "https://www.seoul.go.kr",
+    "asOf": "2026-08-21",
+    "freshnessNote": null
+   },
+   "after": {
+    "title": "기후동행카드 — 서울 대중교통 무제한 단기권(1~7일)",
+    "summary": "서울시 대중교통 무제한 교통카드. 30일권은 신규 충전이 2026년 8월 31일(선불)로 끝났다 — 이미 충전한 카드는 만료일까지 쓸 수 있고, 후불 30일권은 9월 30일에 이용이 끝난다. 지금 여행자가 새로 살 수 있는 것은 1·2·3·5·7일 단기권이며, 기간 동안 서울 지하철(인천공항 T1·T2 하차 포함)과 서울시 면허 시내·마을버스를 무제한 이용한다.",
+    "keyInfo": {
+     "coverage": "서울지역 지하철 + 인천국제공항 하차(T1·T2), 서울시 면허 시내·마을버스(심야버스 포함)",
+     "excluded": "신분당선, GTX, 서울지역 외 지하철, 광역·공항버스, 타 지역 면허버스",
+     "short_term_passes_krw": {
+      "1일": 5000,
+      "2일": 8000,
+      "3일": 10000,
+      "5일": 15000,
+      "7일": 20000,
+      "청소년 7일": 13000
+     },
+     "use_period": "사용 개시일 첫차(04시)부터 사용 종료일 막차까지",
+     "pass_30day": "선불: 2026-08-31 충전 종료(이미 충전한 카드는 만료까지 사용 가능) · 후불: 2026-09-30 이용 종료 — 서울시 공지 본문"
+    },
+    "sourceUrl": "https://news.seoul.go.kr/traffic/archives/510651",
+    "asOf": "2026-09-29",
+    "freshnessNote": "2026-09-29 확인: 서울시 기후동행카드 안내(권종·단기권 요금)와 '기후동행카드 30일권 종료 안내'(news.seoul.go.kr/traffic/archives/517575)"
+   },
+   "sources": [
+    "https://news.seoul.go.kr/traffic/archives/510651",
+    "https://news.seoul.go.kr/traffic/archives/517575"
+   ],
+   "verified_at": "2026-09-29",
+   "verified_by": "Claude (official page fetched)",
+   "review_status": "preview_only — Owner release approval required before Production",
+   "wording_fix": "2026-09-29 재확인: '운영 종료'로 뭉뚱그리던 문구를 공지 본문대로 '신규 충전 종료(선불 8/31)·기존 충전분 만료까지 사용 가능·후불 9/30 이용 종료'로 구분. 공지 상단 AI 요약의 '7월 31일'은 본문과 달라 채택하지 않음"
+  }
+ ]
+}

@@ -124,7 +124,9 @@ test("시행일 단일 원천 — 동의 버전 3종·Legal effectiveDate 가 �
 test("Legal 문안 — 6개월 운영 기준·자동 파기·법정 기한·원문 없는 알림(4locale)", () => {
   const p = read("src/lib/legal/privacy-content.ts");
   for (const k of ["6 months", "6개월", "6か月", "6 个月"]) assert.ok(p.includes(k), k);
-  for (const k of ["매일 자동으로 파기", "destroyed automatically by a daily job", "毎日の自動処理で破棄", "每日自动任务销毁"]) assert.ok(p.includes(k), k);
+  // 파기는 '지체 없이' + 방법(자동 작업 또는 운영자 직접 삭제) — 083 관문이 켜지기 전·후 모두 참인 문장(AUTH 통합 2026-09-29)
+  for (const k of ["6개월 보관한 뒤 지체 없이 파기합니다", "they are then destroyed without delay", "6か月保管した後、遅滞なく破棄します", "之后及时销毁"]) assert.ok(p.includes(k), k);
+  for (const k of ["자동 파기 작업 또는 운영자의 직접 삭제", "by an automatic job or directly by the operator", "自動処理または運営者による直接削除", "由自动任务或运营方直接删除"]) assert.ok(p.includes(k), k);
   assert.ok(p.includes("서비스가 정한 운영 기준"), "6개월은 운영 기준(법정 기간 아님)");
   assert.ok(p.includes("요청하신 이메일 주소로 알려드리며"), "결과 통지 방법");
   // 법 제30조①3의2(파기절차·방법)·4(위탁)·시행령 제31조①2(국외 이전) 대조분

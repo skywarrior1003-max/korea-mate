@@ -66,4 +66,5 @@ test("④ 범위 가드 — auth/linking·migration 무접촉(이번 TASK)", () 
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
   assert.ok(files.length >= 79); // 080 이후는 스냅숏 3파일 가드가 고정
   assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = null;/); // 게시 전 DRAFT — 시행일 단일 원천
+  // master 의 공개 서비스판(PUBLIC_PRIVACY_EFFECTIVE_DATE)은 Auth 통합(2026-09-29)으로 Auth 판에 흡수됐다 — 시행일 단일 원천은 consent-contract.
 });

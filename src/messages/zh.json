@@ -1465,6 +1465,7 @@
     "essentialsIn": "{city}旅行实用信息",
     "officialLink": "查看官方信息",
     "asOfLine": "信息截至 {date}",
+    "essRecheckPending": "我们正在根据最新官方信息重新核实票价和运营信息。出行前请查看官方指南。",
     "viewPlace": "查看地点",
     "typeLink": "链接",
     "urlOpenShared": "打开分享的行程",
