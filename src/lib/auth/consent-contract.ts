@@ -17,7 +17,7 @@
  * ②약관·처리방침·연령 동의 버전을 함께 정한다 — 셋이 어긋날 수 없다.
  * 출시 절차: 이 줄에 날짜를 넣는 커밋을 Auth 코드와 같은 merge 로 master 에 올린다.
  */
-export const LEGAL_EFFECTIVE_DATE: string | null = null;
+export const LEGAL_EFFECTIVE_DATE: string | null = "2026-09-29";
 
 export const TERMS_VERSION = LEGAL_EFFECTIVE_DATE ? `legal-${LEGAL_EFFECTIVE_DATE}-v1` : "preview-legal-v1";
 export const PRIVACY_VERSION = LEGAL_EFFECTIVE_DATE ? `legal-${LEGAL_EFFECTIVE_DATE}-v1` : "preview-legal-v1";
