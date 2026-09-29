@@ -22,6 +22,14 @@ const DATE_TBD: Record<LegalLocale, string> = {
   zh: "生效日期: 发布时确定",
 };
 
+// 날짜만 두 개 나란히 보이면 무엇의 날짜인지 알 수 없다 — 라벨을 붙이고, 최종 수정일은 시행일과 다를 때만 보인다.
+const DATE_LABEL: Record<LegalLocale, { effective: string; updated: string }> = {
+  en: { effective: "Effective date", updated: "Last updated" },
+  ko: { effective: "시행일", updated: "최종 수정일" },
+  ja: { effective: "施行日", updated: "最終更新日" },
+  zh: { effective: "生效日期", updated: "最后更新" },
+};
+
 export default function LegalDocument({ docs }: { docs: LegalDocSet }) {
   const rawLocale = useLocale();
   const locale: LegalLocale = (["en", "ko", "ja", "zh"] as const).includes(rawLocale as LegalLocale)
@@ -52,8 +60,8 @@ export default function LegalDocument({ docs }: { docs: LegalDocSet }) {
 
         <h1 className="text-4xl font-black tracking-tight leading-tight">{doc.title}</h1>
         <p className="mt-3 text-[13px] text-[#8A7D72]">
-          {doc.effectiveDate ?? DATE_TBD[locale]}
-          {doc.lastUpdated ? ` · ${doc.lastUpdated}` : ""}
+          {doc.effectiveDate ? `${DATE_LABEL[locale].effective}: ${doc.effectiveDate}` : DATE_TBD[locale]}
+          {doc.lastUpdated && doc.lastUpdated !== doc.effectiveDate ? ` · ${DATE_LABEL[locale].updated}: ${doc.lastUpdated}` : ""}
         </p>
 
         <div className="mt-6 space-y-4">
