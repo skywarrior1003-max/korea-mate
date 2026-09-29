@@ -23,6 +23,7 @@ test("게시 가능 상태 — 내부 마커·DRAFT 없음, 시행일 있음, 4l
   }
 });
 
+// ⚠ Auth 병합 시 이 테스트만 Auth 판 기준으로 바꾼다(로그인·계정 삭제·동의·자동 파기가 그때 출시되므로).
 test("미출시 기능을 제공한다고 쓰지 않는다(로그인·계정 삭제·동의·자동 파기)", () => {
   const ko = all("ko"), en = all("en");
   for (const bad of ["Google 로그인", "계정 영구 삭제", "만 14세", "매일 자동으로 파기", "동의 기록"]) assert.ok(!ko.includes(bad), bad);
@@ -30,13 +31,22 @@ test("미출시 기능을 제공한다고 쓰지 않는다(로그인·계정 삭
   assert.ok(ko.includes("현재 서비스에는 로그인·계정 기능이 없으며"));
 });
 
-test("Production 실측 사실이 4locale 에 있다", () => {
+// ⚠ Auth 병합 대조 항목(고정) — 아래 사실은 Auth 판 처리방침으로 교체된 뒤에도 4locale 에 남아 있어야 한다.
+//   이 테스트는 Auth 병합 때 수정·삭제하지 않는다. 실패하면 Auth 판에 사실을 옮겨 적는다.
+//   (네이버 지도 · Cloudflare Web Analytics · 관광 공식 사이트 이미지 · 기기 식별자 원형 저장 · 보관 문구)
+test("Production 실측 사실이 4locale 에 있다 — Auth 병합 대조 항목", () => {
   for (const l of LOCALES) {
     const t = all(l);
     for (const k of ["support@gokoreamate.com", "케이이엔지", "부산시 남구 유엔로 96번길 26-31 (대연동)", "Cloudflare Web Analytics", "Resend", "Supabase Pte. Ltd.", "Google LLC", "Agoda"]) assert.ok(t.includes(k), `${l}: ${k}`);
     assert.ok(/NAVER|네이버/.test(t), `${l}: 네이버 지도`);
     assert.ok(/2 months|2개월|2か月|2 个月/.test(t) && /14 months|14개월|14か月|14 个月/.test(t), `${l}: GA 보관`);
+    assert.ok(/6 months|6개월|6か月|6 个月/.test(t), `${l}: 문의·신고 6개월 보관`);
   }
+  const ko = all("ko"), en = all("en");
+  assert.ok(ko.includes("관광 공식 사이트에서 직접 불러오며") && en.includes("loaded directly from official tourism websites"), "외부 이미지");
+  assert.ok(ko.includes("이용자가 만든 콘텐츠와 반응이 이용자의 것임을 알아보기 위해 함께 저장하며, 일부 기록에는 이 값을 변환한 값을 저장합니다"), "기기 식별자 원형 저장(일부만 변환)");
+  assert.ok(en.includes("for some records we store a value converted from it instead"), "device identifier stored as-is (some converted)");
+  assert.ok(!/원본 대신 일방향 해시|instead of the original .*one-way hash/.test(ko + en), "기기 식별자를 모두 해시한다고 쓰지 않는다");
   assert.ok(all("ko").includes("현재 문의 알림 메일에는 이용자가 입력한 이름·이메일·메시지가 담깁니다"));
   assert.ok(all("ko").includes("서버로 보내지 않습니다"), "위치는 기기 안에서만");
 });

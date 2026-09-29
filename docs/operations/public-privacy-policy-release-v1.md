@@ -36,7 +36,7 @@
 
 ### 남는 위험
 
-- 문의·신고 **6개월 파기는 현재 수동**이다(자동 파기 082 는 Auth 와 함께 출시). 첫 대상은 2026-12-14 문의 1건(운영 시험 기록). 그 전에 082 가 출시되지 않으면 해당일에 수동 삭제한다.
+- 문의·신고 **6개월 파기는 현재 수동**이다(자동 파기 082 는 Auth 와 함께 출시). 운영 기록: `manual-retention-log.md`(담당·확인일·판단·실행 기록). 첫 대상은 2026-12-14 문의 1건(운영 시험 기록).
 - GA 의 국외 이전 근거 해석(L1)은 여전히 남는다 — 사실 고지와 쿠키 거부 방법은 게시된다.
 
 ## 3. 대안 — GA 임시 중단(권고하지 않음)
@@ -56,7 +56,7 @@ Auth 출시 merge 때 해소 규칙:
 2. `HomeClient.tsx` — Auth 판(개인정보처리방침 + 이용약관 링크) 채택.
 3. `messages/*.json` — 두 판의 `nav.privacy`·`more.privacyDesc` 값이 같다. Auth 판(terms 키 포함) 채택.
 4. `global-more-nav-guard.test.ts` — Auth 판 조건(`LEGAL_EFFECTIVE_DATE`)과 이 판 조건(`PUBLIC_PRIVACY_EFFECTIVE_DATE`)을 합친다.
-5. `public-privacy-guard.test.ts` — Auth 판에서는 로그인 문장이 생기므로 '미출시 기능 서술 금지' 테스트를 Auth 판 기준으로 바꾸거나 제거한다.
+5. `public-privacy-guard.test.ts` — '미출시 기능 서술 금지' 테스트만 Auth 판 기준으로 바꾼다. **'Production 실측 사실 — Auth 병합 대조 항목' 테스트는 수정·삭제하지 않는다**(네이버 지도·Cloudflare Web Analytics·관광 공식 사이트 이미지·기기 식별자 원형 저장·6개월 보관 문구가 Auth 판에 남아 있는지 고정 검사).
 6. Auth 판 시행일은 새 방침 시행일(변경 고지 — 이 판의 제13조).
 
 ## 5. Production 반영 시 확인 항목
