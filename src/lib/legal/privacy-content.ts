@@ -8,8 +8,9 @@
 //    oapi.map.naver.com·pstatic·nelo.navercorp.com(네이버 지도), supabase.co, 관광 공식 사이트 이미지
 //  · 위치: 브라우저 위치는 '내 주변' 정렬에만 쓰고 서버로 보내지 않는다(코드 확인)
 //  · 문의 알림 메일(Resend)에는 이름·이메일·메시지가 담긴다(현재 master contact.ts)
-//  · GA-CONSENT-V1: GA 는 첫 방문 안내에서 '허용'한 경우에만 적재·전송(선택 전·거부 시 요청 0·쿠키 0),
-//    철회 = 더보기 › 사용 통계. 근거 = 제15조①1호 동의 + 제28조의8①1호 국외 이전 별도 동의
+//  · GA-CONSENT-V1: GA 는 첫 방문 안내에서 수집·이용 동의와 국외 이전 동의를 **각각** 받아 둘 다 있을 때만
+//    적재·전송(선택 전·나중에·한쪽만·거부 시 요청 0·쿠키 0). 철회 = 더보기 › 사용 통계(그때부터만 — 과거 전송분은
+//    보관기간 뒤 삭제). 근거 = 제15조①1호 동의 + 제28조의8①1호 국외 이전 별도 동의(제22조① 구분 동의)
 //
 // Auth 출시 때는 Auth 브랜치의 같은 경로 파일(로그인·계정 삭제·동의 포함판)로 교체된다 —
 // 이 판에서 새로 확인한 사실(네이버 지도·Cloudflare Web Analytics·기기 식별자 저장)은
@@ -18,7 +19,10 @@
 import type { LegalDocSet } from "./legal-types";
 
 /** 이 판의 시행일 = Production 게시일. 게시 날짜가 다르면 merge 전 이 한 줄만 바꾼다. */
-export const PUBLIC_PRIVACY_EFFECTIVE_DATE = "2026-09-29";
+/** 최초 게시일(개정 이력 표기용) */
+export const PUBLIC_PRIVACY_FIRST_DATE = "2026-09-29";
+/** 현재 판 시행일 — GA 동의 개정판. 배포일이 다르면 merge 전 이 한 줄만 바꾼다(방침 제13조: 새 시행일과 함께 게시). */
+export const PUBLIC_PRIVACY_EFFECTIVE_DATE = "2026-09-30";
 
 const ADDR = "부산시 남구 유엔로 96번길 26-31 (대연동)";
 
@@ -82,16 +86,16 @@ export const PRIVACY: LegalDocSet = {
         items: [
           `Supabase (database and photo storage) — stores travel content and photos in the Seoul region, South Korea (AWS ap-northeast-2). Operator named in its privacy policy: Supabase Pte. Ltd. (Singapore); contact privacy@supabase.com. Kept until you delete the content.`,
           "Cloudflare (website delivery, server functions, and cookie-free visit statistics) — Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA; contact dpo@cloudflare.com. Each time you use the service, request data (such as IP address and the request itself) may be processed at a nearby Cloudflare location outside Korea.",
-          "Google (Google Analytics usage statistics, only if you allow it) — Google LLC (USA); contact https://support.google.com/policies.",
+          "Google (Google Analytics usage statistics, only if you consent) — Google LLC (USA); contact https://support.google.com/policies.",
           "Resend (sending inquiry notifications to the operator) — Plus Five Five, Inc.; its privacy policy states data is processed in the United States; contact support@resend.com. Inquiry notifications currently include the name, email address, and message you submit.",
           "How, when, and how long: information needed for these tasks is sent over encrypted connections (HTTPS) each time you use the service. Retention: Supabase keeps it until you delete the content; Resend keeps delivery logs for 30 days on our current plan; Google Analytics keeps event data for 2 months and user data for 14 months; Cloudflare does not store execution logs of our server functions (each provider may keep its own logs under its own policies).",
-          "How to refuse and what happens: Google Analytics is used only if you allow it in the notice shown on your first visit. If you choose \"Don't allow\", or later turn off More › Usage statistics, nothing is sent to Google Analytics, its cookies on this site are deleted, and every feature still works. Supabase and Cloudflare are needed to provide the service, so to refuse them you would stop using it (and can ask us to delete what is already stored). If you prefer your inquiry not to pass through the email service, contact us at support@gokoreamate.com instead of the form.",
+          "How to refuse and what happens: Google Analytics is used only if, in the notice shown on your first visit, you give both consents (collection and use, and transfer outside Korea). If you don't, choose \"Reject all\", or later turn either off under More › Usage statistics, nothing is sent to Google Analytics from then on, its cookies on this site are deleted, and every feature still works. Supabase and Cloudflare are needed to provide the service, so to refuse them you would stop using it (and can ask us to delete what is already stored). If you prefer your inquiry not to pass through the email service, contact us at support@gokoreamate.com instead of the form.",
         ],
       },
       {
         no: 7, title: "Analytics, maps, cookies, and browser storage",
         paragraphs: [
-          "We use Google Analytics 4 for usage statistics only if you allow it. Until you choose, and if you don't allow it, the Google Analytics script is not loaded, nothing is sent to Google, and no Google Analytics cookie is set. If you allow it, information about your visit (a cookie identifier, screens viewed and features used, device and browser information, and your IP address, which Google uses to estimate a rough region) is sent to Google LLC in the USA each time you use the service. The legal basis is your consent (Personal Information Protection Act Article 15(1)(1)) and your separate consent to the transfer abroad (Article 28-8(1)(1)); you can withdraw it at any time under More › Usage statistics. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again. Analytics events carry feature- and place-level information (for example a city name or a public place identifier) and never your email address or name.",
+          "We use Google Analytics 4 for usage statistics only with your consent. We ask for two consents separately — consent to collection and use of personal information (Personal Information Protection Act Article 15(1)(1)) and consent to its transfer outside Korea (Article 28-8(1)(1)) — and load Google Analytics only if you give both. Before you choose, if you choose \"Decide later\", or if you give only one of them, the Google Analytics script is not loaded, nothing is sent to Google, and no Google Analytics cookie is set. With both consents, information about your visit (a cookie identifier, screens viewed and features used, device and browser information, and your IP address, which Google uses to estimate a rough region) is sent to Google LLC in the USA each time you use the service. You can change or withdraw your consent at any time under More › Usage statistics; from then on nothing more is sent and this site's Google Analytics cookies are deleted. Statistics already sent are not deleted immediately by withdrawing; they are deleted when the retention periods below end. If what we tell you in the notice changes, we do not apply your earlier choice and ask again. The notice asks people under 14 not to consent, but we do not verify age. In our Google Analytics settings, event data is kept for 2 months and user data for 14 months, and the user-data period restarts when a user is active again. Analytics events carry feature- and place-level information (for example a city name or a public place identifier) and never your email address or name.",
           "Cloudflare Web Analytics counts visits using browser performance data without cookies; Cloudflare states that it does not collect or use visitors' personal data.",
           "Maps are displayed with NAVER Maps. When a map is shown, your browser connects directly to NAVER's servers, which receive standard connection information such as your IP address. Some images are loaded directly from official tourism websites, which likewise receive connection information.",
           "The service itself sets no cookies. Your browser's local storage keeps the device identifier, your trip in progress, saved places, guide status, and language choice. Clearing browser storage removes this information from this device.",
@@ -135,6 +139,7 @@ export const PRIVACY: LegalDocSet = {
         no: 13, title: "Changes to this policy",
         paragraphs: [
           "If this policy changes, the updated version will be posted on this page with a new effective date. For significant changes we will provide notice within the service.",
+          `History: first posted ${PUBLIC_PRIVACY_FIRST_DATE}. Revised ${PUBLIC_PRIVACY_EFFECTIVE_DATE} — Google Analytics is used only if you give both optional consents (collection and use, and transfer outside Korea) (Sections 6 and 7).`,
         ],
       },
       {
@@ -206,16 +211,16 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase(데이터베이스·사진 저장) — 여행 콘텐츠와 사진을 대한민국 서울 리전(AWS ap-northeast-2)에 저장합니다. 제공사 개인정보처리방침상 운영 법인: Supabase Pte. Ltd.(싱가포르), 연락처 privacy@supabase.com. 이용자가 삭제할 때까지 보관합니다.",
           "Cloudflare(웹사이트 전송·서버 기능 실행·쿠키 없는 방문 통계) — Cloudflare, Inc.(미국, 101 Townsend St, San Francisco, CA 94107), 연락처 dpo@cloudflare.com. 서비스를 이용할 때마다 요청 정보(접속 IP 주소·요청 내용 등)가 가까운 국외 Cloudflare 거점에서 처리될 수 있습니다.",
-          "Google(Google Analytics 사용 통계, 이용자가 허용한 경우에만) — Google LLC(미국), 문의 https://support.google.com/policies.",
+          "Google(Google Analytics 사용 통계, 이용자가 동의한 경우에만) — Google LLC(미국), 문의 https://support.google.com/policies.",
           "Resend(운영자에게 문의 알림 메일 발송) — Plus Five Five, Inc., 제공사 방침상 미국에서 처리, 연락처 support@resend.com. 현재 문의 알림 메일에는 이용자가 입력한 이름·이메일·메시지가 담깁니다.",
           "처리 방법·시기·보유기간: 서비스를 이용할 때마다 해당 업무에 필요한 정보가 암호화된 연결(HTTPS)로 전송됩니다. 보유기간은 Supabase 는 이용자가 삭제할 때까지, Resend 발송 기록은 현재 요금제에서 30일, Google Analytics 는 이벤트 데이터 2개월·사용자 데이터 14개월이며, Cloudflare 는 서버 기능 실행 로그를 저장하지 않습니다(각 제공사가 자체 정책에 따라 보관하는 로그는 별도).",
-          "거부 방법과 효과: Google Analytics 는 첫 방문 때 보이는 안내에서 허용한 경우에만 사용합니다. '허용 안 함'을 고르거나 나중에 더보기 › 사용 통계를 끄면 Google Analytics 로 아무것도 보내지 않고 이 사이트의 Google Analytics 쿠키를 지우며, 모든 기능을 그대로 이용할 수 있습니다. Supabase·Cloudflare 처리는 서비스 제공에 필요하므로 거부하려면 서비스 이용을 중단해야 하며, 이미 저장된 정보는 삭제를 요청할 수 있습니다. 문의가 메일 발송 서비스를 거치지 않기를 원하면 문의 양식 대신 support@gokoreamate.com 으로 직접 연락해 주세요.",
+          "거부 방법과 효과: Google Analytics 는 첫 방문 때 보이는 안내에서 수집·이용 동의와 국외 이전 동의를 모두 한 경우에만 사용합니다. 동의하지 않거나 '모두 거부'를 고르거나 나중에 더보기 › 사용 통계에서 어느 하나를 끄면 그때부터 Google Analytics 로 아무것도 보내지 않고 이 사이트의 Google Analytics 쿠키를 지우며, 모든 기능을 그대로 이용할 수 있습니다. Supabase·Cloudflare 처리는 서비스 제공에 필요하므로 거부하려면 서비스 이용을 중단해야 하며, 이미 저장된 정보는 삭제를 요청할 수 있습니다. 문의가 메일 발송 서비스를 거치지 않기를 원하면 문의 양식 대신 support@gokoreamate.com 으로 직접 연락해 주세요.",
         ],
       },
       {
         no: 7, title: "분석 도구·지도·쿠키·브라우저 저장소",
         paragraphs: [
-          "사용 통계에 Google Analytics 4 를 이용자가 허용한 경우에만 사용합니다. 선택하기 전과 허용하지 않은 경우에는 Google Analytics 스크립트를 불러오지 않아 Google 로 아무것도 전송되지 않고 Google Analytics 쿠키도 설정되지 않습니다. 허용하면 이용할 때마다 방문 정보(쿠키 식별자, 본 화면과 쓴 기능, 기기·브라우저 정보, Google 이 대략적 지역 산출에 쓰는 접속 IP 주소)가 미국의 Google LLC 로 전송됩니다. 처리 근거는 이용자의 동의(개인정보 보호법 제15조제1항제1호)와 국외 이전에 대한 별도 동의(제28조의8제1항제1호)이며, 더보기 › 사용 통계에서 언제든 철회할 수 있습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름은 담기지 않습니다.",
+          "사용 통계에 Google Analytics 4 를 이용자가 동의한 경우에만 사용합니다. 동의는 개인정보 수집·이용 동의(개인정보 보호법 제15조제1항제1호)와 국외 이전 동의(제28조의8제1항제1호) 두 가지로 따로 받으며, 두 가지에 모두 동의한 경우에만 Google Analytics 를 불러옵니다. 선택하기 전, '나중에 결정'을 고른 경우, 한 가지에만 동의한 경우에는 Google Analytics 스크립트를 불러오지 않아 Google 로 아무것도 전송되지 않고 Google Analytics 쿠키도 설정되지 않습니다. 두 가지에 모두 동의하면 이용할 때마다 방문 정보(쿠키 식별자, 본 화면과 쓴 기능, 기기·브라우저 정보, Google 이 대략적 지역 산출에 쓰는 접속 IP 주소)가 미국의 Google LLC 로 전송됩니다. 더보기 › 사용 통계에서 언제든 바꾸거나 철회할 수 있으며, 철회하면 그때부터 전송을 멈추고 이 사이트의 Google Analytics 쿠키를 지웁니다. 이미 전송된 통계는 철회로 즉시 삭제되지 않고 아래 보관 기간이 지나면 삭제됩니다. 안내 내용이 바뀌면 이전 선택을 적용하지 않고 다시 묻습니다. 만 14세 미만은 동의하지 않도록 안내하지만, 나이를 확인하지는 않습니다. Google Analytics 설정상 이벤트 데이터는 2개월, 사용자 데이터는 14개월 보관되며, 사용자가 다시 이용하면 사용자 데이터 보관 기간이 새로 시작됩니다. 분석 이벤트에는 기능·장소 수준 정보(예: 도시 이름, 공개 장소 식별자)만 담기며 이메일·이름은 담기지 않습니다.",
           "Cloudflare Web Analytics 는 쿠키 없이 브라우저 성능 정보로 방문을 집계하며, Cloudflare 는 방문자의 개인정보를 수집·이용하지 않는다고 밝히고 있습니다.",
           "지도는 네이버 지도로 표시합니다. 지도가 보일 때 브라우저가 네이버 서버에 직접 접속하므로 네이버는 IP 주소 등 일반적인 접속 정보를 받습니다. 일부 이미지는 관광 공식 사이트에서 직접 불러오며, 해당 사이트도 접속 정보를 받습니다.",
           "서비스 자체는 쿠키를 설정하지 않습니다. 브라우저 로컬 저장소에는 기기 식별자·작성 중인 여행·저장 장소·안내 표시 상태·언어 선택이 보관됩니다. 브라우저 저장소를 지우면 이 기기에서 해당 정보가 삭제됩니다.",
@@ -257,7 +262,10 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 13, title: "방침 변경 고지",
-        paragraphs: ["방침이 변경되면 새 시행일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 안에서 안내합니다."],
+        paragraphs: [
+          "방침이 변경되면 새 시행일과 함께 이 페이지에 게시합니다. 중요한 변경은 서비스 안에서 안내합니다.",
+          `개정 이력: ${PUBLIC_PRIVACY_FIRST_DATE} 최초 게시 · ${PUBLIC_PRIVACY_EFFECTIVE_DATE} 개정 — Google Analytics 를 수집·이용과 국외 이전 두 가지 선택 동의를 모두 한 경우에만 사용(제6·7조).`,
+        ],
       },
       {
         no: 14, title: "문의처",
@@ -328,16 +336,16 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase（データベース・写真の保存）— 旅行コンテンツと写真を大韓民国ソウルリージョン（AWS ap-northeast-2）に保存します。同社のプライバシーポリシー上の運営法人：Supabase Pte. Ltd.（シンガポール）、連絡先 privacy@supabase.com。利用者が削除するまで保管します。",
           "Cloudflare（ウェブサイトの配信・サーバー機能の実行・Cookieを使わない訪問統計）— Cloudflare, Inc.（米国、101 Townsend St, San Francisco, CA 94107）、連絡先 dpo@cloudflare.com。サービスを利用するたびに、リクエスト情報（IPアドレス・リクエスト内容など）が国外の近くのCloudflare拠点で処理されることがあります。",
-          "Google（Google Analytics 利用統計、利用者が許可した場合のみ）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。",
+          "Google（Google Analytics 利用統計、利用者が同意した場合のみ）— Google LLC（米国）、お問い合わせ https://support.google.com/policies。",
           "Resend（運営者宛てのお問い合わせ通知メールの送信）— Plus Five Five, Inc.、同社の方針上米国で処理、連絡先 support@resend.com。現在、お問い合わせ通知メールには利用者が入力した氏名・メールアドレス・メッセージが含まれます。",
           "処理の方法・時期・保存期間：サービスを利用するたびに、各業務に必要な情報が暗号化された接続（HTTPS）で送信されます。保存期間は、Supabase は利用者が削除するまで、Resend の配信記録は現在のプランで30日、Google Analytics はイベントデータ2か月・ユーザーデータ14か月で、Cloudflare はサーバー機能の実行ログを保存しません（各事業者が自社の方針で保存するログは別途）。",
-          "拒否の方法と影響：Google Analytics は、初回訪問時に表示される案内で許可した場合にのみ使用します。「許可しない」を選ぶか、後で「その他 › 利用統計」をオフにすると、Google Analytics へは何も送信されず、このサイトの Google Analytics の Cookie は削除され、すべての機能をそのまま利用できます。Supabase・Cloudflare による処理はサービスの提供に必要なため、拒否する場合はサービスの利用を中止する必要があり、既に保存された情報の削除を依頼できます。お問い合わせをメール送信サービスを経由させたくない場合は、フォームの代わりに support@gokoreamate.com へ直接ご連絡ください。",
+          "拒否の方法と影響：Google Analytics は、初回訪問時に表示される案内で収集・利用への同意と国外移転への同意の両方をした場合にのみ使用します。同意しない、「すべて拒否」を選ぶ、または後で「その他 › 利用統計」でどちらかをオフにすると、その時点から Google Analytics へは何も送信されず、このサイトの Google Analytics の Cookie は削除され、すべての機能をそのまま利用できます。Supabase・Cloudflare による処理はサービスの提供に必要なため、拒否する場合はサービスの利用を中止する必要があり、既に保存された情報の削除を依頼できます。お問い合わせをメール送信サービスを経由させたくない場合は、フォームの代わりに support@gokoreamate.com へ直接ご連絡ください。",
         ],
       },
       {
         no: 7, title: "分析ツール・地図・Cookie・ブラウザストレージ",
         paragraphs: [
-          "利用統計には、利用者が許可した場合にのみ Google Analytics 4 を使用します。選択する前と許可しなかった場合は Google Analytics のスクリプトを読み込まないため、Google へは何も送信されず、Google Analytics の Cookie も設定されません。許可すると、利用のたびに訪問情報（Cookie 識別子、閲覧した画面と使った機能、端末・ブラウザ情報、Google がおおよその地域の推定に使う IP アドレス）が米国の Google LLC に送信されます。処理の根拠は利用者の同意（個人情報保護法第15条第1項第1号）と国外移転についての別途の同意（第28条の8第1項第1号）で、「その他 › 利用統計」からいつでも撤回できます。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。分析イベントには機能・場所レベルの情報（例：都市名、公開場所の識別子）のみを含み、メールアドレスや氏名は含みません。",
+          "利用統計には、利用者が同意した場合にのみ Google Analytics 4 を使用します。同意は、個人情報の収集・利用への同意（個人情報保護法第15条第1項第1号）と国外移転への同意（第28条の8第1項第1号）の2つを別々にいただき、両方に同意した場合にのみ Google Analytics を読み込みます。選択する前、「後で決める」を選んだ場合、どちらか一方にのみ同意した場合は、Google Analytics のスクリプトを読み込まないため、Google へは何も送信されず、Google Analytics の Cookie も設定されません。両方に同意すると、利用のたびに訪問情報（Cookie 識別子、閲覧した画面と使った機能、端末・ブラウザ情報、Google がおおよその地域の推定に使う IP アドレス）が米国の Google LLC に送信されます。「その他 › 利用統計」でいつでも変更・撤回でき、撤回するとその時点から送信を止め、このサイトの Google Analytics の Cookie を削除します。すでに送信された統計は撤回によって直ちに削除されず、下記の保管期間が過ぎると削除されます。案内の内容が変わった場合は、以前の選択を適用せず改めてお尋ねします。14歳未満の方には同意しないよう案内していますが、年齢の確認は行っていません。Google Analytics の設定では、イベントデータは2か月、ユーザーデータは14か月保管され、ユーザーが再び利用するとユーザーデータの保管期間が改めて始まります。分析イベントには機能・場所レベルの情報（例：都市名、公開場所の識別子）のみを含み、メールアドレスや氏名は含みません。",
           "Cloudflare Web Analytics は Cookie を使わずブラウザのパフォーマンス情報で訪問を集計し、Cloudflare は訪問者の個人データを収集・利用しないとしています。",
           "地図は NAVER 地図で表示します。地図が表示されるとき、ブラウザが NAVER のサーバーに直接接続するため、NAVER は IP アドレスなど一般的な接続情報を受け取ります。一部の画像は観光公式サイトから直接読み込まれ、そのサイトも接続情報を受け取ります。",
           "サービス自体は Cookie を設定しません。ブラウザのローカルストレージには、端末識別子・作成中の旅程・保存した場所・案内の表示状態・言語設定が保存されます。ブラウザのストレージを消去すると、この端末から該当情報が削除されます。",
@@ -379,7 +387,10 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 13, title: "ポリシー変更の告知",
-        paragraphs: ["ポリシーを変更する場合は、新しい施行日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。"],
+        paragraphs: [
+          "ポリシーを変更する場合は、新しい施行日とともに本ページに掲載します。重要な変更はサービス内でお知らせします。",
+          `改定履歴：${PUBLIC_PRIVACY_FIRST_DATE} 初回掲載・${PUBLIC_PRIVACY_EFFECTIVE_DATE} 改定 — Google Analytics を、収集・利用と国外移転の2つの任意の同意を両方いただいた場合にのみ使用（第6・7条）。`,
+        ],
       },
       {
         no: 14, title: "お問い合わせ",
@@ -450,16 +461,16 @@ export const PRIVACY: LegalDocSet = {
         items: [
           "Supabase（数据库、照片存储）——将旅行内容和照片存储在韩国首尔区域（AWS ap-northeast-2）。其隐私政策载明的运营法人：Supabase Pte. Ltd.（新加坡），联系方式 privacy@supabase.com。保存至你删除为止。",
           "Cloudflare（网站分发、服务器功能运行、不使用 Cookie 的访问统计）——Cloudflare, Inc.（美国，101 Townsend St, San Francisco, CA 94107），联系方式 dpo@cloudflare.com。每次使用服务时，请求信息（IP 地址、请求内容等）可能在境外就近的 Cloudflare 节点处理。",
-          "Google（Google Analytics 使用统计，仅在你允许时）——Google LLC（美国），联系 https://support.google.com/policies。",
+          "Google（Google Analytics 使用统计，仅在你同意时）——Google LLC（美国），联系 https://support.google.com/policies。",
           "Resend（向运营方发送咨询通知邮件）——Plus Five Five, Inc.，其政策载明在美国处理，联系方式 support@resend.com。目前咨询通知邮件包含你填写的姓名、邮箱和留言。",
           "处理方式、时间与保存期限：每次使用服务时，完成相应工作所需的信息都会通过加密连接（HTTPS）传输。保存期限：Supabase 保存至你删除为止；Resend 的发送记录在当前套餐下保存 30 天；Google Analytics 的事件数据保存 2 个月、用户数据保存 14 个月；Cloudflare 不保存我们服务器功能的运行日志（各服务商依其自身政策保存的日志另计）。",
-          "拒绝方式与后果：只有在你于首次访问时显示的提示中选择允许后，我们才使用 Google Analytics。如果选择“不允许”，或之后在“更多 › 使用统计”中关闭，则不会向 Google Analytics 发送任何信息，本网站的 Google Analytics Cookie 会被删除，且全部功能仍可照常使用。Supabase 与 Cloudflare 的处理是提供服务所必需的，如需拒绝则须停止使用服务，并可请求删除已保存的信息。如果不希望咨询经过邮件发送服务，请不使用表单，直接发送邮件至 support@gokoreamate.com。",
+          "拒绝方式与后果：只有在你于首次访问时显示的提示中同时同意收集和使用以及境外转移后，我们才使用 Google Analytics。如果不同意、选择“全部拒绝”，或之后在“更多 › 使用统计”中关闭任意一项，则从那时起不会向 Google Analytics 发送任何信息，本网站的 Google Analytics Cookie 会被删除，且全部功能仍可照常使用。Supabase 与 Cloudflare 的处理是提供服务所必需的，如需拒绝则须停止使用服务，并可请求删除已保存的信息。如果不希望咨询经过邮件发送服务，请不使用表单，直接发送邮件至 support@gokoreamate.com。",
         ],
       },
       {
         no: 7, title: "分析工具、地图、Cookie 与浏览器存储",
         paragraphs: [
-          "仅在你允许时，我们才使用 Google Analytics 4 进行使用统计。在你作出选择之前以及你不允许时，我们不会加载 Google Analytics 脚本，不会向 Google 发送任何信息，也不会设置 Google Analytics Cookie。允许后，每次使用时，访问信息（Cookie 标识符、浏览的页面和使用的功能、设备与浏览器信息，以及 Google 用于估算大致地区的 IP 地址）会发送至美国的 Google LLC。处理依据是你的同意（《个人信息保护法》第15条第1款第1项）以及对境外转移的单独同意（第28条之8第1款第1项），你可随时在“更多 › 使用统计”中撤回。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。分析事件仅包含功能和地点层面的信息（例如城市名、公开地点的标识），不包含你的邮箱或姓名。",
+          "仅在你同意时，我们才使用 Google Analytics 4 进行使用统计。我们分别征求两项同意——收集和使用个人信息的同意（《个人信息保护法》第15条第1款第1项）以及向境外转移的同意（第28条之8第1款第1项）——只有两项都同意时才会加载 Google Analytics。在你作出选择之前、选择“稍后决定”时，或只同意其中一项时，我们不会加载 Google Analytics 脚本，不会向 Google 发送任何信息，也不会设置 Google Analytics Cookie。两项都同意后，每次使用时，访问信息（Cookie 标识符、浏览的页面和使用的功能、设备与浏览器信息，以及 Google 用于估算大致地区的 IP 地址）会发送至美国的 Google LLC。你可随时在“更多 › 使用统计”中更改或撤回；撤回后将从那时起停止发送，并删除本网站的 Google Analytics Cookie。已发送的统计不会因撤回而立即删除，而是在下述保存期限届满后删除。提示内容发生变化时，我们不会沿用你之前的选择，而会重新询问。我们提示未满 14 周岁者不要同意，但不核实年龄。按我们的 Google Analytics 设置，事件数据保存 2 个月，用户数据保存 14 个月；用户再次使用时，用户数据的保存期限重新计算。分析事件仅包含功能和地点层面的信息（例如城市名、公开地点的标识），不包含你的邮箱或姓名。",
           "Cloudflare Web Analytics 不使用 Cookie，而是通过浏览器性能信息统计访问；Cloudflare 表示不收集或使用访客的个人数据。",
           "地图通过 NAVER 地图显示。显示地图时，浏览器会直接连接 NAVER 的服务器，NAVER 会收到 IP 地址等一般连接信息。部分图片直接从官方旅游网站加载，这些网站同样会收到连接信息。",
           "服务本身不设置 Cookie。浏览器本地存储中保存设备标识符、正在编辑的行程、收藏的地点、提示显示状态和语言选择。清除浏览器存储会从此设备上删除这些信息。",
@@ -501,7 +512,10 @@ export const PRIVACY: LegalDocSet = {
       },
       {
         no: 13, title: "政策变更通知",
-        paragraphs: ["政策如有变更，将连同新的生效日期发布在本页面。重大变更将在服务内另行通知。"],
+        paragraphs: [
+          "政策如有变更，将连同新的生效日期发布在本页面。重大变更将在服务内另行通知。",
+          `修订记录：${PUBLIC_PRIVACY_FIRST_DATE} 首次发布 · ${PUBLIC_PRIVACY_EFFECTIVE_DATE} 修订——仅在你同时给出收集和使用以及境外转移两项可选同意时才使用 Google Analytics（第 6、7 条）。`,
+        ],
       },
       {
         no: 14, title: "联系我们",

@@ -25,7 +25,11 @@ test("게시 가능 상태 — 내부 마커·DRAFT 없음, 시행일 있음, 4l
 
 // ⚠ Auth 병합 시 이 테스트만 Auth 판 기준으로 바꾼다(로그인·계정 삭제·동의·자동 파기가 그때 출시되므로).
 test("미출시 기능을 제공한다고 쓰지 않는다(로그인·계정 삭제·동의·자동 파기)", () => {
-  const ko = all("ko"), en = all("en");
+  // GA-CONSENT: 사용 통계 동의 안내의 한계 문장(나이를 확인하지 않음)만 예외 — 로그인 연령 확인을 제공한다는 뜻이 아니다.
+  // 그 한 문장만 빼고 같은 금지어 검사를 그대로 한다.
+  const GA_UNDER14 = "만 14세 미만은 동의하지 않도록 안내하지만, 나이를 확인하지는 않습니다.";
+  assert.equal(all("ko").split(GA_UNDER14).length, 2, "GA 한계 문장은 정확히 1회");
+  const ko = all("ko").replace(GA_UNDER14, ""), en = all("en");
   for (const bad of ["Google 로그인", "계정 영구 삭제", "만 14세", "매일 자동으로 파기", "동의 기록"]) assert.ok(!ko.includes(bad), bad);
   for (const bad of ["Google sign-in", "delete your account", "aged 14", "daily job"]) assert.ok(!en.includes(bad), bad);
   assert.ok(ko.includes("현재 서비스에는 로그인·계정 기능이 없으며"));
