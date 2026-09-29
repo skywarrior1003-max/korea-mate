@@ -15,6 +15,7 @@ import path from "node:path";
 import { PRIVACY } from "./privacy-content.ts";
 import { TERMS } from "./terms-content.ts";
 import { hasOwnerInput } from "./legal-types.ts";
+import { LEGAL_EFFECTIVE_DATE } from "../auth/consent-contract.ts";
 import type { LegalDocSet } from "./legal-types.ts";
 
 const ROOT = process.cwd();
@@ -71,11 +72,14 @@ test("허위 표현 금지 — Google 비밀번호 수집·저장 긍정문 없�
 });
 
 test("DRAFT 계약 — ownerInput 잔존 = DRAFT, 렌더러가 배너 강제", () => {
-  // 현 시점: Owner 미확정 항목이 남아 있으므로 두 문서 모두 DRAFT 여야 한다.
-  // (Owner 확정 반영 커밋에서 이 기대값을 함께 바꾼다 — 그 전에 사라지면 회귀)
+  // Owner 문구 결정(2026-09-29)으로 마커는 0 — DRAFT 여부는 시행일 한 값으로만 정해진다.
+  // 게시 전(null): 두 문서 모두 DRAFT. 출시 커밋(시행일): 두 문서 모두 DRAFT 아님 + 시행일 표시 = 그 날짜.
   for (const l of LOCALES) {
-    assert.equal(hasOwnerInput(PRIVACY[l]), true, `privacy ${l} 는 아직 DRAFT`);
-    assert.equal(hasOwnerInput(TERMS[l]), true, `terms ${l} 는 아직 DRAFT`);
+    for (const [name, doc] of [["privacy", PRIVACY[l]], ["terms", TERMS[l]]] as const) {
+      assert.equal(doc.sections.filter(s => s.ownerInput).length, 0, `${name} ${l}: 마커 0`);
+      if (LEGAL_EFFECTIVE_DATE === null) assert.equal(hasOwnerInput(doc), true, `${name} ${l} 는 아직 DRAFT`);
+      else { assert.equal(hasOwnerInput(doc), false, `${name} ${l}: 시행일이 있으면 DRAFT 아님`); assert.equal(doc.effectiveDate, LEGAL_EFFECTIVE_DATE); }
+    }
   }
   const renderer = read("src/components/legal/LegalDocument.tsx");
   assert.ok(renderer.includes("hasOwnerInput"), "렌더러가 DRAFT 판정을 사용");

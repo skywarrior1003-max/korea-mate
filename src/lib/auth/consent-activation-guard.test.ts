@@ -22,7 +22,7 @@ import {
   createIntentCookieValue, verifyIntentCookie, constantTimeEqual,
 } from "../../../functions/_lib/consent-intent.ts";
 import {
-  TERMS_VERSION, PRIVACY_VERSION, AGE_GATE_VERSION, CONSENT_INTENT_MAX_AGE_S,
+  TERMS_VERSION, PRIVACY_VERSION, AGE_GATE_VERSION, CONSENT_INTENT_MAX_AGE_S, LEGAL_EFFECTIVE_DATE,
 } from "./consent-contract.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..", "..");
@@ -127,9 +127,17 @@ test("③ 버전 문자열 단일 정의 — contract 밖 하드코딩 0", () =>
   };
   walk("src"); walk("functions");
   assert.deepEqual(offenders, []);
-  assert.equal(TERMS_VERSION, "preview-legal-v1");
-  assert.equal(PRIVACY_VERSION, "preview-legal-v1");
-  assert.equal(AGE_GATE_VERSION, "preview-age-14-v1");
+  // 게시 전(null)은 Preview 버전, 출시 커밋(시행일)부터는 세 버전 모두 같은 날짜에서 파생 — 어긋날 수 없다
+  if (LEGAL_EFFECTIVE_DATE === null) {
+    assert.equal(TERMS_VERSION, "preview-legal-v1");
+    assert.equal(PRIVACY_VERSION, "preview-legal-v1");
+    assert.equal(AGE_GATE_VERSION, "preview-age-14-v1");
+  } else {
+    assert.match(LEGAL_EFFECTIVE_DATE, /^\d{4}-\d{2}-\d{2}$/);
+    assert.equal(TERMS_VERSION, `legal-${LEGAL_EFFECTIVE_DATE}-v1`);
+    assert.equal(PRIVACY_VERSION, `legal-${LEGAL_EFFECTIVE_DATE}-v1`);
+    assert.equal(AGE_GATE_VERSION, `age-14-${LEGAL_EFFECTIVE_DATE}-v1`);
+  }
 });
 
 test("③ AI 4route — requireActiveUser 가 관문(맨 requireUser 게이트 잔존 0)", () => {

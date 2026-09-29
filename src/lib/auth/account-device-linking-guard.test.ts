@@ -212,7 +212,7 @@ test("§12-11·12·13·14 — 기존 계약 무변경", () => {
   const usage = read("functions/api/place-usage.ts");
   assert.ok(!/resolveOwnership/.test(usage), "usage 신호 계약 무변경(비식별 aggregate)");
   // Legal DRAFT 유지
-  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = null;/); // 게시 전 DRAFT — 시행일 단일 원천
+  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = (null|"\d{4}-\d{2}-\d{2}");/); // 게시 전 null(DRAFT), 출시 커밋에서 시행일 한 줄 — 시행일 단일 원천
   // 계정 삭제 가능 문구 금지(구현 전)
   for (const l of ["ko", "en", "ja", "zh"]) {
     const auth = (JSON.parse(read(`src/messages/${l}.json`)) as { auth: Record<string, string> }).auth;
