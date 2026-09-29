@@ -122,7 +122,13 @@ export default function MoreClient() {
             href="/survival-guide/"
             label={tNav("survivalGuide")}
             desc={t("guideDesc")}
-            icon={<svg {...ICON} aria-hidden><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z" /><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z" /></svg>}
+            icon={<svg {...ICON} aria-hidden><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z" />
+          <Row
+            href="/privacy/"
+            label={tNav("privacy")}
+            desc={t("privacyDesc")}
+            icon={<svg {...ICON} aria-hidden><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /></svg>}
+          /><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z" /></svg>}
           />
         </Group>
 

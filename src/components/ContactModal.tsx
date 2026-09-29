@@ -34,6 +34,7 @@ export default function ContactModal({
   relatedPlaceName,
 }: ContactModalProps) {
   const t = useTranslations("contactForm");
+  const tNav = useTranslations("nav");
   const [type,    setType]    = useState<string>(INQUIRY_TYPES[0]);
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
@@ -262,7 +263,10 @@ export default function ContactModal({
 
               {/* Privacy note */}
               <p className="text-[11px] text-gray-400 leading-relaxed">
-                {t("privacy")}
+                {t("privacy")}{" "}
+                <a href="/privacy/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-gray-600">
+                  {tNav("privacy")}
+                </a>
               </p>
 
               {/* Buttons */}

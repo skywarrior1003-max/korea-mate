@@ -65,7 +65,8 @@ test("④ 범위 가드 — auth/linking·migration 무접촉(이번 TASK)", () 
   // migration 수는 079 까지 그대로(스냅숏 digest 는 3파일 가드가 고정).
   const files = readdirSync(join(ROOT, "supabase/migrations")).filter(f => f.endsWith(".sql"));
   assert.ok(files.length >= 76); // production 기준 — 정확 카운트는 스냅숏 3파일 가드가 고정
-  // legal DRAFT 마커는 Auth 계보 전용 파일 — production 묶음에는 없어도 된다(있으면 검사)
-  try { assert.match(read("src/lib/legal/privacy-content.ts"), /effectiveDate: null/); }
+  // legal 파일은 Auth 계보 DRAFT(effectiveDate null) 이거나, 현재 공개 서비스판
+  // (PUBLIC-PRIVACY-POLICY-V1 — 시행일 상수 PUBLIC_PRIVACY_EFFECTIVE_DATE)이어야 한다(없어도 된다)
+  try { assert.match(read("src/lib/legal/privacy-content.ts"), /effectiveDate: null|effectiveDate: PUBLIC_PRIVACY_EFFECTIVE_DATE,/); }
   catch (e) { if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e; }
 });
