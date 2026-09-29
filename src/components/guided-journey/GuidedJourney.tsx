@@ -54,7 +54,7 @@ const STEPS: Record<JourneyStep, StepDef> = {
   pickPlace: { on: l => reCityHub.test(l.path), goto: "/", targets: ['[data-tut="tut-place"]'], done: { route: l => /^\/place\//.test(l.path) } },
   savePlace: { on: l => /^\/place\//.test(l.path), targets: ['[data-tut="tut-save"]'], done: { dom: '[data-tut="tut-save"][aria-pressed="true"]' } },
   openPicks: { on: () => true, goto: "/picks/", targets: ['[data-tut="tut-nav-picks"]'], done: { route: l => /^\/picks/.test(l.path) } },
-  addToThisTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-this-trip"]', '[data-tut="tut-tab-saved"]'], done: { click: ['[data-tut="tut-this-trip"]'] } },
+  addToThisTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-this-trip"]', '[data-tut="tut-tab-saved"][aria-selected="false"]'], done: { click: ['[data-tut="tut-this-trip"]'] } },
   openThisTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", targets: ['[data-tut="tut-tab-selected"]'], done: { dom: '[data-tut="tut-tab-selected"][aria-selected="true"]' } },
   buildTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", // 여행 도시·날짜가 아직 없으면(시작 카드) 날짜 → [이 조건으로 시작] 을 먼저 가리킨다
     targets: ['[data-tut="tut-starter-go"]:not(:disabled)', '[data-tut="tut-starter-start"][value=""]', '[data-tut="tut-starter-end"]', '[data-tut="tut-build"]'], done: { route: l => /^\/itinerary/.test(l.path) } },
@@ -62,7 +62,7 @@ const STEPS: Record<JourneyStep, StepDef> = {
   pasteLink: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-url"]'], done: { dom: '[data-tut="tut-import-preview"]' }, failDom: '[data-tut="tut-import-error"]' },
   reviewImport: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-confirm"]', '[data-tut="tut-import-add"]'], done: { route: l => isMyTrip(l) || /^\/picks/.test(l.path) } },
   openMyTrip: { on: () => true, goto: "/my-trips/", targets: ['[data-tut="tut-trip-row"]'], done: { route: isMyTrip } },
-  tripSaved: { on: l => /^\/itinerary/.test(l.path), goto: "/my-trips/", targets: ['[data-tut="tut-sync"]'], done: { dom: '[data-tut-itin="saved"]' } },
+  tripSaved: { on: l => /^\/itinerary/.test(l.path), goto: "/my-trips/", targets: ['[data-tut="tut-sync"]'], done: { signal: "trip-saved", dom: '[data-tut-sync="saved"]' } },
   checkDates: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-dates-apply"]', '[data-tut="tut-dates"]'], done: { signal: "dates-applied" }, confirm: true },
   // 일정 탭의 장소별 기록 버튼은 여행 기간에만 보인다 — 없으면 늘 기록 버튼이 있는 Story 탭부터 가리킨다
   addRecord: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-add-record"]', '[data-tut="tut-story-tab"]'], done: { signal: "moment-saved" }, pausable: true },
@@ -280,7 +280,7 @@ export default function GuidedJourney() {
             {body.head && <p className="mt-0.5 text-[12.5px] font-bold text-sub">{body.head}</p>}
             <p id="gkm-journey-say" aria-live="polite" className="mt-0.5 text-[14.5px] font-black leading-snug">{body.text}</p>
             {why && mode !== "failed" && (!compact || expanded) && <p className="mt-1 text-[12.5px] leading-relaxed text-sub">{why}</p>}
-            {(body.goto || mode === "offscreen" || (def.confirm && mode !== "offRoute") || def.pausable || mode === "failed") && (
+            {(body.goto || mode === "offscreen" || (def.confirm && mode !== "offRoute" && mode !== "missing") || def.pausable || mode === "failed") && (
             <div className="mt-2.5 flex flex-wrap gap-2">
               {body.goto && (
                 <Link href={body.goto} className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl bg-ink text-white text-[13px] font-bold">{t(`goto.${step}`)}</Link>
@@ -289,7 +289,7 @@ export default function GuidedJourney() {
                 <button type="button" onClick={() => targetRef.current?.scrollIntoView({ block: "center", behavior: reduceMotion() ? "auto" : "smooth" })}
                   className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl border border-ink text-[13px] font-bold">{t("scrollTo")}</button>
               )}
-              {def.confirm && mode !== "offRoute" && (
+              {def.confirm && mode !== "offRoute" && mode !== "missing" && (
                 <button type="button" onClick={() => step === "finish" ? set(endJourney(completeStep(js!, "finish"), "done")) : advance(step)}
                   className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl border border-ink text-[13px] font-bold">{t(`confirm.${step}`)}</button>
               )}

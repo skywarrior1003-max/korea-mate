@@ -1452,6 +1452,8 @@ function ItineraryResult() {
    */
   const [checkinTime, setCheckinTime] = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
+  // Guided Journey — 서버 저장이 실제로 끝났을 때만 알린다(일정 id 는 생성 전에 먼저 정해진다)
+  useEffect(() => { if (syncStatus === "saved") signalJourney("trip-saved"); }, [syncStatus]);
   const [syncFading,  setSyncFading]  = useState(false);
   const [copied,          setCopied]          = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -3106,7 +3108,7 @@ function ItineraryResult() {
           시안(my_trip_planning_final)은 일정이 주인공이다. 예전 헤더 카드의 버튼 무더기(공개/비공개·
           순간 기록·공유 카드·홈·편집·보기 전환)는 기능을 하나도 빼지 않고 "더보기" 메뉴로 접는다.
           동기화 상태와 공개 일정의 링크 복사만 바로 보이게 둔다. */}
-      <div className="flex items-center justify-between gap-3 mb-5" data-tut-itin={itinId ? "saved" : "draft"} data-tut-public={isPublic ? "1" : "0"}>
+      <div className="flex items-center justify-between gap-3 mb-5" data-tut-itin={itinId ? "saved" : "draft"} data-tut-sync={syncStatus} data-tut-public={isPublic ? "1" : "0"}>
         <div data-tut="tut-sync" className="flex items-center gap-2 flex-wrap min-w-0">
           {syncStatus === "saving" && (
             <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">

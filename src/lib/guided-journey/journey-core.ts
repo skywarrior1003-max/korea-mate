@@ -158,7 +158,7 @@ export function progressOf(state: JourneyState): { phase: "start" | "mytrip"; in
   return { phase: "start", index: own.indexOf(state.step) + 1, total: own.length };
 }
 
-export type JourneySignal = "dates-applied" | "moment-saved";
+export type JourneySignal = "dates-applied" | "moment-saved" | "trip-saved";
 
 /** 제품 코드가 행동 결과를 알린다(안내가 꺼져 있어도 부작용 없음) */
 export function signalJourney(name: JourneySignal): void {
