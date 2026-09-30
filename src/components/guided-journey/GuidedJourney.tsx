@@ -134,7 +134,9 @@ export default function GuidedJourney() {
   /** 키보드 건너뛰기 링크 자리 — body 맨 앞(Tab 첫 번째)에 둔다. 말풍선 자체는 초점을 빼앗지 않는다. */
   const [skipHost, setSkipHost] = useState<HTMLElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
-  const stepStart = useRef<{ step: JourneyStep | null; at: number; scrolled: boolean }>({ step: null, at: 0, scrolled: false });
+  // scrolledFor: 자동 스크롤을 이미 한 대상(data-tut). 한 단계 안에서 대상이 바뀌면(예: 카드 만들기 → 공유/저장) 새 대상에 한 번 더 —
+  // 2026-09-30 실측: 공유 카드 단계에서 첫 대상에 스크롤을 쓴 뒤 아래쪽 공유 버튼은 화살표 없이 '버튼으로 이동'만 남았다.
+  const stepStart = useRef<{ step: JourneyStep | null; at: number; scrolled: boolean; scrolledFor: string | null }>({ step: null, at: 0, scrolled: false, scrolledFor: null });
 
   // 상태 읽기·동기화(다른 탭·더보기에서 바꿔도 따라온다)
   useEffect(() => {
@@ -195,7 +197,7 @@ export default function GuidedJourney() {
   // 완료 판정 + 대상 추적(가벼운 주기 점검 — 화면·상태가 바뀌는 대부분의 경우를 잡는다)
   useEffect(() => {
     if (!step || !def) return;
-    if (stepStart.current.step !== step) stepStart.current = { step, at: Date.now(), scrolled: false };
+    if (stepStart.current.step !== step) stepStart.current = { step, at: Date.now(), scrolled: false, scrolledFor: null };
     const tick = () => {
       const l = locNow();
       // 첫 방문 안내(오픈 전 안내·통계 선택)가 열려 있으면 그 위에 겹치지 않는다.
@@ -226,9 +228,12 @@ export default function GuidedJourney() {
       const hit = top && !el.contains(top) && !top.closest("[data-journey-bubble]") ? top : null;
       const underBar = !!hit && !!hit.closest("nav, header");
       const off = outside || underBar;
+      const key = el.getAttribute("data-tut");
+      if (stepStart.current.scrolled && stepStart.current.scrolledFor !== key) stepStart.current.scrolled = false;
       if (off && !stepStart.current.scrolled && !typing()) {
         // 단계가 시작될 때 한 번만 대상을 보이게 한다 — 이후의 스크롤은 사용자의 것이다
         stepStart.current.scrolled = true;
+        stepStart.current.scrolledFor = key;
         bringIntoView(el);
       }
       setRect(r);
