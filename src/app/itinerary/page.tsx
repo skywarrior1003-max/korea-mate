@@ -2677,13 +2677,17 @@ function ItineraryResult() {
     // 순서 계약: 시각 있는 항목은 시각이 자리를 정한다. 고른 자리와 다르면 숨기지 않고 알린다.
     const current = days[editDay]?.places ?? [];
     const wanted  = addAfter === null || addAfter >= current.length - 1 ? current.length : Math.max(0, addAfter + 1);
-    const placed  = orderDayPlaces(insertAtChosen(current, newPlace));
+    // 시각 있는 항목은 끝에 넣고 시각 자리로 보낸다 — 고른 자리에 끼워 넣으면 시각 정렬이 시각 없는 항목들의
+    // 이웃을 바꿔 놓는다(2026-09-30 실측: 먼저 "광안리 다음"에 넣은 새 장소가 해운대 뒤로 밀렸다).
+    const timedNew = shouldShowClock(newPlace);
+    const put = (list: Place[]) => (timedNew ? [...list, newPlace] : insertAtChosen(list, newPlace));
+    const placed  = orderDayPlaces(put(current));
     const landed  = placed.indexOf(newPlace);
     setOrderNotice(landed !== wanted
       ? { dayIdx: editDay, key: getItemSourceKey(item), name: newPlace.name, time: placeTime, fixed: Boolean(item.fixed), wanted }
       : null);
     setDays(prev => prev.map((day, di) =>
-      di === editDay ? { ...day, places: orderDayPlaces(insertAtChosen(day.places, newPlace)) } : day
+      di === editDay ? { ...day, places: orderDayPlaces(put(day.places)) } : day
     ));
     const key = getItemSourceKey(item);
     if (itinId && unplacedItems.some(u => getItemSourceKey(u) === key)) {
