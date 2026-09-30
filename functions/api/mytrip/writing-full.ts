@@ -148,6 +148,9 @@ async function loadPhotos(env: Env, cands: readonly PhotoCandidate[]): Promise<{
       });
     } catch { res = null; }
     if (!res || !res.ok) { skipped.push({ momentId: c.momentId, reason: "load_failed" }); continue; }
+    // 크기를 먼저 본다 — 상한을 넘는 파일은 내려받지 않는다(저장소 버킷은 현재 1MB·JPEG 로 제한돼 있다)
+    const declared = Number(res.headers.get("content-length") ?? "");
+    if (Number.isFinite(declared) && declared > L.maxBytesEach) { skipped.push({ momentId: c.momentId, reason: "too_large" }); await res.body?.cancel(); continue; }
     const mime = (res.headers.get("content-type") ?? "").split(";")[0]!.trim().toLowerCase();
     if (!(FULL_TRIP_PHOTO_MIME as readonly string[]).includes(mime)) { skipped.push({ momentId: c.momentId, reason: "unsupported" }); continue; }
     const bytes = new Uint8Array(await res.arrayBuffer());
