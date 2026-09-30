@@ -358,7 +358,8 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     worstUsdMicro: 12_100, // cost-model analyze 가정 상한 ≈$0.0121(입력 18,000자·출력 4,096 토큰 기준 — 절대 최악 아님)
     idempotencyKey: `import:${quotaId}:${crypto.randomUUID().slice(0, 8)}`,
     actorHash: actor,
-    featureDailyCalls: 100, featureDailyUsdMicro: 1_500_000, // $1.5/day
+    // TEMP 2026-09-30 Owner 승인(Staging 오늘 한정 +100) — Preview 검증 후 100 으로 되돌린다. Production 반영 금지
+    featureDailyCalls: 200, featureDailyUsdMicro: 1_500_000, // $1.5/day
   });
   if (!gate.ok) {
     await release();
