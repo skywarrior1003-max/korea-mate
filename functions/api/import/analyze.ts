@@ -145,7 +145,8 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
   return ((_url: RequestInfo | URL, init?: RequestInit) =>
     binding.fetch("https://ai-writing.internal/provider", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-internal-auth": key },
+      // 긴 블로그·일정 글은 8초를 넘는다(실측 8.6~13초) — Worker 에 이 요청의 상한(20초)을 알린다
+      headers: { "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": "20000" },
       body: init?.body ?? null,
       signal: init?.signal ?? undefined,
     })) as typeof fetch;

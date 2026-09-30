@@ -660,7 +660,8 @@
     "heroCostNote": "AI suggestions are generated only when you pick a mood or ask again.",
     "mapLoadFailed": "Could not load the map.",
     "mapRetry": "Try again",
-    "focusRegion": "{city}, South Korea"
+    "focusRegion": "{city}, South Korea",
+    "heroManualNote": "Pick a tone and write it yourself. For AI suggestions in three styles, use 'Write the whole trip at once' below."
   },
   "memo": {
     "edit": "Edit",
@@ -1525,7 +1526,7 @@
     "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself.",
     "suggestUnavailable": "AI suggestions are temporarily unavailable. You can still write it yourself.",
     "suggestAsk": "Get AI suggestions",
-    "suggestUsesFree": "A new suggestion uses your free AI assist (once every 30 days, shared with personalization and import)."
+    "suggestUsesFree": "AI writing suggests all records together in 'Write the whole trip at once'."
   },
   "blog": {
     "title": "Blog",
@@ -1546,9 +1547,8 @@
     "linkLabel": "Paste a public link to a plan or a place",
     "linkScope": "We can read blogs and web pages anyone can open, and public AI share links. Pages that need a login and private chat addresses can't be read — copy the text and paste it instead.",
     "needLogin": "Import analysis needs you to sign in.",
-    "aiCountNote": "One completed import = one AI assist. Saving, reopening and your own edits don't count.",
-    "balanceFree": "You have 1 free AI assist (once every 30 days, shared by AI trip personalization, Story AI writing and import).",
-    "balanceUsed": "You've used your free AI assist — it's available again from {date}.",
+    "aiCountNote": "One completed import = one AI trip build. Saving, reopening and your own edits don't count.",
+    "balanceUsed": "You've used this month's free AI trip building — it's available again from {date}.",
     "analyze": "Import",
     "analyzing": "Analyzing…",
     "analyzingNote": "We're only copying out places, order and times — nothing is rearranged or invented.",
@@ -1557,7 +1557,7 @@
     "switchToText": "Switch to paste text",
     "errLogin": "Please sign in. You can continue right after.",
     "errConsent": "Please agree to the terms and privacy notice first.",
-    "errQuota": "You've used your free AI assist (once every 30 days). It's available again from {date}. Building a trip by picking places and editing it yourself still work.",
+    "errQuota": "You've used this month's free AI trip building (shared by import and AI planning). It's available again from {date}. Building a trip by picking places and editing it yourself still work.",
     "errPaused": "Import analysis isn't available right now. Try again later, or build the trip by picking places yourself.",
     "errInProgress": "This content is already being analyzed. Please try again in a moment.",
     "errPrivateChat": "This is the address of your own chat, which can't be opened elsewhere. Create a public link with the chat's Share option, or copy the answer and paste it.",
@@ -1605,7 +1605,9 @@
     "multiToNewTrip": "Start a new trip with these places",
     "addToThisTrip": "Add to This Trip (others to My Places)",
     "placesSaved": "The chosen places were kept in My Places.",
-    "startOver": "Import something else"
+    "startOver": "Import something else",
+    "balancePlan": "{count} free AI trip build(s) left (1 per month, shared by import and AI planning).",
+    "balancePlanWithBonus": "{count} free AI trip build(s) left (1 per month + 1 extra the first time, shared by import and AI planning)."
   },
   "community": {
     "reactionGroup": "Reactions to this content",
@@ -1759,7 +1761,7 @@
     "importCan": "plan text copied from Gemini, ChatGPT and others; blogs, web pages and public AI share links anyone can open",
     "importCannotLabel": "Not supported:",
     "importCannot": "pages that need a login, private chat addresses (not share links), files",
-    "importNeedLogin": "Importing needs a sign-in. Import analysis uses your free AI assist (once every 30 days, shared with personalization and Story writing).",
+    "importNeedLogin": "Import needs sign-in. Import analysis uses your free AI trip building (1 per month, shared with AI planning, plus 1 extra the first time).",
     "importOutside": "Places outside our 5 cities can also be saved or imported and used in your trip.",
     "pathImport": "Start importing",
     "pathMyTrip": "Continue from my trip",
@@ -1878,7 +1880,7 @@
       "pasteLink": {
         "say": "Paste plan text or a link, then tap [Import]",
         "name": "Paste text or a link",
-        "why": "One completed import = one AI assist. The AI only copies out order and times — it doesn't change them.",
+        "why": "One completed import = one AI trip build. The AI only copies your text — it doesn't change the order or times.",
         "say_tut-import-text": "Paste the plan you copied from Gemini, ChatGPT or elsewhere here",
         "say_tut-import-url": "Paste the public link here",
         "say_tut-import-go": "Tap [Import]"
@@ -1954,7 +1956,40 @@
     }
   },
   "freeAi": {
-    "used": "You've used your free AI assist (once every 30 days). You can keep writing and editing yourself.",
-    "usedUntil": "You've used your free AI assist (once every 30 days). It's available again from {date} — you can keep writing and editing yourself."
+    "used": "You've used this month's free AI writing (2 per month). You can keep writing and editing yourself.",
+    "usedUntil": "You've used this month's free AI writing (2 per month). It's available again from {date} — you can keep writing and editing yourself.",
+    "planUsed": "You've used this month's free AI trip building (shared by import and AI planning). Picking places yourself and editing still work.",
+    "planUsedUntil": "You've used this month's free AI trip building (shared by import and AI planning). It's available again from {date} — picking places yourself and editing still work."
+  },
+  "fullTripAi": {
+    "heading": "Write the whole trip at once",
+    "desc": "Tap this once your plan and records are in. One request suggests the trip title, story intro and a title and text for every record, in three styles. The AI doesn't look at your photos — it reads only places, dates and your own notes.",
+    "remaining": "{count} free AI writing request(s) left this month (2 per month, shared by My Trip and Story).",
+    "ask": "Get AI suggestions for the whole trip",
+    "retry": "Try again",
+    "failed": "We couldn't make suggestions. Nothing was counted — you can try again.",
+    "needLogin": "AI writing needs sign-in. Writing it yourself works without signing in.",
+    "loginCta": "Continue with Google",
+    "confirmTitle": "Use 1 free AI writing request?",
+    "confirmBody": "You only get suggestions. You choose what to apply next, and anything you wrote stays unless you pick it. Failures aren't counted.",
+    "confirmYes": "Yes, get suggestions",
+    "confirmNo": "Not now",
+    "busy": "Reading your whole trip and writing…",
+    "backToSaved": "View previous suggestions",
+    "savedView": "You're viewing previous suggestions — nothing extra is counted.",
+    "styleLabel": "Choose a style",
+    "fieldTripTitle": "Trip title",
+    "fieldStoryTitle": "Story title",
+    "fieldStoryIntro": "Story intro",
+    "fieldMoment": "Record",
+    "dayN": "Day {n}",
+    "current": "Now",
+    "userWritten": "You wrote this — it changes only if you pick it.",
+    "apply": "Apply {count} selected",
+    "applying": "Applying…",
+    "applied": "Applied. You can edit anything yourself anytime.",
+    "applyFailed": "Some items couldn't be saved. Please apply again.",
+    "regenerate": "Get new suggestions (uses 1 more)",
+    "noPhotoNote": "The AI doesn't see what's in your photos. It writes only from places, dates and your own notes."
   }
 }

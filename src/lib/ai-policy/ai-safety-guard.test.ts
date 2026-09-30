@@ -13,7 +13,7 @@ import path from "node:path";
 
 import {
   BASE_SCHEDULER_CREDIT_COST, TRIP_DAYS_MIN, TRIP_DAYS_MAX,
-  CREDIT_COST, FORBIDDEN_LEGACY, TICKET, FREE_AI,
+  CREDIT_COST, FORBIDDEN_LEGACY, TICKET, FREE_AI, FREE_MONTHLY,
 } from "./usage-policy.ts";
 import {
   provenanceOrUser, fieldEligible, creditUnitsForProposal,
@@ -247,11 +247,14 @@ test("정책 — 5,900원 이용권 100(첫)=80+20 / 80(재), 구독·만료 없
 });
 
 // 정정(2026-09-30): 이전 가드는 "월 1+2, 30일 통합 1회 금지"를 고정했지만 Owner 확정 정책은 반대였다.
-test("정책 — 비용 드는 AI 도움은 30일 이동 구간 무료 1회, 개인화·글쓰기·가져오기 공유", () => {
-  assert.equal(FREE_AI.windowDays, 30);
-  assert.equal(FREE_AI.uses, 1);
-  assert.deepEqual([...FREE_AI.sharedBy].sort(), ["import", "personalize", "writing"]);
-  assert.equal(FREE_AI.ledgerPool, "shared_30d");
+// 재정정(2026-09-30): Owner 가 09-25 작업 지시를 기준으로 바로잡았다 — 30일 통합 1회(FREE_AI)는 기록으로만 남는다.
+test("정책 — 일정 만들기 월 1(+최초 1, 가져오기·AI 일정 공유) · 전체 여행 글쓰기 월 2", () => {
+  assert.equal(FREE_MONTHLY.plan.monthly, 1);
+  assert.equal(FREE_MONTHLY.plan.welcomeBonusOnce, 1);
+  assert.deepEqual([...FREE_MONTHLY.plan.sharedBy].sort(), ["import", "personalize"]);
+  assert.equal(FREE_MONTHLY.writing.monthly, 2);
+  assert.equal(FREE_MONTHLY.ledgerMigration, "087");
+  assert.equal(FREE_AI.ledgerPool, "shared_30d", "086 기록 값은 바꾸지 않는다(새 코드에서 쓰지 않음)");
 });
 
 // ── §10 전체 여행 글쓰기 계약 — 사용자 작성 보호 ────────────────────────────

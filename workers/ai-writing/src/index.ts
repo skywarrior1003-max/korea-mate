@@ -217,7 +217,10 @@ export default {
         return json({ error: "invalid_body" }, 400);
       }
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+      // 호출측이 긴 작업(가져오기 분석·전체 여행 글쓰기)이면 x-provider-timeout-ms 로 늘린다 — 8~45초로 제한
+      const wanted = Number(request.headers.get("x-provider-timeout-ms") ?? "");
+      const timeoutMs = Number.isFinite(wanted) && wanted > 0 ? Math.min(45_000, Math.max(TIMEOUT_MS, Math.floor(wanted))) : TIMEOUT_MS;
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
       const started = Date.now();
       try {
         const res = await fetch(

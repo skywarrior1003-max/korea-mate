@@ -18,6 +18,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { MAX_USER_SPOT_BODY_BYTES, readBodyWithLimit, str, optStr } from "../../../src/lib/itinerary-validate";
 import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
+import { tripCityKey } from "../../../src/data/cities/trip-city.ts";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -54,7 +55,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     const key = name.normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    wanted.push({ name: name.replace(/\s+/g, " ").trim(), note: optStr(raw?.note, 300) ?? null, city: optStr(raw?.city, 100) ?? null, key });
+    wanted.push({ name: name.replace(/\s+/g, " ").trim(), note: optStr(raw?.note, 300) ?? null, city: tripCityKey(optStr(raw?.city, 100) ?? null) || null, key }); // 같은 도시는 한 값(강릉·gangneung → gangneung)
   }
   if (wanted.length === 0) return json({ error: "invalid items" }, 400);
 

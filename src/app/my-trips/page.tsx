@@ -35,6 +35,7 @@ import { getDeviceId } from "@/lib/deviceId";
 import { visitedStorageKey } from "@/lib/visited";
 import { cityVisual } from "@/lib/city-visual";
 import { CITY_CONFIGS, cityLabelKey } from "@/data/cities";
+import { tripCityLabel } from "@/data/cities/trip-city";
 import { classifyTrips, todayStopLabel, formatTripDates } from "@/lib/trips/trips-lifecycle";
 import { seoulClock } from "@/lib/trips/seoul-clock";
 import {
@@ -162,7 +163,8 @@ export default function MyTripsPage() {
   // 도시 이름은 이미 있는 번역(tripForm.city_*)으로. 모르는 도시는 slug 를 대문자로.
   const cityLabel = (slug: string) => {
     const conf = CITY_CONFIGS[slug.toLowerCase()];
-    return conf ? tForm(cityLabelKey(conf)) : cityCap(slug);
+    // 5개 도시 밖은 언어별 공식 이름(표에 있는 도시), 모르면 저장값 그대로 — 강릉·gangneung 이 한 도시로 보인다
+    return conf ? tForm(cityLabelKey(conf)) : tripCityLabel(slug, locale) || cityCap(slug);
   };
   const titleOf = (trip: Trip) => trip.tripTitle || t("titleFallback", { city: cityLabel(trip.city) });
   const datesOf = (trip: Trip) => formatTripDates(trip.startDate, trip.endDate, locale);

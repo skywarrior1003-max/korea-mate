@@ -62,6 +62,9 @@ interface Env {
   MYTRIP_AI_GLOBAL_CALLS_PER_DAY?: string;
 }
 
+/** 전체 여행 AI 글쓰기로 옮긴 개별 생성 target(Owner 교정 2026-09-30) */
+const RETIRED_TARGETS: ReadonlySet<string> = new Set(["title", "memo", "moment", "moment3", "storyHero"]);
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const GEN_TABLE = "mytrip_ai_generations";
 const TREND_TABLE = "mytrip_trend_packs";
@@ -339,6 +342,11 @@ export async function onRequestPost(
   try { body = await ctx.request.json(); }
   catch { return reply(null, "invalid_request"); }
   if (!isWritingRequest(body)) return reply(null, "invalid_request");
+  // Owner 교정(2026-09-30) — 여행 제목·기록(사진)별·Story 표지 AI 는 따로 부르지 않는다.
+  // 전체 여행 AI 글쓰기(/api/mytrip/writing-full)가 한 번의 요청으로 모두 3가지 표현으로 제안한다.
+  // 이 경로의 개별 생성은 provider 호출·사용권 예약 전에 닫는다(사진마다 추가 요청이 생기지 않게).
+  // 아래 코드는 되돌림용으로 남겨 둔다(되돌릴 때는 RETIRED_TARGETS 를 비운다).
+  if (RETIRED_TARGETS.has(body.target)) return reply(null, "retired_use_full_trip");
 
   // 사진 입력(§B) — moment3 전용. 계약 위반 이미지는 provider 호출 없이 정직한
   // 실패다(사진을 본 척하는 경로 금지). URL 은 어떤 형태로도 받지 않는다(SSRF 0).

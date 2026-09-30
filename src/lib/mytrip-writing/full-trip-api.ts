@@ -1,0 +1,44 @@
+// 전체 여행 AI 글쓰기 클라이언트 — /api/mytrip/writing-full
+//  load     : 저장된 지난 제안(재열람 · AI 호출·차감 0)
+//  generate : 새 제안(성공하면 전체 여행 AI 글쓰기 사용권 1회). 같은 내용의 저장 결과가 있으면 그대로(0)
+
+import { withAuthHeader } from "@/lib/auth/device-auth-headers";
+import type { FullTripProposal } from "@/lib/mytrip-writing/full-trip-core";
+
+export type FullTripResult =
+  | { kind: "proposal"; proposal: FullTripProposal; generationId: string | null; charged: boolean; saved: boolean; stale: boolean }
+  | { kind: "none" }
+  | { kind: "freeUsed"; nextFreeAt: string | null }
+  | { kind: "login" }
+  | { kind: "busy" }
+  | { kind: "failed" };
+
+export async function apiFullTrip(args: { itineraryId: string; deviceId: string; locale: string; mode: "load" | "generate"; forceFresh?: boolean }): Promise<FullTripResult> {
+  try {
+    const res = await fetch("/api/mytrip/writing-full", {
+      method: "POST",
+      headers: await withAuthHeader({ "Content-Type": "application/json", "x-device-id": args.deviceId }),
+      body: JSON.stringify({ itineraryId: args.itineraryId, locale: args.locale, mode: args.mode, ...(args.forceFresh ? { forceFresh: true } : {}) }),
+      signal: AbortSignal.timeout(60_000),
+    });
+    if (res.status === 401 || res.status === 403) return { kind: "login" };
+    if (!res.ok) return { kind: "failed" };
+    const j = (await res.json()) as { ok?: boolean; ai_status?: string; proposal?: FullTripProposal | null; generation_id?: string | null; charged?: boolean; next_free_at?: string | null; stale?: boolean | null };
+    if (j.proposal) return { kind: "proposal", proposal: j.proposal, generationId: j.generation_id ?? null, charged: j.charged === true,
+      saved: j.ai_status === "saved" || j.ai_status === "cache_server", stale: j.stale === true };
+    if (j.ai_status === "none") return { kind: "none" };
+    if (j.ai_status === "fallback_quota") return { kind: "freeUsed", nextFreeAt: j.next_free_at ?? null };
+    if (j.ai_status === "fallback_busy") return { kind: "busy" };
+    return { kind: "failed" };
+  } catch { return { kind: "failed" }; }
+}
+
+/** 이번 달 남은 전체 여행 AI 글쓰기 사용권 — 로그인 전이면 null */
+export async function apiFullTripBalance(): Promise<{ remaining: number; limit: number; resetsAt: string } | null> {
+  try {
+    const res = await fetch("/api/mytrip/writing-full", { headers: await withAuthHeader({}) });
+    if (!res.ok) return null;
+    const j = (await res.json()) as { ok?: boolean; writing?: { monthly_remaining: number; monthly_limit: number }; resets_at?: string };
+    return j.ok && j.writing ? { remaining: j.writing.monthly_remaining, limit: j.writing.monthly_limit, resetsAt: j.resets_at ?? "" } : null;
+  } catch { return null; }
+}

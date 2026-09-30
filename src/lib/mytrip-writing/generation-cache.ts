@@ -125,7 +125,7 @@ export function normalizedContextString(c: WritingContext): string {
 }
 
 export interface CacheKeyParts {
-  feature: "moment3" | "storyHero";
+  feature: "moment3" | "storyHero" | "fullTrip";
   /** storyHero 는 문체별 결과가 다르다 — 키에 반드시 포함(QA 실측: 미포함 시 warm 이 witty 캐시를 받았다). moment3 는 null. */
   direction: string | null;
   itineraryId: string;

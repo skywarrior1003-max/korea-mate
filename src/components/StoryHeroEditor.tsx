@@ -12,6 +12,10 @@
 //    공개 표지는 저장된 최종값만 쓴다.
 //  · 같은 입력+같은 문체는 sessionStorage 캐시(해시 키 — 평문 저장 0)로
 //    재호출하지 않는다.
+//
+// Owner 교정(2026-09-30): 문체별 AI 호출을 하지 않는다. Story 제목·소개도 전체 여행 AI 글쓰기
+// (FullTripAiWriter)가 한 번의 요청에서 세 가지 표현으로 함께 제안한다. 여기서는 문체를 고르고
+// 직접 쓴다(AI 호출·차감 0). AI 경로 코드는 되돌림용으로 남기고 AI_TONE_RETIRED 로 닫는다.
 
 import { useCallback, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -24,6 +28,8 @@ import { apiSuggestStoryHero } from "@/lib/mytrip-writing/api";
 
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 const ORANGE = "#FF4A2D";
+/** 문체별 AI 생성 닫힘(전체 여행 AI 글쓰기로 이동) — 되돌릴 때 false */
+const AI_TONE_RETIRED: boolean = true;
 
 function djb2(s: string): string {
   let h = 5381;
@@ -82,6 +88,7 @@ export default function StoryHeroEditor({
     if (busy) return;
     setTone(dir);
     setFailed(false);
+    if (AI_TONE_RETIRED) { setMode("edit"); return; } // 직접 쓰기 — AI 호출 0
     const context = buildContext();
     const key = `gkm_hero_${STORY_HERO_PROMPT_VERSION}_${locale}_${dir}_${djb2(JSON.stringify(context))}`;
     if (!opts?.forceFresh) try {
@@ -187,7 +194,7 @@ export default function StoryHeroEditor({
               ))}
             </div>
             {/* 재생성 비용 고지(§3) — 과장 없이 */}
-            <p className="mt-2 text-[11.5px] text-[#8A919B]">{t("heroRegenNote")}</p>
+            <p className="mt-2 text-[11.5px] text-[#8A919B]">{AI_TONE_RETIRED ? t("heroManualNote") : t("heroRegenNote")}</p>
             {busy && (
               <p className="mt-2 flex items-center gap-2 text-[12.5px] text-[#565D66]" role="status">
                 <span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-black/20 border-t-[#FF4A2D] animate-spin" aria-hidden />
@@ -225,7 +232,7 @@ export default function StoryHeroEditor({
                 {t("heroSave")}
               </button>
               {/* 명시적 재제안(§B) — 누를 때만 정확히 1요청. 자동 재호출 없음. */}
-              {tone && (
+              {tone && !AI_TONE_RETIRED && (
                 <button
                   type="button" onClick={() => void pickTone(tone, { forceFresh: true })} disabled={busy}
                   className="gkm-focus px-3 py-2 rounded-xl text-xs font-bold border border-black/15 text-[#565D66] cursor-pointer disabled:opacity-50"
@@ -241,7 +248,7 @@ export default function StoryHeroEditor({
               </button>
             </div>
             {/* 비용 구조 안내(§B) — 과장 없이 */}
-            <p className="text-[11.5px] text-[#8A919B]">{t("heroCostNote")}</p>
+            <p className="text-[11.5px] text-[#8A919B]">{AI_TONE_RETIRED ? t("heroManualNote") : t("heroCostNote")}</p>
           </div>
         )}
       </div>

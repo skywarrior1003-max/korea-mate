@@ -7,7 +7,13 @@ import type { AnalyzedContent } from "./import-core";
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 
 /** 무료 AI 도움(30일 1회 · 개인화·글쓰기·가져오기 공통). 유료 잔액은 없다(결제 미구현). */
-export interface ImportBalance { free_remaining: number; next_free_at: string | null; window_days: number }
+/** 087 — 남은 무료 사용권(유료 잔액 없음). plan = 가져오기·AI 일정 공통, writing = 전체 여행 AI 글쓰기 */
+export interface ImportBalance {
+  period: string;
+  resets_at: string;
+  plan: { monthly_limit: number; monthly_remaining: number; bonus_remaining: number };
+  writing: { monthly_limit: number; monthly_remaining: number };
+}
 
 export type AnalyzeResponse =
   | { ok: true; url: string | null; pageTitle: string; analysis: AnalyzedContent; charged?: boolean; replay?: boolean; pool?: string; balance?: ImportBalance | null }

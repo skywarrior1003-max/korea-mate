@@ -315,6 +315,9 @@ test("★신규 personalize 가 유일한 AI 진입점이다", () => {
   assert.deepEqual(hits.sort(), [
     "/functions/api/generate-itinerary.ts",
     "/functions/api/import/analyze.ts",
+    // 전체 여행 AI 글쓰기(Owner 교정 2026-09-30) — 개별 글쓰기를 대체한 승인 기능. 서울 Worker 경유 우선·
+    // 로그인·사용권(087)·회사 게이트 보유(import-quota-guard 가 순서를 고정)
+    "/functions/api/mytrip/writing-full.ts",
     "/functions/api/mytrip/writing.ts",
   ]);
 

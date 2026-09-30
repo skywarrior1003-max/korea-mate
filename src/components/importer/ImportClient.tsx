@@ -33,11 +33,11 @@ import { getDeviceId } from "@/lib/deviceId";
 import { displayPlaceName } from "@/lib/place-display-name";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
+import { tripCityKey } from "@/data/cities/trip-city";
 
 type Phase = "idle" | "analyzing" | "preview" | "saving" | "error";
 type Tab = "text" | "link";
 
-const KNOWN_CITIES = ["busan", "seoul", "jeju", "gyeongju", "jeonju"];
 
 const addDays = (iso: string, n: number): string => {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -178,7 +178,7 @@ function ImportInner() {
   /** 연결되지 않은 이름들을 내 장소로 보존하고 이름→id 를 돌려준다 */
   async function preserveUnmatched(items: { name: string; note?: string | null }[]): Promise<Map<string, string> | null> {
     if (items.length === 0) return new Map();
-    const saved = await apiCreateUserSpotsFromImport(source, items.map(i => ({ name: i.name, note: i.note ?? null, city: city.trim() || null })));
+    const saved = await apiCreateUserSpotsFromImport(source, items.map(i => ({ name: i.name, note: i.note ?? null, city: tripCityKey(city) || null })));
     if (!saved) return null;
     return new Map(saved.map(s => [s.name.replace(/\s+/g, " ").trim().toLowerCase(), s.id]));
   }
@@ -241,7 +241,8 @@ function ImportInner() {
     const cityValue = city.trim();
     const okSave = await apiSaveItinerary({
       id,
-      city: KNOWN_CITIES.includes(cityValue.toLowerCase()) ? cityValue.toLowerCase() : cityValue,
+      // 같은 도시는 한 값으로 저장 — 5개 도시 slug · 표에 있는 도시 로마자 key · 그 밖은 입력 그대로(trip-city.ts)
+      city: tripCityKey(cityValue),
       start_date: startDate,
       end_date: endDate < startDate ? startDate : endDate,
       travelers: "1",
@@ -370,7 +371,13 @@ function ImportInner() {
 
             <p className="mt-3 text-xs leading-relaxed" style={ui.faint}>
               {user === false ? t("needLogin") : t("aiCountNote")}
-              {balance && ` ${balance.free_remaining > 0 ? t("balanceFree") : t("balanceUsed", { date: fmtDate(balance.next_free_at) })}`}
+              {balance && (() => {
+                // 087 — 일정 만들기(가져오기·AI 일정 공통) 월 1회 + 신규 회원 최초 1회. 유료 잔액은 없다.
+                const left = balance.plan.monthly_remaining + balance.plan.bonus_remaining;
+                return ` ${left > 0
+                  ? t(balance.plan.bonus_remaining > 0 ? "balancePlanWithBonus" : "balancePlan", { count: left })
+                  : t("balanceUsed", { date: fmtDate(balance.resets_at) })}`;
+              })()}
             </p>
             <button type="button" data-tut="tut-import-go" onClick={() => void analyze()} disabled={phase === "analyzing"}
               className={`${primary} mt-3`} style={{ backgroundColor: "var(--qh-navy)" }}>

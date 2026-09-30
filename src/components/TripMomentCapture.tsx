@@ -10,7 +10,6 @@ import { useTranslations, useLocale } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
-import MomentAiSuggest from "@/components/MomentAiSuggest";
 import { apiWritingMeta } from "@/lib/mytrip-writing/api";
 
 interface Props {
@@ -391,29 +390,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             {/* AI 3안(제목+본문) — 정보가 준비되면 자동 제안, 고른 안은 아래
                 필드에 채워지고 그대로 고칠 수 있다. 저장값이 Story 의 SSOT 다. */}
-            <div className="mb-3">
-              <MomentAiSuggest
-                ready={photoData !== null || (isBound ? boundPlaceName !== "" : placeName.trim() !== "") || memo.trim() !== ""}
-                photoDataUrl={photoData}
-                itineraryId={itineraryId}
-                deviceId={deviceId}
-                buildContext={() => ({
-                  city: (city ?? "").trim() || "Korea",
-                  // 결합 순간 = DB canonical locale 이름(aiPlaceName), 자유 순간 =
-                  // 사용자 입력 이름 그대로 — AI 에게 번역/음차를 맡기지 않는다.
-                  placeName: (isBound ? (aiPlaceName ?? placeName) : placeName) || null,
-                  category,
-                  dayNumber,
-                  hasPhoto: photoData !== null,
-                  draft: memo.trim() || null,
-                  tripTitle: (tripTitle ?? "").trim() || null,
-                })}
-                onPick={pick => {
-                  aiPickRef.current = { title: pick.title, memo: pick.memo, generationId: pick.generationId };
-                  setTitle(pick.title.slice(0, 60)); setMemo(pick.memo.slice(0, 300));
-                }}
-              />
-            </div>
+            {/* 기록(사진)별 AI 제안은 따로 부르지 않는다 — 전체 여행 AI 글쓰기가 한 번의 요청으로
+                모든 기록의 제목·내용을 함께 제안한다(Owner 교정 2026-09-30). 여기서는 직접 쓴다. */}
             <label className="block text-xs font-bold text-white/50 mb-1.5" htmlFor="moment-title">{t("titleLabel")}</label>
             <input
               id="moment-title"

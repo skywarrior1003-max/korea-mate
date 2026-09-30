@@ -660,7 +660,8 @@
     "heroCostNote": "只有在选择语气或再次生成时才会调用AI。",
     "mapLoadFailed": "无法加载地图。",
     "mapRetry": "重试",
-    "focusRegion": "{city}，韩国"
+    "focusRegion": "{city}，韩国",
+    "heroManualNote": "选择文风后自行撰写。AI 建议请在下方“一次写好整趟旅行”中一次获得三种表达。"
   },
   "memo": {
     "edit": "编辑",
@@ -1525,7 +1526,7 @@
     "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。",
     "suggestUnavailable": "AI建议暂时不可用。你仍可直接输入。",
     "suggestAsk": "获取 AI 建议",
-    "suggestUsesFree": "新建议会使用免费 AI 帮助（每 30 天 1 次，与个性化、导入共用）。"
+    "suggestUsesFree": "AI 文字会在“一次写好整趟旅行”中为所有记录一起提供建议。"
   },
   "blog": {
     "title": "博客",
@@ -1546,9 +1547,8 @@
     "linkLabel": "粘贴公开的行程或地点链接",
     "linkScope": "可以读取任何人都能打开的博客、网页和 AI 公开分享链接。需要登录的页面或对话窗口地址无法读取，这时请复制文字后粘贴。",
     "needLogin": "导入分析需要登录后使用。",
-    "aiCountNote": "完成一次导入 = 使用一次 AI 帮助。保存、再次查看和自行修改不计次数。",
-    "balanceFree": "可使用 1 次免费 AI 帮助（每 30 天 1 次，AI 行程个性化、故事 AI 写作、导入共用）。",
-    "balanceUsed": "免费 AI 帮助已用完 — {date} 起可再次使用。",
+    "aiCountNote": "完成一次导入 = 一次 AI 行程制作。保存、再次查看和自行修改不计次数。",
+    "balanceUsed": "本月免费 AI 行程制作已用完 — {date} 起可再次使用。",
     "analyze": "导入",
     "analyzing": "分析中…",
     "analyzingNote": "只从原文中提取地点、顺序和时间，不会调整路线或凭空创造。",
@@ -1557,7 +1557,7 @@
     "switchToText": "改为粘贴文字",
     "errLogin": "需要登录。登录后即可继续导入。",
     "errConsent": "需要先同意使用条款和隐私说明。",
-    "errQuota": "免费 AI 帮助（每 30 天 1 次）已用完，{date} 起可再次使用。自己挑选地点制作和自行修改仍可使用。",
+    "errQuota": "本月免费 AI 行程制作（导入与 AI 行程共用）已用完，{date} 起可再次使用。自己挑选地点制作和自行修改仍可使用。",
     "errPaused": "目前无法使用导入分析。请稍后再试，或自己挑选地点制作旅行。",
     "errInProgress": "相同内容正在分析中，请稍后再试。",
     "errPrivateChat": "这是你自己的对话窗口地址，其他地方无法打开。请用对话的“分享”生成公开链接，或复制回答后粘贴。",
@@ -1605,7 +1605,9 @@
     "multiToNewTrip": "用所选地点创建新旅行",
     "addToThisTrip": "加入本次行程（其余存入我的地点）",
     "placesSaved": "所选地点已保存到我的地点。",
-    "startOver": "导入其他内容"
+    "startOver": "导入其他内容",
+    "balancePlan": "剩余 {count} 次免费 AI 行程制作（每月 1 次，导入与 AI 行程共用）。",
+    "balancePlanWithBonus": "剩余 {count} 次免费 AI 行程制作（每月 1 次 + 首次额外 1 次，导入与 AI 行程共用）。"
   },
   "community": {
     "reactionGroup": "对此内容的反馈",
@@ -1759,7 +1761,7 @@
     "importCan": "从 Gemini、ChatGPT 等复制的行程文字，任何人都能打开的博客、网页和 AI 公开分享链接",
     "importCannotLabel": "不支持：",
     "importCannot": "需要登录的页面、对话窗口地址（非分享链接）、文件",
-    "importNeedLogin": "导入需要登录。导入分析会使用免费 AI 帮助（每 30 天 1 次，与个性化、故事写作共用）。",
+    "importNeedLogin": "导入需要登录。导入分析使用免费 AI 行程制作（每月 1 次，与 AI 行程共用，首次额外 1 次）。",
     "importOutside": "5 个城市以外的地点也可以自行保存或导入，用在你的旅行中。",
     "pathImport": "开始导入",
     "pathMyTrip": "从我的旅行继续",
@@ -1878,7 +1880,7 @@
       "pasteLink": {
         "say": "粘贴行程文字或链接，然后点击[导入]",
         "name": "粘贴文字或链接",
-        "why": "完成一次导入 = 使用一次 AI 帮助。AI 只会照抄原文的顺序和时间，不会修改。",
+        "why": "完成一次导入 = 一次 AI 行程制作。AI 只照抄原文，不改变顺序和时间。",
         "say_tut-import-text": "把从 Gemini、ChatGPT 等复制的行程粘贴到这里",
         "say_tut-import-url": "把公开链接粘贴到这里",
         "say_tut-import-go": "点击[导入]"
@@ -1954,7 +1956,40 @@
     }
   },
   "freeAi": {
-    "used": "免费 AI 帮助（每 30 天 1 次）已用完。仍可自行撰写和修改。",
-    "usedUntil": "免费 AI 帮助（每 30 天 1 次）已用完，{date} 起可再次使用 — 仍可自行撰写和修改。"
+    "used": "本月免费 AI 写作（每月 2 次）已用完。仍可自行撰写和修改。",
+    "usedUntil": "本月免费 AI 写作（每月 2 次）已用完，{date} 起可再次使用 — 仍可自行撰写和修改。",
+    "planUsed": "本月免费 AI 行程制作（导入与 AI 行程共用）已用完。自己挑选地点制作和修改仍可使用。",
+    "planUsedUntil": "本月免费 AI 行程制作（导入与 AI 行程共用）已用完，{date} 起可再次使用 — 自己挑选地点制作和修改仍可使用。"
+  },
+  "fullTripAi": {
+    "heading": "一次写好整趟旅行",
+    "desc": "放好全部行程和记录后再点。一次请求就会用三种表达，建议旅行标题、故事简介以及每条记录的标题和内容。AI 不看照片，只读取地点、日期和你自己写的备注。",
+    "remaining": "本月还剩 {count} 次免费 AI 写作（每月 2 次，My Trip 与故事共用）。",
+    "ask": "获取整趟旅行的 AI 建议",
+    "retry": "重试",
+    "failed": "未能生成建议。未扣除次数 — 可以重试。",
+    "needLogin": "AI 写作需要登录。自行撰写无需登录。",
+    "loginCta": "使用 Google 继续",
+    "confirmTitle": "要使用 1 次免费 AI 写作吗？",
+    "confirmBody": "只会收到建议。下一步由你选择要应用的项目，自己写的内容不选就不会改变。失败不扣次数。",
+    "confirmYes": "好，获取建议",
+    "confirmNo": "暂不",
+    "busy": "正在阅读整趟旅行并撰写…",
+    "backToSaved": "查看上次的建议",
+    "savedView": "正在查看上次的建议 — 不会额外扣次数。",
+    "styleLabel": "选择表达",
+    "fieldTripTitle": "旅行标题",
+    "fieldStoryTitle": "故事标题",
+    "fieldStoryIntro": "故事简介",
+    "fieldMoment": "记录",
+    "dayN": "第 {n} 天",
+    "current": "当前",
+    "userWritten": "这是你写的内容 — 选中后才会换成建议。",
+    "apply": "应用所选 {count} 项",
+    "applying": "正在应用…",
+    "applied": "已应用。随时可以自行修改。",
+    "applyFailed": "部分内容未能保存。请再次应用。",
+    "regenerate": "重新获取建议（再用 1 次）",
+    "noPhotoNote": "AI 看不到照片内容，只根据地点、日期和你自己写的备注来写。"
   }
 }

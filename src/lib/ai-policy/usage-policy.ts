@@ -9,6 +9,12 @@
 //   **비용이 드는 AI 도움은 성공 시점부터 30일 이동 구간에 무료 1회**이고, AI 일정 개인화·Story 의
 //   명시적 AI 글쓰기·외부 일정 AI 분석이 **같은 1회**를 쓴다. 위 "30일당 통합 1회 폐기" 문장과 아래
 //   FREE_MONTHLY(월 1+2) 는 승인 정책이 아니었다 — FREE_AI 가 SSOT 다. (1~5일·일정 3크레딧 금지는 그대로)
+//
+// ▶ 재정정(2026-09-30, MYTRIP-FULL-TRIP-AI-WRITING-AND-ENTITLEMENT-CORRECTION): Owner 가 **2026-09-25 작업 지시**를
+//   기준으로 바로잡았다 — 위 정정(30일 통합 1회)은 다시 적용하지 않는다. SSOT 는 FREE_MONTHLY(087).
+//   · 일정 만들기(plan) 월 1회 = 글·링크 가져오기 분석 + AI 일정(개인화·레거시 생성) 공유, 신규 회원 최초 1회 추가
+//   · 전체 여행 AI 글쓰기(writing) 월 2회 = My Trip·Story 공유, 3문체 한 요청 = 1회
+//   · '월' 갱신 시점·최초 보너스 만료는 원문에 없다 — DB(ai_user_period_now = 서울 시각 달력 월, 보너스 만료 없음)에만 두고 Owner 결정 대기
 
 /** 기본(비AI) 일정 생성 — 무제한·차감 0. 어떤 원장에도 계상하지 않는다 */
 export const BASE_SCHEDULER_CREDIT_COST = 0 as const;
@@ -54,9 +60,24 @@ export const TICKET = {
  *  · 유료 이용권은 미구현 — 화면에 유료 잔액을 보이지 않고, 무료 소진 뒤 무제한 호출도 열지 않는다.
  *  · 가져오기의 AI 는 원문을 바꾸지 않는다 — 추출만(순서·시간·내용 그대로).
  */
+/** @deprecated 086(30일 통합 1회) 기록 — 087 에서 FREE_MONTHLY 로 대체. 새 코드에서 쓰지 않는다 */
 export const FREE_AI = {
   windowDays: 30,
   uses: 1,
   sharedBy: ["personalize", "writing", "import"],
   ledgerPool: "shared_30d",
+} as const;
+
+/**
+ * 무료 사용권(087 · 2026-09-25 Owner 작업 지시 기준 · 2026-09-30 재정정).
+ *  · plan: 일정 만들기 월 1회 — 글·링크 가져오기 분석과 AI 일정(개인화·레거시 생성)이 공유.
+ *          신규 회원 최초 보너스 1회(계정당 1회 · 가져오기 전용 아님 · 매월 재지급 없음).
+ *  · writing: 전체 여행 AI 글쓰기 월 2회 — My Trip·Story 공유. 3가지 표현을 한 요청으로 받으면 1회.
+ *  · 차감 0: 기본 일정·추천 코스·직접 편집·사진 업로드·Story 열람·실패·저장 결과 재열람.
+ *  · 유료 이용권은 미구현 — 유료 잔액을 보이지 않고 소진 뒤 무제한 호출도 열지 않는다.
+ */
+export const FREE_MONTHLY = {
+  plan: { monthly: 1, welcomeBonusOnce: 1, sharedBy: ["import", "personalize"] },
+  writing: { monthly: 2, sharedBy: ["writing"] },
+  ledgerMigration: "087",
 } as const;

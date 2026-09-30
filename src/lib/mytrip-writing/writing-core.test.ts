@@ -147,17 +147,16 @@ test("parser guard — malformed/truncated payload 는 raw 노출 없이 null", 
   assert.equal(extractSuggestion("", "memo"), null);
 });
 
-test("배선 가드 — title 은 locale 해석 tripFacts, memo 는 tripTitle·aiPlaceName 을 실제로 보낸다", () => {
+test("배선 가드 — 제목·기록별 AI 는 화면에서 부르지 않는다(전체 여행 AI 글쓰기로 이동), 캡처 aiPlaceName 배선은 유지", () => {
   const page = readFileSync(join(process.cwd(), "src", "app", "itinerary", "page.tsx"), "utf8");
-  // LOCALE-FACT-GROUNDING-V1: tripFacts 장소명은 requested-locale canonical 로 해석해 보낸다
-  assert.match(page, /tripFacts: deriveTripWritingFacts\(days\.map/);
-  assert.match(page, /name: localizedPlaceName\(p\.name\?\.trim\(\) \|\| "", l10nOf\(p\), locale\)/);
+  // Owner 교정(2026-09-30): 제목 AI 3방향·기록(사진)별 AI 제안은 따로 부르지 않는다 — 한 번의 요청으로 전체를 제안
+  assert.doesNotMatch(page, /<AiWritingAssist/);
+  assert.match(page, /<FullTripAiWriter/);
   // 결합 순간 캡처 3경로 모두 aiPlaceName(locale 해석)을 싣는다
   assert.equal((page.match(/aiPlaceName: localizedPlaceName\(/g) ?? []).length >= 2, true, "캡처 진입점 aiPlaceName 누락");
   assert.match(page, /aiPlaceName=\{captureStop\?\.aiPlaceName \?\? null\}/);
   const cap = readFileSync(join(process.cwd(), "src", "components", "TripMomentCapture.tsx"), "utf8");
-  assert.match(cap, /tripTitle: \(tripTitle \?\? ""\)\.trim\(\) \|\| null/);
-  assert.match(cap, /placeName: \(isBound \? \(aiPlaceName \?\? placeName\) : placeName\) \|\| null/);
+  assert.doesNotMatch(cap, /<MomentAiSuggest/);
   const worker = readFileSync(join(process.cwd(), "workers", "ai-writing", "src", "index.ts"), "utf8");
   // moment3(다중카드)부터 target, MULTIMODAL V1 부터 image 인자 — 4-인자 계약
   assert.match(worker, /buildProviderBody\(prompt, direction, target, isMultimodal \? image : null\)/);

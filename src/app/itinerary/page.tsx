@@ -41,7 +41,6 @@ import WeatherLinkChip, { type DayForecast } from "@/components/planner/WeatherL
 import { readUnplaced, addUnplaced, removeUnplaced, UNPLACED_EVENT } from "@/lib/planner/unplaced-store";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import PartnerOfferRow from "@/components/PartnerOfferRow";
-import AiWritingAssist from "@/components/AiWritingAssist";
 import { deriveTripWritingFacts } from "@/lib/mytrip-writing/writing-core";
 import StoryHeroEditor from "@/components/StoryHeroEditor";
 import StoryRecommendSubmit from "@/components/community/StoryRecommendSubmit";
@@ -94,6 +93,8 @@ import PlannerDayNav from "@/components/planner/PlannerDayNav";
 import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
 import { fetchPersonalizationProfile, takeFreeAiUsed } from "@/lib/planner/personalize-client";
 import FreeAiUsedNote from "@/components/FreeAiUsedNote";
+import { tripCityLabel } from "@/data/cities/trip-city";
+import FullTripAiWriter from "@/components/FullTripAiWriter";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
 import TimelineIcon from "@/components/planner/TimelineIcon";
@@ -1336,7 +1337,9 @@ function ItineraryResult() {
   // locale 라벨로 — 저장 원본(과거 locale 라벨 포함)은 손대지 않는다.
   const citySlugCanonical = resolveCitySlug(city);
   const tCityLabel = useTranslations("tripForm");
-  const cityDisplay = citySlugCanonical ? tCityLabel(cityLabelKey(citySlugCanonical)) : city;
+  // 5개 도시 밖(가져오기·내 장소)도 언어별 이름으로 — 강릉·gangneung 저장값 모두 같은 표시(trip-city.ts)
+  const cityUiLocale = useLocale();
+  const cityDisplay = citySlugCanonical ? tCityLabel(cityLabelKey(citySlugCanonical)) : tripCityLabel(city, cityUiLocale);
   // 자동 기본 제목 — locale 완성 문구(문자열 이어붙임으로 혼합 언어를 만들지 않는다).
   // 사용자가 직접 입력한 tripTitle 이 있으면 언제나 그것이 우선한다(아래 fallback 자리만 사용).
   const tAutoTitle = useTranslations("itin");
@@ -3007,7 +3010,7 @@ function ItineraryResult() {
           ) : aiOptInPhase === "unavailable" ? (
             <p className="text-sm text-violet-700 font-medium">{t("aiUnavailableNotice")}</p>
           ) : aiOptInPhase === "freeUsed" ? (
-            <FreeAiUsedNote nextFreeAt={aiFreeUsedAt} className="text-sm text-violet-700 font-medium" />
+            <FreeAiUsedNote kind="plan" nextFreeAt={aiFreeUsedAt} className="text-sm text-violet-700 font-medium" />
           ) : aiOptInPhase === "busy" ? (
             <p className="text-sm text-violet-700 font-medium">{t("aiOptInBusy")}</p>
           ) : aiOptInPhase === "confirm" ? (
@@ -3084,26 +3087,8 @@ function ItineraryResult() {
             {/* My Trip 제목 AI 3방향 — 제안은 input 으로 들어가고 Enter/저장으로 확정한다.
                 blur 저장을 버튼 클릭과 겹치지 않게, 편집 종료는 Enter/Escape/저장 버튼만. */}
             <span className="mt-2 flex items-start justify-between gap-3 rounded-2xl bg-white/95 px-4 py-2.5">
-              <AiWritingAssist
-                target="title"
-                buildContext={() => ({
-                  city,
-                  dates: `${startDate} – ${endDate}`,
-                  draft: titleInput.trim() || null,
-                  // 실제 일정에서 셈한 여행 패턴 — "이 여행에서만 나올 제목" 의 재료
-                  // (AI-WRITING-QUALITY-PRODUCTION-V1; 좌표·숙소명·내부 id 없음).
-                  // 장소명은 requested locale 의 canonical l10n 으로 해석해 보낸다 —
-                  // AI 에게 번역/음차를 맡기지 않는다 (LOCALE-FACT-GROUNDING-V1 §3).
-                  tripFacts: deriveTripWritingFacts(days.map(d => ({
-                    places: (d.places ?? []).map(p => ({
-                      name: localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale),
-                      category: p.category,
-                      isAccommodation: p.isAccommodation,
-                    })),
-                  }))),
-                })}
-                onSuggestion={text => setTitleInput(text.slice(0, 60))}
-              />
+              {/* 제목 AI 제안은 전체 여행 AI 글쓰기(FullTripAiWriter)로 옮겼다 — 여행 제목도 그 한 번의 요청에서 함께 제안한다(Owner 교정 2026-09-30). */}
+              <span className="flex-1" />
               <button type="button" onClick={handleTitleSave}
                 className="flex-none text-[13px] font-bold text-white rounded-full px-3.5 py-2 min-h-9"
                 style={{ backgroundColor: "#131b2e" }}>
@@ -3296,6 +3281,7 @@ function ItineraryResult() {
                       선택 시 그 방향 1회만 생성한다. 저장값이 위 표지·공개 Story 의 정본. */}
                   {itinId && (
                     <StoryHeroEditor
+                      key={`${storyHeroTitle ?? ""}|${storyHeroIntro ?? ""}`}
                       itineraryId={itinId}
                       deviceId={getDeviceId()}
                       city={city}
@@ -3310,6 +3296,25 @@ function ItineraryResult() {
                       storyIntro={storyHeroIntro}
                       storyTone={storyHeroTone}
                       onSaved={v => { setStoryHeroTitle(v.title); setStoryHeroIntro(v.intro); setStoryHeroTone(v.tone); }}
+                    />
+                  )}
+                  {/* 전체 여행 AI 글쓰기(Owner 교정 2026-09-30) — 명시 버튼으로만, 한 번의 요청으로 여행 제목·Story·
+                      기록(사진)마다 제목과 내용을 세 가지 표현으로 제안. 고른 항목만 적용한다. */}
+                  {itinId && isOwner && (
+                    <FullTripAiWriter
+                      itineraryId={itinId}
+                      deviceId={getDeviceId()}
+                      tripTitle={tripTitle || null}
+                      storyTitle={storyHeroTitle}
+                      storyIntro={storyHeroIntro}
+                      moments={moments.map(m => ({ id: m.moment_id, title: m.title ?? null, memo: m.memo || null, place: m.place_name ?? null, day: m.day_number ?? null, synced: m.synced }))}
+                      onApplied={v => {
+                        if (v.tripTitle) setTripTitle(v.tripTitle);
+                        if (v.storyTitle !== undefined) setStoryHeroTitle(v.storyTitle);
+                        if (v.storyIntro !== undefined) setStoryHeroIntro(v.storyIntro);
+                        if (v.storyTitle || v.storyIntro) setStoryHeroTone(v.tone);
+                        if (v.momentIds.length > 0) void loadMomentsFromServer(itinId, getDeviceId()).then(setMoments);
+                      }}
                     />
                   )}
                   {/* COMMUNITY-V1 §5-2 — 공개 Story 만 지역 추천에 제출할 수 있다.
