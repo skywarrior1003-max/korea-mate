@@ -80,3 +80,8 @@ test("원문은 원장에 저장하지 않는다 — 재응답용 결과만, 24�
   assert.match(M087, /result = NULL\s+WHERE user_id = p_user AND result IS NOT NULL AND settled_at < now\(\) - interval '24 hours'/);
   assert.doesNotMatch(M087, /\braw_text\b|\binput_text\b|\bsource_text\b/);
 });
+
+test("원인 진단(?diag=raw)은 Production 이 아닐 때만 — 모델 응답 앞부분이 Production 응답에 실리지 않는다(2026-09-30)", () => {
+  assert.match(ANALYZE, /const wantDiag = \(ctx\.env\.APP_ENV \?\? ""\)\.trim\(\)\.toLowerCase\(\) !== "production" && new URL\(ctx\.request\.url\)\.searchParams\.get\("diag"\) === "raw"/);
+  assert.match(ANALYZE, /const diag = wantDiag \?/);
+});
