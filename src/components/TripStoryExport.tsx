@@ -949,10 +949,12 @@ export default function TripStoryExport({
   return (
     <div
       data-tut="tut-card-modal"
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4"
+      // 2026-09-30: 휴대폰 높이(664px 실측)보다 창이 길면 가운데 정렬 때문에 아래 공유·저장 버튼이 화면 밖으로
+      // 잘려 스크롤로도 닿지 않았다 — 바깥을 스크롤 가능하게 하고, 창은 남는 공간이 있을 때만 가운데(my-auto)
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center p-4 overflow-y-auto"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-[#1a1a2e] rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl">
+      <div className="bg-[#1a1a2e] rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl my-auto shrink-0">
         {/* 헤더 */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <h2 className="text-base font-black text-white">{t("cardTitle")}</h2>
@@ -975,10 +977,11 @@ export default function TripStoryExport({
             else if (d < -40) goNext();
           }) : undefined}
         >
+          {/* 미리보기 높이는 화면의 56% 까지 — 9:16 비율은 그대로, 공유·저장 버튼이 한 화면에 함께 보이게 */}
           <canvas
             ref={canvasRef}
-            className="w-full rounded-2xl"
-            style={{ aspectRatio: "9/16", background: "#16213e" }}
+            className="block mx-auto max-w-full rounded-2xl"
+            style={{ aspectRatio: "9/16", background: "#16213e", height: "min(56dvh, calc((min(100vw, 24rem) - 4rem) * 16 / 9))", width: "auto" }}
           />
           {hasDeck && (
             <>
