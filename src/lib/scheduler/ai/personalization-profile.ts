@@ -48,7 +48,9 @@ export interface PersonalizationProfile {
 export type AiStatus =
   | "disabled" | "mock" | "applied"
   | "fallback_missing_key" | "fallback_timeout" | "fallback_provider_error"
-  | "fallback_invalid_response" | "fallback_duplicate" | "fallback_guard";
+  | "fallback_invalid_response" | "fallback_duplicate" | "fallback_guard"
+  /** 이번 달 무료 개인화(가져오기와 공유) 횟수 소진 — 기본 일정은 그대로 만들어진다 */
+  | "fallback_quota";
 
 export interface PersonalizeResponse {
   profile:   PersonalizationProfile | null;

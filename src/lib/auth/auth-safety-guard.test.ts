@@ -155,7 +155,8 @@ test("AI 4 route — requireActiveUser 가 reserve 이전에 배선되어 있다
     assert.ok(authIdx > 0, `${f}: requireActiveUser 없음`);
     assert.ok(!/await requireUser\(/.test(s), `${f}: 동의 없는 requireUser 게이트 금지`);
     assert.ok(authIdx < reserveIdx, `${f}: 인증이 예산 reserve 뒤에 있다`);
-    assert.ok(s.includes("checkUserEntitlementPlaceholder("), `${f}: entitlement 자리 없음`);
+    // IMPORT-V2 — personalize·analyze 는 자리가 실제 사용자 횟수 원장(quotaReserve)으로 바뀌었다
+    assert.ok(s.includes("checkUserEntitlementPlaceholder(") || s.includes("quotaReserve("), `${f}: entitlement 자리 없음`);
   }
   const w = read("functions/api/mytrip/writing.ts");
   assert.equal((w.match(/await requireActiveUser\(/g) ?? []).length, 2, "writing 은 레거시·본 2경로 모두");

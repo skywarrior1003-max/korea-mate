@@ -1,75 +1,75 @@
 "use client";
 
-// External URL Import — Preview 화면. (TASK-GOKOREAMATE-EXTERNAL-URL-IMPORT-ENGINE-V1)
+// External Import — 입력·확인·저장 화면. (TASK-GOKOREAMATE-EXTERNAL-URL-IMPORT-ENGINE-V1 →
+// GOKOREAMATE-EXTERNAL-TRIP-IMPORT-AND-GUIDED-JOURNEY-V2)
 //
 // 계약
-//  · URL 입력만으로 저장되지 않는다. 반드시 이 Preview 에서 사용자가 확인해야
-//    목적지(My Trip/Saved/This Trip)로 저장된다.
+//  · 입력은 두 가지를 사용자가 고른다: '글 붙여넣기'(Gemini·ChatGPT 등에서 복사한 일정 글) /
+//    '링크 가져오기'(공개 블로그·웹페이지·AI 공개 공유 링크). 한 칸에서 추측하지 않는다.
+//  · 입력만으로 저장되지 않는다. 반드시 이 확인 화면에서 사용자가 저장을 눌러야 My Trip/My Places 로 간다.
 //  · gokoreamate 내부 URL 은 서버 분석 없이 기존 경로로 보낸다(§7).
-//  · 원문 Day/순서/시간 보존 — 재배치·재생성 없음(Import ≠ scheduler).
-//  · place 매칭은 카탈로그 정확 일치(원명+nameL10n)만. fuzzy/강제 매칭 없음.
-//    미매칭 장소는 "확인 필요"로 보여 주되 구조를 망가뜨리지 않는다.
-//  · My Places 임의 생성 없음 — 미매칭 단일 장소는 Saved 불가를 정직하게 알린다.
+//  · 원문 Day/순서/시간 보존 — 재배치·재생성·최적화 없음(Import ≠ scheduler). 시간은 사용자가 정한 시각으로 저장한다.
+//  · place 연결: 정확 일치는 자동, 표기만 다른 경우는 '제안'(사용자가 눌러야 연결), 그 외는 내 장소로 보존.
+//    잘못된 기존 장소에 조용히 합치지 않는다. 5개 도시 밖 장소도 버리지 않는다.
+//  · 외부 원문의 평점·영업시간·이미지 URL 은 서비스 데이터로 채택하지 않는다(이름·순서·시간·짧은 설명만).
+//  · 분석은 로그인 후 AI 로 한다. 완료된 가져오기 1건 = AI 도움 1회. 저장·재방문·직접 수정은 차감하지 않는다.
 
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { detectPastedUrl } from "@/lib/home-url-detect";
-import { apiAnalyzeUrl, type AnalyzeResponse } from "@/lib/url-import/api";
-import type { AnalyzedContent } from "@/lib/url-import/import-core";
+import { apiAnalyze, apiImportBalance, type AnalyzeResponse, type ImportBalance } from "@/lib/url-import/api";
+import type { AnalyzedContent, AnalyzedStop } from "@/lib/url-import/import-core";
+import { buildPlaceMatcher, type MatchHit } from "@/lib/url-import/match-core";
 import { loadSearchSpots } from "@/components/quiet/quiet-data";
 import type { CitySpot } from "@/data/cities/types";
 import { toEventItem } from "@/components/ExploreCity";
-import { savePlace, isPlaceSaved, addPlaceToThisTrip } from "@/lib/place-actions/place-actions-core";
-import { normalizeForMatch } from "@/lib/place-identity";
+import { addPlaceToThisTrip } from "@/lib/place-actions/place-actions-core";
 import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { apiSaveItinerary } from "@/lib/itinerary-api";
+import { apiCreateUserSpotsFromImport, apiCreateUserSpotFromCanonical } from "@/lib/user-spots-api";
 import { getDeviceId } from "@/lib/deviceId";
 import { displayPlaceName } from "@/lib/place-display-name";
+import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
+import ConsentSheet from "@/components/auth/ConsentSheet";
 
 type Phase = "idle" | "analyzing" | "preview" | "saving" | "error";
+type Tab = "text" | "link";
 
 const KNOWN_CITIES = ["busan", "seoul", "jeju", "gyeongju", "jeonju"];
-
-/** 카탈로그 정확 일치 매칭 — 원명과 nameL10n(ko/en/ja/zh) 동등 비교만. */
-function buildMatcher(spots: CitySpot[]) {
-  const index = new Map<string, CitySpot[]>();
-  const put = (key: string | undefined | null, s: CitySpot) => {
-    const k = typeof key === "string" ? normalizeForMatch(key) : "";
-    if (k === "") return;
-    const list = index.get(k) ?? [];
-    if (!list.some(x => x.id === s.id)) { list.push(s); index.set(k, list); }
-  };
-  for (const s of spots) {
-    put(s.name, s);
-    const l10n = s.nameL10n as Record<string, string> | undefined | null;
-    if (l10n) for (const v of Object.values(l10n)) put(v, s);
-  }
-  const lookup = (key: string, city: string | null): CitySpot | null => {
-    const hits = index.get(key) ?? [];
-    const scoped = city && KNOWN_CITIES.includes(city) ? hits.filter(h => h.city.toLowerCase() === city) : hits;
-    // 정확 일치가 유일할 때만 — 애매하면 강제 매칭하지 않는다
-    return scoped.length === 1 ? scoped[0]! : null;
-  };
-  // 선행 도시명 토큰 제거 — 유사도 매칭이 아니라 결정적 표기 규칙이다.
-  // 위키류 표기("경주 첨성대")가 카탈로그 정식명("첨성대")과 어긋나는 경우만 다룬다.
-  const CITY_PREFIX = ["경주", "서울", "부산", "제주", "전주", "busan", "seoul", "jeju", "gyeongju", "jeonju"];
-  return (name: string, city: string | null): CitySpot | null => {
-    const key = normalizeForMatch(name);
-    const direct = lookup(key, city);
-    if (direct) return direct;
-    for (const p of CITY_PREFIX) {
-      if (key.startsWith(p + " ")) return lookup(key.slice(p.length + 1), city);
-    }
-    return null;
-  };
-}
 
 const addDays = (iso: string, n: number): string => {
   const d = new Date(`${iso}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + n);
   return d.toISOString().slice(0, 10);
+};
+const todayKst = (): string => new Date(Date.now() + 9 * 3_600_000).toISOString().slice(0, 10);
+const minutesBetween = (a: string, b: string): number | null => {
+  const [ah, am] = a.split(":").map(Number); const [bh, bm] = b.split(":").map(Number);
+  const d = (bh! * 60 + bm!) - (ah! * 60 + am!);
+  return d > 0 ? d : null;
+};
+
+/** 링크 입력의 오류 코드 → 사용자 문구 키. 링크로 안 되는 경우는 글 붙여넣기를 함께 권한다. */
+const LINK_FALLBACK_ERRORS = new Set([
+  "private_chat_url", "share_not_readable", "login_required_page", "not_found", "no_readable_text",
+  "unsupported_content_type", "too_large", "timeout", "fetch_failed", "blocked_redirect", "too_many_redirects",
+]);
+const ERROR_KEYS: Record<string, string> = {
+  authentication_required: "errLogin", invalid_session: "errLogin",
+  consent_required: "errConsent",
+  quota_exhausted: "errQuota", quota_unavailable: "errPaused",
+  in_progress: "errInProgress",
+  ai_unavailable_in_this_environment: "errPaused", ai_paused: "errPaused", analyze_unavailable: "errPaused", off: "errPaused",
+  private_chat_url: "errPrivateChat", share_not_readable: "errShareNotReadable",
+  login_required_page: "errLoginPage", not_found: "errNotFound",
+  no_readable_text: "errNoText", unsupported_content_type: "errNoText",
+  too_large: "errTooLarge", timeout: "errTimeout", client_timeout: "errTimeout", analyze_timeout: "errTimeout",
+  fetch_failed: "errNetwork", network: "errNetwork", blocked_redirect: "errBlocked", too_many_redirects: "errBlocked",
+  blocked_host: "errBlocked", invalid_url: "errBlocked", internal_url: "errBlocked",
+  text_too_short: "errTextShort",
+  unsupported: "errUnsupported", analyze_failed: "errAnalyze",
 };
 
 function ImportInner() {
@@ -79,133 +79,211 @@ function ImportInner() {
   const params = useSearchParams();
   const urlParam = params.get("url") ?? "";
 
-  const [input, setInput] = useState(urlParam);
+  const [tab, setTab] = useState<Tab>(urlParam ? "link" : "text");
+  const [urlInput, setUrlInput] = useState(urlParam);
+  const [textInput, setTextInput] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<{ code: string; resetsAt?: string } | null>(null);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
   const [spots, setSpots] = useState<CitySpot[]>([]);
+  const [user, setUser] = useState<boolean | null>(null);
+  const [balance, setBalance] = useState<ImportBalance | null>(null);
+  const [consentOpen, setConsentOpen] = useState(false);
 
-  // Preview 편집 상태
+  // 확인 화면 편집 상태
   const [tripTitle, setTripTitle] = useState("");
   const [city, setCity] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [dateFromSource, setDateFromSource] = useState(true);
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
+  /** '제안' 연결을 사용자가 받아들인 항목 */
+  const [accepted, setAccepted] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [doneMsg, setDoneMsg] = useState<string | null>(null);
 
   const analysis: AnalyzedContent | null = result?.ok ? result.analysis : null;
-  const match = useMemo(() => buildMatcher(spots), [spots]);
+  const match = useMemo(() => buildPlaceMatcher(spots), [spots]);
+  const source = result?.ok && result.url ? (() => { try { return new URL(result.url!).hostname.toLowerCase(); } catch { return "text"; } })() : "text";
 
-  async function analyze(raw: string) {
-    const detected = detectPastedUrl(raw.trim());
-    if (detected?.kind === "internal") {
-      // 내부 URL — 기존 shared/캐논 경로 그대로. 서버 분석 금지(§7).
-      router.replace(detected.path);
-      return;
+  useEffect(() => {
+    let alive = true;
+    void (async () => {
+      const u = await getCurrentUser();
+      if (!alive) return;
+      setUser(!!u);
+      if (u) { const b = await apiImportBalance(); if (alive) setBalance(b); }
+    })();
+    return () => { alive = false; };
+  }, []);
+
+  /** 연결 결과 — exact 는 자동, suggest 는 사용자가 받아들였을 때만 */
+  const linkOf = (key: string, name: string): { hit: MatchHit<CitySpot> | null; linked: CitySpot | null } => {
+    const hit = match(name, analysis?.city ?? null);
+    const linked = hit && (hit.kind === "exact" || accepted.has(key)) ? hit.spot : null;
+    return { hit, linked };
+  };
+
+  async function analyze() {
+    setDoneMsg(null);
+    let input: { url: string } | { text: string };
+    if (tab === "link") {
+      const detected = detectPastedUrl(urlInput.trim());
+      if (detected?.kind === "internal") { router.replace(detected.path); return; } // 서버 분석 금지(§7)
+      if (!detected) { setPhase("error"); setError({ code: "invalid_url" }); return; }
+      input = { url: detected.url };
+    } else {
+      if (textInput.trim().length < 20) { setPhase("error"); setError({ code: "text_too_short" }); return; }
+      input = { text: textInput };
     }
-    if (!detected) { setPhase("error"); setError("errBlocked"); return; }
+    if (user === false) { setPhase("error"); setError({ code: "authentication_required" }); return; }
     setPhase("analyzing");
     setError(null);
-    const [res, loadedSpots] = await Promise.all([apiAnalyzeUrl(detected.url), loadSearchSpots()]);
+    const [res, loadedSpots] = await Promise.all([apiAnalyze(input), loadSearchSpots()]);
     setSpots(loadedSpots);
-    if (!res?.ok) {
+    if (!res.ok) {
       setPhase("error");
-      const e = res?.error ?? "errFetch";
-      setError(["blocked_host", "invalid_url", "internal_url", "off"].includes(e) ? "errBlocked"
-        : ["unsupported", "no_readable_text", "analyze_failed", "analyze_timeout", "analyze_unavailable"].includes(e) ? "unsupported"
-        : "errFetch");
+      setError({ code: res.error, resetsAt: res.resets_at });
+      if (res.error === "authentication_required" || res.error === "invalid_session") setUser(false);
       return;
     }
     setResult(res);
+    if (res.balance) setBalance(res.balance);
     const a = res.analysis;
-    if (a.kind === "unsupported") { setPhase("error"); setError("unsupported"); return; }
     setTripTitle(a.trip_title ?? res.pageTitle ?? "");
-    setCity(a.city && KNOWN_CITIES.includes(a.city) ? a.city : (a.city ?? ""));
+    setCity(a.city ?? "");
     const dayCount = Math.max(1, ...a.days.map(d => d.day_number));
-    const sd = a.start_date ?? a.days.find(d => d.date)?.date ?? new Date().toISOString().slice(0, 10);
+    const known = a.start_date ?? a.days.find(d => d.date)?.date ?? null;
+    const sd = known ?? todayKst();
+    setDateFromSource(known !== null);
     setStartDate(sd);
     setEndDate(a.end_date ?? addDays(sd, dayCount - 1));
-    // multi-place 는 매칭된 장소를 기본 선택으로 시작한다(선택은 사용자가 확정).
-    // state 반영 전이라 방금 로드한 spots 로 로컬 matcher 를 만든다.
-    const localMatch = buildMatcher(loadedSpots);
-    setSelected(new Set(a.places.filter(p => localMatch(p.name, a.city)).map(p => p.name)));
+    setExcluded(new Set());
+    setAccepted(new Set());
+    setSelected(new Set(a.places.map(p => p.name)));
     setPhase("preview");
   }
 
   useEffect(() => {
-    if (urlParam) void analyze(urlParam);
+    if (urlParam && user === true) void Promise.resolve().then(() => analyze());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlParam]);
+  }, [urlParam, user]);
 
-  // ── 저장: external_itinerary → My Trip ────────────────────────────────────
-  async function importToMyTrip() {
+  /** 연결되지 않은 이름들을 내 장소로 보존하고 이름→id 를 돌려준다 */
+  async function preserveUnmatched(items: { name: string; note?: string | null }[]): Promise<Map<string, string> | null> {
+    if (items.length === 0) return new Map();
+    const saved = await apiCreateUserSpotsFromImport(source, items.map(i => ({ name: i.name, note: i.note ?? null, city: city.trim() || null })));
+    if (!saved) return null;
+    return new Map(saved.map(s => [s.name.replace(/\s+/g, " ").trim().toLowerCase(), s.id]));
+  }
+
+  function placeFromStop(stop: AnalyzedStop, linked: CitySpot | null, ownId: string | null) {
+    const duration = stop.time && stop.end_time ? minutesBetween(stop.time, stop.end_time) : null;
+    return {
+      name: stop.name,
+      time: stop.time ?? "",
+      // 원문 시각은 사용자가 정한 시각으로 저장한다(화면에 실제 시각으로 보이고, 스케줄러가 바꾸지 않는다)
+      ...(stop.time ? { timeSource: "user" as const } : {}),
+      category: linked?.category ?? "attraction",
+      location: linked?.district ?? "",
+      duration: duration ? `${duration}m` : "",
+      tips: stop.note ?? "",
+      googleMapsUrl: "",
+      ...(linked ? {
+        source: "city_spot" as const,
+        place_id: String(linked.id),
+        ...(linked.image ? { image: linked.image } : {}),
+        ...(typeof linked.lat === "number" ? { lat: linked.lat } : {}),
+        ...(typeof linked.lng === "number" ? { lng: linked.lng } : {}),
+      } : ownId ? {
+        source: "user_spot" as const,
+        place_id: ownId,
+        sourceKey: `user_spot:${ownId}`,
+      } : {}),
+    };
+  }
+
+  /** keyOf — 확인 화면에서 쓴 항목 키(제외·제안 수락)와 같은 키로 판정한다 */
+  async function saveTrip(daysIn: { day_number: number; stops: AnalyzedStop[] }[],
+                          keyOf: (dayNumber: number, name: string) => string = (d, n) => `${d}|${n}`) {
     if (!analysis || phase === "saving") return;
-    if (city.trim() === "") { setDoneMsg("cityRequired"); return; }
     setPhase("saving");
-    const days = analysis.days
-      .filter(d => d.stops.some(s => !excluded.has(`${d.day_number}|${s.name}`)))
+    // 1) 연결되지 않은 장소를 내 장소로 보존(버리지 않는다)
+    const unmatched: { name: string; note: string | null }[] = [];
+    for (const d of daysIn) for (const s of d.stops) {
+      const key = keyOf(d.day_number, s.name);
+      if (excluded.has(key)) continue;
+      if (!linkOf(key, s.name).linked) unmatched.push({ name: s.name, note: s.note });
+    }
+    const ownIds = await preserveUnmatched(unmatched);
+    if (!ownIds) { setPhase("preview"); setDoneMsg("errSave"); return; }
+    // 2) My Trip — 원문 순서·시간 그대로
+    const days = daysIn
       .map(d => ({
         date: addDays(startDate, d.day_number - 1),
         dayNumber: d.day_number,
         places: d.stops
-          .filter(s => !excluded.has(`${d.day_number}|${s.name}`))
+          .filter(s => !excluded.has(keyOf(d.day_number, s.name)))
           .map(s => {
-            const m = match(s.name, analysis.city);
-            // 기존 일정 렌더러는 category/location/time/duration 을 문자열로
-            // 전제한다 — 미매칭 stop 도 빈 문자열로 항상 채운다(crash 방지).
-            return {
-              name: s.name,
-              time: s.time ?? "",
-              category: m?.category ?? "",
-              location: m?.district ?? "",
-              duration: "",
-              tips: s.note ?? "",
-              ...(m ? {
-                source: "city_spot" as const,
-                place_id: String(m.id),
-                ...(m.image ? { image: m.image } : {}),
-                ...(typeof m.lat === "number" ? { lat: m.lat } : {}),
-                ...(typeof m.lng === "number" ? { lng: m.lng } : {}),
-              } : {}),
-            };
+            const { linked } = linkOf(keyOf(d.day_number, s.name), s.name);
+            const ownId = linked ? null : ownIds.get(s.name.replace(/\s+/g, " ").trim().toLowerCase()) ?? null;
+            return placeFromStop(s, linked, ownId);
           }),
-      }));
+      }))
+      .filter(d => d.places.length > 0);
     const id = crypto.randomUUID();
+    const cityValue = city.trim();
     const okSave = await apiSaveItinerary({
       id,
-      city: city.trim(),
+      city: KNOWN_CITIES.includes(cityValue.toLowerCase()) ? cityValue.toLowerCase() : cityValue,
       start_date: startDate,
-      end_date: endDate,
+      end_date: endDate < startDate ? startDate : endDate,
       travelers: "1",
       travel_style: "imported",
       trip_title: tripTitle.trim() || null,
       days: { __v: 2, scheduled: days, unscheduled: [] },
     } as never, getDeviceId());
     if (okSave) router.push(`/itinerary?id=${encodeURIComponent(id)}`);
-    else { setPhase("preview"); setDoneMsg("errFetch"); }
+    else { setPhase("preview"); setDoneMsg("errSave"); }
   }
 
-  // ── 저장: single_place → Saved ────────────────────────────────────────────
-  function saveSingle(spot: CitySpot) {
-    const item = toEventItem(spot);
-    if (!isPlaceSaved(item)) savePlace(item);
-    setDoneMsg("savedDone");
+  // ── 장소 하나 → 내 장소(My Places) ─────────────────────────────────────────
+  const [placeSavedId, setPlaceSavedId] = useState<string | null>(null);
+  async function savePlaceToMine(name: string, note: string | null, linked: CitySpot | null) {
+    setPhase("saving");
+    let id: string | null = null;
+    if (linked) {
+      const r = await apiCreateUserSpotFromCanonical(Number(linked.id));
+      id = r.ok ? r.spot?.id ?? "linked" : null;
+    } else {
+      const m = await preserveUnmatched([{ name, note }]);
+      id = m ? [...m.values()][0] ?? null : null;
+    }
+    setPhase("preview");
+    if (id) { setPlaceSavedId(id); setDoneMsg("placeSaved"); }
+    else setDoneMsg("errSave");
   }
 
-  // ── 저장: multi_place → This Trip ─────────────────────────────────────────
-  function addSelectedToThisTrip() {
+  // ── 여러 장소 → 서비스 장소는 This Trip, 나머지는 내 장소 ────────────────────
+  async function addSelected() {
     if (!analysis) return;
     const draft = readTripDraft();
     let added = 0;
+    const rest: { name: string }[] = [];
     for (const p of analysis.places) {
       if (!selected.has(p.name)) continue;
-      const m = match(p.name, analysis.city);
-      if (!m) continue;
-      const tripCity = draft?.city?.toLowerCase() === m.city.toLowerCase() ? draft.city : m.city;
-      if (addPlaceToThisTrip(toEventItem(m), tripCity)) added += 1;
+      const { linked } = linkOf(`p|${p.name}`, p.name);
+      if (linked) {
+        const tripCity = draft?.city?.toLowerCase() === linked.city.toLowerCase() ? draft.city : linked.city;
+        if (addPlaceToThisTrip(toEventItem(linked), tripCity)) added += 1;
+      } else rest.push({ name: p.name });
     }
+    setPhase("saving");
+    const saved = await preserveUnmatched(rest);
+    setPhase("preview");
+    if (!saved) { setDoneMsg("errSave"); return; }
     if (added > 0) router.push("/picks?tab=selected");
+    else if (rest.length > 0) setDoneMsg("placesSaved");
     else setDoneMsg("selectHint");
   }
 
@@ -216,75 +294,104 @@ function ImportInner() {
     faint: { color: "var(--qh-faint)" } as const,
     line: { borderColor: "var(--qh-line)" } as const,
   };
+  const primary = "gkm-focus w-full rounded-xl py-3.5 text-sm font-bold text-white disabled:opacity-50";
 
-  const badge = (matchedFlag: boolean) => (
-    <span
-      className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0"
-      style={matchedFlag
-        ? { color: "var(--qh-blue)", border: "1px solid var(--qh-line)" }
-        : { color: "var(--qh-clay)", border: "1px solid var(--qh-line)" }}
-    >
-      {matchedFlag ? t("matched") : t("unmatched")}
+  const badge = (hit: MatchHit<CitySpot> | null, linked: boolean) => (
+    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border" style={{ ...ui.line, color: linked ? "var(--qh-blue)" : "var(--qh-clay)" }}>
+      {linked ? t("linked") : hit ? t("suggested") : t("keptAsMine")}
     </span>
   );
+
+  const errorBox = error && (() => {
+    const key = ERROR_KEYS[error.code] ?? (error.code.startsWith("http_") ? "errNetwork" : "errAnalyze");
+    return (
+      <div data-tut="tut-import-error" data-import-error={error.code} role="alert" className="mt-5 rounded-2xl border p-4" style={ui.line}>
+        <p className="text-sm font-bold" style={ui.ink}>{t(key, { date: error.resetsAt ?? "" })}</p>
+        {(key === "errLogin" || key === "errConsent") && (
+          <button type="button" onClick={() => setConsentOpen(true)} className="gkm-focus mt-3 rounded-xl px-4 py-2.5 text-sm font-bold text-white" style={{ backgroundColor: "var(--qh-navy)" }}>
+            {t("loginCta")}
+          </button>
+        )}
+        {tab === "link" && LINK_FALLBACK_ERRORS.has(error.code) && (
+          <div className="mt-3">
+            <p className="text-sm" style={ui.faint}>{t("pasteInstead")}</p>
+            <button type="button" data-tut="tut-import-switch-text" onClick={() => { setTab("text"); setPhase("idle"); setError(null); }}
+              className="gkm-focus mt-2 rounded-xl px-4 py-2.5 text-sm font-bold border" style={{ ...ui.line, ...ui.ink }}>
+              {t("switchToText")}
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  })();
 
   return (
     <div className="qh min-h-screen" style={ui.page}>
       <div className="max-w-xl mx-auto px-5 pt-8 pb-24">
         <h1 className="qh-serif text-2xl" style={ui.ink}>{t("title")}</h1>
+        <p className="mt-2 text-sm leading-relaxed" style={ui.faint}>{t("lead")}</p>
 
-        {(phase === "idle" || phase === "error") && (
+        {(phase === "idle" || phase === "error" || phase === "analyzing") && (
           <div className="mt-6">
-            <label className="text-sm block mb-2" style={ui.faint}>{t("pasteLabel")}</label>
-            <div className="flex gap-2">
-              <input
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={e => { if (e.key === "Enter") void analyze(input); }}
-                inputMode="url"
-                data-tut="tut-import-url"
-                placeholder="https://…"
-                className="gkm-focus flex-1 rounded-xl border px-3.5 py-3 text-sm bg-transparent"
-                style={{ ...ui.line, ...ui.ink }}
-              />
-              <button
-                onClick={() => void analyze(input)}
-                className="gkm-focus rounded-xl px-4 py-3 text-sm font-bold text-white"
-                style={{ backgroundColor: "var(--qh-navy)" }}
-              >
-                {t("analyze")}
-              </button>
+            <div role="tablist" aria-label={t("tabsLabel")} className="grid grid-cols-2 gap-2" data-tut="tut-import-tabs">
+              {(["text", "link"] as const).map(k => (
+                <button key={k} type="button" role="tab" aria-selected={tab === k} data-tut={k === "text" ? "tut-import-tab-text" : "tut-import-tab-link"}
+                  onClick={() => { setTab(k); if (phase === "error") { setPhase("idle"); setError(null); } }}
+                  className="gkm-focus rounded-xl border px-3 py-3 text-sm font-bold"
+                  style={{ ...ui.line, ...ui.ink, backgroundColor: tab === k ? "var(--qh-line)" : "transparent" }}>
+                  {k === "text" ? t("tabText") : t("tabLink")}
+                </button>
+              ))}
             </div>
-            {phase === "error" && error && (
-              <div data-tut="tut-import-error" className="mt-5 rounded-2xl border p-4" style={ui.line}>
-                <p className="text-sm font-bold" style={ui.ink}>
-                  {error === "unsupported" ? t("unsupportedTitle") : error === "errBlocked" ? t("errBlocked") : t("errFetch")}
-                </p>
-                {error === "unsupported" && <p className="text-sm mt-1" style={ui.faint}>{t("unsupportedBody")}</p>}
+
+            {tab === "text" ? (
+              <div className="mt-4">
+                <label htmlFor="gkm-import-text" className="text-sm block mb-2" style={ui.faint}>{t("textLabel")}</label>
+                <textarea id="gkm-import-text" data-tut="tut-import-text" value={textInput} onChange={e => setTextInput(e.target.value)}
+                  rows={8} maxLength={18000} placeholder={t("textPlaceholder")}
+                  className="gkm-focus w-full rounded-xl border px-3.5 py-3 text-sm bg-transparent leading-relaxed" style={{ ...ui.line, ...ui.ink }} />
+              </div>
+            ) : (
+              <div className="mt-4">
+                <label htmlFor="gkm-import-url" className="text-sm block mb-2" style={ui.faint}>{t("linkLabel")}</label>
+                <input id="gkm-import-url" value={urlInput} onChange={e => setUrlInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === "Enter") void analyze(); }}
+                  inputMode="url" data-tut="tut-import-url" placeholder="https://…"
+                  className="gkm-focus w-full rounded-xl border px-3.5 py-3 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
+                <p className="mt-2 text-xs leading-relaxed" style={ui.faint}>{t("linkScope")}</p>
               </div>
             )}
+
+            <p className="mt-3 text-xs leading-relaxed" style={ui.faint}>
+              {user === false ? t("needLogin") : t("aiCountNote")}
+              {balance && ` ${balance.welcome_import > 0 ? t("balanceWelcome") : t("balanceMonthly", { n: balance.plan_import, date: balance.resets_at })}`}
+            </p>
+            <button type="button" data-tut="tut-import-go" onClick={() => void analyze()} disabled={phase === "analyzing"}
+              className={`${primary} mt-3`} style={{ backgroundColor: "var(--qh-navy)" }}>
+              {phase === "analyzing" ? t("analyzing") : t("analyze")}
+            </button>
+            {phase === "analyzing" && <p className="mt-2 text-xs" role="status" style={ui.faint}>{t("analyzingNote")}</p>}
+            {phase === "error" && errorBox}
+            <ConsentSheet open={consentOpen} onClose={() => setConsentOpen(false)}
+              onProceed={() => { void signInWithGoogle(window.location.pathname + window.location.search); }} />
           </div>
         )}
 
-        {phase === "analyzing" && (
-          <p className="mt-8 text-sm" style={ui.faint} role="status">{t("analyzing")}</p>
-        )}
-
         {(phase === "preview" || phase === "saving") && analysis && result?.ok && (
-          <div className="mt-5" data-tut="tut-import-preview">
+          <div className="mt-5" data-tut="tut-import-preview" data-import-kind={analysis.kind}>
             <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--qh-clay)" }}>
-              {analysis.kind === "external_itinerary" ? t("kindItinerary")
-                : analysis.kind === "single_place" ? t("kindPlace") : t("kindMulti")}
+              {analysis.kind === "external_itinerary" ? t("kindItinerary") : analysis.kind === "single_place" ? t("kindPlace") : t("kindMulti")}
             </p>
             <p className="text-xs mt-2 leading-relaxed" style={ui.faint}>{t("previewNote")}</p>
             <p className="text-xs mt-1.5" style={ui.faint}>
               {t("sourceLine")}:{" "}
-              <a href={result.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2" style={{ color: "var(--qh-blue)" }}>
-                {new URL(result.url).hostname}
-              </a>
+              {result.url ? (
+                <a href={result.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2" style={{ color: "var(--qh-blue)" }}>{source}</a>
+              ) : t("sourceText")}
+              {result.charged === false && ` · ${t("replayed")}`}
             </p>
 
-            {/* ── external_itinerary ── */}
+            {/* ── 일정 → My Trip ── */}
             {analysis.kind === "external_itinerary" && (
               <div className="mt-5 flex flex-col gap-4">
                 <div>
@@ -295,12 +402,12 @@ function ImportInner() {
                 <div className="grid grid-cols-3 gap-2">
                   <div>
                     <label className="text-xs block mb-1" style={ui.faint}>{t("cityLabel")}</label>
-                    <input value={city} onChange={e => setCity(e.target.value)}
+                    <input value={city} onChange={e => setCity(e.target.value)} placeholder={t("cityOptional")}
                       className="gkm-focus w-full rounded-xl border px-3 py-2.5 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
                   </div>
                   <div>
                     <label className="text-xs block mb-1" style={ui.faint}>{t("startLabel")}</label>
-                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)}
+                    <input type="date" value={startDate} onChange={e => { setStartDate(e.target.value); setDateFromSource(true); }}
                       className="gkm-focus w-full rounded-xl border px-3 py-2.5 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
                   </div>
                   <div>
@@ -309,29 +416,33 @@ function ImportInner() {
                       className="gkm-focus w-full rounded-xl border px-3 py-2.5 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
                   </div>
                 </div>
-
+                {!dateFromSource && <p className="text-xs" style={{ color: "var(--qh-clay)" }}>{t("dateAssumed")}</p>}
                 <p className="text-xs" style={ui.faint}>{t("excludeHint")}</p>
                 {analysis.days.map(day => (
                   <div key={day.day_number} className="rounded-2xl border p-4" style={ui.line}>
                     <p className="text-sm font-bold" style={ui.ink}>Day {day.day_number}</p>
-                    <ul className="mt-2 flex flex-col gap-2">
+                    <ul className="mt-2 flex flex-col gap-2.5">
                       {day.stops.map(stop => {
                         const key = `${day.day_number}|${stop.name}`;
-                        const m = match(stop.name, analysis.city);
+                        const { hit, linked } = linkOf(key, stop.name);
                         const on = !excluded.has(key);
                         return (
-                          <li key={key} className="flex items-start gap-2.5">
-                            <input type="checkbox" checked={on} className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
+                          <li key={key} className="flex items-start gap-2.5" data-import-stop={stop.name} data-import-link={linked ? "linked" : hit ? "suggested" : "mine"}>
+                            <input type="checkbox" checked={on} aria-label={stop.name} className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
                               onChange={() => setExcluded(prev => { const n = new Set(prev); if (on) n.add(key); else n.delete(key); return n; })} />
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                {stop.time && <span className="text-xs font-bold tabular-nums" style={ui.faint}>{stop.time}</span>}
-                                <span className="text-sm" style={{ ...ui.ink, opacity: on ? 1 : 0.4 }}>
-                                  {m ? displayPlaceName(m.name, m.nameL10n ?? null, locale) : stop.name}
-                                </span>
-                                {badge(m !== null)}
+                                {(stop.time_text || stop.time) && <span className="text-xs font-bold tabular-nums" style={ui.faint}>{stop.time_text ?? stop.time}</span>}
+                                <span className="text-sm" style={{ ...ui.ink, opacity: on ? 1 : 0.4 }}>{stop.name}</span>
+                                {badge(hit, !!linked)}
                               </div>
                               {stop.note && <p className="text-xs mt-0.5" style={ui.faint}>{stop.note}</p>}
+                              {hit && hit.kind === "suggest" && (
+                                <button type="button" onClick={() => setAccepted(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; })}
+                                  className="gkm-focus mt-1 text-xs font-bold underline underline-offset-2" style={{ color: "var(--qh-blue)" }}>
+                                  {linked ? t("unlinkSuggestion") : t("linkSuggestion", { name: displayPlaceName(hit.spot.name, hit.spot.nameL10n ?? null, locale) })}
+                                </button>
+                              )}
                             </div>
                           </li>
                         );
@@ -339,92 +450,90 @@ function ImportInner() {
                     </ul>
                   </div>
                 ))}
-
-                {doneMsg === "cityRequired" && <p className="text-xs" style={{ color: "var(--qh-clay)" }}>{t("cityRequired")}</p>}
-                <button
-                  data-tut="tut-import-confirm"
-                  onClick={() => void importToMyTrip()}
-                  disabled={phase === "saving"}
-                  className="gkm-focus w-full rounded-xl py-3.5 text-sm font-bold text-white disabled:opacity-50"
-                  style={{ backgroundColor: "var(--qh-navy)" }}
-                >
+                <p className="text-xs leading-relaxed" style={ui.faint}>{t("mineExplain")}</p>
+                {doneMsg === "errSave" && <p className="text-xs" role="alert" style={{ color: "var(--qh-clay)" }}>{t("errSave")}</p>}
+                <button data-tut="tut-import-confirm" onClick={() => void saveTrip(analysis.days)} disabled={phase === "saving"}
+                  className={primary} style={{ backgroundColor: "var(--qh-navy)" }}>
                   {phase === "saving" ? t("importing") : t("importToMyTrip")}
                 </button>
               </div>
             )}
 
-            {/* ── single_place ── */}
+            {/* ── 장소 하나 → 내 장소, 원하면 새 여행 ── */}
             {analysis.kind === "single_place" && (() => {
-              const name = analysis.places[0]?.name ?? result.pageTitle ?? "";
-              const m = name ? match(name, analysis.city) : null;
+              const p = analysis.places[0] ?? { name: result.pageTitle ?? "" };
+              const key = `p|${p.name}`;
+              const { hit, linked } = linkOf(key, p.name);
               return (
-                <div className="mt-5 rounded-2xl border p-4" style={ui.line}>
+                <div className="mt-5 rounded-2xl border p-4" style={ui.line} data-import-stop={p.name} data-import-link={linked ? "linked" : hit ? "suggested" : "mine"}>
                   <div className="flex items-center gap-2">
-                    <p className="text-base font-bold flex-1" style={ui.ink}>
-                      {m ? displayPlaceName(m.name, m.nameL10n ?? null, locale) : name}
-                    </p>
-                    {badge(m !== null)}
+                    <p className="text-base font-bold flex-1" style={ui.ink}>{linked ? displayPlaceName(linked.name, linked.nameL10n ?? null, locale) : p.name}</p>
+                    {badge(hit, !!linked)}
                   </div>
-                  {m ? (
-                    <>
-                      {m.image && (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={m.image} alt={m.name} className="w-full aspect-[16/9] object-cover rounded-xl mt-3" />
-                      )}
-                      <p className="text-xs mt-2" style={ui.faint}>{m.city}{m.district ? ` · ${m.district}` : ""}</p>
-                      <div className="mt-4 flex gap-2">
-                        <button onClick={() => saveSingle(m)}
-                          className="gkm-focus flex-1 rounded-xl py-3 text-sm font-bold text-white"
-                          style={{ backgroundColor: "var(--qh-navy)" }}>
-                          {doneMsg === "savedDone" ? t("savedDone") : t("saveToSaved")}
-                        </button>
-                        <Link href={`/place/${m.id}/`} className="gkm-focus rounded-xl px-4 py-3 text-sm font-bold border" style={{ ...ui.line, ...ui.ink }}>
-                          →
-                        </Link>
-                      </div>
-                    </>
+                  {linked && <p className="text-xs mt-1" style={ui.faint}>{linked.city}{linked.district ? ` · ${linked.district}` : ""}</p>}
+                  {hit && hit.kind === "suggest" && (
+                    <button type="button" onClick={() => setAccepted(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; })}
+                      className="gkm-focus mt-1 text-xs font-bold underline underline-offset-2" style={{ color: "var(--qh-blue)" }}>
+                      {linked ? t("unlinkSuggestion") : t("linkSuggestion", { name: displayPlaceName(hit.spot.name, hit.spot.nameL10n ?? null, locale) })}
+                    </button>
+                  )}
+                  {!linked && <p className="text-xs mt-2 leading-relaxed" style={ui.faint}>{t("placeMineExplain")}</p>}
+                  {doneMsg === "errSave" && <p className="text-xs mt-2" role="alert" style={{ color: "var(--qh-clay)" }}>{t("errSave")}</p>}
+                  {!placeSavedId ? (
+                    <button type="button" data-tut="tut-import-place-save" onClick={() => void savePlaceToMine(p.name, null, linked)} disabled={phase === "saving"}
+                      className={`${primary} mt-4`} style={{ backgroundColor: "var(--qh-navy)" }}>
+                      {t("saveToMyPlaces")}
+                    </button>
                   ) : (
-                    <p className="text-sm mt-2 leading-relaxed" style={ui.faint}>{t("unmatchedSingle")}</p>
+                    <div className="mt-4 flex flex-col gap-2" data-import-saved="">
+                      <p className="text-sm font-bold" role="status" style={ui.ink}>{t("placeSaved")}</p>
+                      <button type="button" data-tut="tut-import-place-trip" disabled={phase === "saving"}
+                        onClick={() => void saveTrip([{ day_number: 1, stops: [{ name: p.name, time: null, end_time: null, time_text: null, note: null }] }], (_d, n) => `p|${n}`)}
+                        className={primary} style={{ backgroundColor: "var(--qh-navy)" }}>{t("placeToNewTrip")}</button>
+                      <Link href="/picks?tab=mine" className="gkm-focus text-center rounded-xl py-3 text-sm font-bold border" style={{ ...ui.line, ...ui.ink }}>{t("openMyPlaces")}</Link>
+                    </div>
                   )}
                 </div>
               );
             })()}
 
-            {/* ── multi_place_content ── */}
+            {/* ── 장소 여러 곳 ── */}
             {analysis.kind === "multi_place_content" && (
               <div className="mt-5">
                 <p className="text-sm" style={ui.faint}>{t("selectHint")}</p>
                 <ul className="mt-3 flex flex-col gap-2">
                   {analysis.places.map(p => {
-                    const m = match(p.name, analysis.city);
+                    const key = `p|${p.name}`;
+                    const { hit, linked } = linkOf(key, p.name);
                     const on = selected.has(p.name);
                     return (
-                      <li key={p.name} className="flex items-center gap-2.5 rounded-2xl border p-3" style={ui.line}>
-                        <input type="checkbox" checked={on} disabled={m === null} className="gkm-focus h-4 w-4 shrink-0"
+                      <li key={p.name} className="flex items-center gap-2.5 rounded-2xl border p-3" style={ui.line} data-import-stop={p.name} data-import-link={linked ? "linked" : hit ? "suggested" : "mine"}>
+                        <input type="checkbox" checked={on} aria-label={p.name} className="gkm-focus h-4 w-4 shrink-0"
                           onChange={() => setSelected(prev => { const n = new Set(prev); if (on) n.delete(p.name); else n.add(p.name); return n; })} />
-                        {m?.image && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={m.image} alt="" className="w-10 h-10 rounded-lg object-cover shrink-0" />
-                        )}
-                        <span className="text-sm flex-1 min-w-0 truncate" style={ui.ink}>
-                          {m ? displayPlaceName(m.name, m.nameL10n ?? null, locale) : p.name}
-                        </span>
-                        {badge(m !== null)}
+                        <span className="text-sm flex-1 min-w-0 truncate" style={ui.ink}>{linked ? displayPlaceName(linked.name, linked.nameL10n ?? null, locale) : p.name}</span>
+                        {badge(hit, !!linked)}
                       </li>
                     );
                   })}
                 </ul>
-                <button
-                  data-tut="tut-import-add"
-                  onClick={addSelectedToThisTrip}
-                  className="gkm-focus mt-4 w-full rounded-xl py-3.5 text-sm font-bold text-white"
-                  style={{ backgroundColor: "var(--qh-navy)" }}
-                >
-                  {t("addToThisTrip")}
-                </button>
+                <p className="mt-3 text-xs leading-relaxed" style={ui.faint}>{t("multiExplain")}</p>
+                <div className="mt-3 flex flex-col gap-2">
+                  <button type="button" data-tut="tut-import-multi-trip" disabled={phase === "saving"}
+                    onClick={() => void saveTrip([{ day_number: 1, stops: analysis.places.filter(p => selected.has(p.name)).map(p => ({ name: p.name, time: null, end_time: null, time_text: null, note: null })) }], (_d, n) => `p|${n}`)}
+                    className={primary} style={{ backgroundColor: "var(--qh-navy)" }}>{t("multiToNewTrip")}</button>
+                  <button type="button" data-tut="tut-import-add" onClick={() => void addSelected()} disabled={phase === "saving"}
+                    className="gkm-focus w-full rounded-xl py-3 text-sm font-bold border" style={{ ...ui.line, ...ui.ink }}>
+                    {t("addToThisTrip")}
+                  </button>
+                </div>
+                {doneMsg === "placesSaved" && <p className="text-xs mt-2" role="status" style={ui.faint}>{t("placesSaved")}</p>}
                 {doneMsg === "selectHint" && <p className="text-xs mt-2" style={{ color: "var(--qh-clay)" }}>{t("selectHint")}</p>}
+                {doneMsg === "errSave" && <p className="text-xs mt-2" role="alert" style={{ color: "var(--qh-clay)" }}>{t("errSave")}</p>}
               </div>
             )}
+
+            <button type="button" onClick={() => { setPhase("idle"); setResult(null); setPlaceSavedId(null); setDoneMsg(null); }}
+              className="gkm-focus mt-5 text-xs font-bold underline underline-offset-2" style={ui.faint}>{t("startOver")}</button>
           </div>
         )}
       </div>

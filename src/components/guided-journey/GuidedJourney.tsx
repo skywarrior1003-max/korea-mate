@@ -59,8 +59,10 @@ const STEPS: Record<JourneyStep, StepDef> = {
   buildTrip: { on: l => /^\/picks/.test(l.path), goto: "/picks/", // 여행 도시·날짜가 아직 없으면(시작 카드) 날짜 → [이 조건으로 시작] 을 먼저 가리킨다
     targets: ['[data-tut="tut-starter-go"]:not(:disabled)', '[data-tut="tut-starter-start"][value=""]', '[data-tut="tut-starter-end"]', '[data-tut="tut-build"]'], done: { route: l => /^\/itinerary/.test(l.path) } },
   openImport: { on: () => true, goto: "/import/", targets: [], done: { route: l => /^\/import/.test(l.path) } },
-  pasteLink: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-url"]'], done: { dom: '[data-tut="tut-import-preview"]' }, failDom: '[data-tut="tut-import-error"]' },
-  reviewImport: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-confirm"]', '[data-tut="tut-import-add"]'], done: { route: l => isMyTrip(l) || /^\/picks/.test(l.path) } },
+  // IMPORT-V2 — 글 붙여넣기·링크 두 입력 모두. 비어 있는 입력칸 → [가져오기] 순서로 가리킨다. 완료 = 확인 화면 도착.
+  pasteLink: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-text"]:placeholder-shown', '[data-tut="tut-import-url"]:placeholder-shown', '[data-tut="tut-import-go"]:not(:disabled)'], done: { dom: '[data-tut="tut-import-preview"]' }, failDom: '[data-tut="tut-import-error"]' },
+  // 일정 → [내 여행으로 만들기], 장소 하나 → [내 장소에 저장] → [이 장소로 새 여행], 여러 곳 → [새 여행 만들기]. 완료 = My Trip 도착(또는 This Trip)
+  reviewImport: { on: l => /^\/import/.test(l.path), goto: "/import/", targets: ['[data-tut="tut-import-confirm"]', '[data-tut="tut-import-place-trip"]', '[data-tut="tut-import-place-save"]', '[data-tut="tut-import-multi-trip"]'], done: { route: l => isMyTrip(l) || /^\/picks/.test(l.path) } },
   openMyTrip: { on: () => true, goto: "/my-trips/", targets: ['[data-tut="tut-trip-row"]'], done: { route: isMyTrip } },
   tripSaved: { on: l => /^\/itinerary/.test(l.path), goto: "/my-trips/", targets: ['[data-tut="tut-sync"]'], done: { signal: "trip-saved", dom: '[data-tut-sync="saved"]' } },
   checkDates: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-dates-apply"]', '[data-tut="tut-dates"]'], done: { signal: "dates-applied" }, confirm: true },
@@ -110,13 +112,25 @@ export default function GuidedJourney() {
   const [hidden, setHidden] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const [mounted, setMounted] = useState(false);
+  /** 키보드 건너뛰기 링크 자리 — body 맨 앞(Tab 첫 번째)에 둔다. 말풍선 자체는 초점을 빼앗지 않는다. */
+  const [skipHost, setSkipHost] = useState<HTMLElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
   const stepStart = useRef<{ step: JourneyStep | null; at: number; scrolled: boolean }>({ step: null, at: 0, scrolled: false });
 
   // 상태 읽기·동기화(다른 탭·더보기에서 바꿔도 따라온다)
   useEffect(() => {
     const sync = () => setJs(readJourney());
-    Promise.resolve().then(() => { sync(); setMounted(true); });
+    Promise.resolve().then(() => {
+      sync(); setMounted(true);
+      let host = document.getElementById("gkm-journey-skip-host");
+      if (!host) {
+        host = document.createElement("div"); host.id = "gkm-journey-skip-host";
+        // 화면 맨 위에 고정 — 스크롤된 화면에서도 Tab 시작점(보이는 영역) 안에 있게 한다
+        host.style.cssText = "position:fixed;top:0;left:0;z-index:96;";
+        document.body.prepend(host);
+      }
+      setSkipHost(host);
+    });
     window.addEventListener(JOURNEY_CHANGE_EVENT, sync);
     window.addEventListener("storage", sync);
     return () => { window.removeEventListener(JOURNEY_CHANGE_EVENT, sync); window.removeEventListener("storage", sync); };
@@ -260,7 +274,7 @@ export default function GuidedJourney() {
         <div aria-hidden data-journey-ring="" className="gkm-journey-in pointer-events-none fixed z-[94] rounded-xl border-2 border-action"
           style={{ left: rect.left - 4, top: rect.top - 4, width: rect.width + 8, height: rect.height + 8 }} />
       )}
-      <div key={`${step}-${mode}`} role="dialog" aria-modal="false" aria-labelledby="gkm-journey-say" data-journey-bubble={step} data-journey-mode={mode}
+      <div key={`${step}-${mode}`} id="gkm-journey-bubble" tabIndex={-1} role="dialog" aria-modal="false" aria-labelledby="gkm-journey-say" data-journey-bubble={step} data-journey-mode={mode}
         className="gkm-journey-in z-[95] rounded-2xl border border-line bg-white text-ink shadow-[0_10px_30px_rgba(20,24,33,.18)] p-3.5" style={style}>
         {arrow && (
           <span aria-hidden className="absolute w-3.5 h-3.5 bg-white border-line rotate-45"
@@ -318,5 +332,18 @@ export default function GuidedJourney() {
       </div>
     </>
   );
-  return createPortal(node, document.body);
+  // 건너뛰기 링크 — 평소에는 보이지 않고, Tab 으로 초점을 받으면 나타난다. 누르면 말풍선의 첫 버튼으로 간다.
+  const skip = skipHost ? createPortal(
+    <a href="#gkm-journey-bubble"
+      onClick={e => {
+        e.preventDefault();
+        const box = document.getElementById("gkm-journey-bubble");
+        const first = box?.querySelector<HTMLElement>("a[href], button:not([disabled])");
+        (first ?? box)?.focus();
+      }}
+      className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[96] focus:rounded-xl focus:bg-ink focus:text-white focus:px-3.5 focus:py-2.5 focus:text-[13px] focus:font-bold"
+    >{t("skipToGuide")}</a>,
+    skipHost,
+  ) : null;
+  return <>{skip}{createPortal(node, document.body)}</>;
 }

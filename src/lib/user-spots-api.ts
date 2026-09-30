@@ -57,6 +57,8 @@ export interface UserSpot {
   created_at:         string;
   updated_at:         string;
   submission_status?: "none" | "pending" | "approved" | "rejected";
+  /** 가져온 글·링크에서 보존한 장소의 출처('text' 또는 링크 host). 위치는 사용자가 나중에 정한다. */
+  import_source?:     string | null;
 }
 
 // 최소 식별 계약: name 또는 (lat AND lng). 서버와 DB CHECK 가 같은 규칙을
@@ -472,5 +474,32 @@ export async function apiEnrichUserSpot(
     return (await res.json()) as EnrichResult;
   } catch {
     return { status: "error", updated: { title: false, memo: false } };
+  }
+}
+
+// ── POST /api/user-spots/from-import ───────────────────────────────────────────
+// EXTERNAL-TRIP-IMPORT-V2 — 가져온 글·링크의 장소 중 서비스 장소와 확실히 맞지 않는 것을
+// 이름·짧은 설명·출처만으로 내 장소에 보존한다(좌표를 지어내지 않는다 — 위치는 나중에 사용자가 정한다).
+// 같은 출처의 같은 이름은 기존 행을 돌려준다(재가져오기 중복 없음).
+
+export interface ImportedPlaceInput { name: string; note?: string | null; city?: string | null }
+export interface ImportedPlaceSaved { name: string; id: string; reused: boolean }
+
+export async function apiCreateUserSpotsFromImport(
+  source: string,
+  items: ImportedPlaceInput[],
+): Promise<ImportedPlaceSaved[] | null> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch("/api/user-spots/from-import", {
+      method:  "POST",
+      headers: await deviceHeader(deviceId),
+      body:    JSON.stringify({ source, items }),
+    });
+    if (!res.ok) return null;
+    const body = (await res.json()) as { items?: ImportedPlaceSaved[] };
+    return Array.isArray(body.items) ? body.items : null;
+  } catch {
+    return null;
   }
 }

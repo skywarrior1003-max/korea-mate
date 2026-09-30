@@ -50,3 +50,18 @@ export const FREE_MONTHLY = {
   fullTripWritingSharedPool: 2,
   total: 3,
 } as const;
+
+/**
+ * 가져오기(외부 일정 글·링크 → 내 여행) 무료 이용 — Owner 확정 2026-09-30 (EXTERNAL-TRIP-IMPORT-V2).
+ *  · 신규 사용자의 첫 가져오기 1회는 위 월 3회와 별도로 무료(평생 1회).
+ *  · 그 이후 가져오기는 AI 일정 개인화와 **월 1회를 공유**한다(개인화 1회 풀을 함께 쓴다).
+ *  · 가져오기는 AI 가 원문을 바꾸지 않는다 — 추출만 한다(순서·시간·내용 그대로).
+ *  · 원장: supabase/migrations/084_ai_user_usage_ledger.sql (풀 welcome_import · plan_import · writing).
+ *    월 기준은 KST 달력 월(매월 1일 00:00 KST 초기화).
+ */
+export const IMPORT_FREE = {
+  welcomeOnce: 1,
+  /** 월 풀 이름 — 개인화와 공유 */
+  sharedMonthlyPool: "plan_import",
+  sharedMonthlyLimit: FREE_MONTHLY.aiPersonalize,
+} as const;

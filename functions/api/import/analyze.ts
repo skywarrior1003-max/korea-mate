@@ -17,14 +17,25 @@
 // AI 는 승인된 내부 통로(서울 placement Worker /provider — provider-neutral 내부
 // 계약)를 재사용한다. binding 이 없는 로컬 dev 는 직결 fallback(writing/personalize 와
 // 동일 패턴). 어떤 실패도 200 + {ok:false, error} — 클라이언트가 정직하게 보여 준다.
+//
+// EXTERNAL-TRIP-IMPORT-V2 (2026-09-30)
+//  · 입력 두 가지: { url } 공개 링크 또는 { text } 붙여넣은 일정 글. 대화창 개인 주소
+//    (gemini.google.com/app, chatgpt.com/c 등)는 서버가 읽을 수 없으므로 fetch 하지 않는다.
+//  · 로그인은 **어떤 외부 fetch 보다 먼저** — 비로그인 요청으로 서버가 임의 페이지를 읽지 않게.
+//  · 사용자 횟수(ai-user-quota) → 회사 스위치·비용(ai-ops-guard) → provider 순서.
+//    완성 결과(장소 1곳 이상)일 때만 사용자 차감을 확정하고, 실패·무효·중복은 해제한다.
+//    같은 사용자의 같은 입력(같은 날)은 추가 차감 없이 이전 결과를 돌려준다(새로고침·중복 클릭).
+//  · AI 는 추출만 한다 — 순서·시간·내용을 바꾸거나 동선을 최적화하지 않는다(프롬프트·파서 계약).
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
-import { aiOpsReserve, aiOpsSettle } from "../../_lib/ai-ops-guard";
-import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
+import { requireActiveUser, userActorHash } from "../../_lib/user-auth";
+import { quotaIdemKey, quotaReserve, quotaSettle, quotaBalance } from "../../_lib/ai-user-quota";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
+  classifyAiChatUrl, preparePastedText,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
-  type AnalyzedContent,
+  type AnalyzedContent, type ExtractedPage,
 } from "../../../src/lib/url-import/import-core";
 import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
 
@@ -33,6 +44,13 @@ interface Env {
   AI_WRITING?: { fetch: typeof fetch };
   INTERNAL_KEY?: string;
   URL_IMPORT_MODE?: string; // "off" → kill switch
+  APP_ENV?: string;
+  /**
+   * IMPORT-V2 — Production 이 아닌 환경 전용 검증 경로. "direct" 면 서울 Worker 를 거치지 않고
+   * 이 환경의 GEMINI_API_KEY 로 직접 부른다. 공용 Worker 의 비상정지(AI_WRITING_WORKER_MODE)는
+   * Production 과 공유라 Preview 검증을 위해 켜지 않는다. Production 에서는 무시한다.
+   */
+  AI_PROVIDER_ROUTE?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -119,6 +137,8 @@ async function safeFetchPage(startUrl: URL): Promise<
 
 // ── provider (서울 Worker 경유 우선 — personalize 와 동일 패턴) ──────────────
 function bindingProviderFetch(env: Env): typeof fetch | undefined {
+  const isProd = (env.APP_ENV ?? "").trim().toLowerCase() === "production";
+  if (!isProd && (env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct") return undefined;
   const binding = env.AI_WRITING;
   const key = env.INTERNAL_KEY;
   if (!binding || typeof binding.fetch !== "function" || !key) return undefined;
@@ -131,13 +151,15 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
     })) as typeof fetch;
 }
 
+interface AiUsage { inTok: number | null; outTok: number | null }
+
 async function analyzeWithAi(env: Env, prompt: string): Promise<
-  | { ok: true; analysis: AnalyzedContent }
-  | { ok: false; error: string }
+  | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
+  | { ok: false; error: string; sent: boolean; providerStatus?: string }
 > {
   const apiKey = env.GEMINI_API_KEY ?? "";
   const providerFetch = bindingProviderFetch(env) ?? (apiKey ? fetch : null);
-  if (!providerFetch) return { ok: false, error: "analyze_unavailable" };
+  if (!providerFetch) return { ok: false, error: "analyze_unavailable", sent: false };
 
   const body = JSON.stringify({
     contents: [{ parts: [{ text: prompt }] }],
@@ -157,17 +179,49 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
       { method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.signal, body },
     );
     clearTimeout(timer);
-    if (!res.ok) return { ok: false, error: "analyze_failed" };
-    const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+    if (!res.ok) {
+      // 비밀·본문 없이 상태만 — 운영 진단용(비 Production 응답에만 싣는다)
+      let st = `http_${res.status}`;
+      try { const e = (await res.json()) as { error?: { status?: string } }; if (e.error?.status) st += `:${e.error.status}`; } catch { /* ignore */ }
+      return { ok: false, error: "analyze_failed", sent: true, providerStatus: st };
+    }
+    const raw = (await res.json()) as {
+      candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[];
+      usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number };
+    };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     const analysis = parseAnalyzed(text);
-    if (!analysis) return { ok: false, error: "analyze_failed" };
-    return { ok: true, analysis };
+    if (!analysis) return { ok: false, error: "analyze_failed", sent: true, providerStatus: `parse_failed:${raw.candidates?.[0]?.finishReason ?? "none"}:${text.length}` };
+    const u = raw.usageMetadata;
+    const usage: AiUsage = {
+      inTok: typeof u?.promptTokenCount === "number" ? u.promptTokenCount : null,
+      outTok: typeof u?.candidatesTokenCount === "number" || typeof u?.thoughtsTokenCount === "number"
+        ? (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0) : null,
+    };
+    return { ok: true, analysis, usage };
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
-    return { ok: false, error: isAbort ? "analyze_timeout" : "analyze_failed" };
+    return { ok: false, error: isAbort ? "analyze_timeout" : "analyze_failed", sent: true, providerStatus: isAbort ? "timeout" : "fetch_error" };
   }
+}
+
+
+/** 링크를 읽지 못한 이유를 사용자가 알아들을 말로 — 모든 실패를 "로그인/스크립트"라 부르지 않는다 */
+function fetchErrorCode(raw: string, aiShare: boolean): string {
+  if (raw === "http_401" || raw === "http_403") return aiShare ? "share_not_readable" : "login_required_page";
+  if (raw === "http_404" || raw === "http_410") return "not_found";
+  if (aiShare && (raw === "no_readable_text" || raw === "unsupported_content_type" || /^http_/.test(raw))) return "share_not_readable";
+  return raw;
+}
+
+// GET /api/import/analyze — 로그인 사용자의 남은 무료 가져오기 횟수(화면 안내용)
+export async function onRequestGet(ctx: { request: Request; env: Env }): Promise<Response> {
+  const auth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
+  if (!auth.ok) return auth.response;
+  const balance = await quotaBalance(ctx.env as Parameters<typeof quotaBalance>[0], auth.userId);
+  if (!balance) return fail("quota_unavailable");
+  return json({ ok: true, balance });
 }
 
 export async function onRequestPost(ctx: { request: Request; env: Env }): Promise<Response> {
@@ -175,64 +229,131 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   if (!aiAllowed(ctx.env as Parameters<typeof aiAllowed>[0])) return aiUnavailableResponse();
   if ((ctx.env.URL_IMPORT_MODE ?? "").toLowerCase() === "off") return fail("off");
 
-  let body: { url?: unknown };
-  try { body = (await ctx.request.json()) as { url?: unknown }; }
+  let body: { url?: unknown; text?: unknown };
+  try { body = (await ctx.request.json()) as { url?: unknown; text?: unknown }; }
   catch { return fail("invalid_request"); }
-  if (typeof body.url !== "string") return fail("invalid_request");
 
-  const check = validateImportUrl(body.url);
-  if (!check.ok) {
-    log({ ok: false, error: check.reason });
-    return fail(check.reason === "blocked_host" ? "blocked_host" : "invalid_url");
+  // ── 입력 검증(네트워크·AI 없이) ───────────────────────────────────────────
+  let mode: "url" | "text";
+  let pageUrl: URL | null = null;
+  let pasted: ExtractedPage | null = null;
+  let aiShare = false;
+  if (typeof body.text === "string") {
+    mode = "text";
+    const prepared = preparePastedText(body.text);
+    if (!prepared.ok) return fail("text_too_short");
+    pasted = prepared.page;
+  } else if (typeof body.url === "string") {
+    mode = "url";
+    const check = validateImportUrl(body.url);
+    if (!check.ok) {
+      log({ ok: false, error: check.reason });
+      return fail(check.reason === "blocked_host" ? "blocked_host" : "invalid_url");
+    }
+    // 내부 URL 은 여기 오면 안 된다(클라이언트가 shared 흐름으로 처리) — 이중 가드
+    if (isOwnHost(check.url.hostname)) return fail("internal_url");
+    const chat = classifyAiChatUrl(check.url);
+    // 대화창 개인 주소 — 본인 계정으로만 열린다. 읽으러 가지 않는다(우회 없음).
+    if (chat.link === "private") return fail("private_chat_url");
+    aiShare = chat.link === "share";
+    pageUrl = check.url;
+  } else {
+    return fail("invalid_request");
   }
-  // 내부 URL 은 여기 오면 안 된다(클라이언트가 shared 흐름으로 처리) — 이중 가드
-  if (isOwnHost(check.url.hostname)) return fail("internal_url");
 
-  const started = Date.now();
-  const fetched = await safeFetchPage(check.url);
-  if (!fetched.ok) {
-    log({ ok: false, host: check.url.hostname, error: fetched.error, ms: Date.now() - started });
-    return fail(fetched.error);
-  }
-
-  const page = extractReadableText(fetched.html);
-  if (page.text.length < 80) {
-    // JS 렌더 전용/빈 페이지 — 억지 우회하지 않는다
-    log({ ok: false, host: fetched.finalHost, error: "no_readable_text", ms: Date.now() - started });
-    return fail("no_readable_text");
-  }
-
-  // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수
+  // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수.
+  // IMPORT-V2 — 외부 fetch 보다 먼저 확인한다(비로그인 요청이 서버로 임의 페이지를 읽게 하지 않는다).
   const auth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
   if (!auth.ok) return auth.response;
-  checkUserEntitlementPlaceholder(auth.userId); // 차감은 후속 TASK
+  const userId = auth.userId;
+  const qEnv = ctx.env as Parameters<typeof quotaReserve>[0];
+
+  // ── 사용자 무료 횟수 예약 — 같은 입력은 같은 키(새로고침·중복 클릭이 두 번 차감되지 않는다) ──
+  const inputKey = mode === "text" ? `text:${pasted!.text}` : `url:${pageUrl!.toString()}`;
+  const idem = await quotaIdemKey(userId, "import", inputKey);
+  const q = await quotaReserve(qEnv, userId, "import", idem);
+  if (q.status === "unavailable") return fail("quota_unavailable"); // 셀 수 없으면 부르지 않는다(fail-closed)
+  if (q.status === "in_progress") return fail("in_progress");
+  if (q.status === "exhausted") return json({ ok: false, error: "quota_exhausted", pool: q.pool, resets_at: q.resetsAt });
+  if (q.status === "replay") {
+    const prev = q.result as { analysis?: AnalyzedContent; pageTitle?: string; url?: string | null } | null;
+    if (prev?.analysis) {
+      log({ ok: true, mode, replay: true });
+      return json({ ok: true, url: prev.url ?? null, pageTitle: prev.pageTitle ?? "", analysis: prev.analysis, charged: false, replay: true, pool: q.pool });
+    }
+    return fail("in_progress");
+  }
+  const quotaId = q.id;
+  const release = () => quotaSettle(qEnv, quotaId, userId, "released");
+
+  // ── 읽기 ─────────────────────────────────────────────────────────────────
+  const started = Date.now();
+  let page: ExtractedPage;
+  let host = "text";
+  if (mode === "url") {
+    const fetched = await safeFetchPage(pageUrl!);
+    if (!fetched.ok) {
+      await release();
+      log({ ok: false, host: pageUrl!.hostname, error: fetched.error, ms: Date.now() - started });
+      return fail(fetchErrorCode(fetched.error, aiShare));
+    }
+    page = extractReadableText(fetched.html);
+    host = fetched.finalHost;
+    if (page.text.length < 80) {
+      // JS 렌더 전용/빈 페이지 — 억지 우회하지 않는다
+      await release();
+      log({ ok: false, host, error: "no_readable_text", ms: Date.now() - started });
+      return fail(aiShare ? "share_not_readable" : "no_readable_text");
+    }
+  } else {
+    page = pasted!;
+  }
+
+  // ── 회사 스위치·비용 원자 예약(provider 이전) — V2-HARDCAP §7·§8 ─────────
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
-  const actor = actorSecret ? await userActorHash(auth.userId, actorSecret) : null;
-  // V2-HARDCAP §7·§8 — DB 스위치 + 원자 비용 예약(provider 이전)
-  const idemBuf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(check.url.toString() + ":" + new Date().toISOString().slice(0, 13)));
+  const actor = actorSecret ? await userActorHash(userId, actorSecret) : null;
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
     feature: "import_analyze", model: "gemini-2.5-flash",
-    worstUsdMicro: 12_100, // cost-model analyze 최악 ≈$0.0121
-    idempotencyKey: "analyze:" + [...new Uint8Array(idemBuf)].slice(0, 16).map(b => b.toString(16).padStart(2, "0")).join(""),
+    worstUsdMicro: 12_100, // cost-model analyze 가정 상한 ≈$0.0121(입력 18,000자·출력 4,096 토큰 기준 — 절대 최악 아님)
+    idempotencyKey: `import:${quotaId}:${crypto.randomUUID().slice(0, 8)}`,
     actorHash: actor,
     featureDailyCalls: 100, featureDailyUsdMicro: 1_500_000, // $1.5/day
   });
-  if (!gate.ok) return fail("analyze_unavailable");
-
-  const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, check.url.toString()));
-  if (!ai.ok) {
-    // 정산(CORRECTION-V1 §2): "analyze_unavailable" 은 analyzeWithAi 가
-    // key/binding 부재로 **요청을 만들기 전에** 반환하는 유일한 코드다 —
-    // provider 미전송 확정이므로 released. 그 외(analyze_failed/timeout/parse)는
-    // 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
-    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId,
-      ai.error === "analyze_unavailable" ? "released" : "unknown_billed");
-    log({ ok: false, host: fetched.finalHost, error: ai.error, ms: Date.now() - started });
-    return fail(ai.error);
+  if (!gate.ok) {
+    await release();
+    return fail("ai_paused");
   }
-  await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
-    { inTok: null, outTok: null, usdMicro: 12_100 }); // usage 미수집 경로 — 보수 commit
 
-  log({ ok: true, host: fetched.finalHost, kind: ai.analysis.kind, days: ai.analysis.days.length, places: ai.analysis.places.length, ms: Date.now() - started });
-  return json({ ok: true, url: check.url.toString(), pageTitle: page.title, analysis: ai.analysis });
+  const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, mode === "url" ? pageUrl!.toString() : null));
+  if (!ai.ok) {
+    // 정산(CORRECTION-V1 §2): 요청을 만들기 전 실패(sent=false)만 회사 원장 released.
+    // 그 외(analyze_failed/timeout/parse)는 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
+    // 사용자 횟수는 어느 쪽이든 차감하지 않는다(완성 작업이 아니다).
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent ? "unknown_billed" : "released");
+    await release();
+    log({ ok: false, mode, host, error: ai.error, provider: ai.providerStatus ?? null, ms: Date.now() - started });
+    const nonProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() !== "production";
+    return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus }) : fail(ai.error);
+  }
+  // 회사 원장 — 실제 토큰으로 정산(usage 가 없으면 예약액 보수 commit)
+  const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok) : 12_100;
+  await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
+    { inTok: ai.usage.inTok, outTok: ai.usage.outTok, usdMicro: usd });
+
+  const a = ai.analysis;
+  const useful = a.kind !== "unsupported" && (a.days.some(d => d.stops.length > 0) || a.places.length > 0);
+  if (!useful) {
+    // 무효 결과 — 사용자에게 완성 작업을 주지 못했다. 사용자 차감 0.
+    await release();
+    log({ ok: false, mode, host, error: "unsupported", ms: Date.now() - started, usd_micro: usd });
+    return fail("unsupported");
+  }
+  const url = mode === "url" ? pageUrl!.toString() : null;
+  const pageTitle = page.title;
+  await quotaSettle(qEnv, quotaId, userId, "committed", { analysis: a, pageTitle, url });
+  const balance = await quotaBalance(qEnv, userId);
+
+  log({ ok: true, mode, host, kind: a.kind, days: a.days.length, places: a.places.length, ms: Date.now() - started,
+        in_tok: ai.usage.inTok, out_tok: ai.usage.outTok, usd_micro: usd, pool: q.pool });
+  return json({ ok: true, url, pageTitle, analysis: a, charged: true, pool: q.pool, balance });
 }

@@ -12,6 +12,8 @@ import {
   readJourney, writeJourney, resumeJourney, endJourney, JOURNEY_CHANGE_EVENT, type JourneyState,
 } from "@/lib/guided-journey/journey-core";
 import JourneyStartChooser from "@/components/guided-journey/JourneyStartChooser";
+import { apiFetchItinerariesByDevice } from "@/lib/itinerary-api";
+import { getDeviceId } from "@/lib/deviceId";
 
 export function useJourneyState(): JourneyState | null {
   const [js, setJs] = useState<JourneyState | null>(null);
@@ -34,6 +36,19 @@ export function resumeFromPause(js: JourneyState): void {
 export function HomeJourneyEntry({ hasTrip, blocked }: { hasTrip: boolean | undefined; blocked: boolean }) {
   const t = useTranslations("journey");
   const js = useJourneyState();
+  // Home 의 hasTrip 은 이 기기 키(koreamate_itin3_id_)만 본다 — 추천 일정 담기·가져오기로 만든 여행은
+  // 그 키를 남기지 않아 "여행 없음"으로 보였다. 기기 키가 없을 때만 내 여행 목록(서버, 기기·계정 소유)을
+  // 한 번 확인한다. 확인 전에는 선택지를 그리지 않는다(깜박 나타났다 사라지지 않게).
+  const [serverHasTrip, setServerHasTrip] = useState<boolean | null>(null);
+  const needServerCheck = !!js && js.status === "idle" && hasTrip === false;
+  useEffect(() => {
+    if (!needServerCheck) return;
+    let alive = true;
+    apiFetchItinerariesByDevice(getDeviceId())
+      .then(rows => { if (alive) setServerHasTrip(rows.length > 0); })
+      .catch(() => { if (alive) setServerHasTrip(false); });
+    return () => { alive = false; };
+  }, [needServerCheck]);
   if (!js || blocked || hasTrip === undefined) return null;
   if (js.status === "paused" && js.step) {
     return (
@@ -47,6 +62,7 @@ export function HomeJourneyEntry({ hasTrip, blocked }: { hasTrip: boolean | unde
     );
   }
   if (js.status !== "idle" || hasTrip) return null;
+  if (serverHasTrip !== false) return null; // 확인 중이거나 이미 여행이 있다
   return (
     <div className="max-w-xl mx-auto px-4 pt-4">
       <JourneyStartChooser hasTrip={false} />

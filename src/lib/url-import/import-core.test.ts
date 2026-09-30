@@ -102,3 +102,29 @@ test("U8 상한 상수가 방어적이다", () => {
   assert.ok(MAX_REDIRECTS <= 3);
   assert.ok(FETCH_TIMEOUT_MS <= 15_000);
 });
+
+// EXTERNAL-TRIP-IMPORT-V2 — 원문 시간 표기의 결정적 변환(AI 값을 믿지 않는다)
+test("parseTimeText — 오전/오후·범위·한국어 표기", async () => {
+  const { parseTimeText } = await import("./import-core.ts");
+  const cases: [string | null, string | null, string | null][] = [
+    ["12:00 PM - 02:00 PM", "12:00", "14:00"],
+    ["02:00 PM - 04:30 PM", "14:00", "16:30"],
+    ["14:00~16:30", "14:00", "16:30"],
+    ["오후 2시 30분 - 4시", "14:30", "16:00"],
+    ["오전 11시~오후 1시", "11:00", "13:00"],
+    ["2 - 4:30 PM", "14:00", "16:30"],
+    ["9:30", "09:30", null],
+    [null, null, null],
+  ];
+  for (const [raw, s, e] of cases) assert.deepEqual(parseTimeText(raw), { start: s, end: e }, String(raw));
+});
+
+test("AI 대화 링크 — 공개 공유 vs 대화창 개인 주소", async () => {
+  const { classifyAiChatUrl } = await import("./import-core.ts");
+  assert.equal(classifyAiChatUrl(new URL("https://gemini.google.com/share/abc123")).link, "share");
+  assert.equal(classifyAiChatUrl(new URL("https://g.co/gemini/share/abc")).link, "share");
+  assert.equal(classifyAiChatUrl(new URL("https://chatgpt.com/share/abc-1")).link, "share");
+  assert.equal(classifyAiChatUrl(new URL("https://gemini.google.com/app/abc")).link, "private");
+  assert.equal(classifyAiChatUrl(new URL("https://chatgpt.com/c/abc")).link, "private");
+  assert.equal(classifyAiChatUrl(new URL("https://blog.naver.com/x/1")).link, null);
+});

@@ -88,15 +88,20 @@ test("정산 매트릭스 — provider 도달 후 release 금지 (CORRECTION-V1 
   // HTTP 오류 응답 수신(4xx·429·5xx)은 전송 후의 사건 — unknown_billed.
   const gi = read("functions/api/generate-itinerary.ts");
   assert.ok(!gi.includes('"released"'), "generate-itinerary 는 reserve 후 전 실패가 전송 후 — release 금지");
+  // IMPORT-V2 — 사용자 무료 횟수 원장(ai-user-quota)의 "released" 는 별개 축이다(사용자 차감 0).
+  // 이 가드는 회사 비용 원장(aiOpsSettle) 의 released 만 센다.
+  const opsReleased = (src: string) => src.split("\n").filter(l => l.includes("aiOpsSettle") && l.includes('"released"'));
   const pers = read("functions/api/trip/personalize.ts");
-  assert.ok(!pers.includes('"released"'), "personalize 도 reserve 후 전 실패가 전송 후 — release 금지");
+  assert.equal(opsReleased(pers).length, 0, "personalize 도 reserve 후 전 실패가 전송 후 — release 금지");
   const wr = read("functions/api/mytrip/writing.ts");
   assert.ok(!wr.includes('"released"'), "writing 은 committed/unknown_billed 만");
-  // analyze 의 released 는 정확히 한 곳 — 전송 전 확정 코드(analyze_unavailable) 조건부만
+  // analyze 의 회사 원장 released 는 정확히 한 곳 — 전송 전 확정(sent=false = analyze_unavailable) 조건부만
   const an = read("functions/api/import/analyze.ts");
-  const relLines = an.split("\n").filter(l => l.includes('"released"'));
-  assert.equal(relLines.length, 1, "analyze released 는 1곳이어야 한다");
-  assert.ok(relLines[0]!.includes('analyze_unavailable'), "analyze released 는 전송 전 확정 코드 조건부만");
+  const relLines = opsReleased(an);
+  assert.equal(relLines.length, 1, "analyze 회사 원장 released 는 1곳이어야 한다");
+  assert.ok(relLines[0]!.includes("ai.sent ?"), "analyze released 는 전송 전 확정 조건부만");
+  assert.match(an, /if \(!providerFetch\) return \{ ok: false, error: "analyze_unavailable", sent: false \}/, "sent=false 는 전송 전 analyze_unavailable 뿐");
+  assert.equal((an.match(/sent: false/g) ?? []).length, 1, "sent=false 는 한 곳뿐");
 });
 
 test("공통 게이트 — AI_MODE(env) 최우선, 스위치는 fail-closed", () => {

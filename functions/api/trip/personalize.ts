@@ -19,7 +19,8 @@
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
-import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { requireActiveUser, userActorHash } from "../../_lib/user-auth";
+import { quotaIdemKey, quotaReserve, quotaSettle } from "../../_lib/ai-user-quota";
 import {
   resolveAiMode, modeAllowsProviderCall, validateProfile, buildMockProfile,
   PROFILE_VERSION, PROFILE_CATEGORIES, TIME_PREFERENCES,
@@ -181,7 +182,14 @@ export async function onRequestPost(
   // off/mock 은 위에서 이미 반환됐다 — 무과금 경로는 로그인 없이도 동작한다.
   const auth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
   if (!auth.ok) return auth.response;
-  checkUserEntitlementPlaceholder(auth.userId); // 무료/크레딧 차감은 후속 TASK
+  // EXTERNAL-TRIP-IMPORT-V2 — 사용자 무료 횟수(개인화·가져오기 공유 풀). 셀 수 없으면 부르지 않는다.
+  const qEnv = ctx.env as Parameters<typeof quotaReserve>[0];
+  const quota = await quotaReserve(qEnv, auth.userId, "personalize", await quotaIdemKey(auth.userId, "personalize", requestId));
+  if (quota.status !== "reserved") {
+    log({ requestId, mode, providerCalled: false, status: "fallback_quota", quota: quota.status });
+    return reply(null, quota.status === "unavailable" ? "fallback_guard" : "fallback_quota");
+  }
+  const releaseQuota = () => quotaSettle(qEnv, quota.id, auth.userId, "released");
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
   const actor = actorSecret ? await userActorHash(auth.userId, actorSecret) : null;
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
@@ -192,6 +200,7 @@ export async function onRequestPost(
     featureDailyCalls: 200, featureDailyUsdMicro: 1_000_000, // $1/day
   });
   if (!gate.ok) {
+    await releaseQuota();
     log({ requestId, mode, providerCalled: false, status: "fallback_ops_gate" });
     return reply(null, "fallback_guard");
   }
@@ -207,6 +216,7 @@ export async function onRequestPost(
       // 정산(CORRECTION-V1 §2): 요청은 이미 전송됐다 — HTTP 오류 응답이라는
       // 사실만으로 무과금을 단정할 공식 근거가 없다. 예약액 보존.
       await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
+      await releaseQuota(); // 사용자에게 완성 결과가 없다 — 사용자 차감 0
       log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: call.httpStatus,
             latency: call.latencyMs, status: "fallback_provider_error" });
       return reply(null, "fallback_provider_error");
@@ -214,6 +224,7 @@ export async function onRequestPost(
     const isAbort = call.kind === "timeout";
     // timeout·network 는 과금 여부 불명 — 예약액 보존(unknown_billed)
     await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
+    await releaseQuota(); // 사용자 차감 0
     // timeout·network 모두 재호출하지 않는다. 늦게 오는 응답도 버린다.
     log({ requestId, mode, providerCalled: true, attempts: 1,
           latency: call.latencyMs, timedOut: isAbort,
@@ -261,6 +272,8 @@ export async function onRequestPost(
           validatorPassed: profile !== null,
           status: profile ? "applied" : "fallback_invalid_response" });
 
+    // 사용자 차감은 적용 가능한 프로필을 받았을 때만 확정한다
+    await quotaSettle(qEnv, quota.id, auth.userId, profile ? "committed" : "released");
     return profile ? reply(profile, "applied") : reply(null, "fallback_invalid_response");
   }
 }

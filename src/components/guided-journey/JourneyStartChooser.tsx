@@ -4,8 +4,8 @@
 //
 // 두 선택지는 같은 모양·같은 무게다. 어느 쪽도 미리 고르거나 권하지 않는다.
 //  ① 고코리아메이트에서 발견하기 → 추천 일정 / 장소를 골라 직접 만들기
-//  ② 이미 만든 일정 활용하기 → 링크 가져오기(지원 범위를 먼저 알린다 — 공개 웹페이지·블로그 링크만,
-//     로그인 필요, AI 대화 답변 붙여넣기·파일은 지원하지 않는다)
+//  ② 이미 만든 일정 활용하기 → 글 붙여넣기 또는 공개 링크(지원 범위를 먼저 알린다 — IMPORT-V2 부터
+//     Gemini·ChatGPT 등의 답변 글 붙여넣기 지원, 로그인 필요, 로그인해야 보이는 페이지·대화창 주소·파일은 안 된다)
 // 이미 여행이 있는 사용자에게는 '내 여행에서 이어가기'(My Trip 합류 지점부터)를 함께 보인다.
 
 import { useState } from "react";
@@ -61,9 +61,9 @@ export default function JourneyStartChooser({ hasTrip, onDone, compact = false }
               <p><span className="font-bold text-ink">{t("importCanLabel")}</span> {t("importCan")}</p>
               <p className="mt-1"><span className="font-bold text-ink">{t("importCannotLabel")}</span> {t("importCannot")}</p>
               <p className="mt-1">{t("importNeedLogin")}</p>
+              <p className="mt-1">{t("importOutside")}</p>
               <div className="mt-2.5 grid gap-1.5">
                 <button type="button" onClick={() => go("import")} className={subBtn}>{t("pathImport")}</button>
-                <button type="button" onClick={() => go("places")} className={subBtn}>{t("pathImportTextAlt")}</button>
               </div>
             </div>
           )}

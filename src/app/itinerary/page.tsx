@@ -1377,6 +1377,9 @@ function ItineraryResult() {
   const [editDay,       setEditDay]       = useState(0);
   /** 편집 캔버스: "다른 날로" 칩이 펼쳐진 항목 · 장소 추가 패널 */
   const [moveOpenIdx,   setMoveOpenIdx]   = useState<number | null>(null);
+  // EXTERNAL-TRIP-IMPORT-V2 — 항목 이름·메모 직접 수정(가져온 일정도 사용자가 고친다 · AI 차감 없음)
+  const [textEditIdx,   setTextEditIdx]   = useState<number | null>(null);
+  const [textDraft,     setTextDraft]     = useState<{ name: string; tips: string }>({ name: "", tips: "" });
   const [addOpen,       setAddOpen]       = useState(false);
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
   // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
@@ -2228,11 +2231,14 @@ function ItineraryResult() {
   }, []);
 
   // ── 브라우저 탭 제목 동기화 ────────────────────────────────
+  // IMPORT-V2 — ?id= 로 여는 여행은 주소에 도시가 없어 불러오기 전까지 city 가 기본값("Seoul")이다.
+  // 그동안 "서울 여행"이 탭 제목·화면 읽기 안내로 먼저 나가던 결함 — 도시를 모를 때는 중립 제목만 쓴다.
+  const cityKnownForTitle = !!searchParams.get("city") || !loading;
   useEffect(() => {
     document.title = tripTitle
       ? `${tripTitle} — gokoreamate`
-      : `${autoTripTitle} — gokoreamate`;
-  }, [tripTitle, city, autoTripTitle]);
+      : cityKnownForTitle ? `${autoTripTitle} — gokoreamate` : "gokoreamate";
+  }, [tripTitle, city, autoTripTitle, cityKnownForTitle]);
 
   // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
   useEffect(() => {
@@ -2492,6 +2498,20 @@ function ItineraryResult() {
       return { ...day, places: orderDayPlaces(day.places.map((p, pi) => pi === placeIdx
         ? { ...p, time: hhmm, slot: assignSlot(hhmm), timeSource: "user" as const }
         : p)) };
+    }));
+  }
+
+  // 이름·메모 직접 수정. 카탈로그 장소(city_spot)의 이름은 장소 연결의 기준이라 바꾸지 않는다 —
+  // 이름은 가져온 장소·내 장소·이름만 있는 항목에서만 고친다. 메모(tips)는 모든 항목에서 고친다.
+  // 저장은 기존 자동 저장(apiSaveItinerary)이 한다 — 새 저장 경로를 만들지 않는다.
+  function setPlaceText(dayIdx: number, placeIdx: number, next: { name: string; tips: string }) {
+    setDays(prev => prev.map((day, di) => {
+      if (di !== dayIdx) return day;
+      return { ...day, places: day.places.map((p, pi) => {
+        if (pi !== placeIdx) return p;
+        const name = p.source === "city_spot" ? p.name : (next.name.trim().slice(0, 120) || p.name);
+        return { ...p, name, tips: next.tips.trim().slice(0, 500) };
+      }) };
     }));
   }
 
@@ -3142,7 +3162,7 @@ function ItineraryResult() {
             {/* VISUAL-POLISH V2 §6 — "RELAXED TRIP" 혼합 언어 제거: pace 네임스페이스
                 라벨(4locale)로 렌더. 알 수 없는 값만 기존 영문 fallback 유지. */}
             {travelStyle
-              ? (["relaxed", "balanced", "active"].includes(travelStyle) ? tPace(travelStyle) : `${travelStyle} Trip`)
+              ? (["relaxed", "balanced", "active", "imported"].includes(travelStyle) ? tPace(travelStyle) : `${travelStyle} Trip`) /* IMPORT-V2: 가져온 일정도 locale 라벨 */
               : t("tripTitleFallback")}
           </span>
 
@@ -3560,10 +3580,57 @@ function ItineraryResult() {
                           )}
                           <button
                             type="button"
+                            onClick={() => {
+                              if (textEditIdx === pi) { setTextEditIdx(null); return; }
+                              setTextDraft({ name: p.name ?? "", tips: p.tips ?? "" });
+                              setTextEditIdx(pi);
+                            }}
+                            aria-expanded={textEditIdx === pi}
+                            aria-label={`${tPlanner("editText")}: ${p.name}`}
+                            className="gkm-focus inline-flex items-center min-h-11 px-3 rounded-full border border-line bg-white text-xs font-bold text-ink"
+                          >{tPlanner("editText")}</button>
+                          <button
+                            type="button"
                             onClick={() => { deletePlace(editDay, pi); setMoveOpenIdx(null); }}
                             aria-label={`${t("removePlace")}: ${p.name}`}
                             className="gkm-focus ml-auto inline-flex items-center min-h-11 px-3 rounded-full border border-line bg-white text-xs font-bold text-sub hover:text-accent-coral"
                           >{t("removePlace")}</button>
+                        </div>
+                      )}
+                      {canEdit && textEditIdx === pi && (
+                        <div className="flex flex-col gap-2 px-3 pb-3">
+                          {p.source !== "city_spot" && (
+                            <label className="flex flex-col gap-1 text-xs font-bold text-sub">{tPlanner("editTextName")}
+                              <input
+                                value={textDraft.name}
+                                onChange={e => setTextDraft(d => ({ ...d, name: e.target.value }))}
+                                maxLength={120}
+                                className="gkm-focus min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-semibold text-ink"
+                              />
+                            </label>
+                          )}
+                          <label className="flex flex-col gap-1 text-xs font-bold text-sub">{tPlanner("editTextNote")}
+                            <textarea
+                              value={textDraft.tips}
+                              onChange={e => setTextDraft(d => ({ ...d, tips: e.target.value }))}
+                              maxLength={500}
+                              rows={3}
+                              className="gkm-focus rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink"
+                            />
+                          </label>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => { setPlaceText(editDay, pi, textDraft); setTextEditIdx(null); }}
+                              className="gkm-focus min-h-11 px-4 rounded-full text-xs font-black text-white"
+                              style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                            >{tPlanner("editTextSave")}</button>
+                            <button
+                              type="button"
+                              onClick={() => setTextEditIdx(null)}
+                              className="gkm-focus min-h-11 px-4 rounded-full border border-line bg-white text-xs font-bold text-sub"
+                            >{tPlanner("editTextCancel")}</button>
+                          </div>
                         </div>
                       )}
                       {canEdit && moveOpenIdx === pi && otherDays.length > 0 && (
