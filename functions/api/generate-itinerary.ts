@@ -1,7 +1,8 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 import { aiAllowed, aiUnavailableResponse } from "../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, aiFeatureUnavailable } from "../_lib/ai-ops-guard";
-import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../_lib/user-auth";
+import { requireActiveUser, userActorHash } from "../_lib/user-auth";
+import { quotaIdemKey, quotaReserve, quotaSettle, quotaRelease } from "../_lib/ai-user-quota";
 interface Env {
   /**
    * 이 레거시 endpoint 전용 게이트. 기본 미설정 = 영구 410.
@@ -816,7 +817,20 @@ export const onRequestPost: (context: {
   // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수
   const userAuth = await requireActiveUser(env as Parameters<typeof requireActiveUser>[0], request);
   if (!userAuth.ok) return userAuth.response;
-  checkUserEntitlementPlaceholder(userAuth.userId); // 차감은 후속 TASK
+  // 무료 AI 도움(30일 이동 구간 1회) — AI 일정 생성은 개인화와 같은 AI 스케줄러 분류로 같은 권리를 쓴다.
+  // (이 레거시 경로는 feature_itinerary_legacy=off·도달 소비처 0 이지만, 켜져도 무료 한도를 우회하지 않게 한다)
+  const qEnv = env as Parameters<typeof quotaReserve>[0];
+  const quota = await quotaReserve(qEnv, userAuth.userId, "personalize",
+    await quotaIdemKey(userAuth.userId, "personalize", JSON.stringify({ legacy: 1, city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, departurePlace, departureTime })));
+  if (quota.status === "replay" && quota.result) {
+    return new Response(JSON.stringify(quota.result), { status: 200, headers: corsHeaders });
+  }
+  if (quota.status !== "reserved") {
+    const body = quota.status === "exhausted" ? { error: "free_ai_used", next_free_at: quota.resetsAt || null }
+      : { error: quota.status === "in_progress" || quota.status === "replay" ? "duplicate" : "ai_paused" };
+    return new Response(JSON.stringify(body), { status: 429, headers: corsHeaders });
+  }
+  const releaseQuota = () => quotaRelease(qEnv, quota.id, userAuth.userId);
   const actorSecret = (env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
   const userActor = actorSecret ? await userActorHash(userAuth.userId, actorSecret) : null;
   const opsGate = await aiOpsReserve(env as Parameters<typeof aiOpsReserve>[0], {
@@ -826,7 +840,7 @@ export const onRequestPost: (context: {
     actorHash: userActor,
     featureDailyCalls: 20, featureDailyUsdMicro: 500_000, // 20/day·$0.5/day
   });
-  if (!opsGate.ok) return opsGate.response;
+  if (!opsGate.ok) { await releaseQuota(); return opsGate.response; }
 
   const arrivalHour = arrivalTime
     ? parseInt(arrivalTime.split(":")[0] ?? "14", 10)
@@ -850,7 +864,10 @@ export const onRequestPost: (context: {
         );
         const result = await callGemini(apiKey, model, prompt);
         await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "committed", { usdMicro: 22_000 }); // usage 미수집 — 보수 commit
-        return new Response(JSON.stringify(result), {
+        // 사용자 무료 횟수 — 완성 일정일 때만 확정. 같은 요청 재응답용 결과는 64KB 이하일 때만 보관
+        const resultJson = JSON.stringify(result);
+        await quotaSettle(qEnv, quota.id, userAuth.userId, "committed", resultJson.length <= 60_000 ? result : null);
+        return new Response(resultJson, {
           status: 200,
           headers: corsHeaders,
         });
@@ -876,6 +893,7 @@ export const onRequestPost: (context: {
   // 근거는 없다(4xx·429 포함). 코드로 무과금을 증명할 수 없는 실패는 전부
   // 예약액 보존 — released 는 provider 이전 차단에만 허용된다.
   await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "unknown_billed");
+  await releaseQuota(); // 사용자는 완성 일정을 받지 못했다 — 무료 횟수 차감 0
   console.error("Gemini all models failed:", allErrors.join(" | "));
   return new Response(
     JSON.stringify(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime)),

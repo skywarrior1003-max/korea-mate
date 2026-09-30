@@ -75,6 +75,11 @@ export async function quotaSettle(env: QuotaEnv, id: number, userId: string, sta
   return r.ok && r.data === true;
 }
 
+/** 사용자 무료 횟수 되돌림(완성 결과 없음 → 차감 0). 회사 비용 원장(aiOpsSettle)의 정산과는 별개 축이다. */
+export function quotaRelease(env: QuotaEnv, id: number, userId: string): Promise<boolean> {
+  return quotaSettle(env, id, userId, "released");
+}
+
 export async function quotaBalance(env: QuotaEnv, userId: string): Promise<QuotaBalance | null> {
   const r = await rpc(env, "ai_user_balance", { p_user: userId });
   const d = r.data as QuotaBalance | null;
