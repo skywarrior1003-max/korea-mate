@@ -31,6 +31,7 @@ import {
   type WritingImage, type WritingRequest, type Moment3CreativeMeta, type TrendPromptEntry,
   // eslint 없음 — 계약: functions 와 동일 배선
 } from "../../../src/lib/mytrip-writing/writing-core";
+import { buildProviderRequestBody } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
 
 export interface Env {
   GEMINI_API_KEY?: string;
@@ -240,9 +241,13 @@ export default {
       if (variant === "json" || variant === "all") { gc.responseMimeType = "application/json"; gc.responseSchema = { type: "object", properties: { a: { type: "string", nullable: true } } }; }
       const started = Date.now();
       try {
+        // variant "profile": AI 스케줄러와 같은 요청 본문(스키마·설정)에 짧은 프롬프트 — 3.x 호환성 진단
+        const body = variant === "profile"
+          ? adaptProviderBody(JSON.stringify(buildProviderRequestBody("Return a travel preference profile for a relaxed 2-day Busan trip. Places: 39, 966, 1460.")), probeModel)
+          : JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc });
         const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${probeModel}:generateContent?key=${apiKey}`, {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc }),
+          body,
           signal: AbortSignal.timeout(20_000),
         });
         const t = await r.text();
@@ -305,7 +310,9 @@ export default {
         );
         clearTimeout(timer);
         const [text, colo] = await Promise.all([res.text(), executionColo()]);
-        log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length, inBytes: raw.length });
+        // 실패 응답은 원인 문장 앞부분만 로그에(키·본문 원문 없음) — 지역 차단·인자 오류·과부하 구분용
+        const errHead = res.ok ? undefined : text.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/\s+/g, " ").slice(0, 160);
+        log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length, inBytes: raw.length, model: modelOf(env), ...(errHead ? { errHead } : {}) });
         // 상태·본문을 그대로 넘긴다 — 호출측의 기존 오류 분기(!res.ok)가 그대로 동작한다.
         return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1", "x-gkm-model": modelOf(env) } });
       } catch (err) {
