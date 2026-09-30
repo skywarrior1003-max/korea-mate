@@ -196,6 +196,9 @@ export const ANALYZE_SCHEMA = {
     places: { type: "array", items: { type: "object", properties: { name: { type: "string" } }, required: ["name"] } },
   },
   required: ["content_kind"],
+  // 일정(days·places)을 먼저, 자유 글인 trip_title 은 맨 뒤에 — 2026-09-30 Preview 실측(3.5 Flash-Lite): 첫머리
+  // trip_title 문자열에서 같은 글자가 반복되며 폭주해 days 없이 끝나거나(unsupported) 출력 상한에 걸렸다(MAX_TOKENS).
+  propertyOrdering: ["content_kind", "days", "places", "city", "start_date", "end_date", "trip_title"],
 } as const;
 
 export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): string {
