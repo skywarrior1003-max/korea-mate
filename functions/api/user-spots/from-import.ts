@@ -89,7 +89,8 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
       .insert(toInsert.map(w => ({
         device_id: own.currentDevice,
         name: w.name,
-        category: "attraction",
+        // 원문이 알려 주지 않은 분류는 만들지 않는다 — 열 기본값('attraction')이 대신 들어가지 않게 명시적으로 비운다
+        category: null,
         import_source: source,
         ...(w.note ? { note: w.note } : {}),
         ...(w.city ? { city: w.city } : {}),

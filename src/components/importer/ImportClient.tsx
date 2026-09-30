@@ -190,7 +190,8 @@ function ImportInner() {
       time: stop.time ?? "",
       // 원문 시각은 사용자가 정한 시각으로 저장한다(화면에 실제 시각으로 보이고, 스케줄러가 바꾸지 않는다)
       ...(stop.time ? { timeSource: "user" as const } : {}),
-      category: linked?.category ?? "attraction",
+      // 서비스 장소에 연결될 때만 그 분류를 쓴다 — 모르는 분류를 만들어 저장하지 않는다(화면은 분류 없이도 표시)
+      ...(linked?.category ? { category: linked.category } : {}),
       location: linked?.district ?? "",
       duration: duration ? `${duration}m` : "",
       tips: stop.note ?? "",
