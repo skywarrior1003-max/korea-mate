@@ -20,6 +20,7 @@
 // 경로
 //   POST /generate  — WritingRequest(JSON) → {suggestion, ai_status}
 //   POST /canary    — 서버 고정 합성 요청 1회 + 실행 위치 증거. 사용자 데이터 0.
+//   POST /health    — 연결 진단(환경 표식·스위치·키 유무·colo). provider 호출 0.
 
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
@@ -35,6 +36,8 @@ export interface Env {
   GEMINI_API_KEY?: string;
   INTERNAL_KEY?: string;
   AI_WRITING_WORKER_MODE?: string;
+  /** 진단용 표식 — Preview 전용 Worker 는 "preview"(없으면 production 으로 본다) */
+  WORKER_ENV?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -163,15 +166,23 @@ export default {
     if (!env.INTERNAL_KEY || !provided || !(await keysMatch(provided, env.INTERNAL_KEY))) {
       return json({ error: "unauthorized" }, 401);
     }
+    // 연결 진단 — provider 를 부르지 않는다(비용 0). 키는 있는지만(값·형식 없음).
+    if (new URL(request.url).pathname === "/health") {
+      return json({
+        worker_env: (env.WORKER_ENV ?? "production").trim() || "production",
+        mode: (env.AI_WRITING_WORKER_MODE ?? "").trim().toLowerCase() === "live" ? "live" : "off",
+        has_key: !!env.GEMINI_API_KEY, colo: await executionColo(),
+      });
+    }
     // V2-HARDCAP §8 — Worker 자체 kill switch(누락·오타=차단). Pages 게이트와
     // 독립으로, binding·직접 호출 어느 경로든 이 스위치가 꺼져 있으면 provider 0.
     if ((env.AI_WRITING_WORKER_MODE ?? "").trim().toLowerCase() !== "live") {
       return json({ error: "worker_disabled" }, 503);
     }
     const apiKey = env.GEMINI_API_KEY;
-    if (!apiKey) return reply(null, "no_key");
-
     const path = new URL(request.url).pathname;
+    // /provider 호출측은 HTTP 상태로 분기한다 — 키 누락을 200 빈 응답이 아니라 503 코드로 알린다
+    if (!apiKey) return path === "/provider" ? json({ error: "no_key" }, 503) : reply(null, "no_key");
 
     if (path === "/canary") {
       // 본문은 읽지 않는다 — provider 로 나가는 입력은 서버 고정값뿐이다.

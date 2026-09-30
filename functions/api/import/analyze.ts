@@ -183,10 +183,12 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
       // 비밀·본문 없이 상태만 — 운영 진단용(비 Production 응답에만 싣는다)
       let st = `http_${res.status}`;
       try {
-        const e = (await res.json()) as { error?: { status?: string; message?: string } };
-        if (e.error?.status) st += `:${e.error.status}`;
+        const e = (await res.json()) as { error?: string | { status?: string; message?: string } };
+        // 서울 Worker 의 거절은 문자열 코드(unauthorized·worker_disabled 등) — 그대로 싣는다
+        if (typeof e.error === "string") st += `:worker_${e.error.replace(/[^a-z_]/g, "").slice(0, 40)}`;
+        else if (e.error?.status) st += `:${e.error.status}`;
         // 오류 문장 앞부분만 — 키처럼 보이는 문자열은 가린다(키 값을 응답·로그에 싣지 않는다)
-        if (e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
+        if (typeof e.error === "object" && e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
       } catch { /* ignore */ }
       return { ok: false, error: "analyze_failed", sent: true, providerStatus: st };
     }
@@ -226,6 +228,23 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   if (!auth.ok) return auth.response;
   const balance = await quotaBalance(ctx.env as Parameters<typeof quotaBalance>[0], auth.userId);
   if (!balance) return fail("quota_unavailable");
+  // 비 Production 전용 연결 진단 — ?diag=route. Worker /health 는 provider 를 부르지 않는다(비용 0).
+  // 키 값·형식은 싣지 않는다(있는지만).
+  const isProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() === "production";
+  if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "route") {
+    const direct = (ctx.env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct";
+    const binding = ctx.env.AI_WRITING;
+    let worker: unknown = "no_binding";
+    if (binding && typeof binding.fetch === "function") {
+      try {
+        const r = await binding.fetch("https://ai-writing.internal/health", {
+          method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "" },
+        });
+        worker = { http: r.status, ...(await r.json().catch(() => ({}))) as Record<string, unknown> };
+      } catch { worker = "unreachable"; }
+    }
+    return json({ ok: true, balance, route: { via: direct ? "direct" : binding ? "worker" : "direct", internal_key: !!ctx.env.INTERNAL_KEY, worker } });
+  }
   return json({ ok: true, balance });
 }
 

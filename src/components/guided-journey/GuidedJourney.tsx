@@ -154,6 +154,26 @@ export default function GuidedJourney() {
   }, []);
   // 화면이 바뀌면 숨김을 풀고 다시 판단
   useEffect(() => { Promise.resolve().then(() => setHidden(false)); }, [pathname]);
+  // 키보드 사용자가 앱 안에서 화면을 옮기면 이전 화면의 버튼(하단 메뉴 등)에 초점이 남아
+  // 다음 Tab 이 건너뛰기 링크를 지나친다. 마지막 입력이 키보드였을 때만 초점 시작점을
+  // 건너뛰기 링크 자리로 옮긴다 — 다음 Tab 한 번이 '여행 만들기 안내로 이동'. 마우스·터치는 그대로.
+  const lastKeyboard = useRef(false);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Tab" || e.key === "Enter" || e.key === " ") lastKeyboard.current = true; };
+    const onPointer = () => { lastKeyboard.current = false; };
+    window.addEventListener("keydown", onKey, true);
+    window.addEventListener("pointerdown", onPointer, true);
+    return () => { window.removeEventListener("keydown", onKey, true); window.removeEventListener("pointerdown", onPointer, true); };
+  }, []);
+  const prevPath = useRef(pathname);
+  useEffect(() => {
+    if (prevPath.current === pathname) return;
+    prevPath.current = pathname;
+    if (!lastKeyboard.current || !skipHost || readJourney().status !== "active") return;
+    skipHost.tabIndex = -1;
+    skipHost.style.outline = "none";
+    skipHost.focus({ preventScroll: true });
+  }, [pathname, skipHost]);
   // 단계가 바뀌면 '자세히'는 다시 접힌다
   const stepNow = js?.step ?? null;
   useEffect(() => { Promise.resolve().then(() => setExpanded(false)); }, [stepNow]);

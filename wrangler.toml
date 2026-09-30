@@ -9,3 +9,9 @@ compatibility_flags = ["nodejs_compat"]
 [[services]]
 binding = "AI_WRITING"
 service = "gokoreamate-ai-writing"
+# Preview 배포(브랜치 배포)는 Production 과 공유하는 Worker 대신 Preview 전용 Worker 를 부른다.
+# (최상위 설정 = Production. 여기 없는 연결은 Preview 에 상속되지 않는다 — Pages 규칙)
+[env.preview]
+[[env.preview.services]]
+binding = "AI_WRITING"
+service = "gokoreamate-ai-writing-preview"
