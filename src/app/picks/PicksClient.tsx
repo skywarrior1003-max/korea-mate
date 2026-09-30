@@ -17,6 +17,7 @@ import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
+import { tripCityLabel } from "@/data/cities/trip-city";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import { getCityCart, lastAddedTripCity, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
@@ -1187,7 +1188,8 @@ function PicksContent() {
                                 <div className="min-w-0">
                                   <p className="font-semibold text-ink text-[15px]">{display}</p>
                                   <p className="text-xs text-faint mt-0.5">
-                                    {[catLabel, s.city, s.address].filter(Boolean).join(" · ")}
+                                    {/* 도시는 언어별 이름으로(저장값 gangneung·강릉 → 강릉 / Gangneung) — trip-city.ts */}
+                                    {[catLabel, s.city ? tripCityLabel(s.city, locale) : null, s.address].filter(Boolean).join(" · ")}
                                   </p>
                                   {s.note && <p className="text-sm text-sub mt-2 leading-relaxed">{s.note}</p>}
                                 </div>
