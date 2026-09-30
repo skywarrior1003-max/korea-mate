@@ -13,14 +13,15 @@
  * 무엇을 보나(기본 — provider 호출 0)
  *   U1 로그인 없으면 401 · 회사 원장 0행
  *   U2 회사 비용 상한 — 실제 예약 함수(ai_ops_reserve)가 일일 예산·기능별 예산·중복 요청을 거절하고 행을 만들지 않는다
- *   U3 실패 복구 — 회사 예약이 거절되면(중복 요청 열쇠) 사용자 무료 횟수가 released 로 돌아가고 provider 0.
- *      이 스크립트가 먼저 같은 열쇠의 예약 1행을 만들고 곧바로 released 로 닫는다(비용 0 · 상한 계산 제외).
+ *   (U3 회사 거절 뒤 사용자 복구는 6d796299 로 회사 원장 열쇠가 예약마다 달라져 실환경에서 AI 없이 일으킬 수 없다 —
+ *    personalize-user-path.test.ts UP5·UP6 이 실제 handler 로 본다)
  *   U4 소진 — 이번 달 무료 횟수를 다 쓴 계정은 fallback_quota(다음 가능일)이고 provider 0 · 원장 0행
  *   U5 잘못된 요청 — 기간 14일 초과는 로그인·차감 이전에 막힌다: provider 0 · 원장 0행 · 사용자 행 0
  *      (후보 0개는 잘못된 요청이 아니다 — route 가 도시 전체 기준으로 부른다. 2026-09-30 실측)
  * --with-ai 일 때만
  *   A1 첫 요청 → applied 면 사용자 committed + 원장 committed(실토큰) / 실패면 released + 원장 unknown_billed
  *   A2 같은 request_id 재요청 → 추가 원장 0 · 추가 차감 0
+ *   A3 다른 사용자가 같은 일정(같은 request_id)을 보내도 막히지 않는다(6d796299 이전에는 fallback_guard 로 막혔다)
  *
  * 안전
  *   · Staging(Supabase ref nimzhbntqoezqserujoc)·*.korea-mate.pages.dev 에서만 돈다. Production ref·도메인이면 즉시 중단.
@@ -91,12 +92,6 @@ async function personalize(user, requestId, ids = ["39", "966", "1460"], dates =
 
 const results = [];
 function check(id, pass, detail) { results.push({ id, pass, detail }); console.log(`${pass ? "PASS" : "FAIL"} ${id} ${JSON.stringify(detail)}`); }
-// personalize route 의 요청 열쇠(shortHash)와 같은 계산 — functions/api/trip/personalize.ts 와 같아야 한다
-function routeRequestHash(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
-  return (h >>> 0).toString(36);
-}
 const kstMonth = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit" }).format(new Date()).slice(0, 7);
 
 try {
@@ -118,23 +113,6 @@ try {
     const reason = x => (Array.isArray(x?.data) ? x.data[0]?.reason : null);
     check("U2 company cap refusals", reason(day) === "daily_budget_exceeded" && reason(feat) === "feature_daily_budget_exceeded" && (!dup || reason(dup) === "duplicate_idempotency") && count0 === count1,
       { daily: reason(day), feature_budget: reason(feat), duplicate: dup ? reason(dup) : "skipped(no ledger row)", new_rows: count1 - count0 });
-  }
-  // U3 실패 복구 — 같은 열쇠의 예약을 먼저 만들어 닫아 두면 route 의 회사 예약이 중복으로 거절된다
-  {
-    const rid = `qa-aipath-u3-${randomUUID()}`;
-    const key = `personalize:${routeRequestHash(rid)}`;
-    const pre = await rest("rpc/ai_ops_reserve", { method: "POST", body: JSON.stringify({ p_route: "personalize", p_model: "qa-probe", p_worst_usd_micro: 1, p_idem_key: key, p_actor_hash: null, p_feature_daily_calls: 0, p_feature_daily_usd_micro: 0 }) });
-    const preId = Array.isArray(pre.data) && pre.data[0]?.ok ? pre.data[0].ledger_id : null;
-    if (preId) await rest("rpc/ai_ops_settle", { method: "POST", body: JSON.stringify({ p_ledger_id: preId, p_status: "released", p_committed_usd_micro: null, p_input_tokens: null, p_output_tokens: null }) });
-    if (!preId) check("U3 recovery (company refusal → user released)", false, { skipped: "could not pre-reserve collision key" });
-    else {
-      const u = await makeUser("u3");
-      const before = await ledgerCount("personalize");
-      const r = await personalize(u, rid);
-      const us = await usage(u.id);
-      check("U3 recovery (company refusal → user released)", r.ai_status === "fallback_guard" && us.length === 1 && us[0].status === "released" && (await ledgerCount("personalize")) === before,
-        { ai_status: r.ai_status, user_usage: us.map(x => `${x.pool}:${x.status}`), new_rows: (await ledgerCount("personalize")) - before });
-    }
   }
   // U4 소진 — 이번 달 plan + welcome 을 이미 쓴 계정
   {
@@ -172,6 +150,11 @@ try {
     const r2 = await personalize(u, rid);
     check("A2 same request_id → no extra ledger/charge", (await ledgerCount("personalize")) === mid && (await usage(u.id)).filter(x => x.status === "committed").length === us1.filter(x => x.status === "committed").length,
       { ai_status: r2.ai_status });
+    const v = await makeUser("a3");
+    const before3 = await ledgerCount("personalize");
+    const r3 = await personalize(v, rid);
+    check("A3 other user, same request_id → not refused", r3.ai_status !== "fallback_guard" && (await ledgerCount("personalize")) === before3 + 1,
+      { ai_status: r3.ai_status });
   }
 } finally {
   // 만든 합성 계정과 그 계정 행만 정리(회사 원장은 감사 기록이라 남긴다)

@@ -108,17 +108,28 @@ export const onRequestPost: (ctx: Ctx) => Promise<Response> = async ({ request, 
 
   let handlerBody: { profile: unknown; ai_status: string } | null = null;
   let handlerError: string | null = null;
+  let handlerStatus = 0;
   const started = Date.now();
   try {
     const res = await personalizeHandler({
       request: syntheticRequest, env: canaryEnv, fetchFn: probe.fetchFn,
     });
+    handlerStatus = res.status;
     handlerBody = await res.json() as { profile: unknown; ai_status: string };
   } catch (e) {
     handlerError = (e as Error).message;
   }
   const totalMs = Date.now() - started;
   const providerCalls = probe.providerCalls();
+
+  // 2026-09-30: 34d0a6c9 부터 개인화 route 는 로그인·동의가 필요하다. 세션 없는 이 합성 요청은 provider 까지
+  // 가지 못한다(인증을 완화하지 않는다). 아무것도 부르지 않았는데 "executed" 로 답하던 것을 바로잡는다 —
+  // provider 경로 검증은 로그인한 사용자 경로 검사(personalize-user-path.test.ts · scripts/qa/ai-user-path-check.mjs)가 맡는다.
+  if (providerCalls === 0 && !handlerError) {
+    const blocked = handlerStatus === 401 || handlerStatus === 403 ? "blocked_user_auth_required" : "blocked_before_provider";
+    log({ status: blocked, providerCalls: 0, totalMs });
+    return json({ success: false, canary_status: blocked, providerCalled: false }, 409);
+  }
 
   // ── 7. 안전한 진단만 조립한다 ───────────────────────────────────────────
   const cap = probe.captured();
