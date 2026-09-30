@@ -57,7 +57,11 @@ test("★P10~P15 실패 원인을 알 수 있는 진단값을 남긴다", () => 
   }
   // provider 가 안 준 값을 0 으로 추측하지 않는다
   assert.match(s, /provider_not_returned/);
-  assert.doesNotMatch(s, /thoughtsTokenCount\s*\?\?\s*0/);
+  assert.match(s, /thoughtsTokens: orNR\(u\?\.thoughtsTokenCount\)/);
+  // 예외는 회사 원장 정산식 한 곳뿐(2fad3335) — 안 준 thinking 토큰은 과금되지 않은 것이라 비용 합산에서 0 이다.
+  // 진단값·로그에는 여전히 0 으로 채우지 않는다.
+  const outsideSettlement = s.split("\n").filter(l => !/outTok:|usdMicroFromUsage\(/.test(l)).join("\n");
+  assert.doesNotMatch(outsideSettlement, /thoughtsTokenCount\s*\?\?\s*0/);
   // 응답 원문을 통째로 남기지 않는다
   assert.doesNotMatch(s, /log\(\{[^}]*rawResponse|JSON\.stringify\(raw\)/);
 });
@@ -126,7 +130,8 @@ test("★P2·P3 A안 수정에 unsafe 억제가 없다", () => {
 
 test("★P4 공유 페이지 — trip 이 없으면 브랜드 fallback, 정상 trip 은 그대로", () => {
   const s = read("functions", "shared", "[id].ts");
-  assert.match(s, /: FALLBACK_OG;/);
+  // 브랜드 fallback 으로 시작하고, trip 이 있을 때만 바꾼다(삼항 → 초기값 + if (trip) 로 모양만 바뀜)
+  assert.match(s, /let ogImage = FALLBACK_OG;[\s\S]*?\n\s*if \(trip\) \{/);
   assert.match(s, /img\/trip-cover\/\$\{shareId\}\?v=\$\{encodeURIComponent\(coverVersion\)\}/);
   // 도시별 OG 를 새로 켜지 않았다
   assert.doesNotMatch(s, /CITY_OG_IMAGE\[/);

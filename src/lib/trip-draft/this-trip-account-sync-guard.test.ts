@@ -90,7 +90,11 @@ test("⑨⑫⑬⑭⑮ — 079 잠금·기존 계약 무변경", () => {
   assert.match(s, /REVOKE ALL ON TABLE public\.trip_drafts FROM PUBLIC, anon, authenticated/);
   assert.ok(!/CASCADE/.test(s), "FK/CASCADE 없음(다형 owner)");
   // Legal DRAFT 유지·연결 선택 UI 없음
-  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = null;/); // 게시 전 DRAFT — 시행일 단일 원천
+  // 게시 전에는 null(DRAFT) 이었고, 2026-09-29 Production 게시(7c7e623b)로 실제 시행일이 들어갔다.
+  // 잠금의 뜻은 "시행일은 한 곳에서만 정한다" — 값과 단일 원천(개인정보처리방침이 이 상수를 읽는다)을 함께 고정한다.
+  assert.match(read("src/lib/auth/consent-contract.ts"), /LEGAL_EFFECTIVE_DATE: string \| null = "2026-09-29";/);
+  assert.match(read("src/lib/legal/privacy-content.ts"), /import \{ LEGAL_EFFECTIVE_DATE \} from "\.\.\/auth\/consent-contract\.ts";/);
+  assert.doesNotMatch(read("src/lib/legal/privacy-content.ts"), /effectiveDate:\s*"\d{4}-/, "시행일을 방침 안에 따로 적었다");
   const sheet = strip(read("src/components/auth/ConsentSheet.tsx"));
   assert.equal((sheet.match(/<CheckRow /g) ?? []).length, 3, "연결 checkbox 추가 금지");
 });

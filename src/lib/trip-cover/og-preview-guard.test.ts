@@ -107,9 +107,19 @@ test("G3: /shared OG 메타는 og:image:width/height 를 내보낸다", () => {
 test("G4: /shared 는 프록시와 같은 결정 함수·실측 치수를 쓴다", () => {
   assert.match(sharedSrc, /resolveTourismCoverAsset/);
   // select 에 커버 컬럼이 포함되어야 결정이 가능하다
-  assert.match(sharedSrc, /select=city,start_date,end_date,travel_style,days,updated_at,cover_kind,cover_asset_id/);
+  // trip_title 이 더해졌다(대표 커버·제목 fallback 용) — 목록 전체를 그대로 고정한다
+  assert.match(sharedSrc, /select=city,start_date,end_date,travel_style,trip_title,days,updated_at,cover_kind,cover_asset_id/);
 });
 
 test("G5: 개인 커버는 치수를 추측하지 않는다 — personal 분기 제외 가드", () => {
-  assert.match(sharedSrc, /cover_kind !== "personal"/);
+  // 분기 모양이 `!== "personal"` → `=== "personal" { … } else { … }` 로 바뀌었다. 규칙은 같다:
+  // 개인 커버 분기는 프록시 주소만 쓰고 og:image 치수를 채우지 않는다. 치수는 else(관광 자산) 쪽에서만.
+  const start = sharedSrc.indexOf('if (trip.cover_kind === "personal") {');
+  assert.ok(start > 0, "personal 분기가 사라졌다");
+  const end = sharedSrc.indexOf("} else {", start);
+  assert.ok(end > start, "personal 분기의 else 가 사라졌다");
+  const personal = sharedSrc.slice(start, end);
+  assert.match(personal, /img\/trip-cover\/\$\{shareId\}/);
+  assert.doesNotMatch(personal, /ogImageWidth|ogImageHeight/, "개인 커버 분기에서 치수를 채운다");
+  assert.match(sharedSrc.slice(end), /ogImageWidth\s*=\s*asset\.width/);
 });
