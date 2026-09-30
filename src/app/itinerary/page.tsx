@@ -202,6 +202,18 @@ const TIME_SLOTS = [
 ] as const;
 
 
+// ── 저장 비교 열쇠 — 자동 저장이 보내는 값과 같은 모양으로 만든다 ─────────────
+/**
+ * rawDays 는 서버에서 읽은 days 원본(있을 때). unscheduled 가 비어 있지 않은 옛 기록은
+ * 저장하면 비워지므로(현재 저장 계약) 같은 내용으로 보지 않는다 — 그때는 한 번 저장된다.
+ */
+function itinerarySyncKey(city: unknown, start: unknown, end: unknown, travelers: unknown, style: unknown, scheduled: unknown, rawDays: unknown): string {
+  const legacyUnscheduled = !!rawDays && !Array.isArray(rawDays) && typeof rawDays === "object"
+    && Array.isArray((rawDays as { unscheduled?: unknown }).unscheduled) && ((rawDays as { unscheduled: unknown[] }).unscheduled.length > 0);
+  const legacyArray = Array.isArray(rawDays);
+  return JSON.stringify([city ?? null, start ?? null, end ?? null, travelers ?? null, style ?? null, scheduled, legacyUnscheduled || legacyArray ? "legacy" : ""]);
+}
+
 // ── time 문자열 → 슬롯 자동 배정 ─────────────────────────────
 function assignSlot(time: string): string {
   const h = parseInt(time?.split(":")?.[0] ?? "12", 10);
@@ -1500,6 +1512,12 @@ function ItineraryResult() {
   const [copied,          setCopied]          = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   /**
+   * 서버에 있는 것과 같은 저장 내용(열었을 때 읽은 값 · 마지막으로 저장한 값).
+   * 읽기만 했는데 같은 내용을 다시 저장해 updated_at(목록 순서·동기화 기준)이 바뀌지 않게 한다.
+   * 열 때 정리(sanitize)나 열쇠 붙이기로 실제 내용이 달라지면 그때는 그대로 저장한다.
+   */
+  const syncBaselineRef = useRef<string | null>(null);
+  /**
    * 이 화면이 방금 만든 일정인가 — 저장에 성공하면 This Trip 을 비울 자격.
    *
    * 저장 effect 는 새로 만들 때도, 저장된 일정을 다시 열 때도, 편집할 때도
@@ -1938,6 +1956,7 @@ function ItineraryResult() {
         return;
       }
 
+      syncBaselineRef.current = itinerarySyncKey(record.city, record.start_date, record.end_date, record.travelers, record.travel_style, sharedDays, rawShareDays);
       setDays(sanitizeDays(sharedDays));
       setItinId(shareId);
       setCity(record.city);
@@ -2091,6 +2110,7 @@ function ItineraryResult() {
         // 저장된 일정은 이미 완성된 결과이지 지금 짜고 있는 This Trip 의 주인이
         // 아니다. 같은 도시든 다른 도시든, 과거 snapshot 으로 현재 고른 곳을
         // 되돌리지 않는다 — 방금 담은 장소가 조용히 사라지던 자리다.
+        if (record) syncBaselineRef.current = itinerarySyncKey(record.city, record.start_date, record.end_date, record.travelers, record.travel_style, loadedDays, raw);
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
       setStoryHeroTitle((record as { story_title?: string | null }).story_title ?? null);
@@ -2153,6 +2173,10 @@ function ItineraryResult() {
     const allDaysEmpty = days.length > 0 && days.every(d => !d.places || d.places.length === 0);
     if (allDaysEmpty) return;
 
+    // 서버에 이미 있는 내용과 같으면 저장하지 않는다(여는 것만으로 updated_at 이 바뀌지 않게)
+    const syncKey = itinerarySyncKey(resolveCitySlug(city) ?? city, startDate, endDate, travelers, travelStyle, days, null);
+    if (syncKey === syncBaselineRef.current) return;
+
     // Supabase 디바운스 동기화 (1.5s)
     setSyncStatus("saving");
     if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
@@ -2185,6 +2209,7 @@ function ItineraryResult() {
         days: { __v: 2, scheduled: snapDays, unscheduled: snapUnscheduled },
       }, getDeviceId());
       setSyncStatus(ok ? "saved" : "error");
+      if (ok) syncBaselineRef.current = syncKey;
       // 방금 만든 일정이 실제로 저장된 그 순간에만, 그 도시의 This Trip 을 비운다.
       // 실패하면 그대로 둔다 — 저장 안 된 일정 때문에 고른 곳을 잃게 하지 않는다.
       // 플래그를 먼저 내려 다음 autosave 가 다시 비우지 않게 한다.

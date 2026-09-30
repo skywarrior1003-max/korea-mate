@@ -8,6 +8,7 @@ import { reportShareEvent, shareIdFromUrl } from "@/lib/social/signals";
 import ShareIcon from "@/components/ui/ShareIcon";
 import { useRef, useCallback, useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { resolveCitySlug, CITY_DISPLAY_NAMES } from "@/data/cities/resolve";
 // 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
 // 390px 로 실측해 확정한 값(story-tokens)을 그대로 확대해 쓴다.
 import {
@@ -155,6 +156,12 @@ export default function TripStoryExport({
 }: Props) {
   const t = useTranslations("story");
   const locale = useLocale();
+  // 도시 이름은 화면 언어로 — 한국어 카드에 "Busan에서 보낸 2일" 처럼 섞이지 않게(공유 Story 와 같은 표).
+  // 모르는 도시는 예전처럼 원문 첫 글자만 대문자로.
+  const citySlug = resolveCitySlug(city);
+  const cityName = citySlug
+    ? CITY_DISPLAY_NAMES[citySlug][(["ko", "en", "ja", "zh"].includes(locale) ? locale : "en") as "ko" | "en" | "ja" | "zh"]
+    : city.charAt(0).toUpperCase() + city.slice(1);
   const canvasRef               = useRef<HTMLCanvasElement>(null);
   const [rendering,  setRendering]  = useState(false);
   const [rendered,   setRendered]   = useState(false);
@@ -371,7 +378,7 @@ export default function TripStoryExport({
     // 제목 — **사용자의 실제 Trip title 이 최우선**(SHARING-VISUAL-PRODUCTION-V1).
     // 없을 때만 locale 의 "{N} Days in {City}" fallback. 긴 제목은 generic 으로
     // 바꾸지 않고 글자 크기·줄 수로 대응한다(코어 규칙 = OG 와 동일).
-    const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
+    const cityCap = cityName; // 화면 언어의 도시 이름
     const actual = isActualTitle(tripTitle);
     const headline = actual
       ? shareTitle(tripTitle, city, dayCount)
@@ -429,7 +436,7 @@ export default function TripStoryExport({
     ctx.fillText(eyebrow, PAD, y);
     ctx.letterSpacing = "0px";
     return "ok";
-  }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, locale, t]);
+  }, [moments, city, startDate, endDate, dayCount, placeCount, tripTitle, fallbackPhotoSrc, locale, cityName, t]);
 
   const render = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -725,7 +732,7 @@ export default function TripStoryExport({
     }
     // 마무리(브랜드 통합) — 여행 제목 + 기간
     ctx.textAlign = "center";
-    const headline = isActualTitle(tripTitle) ? shareTitle(tripTitle, city, dayCount) : t("cardHeadline", { n: dayCount, city: city.charAt(0).toUpperCase() + city.slice(1) });
+    const headline = isActualTitle(tripTitle) ? shareTitle(tripTitle, city, dayCount) : t("cardHeadline", { n: dayCount, city: cityName });
     ctx.font = `700 ${px(26)}px ${serif}`;
     ctx.fillStyle = "#ffffff";
     let hy = Math.round(H * 0.85);
@@ -735,7 +742,7 @@ export default function TripStoryExport({
     ctx.fillText(`${startDate} – ${endDate}`, W / 2, hy + px(4));
     drawWordmark(ctx, W, H, px, sans);
     ctx.textAlign = "left";
-  }, [specFonts, tripTitle, city, dayCount, startDate, endDate, t]);
+  }, [specFonts, tripTitle, city, cityName, dayCount, startDate, endDate, t]);
 
   const drawSpecOn = useCallback(async (canvas: HTMLCanvasElement, spec: StoryCardSpec): Promise<void> => {
     if (spec.kind === "cover") { await drawCoverOn(canvas); return; }
@@ -789,7 +796,7 @@ export default function TripStoryExport({
 
     setSharing(true);
     const dataUrl   = canvas.toDataURL("image/png");
-    const cityCap    = city.charAt(0).toUpperCase() + city.slice(1);
+    const cityCap    = cityName; // 화면 언어의 도시 이름
     const memoPart   = moments.length > 0 ? ` · ${t("shareTextMemories", { n: moments.length })}` : "";
     const shareText  = buildShareText({
       title: t("shareTextTitle", { city: cityCap }),
@@ -835,7 +842,7 @@ export default function TripStoryExport({
     // [경로 C] 모든 share 시도 실패 → PNG 다운로드 + 링크 복사 + 배너
     await runFallback();
     setSharing(false);
-  }, [rendered, sharing, city, dayCount, placeCount, moments, shareUrl, pngFilename, runFallback, t]);
+  }, [rendered, sharing, city, cityName, dayCount, placeCount, moments, shareUrl, pngFilename, runFallback, t]);
 
   // ── PNG 직접 다운로드 (Secondary 버튼) ────────────────────────────────────
   const handleDownload = useCallback(() => {

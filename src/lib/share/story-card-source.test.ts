@@ -283,3 +283,9 @@ test("L5 띄어쓰기 없는 글도 줄바꿈한다 — 일본어·중국어 제
   const wrap = CARD.slice(CARD.indexOf("function wrapText"), CARD.indexOf("function dataUrlToFile"));
   assert.match(wrap, /for \(const ch of word\)/);
 });
+
+test("L3 카드의 도시 이름은 화면 언어로 — 한국어 카드에 'Busan에서' 처럼 섞이지 않는다(2026-09-30)", () => {
+  assert.match(CARD, /CITY_DISPLAY_NAMES\[citySlug\]/);
+  assert.doesNotMatch(CARD, /cardHeadline", \{ n: dayCount, city: city\.charAt/, "제목에 원문 도시값을 쓰지 않는다");
+  assert.doesNotMatch(CARD, /const cityCap\s*=\s*city\.charAt/, "공유 문구도 원문 도시값을 쓰지 않는다");
+});
