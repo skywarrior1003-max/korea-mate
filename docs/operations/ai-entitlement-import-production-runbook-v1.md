@@ -1,8 +1,17 @@
 # AI 무료 이용 권리 · 외부 일정 가져오기 — Production 전환 런북 v1
 
-작성 2026-09-30 · 정책 미확정(0절) — 무료 횟수가 결정되기 전에는 1절 3단계(086)와 5단계를 진행하지 않는다 · 브랜치 `feature/external-trip-import-v2` · **Owner 가 Preview 화면을 확인하기 전에는 아래 어떤 단계도 실행하지 않는다.**
+작성 2026-09-30 · 정책: 2026-09-25 Owner 작업 지시 기준(Owner 2026-09-30 확인) — 087 · '월' 갱신 시점과 최초 보너스 만료는 미정(0절) · 브랜치 `feature/external-trip-import-v2` · **Owner 가 Preview 화면을 확인하기 전에는 아래 어떤 단계도 실행하지 않는다.**
 
-## 0. 정책 — **미확정**(Owner 결정 대기)
+## 0. 정책 — 2026-09-25 Owner 작업 지시 기준(2026-09-30 Owner 확인) · 087
+
+- 일정 만들기(plan) **월 1회** — 글·링크 가져오기 분석과 고코리아메이트 AI 스케줄러(개인화·레거시 생성)가 공유.
+- **신규 회원 최초 보너스 1회** — plan 에 계정당 1회(가져오기 전용 아님, 매월 재지급 없음). "가져오기 1회 → AI 스케줄러 1회"를 둘 다 경험할 수 있다.
+- 전체 여행 AI 글쓰기(writing) **월 2회** — My Trip·Story 공유. 한 번의 요청으로 여행 제목·Story·모든 기록의 제목·내용을 3가지 표현으로 받으면 1회.
+- 차감 0: 기본 일정·추천 코스·직접 편집·사진 업로드·Story 열람·공유카드·실패·저장 결과 재열람.
+- **원문에 없는 값(Owner 결정 대기)**: '월' 갱신 시점 — 084 의 `ai_user_period_now()`(서울 시각 달력 월)를 그대로 쓴다. 최초 보너스 만료 — 규칙 없음(쓰기 전까지 남음). 바꿀 때는 DB 함수 한 곳.
+- 09-21 인계서의 "30일 통합 1회"(086)는 다시 적용하지 않는다.
+
+### (기록) 정책 원문 대조 — 2026-09-30 오전 시점 "미확정" 판정
 
 두 원문이 충돌하고, 둘 중 어느 쪽을 최신으로 승인했는지 Owner 기록이 확인되지 않았다. Staging 에 구현된 것은 아래 A안이며, **확정 정책이 아니라 현재 구현 상태**다. 결정 전에는 B안 전환도, A안의 Production 적용도 하지 않는다.
 
@@ -50,6 +59,7 @@
 | 1 | DB `084_ai_user_usage_ledger.sql` | Owner 승인 후 SQL Editor | 표·함수 추가만(기존 표 무변경). 코드가 아직 부르지 않으므로 사용자 영향 0 |
 | 2 | DB `085_user_spots_import_source.sql` | 〃 | `user_spots.import_source` nullable 컬럼 추가. 기존 행 NULL |
 | 3 | DB `086_ai_user_usage_shared_30d.sql` | 〃 | `ai_user_reserve`·`ai_user_balance` 교체(30일 이동 구간). 084 의 월 풀 함수는 남지만 호출처 0 |
+| 3-1 | DB `087_ai_user_usage_monthly_plan_writing.sql` | 〃 | 086 의 두 함수를 월 사용권(plan 월1+최초1 · writing 월2)으로 교체 + `mytrip_ai_generations.feature` 에 `fullTrip` 허용. 086 단독 상태로 코드를 내보내지 않는다 |
 | 4 | 코드 병합(master) → Pages 자동 배포 | Owner 승인 후 | 코드만 되돌리면 표·컬럼은 남는다. 이전 코드는 `import_source`·`ai_user_usage` 를 읽지 않으므로 동작 영향 0 |
 | 5 | 환경·Worker·기능 스위치 | Owner 승인 후 | 스위치 off 로 즉시 차단(재배포 불필요) |
 
@@ -89,6 +99,7 @@ select ops_key, value_text from public.ai_ops_switches order by ops_key;
 -- 운영 중 관찰(원문 없음 — 기능·상태만)
 select feature, status, count(*) from public.ai_user_usage
  where created_at > now() - interval '1 day' group by 1, 2 order by 1, 2;
+-- 087 이후 pool 은 plan | writing. 한 사용자·한 달에 plan committed(period=YYYY-MM) 2행 이상 또는 writing 3행 이상이면 이중 차감
 -- 'reserved' 가 5분 넘게 남아 있으면 이상(다음 reserve 때 자동 release 되지만 원인 확인)
 select route, status, count(*), sum(committed_usd_micro) from public.ai_ops_ledger
  where created_at > now() - interval '1 day' group by 1, 2 order by 1, 2;
@@ -96,7 +107,7 @@ select route, status, count(*), sum(committed_usd_micro) from public.ai_ops_ledg
 
 ## 3. 중단 조건(하나라도 해당하면 즉시 스위치 off 후 보고)
 
-- 같은 사용자에게 30일 안 `committed` 가 2행 이상 생김(이중 차감).
+- 같은 사용자·같은 달에 plan `committed`(period=YYYY-MM) 2행 이상, 또는 writing 3행 이상(이중 차감). 최초 보너스(period='welcome')는 계정당 1행.
 - `reserved` 가 5분 넘게 계속 쌓임, 또는 `ai_user_reserve` 오류로 AI 기능 전체가 `ai_paused`.
 - 일일 비용이 `budget_daily_usd_micro`(현재 $5)의 50% 를 첫날에 넘김.
 - `/api/user-spots` GET 5xx(085 누락 신호).
@@ -111,7 +122,7 @@ select route, status, count(*), sum(committed_usd_micro) from public.ai_ops_ledg
 |---|---|
 | `ai_master` | 모든 AI 기능의 공통 전제. 단독으로는 아무 기능도 켜지 않는다(기능 스위치 AND) |
 | `feature_personalize` | 일정 화면 "AI로 내 취향 반영하기"(옵트인·확인 후) |
-| `feature_writing` | 스토리 표지 AI 글, 기록 사진별 AI 제안(버튼), 여행 제목·메모 AI 제안 — 모두 같은 무료 1회 |
+| `feature_writing` | 전체 여행 AI 글쓰기(`/api/mytrip/writing-full`, 월 2회). 제목·기록별·표지 개별 AI 는 닫혀 있다(`retired_use_full_trip`) |
 | `feature_import_analyze` | `/import` 글 붙여넣기·링크 분석 |
 | Worker `AI_WRITING_WORKER_MODE` | 위 세 기능의 provider 경유지 — off 면 세 기능 모두 실패(무차감) |
 
