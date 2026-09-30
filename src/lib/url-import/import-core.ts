@@ -164,7 +164,8 @@ export const ANALYZE_SCHEMA = {
   type: "object",
   properties: {
     content_kind: { type: "string", enum: ["external_itinerary", "single_place", "multi_place_content", "unsupported"] },
-    trip_title: { type: "string", nullable: true },
+    // trip_title 은 모델에 묻지 않는다(2026-09-30) — 3.5 Flash-Lite 가 이 문자열 안에서 규칙을 되뇌며 폭주했다.
+    // 제목은 화면의 자동 제목이 맡는다. 파서는 옛 응답의 trip_title 을 그대로 읽는다.
     city: { type: "string", nullable: true },
     start_date: { type: "string", nullable: true },
     end_date: { type: "string", nullable: true },
@@ -195,10 +196,11 @@ export const ANALYZE_SCHEMA = {
     },
     places: { type: "array", items: { type: "object", properties: { name: { type: "string" } }, required: ["name"] } },
   },
-  required: ["content_kind"],
+  // days·places 는 반드시 채우게 한다 — 선택 항목일 때 모델이 {content_kind, city} 만 내고 끝냈다(실측 3/3)
+  required: ["content_kind", "days", "places"],
   // 일정(days·places)을 먼저, 자유 글인 trip_title 은 맨 뒤에 — 2026-09-30 Preview 실측(3.5 Flash-Lite): 첫머리
   // trip_title 문자열에서 같은 글자가 반복되며 폭주해 days 없이 끝나거나(unsupported) 출력 상한에 걸렸다(MAX_TOKENS).
-  propertyOrdering: ["content_kind", "days", "places", "city", "start_date", "end_date", "trip_title"],
+  propertyOrdering: ["content_kind", "days", "places", "city", "start_date", "end_date"],
 } as const;
 
 export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): string {
@@ -217,7 +219,6 @@ export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): str
     "- A plan without explicit days (for example one afternoon) is external_itinerary with a single day, day_number 1.",
     "- A stop is a NAMED place. Unnamed activities (\"a small cafe nearby\", \"lunch\") are not stops — mention them in the note of the stop they belong to.",
     "- time: the start time only if written, as HH:MM 24h (\"02:00 PM\" → \"14:00\"). end_time: the end time if a range is written, same format. time_text: the time exactly as written (e.g. \"12:00 PM - 02:00 PM\"). If a time range covers several stops, give each of those stops the same range.",
-    "- trip_title: only if the text states a short title or heading for the plan (max ~40 characters). A descriptive sentence is not a title → null.",
     "- date: only if unambiguous, format YYYY-MM-DD. Relative words like \"today\" are NOT dates → null.",
     "- city: if the plan is in busan/seoul/jeju/gyeongju/jeonju use that lowercase English word; otherwise the main city or region name as written in the text; null if unclear.",
     "- place names: as written in the text (keep language). Max 40 places total.",
