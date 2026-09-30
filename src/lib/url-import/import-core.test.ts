@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   validateImportUrl, isOwnHost, extractReadableText, parseAnalyzed,
-  buildAnalyzePrompt, normalizePlaceName, isMatchableName,
+  buildAnalyzePrompt, normalizePlaceName, isMatchableName, providerFailClass,
   MAX_RESPONSE_BYTES, MAX_REDIRECTS, FETCH_TIMEOUT_MS,
 } from "./import-core.ts";
 
@@ -136,4 +136,15 @@ test("4개 locale 메시지에 ICU 따옴표로 감싼 자리표시가 없다", 
     const raw = readFileSync(new URL(`../../messages/${lc}.json`, import.meta.url), "utf8");
     assert.doesNotMatch(raw, /'\{[a-zA-Z]+\}'/, lc);
   }
+});
+
+test("providerFailClass — 520 과 시간 초과·출력 상한을 가르고, 오류 문장·키는 버린다(2026-09-30)", () => {
+  assert.equal(providerFailClass("timeout"), "timeout");
+  assert.equal(providerFailClass("http_520:INTERNAL:boom AIzaXXXX"), "edge_520");
+  assert.equal(providerFailClass("http_503:UNAVAILABLE:overloaded"), "http_5xx_503");
+  assert.equal(providerFailClass("http_400:FAILED_PRECONDITION:User location is not supported"), "http_4xx_400");
+  assert.equal(providerFailClass("http_401:worker_unauthorized"), "worker_refused_401");
+  assert.equal(providerFailClass("parse_failed:MAX_TOKENS:4134"), "parse_max_tokens");
+  assert.equal(providerFailClass("fetch_error"), "network");
+  assert.equal(providerFailClass(undefined), "unknown");
 });

@@ -363,3 +363,21 @@ export function normalizePlaceName(name: string): string {
 export function isMatchableName(name: string): boolean {
   return name.length >= 2 && name.length <= 80 && !/[,()*%\\"]/.test(name);
 }
+
+/**
+ * provider 실패의 짧은 분류값(로그 전용). 520 같은 가장자리 오류와 시간 초과를 구분해 남긴다.
+ * 입력은 providerStatus(상태 코드·표준 코드) — 오류 문장·키·사용자 글은 여기서 버린다.
+ */
+export function providerFailClass(providerStatus: string | undefined): string {
+  const s = providerStatus ?? "";
+  if (s === "timeout") return "timeout";
+  if (s === "fetch_error") return "network";
+  if (s.startsWith("parse_failed:MAX_TOKENS")) return "parse_max_tokens";
+  if (s.startsWith("parse_failed")) return "parse_other";
+  const m = /^http_(\d{3})/.exec(s);
+  if (!m) return "unknown";
+  const code = Number(m[1]);
+  if (/:worker_/.test(s)) return `worker_refused_${code}`;
+  if (code >= 520 && code <= 527) return `edge_${code}`;
+  return code >= 500 ? `http_5xx_${code}` : `http_4xx_${code}`;
+}

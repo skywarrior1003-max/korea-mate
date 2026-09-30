@@ -33,7 +33,7 @@ import { requireActiveUser, userActorHash } from "../../_lib/user-auth";
 import { quotaIdemKey, quotaReserve, quotaSettle, quotaBalance } from "../../_lib/ai-user-quota";
 import {
   validateImportUrl, isOwnHost, extractReadableText, buildAnalyzePrompt, parseAnalyzed,
-  classifyAiChatUrl, preparePastedText,
+  classifyAiChatUrl, preparePastedText, providerFailClass,
   ANALYZE_SCHEMA, MAX_REDIRECTS, FETCH_TIMEOUT_MS, MAX_RESPONSE_BYTES, ALLOWED_CONTENT_TYPES,
   type AnalyzedContent, type ExtractedPage,
 } from "../../../src/lib/url-import/import-core";
@@ -153,12 +153,10 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
 }
 
 interface AiUsage { inTok: number | null; outTok: number | null; model?: string | null }
-/** 비 Production 진단 전용(?diag=raw) — 모델 응답이 어떻게 끝났는지. Production 응답에는 싣지 않는다 */
-interface AiRawMeta { finish: string | null; textLen: number; head: string; thoughts: number | null; out: number | null; model: string | null; ms: number }
 
 async function analyzeWithAi(env: Env, prompt: string): Promise<
-  | { ok: true; analysis: AnalyzedContent; usage: AiUsage; raw?: AiRawMeta }
-  | { ok: false; error: string; sent: boolean; providerStatus?: string; raw?: AiRawMeta }
+  | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
+  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number }
 > {
   const apiKey = env.GEMINI_API_KEY ?? "";
   const providerFetch = bindingProviderFetch(env) ?? (apiKey ? fetch : null);
@@ -203,26 +201,19 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
     };
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     const u = raw.usageMetadata;
-    const meta: AiRawMeta = {
-      finish: raw.candidates?.[0]?.finishReason ?? null, textLen: text.length, head: text.slice(0, 2500),
-      thoughts: typeof u?.thoughtsTokenCount === "number" ? u.thoughtsTokenCount : null,
-      out: typeof u?.candidatesTokenCount === "number" ? u.candidatesTokenCount : null,
-      model: res.headers.get("x-gkm-model"), ms: Date.now() - t0,
-    };
     const analysis = parseAnalyzed(text);
-    if (!analysis) return { ok: false, error: "analyze_failed", sent: true, providerStatus: `parse_failed:${raw.candidates?.[0]?.finishReason ?? "none"}:${text.length}`, raw: meta };
+    if (!analysis) return { ok: false, error: "analyze_failed", sent: true, providerStatus: `parse_failed:${raw.candidates?.[0]?.finishReason ?? "none"}:${text.length}`, ms: Date.now() - t0 };
     const usage: AiUsage = {
       inTok: typeof u?.promptTokenCount === "number" ? u.promptTokenCount : null,
       outTok: typeof u?.candidatesTokenCount === "number" || typeof u?.thoughtsTokenCount === "number"
         ? (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0) : null,
       model: res.headers.get("x-gkm-model"), // 서울 Worker 가 실제로 부른 모델(단가 계산용)
     };
-    return { ok: true, analysis, usage, raw: meta };
+    return { ok: true, analysis, usage };
   } catch (err) {
     clearTimeout(timer);
     const isAbort = err instanceof Error && err.name === "AbortError";
-    return { ok: false, error: isAbort ? "analyze_timeout" : "analyze_failed", sent: true, providerStatus: isAbort ? "timeout" : "fetch_error",
-      raw: { finish: null, textLen: 0, head: "", thoughts: null, out: null, model: null, ms: Date.now() - t0 } };
+    return { ok: false, error: isAbort ? "analyze_timeout" : "analyze_failed", sent: true, providerStatus: isAbort ? "timeout" : "fetch_error", ms: Date.now() - t0 };
   }
 }
 
@@ -374,23 +365,20 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return fail("ai_paused");
   }
 
-  const prompt = buildAnalyzePrompt(page, mode === "url" ? pageUrl!.toString() : null);
-  // 비 Production 전용 원인 진단(?diag=raw) — 입력 추출·프롬프트 길이·모델 응답 앞부분. Production 에서는 무시한다
-  const wantDiag = (ctx.env.APP_ENV ?? "").trim().toLowerCase() !== "production" && new URL(ctx.request.url).searchParams.get("diag") === "raw";
-  const ai = await analyzeWithAi(ctx.env, prompt);
-  const diag = wantDiag ? { extract_len: page.text.length, prompt_len: prompt.length, ...(ai.raw ?? {}) } : undefined;
+  const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, mode === "url" ? pageUrl!.toString() : null));
   if (!ai.ok) {
     // 정산(CORRECTION-V1 §2): 요청을 만들기 전 실패(sent=false)만 회사 원장 released.
     // 그 외(analyze_failed/timeout/parse)는 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
     // 사용자 횟수는 어느 쪽이든 차감하지 않는다(완성 작업이 아니다).
     await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent ? "unknown_billed" : "released");
     await release();
-    log({ ok: false, mode, host, error: ai.error, provider: ai.providerStatus ?? null, ms: Date.now() - started });
+    // fail_class: 재발 시 520·시간 초과·출력 상한 등을 가르는 짧은 분류값만 — 본문·키·사용자 입력은 싣지 않는다
+    log({ ok: false, mode, host, error: ai.error, fail_class: providerFailClass(ai.providerStatus), provider_ms: ai.ms ?? null, ms: Date.now() - started });
     const nonProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() !== "production";
     // 비 Production 진단 — 키 값은 싣지 않고 형식 사실(있음·Google API 키 형식·앞뒤 공백)만
     const k = ctx.env.GEMINI_API_KEY ?? "";
     const keyShape = { present: k.length > 0, google_api_key_format: /^AIza[0-9A-Za-z_-]{35}$/.test(k), has_outer_whitespace: k !== k.trim(), via: bindingProviderFetch(ctx.env) ? "worker" : "direct" };
-    return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus, key_shape: keyShape, ...(diag ? { diag } : {}) }) : fail(ai.error);
+    return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus, key_shape: keyShape }) : fail(ai.error);
   }
   // 회사 원장 — 실제 토큰으로 정산(usage 가 없으면 예약액 보수 commit)
   const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok, ai.usage.model) : 12_100;
@@ -403,7 +391,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     // 무효 결과 — 사용자에게 완성 작업을 주지 못했다. 사용자 차감 0.
     await release();
     log({ ok: false, mode, host, error: "unsupported", ms: Date.now() - started, usd_micro: usd });
-    return diag ? json({ ok: false, error: "unsupported", diag: { ...diag, kind: a.kind, stops: a.days.reduce((n, d) => n + d.stops.length, 0), places: a.places.length } }) : fail("unsupported");
+    return fail("unsupported");
   }
   const url = mode === "url" ? pageUrl!.toString() : null;
   const pageTitle = page.title;
@@ -412,5 +400,5 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
 
   log({ ok: true, mode, host, kind: a.kind, days: a.days.length, places: a.places.length, ms: Date.now() - started,
         in_tok: ai.usage.inTok, out_tok: ai.usage.outTok, usd_micro: usd, pool: q.pool });
-  return json({ ok: true, url, pageTitle, analysis: a, charged: true, pool: q.pool, balance, ...(diag ? { diag } : {}) });
+  return json({ ok: true, url, pageTitle, analysis: a, charged: true, pool: q.pool, balance });
 }

@@ -81,7 +81,9 @@ test("원문은 원장에 저장하지 않는다 — 재응답용 결과만, 24�
   assert.doesNotMatch(M087, /\braw_text\b|\binput_text\b|\bsource_text\b/);
 });
 
-test("원인 진단(?diag=raw)은 Production 이 아닐 때만 — 모델 응답 앞부분이 Production 응답에 실리지 않는다(2026-09-30)", () => {
-  assert.match(ANALYZE, /const wantDiag = \(ctx\.env\.APP_ENV \?\? ""\)\.trim\(\)\.toLowerCase\(\) !== "production" && new URL\(ctx\.request\.url\)\.searchParams\.get\("diag"\) === "raw"/);
-  assert.match(ANALYZE, /const diag = wantDiag \?/);
+test("원인 진단(?diag=raw)은 진단을 마친 뒤 제거했다 — 모델 응답·입력 앞부분을 응답에 싣는 길이 없다(2026-09-30)", () => {
+  assert.doesNotMatch(ANALYZE, /diag"\) === "raw"/);
+  assert.doesNotMatch(ANALYZE, /head: text\.slice/);
+  // 재발 시 원인 구분은 로그의 짧은 분류값만 — 오류 문장·입력은 싣지 않는다
+  assert.match(ANALYZE, /fail_class: providerFailClass\(ai\.providerStatus\)/);
 });
