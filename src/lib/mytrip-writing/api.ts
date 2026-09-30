@@ -3,22 +3,36 @@
 import type { WritingDirection, WritingTarget, WritingLocale, WritingContext, WritingImage } from "./writing-core";
 
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
+
+/**
+ * 무료 AI 도움을 이미 쓴 경우(EXTERNAL-IMPORT-V2 정책 교정) — 30일 이동 구간에 1회, 개인화·글쓰기·가져오기 공통.
+ * 서버가 ai_status "fallback_quota" 와 next_free_at 을 준다. 화면은 다음 가능 날짜를 알리고 직접 작성은 계속 허용한다.
+ */
+export interface FreeAiUsedInfo { freeAiUsed: true; nextFreeAt: string | null }
+function freeAiUsedOf(j: { ai_status?: unknown; next_free_at?: unknown } | null): FreeAiUsedInfo | null {
+  if (!j || j.ai_status !== "fallback_quota") return null;
+  return { freeAiUsed: true, nextFreeAt: typeof j.next_free_at === "string" ? j.next_free_at : null };
+}
+
 export async function apiSuggestWriting(args: {
   target: WritingTarget;
   direction: WritingDirection;
   locale: string;
   context: WritingContext;
-}): Promise<string | null> {
+}): Promise<string | FreeAiUsedInfo | null> {
   const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
   try {
+    // 서버는 로그인 사용자만 AI 로 보낸다 — 예전에는 이 호출에 로그인 정보가 없어 항상 401 이었다
     const res = await fetch("/api/mytrip/writing", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await withAuthHeader({ "Content-Type": "application/json" }),
       body: JSON.stringify({ target: args.target, direction: args.direction, locale, context: args.context }),
       signal: AbortSignal.timeout(12_000),
     });
     if (!res.ok) return null;
-    const j = (await res.json()) as { suggestion?: unknown };
+    const j = (await res.json()) as { suggestion?: unknown; ai_status?: unknown; next_free_at?: unknown };
+    const used = freeAiUsedOf(j);
+    if (used) return used;
     return typeof j.suggestion === "string" && j.suggestion.trim() ? j.suggestion.trim() : null;
   } catch {
     return null;
@@ -50,7 +64,7 @@ export async function apiSuggestStoryHero(args: {
   deviceId?: string;
   forceFresh?: boolean;
   signal?: AbortSignal;
-}): Promise<{ title: string; intro: string } | RateLimitInfo | null> {
+}): Promise<{ title: string; intro: string } | RateLimitInfo | FreeAiUsedInfo | null> {
   const locale = (["ko", "en", "ja", "zh"].includes(args.locale) ? args.locale : "en") as WritingLocale;
   try {
     const timeout = AbortSignal.timeout(12_000);
@@ -65,7 +79,9 @@ export async function apiSuggestStoryHero(args: {
     const limited = await parseRateLimit(res.clone());
     if (limited) return limited;
     if (!res.ok) return null;
-    const j = (await res.json()) as { moment?: { title?: unknown; memo?: unknown } | null };
+    const j = (await res.json()) as { moment?: { title?: unknown; memo?: unknown } | null; ai_status?: unknown; next_free_at?: unknown };
+    const used = freeAiUsedOf(j);
+    if (used) return used;
     const m = j.moment;
     if (m && typeof m.title === "string" && m.title.trim() && typeof m.memo === "string" && m.memo.trim()) {
       return { title: m.title.trim(), intro: m.memo.trim() };
@@ -91,6 +107,8 @@ export interface MomentSetResult {
   /** "cache_server"(서버 캐시 hit) 등 서버 ai_status — 계측·표시용 */
   aiStatus: string | null;
   rateLimited?: RateLimitInfo;
+  /** 무료 AI 도움을 이미 사용함(30일 1회) */
+  freeAiUsed?: FreeAiUsedInfo;
 }
 
 export async function apiSuggestMomentSet(args: {
@@ -124,8 +142,10 @@ export async function apiSuggestMomentSet(args: {
     if (!res.ok) return empty;
     const j = (await res.json()) as {
       set?: Partial<Record<WritingDirection, { title?: unknown; memo?: unknown }>> | null;
-      generation_id?: unknown; ai_status?: unknown;
+      generation_id?: unknown; ai_status?: unknown; next_free_at?: unknown;
     };
+    const used = freeAiUsedOf(j);
+    if (used) return { ...empty, aiStatus: "fallback_quota", freeAiUsed: used };
     const set: MomentSuggestionSet = {};
     for (const d of ["calm", "witty", "warm"] as const) {
       const m = j.set?.[d];

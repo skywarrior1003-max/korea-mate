@@ -6,7 +6,8 @@
 import type { AnalyzedContent } from "./import-core";
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
 
-export interface ImportBalance { welcome_import: number; plan_import: number; writing: number; resets_at: string }
+/** 무료 AI 도움(30일 1회 · 개인화·글쓰기·가져오기 공통). 유료 잔액은 없다(결제 미구현). */
+export interface ImportBalance { free_remaining: number; next_free_at: string | null; window_days: number }
 
 export type AnalyzeResponse =
   | { ok: true; url: string | null; pageTitle: string; analysis: AnalyzedContent; charged?: boolean; replay?: boolean; pool?: string; balance?: ImportBalance | null }

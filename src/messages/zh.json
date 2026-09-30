@@ -468,7 +468,10 @@
     "syncSaved": "已保存",
     "syncFailed": "保存失败",
     "wholeTrip": "全程",
-    "autoTripTitle": "{city} 行程"
+    "autoTripTitle": "{city} 行程",
+    "noLocationTitle": "位置未设定",
+    "noLocationBody": "这是导入的地点，没有位置信息，无法使用地图和导航。在我的地点中用地图设定位置后即可使用。",
+    "noLocationCta": "在我的地点中设定位置"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",
@@ -1520,7 +1523,9 @@
     "pickHint": "点选喜欢的一条即可填入下方标题与笔记 — 可自由修改。",
     "photoUseNotice": "为生成AI建议，会使用这张照片和地点信息。",
     "suggestLimited": "建议次数已达上限。{sec}秒后可重试 — 你仍可直接输入。",
-    "suggestUnavailable": "AI建议暂时不可用。你仍可直接输入。"
+    "suggestUnavailable": "AI建议暂时不可用。你仍可直接输入。",
+    "suggestAsk": "获取 AI 建议",
+    "suggestUsesFree": "新建议会使用免费 AI 帮助（每 30 天 1 次，与个性化、导入共用）。"
   },
   "blog": {
     "title": "博客",
@@ -1542,8 +1547,8 @@
     "linkScope": "可以读取任何人都能打开的博客、网页和 AI 公开分享链接。需要登录的页面或对话窗口地址无法读取，这时请复制文字后粘贴。",
     "needLogin": "导入分析需要登录后使用。",
     "aiCountNote": "完成一次导入 = 使用一次 AI 帮助。保存、再次查看和自行修改不计次数。",
-    "balanceWelcome": "首次导入免费。",
-    "balanceMonthly": "本月剩余免费次数：{n} 次（与 AI 行程个性化共用 · {date} 重置）。",
+    "balanceFree": "可使用 1 次免费 AI 帮助（每 30 天 1 次，AI 行程个性化、故事 AI 写作、导入共用）。",
+    "balanceUsed": "免费 AI 帮助已用完 — {date} 起可再次使用。",
     "analyze": "导入",
     "analyzing": "分析中…",
     "analyzingNote": "只从原文中提取地点、顺序和时间，不会调整路线或凭空创造。",
@@ -1552,7 +1557,7 @@
     "switchToText": "改为粘贴文字",
     "errLogin": "需要登录。登录后即可继续导入。",
     "errConsent": "需要先同意使用条款和隐私说明。",
-    "errQuota": "本月的免费导入已用完，{date} 可再次使用。自己挑选地点制作旅行仍然免费。",
+    "errQuota": "免费 AI 帮助（每 30 天 1 次）已用完，{date} 起可再次使用。自己挑选地点制作和自行修改仍可使用。",
     "errPaused": "目前无法使用导入分析。请稍后再试，或自己挑选地点制作旅行。",
     "errInProgress": "相同内容正在分析中，请稍后再试。",
     "errPrivateChat": "这是你自己的对话窗口地址，其他地方无法打开。请用对话的“分享”生成公开链接，或复制回答后粘贴。",
@@ -1754,7 +1759,7 @@
     "importCan": "从 Gemini、ChatGPT 等复制的行程文字，任何人都能打开的博客、网页和 AI 公开分享链接",
     "importCannotLabel": "不支持：",
     "importCannot": "需要登录的页面、对话窗口地址（非分享链接）、文件",
-    "importNeedLogin": "导入需要登录。完成一次导入 = 使用一次 AI 帮助（首次导入免费）。",
+    "importNeedLogin": "导入需要登录。导入分析会使用免费 AI 帮助（每 30 天 1 次，与个性化、故事写作共用）。",
     "importOutside": "5 个城市以外的地点也可以自行保存或导入，用在你的旅行中。",
     "pathImport": "开始导入",
     "pathMyTrip": "从我的旅行继续",
@@ -1947,5 +1952,9 @@
       "checkDates": "日期正确",
       "finish": "完成指引"
     }
+  },
+  "freeAi": {
+    "used": "免费 AI 帮助（每 30 天 1 次）已用完。仍可自行撰写和修改。",
+    "usedUntil": "免费 AI 帮助（每 30 天 1 次）已用完，{date} 起可再次使用 — 仍可自行撰写和修改。"
   }
 }

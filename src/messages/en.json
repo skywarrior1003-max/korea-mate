@@ -468,7 +468,10 @@
     "syncSaved": "Saved",
     "syncFailed": "Save failed",
     "wholeTrip": "Whole Trip",
-    "autoTripTitle": "My {city} Trip"
+    "autoTripTitle": "My {city} Trip",
+    "noLocationTitle": "Location not set",
+    "noLocationBody": "This imported place has no location, so the map and directions aren't available. Set it on the map in My Places to use them.",
+    "noLocationCta": "Set the location in My Places"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -1520,7 +1523,9 @@
     "pickHint": "Tap one to fill the title and memo below — you can edit freely.",
     "photoUseNotice": "This photo and the place info are used to create the AI suggestions.",
     "suggestLimited": "Suggestion limit reached for now. Try again in {sec}s — you can still write it yourself.",
-    "suggestUnavailable": "AI suggestions are temporarily unavailable. You can still write it yourself."
+    "suggestUnavailable": "AI suggestions are temporarily unavailable. You can still write it yourself.",
+    "suggestAsk": "Get AI suggestions",
+    "suggestUsesFree": "A new suggestion uses your free AI assist (once every 30 days, shared with personalization and import)."
   },
   "blog": {
     "title": "Blog",
@@ -1542,8 +1547,8 @@
     "linkScope": "We can read blogs and web pages anyone can open, and public AI share links. Pages that need a login and private chat addresses can't be read — copy the text and paste it instead.",
     "needLogin": "Import analysis needs you to sign in.",
     "aiCountNote": "One completed import = one AI assist. Saving, reopening and your own edits don't count.",
-    "balanceWelcome": "Your first import is free.",
-    "balanceMonthly": "Free uses left this month: {n} (shared with AI trip personalization · resets {date}).",
+    "balanceFree": "You have 1 free AI assist (once every 30 days, shared by AI trip personalization, Story AI writing and import).",
+    "balanceUsed": "You've used your free AI assist — it's available again from {date}.",
     "analyze": "Import",
     "analyzing": "Analyzing…",
     "analyzingNote": "We're only copying out places, order and times — nothing is rearranged or invented.",
@@ -1552,7 +1557,7 @@
     "switchToText": "Switch to paste text",
     "errLogin": "Please sign in. You can continue right after.",
     "errConsent": "Please agree to the terms and privacy notice first.",
-    "errQuota": "You've used this month's free imports. They reset on {date}. Building a trip by picking places yourself stays free.",
+    "errQuota": "You've used your free AI assist (once every 30 days). It's available again from {date}. Building a trip by picking places and editing it yourself still work.",
     "errPaused": "Import analysis isn't available right now. Try again later, or build the trip by picking places yourself.",
     "errInProgress": "This content is already being analyzed. Please try again in a moment.",
     "errPrivateChat": "This is the address of your own chat, which can't be opened elsewhere. Create a public link with the chat's Share option, or copy the answer and paste it.",
@@ -1754,7 +1759,7 @@
     "importCan": "plan text copied from Gemini, ChatGPT and others; blogs, web pages and public AI share links anyone can open",
     "importCannotLabel": "Not supported:",
     "importCannot": "pages that need a login, private chat addresses (not share links), files",
-    "importNeedLogin": "Importing needs a sign-in. One completed import = one AI assist (your first import is free).",
+    "importNeedLogin": "Importing needs a sign-in. Import analysis uses your free AI assist (once every 30 days, shared with personalization and Story writing).",
     "importOutside": "Places outside our 5 cities can also be saved or imported and used in your trip.",
     "pathImport": "Start importing",
     "pathMyTrip": "Continue from my trip",
@@ -1947,5 +1952,9 @@
       "checkDates": "Dates are right",
       "finish": "Finish the guide"
     }
+  },
+  "freeAi": {
+    "used": "You've used your free AI assist (once every 30 days). You can keep writing and editing yourself.",
+    "usedUntil": "You've used your free AI assist (once every 30 days). It's available again from {date} — you can keep writing and editing yourself."
   }
 }

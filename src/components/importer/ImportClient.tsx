@@ -103,6 +103,12 @@ function ImportInner() {
   const [doneMsg, setDoneMsg] = useState<string | null>(null);
 
   const analysis: AnalyzedContent | null = result?.ok ? result.analysis : null;
+  /** 다음 무료 사용 가능 날짜(서버는 ISO UTC) — 한국 시간 날짜로 보인다 */
+  const fmtDate = (iso: string | null): string => {
+    if (!iso) return "";
+    try { return new Date(iso).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Seoul" }); }
+    catch { return iso.slice(0, 10); }
+  };
   const match = useMemo(() => buildPlaceMatcher(spots), [spots]);
   const source = result?.ok && result.url ? (() => { try { return new URL(result.url!).hostname.toLowerCase(); } catch { return "text"; } })() : "text";
 
@@ -306,7 +312,7 @@ function ImportInner() {
     const key = ERROR_KEYS[error.code] ?? (error.code.startsWith("http_") ? "errNetwork" : "errAnalyze");
     return (
       <div data-tut="tut-import-error" data-import-error={error.code} role="alert" className="mt-5 rounded-2xl border p-4" style={ui.line}>
-        <p className="text-sm font-bold" style={ui.ink}>{t(key, { date: error.resetsAt ?? "" })}</p>
+        <p className="text-sm font-bold" style={ui.ink}>{t(key, { date: fmtDate(error.resetsAt ?? null) })}</p>
         {(key === "errLogin" || key === "errConsent") && (
           <button type="button" onClick={() => setConsentOpen(true)} className="gkm-focus mt-3 rounded-xl px-4 py-2.5 text-sm font-bold text-white" style={{ backgroundColor: "var(--qh-navy)" }}>
             {t("loginCta")}
@@ -364,7 +370,7 @@ function ImportInner() {
 
             <p className="mt-3 text-xs leading-relaxed" style={ui.faint}>
               {user === false ? t("needLogin") : t("aiCountNote")}
-              {balance && ` ${balance.welcome_import > 0 ? t("balanceWelcome") : t("balanceMonthly", { n: balance.plan_import, date: balance.resets_at })}`}
+              {balance && ` ${balance.free_remaining > 0 ? t("balanceFree") : t("balanceUsed", { date: fmtDate(balance.next_free_at) })}`}
             </p>
             <button type="button" data-tut="tut-import-go" onClick={() => void analyze()} disabled={phase === "analyzing"}
               className={`${primary} mt-3`} style={{ backgroundColor: "var(--qh-navy)" }}>

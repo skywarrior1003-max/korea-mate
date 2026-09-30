@@ -128,3 +128,12 @@ test("AI 대화 링크 — 공개 공유 vs 대화창 개인 주소", async () =
   assert.equal(classifyAiChatUrl(new URL("https://chatgpt.com/c/abc")).link, "private");
   assert.equal(classifyAiChatUrl(new URL("https://blog.naver.com/x/1")).link, null);
 });
+
+// 메시지 자리표시({name}·{date})를 작은따옴표로 감싸면 ICU 가 이스케이프해 글자 그대로 보인다(실측 결함)
+test("4개 locale 메시지에 ICU 따옴표로 감싼 자리표시가 없다", async () => {
+  const { readFileSync } = await import("node:fs");
+  for (const lc of ["ko", "en", "ja", "zh"]) {
+    const raw = readFileSync(new URL(`../../messages/${lc}.json`, import.meta.url), "utf8");
+    assert.doesNotMatch(raw, /'\{[a-zA-Z]+\}'/, lc);
+  }
+});

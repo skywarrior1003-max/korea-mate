@@ -182,7 +182,12 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
     if (!res.ok) {
       // 비밀·본문 없이 상태만 — 운영 진단용(비 Production 응답에만 싣는다)
       let st = `http_${res.status}`;
-      try { const e = (await res.json()) as { error?: { status?: string } }; if (e.error?.status) st += `:${e.error.status}`; } catch { /* ignore */ }
+      try {
+        const e = (await res.json()) as { error?: { status?: string; message?: string } };
+        if (e.error?.status) st += `:${e.error.status}`;
+        // 오류 문장 앞부분만 — 키처럼 보이는 문자열은 가린다(키 값을 응답·로그에 싣지 않는다)
+        if (e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
+      } catch { /* ignore */ }
       return { ok: false, error: "analyze_failed", sent: true, providerStatus: st };
     }
     const raw = (await res.json()) as {
@@ -211,7 +216,7 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
 function fetchErrorCode(raw: string, aiShare: boolean): string {
   if (raw === "http_401" || raw === "http_403") return aiShare ? "share_not_readable" : "login_required_page";
   if (raw === "http_404" || raw === "http_410") return "not_found";
-  if (aiShare && (raw === "no_readable_text" || raw === "unsupported_content_type" || /^http_/.test(raw))) return "share_not_readable";
+  if (aiShare && (raw === "no_readable_text" || raw === "unsupported_content_type" || raw === "timeout" || raw === "fetch_failed" || /^http_/.test(raw))) return "share_not_readable";
   return raw;
 }
 
@@ -333,7 +338,10 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     await release();
     log({ ok: false, mode, host, error: ai.error, provider: ai.providerStatus ?? null, ms: Date.now() - started });
     const nonProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() !== "production";
-    return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus }) : fail(ai.error);
+    // 비 Production 진단 — 키 값은 싣지 않고 형식 사실(있음·Google API 키 형식·앞뒤 공백)만
+    const k = ctx.env.GEMINI_API_KEY ?? "";
+    const keyShape = { present: k.length > 0, google_api_key_format: /^AIza[0-9A-Za-z_-]{35}$/.test(k), has_outer_whitespace: k !== k.trim(), via: bindingProviderFetch(ctx.env) ? "worker" : "direct" };
+    return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus, key_shape: keyShape }) : fail(ai.error);
   }
   // 회사 원장 — 실제 토큰으로 정산(usage 가 없으면 예약액 보수 commit)
   const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok) : 12_100;

@@ -4,6 +4,11 @@
 // 폐기됐고 재도입 금지 — usage-policy-guard.test.ts 가 이 파일과 소비처를 고정한다.
 // 이번 TASK 는 정책 상수·계약만 둔다: 실제 무료/유료 차감·월 초기화는
 // 로그인·원장 TASK 에서 구현한다(여기 값이 그 TASK 의 입력).
+//
+// ▶ 정정(2026-09-30, EXTERNAL-IMPORT-V2-POLICY-CORRECTION): Owner 가 확정 정책을 다시 밝혔다 —
+//   **비용이 드는 AI 도움은 성공 시점부터 30일 이동 구간에 무료 1회**이고, AI 일정 개인화·Story 의
+//   명시적 AI 글쓰기·외부 일정 AI 분석이 **같은 1회**를 쓴다. 위 "30일당 통합 1회 폐기" 문장과 아래
+//   FREE_MONTHLY(월 1+2) 는 승인 정책이 아니었다 — FREE_AI 가 SSOT 다. (1~5일·일정 3크레딧 금지는 그대로)
 
 /** 기본(비AI) 일정 생성 — 무제한·차감 0. 어떤 원장에도 계상하지 않는다 */
 export const BASE_SCHEDULER_CREDIT_COST = 0 as const;
@@ -40,28 +45,18 @@ export const TICKET = {
 } as const;
 
 /**
- * 무료 이용(월) — 로그인·원장 TASK 에서 구현. 월 초기화 기준·시간대는 그 TASK 에서 확정.
- *  · AI 일정 개인화: 월 1회
- *  · 전체 여행 글쓰기: 월 2회 — Story/My Trip 두 표면이 **하나의 풀을 공유**
- *  · 합계 월 3회. 기본 일정·직접 편집은 무료 횟수에 포함하지 않는다.
+ * 무료 AI 도움 — Owner 확정(2026-09-30 재확인). 원장: 084 → 086(shared_30d).
+ *  · 비용이 드는 AI 도움은 **성공한 사용 시점부터 30일 이동 구간에 1회**.
+ *  · AI 일정 개인화 · Story 의 명시적 AI 글쓰기(제목·표지·기록 문구) · 외부 일정 AI 분석이 **같은 1회**를 쓴다.
+ *  · 한 요청으로 여러 문체(3안)를 받아도 사용자 기준 1회. 캐시에서 돌려준 결과는 차감 0.
+ *  · 실패·timeout·무효 결과·중복 요청·저장·재방문·직접 편집은 차감 0.
+ *  · 첫 가져오기 추가 무료·달력 월 기준·글쓰기 별도 횟수는 **없다**.
+ *  · 유료 이용권은 미구현 — 화면에 유료 잔액을 보이지 않고, 무료 소진 뒤 무제한 호출도 열지 않는다.
+ *  · 가져오기의 AI 는 원문을 바꾸지 않는다 — 추출만(순서·시간·내용 그대로).
  */
-export const FREE_MONTHLY = {
-  aiPersonalize: 1,
-  fullTripWritingSharedPool: 2,
-  total: 3,
-} as const;
-
-/**
- * 가져오기(외부 일정 글·링크 → 내 여행) 무료 이용 — Owner 확정 2026-09-30 (EXTERNAL-TRIP-IMPORT-V2).
- *  · 신규 사용자의 첫 가져오기 1회는 위 월 3회와 별도로 무료(평생 1회).
- *  · 그 이후 가져오기는 AI 일정 개인화와 **월 1회를 공유**한다(개인화 1회 풀을 함께 쓴다).
- *  · 가져오기는 AI 가 원문을 바꾸지 않는다 — 추출만 한다(순서·시간·내용 그대로).
- *  · 원장: supabase/migrations/084_ai_user_usage_ledger.sql (풀 welcome_import · plan_import · writing).
- *    월 기준은 KST 달력 월(매월 1일 00:00 KST 초기화).
- */
-export const IMPORT_FREE = {
-  welcomeOnce: 1,
-  /** 월 풀 이름 — 개인화와 공유 */
-  sharedMonthlyPool: "plan_import",
-  sharedMonthlyLimit: FREE_MONTHLY.aiPersonalize,
+export const FREE_AI = {
+  windowDays: 30,
+  uses: 1,
+  sharedBy: ["personalize", "writing", "import"],
+  ledgerPool: "shared_30d",
 } as const;

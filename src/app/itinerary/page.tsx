@@ -1014,6 +1014,26 @@ interface ModalProps {
   detailLabel?: string;
 }
 
+/**
+ * 위치를 모르는 항목인가 (EXTERNAL-IMPORT-V2) — 가져온 글·링크에서 서비스 장소와 연결하지 않은 장소는
+ * 좌표를 지어내지 않는다. 그때 이름 검색 길찾기는 엉뚱한 곳을 열 수 있으므로 지도·길찾기를 막고
+ * "위치 미정"을 알린다. 서비스 장소(city_spot)·숙소는 기존 동작 그대로.
+ */
+function lacksLocation(p: { source?: string; lat?: number; lng?: number; isAccommodation?: true }): boolean {
+  return p.source !== "city_spot" && !p.isAccommodation && (typeof p.lat !== "number" || typeof p.lng !== "number");
+}
+
+function NoLocationNote({ compact = false }: { compact?: boolean }) {
+  const t = useTranslations("itin");
+  return (
+    <div data-no-location="" className={compact ? "mt-3 rounded-xl border border-line bg-surface-dim/50 px-3.5 py-2.5" : "rounded-xl border border-line bg-surface-dim/50 p-4"}>
+      <p className="text-xs font-black text-ink">{t("noLocationTitle")}</p>
+      <p className="mt-0.5 text-xs text-sub leading-relaxed">{t("noLocationBody")}</p>
+      <Link href="/picks/?tab=mine" className="gkm-focus mt-1.5 inline-block text-xs font-bold text-action underline underline-offset-2">{t("noLocationCta")}</Link>
+    </div>
+  );
+}
+
 function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onToggleVisited, onAddMoment, visitedLabel, addMomentLabel, detailLabel }: ModalProps) {
   const t          = useTranslations("itin");
   const modalLocale = useLocale();
@@ -1151,6 +1171,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
               )}
             </div>
           )}
+          {lacksLocation(place) ? <NoLocationNote /> : (<>
           <div className="bg-green-50 border border-green-200 rounded-xl p-4">
             <p className="text-xs font-bold text-green-700 mb-1">{t("naverKoreanHint")}</p>
           </div>
@@ -1164,6 +1185,7 @@ function PlaceModal({ place, city, citySpots, onClose, detailHref, visited, onTo
               {naverIsGoogle ? t("moreSearch") : "Naver Maps"}
             </a>
           </div>
+          </>)}
 
           {/* ── Cart 아이템 제휴 링크 (P0-1 Phase 2: 수익화 생존 체인) ── */}
           {TRIP_FLOW_COMMERCE_ENABLED && (place.affiliateUrl || place.bookingUrl) && (
@@ -3795,13 +3817,17 @@ function ItineraryResult() {
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img src={thumb} alt="" className="mt-3 w-full h-44 rounded-xl object-cover border border-line" onError={swapToPlaceholderOnError} />
                         )}
+                        {lacksLocation(p) && <NoLocationNote compact />}
                         <div className="mt-3 flex items-center gap-2">
-                          {/* Directions — 기존 Naver 우선 + Google 접근(PlaceModal 과 같은 helpers 재사용) */}
+                          {/* Directions — 기존 Naver 우선 + Google 접근(PlaceModal 과 같은 helpers 재사용).
+                              위치 미정(가져온 장소·좌표 없음)이면 길찾기를 내지 않는다 — 이름 검색이 엉뚱한 곳을 열 수 있다 */}
+                          {!lacksLocation(p) && (
                           <a
                             href={naverUrl} target="_blank" rel="noopener noreferrer"
                             className="gkm-focus flex-1 inline-flex items-center justify-center min-h-11 rounded-full text-sm font-black text-white"
                             style={{ backgroundColor: "var(--gkm-action-primary)" }}
                           >{naverIsGoogle ? tPlanner("execDirections") : `Naver · ${tPlanner("execDirections")}`}</a>
+                          )}
                           {canMoment && (
                             <button
                               type="button"
@@ -3814,7 +3840,7 @@ function ItineraryResult() {
                             >{tMemo("addMemory")}</button>
                           )}
                         </div>
-                        {!naverIsGoogle && (
+                        {!naverIsGoogle && !lacksLocation(p) && (
                           <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="gkm-focus mt-2.5 inline-block text-[11px] font-bold text-sub underline">Google Maps</a>
                         )}
                       </div>

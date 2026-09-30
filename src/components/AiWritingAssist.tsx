@@ -9,6 +9,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import { WRITING_DIRECTIONS, type WritingDirection, type WritingTarget, type WritingContext } from "@/lib/mytrip-writing/writing-core";
 import { apiSuggestWriting } from "@/lib/mytrip-writing/api";
 
@@ -27,13 +28,16 @@ export default function AiWritingAssist({ target, buildContext, onSuggestion, da
   const [direction, setDirection] = useState<WritingDirection>("calm");
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  /** 무료 AI 도움(30일 1회)을 이미 씀 — 다음 가능 시각 */
+  const [freeUsed, setFreeUsed] = useState<{ nextFreeAt: string | null } | null>(null);
 
   const run = async () => {
     if (busy) return;
-    setBusy(true); setFailed(false);
+    setBusy(true); setFailed(false); setFreeUsed(null);
     const suggestion = await apiSuggestWriting({ target, direction, locale, context: buildContext() });
     setBusy(false);
-    if (suggestion) onSuggestion(suggestion);
+    if (suggestion && typeof suggestion === "object") setFreeUsed({ nextFreeAt: suggestion.nextFreeAt });
+    else if (suggestion) onSuggestion(suggestion);
     else setFailed(true);
   };
 
@@ -64,6 +68,7 @@ export default function AiWritingAssist({ target, buildContext, onSuggestion, da
         </button>
       </div>
       {failed && <p className={`mt-1 text-[11.5px] ${sub}`}>{t("failed")}</p>}
+      {freeUsed && <FreeAiUsedNote nextFreeAt={freeUsed.nextFreeAt} className={`mt-1 text-[11.5px] ${sub}`} />}
       <p className={`mt-1 text-[11px] ${sub}`}>{t("editableHint")}</p>
     </div>
   );

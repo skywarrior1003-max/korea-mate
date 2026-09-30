@@ -21,7 +21,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
 import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
-import { requireActiveUser, userActorHash, checkUserEntitlementPlaceholder } from "../../_lib/user-auth";
+import { requireActiveUser, userActorHash } from "../../_lib/user-auth";
+import { quotaIdemKey, quotaReserve, quotaSettle } from "../../_lib/ai-user-quota";
 import {
   isWritingRequest, buildWritingPrompt, buildProviderBody, extractSuggestion,
   groundedSuggestionGuard, extractMomentSuggestion, groundedMomentGuard,
@@ -383,7 +384,18 @@ export async function onRequestPost(
     // V2-AUTH §9 — provider 로 가는 사용자 경로는 검증된 로그인 필수(레거시 포함).
     const legacyAuth = await requireActiveUser(ctx.env as Parameters<typeof requireActiveUser>[0], ctx.request);
     if (!legacyAuth.ok) return legacyAuth.response;
-    checkUserEntitlementPlaceholder(legacyAuth.userId); // 차감은 후속 TASK
+    // EXTERNAL-IMPORT-V2 정책 교정(086) — 비용이 드는 AI 글쓰기는 개인화·가져오기와 같은 무료 1회(30일 이동 구간)를 쓴다.
+    // 같은 사용자의 같은 요청(같은 날)은 저장된 결과를 다시 돌려준다(추가 차감 0).
+    const qEnv = ctx.env as Parameters<typeof quotaReserve>[0];
+    const legacyQuota = await quotaReserve(qEnv, legacyAuth.userId, "writing",
+      await quotaIdemKey(legacyAuth.userId, "writing", JSON.stringify({ t: body.target, d: body.direction, l: body.locale, c: body.context })));
+    if (legacyQuota.status === "replay") {
+      const prev = legacyQuota.result as { suggestion?: string | null; moment?: MomentSuggestion | null; set?: MomentSuggestionSet3 | null } | null;
+      return reply(prev?.suggestion ?? null, "quota_replay", prev?.moment ?? null, prev?.set ?? null);
+    }
+    if (legacyQuota.status === "exhausted") return reply(null, "fallback_quota", null, null, { next_free_at: legacyQuota.resetsAt });
+    if (legacyQuota.status !== "reserved") return reply(null, legacyQuota.status === "in_progress" ? "fallback_busy" : "fallback_ops_gate");
+    const releaseLegacy = () => quotaSettle(qEnv, legacyQuota.id, legacyAuth.userId, "released");
     const legacyActor = hashSecret ? await userActorHash(legacyAuth.userId, hashSecret) : null;
     // V2-HARDCAP §7·§8 — 레거시(비캐시) 경로도 같은 게이트를 지난다. 여기가
     // 뚫려 있으면 target 하나만 바꿔도 스위치·예산을 우회할 수 있었다.
@@ -394,23 +406,31 @@ export async function onRequestPost(
       actorHash: legacyActor,
       featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // $1/day — 본 경로와 공유
     });
-    if (!legacyGate.ok) return reply(null, "fallback_ops_gate");
+    if (!legacyGate.ok) { await releaseLegacy(); return reply(null, "fallback_ops_gate"); }
     if (useWorker) {
       const res = await viaWorker(binding!, internalKey!, body);
       // viaWorker 는 실패도 200 + fallback_* 로 답한다 — 본문 ai_status 로 판정.
       // Worker 는 usage 를 이 계약으로 돌려주지 않는다: 성공이면 보수적 정액
       // commit, 실패 계열은 provider 도달 여부를 모르므로 예약 보존.
       let okBody = false;
+      let parsedBody: { ai_status?: unknown; suggestion?: unknown; moment?: unknown; set?: unknown } | null = null;
       try {
-        const parsed = (await res.clone().json()) as { ai_status?: unknown };
-        okBody = typeof parsed.ai_status === "string" && !parsed.ai_status.startsWith("fallback");
+        parsedBody = (await res.clone().json()) as { ai_status?: unknown; suggestion?: unknown; moment?: unknown; set?: unknown };
+        okBody = typeof parsedBody.ai_status === "string" && !parsedBody.ai_status.startsWith("fallback");
       } catch { okBody = false; }
       await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], legacyGate.ledgerId,
         okBody ? "committed" : "unknown_billed", okBody ? { inTok: null, outTok: null, usdMicro: 9_500 } : undefined);
+      // 사용자 무료 횟수 — 완성 결과일 때만 확정
+      if (okBody) await quotaSettle(qEnv, legacyQuota.id, legacyAuth.userId, "committed",
+        { suggestion: parsedBody?.suggestion ?? null, moment: parsedBody?.moment ?? null, set: parsedBody?.set ?? null });
+      else await releaseLegacy();
       return res;
     }
     const legacyOutcome = await runDirect(ctx.fetchFn ?? fetch, apiKey!, body, image, []);
     const legacyOk = legacyOutcome.suggestion !== null || legacyOutcome.moment !== null || legacyOutcome.set !== null;
+    if (legacyOk) await quotaSettle(qEnv, legacyQuota.id, legacyAuth.userId, "committed",
+      { suggestion: legacyOutcome.suggestion, moment: legacyOutcome.moment, set: legacyOutcome.set });
+    else await releaseLegacy();
     if (legacyOk) {
       const u = legacyOutcome.usage as { inTok?: number | null; outTok?: number | null; thinkTok?: number | null };
       const hasUsage = typeof u?.inTok === "number" || typeof u?.outTok === "number";
@@ -614,7 +634,16 @@ export async function onRequestPost(
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
     return userAuth.response;
   }
-  checkUserEntitlementPlaceholder(userAuth.userId); // 차감은 후속 TASK
+  // EXTERNAL-IMPORT-V2 정책 교정(086) — 캐시에 없는 새 생성만 여기 온다(캐시 적중은 위에서 이미 반환·차감 0).
+  // 한 요청으로 3문체(moment3)를 받아도 사용자 기준 1회. 새 생성 1건 = 무료 1회(개인화·가져오기와 공유, 30일 이동 구간).
+  const cEnv = ctx.env as Parameters<typeof quotaReserve>[0];
+  const genQuota = await quotaReserve(cEnv, userAuth.userId, "writing", await quotaIdemKey(userAuth.userId, "writing", `gen:${genId}`));
+  if (genQuota.status !== "reserved") {
+    await admin!.from(GEN_TABLE).delete().eq("id", genId);
+    log({ ok: false, kind: "quota", target: feature, quota: genQuota.status });
+    if (genQuota.status === "exhausted") return reply(null, "fallback_quota", null, null, { next_free_at: genQuota.resetsAt });
+    return reply(null, genQuota.status === "in_progress" ? "fallback_busy" : "fallback_ops_gate");
+  }
   // 원장 actor 는 로그인 사용자 기준(여러 기기 동일) — 캐시 owner_hash(oHash,
   // device 기반)는 기존 저장 계약 그대로 둔다.
   const userActor = await userActorHash(userAuth.userId, hashSecret);
@@ -630,6 +659,7 @@ export async function onRequestPost(
   });
   if (!opsGate.ok) {
     await admin!.from(GEN_TABLE).delete().eq("id", genId);
+    await quotaSettle(cEnv, genQuota.id, userAuth.userId, "released");
     return reply(null, "fallback_ops_gate");
   }
   await admin!.from(GEN_TABLE).update({ status: "provider_started" }).eq("id", genId);
@@ -654,6 +684,8 @@ export async function onRequestPost(
   }
 
   const ok = feature === "moment3" ? outcome.set !== null : outcome.moment !== null;
+  // 사용자 무료 횟수 — 받은 완성 결과가 있을 때만 확정(결과는 생성 캐시가 보관하므로 원장엔 남기지 않는다)
+  await quotaSettle(cEnv, genQuota.id, userAuth.userId, ok ? "committed" : "released");
   // V2-HARDCAP §7 — 비용 정산. timeout 은 과금 불명(unknown_billed·예약 보존),
   // 성공은 usage 실비(usage 미상인 Worker 경로는 예약액 그대로 보수 commit),
   // 그 외 provider 시도 후 실패는 명확 무과금 판별이 어려워 unknown_billed 보수.

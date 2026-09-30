@@ -18,6 +18,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import { WRITING_DIRECTIONS, MOMENT3_PROMPT_VERSION, type WritingDirection, type WritingContext, type WritingImage } from "@/lib/mytrip-writing/writing-core";
 import { apiSuggestMomentSet, apiWritingMeta, type MomentSuggestionSet } from "@/lib/mytrip-writing/api";
 
@@ -81,16 +82,19 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
   const locale = useLocale();
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [freeUsed, setFreeUsed] = useState<{ nextFreeAt: string | null } | null>(null);
   const [limitedSec, setLimitedSec] = useState<number | null>(null);
   const [unavailable, setUnavailable] = useState(false);
   const [set, setSet] = useState<MomentSuggestionSet | null>(null);
   const [picked, setPicked] = useState<WritingDirection | null>(null);
   const genIdRef = useRef<string | null>(null);
   const autoRan = useRef(false);
+  /** 사용자가 AI 제안을 한 번이라도 요청했는가 — 그 전엔 버튼이 'AI 제안 받기'다 */
+  const [asked, setAsked] = useState(false);
   const inflight = useRef<AbortController | null>(null);
   const cache = useRef<Map<string, MomentSuggestionSet>>(new Map());
 
-  const run = useCallback(async (opts?: { forceFresh?: boolean }) => {
+  const run = useCallback(async (opts?: { forceFresh?: boolean; cacheOnly?: boolean }) => {
     const context = buildContext();
     // 사진이 있으면 멀티모달 입력을 만든다(§A-1). base64 해시는 캐시 키 전용 —
     // 실패(sha null)해도 요청은 진행하되 캐시만 못 쓴다.
@@ -105,16 +109,25 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       const cached = cache.current.get(key) ?? cacheGet(key);
       if (cached && Object.keys(cached).length > 0) { setSet(cached); setFailed(false); setLimitedSec(null); return; }
     }
+    // EXTERNAL-IMPORT-V2 정책 교정 — 새 AI 호출은 무료 AI 도움(30일 1회·개인화·가져오기와 공유)을 쓴다.
+    // 사진·장소를 넣었다고 자동으로 부르지 않는다 — 사용자가 버튼을 눌렀을 때만(cacheOnly 면 여기서 멈춘다).
+    if (opts?.cacheOnly) return;
+    setAsked(true);
     inflight.current?.abort();
     const controller = new AbortController();
     inflight.current = controller;
-    setBusy(true); setFailed(false); setLimitedSec(null); setUnavailable(false);
+    setBusy(true); setFailed(false); setLimitedSec(null); setUnavailable(false); setFreeUsed(null);
     const out = await apiSuggestMomentSet({ locale, context, image, itineraryId, deviceId, forceFresh: opts?.forceFresh, signal: controller.signal });
     if (controller.signal.aborted) return;
     setBusy(false);
     if (out.rateLimited) {
       // 제한(§I) — 남은 시간을 안내한다. 직접 작성·수정·저장은 그대로 가능하다.
       setLimitedSec(out.rateLimited.retryAfterSec);
+      return;
+    }
+    if (out.freeAiUsed) {
+      // 무료 AI 도움(30일 1회)을 이미 씀 — 직접 작성은 그대로
+      setFreeUsed({ nextFreeAt: out.freeAiUsed.nextFreeAt });
       return;
     }
     if (out.aiStatus === "ai_unavailable") {
@@ -131,6 +144,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
   }, [buildContext, locale, photoDataUrl, itineraryId, deviceId]);
 
   // 자동 제안 — 준비 조건 최초 충족 시 1회, 900ms 디바운스(연속 입력 흡수).
+  // IMPORT-V2 정책 교정: 자동으로는 이 기기 캐시만 확인한다(AI 호출·차감 0). 새 제안은 버튼으로만.
   // run 은 ref 로 본다 — buildContext 가 렌더마다 새 함수라 run 을 deps 에 두면
   // 매 렌더 cleanup 이 타이머를 지우고 autoRan 은 이미 true 라 다시 걸리지 않아
   // 자동 제안이 영영 발화하지 않는다(격리 QA 실측).
@@ -139,7 +153,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
   useEffect(() => {
     if (!ready || autoRan.current) return;
     autoRan.current = true;
-    const timer = setTimeout(() => { void runRef.current(); }, 900);
+    const timer = setTimeout(() => { void runRef.current({ cacheOnly: true }); }, 900);
     return () => clearTimeout(timer);
   }, [ready]);
   useEffect(() => () => inflight.current?.abort(), []);
@@ -151,13 +165,15 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       <div className="flex items-center justify-between">
         <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">{t("suggestHeading")}</p>
         <button
-          type="button" onClick={() => void run({ forceFresh: true })} disabled={busy}
+          type="button" onClick={() => void run(asked || set ? { forceFresh: true } : undefined)} disabled={busy}
+          data-ai-suggest=""
           className="px-2.5 py-1 rounded-full text-[11.5px] font-bold border min-h-8 disabled:opacity-50"
           style={{ borderColor: ORANGE, color: "#ffb3a6" }}
         >
-          {busy ? t("busy") : t("regenerate")}
+          {busy ? t("busy") : asked || set ? t("regenerate") : t("suggestAsk")}
         </button>
       </div>
+      {!busy && !set && !freeUsed && <p className="mt-1 text-[10.5px] text-white/40">{t("suggestUsesFree")}</p>}
 
       {/* §B-3 사진 사용 안내 — 사진이 첨부된 제안에서만, 공개 Story 에는 없다 */}
       {photoDataUrl ? (
@@ -173,6 +189,7 @@ export default function MomentAiSuggest({ ready, buildContext, onPick, photoData
       {!busy && failed && (
         <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestFailed")}</p>
       )}
+      {!busy && freeUsed && <FreeAiUsedNote nextFreeAt={freeUsed.nextFreeAt} className="mt-2 text-[11.5px] text-white/50" />}
       {!busy && unavailable && (
         <p className="mt-2 text-[11.5px] text-white/50" role="status">{t("suggestUnavailable")}</p>
       )}

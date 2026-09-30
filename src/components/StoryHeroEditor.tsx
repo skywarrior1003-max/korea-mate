@@ -15,6 +15,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import {
   WRITING_DIRECTIONS, STORY_HERO_PROMPT_VERSION, deriveHeroMomentFacts,
   type WritingDirection, type WritingContext, type PublicMomentFact,
@@ -60,6 +61,7 @@ export default function StoryHeroEditor({
   const [intro, setIntro] = useState(storyIntro ?? "");
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [freeUsed, setFreeUsed] = useState<{ nextFreeAt: string | null } | null>(null);
   const [limitedSec, setLimitedSec] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
@@ -100,9 +102,13 @@ export default function StoryHeroEditor({
     });
     if (controller.signal.aborted) return;
     setBusy(false);
+    setFreeUsed(null);
     if (out && "rateLimited" in out) {
       // 제한(§I) — 남은 시간만 안내. 직접 작성·저장은 계속 가능하다.
       setLimitedSec(out.retryAfterSec);
+    } else if (out && "freeAiUsed" in out) {
+      // 무료 AI 도움(30일 1회)을 이미 씀 — 다음 가능 날짜만 안내, 직접 작성은 그대로
+      setFreeUsed({ nextFreeAt: out.nextFreeAt });
     } else if (out) {
       setTitle(out.title);
       setIntro(out.intro);
@@ -194,6 +200,7 @@ export default function StoryHeroEditor({
         {mode === "edit" && (
           <div className="mt-2 space-y-2.5">
             {failed && <p role="alert" className="text-[12.5px] font-bold text-red-600">{t("heroFailed")}</p>}
+            {freeUsed && <FreeAiUsedNote nextFreeAt={freeUsed.nextFreeAt} className="text-[12.5px] font-bold text-sub" />}
             {limitedSec !== null && <p role="status" className="text-[12.5px] font-bold text-[#8A919B]">{t("heroLimited", { sec: Math.ceil(limitedSec) })}</p>}
             <label className="block">
               <span className="text-[11.5px] font-bold text-[#8A919B]">{t("heroTitleLabel")}</span>

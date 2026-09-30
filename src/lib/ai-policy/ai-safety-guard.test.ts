@@ -13,7 +13,7 @@ import path from "node:path";
 
 import {
   BASE_SCHEDULER_CREDIT_COST, TRIP_DAYS_MIN, TRIP_DAYS_MAX,
-  CREDIT_COST, FORBIDDEN_LEGACY, TICKET, FREE_MONTHLY,
+  CREDIT_COST, FORBIDDEN_LEGACY, TICKET, FREE_AI,
 } from "./usage-policy.ts";
 import {
   provenanceOrUser, fieldEligible, creditUnitsForProposal,
@@ -94,7 +94,7 @@ test("정산 매트릭스 — provider 도달 후 release 금지 (CORRECTION-V1 
   const pers = read("functions/api/trip/personalize.ts");
   assert.equal(opsReleased(pers).length, 0, "personalize 도 reserve 후 전 실패가 전송 후 — release 금지");
   const wr = read("functions/api/mytrip/writing.ts");
-  assert.ok(!wr.includes('"released"'), "writing 은 committed/unknown_billed 만");
+  assert.equal(opsReleased(wr).length, 0, "writing 은 committed/unknown_billed 만(회사 원장)");
   // analyze 의 회사 원장 released 는 정확히 한 곳 — 전송 전 확정(sent=false = analyze_unavailable) 조건부만
   const an = read("functions/api/import/analyze.ts");
   const relLines = opsReleased(an);
@@ -246,11 +246,12 @@ test("정책 — 5,900원 이용권 100(첫)=80+20 / 80(재), 구독·만료 없
   assert.equal(TICKET.expiry, null);
 });
 
-test("정책 — 무료 월 1+2(공유풀)=3, 30일 통합 1회 금지", () => {
-  assert.equal(FREE_MONTHLY.aiPersonalize, 1);
-  assert.equal(FREE_MONTHLY.fullTripWritingSharedPool, 2);
-  assert.equal(FREE_MONTHLY.total, FREE_MONTHLY.aiPersonalize + FREE_MONTHLY.fullTripWritingSharedPool);
-  assert.notEqual(FREE_MONTHLY.total, 1, "과거 '30일 통합 1회' 정책 재적용 금지");
+// 정정(2026-09-30): 이전 가드는 "월 1+2, 30일 통합 1회 금지"를 고정했지만 Owner 확정 정책은 반대였다.
+test("정책 — 비용 드는 AI 도움은 30일 이동 구간 무료 1회, 개인화·글쓰기·가져오기 공유", () => {
+  assert.equal(FREE_AI.windowDays, 30);
+  assert.equal(FREE_AI.uses, 1);
+  assert.deepEqual([...FREE_AI.sharedBy].sort(), ["import", "personalize", "writing"]);
+  assert.equal(FREE_AI.ledgerPool, "shared_30d");
 });
 
 // ── §10 전체 여행 글쓰기 계약 — 사용자 작성 보호 ────────────────────────────

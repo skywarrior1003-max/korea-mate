@@ -97,6 +97,23 @@ const typing = () => { const a = document.activeElement; return !!a && (a.tagNam
 
 const MISSING_AFTER_MS = 3500;
 
+/**
+ * 대상을 화면 가운데로 — 페이지 자체가 스크롤되는 대상은 window 좌표로 옮긴다.
+ * scrollIntoView 는 Chrome 에서 "Tab 시작점"을 대상 쪽으로 옮겨, 키보드 사용자의 첫 Tab 이
+ * 맨 앞의 '안내로 이동' 링크를 건너뛰었다(실측). 창·시트 안처럼 자체 스크롤 상자에 든 대상만 scrollIntoView.
+ */
+function bringIntoView(el: HTMLElement): void {
+  const behavior: ScrollBehavior = reduceMotion() ? "auto" : "smooth";
+  let parent = el.parentElement;
+  while (parent && parent !== document.body) {
+    const cs = getComputedStyle(parent);
+    if (/(auto|scroll)/.test(cs.overflowY) && parent.scrollHeight > parent.clientHeight + 4) { el.scrollIntoView({ block: "center", behavior }); return; }
+    parent = parent.parentElement;
+  }
+  const r = el.getBoundingClientRect();
+  window.scrollTo({ top: Math.max(0, window.scrollY + r.top - (window.innerHeight / 2 - r.height / 2)), behavior });
+}
+
 export default function GuidedJourney() {
   const t = useTranslations("journey");
   const pathname = usePathname() || "/";
@@ -190,7 +207,7 @@ export default function GuidedJourney() {
       if (off && !stepStart.current.scrolled && !typing()) {
         // 단계가 시작될 때 한 번만 대상을 보이게 한다 — 이후의 스크롤은 사용자의 것이다
         stepStart.current.scrolled = true;
-        el.scrollIntoView({ block: "center", behavior: reduceMotion() ? "auto" : "smooth" });
+        bringIntoView(el);
       }
       setRect(r);
       setMode(off ? (stepStart.current.scrolled ? "offscreen" : "target") : hit ? "covered" : "target");
@@ -300,7 +317,7 @@ export default function GuidedJourney() {
                 <Link href={body.goto} className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl bg-ink text-white text-[13px] font-bold">{t(`goto.${step}`)}</Link>
               )}
               {mode === "offscreen" && (
-                <button type="button" onClick={() => targetRef.current?.scrollIntoView({ block: "center", behavior: reduceMotion() ? "auto" : "smooth" })}
+                <button type="button" onClick={() => { if (targetRef.current) bringIntoView(targetRef.current); }}
                   className="gkm-focus inline-flex items-center min-h-10 px-3.5 rounded-xl border border-ink text-[13px] font-bold">{t("scrollTo")}</button>
               )}
               {def.confirm && mode !== "offRoute" && mode !== "missing" && (
