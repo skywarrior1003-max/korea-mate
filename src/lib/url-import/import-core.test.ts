@@ -148,3 +148,48 @@ test("providerFailClass — 520 과 시간 초과·출력 상한을 가르고, �
   assert.equal(providerFailClass("fetch_error"), "network");
   assert.equal(providerFailClass(undefined), "unknown");
 });
+
+// ── 글 형식별 추출 회귀(2026-09-30) — 합성 HTML 로 형식만 흉내 낸다(외부 원문을 저장소에 두지 않는다) ──
+test("추출: 따옴표 속성 안의 '>' 가 본문에 새지 않는다(Brunch 형식) · 빈 목록 줄 제거", () => {
+  const html = `<html><head><title>부산 1박2일</title></head><body>
+    <div class="wrap" data-tiara-layer="본문 하단 > 키워드 클릭" t-section="article">
+    <ul><li></li><li> </li><li></li></ul>
+    <h2 data-x='a > b'>1. 영동밀면</h2><p>부산역 앞 밀면집.</p>
+    <ul><li>이용시간 : 10:00-21:00</li></ul>
+    <h2>5. 흰여울문화마을</h2><p>마지막 일정으로 선택한 곳.</p></div></body></html>`;
+  const t = extractReadableText(html).text;
+  assert.ok(!/t-section|data-tiara|키워드 클릭|a > b/.test(t), t);
+  assert.ok(!/^-\s*$/m.test(t), "빈 목록 줄이 남았다");
+  assert.match(t, /## 1\. 영동밀면/);
+  assert.match(t, /- 이용시간 : 10:00-21:00/);
+  assert.ok(t.indexOf("영동밀면") < t.indexOf("흰여울문화마을"), "순서가 바뀌었다");
+});
+
+test("추출: 영어 Day 제목 형식 — Day 구획과 '건너뛰었다' 같은 문장이 그대로 남는다", () => {
+  const html = `<article><h2>Day 1 – Downtown</h2><h3>Morning</h3><p>Jagalchi Market is a great first stop.</p>
+    <h2>Day 2 – Haeundae</h2><p>This is why we skipped <a href="/x" title="temple > sea">Haedong Yonggungsa Temple</a>.</p></article>`;
+  const t = extractReadableText(html).text;
+  assert.match(t, /## Day 1 – Downtown/);
+  assert.match(t, /## Day 2 – Haeundae/);
+  assert.match(t, /we skipped Haedong Yonggungsa Temple/);
+  assert.ok(!/temple > sea/.test(t));
+});
+
+test("추출: 스크립트·스타일·머리글·주석은 버리고, 본문 순서는 지킨다", () => {
+  const html = `<header><nav>메뉴 > 부산</nav></header><script>var a = "<p>x</p>";</script><style>p>b{}</style>
+    <!-- 광고 --><main><p>첫째 장소: 동백섬</p><p>둘째 장소: 부산시립미술관</p></main><footer>회사 정보</footer>`;
+  const t = extractReadableText(html).text;
+  assert.ok(!/메뉴|var a|p>b|광고|회사 정보/.test(t), t);
+  assert.ok(t.indexOf("동백섬") < t.indexOf("부산시립미술관"));
+});
+
+test("parseAnalyzed: 선택·대안으로 소개된 곳은 optional 로 남기고, 표시가 없거나 false 면 평범한 장소다(2026-09-30)", () => {
+  const a = parseAnalyzed(JSON.stringify({ content_kind: "external_itinerary", days: [{ day_number: 1, stops: [
+    { name: "Songdo Beach", time_text: null, note: null, optional: false },
+    { name: "Amnam Park", time_text: null, note: "if you still have time", optional: true },
+    { name: "Busan Tower", time_text: null, note: null },
+  ] }], places: [] }))!;
+  assert.deepEqual(a.days[0]!.stops.map(s => s.optional ?? false), [false, true, false]);
+  assert.ok(!("optional" in a.days[0]!.stops[0]!), "false 는 필드 자체를 남기지 않는다");
+  assert.ok(buildAnalyzePrompt({ title: "", description: "", text: "x".repeat(100) }, null).includes("skipped, not visited"), "건너뛴 곳 규칙");
+});

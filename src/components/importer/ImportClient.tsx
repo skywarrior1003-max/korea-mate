@@ -449,8 +449,12 @@ function ImportInner() {
                                 {(stop.time_text || stop.time) && <span className="text-xs font-bold tabular-nums" style={ui.faint}>{stop.time_text ?? stop.time}</span>}
                                 <span className="text-sm" style={{ ...ui.ink, opacity: on ? 1 : 0.4 }}>{stop.name}</span>
                                 {badge(hit, !!linked)}
+                                {stop.optional && (
+                                  <span data-import-optional className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border" style={{ ...ui.line, color: "var(--qh-clay)" }}>{t("optionalBadge")}</span>
+                                )}
                               </div>
                               {stop.note && <p className="text-xs mt-0.5" style={ui.faint}>{stop.note}</p>}
+                              {stop.optional && <p className="text-xs mt-0.5" style={{ color: "var(--qh-clay)" }}>{t("optionalHint")}</p>}
                               {hit && hit.kind === "suggest" && (
                                 <button type="button" onClick={() => setAccepted(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; })}
                                   className="gkm-focus mt-1 text-xs font-bold underline underline-offset-2" style={{ color: "var(--qh-blue)" }}>

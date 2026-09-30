@@ -1633,7 +1633,9 @@
     "placesSaved": "選んだ場所をマイプレイスに保存しました。",
     "startOver": "別の内容を取り込む",
     "balancePlan": "無料のAI旅程作成が残り{count}回です（月1回・取り込み・AI旅程共通）。",
-    "balancePlanWithBonus": "無料のAI旅程作成が残り{count}回です（月1回＋初回のみ1回追加・取り込み・AI旅程共通）。"
+    "balancePlanWithBonus": "無料のAI旅程作成が残り{count}回です（月1回＋初回のみ1回追加・取り込み・AI旅程共通）。",
+    "optionalBadge": "任意",
+    "optionalHint": "元の文章で「時間があれば」「どちらか」として紹介された場所です。入れるかどうかを決めてください。"
   },
   "community": {
     "reactionGroup": "このコンテンツへのリアクション",

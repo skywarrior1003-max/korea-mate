@@ -1633,7 +1633,9 @@
     "placesSaved": "所选地点已保存到我的地点。",
     "startOver": "导入其他内容",
     "balancePlan": "剩余 {count} 次免费 AI 行程制作（每月 1 次，导入与 AI 行程共用）。",
-    "balancePlanWithBonus": "剩余 {count} 次免费 AI 行程制作（每月 1 次 + 首次额外 1 次，导入与 AI 行程共用）。"
+    "balancePlanWithBonus": "剩余 {count} 次免费 AI 行程制作（每月 1 次 + 首次额外 1 次，导入与 AI 行程共用）。",
+    "optionalBadge": "可选",
+    "optionalHint": "原文把这里写成“有时间可以去”或“二选一”。请自行决定是否保留。"
   },
   "community": {
     "reactionGroup": "对此内容的反馈",

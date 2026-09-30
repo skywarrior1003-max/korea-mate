@@ -1633,7 +1633,9 @@
     "placesSaved": "The chosen places were kept in My Places.",
     "startOver": "Import something else",
     "balancePlan": "{count} free AI trip build(s) left (1 per month, shared by import and AI planning).",
-    "balancePlanWithBonus": "{count} free AI trip build(s) left (1 per month + 1 extra the first time, shared by import and AI planning)."
+    "balancePlanWithBonus": "{count} free AI trip build(s) left (1 per month + 1 extra the first time, shared by import and AI planning).",
+    "optionalBadge": "Optional",
+    "optionalHint": "The source presents this as optional or as an alternative. Decide whether to keep it."
   },
   "community": {
     "reactionGroup": "Reactions to this content",

@@ -129,6 +129,9 @@ export interface ExtractedPage {
   text: string;
 }
 
+/** 태그 속성 부분 — 따옴표로 감싼 값 안의 ">" 는 태그 끝이 아니다 */
+const TAG_ATTRS = `(?:[^>"']|"[^"]*"|'[^']*')*`;
+
 export function extractReadableText(html: string): ExtractedPage {
   const pick = (re: RegExp): string => decodeEntities((html.match(re)?.[1] ?? "")).replace(/\s+/g, " ").trim();
   const title = pick(/<title[^>]*>([\s\S]*?)<\/title>/i)
@@ -145,15 +148,19 @@ export function extractReadableText(html: string): ExtractedPage {
     .replace(/<svg[\s\S]*?<\/svg>/gi, " ")
     .replace(/<(header|footer|nav|aside)[\s\S]*?<\/\1>/gi, " ");
   // 구조 힌트 — Day 구획과 목록이 AI 에 보이게 한다
+  // 태그 속성은 따옴표 안의 ">" 를 태그 끝으로 보지 않는다(2026-09-30: Brunch 의
+  // data-tiara-layer="본문 하단 > 키워드 클릭" 에서 태그가 일찍 끊겨 속성 조각이 본문에 섞였다)
   s = s
-    .replace(/<h[1-4][^>]*>/gi, "\n## ")
+    .replace(new RegExp(`<h[1-4]\\b${TAG_ATTRS}>`, "gi"), "\n## ")
     .replace(/<\/h[1-4]>/gi, "\n")
-    .replace(/<li[^>]*>/gi, "\n- ")
-    .replace(/<(p|div|section|article|tr|br|table|ul|ol|h5|h6)[^>]*\/?>/gi, "\n")
-    .replace(/<[^>]+>/g, " ");
+    .replace(new RegExp(`<li\\b${TAG_ATTRS}>`, "gi"), "\n- ")
+    .replace(new RegExp(`<(?:p|div|section|article|tr|br|table|ul|ol|h5|h6)\\b${TAG_ATTRS}>`, "gi"), "\n")
+    .replace(new RegExp(`<\\/?[a-zA-Z][\\w:-]*${TAG_ATTRS}>`, "g"), " ");
   s = decodeEntities(s)
     .replace(/[ \t ]+/g, " ")
     .replace(/ ?\n ?/g, "\n")
+    // 내용 없는 목록 줄("-" 만 남은 줄)은 버린다 — 빈 메뉴·아이콘 목록이 수십 줄씩 남았다
+    .replace(/^-[ \t]*$/gm, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
   return { title, description, text: s.slice(0, MAX_TEXT_CHARS) };
@@ -186,6 +193,8 @@ export const ANALYZE_SCHEMA = {
                 end_time: { type: "string", nullable: true },
                 time_text: { type: "string", nullable: true },
                 note: { type: "string", nullable: true },
+                // 원문이 "시간이 되면·원하면·둘 중 하나"로 소개한 곳 — 확인 화면에서 사용자가 정하게 표시한다(2026-09-30)
+                optional: { type: "boolean", nullable: true },
               },
               required: ["name", "time_text", "note"],
             },
@@ -218,6 +227,8 @@ export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): str
     "- Keep the ORIGINAL order of days and stops exactly as written. Do not reorder or optimize, and do not add or drop stops. Do not change the plan.",
     "- A plan without explicit days (for example one afternoon) is external_itinerary with a single day, day_number 1.",
     "- A stop is a NAMED place. Unnamed activities (\"a small cafe nearby\", \"lunch\") are not stops — mention them in the note of the stop they belong to.",
+    "- Places the text says were skipped, not visited, closed or not recommended are NOT stops (you may mention them in the note of a nearby stop). Transport used only to get somewhere (a station, an escalator, a cable car ride) is not a separate stop unless the text treats it as a destination.",
+    "- optional: true when the text presents the stop as optional or as one of alternatives (\"if you have time\", \"you can also\", \"either ... or\", \"option\"); otherwise false.",
     "- time: the start time only if written, as HH:MM 24h (\"02:00 PM\" → \"14:00\"). end_time: the end time if a range is written, same format. time_text: the time exactly as written (e.g. \"12:00 PM - 02:00 PM\"). If a time range covers several stops, give each of those stops the same range.",
     "- date: only if unambiguous, format YYYY-MM-DD. Relative words like \"today\" are NOT dates → null.",
     "- city: if the plan is in busan/seoul/jeju/gyeongju/jeonju use that lowercase English word; otherwise the main city or region name as written in the text; null if unclear.",
@@ -247,6 +258,8 @@ export interface AnalyzedStop {
   /** 원문에 적힌 그대로의 시간 표기 — 화면 확인용 */
   time_text: string | null;
   note: string | null;
+  /** 원문이 선택 사항·대안으로 소개한 곳(확인 화면에서 사용자가 정한다). 옛 응답에는 없다 */
+  optional?: boolean;
 }
 export interface AnalyzedDay { day_number: number; date: string | null; stops: AnalyzedStop[] }
 export interface AnalyzedContent {
@@ -326,7 +339,7 @@ export function parseAnalyzed(text: string): AnalyzedContent | null {
           const time = fromText.start ?? normHHMM(cleanStr(s.time, 8));
           const endAi = normHHMM(cleanStr(s.end_time, 8));
           const end = fromText.end ?? (time && endAi && endAi > time ? endAi : null);
-          stops.push({ name, time, end_time: end, time_text: timeText, note: cleanStr(s.note, 140) });
+          stops.push({ name, time, end_time: end, time_text: timeText, note: cleanStr(s.note, 140), ...(s.optional === true ? { optional: true } : {}) });
         }
       }
       days.push({ day_number: n, date: (() => { const v = cleanStr(d.date, 10); return v && YMD.test(v) ? v : null; })(), stops });

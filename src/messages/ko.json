@@ -1633,7 +1633,9 @@
     "placesSaved": "고른 장소를 내 장소에 보존했어요.",
     "startOver": "다른 내용 가져오기",
     "balancePlan": "무료 AI 일정 만들기 {count}회 남았어요(월 1회 · 가져오기·AI 일정 공통).",
-    "balancePlanWithBonus": "무료 AI 일정 만들기 {count}회 남았어요(월 1회 + 처음 한 번 추가 1회 · 가져오기·AI 일정 공통)."
+    "balancePlanWithBonus": "무료 AI 일정 만들기 {count}회 남았어요(월 1회 + 처음 한 번 추가 1회 · 가져오기·AI 일정 공통).",
+    "optionalBadge": "선택",
+    "optionalHint": "원문에서 ‘시간이 되면’·‘둘 중 하나’로 소개한 곳이에요. 넣을지 직접 정하세요."
   },
   "community": {
     "reactionGroup": "이 콘텐츠에 대한 반응",
