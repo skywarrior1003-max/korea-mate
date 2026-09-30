@@ -524,7 +524,7 @@
     "editDatesApply": "適用",
     "editDatesShrinkMoved": "短くなった日程の{n}か所を未配置に移しました。",
     "mapFullscreen": "地図を全画面で",
-    "addModeHint": "このDayにまだ無い場所だけを表示します。保存した場所やMy Placesから追加してください。",
+    "addModeHint": "このDayにまだ無い場所だけを表示します。保存した場所やMy Placesから選ぶか、新しい場所を名前で追加してください。",
     "execTodayHint": "今の予定と次の場所を確認できます。",
     "editFinish": "編集を終える",
     "mapHidden": "地図に表示されません",
@@ -534,7 +534,20 @@
     "editTextName": "名前",
     "editTextNote": "メモ",
     "editTextSave": "保存",
-    "editTextCancel": "キャンセル"
+    "editTextCancel": "キャンセル",
+    "addPosition": "どこに入れますか？",
+    "addPositionStart": "先頭",
+    "addPositionAfter": "{name}の次",
+    "addPositionEnd": "最後",
+    "newPlaceTitle": "新しい場所",
+    "newPlacePlaceholder": "例: 広安里の貝焼き店",
+    "newPlaceKind": "種類",
+    "newPlaceKind_restaurant": "食事",
+    "newPlaceKind_cafe": "カフェ",
+    "newPlaceKind_attraction": "観光",
+    "newPlaceKind_shopping": "ショッピング",
+    "newPlaceNoPin": "名前だけで大丈夫です。地図の位置なしでこの旅行にだけ追加されます。",
+    "newPlaceAdd": "Day {n}に追加"
   },
   "common": {
     "language": "言語",
@@ -746,7 +759,16 @@
     "addStopRecord": "写真・メモを残す",
     "noRecordPlaces": "記録のない予定 {n}件",
     "manageRecords": "記録の管理",
-    "viewInStory": "ストーリーで見る"
+    "viewInStory": "ストーリーで見る",
+    "savedHere": "ここに保存しました",
+    "dayN": "Day {n}",
+    "changePlace": "場所を変更",
+    "noPlaceOption": "場所なしで残す",
+    "addPhotoCta": "写真を追加",
+    "photoOptional": "写真なしでメモだけでも大丈夫です",
+    "addLocation": "現在地を付ける",
+    "locationAdded": "位置を付けました",
+    "locationFailed": "位置を取得できませんでした — 位置なしで保存されます"
   },
   "dayDone": {
     "title": "Day {n} 完走！",
@@ -1908,10 +1930,10 @@
         "name": "日付を確認"
       },
       "addRecord": {
-        "say": "旅行中の写真やメモはここから残せます",
+        "say": "着いた場所のカードで、このボタンから写真・メモを残せます",
         "name": "写真・メモを残す",
         "why": "今写真がなくても大丈夫。[旅行中に続ける]で一時停止すると、あとでここから再開できます。",
-        "say_tut-story-tab": "写真・メモは[ストーリー]タブで残せます — [ストーリー]タブを押してください"
+        "say_tut-itinerary-tab": "写真・メモは[旅程]タブの場所カードで残します — [旅程]タブを押してください"
       },
       "openStory": {
         "say": "[ストーリー]タブを押してください",

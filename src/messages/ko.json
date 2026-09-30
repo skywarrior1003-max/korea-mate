@@ -524,7 +524,7 @@
     "editDatesApply": "적용",
     "editDatesShrinkMoved": "줄어든 날짜의 장소 {n}곳을 미배정으로 옮겼어요.",
     "mapFullscreen": "지도 전체화면",
-    "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳이나 내 장소에서 골라 추가하세요.",
+    "addModeHint": "이 Day에 아직 없는 장소만 보여요. 담아 둔 곳·내 장소에서 고르거나 새 장소를 이름으로 추가하세요.",
     "execTodayHint": "지금 일정과 다음 장소를 확인하세요.",
     "editFinish": "편집 마치기",
     "mapHidden": "지도에 표시되지 않음",
@@ -534,7 +534,20 @@
     "editTextName": "이름",
     "editTextNote": "메모",
     "editTextSave": "저장",
-    "editTextCancel": "취소"
+    "editTextCancel": "취소",
+    "addPosition": "어디에 넣을까요?",
+    "addPositionStart": "맨 앞",
+    "addPositionAfter": "{name} 다음",
+    "addPositionEnd": "맨 뒤",
+    "newPlaceTitle": "새 장소",
+    "newPlacePlaceholder": "예: 광안리 조개구이집",
+    "newPlaceKind": "종류",
+    "newPlaceKind_restaurant": "식당",
+    "newPlaceKind_cafe": "카페",
+    "newPlaceKind_attraction": "관광",
+    "newPlaceKind_shopping": "쇼핑",
+    "newPlaceNoPin": "이름만 있어도 돼요. 지도 위치는 없이 이 여행에만 추가돼요.",
+    "newPlaceAdd": "Day {n}에 추가"
   },
   "common": {
     "language": "언어",
@@ -746,7 +759,16 @@
     "addStopRecord": "사진·메모 남기기",
     "noRecordPlaces": "기록 없는 일정 {n}곳",
     "manageRecords": "기록 관리",
-    "viewInStory": "스토리에서 보기"
+    "viewInStory": "스토리에서 보기",
+    "savedHere": "여기에 저장됨",
+    "dayN": "Day {n}",
+    "changePlace": "장소 바꾸기",
+    "noPlaceOption": "장소 없이 남기기",
+    "addPhotoCta": "사진 추가",
+    "photoOptional": "사진 없이 메모만 남겨도 돼요",
+    "addLocation": "현재 위치 붙이기",
+    "locationAdded": "위치를 붙였어요",
+    "locationFailed": "위치를 가져오지 못했어요 — 위치 없이 저장돼요"
   },
   "dayDone": {
     "title": "Day {n} 완주!",
@@ -1908,10 +1930,10 @@
         "name": "날짜 확인"
       },
       "addRecord": {
-        "say": "여행 중 사진이나 메모를 남기려면 여기를 누르세요",
+        "say": "도착한 장소 카드에서 이 버튼으로 사진·메모를 남기세요",
         "name": "사진·메모 남기기",
         "why": "지금 사진이 없어도 괜찮아요. [여행 중에 이어하기]로 멈춰 두면 나중에 여기서 다시 시작해요.",
-        "say_tut-story-tab": "사진·메모는 [스토리] 탭에서 남겨요 — [스토리] 탭을 누르세요"
+        "say_tut-itinerary-tab": "장소별 사진·메모는 [일정] 탭의 장소 카드에서 남겨요 — [일정] 탭을 누르세요"
       },
       "openStory": {
         "say": "[스토리] 탭을 누르세요",

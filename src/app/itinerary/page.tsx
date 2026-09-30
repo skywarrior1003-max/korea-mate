@@ -16,7 +16,7 @@ import { seoulClock } from "@/lib/trips/seoul-clock";
 import { tripBucket } from "@/lib/trips/trips-lifecycle";
 import { todayPosition, findTodayDayIndex, freshClockFor } from "@/lib/planner/execution-core";
 import { remapTripDays } from "@/lib/planner/trip-dates-core";
-import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
+import { stopCitySpotId, stopKeyOf, ensureStopIds, type StopIdentityInput as StopIdentityForPhoto } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
   withResolvedPhotos, needsPhotoResolution, isResolvedFresh, fetchMomentPhotoUrls,
@@ -136,6 +136,8 @@ interface Place {
    * 두 의미를 겸할 수 있어, 어느 소스인지는 이 값이 설명한다.
    */
   sourceKey?: string;
+  /** 이 여행의 이 일정 항목 열쇠(uuid) — 카탈로그 id 가 없는 장소에도 사진·메모를 결합한다(stop-binding.ensureStopIds) */
+  stopId?:   string;
   title?:    string;
   address?:  string;
   note?:     string;
@@ -1409,6 +1411,11 @@ function ItineraryResult() {
   const [textEditIdx,   setTextEditIdx]   = useState<number | null>(null);
   const [textDraft,     setTextDraft]     = useState<{ name: string; tips: string }>({ name: "", tips: "" });
   const [addOpen,       setAddOpen]       = useState(false);
+  /** 장소 추가 위치 — 이 Day 의 몇 번째 장소 뒤에 넣을지(-1 = 맨 앞, null = 맨 뒤) */
+  const [addAfter,      setAddAfter]      = useState<number | null>(null);
+  /** 새 장소(이름만) 입력 — 좌표를 지어내지 않는다. 위치 없이도 일정·사진·메모가 된다 */
+  const [newPlaceName,  setNewPlaceName]  = useState("");
+  const [newPlaceKind,  setNewPlaceKind]  = useState<"restaurant" | "cafe" | "attraction" | "shopping">("restaurant");
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
   // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
   const [plannerDay,    setPlannerDay]    = useState(1);
@@ -1471,6 +1478,8 @@ function ItineraryResult() {
   const tPublish = useTranslations("publish");
   const locale = useLocale();
   const [itinId,      setItinId]      = useState<string | null>(null);
+  /** 방금 사진·메모를 남긴 장소 열쇠 — 카드에 잠깐 "저장됨"을 보여 준다 */
+  const [justSavedStop, setJustSavedStop] = useState<string | null>(null);
 
   /**
    * 이 일정의 숙소 체크인 시각. **이 기기에만** 둔다.
@@ -1705,6 +1714,23 @@ function ItineraryResult() {
   // 화면용 복사본 — Timeline 과 Story 가 같은 것을 본다. 원본 `moments` 는 그대로다.
   const displayMoments = withResolvedPhotos(moments, resolvedPhotoUrls);
 
+  // 모든 일정 장소가 기록 열쇠를 갖게 한다(카탈로그 id 가 없는 추천 코스·직접 적은 장소 포함).
+  // 저장된 내 여행을 열었을 때만 — 없는 열쇠에 uuid 를 한 번 붙이고, 기존 autosave 가 저장한다.
+  // 이미 모두 있으면 같은 배열이라 아무 일도 없다.
+  useEffect(() => {
+    if (!itinId || loading || (shareId && !isOwner) || days.length === 0) return;
+    const next = ensureStopIds(days, () => crypto.randomUUID());
+    if (next !== days) Promise.resolve().then(() => setDays(next));
+  }, [days, itinId, loading, shareId, isOwner]);
+
+  /** 이 여행에서 이 장소에 남긴 내 사진(있으면) — 이 여행 화면에서는 공용 장소 사진보다 먼저 보인다. 공용 원본은 그대로 */
+  const myStopPhoto = (place: StopIdentityForPhoto): string | null => {
+    const sk = stopKeyOf(place);
+    if (!sk) return null;
+    const rec = displayMoments.find(m => m.stop_key === sk && typeof m.photo_data === "string" && m.photo_data !== "");
+    return rec?.photo_data ?? null;
+  };
+
   // Story 의 뼈대는 일정이다. 사진이 없어도 지난 장소가 Story 를 이룬다.
   // 오늘 Day 안에서는 지금 시각(한국 시각 — 장소 time 과 같은 기준)을 지난 장소만 들어간다.
   const storyDays = (() => {
@@ -1715,7 +1741,7 @@ function ItineraryResult() {
         dayNumber: d.dayNumber,
         date:      d.date,
         places:    d.places.map(p => ({
-          name: p.name, time: p.time, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, image: p.image,
+          name: p.name, time: p.time, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, stopId: p.stopId, image: p.image,
         })),
       })),
       displayMoments,
@@ -2361,6 +2387,13 @@ function ItineraryResult() {
       setCaptureOpen(false);
       setCaptureDay(null);
       setCaptureStop(null);
+      // 저장 결과를 그 장소 카드에서 바로 보여 준다 — 잠깐 "저장됨" 표시 + 카드로 스크롤
+      const sk = typeof moment.stop_key === "string" ? moment.stop_key : null;
+      if (sk) {
+        setJustSavedStop(sk);
+        window.setTimeout(() => setJustSavedStop(cur => (cur === sk ? null : cur)), 6000);
+        window.setTimeout(() => document.querySelector(`[data-stop-card="${CSS.escape(sk)}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
+      }
       return true;
     } catch {
       // 서버 원문 오류·Storage 경로는 사용자에게 노출하지 않는다
@@ -2564,6 +2597,37 @@ function ItineraryResult() {
   }, [tripCity]);
 
   // ── 보관함 아이템 → 현재 editDay에 추가 ─────────────────
+  /** 선택한 위치(addAfter)에 넣는다 — 범위를 벗어나면 맨 뒤 */
+  function insertAtChosen<T>(places: T[], item: T): T[] {
+    if (addAfter === null || addAfter >= places.length - 1) return [...places, item];
+    const at = Math.max(0, addAfter + 1);
+    return [...places.slice(0, at), item, ...places.slice(at)];
+  }
+
+  // 새 장소 — 이름만으로 이 여행 일정에 넣는다. 원본 카탈로그·내 장소에는 아무것도 쓰지 않는다.
+  // 좌표·시각을 지어내지 않는다: lat/lng 없음, time 비움(시간대만 앞 장소를 따른다).
+  function addNewPlaceToDay() {
+    const name = newPlaceName.trim().slice(0, 80);
+    if (!name) return;
+    const prevPlace = addAfter !== null && addAfter >= 0 ? days[editDay]?.places[addAfter] : days[editDay]?.places.at(-1);
+    const newPlace: Place = {
+      name,
+      category:      newPlaceKind,
+      location:      city,
+      time:          "",
+      duration:      "60m",
+      tips:          "",
+      googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${city} Korea`)}`,
+      ...(prevPlace?.slot ? { slot: prevPlace.slot } : {}),
+      stopId:        crypto.randomUUID(),
+    };
+    setDays(prev => prev.map((day, di) =>
+      di === editDay ? { ...day, places: insertAtChosen(day.places, newPlace) } : day
+    ));
+    setNewPlaceName("");
+    setAddAfter(null);
+  }
+
   function addCartItemToDay(item: CartItem) {
     // 같은 canonical 장소를 의도 없이 한 Day 에 반복 배치하지 않는다 (#14).
     // 목록에서 이미 걸러지지만, 여기서도 한 번 더 지킨다.
@@ -2591,7 +2655,7 @@ function ItineraryResult() {
       cartSnapshot:  item,
     };
     setDays(prev => prev.map((day, di) =>
-      di === editDay ? { ...day, places: orderDayPlaces([...day.places, newPlace]) } : day
+      di === editDay ? { ...day, places: orderDayPlaces(insertAtChosen(day.places, newPlace)) } : day
     ));
     const key = getItemSourceKey(item);
     if (itinId && unplacedItems.some(u => getItemSourceKey(u) === key)) {
@@ -2629,7 +2693,7 @@ function ItineraryResult() {
       note:          userSpot.note,
     };
     setDays(prev => prev.map((day, di) =>
-      di === editDay ? { ...day, places: [...day.places, newPlace] } : day
+      di === editDay ? { ...day, places: insertAtChosen(day.places, newPlace) } : day
     ));
   }
 
@@ -3221,7 +3285,7 @@ function ItineraryResult() {
               key={v}
               type="button"
               role="tab"
-              data-tut={v === "story" ? "tut-story-tab" : undefined}
+              data-tut={v === "story" ? "tut-story-tab" : "tut-itinerary-tab"}
               aria-selected={tripView === v}
               onClick={() => setTripView(v)}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-black transition-all ${
@@ -3246,7 +3310,8 @@ function ItineraryResult() {
             {(!shareId || isOwner) && (
               <button
                 type="button"
-                data-tut="tut-add-record"
+                // 장소 없는 자유 기록 — 보존하되 튜토리얼 주 경로에서는 뺀다(장소 카드의 기록 버튼이 주 경로)
+                data-free-record
                 onClick={() => setCaptureOpen(true)}
                 className="shrink-0 text-xs font-black px-3 py-2 rounded-lg border border-line bg-white text-ink"
               >
@@ -3495,7 +3560,7 @@ function ItineraryResult() {
             <PlannerDayNav
               days={days.map(d => ({ dayNumber: d.dayNumber, dateLabel: formatDayChipDate(d.date, locale), placeCount: d.places.length }))}
               currentDay={clampDay(days.length, editDay + 1)}
-              onSelectDay={(n) => { setEditDay(clampDay(days.length, n) - 1); setMoveOpenIdx(null); }}
+              onSelectDay={(n) => { setEditDay(clampDay(days.length, n) - 1); setMoveOpenIdx(null); setAddAfter(null); }}
               forecast={dayForecasts[days[editDay]?.date ?? ""] ?? null}
               labels={{
                 dayOfTotal:    tPlanner("dayOfTotal", { n: editDay + 1, total: days.length }),
@@ -3538,7 +3603,8 @@ function ItineraryResult() {
                 {days[editDay].places.map((p, pi) => {
                   const editOrdinals = visitOrdinals(days[editDay].places);
                   const imageSrc = p.cartSnapshot?.image ?? p.image;
-                  const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                  // 내가 이 장소에 남긴 사진이 있으면 그것이 먼저(이 여행 화면만 — 공용 사진 원본은 그대로)
+                  const thumb = myStopPhoto(p) ?? (hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null);
                   // B안: 지정한 시간(fixed/user)만 시각으로 보여 준다. 스케줄러 추정 시각은 입력칸에만 있다.
                   // 순서 계약(↑↓ 노출)은 표시가 아니라 실제 시각 유무(timed)로 판단한다 — 그대로다.
                   const timed = shouldShowClock(p);
@@ -3697,7 +3763,65 @@ function ItineraryResult() {
 
           {/* ── 장소 추가 패널 (보조 행동) — 검색 · 내가 고른 곳(미배정) · 내 장소. 기존 기능 그대로. ── */}
           {addOpen && (!shareId || isOwner) && (
-            <div className="mt-5 rounded-2xl border border-line bg-surface-dim/40 p-3 space-y-4">
+            <div className="mt-5 rounded-2xl border border-line bg-surface-dim/40 p-3 space-y-4" data-add-place-panel>
+              {/* 어디에 넣을지 — 이 Day 의 장소 뒤를 고른다. 사진 붙이기와는 별개의 행동이다 */}
+              {(days[editDay]?.places.length ?? 0) > 0 && (
+                <label className="block">
+                  <span className="block text-xs font-black text-sub mb-1 px-1">{tPlanner("addPosition")}</span>
+                  <select
+                    data-add-position
+                    value={addAfter === null ? "end" : String(addAfter)}
+                    onChange={e => setAddAfter(e.target.value === "end" ? null : Number(e.target.value))}
+                    className="gkm-focus w-full min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-bold text-ink"
+                  >
+                    <option value="-1">{tPlanner("addPositionStart")}</option>
+                    {days[editDay].places.map((pl, i) => i < days[editDay].places.length - 1 && (
+                      <option key={i} value={String(i)}>{tPlanner("addPositionAfter", { name: localizedPlaceName(pl.name?.trim() || "", l10nOf(pl), locale) || pl.name })}</option>
+                    ))}
+                    <option value="end">{tPlanner("addPositionEnd")}</option>
+                  </select>
+                </label>
+              )}
+
+              {/* 새 장소 — 이름만 있어도 된다. 위치 권한·지도 핀을 요구하지 않고 좌표를 만들지 않는다 */}
+              {(!shareId || isOwner) && !isPastTrip && (
+                <div className="rounded-2xl border border-line bg-white p-3" data-add-new-place>
+                  <p className="text-xs font-black text-sub mb-2">{tPlanner("newPlaceTitle")}</p>
+                  <input
+                    type="text"
+                    value={newPlaceName}
+                    maxLength={80}
+                    onChange={e => setNewPlaceName(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); addNewPlaceToDay(); } }}
+                    placeholder={tPlanner("newPlacePlaceholder")}
+                    aria-label={tPlanner("newPlaceTitle")}
+                    className="gkm-focus w-full min-h-11 rounded-xl border border-line px-3 text-sm text-ink"
+                  />
+                  <div className="mt-2 flex flex-wrap gap-1.5" role="radiogroup" aria-label={tPlanner("newPlaceKind")}>
+                    {(["restaurant", "cafe", "attraction", "shopping"] as const).map(k => (
+                      <button
+                        key={k}
+                        type="button"
+                        role="radio"
+                        aria-checked={newPlaceKind === k}
+                        onClick={() => setNewPlaceKind(k)}
+                        className="gkm-focus min-h-11 px-3.5 rounded-full text-xs font-bold border"
+                        style={newPlaceKind === k ? { backgroundColor: "var(--gkm-ink)", color: "#fff", borderColor: "var(--gkm-ink)" } : { borderColor: "#E5E7EA", color: "#565D66", backgroundColor: "#fff" }}
+                      >{tPlanner(`newPlaceKind_${k}`)}</button>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-[11px] text-faint">{tPlanner("newPlaceNoPin")}</p>
+                  <button
+                    type="button"
+                    data-add-new-place-go
+                    onClick={addNewPlaceToDay}
+                    disabled={!newPlaceName.trim()}
+                    className="gkm-focus mt-2 w-full min-h-11 rounded-full text-sm font-black text-white disabled:opacity-40"
+                    style={{ backgroundColor: "var(--gkm-action-primary)" }}
+                  >{tPlanner("newPlaceAdd", { n: days[editDay]?.dayNumber ?? editDay + 1 })}</button>
+                </div>
+              )}
+
               <Link
                 href="/all-spots"
                 className="gkm-focus w-full inline-flex items-center justify-center gap-2 min-h-11 rounded-full text-sm font-bold text-action border border-line bg-white hover:bg-surface-dim transition-colors"
@@ -3807,7 +3931,8 @@ function ItineraryResult() {
                   // B안: 스케줄러 추정 시각은 판정에만 쓴다. 화면에는 지정한 시간만.
                   const clock = exactTimeLabel(p);
                   const imageSrc = p.cartSnapshot?.image ?? p.image;
-                  const thumb = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                  // 내가 이 장소에 남긴 사진이 있으면 그것이 먼저(이 여행 화면만 — 공용 사진 원본은 그대로)
+                  const thumb = myStopPhoto(p) ?? (hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null);
                   const displayName = localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale) || (p.isAccommodation ? tStay("placeFallback") : "");
                   if (i === pos.nowIdx) {
                     // PlaceModal 과 같은 규칙: 네이버 키워드가 없으면 Google 검색으로 돌아간다 —
@@ -4011,7 +4136,7 @@ function ItineraryResult() {
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
                     return done > 0 ? `✓ ${t("progress", { done, total: day.places.length })}` : null;
                   })()}
-                  onAdd={(!shareId || isOwner) && !isPastTrip ? () => { setEditMode("add"); setAddOpen(true); setViewMode("compact"); setEditDay(day.dayNumber - 1); } : null}
+                  onAdd={(!shareId || isOwner) && !isPastTrip ? () => { setEditMode("add"); setAddOpen(true); setViewMode("compact"); setEditDay(day.dayNumber - 1); setAddAfter(null); } : null}
                   addLabel={tPlanner("dayAdd")}
                   onMapFullscreen={() => setMapFull(true)}
                   mapFullscreenLabel={tPlanner("mapFullscreen")}
@@ -4060,7 +4185,8 @@ function ItineraryResult() {
                             const stay    = formatDuration(parseDurationMinutes(place.duration), durationLabels);
                             const transit = prev ? transitMinutes(prev, place) : null;
                             const imageSrc = place.cartSnapshot?.image ?? place.image;
-                            const thumb   = hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null;
+                            // 내가 이 장소에 남긴 사진이 있으면 그것이 먼저(이 여행 화면만 — 공용 사진 원본은 그대로)
+                            const thumb   = myStopPhoto(place) ?? (hasRealSpotImage(imageSrc) ? resolveSpotImageSrc(imageSrc) : null);
                             const isVisited = visited.has(visitedPlaceKey(day.dayNumber, place));
                             const openDetail = () => { setSelectedPlace(place); setSelectedPlaceDay(day.dayNumber); };
 
@@ -4152,6 +4278,8 @@ function ItineraryResult() {
                                       return (
                                         <button
                                           type="button"
+                                          data-stop-card={sk}
+                                          data-stop-record="saved"
                                           onClick={() => { setTripView("story"); setManageOpen(true); requestAnimationFrame(() => document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" })); }}
                                           className="gkm-focus mt-1.5 w-full min-h-11 text-left flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-surface-dim/60 hover:bg-surface-dim transition-colors"
                                         >
@@ -4160,6 +4288,7 @@ function ItineraryResult() {
                                             <img src={rec.photo_data} alt="" className="w-7 h-7 rounded-lg object-cover shrink-0 border border-line" />
                                           )}
                                           <span className="min-w-0 flex-1 text-[11px] font-bold text-ink truncate">{line || tMemo("memoriesTitle")}</span>
+                                          {justSavedStop === sk && <span role="status" className="shrink-0 text-[11px] font-black" style={{ color: "#1D9A6C" }}>✓ {tMemo("savedHere")}</span>}
                                           <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>
                                         </button>
                                       );
@@ -4175,6 +4304,7 @@ function ItineraryResult() {
                                         /* VISUAL-POLISH V2 §4 — 흐린 점선·11px 는 설명문처럼 보였다.
                                               조용하지만 분명한 보조 버튼: 실선 테두리·흰 배경·44px 터치·전폭 클릭. */
                                         data-tut="tut-add-record"
+                                        data-stop-card={sk}
                                         className="gkm-focus mt-1.5 w-full min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 rounded-xl border border-line bg-white text-xs font-black text-ink/80 hover:text-ink hover:border-ink/30 active:scale-[0.99] transition-all"
                                       >
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -4434,6 +4564,11 @@ function ItineraryResult() {
           aiPlaceName={captureStop?.aiPlaceName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}
           stopKey={captureStop?.stopKey ?? null}
+          // 저장 전에 장소를 바꿀 수 있게 — 이 여행의 일정 장소(열쇠가 있는 것)만
+          placeOptions={days.flatMap(d => d.places.filter(p => !p.isAccommodation && stopKeyOf(p) !== null).map(p => ({
+            stopKey: stopKeyOf(p)!, dayNumber: d.dayNumber, citySpotId: stopCitySpotId(p),
+            name: localizedPlaceName(p.name?.trim() || "", l10nOf(p), locale) || p.name,
+          })))}
           onSave={handleMomentSave}
           onClose={() => { setCaptureOpen(false); setCaptureDay(null); setCaptureStop(null); }}
         />

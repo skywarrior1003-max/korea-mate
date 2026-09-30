@@ -524,7 +524,7 @@
     "editDatesApply": "Apply",
     "editDatesShrinkMoved": "Moved {n} places from the removed days to Unplaced.",
     "mapFullscreen": "Fullscreen map",
-    "addModeHint": "Only places not yet on this day are shown. Add from your picks or My Places.",
+    "addModeHint": "Only places not yet on this day are shown. Pick from your picks or My Places, or add a new place by name.",
     "execTodayHint": "See what's now and what's next.",
     "editFinish": "Finish editing",
     "mapHidden": "Not shown on map",
@@ -534,7 +534,20 @@
     "editTextName": "Name",
     "editTextNote": "Note",
     "editTextSave": "Save",
-    "editTextCancel": "Cancel"
+    "editTextCancel": "Cancel",
+    "addPosition": "Where should it go?",
+    "addPositionStart": "At the start",
+    "addPositionAfter": "After {name}",
+    "addPositionEnd": "At the end",
+    "newPlaceTitle": "New place",
+    "newPlacePlaceholder": "e.g. Gwangalli clam grill",
+    "newPlaceKind": "Type",
+    "newPlaceKind_restaurant": "Food",
+    "newPlaceKind_cafe": "Cafe",
+    "newPlaceKind_attraction": "Sight",
+    "newPlaceKind_shopping": "Shopping",
+    "newPlaceNoPin": "A name is enough. It's added to this trip only, without a map pin.",
+    "newPlaceAdd": "Add to Day {n}"
   },
   "common": {
     "language": "Language",
@@ -746,7 +759,16 @@
     "addStopRecord": "Add photo & note",
     "noRecordPlaces": "{n} places without records",
     "manageRecords": "Manage records",
-    "viewInStory": "View in Story"
+    "viewInStory": "View in Story",
+    "savedHere": "Saved here",
+    "dayN": "Day {n}",
+    "changePlace": "Change place",
+    "noPlaceOption": "Keep without a place",
+    "addPhotoCta": "Add photo",
+    "photoOptional": "A note without a photo is fine too",
+    "addLocation": "Add current location",
+    "locationAdded": "Location added",
+    "locationFailed": "Couldn't get location — it will save without one"
   },
   "dayDone": {
     "title": "Day {n} complete!",
@@ -1908,10 +1930,10 @@
         "name": "Check dates"
       },
       "addRecord": {
-        "say": "Tap here to add a photo or note during your trip",
+        "say": "At a place, tap this on its card to add a photo or note",
         "name": "Add a photo or note",
         "why": "No photos yet? That's fine — pause with [Continue during my trip] and pick up here later.",
-        "say_tut-story-tab": "Photos and notes live in [Story] — tap the [Story] tab"
+        "say_tut-itinerary-tab": "Photos and notes go on each place card in [Itinerary] — tap the [Itinerary] tab"
       },
       "openStory": {
         "say": "Tap the [Story] tab",

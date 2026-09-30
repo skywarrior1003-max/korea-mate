@@ -39,6 +39,8 @@ export interface StoryStopInput {
   source?:    string | null;
   /** 일정 항목의 출처 열쇠(sourceKey). 없으면 source+place_id 로 만든다 */
   sourceKey?: string | null;
+  /** 이 여행 일정 항목 열쇠(uuid) — 카탈로그 id 가 없는 장소(코스·새 장소)도 stop:<uuid> 로 결합한다 */
+  stopId?:    string | null;
   /** city_spots.image_url — 카탈로그 대표 이미지. 없을 수 있다 */
   image?:    string | null;
 }

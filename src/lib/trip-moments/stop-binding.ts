@@ -12,6 +12,12 @@
 //
 // 공식 장소는 `city_spot_id` 도 함께 싣는다(검증된 기존 결합 경로). 읽는 쪽은
 // stop_key 가 없는 옛 행을 city_spot_id 로 결합한다.
+//
+// 2026-09-30(My Trip 장소 기록 교정): 카탈로그 id 가 없는 일정 항목(추천 코스에서 온 장소·
+// 직접 적은 새 장소)에도 기록을 남길 수 있게, 그 여행의 stop 객체에 한 번 만든 uuid 를 `stopId` 로
+// 보관한다 → 열쇠 `stop:<uuid>`. 숙소의 `stay:<uuid>` 와 같은 방식이다. 이름·순서·시각으로 만들지
+// 않으므로 같은 이름의 장소가 둘이어도, 순서를 바꿔도 기록이 다른 장소로 옮겨 가지 않는다.
+// sourceKey(카탈로그 출처)의 의미는 바꾸지 않는다 — 출처 열쇠가 있으면 그것이 우선이다.
 
 import { citySpotSourceKey, userSpotSourceKey } from "../place-identity.ts";
 import { UUID_RE } from "../itinerary-validate.ts";
@@ -20,6 +26,13 @@ export interface StopIdentityInput {
   place_id?:  string | null;
   source?:    string | null;
   sourceKey?: string | null;
+  /** 이 여행의 이 일정 항목에 한 번 만든 uuid — 카탈로그 id 가 없을 때의 열쇠(`stop:<uuid>`) */
+  stopId?:    string | null;
+}
+
+/** 여행 안 일정 항목 열쇠(카탈로그 id 가 없는 장소용) */
+export function tripStopKey(uuid: string): string {
+  return `stop:${uuid}`;
 }
 
 /**
@@ -27,7 +40,7 @@ export interface StopIdentityInput {
  * `stay:<uuid>` 는 사용자의 실제 숙소 체크인 stop — 카탈로그 id 가 없어 일정에
  * 넣을 때 만든 uuid 를 stop 객체에 보관한다(place-identity.staySourceKey).
  */
-export const STOP_KEY_RE = /^(city_spot|user_spot|event|local_info|stay):[A-Za-z0-9][A-Za-z0-9_.:-]{0,150}$/;
+export const STOP_KEY_RE = /^(city_spot|user_spot|event|local_info|stay|stop):[A-Za-z0-9][A-Za-z0-9_.:-]{0,150}$/;
 export const STOP_KEY_MAX = 160;
 
 /** city_spots 정본 id. 공식 장소가 아니거나 숫자 id 가 아니면 null. */
@@ -52,7 +65,31 @@ export function stopKeyOf(stop: StopIdentityInput): string | null {
     const id = typeof stop.place_id === "string" ? stop.place_id.trim() : "";
     if (UUID_RE.test(id)) return userSpotSourceKey(id);
   }
+  const sid = typeof stop.stopId === "string" ? stop.stopId.trim() : "";
+  if (UUID_RE.test(sid)) return tripStopKey(sid);
   return null;
+}
+
+/**
+ * 열쇠가 없는 일정 항목에 `stopId` 를 한 번 붙인다(숙소 제외 — 숙소는 stay 열쇠를 이미 갖는다).
+ * 바뀐 것이 없으면 같은 배열을 그대로 돌려준다(호출측이 불필요한 저장을 하지 않게).
+ */
+export function ensureStopIds<P extends StopIdentityInput & { isAccommodation?: boolean }, D extends { places: P[] }>(
+  days: D[], newId: () => string,
+): D[] {
+  let changed = false;
+  const next = days.map(d => {
+    let dayChanged = false;
+    const places = d.places.map(p => {
+      if (p.isAccommodation || stopKeyOf(p) !== null) return p;
+      dayChanged = true;
+      return { ...p, stopId: newId() };
+    });
+    if (!dayChanged) return d;
+    changed = true;
+    return { ...d, places };
+  });
+  return changed ? next : days;
 }
 
 export type StopKeyResult = { ok: true; stopKey: string | null } | { ok: false; error: string };

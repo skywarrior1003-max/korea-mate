@@ -67,7 +67,9 @@ const STEPS: Record<JourneyStep, StepDef> = {
   tripSaved: { on: l => /^\/itinerary/.test(l.path), goto: "/my-trips/", targets: ['[data-tut="tut-sync"]'], done: { signal: "trip-saved", dom: '[data-tut-sync="saved"]' } },
   checkDates: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-dates-apply"]', '[data-tut="tut-dates"]'], done: { signal: "dates-applied" }, confirm: true },
   // 일정 탭의 장소별 기록 버튼은 여행 기간에만 보인다 — 없으면 늘 기록 버튼이 있는 Story 탭부터 가리킨다
-  addRecord: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-add-record"]', '[data-tut="tut-story-tab"]'], done: { signal: "moment-saved" }, pausable: true },
+  // 2026-09-30 교정: 장소 기록은 일정 탭의 장소 카드에서만 — Story·더보기로 돌아가지 않는다.
+  // 카드 기록 버튼은 이제 모든 일정 장소(열쇠 없는 코스 장소 포함)에 보이고, Story 탭에 있으면 일정 탭으로 돌려보낸다.
+  addRecord: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-add-record"]', '[data-tut="tut-itinerary-tab"][aria-selected="false"]'], done: { signal: "moment-saved" }, pausable: true },
   openStory: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-story-tab"]'], done: { dom: '[data-tut="tut-story-tab"][aria-selected="true"]' } },
   publishOpen: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-menu-visibility"]', '[data-tut="tut-more-menu"]'], done: { dom: '[data-tut="tut-publish-go"], [data-tut-public="1"]' } },
   publishStory: { on: isMyTrip, goto: "/my-trips/", targets: ['[data-tut="tut-publish-go"]'], done: { dom: '[data-tut-public="1"]' } },

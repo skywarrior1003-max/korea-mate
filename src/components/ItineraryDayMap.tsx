@@ -32,6 +32,8 @@ export interface DayForMap {
     name: string; time?: string; lat?: number; lng?: number; place_id?: string;
     /** Living Map 마커/결합에 쓰는 기존 저장 필드들 — 없던 일정도 그대로 열린다 */
     source?: string; sourceKey?: string; image?: string;
+    /** 이 여행 일정 항목 열쇠 — 카탈로그 id 없는 장소의 사진 결합(stop:<uuid>) */
+    stopId?: string;
   }[];
 }
 
@@ -114,7 +116,7 @@ export default function ItineraryDayMap({
         if (lat == null || lng == null) return;
         order += 1;
         const marker = stopMarker(
-          { name: p.name, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, image: p.image ?? spot?.image ?? undefined },
+          { name: p.name, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, stopId: p.stopId, image: p.image ?? spot?.image ?? undefined },
           d.dayNumber,
           moments ?? [],
         );
@@ -185,7 +187,7 @@ export default function ItineraryDayMap({
     const dp = (mode === "whole" ? buildDayPlaces(d, { whole: true }) : (d === day ? dayPlaces : buildDayPlaces(d, { whole: false })))
       .find(x => x.idx === selectedStop.placeIdx);
     const marker = stopMarker(
-      { name: p.name, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, image: p.image },
+      { name: p.name, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, stopId: p.stopId, image: p.image },
       d.dayNumber, moments ?? [],
     );
     return {
@@ -199,7 +201,7 @@ export default function ItineraryDayMap({
       placeIdx: selectedStop.placeIdx,
       dayIdx: days.indexOf(d),
       citySpotId: stopCitySpotId({ place_id: p.place_id, source: p.source, sourceKey: p.sourceKey }),
-      stopKey: stopKeyOf({ place_id: p.place_id, source: p.source, sourceKey: p.sourceKey }),
+      stopKey: stopKeyOf({ place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, stopId: p.stopId }),
     };
   }, [selectedStop, days, day, dayPlaces, mode, moments, buildDayPlaces]);
 

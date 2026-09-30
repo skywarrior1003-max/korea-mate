@@ -524,7 +524,7 @@
     "editDatesApply": "应用",
     "editDatesShrinkMoved": "已将缩短日期中的{n}个地点移至未安排。",
     "mapFullscreen": "全屏地图",
-    "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中添加。",
+    "addModeHint": "只显示这一天还没有的地点。可从已收藏或“我的地点”中选择，或按名称添加新地点。",
     "execTodayHint": "查看当前行程和下一站。",
     "editFinish": "完成编辑",
     "mapHidden": "未在地图上显示",
@@ -534,7 +534,20 @@
     "editTextName": "名称",
     "editTextNote": "备注",
     "editTextSave": "保存",
-    "editTextCancel": "取消"
+    "editTextCancel": "取消",
+    "addPosition": "放在哪里？",
+    "addPositionStart": "最前面",
+    "addPositionAfter": "{name} 之后",
+    "addPositionEnd": "最后",
+    "newPlaceTitle": "新地点",
+    "newPlacePlaceholder": "例：广安里烤贝店",
+    "newPlaceKind": "类型",
+    "newPlaceKind_restaurant": "餐厅",
+    "newPlaceKind_cafe": "咖啡",
+    "newPlaceKind_attraction": "景点",
+    "newPlaceKind_shopping": "购物",
+    "newPlaceNoPin": "只填名称就行。不设地图位置，仅添加到本次行程。",
+    "newPlaceAdd": "添加到 Day {n}"
   },
   "common": {
     "language": "语言",
@@ -746,7 +759,16 @@
     "addStopRecord": "留下照片和笔记",
     "noRecordPlaces": "{n} 处行程未记录",
     "manageRecords": "管理记录",
-    "viewInStory": "在故事中查看"
+    "viewInStory": "在故事中查看",
+    "savedHere": "已保存到这里",
+    "dayN": "Day {n}",
+    "changePlace": "更换地点",
+    "noPlaceOption": "不关联地点",
+    "addPhotoCta": "添加照片",
+    "photoOptional": "不加照片只写笔记也可以",
+    "addLocation": "添加当前位置",
+    "locationAdded": "已添加位置",
+    "locationFailed": "无法获取位置 — 将不带位置保存"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",
@@ -1908,10 +1930,10 @@
         "name": "确认日期"
       },
       "addRecord": {
-        "say": "旅行中要留下照片或备忘，请点击这里",
+        "say": "到达地点后，在该地点卡片上点这里留下照片和备忘",
         "name": "留下照片·备忘",
         "why": "现在没有照片也没关系。用[旅行中再继续]暂停，之后从这里继续。",
-        "say_tut-story-tab": "照片和备忘在[故事]中留下 — 点击[故事]标签"
+        "say_tut-itinerary-tab": "照片和备忘在[行程]标签的地点卡片上留下 — 点击[行程]标签"
       },
       "openStory": {
         "say": "点击[故事]标签",

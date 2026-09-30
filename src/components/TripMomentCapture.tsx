@@ -1,14 +1,20 @@
 "use client";
-import GlyphIcon from "@/components/ui/GlyphIcon";
 import { signalJourney } from "@/lib/guided-journey/journey-core";
 
 // gokoreamate — Trip Moment Capture Modal
 // TASK-022: photo + GPS + memo + category 캡처
+//
+// 2026-09-30 My Trip 장소 기록 교정(승인 시안 "Memory — final · mobile 390" 기준):
+//  · 밝은 시트. 장소 카드에서 열면 날짜·장소가 이미 정해져 있다 — 저장 전에 이 여행의 다른 장소로 바꾸거나
+//    "장소 없이" 자유 기록으로 돌릴 수 있다(시간·순서로 임의 연결하지 않는다).
+//  · 사진을 고르기 전에는 작은 "사진 추가" 자리만, 고른 뒤에는 사진이 중심이 된다.
+//  · 필수 행동은 사진·짧은 메모·저장. 제목은 선택.
+//  · 위치는 자동으로 묻지 않는다 — 사용자가 "현재 위치 함께 저장"을 눌렀을 때만 요청한다.
+//  · 카테고리 선택 화면은 두지 않는다(저장값은 기존 기본값 random 그대로).
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
-import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
 import { apiWritingMeta } from "@/lib/mytrip-writing/api";
 
@@ -37,6 +43,8 @@ interface Props {
   citySpotId?:       number | null;
   /** 일정 장소의 일반 열쇠(sourceKey 문법). 있으면 결합 순간이다 — 내 장소·행사도 여기로 묶인다. */
   stopKey?:          string | null;
+  /** 저장 전에 고를 수 있는 이 여행의 일정 장소(열쇠가 있는 것만) */
+  placeOptions?:     { stopKey: string; name: string; dayNumber: number; citySpotId: number | null }[];
   /**
    * 로컬 저장 성공 여부를 반환한다.
    * 오프라인 우선 구조라 서버 동기화 실패는 "저장 실패"가 아니며,
@@ -46,10 +54,10 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, city, tripTitle, initialPlaceName, aiPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: initialDay, initialPlaceName, citySpotId: initialCitySpotId, stopKey, placeOptions = [], onSave, onClose }: Props) {
   const t = useTranslations("memo");
   // 기록 시각 미리보기도 UI locale 을 따른다 (Timeline 과 같은 결함 수정).
-  const locale = useLocale();
+  // → 2026-09-30 교정: 입력 화면의 시각 미리보기 줄은 뺐다(필수 행동만). 저장 시각(captured_at)은 그대로 기록한다.
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   /**
    * 두 번째 이후 사진들. 첫 장을 따로 두는 것은 서버 구조가 그렇기 때문이다 —
@@ -68,10 +76,20 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
   const [placeName,    setPlaceName]    = useState(() => (initialPlaceName ?? "").trim());
   // 일정 장소 결합 여부. 결합돼 있으면 장소명은 그 stop 의 이름으로 고정이다 —
   // 보이는 이름과 city_spot_id 가 서로 다른 장소를 가리키는 상태를 만들지 않는다.
-  const boundStopKey   = typeof stopKey === "string" && stopKey.trim() !== "" ? stopKey.trim() : null;
-  const isBound        = typeof citySpotId === "number" || boundStopKey !== null;
-  const boundPlaceName = (initialPlaceName ?? "").trim();
-  const [category,     setCategory]     = useState<MomentCategory>("random");
+  // 저장 전에 장소를 바꿀 수 있다 — 고른 일정 장소(열쇠·이름·날짜·공식 id)가 한 묶음으로 바뀐다
+  const [bound, setBound] = useState<{ stopKey: string | null; name: string; dayNumber: number | null; citySpotId: number | null } | null>(() => {
+    const sk = typeof stopKey === "string" && stopKey.trim() !== "" ? stopKey.trim() : null;
+    if (!sk && typeof initialCitySpotId !== "number") return null;
+    return { stopKey: sk, name: (initialPlaceName ?? "").trim(), dayNumber: initialDay, citySpotId: typeof initialCitySpotId === "number" ? initialCitySpotId : null };
+  });
+  const [picking, setPicking] = useState(false);
+  const boundStopKey   = bound?.stopKey ?? null;
+  const isBound        = bound !== null;
+  const boundPlaceName = bound?.name ?? "";
+  const citySpotId     = bound?.citySpotId ?? null;
+  const dayNumber      = bound ? bound.dayNumber : initialDay;
+  // 카테고리 선택 화면은 두지 않는다 — 저장값은 기존 기본값 그대로
+  const [category] = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
   const [lng,          setLng]          = useState<number | null>(null);
   const [gpsStatus,    setGpsStatus]    = useState<"idle" | "loading" | "ok" | "denied">("idle");
@@ -81,8 +99,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
   const [errorKey,     setErrorKey]     = useState<"compressFailed" | "localSaveFailed" | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // GPS 자동 취득
-  useEffect(() => {
+  // 위치는 자동으로 묻지 않는다 — 사용자가 "현재 위치 함께 저장"을 눌렀을 때만 요청한다.
+  const requestLocation = useCallback(() => {
     if (!navigator.geolocation) { setGpsStatus("denied"); return; }
     setGpsStatus("loading");
     navigator.geolocation.getCurrentPosition(
@@ -206,221 +224,157 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, ci
       // 성공·실패 어느 쪽이든 loading 을 반드시 해제한다
       setSaving(false);
     }
-  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, title, placeName, category, lat, lng, dayNumber, onSave]);
+  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, title, placeName, category, lat, lng, dayNumber, onSave, isBound, boundPlaceName, citySpotId, boundStopKey]);
 
-  // 내부 enum(key)과 API 값은 영어 그대로 유지하고 표시명만 번역한다
-  const catLabel = (k: MomentCategory) =>
-    t(({ food: "catFood", scenery: "catScenery", people: "catPeople",
-         culture: "catCulture", random: "catRandom" } as const)[k]);
-
-  const catInfo = MOMENT_CATEGORIES.find(c => c.key === category)!;
+  const INK = "#191C21", SUB = "#565D66", FAINT = "#8A919B", LINE = "#E5E7EA", DIM = "#F6F7F8", CORAL = "#FF4A2D";
 
   return (
     <div
       data-journey-quiet=""
-      className="fixed inset-0 z-50 flex flex-col bg-[#1a1a2e] text-white"
-      style={{ animation: "slideUp 0.28s ease-out" }}
+      data-capture-sheet=""
+      className="fixed inset-0 z-50 flex flex-col"
+      style={{ backgroundColor: "rgba(16,18,22,.45)", animation: "slideUp 0.28s ease-out" }}
     >
-      {/* 헤더 */}
-      <div className="flex items-center justify-between px-5 pt-safe pt-6 pb-4 border-b border-white/10">
-        <button onClick={onClose} className="text-white/60 hover:text-white text-sm font-bold px-3 py-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+      <div className="mt-auto sm:m-auto w-full sm:max-w-lg max-h-[100dvh] flex flex-col rounded-t-3xl sm:rounded-3xl" style={{ backgroundColor: "#FFFFFF", color: INK }}>
+      {/* 헤더 — 취소 · 제목 · 저장 */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3" style={{ borderBottom: `1px solid ${LINE}` }}>
+        <button onClick={onClose} className="gkm-focus min-h-11 px-3 rounded-xl text-sm font-bold" style={{ color: SUB }}>
           {t("cancel")}
         </button>
-        <h2 className="text-base font-black inline-flex items-center gap-1.5"><GlyphIcon kind="camera" size={16} />{t("captureTitle")}</h2>
+        <h2 className="text-[15px] font-black">{t("addStopRecord")}</h2>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="text-sm font-black px-4 py-1.5 rounded-xl transition-all disabled:opacity-40 cursor-pointer"
-          style={{ backgroundColor: "#FF4A2D", color: "#ffffff" }}
+          data-capture-save=""
+          className="gkm-focus min-h-11 text-sm font-black px-4 rounded-xl transition-all disabled:opacity-40"
+          style={{ backgroundColor: CORAL, color: "#ffffff", boxShadow: "0 2px 8px rgba(255,74,45,.3)" }}
         >
           {saving ? t("saving") : t("save")}
         </button>
       </div>
 
       {errorKey && (
-        <div
-          role="alert"
-          className="mx-5 mt-4 rounded-xl px-4 py-3 text-sm font-semibold"
-          style={{ backgroundColor: "rgba(255,74,45,0.14)", color: "#FFB4A5" }}
-        >
+        <div role="alert" className="mx-4 mt-3 rounded-xl px-4 py-3 text-sm font-semibold" style={{ backgroundColor: "#FDF1EF", color: "#D23B2E" }}>
           {t(errorKey)}
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto">
-        {/* 사진 영역 */}
-        <div
-          className="relative w-full bg-black/40 flex items-center justify-center cursor-pointer"
-          style={{ minHeight: 260 }}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          {compressing ? (
-            <div className="flex flex-col items-center gap-3">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF4A2D]" />
-              <p className="text-xs text-white/50">{t("optimizing")}</p>
+      <div className="flex-1 overflow-y-auto px-4 pb-6">
+        {/* 장소 — 카드에서 열면 이미 정해져 있다. 저장 전에 바꾸거나 장소 없이 남길 수 있다 */}
+        <div className="mt-3 rounded-2xl px-4 py-3" style={{ backgroundColor: DIM }} data-capture-place={isBound ? boundStopKey ?? "" : "free"}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[12px] font-semibold" style={{ color: FAINT }}>{t("fieldPlace")}</p>
+              <p className="text-[15px] font-bold truncate">
+                {isBound ? boundPlaceName : t("noPlaceOption")}
+                {isBound && dayNumber !== null && <span className="ml-1.5 text-[12px] font-semibold" style={{ color: FAINT }}>· {t("dayN", { n: dayNumber })}</span>}
+              </p>
             </div>
-          ) : photoData ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={photoData} alt={t("photoAlt")} className="w-full object-cover" style={{ maxHeight: 340 }} />
-          ) : (
-            <div className="flex flex-col items-center gap-3 py-14">
-              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl">📷</div>
-              <p className="text-sm font-bold text-white/60">{t("tapToAddPhoto")}</p>
-              <p className="text-xs text-white/30">{t("choosePhotoSource")}</p>
-            </div>
+            {placeOptions.length > 0 && (
+              <button type="button" onClick={() => setPicking(v => !v)} data-capture-change-place=""
+                className="gkm-focus shrink-0 min-h-11 px-3 rounded-xl text-[13px] font-bold" style={{ color: INK, border: `1px solid ${LINE}`, backgroundColor: "#fff" }}>
+                {t("changePlace")}
+              </button>
+            )}
+          </div>
+          {picking && (
+            <ul className="mt-2 max-h-56 overflow-y-auto rounded-xl" style={{ border: `1px solid ${LINE}`, backgroundColor: "#fff" }} role="listbox" aria-label={t("changePlace")}>
+              {placeOptions.map(o => (
+                <li key={o.stopKey}>
+                  <button type="button" role="option" aria-selected={boundStopKey === o.stopKey}
+                    onClick={() => { setBound({ stopKey: o.stopKey, name: o.name, dayNumber: o.dayNumber, citySpotId: o.citySpotId }); setPicking(false); }}
+                    className="gkm-focus w-full min-h-11 text-left px-3 text-[14px]" style={{ color: INK, fontWeight: boundStopKey === o.stopKey ? 800 : 500 }}>
+                    {t("dayN", { n: o.dayNumber })} · {o.name}
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button type="button" role="option" aria-selected={!isBound} onClick={() => { setBound(null); setPicking(false); }}
+                  className="gkm-focus w-full min-h-11 text-left px-3 text-[14px]" style={{ color: SUB }}>
+                  {t("noPlaceOption")}
+                </button>
+              </li>
+            </ul>
           )}
-          {photoData && (
-            <div className="absolute inset-0 flex items-end justify-end p-3">
-              <span className="text-xs font-bold bg-black/60 text-white px-2.5 py-1 rounded-lg backdrop-blur-sm cursor-pointer">
-                {t("changePhoto")}
-              </span>
-            </div>
+          {!isBound && (
+            <input
+              type="text" value={placeName} onChange={e => setPlaceName(e.target.value)} maxLength={200}
+              placeholder={t("phPlace")} aria-label={t("fieldPlace")}
+              className="gkm-focus mt-2 w-full rounded-xl px-3 py-2.5 text-[14px]" style={{ border: `1px solid ${LINE}`, backgroundColor: "#fff", color: INK }}
+            />
           )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            /* capture 를 두면 브라우저가 카메라만 열고 multiple 을 무시한다.
-               빼면 OS 선택창이 카메라와 사진첩을 함께 보여 준다 — 두 흐름을
-               모두 살리면서 여러 장을 고를 수 있는 자리는 여기뿐이다. */
-            multiple
-            className="hidden"
-            onChange={handleFile}
-          />
         </div>
 
-        {/* 고른 사진들. 여러 장이면 가로로 흐르게 둔다 — 격자로 쌓으면 메모가
-            화면 밖으로 밀린다. 순서는 고른 순서 그대로다. */}
-        {totalPhotos > 1 && (
-          <div className="px-5 pt-3">
-            <p className="text-xs font-bold text-white/60">{t("photoCount", { n: totalPhotos })}</p>
-            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
-              {extraPhotos.map((src, i) => (
-                <div key={`${i}-${src.slice(-16)}`} className="relative shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" className="w-16 h-16 object-cover rounded-xl" />
-                  <button
-                    type="button"
-                    onClick={() => removeExtra(i)}
-                    aria-label={t("removePhoto")}
-                    className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-black/80 text-white text-xs font-black flex items-center justify-center"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
+        {/* 사진 — 고르기 전에는 작은 자리, 고른 뒤에는 사진이 중심 */}
+        <input ref={fileInputRef} type="file" accept="image/*"
+          /* capture 를 두면 브라우저가 카메라만 열고 multiple 을 무시한다.
+             빼면 OS 선택창이 카메라와 사진첩을 함께 보여 준다. */
+          multiple className="hidden" onChange={handleFile} />
+        {compressing ? (
+          <div className="mt-3 flex items-center justify-center gap-3 rounded-2xl py-8" style={{ backgroundColor: DIM }}>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2" style={{ borderColor: CORAL }} />
+            <p className="text-[14px]" style={{ color: SUB }}>{t("optimizing")}</p>
           </div>
+        ) : photoData ? (
+          <div className="mt-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photoData} alt={t("photoAlt")} className="w-full rounded-2xl object-cover" style={{ maxHeight: "46vh" }} data-capture-photo="" />
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-[12px]" style={{ color: FAINT }}>{totalPhotos > 1 ? t("photoCount", { n: totalPhotos }) : ""}</span>
+              <button type="button" onClick={() => fileInputRef.current?.click()} className="gkm-focus min-h-11 px-3 rounded-xl text-[13px] font-bold" style={{ color: INK, border: `1px solid ${LINE}` }}>
+                {t("changePhoto")}
+              </button>
+            </div>
+            {extraPhotos.length > 0 && (
+              <div className="mt-1 flex gap-2 overflow-x-auto pb-1">
+                {extraPhotos.map((src, i) => (
+                  <div key={`${i}-${src.slice(-16)}`} className="relative shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt="" className="w-14 h-14 object-cover rounded-xl" />
+                    <button type="button" onClick={() => removeExtra(i)} aria-label={t("removePhoto")}
+                      className="absolute -top-1 -right-1 w-6 h-6 rounded-full text-white text-xs font-black flex items-center justify-center" style={{ backgroundColor: INK }}>×</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <button type="button" onClick={() => fileInputRef.current?.click()} data-capture-add-photo=""
+            className="gkm-focus mt-3 w-full min-h-[88px] rounded-2xl flex flex-col items-center justify-center gap-1"
+            style={{ border: `1.5px dashed ${LINE}`, color: INK }}>
+            <span className="text-[15px] font-bold">+ {t("addPhotoCta")}</span>
+            <span className="text-[12px]" style={{ color: FAINT }}>{t("photoOptional")}</span>
+          </button>
         )}
         {failedCount > 0 && (
-          <p role="alert" className="px-5 pt-2 text-xs text-[#FF4A2D]">
-            {t("photoFailed", { n: failedCount })}
-          </p>
+          <p role="alert" className="pt-2 text-[12px]" style={{ color: "#D23B2E" }}>{t("photoFailed", { n: failedCount })}</p>
         )}
 
-        <div className="px-5 py-5 space-y-5">
-          {/* GPS 상태 */}
-          <div className="flex items-center gap-2.5">
-            <span className="text-base">
-              {gpsStatus === "ok" ? "✓" : gpsStatus === "loading" ? "…" : "✕"}
-            </span>
-            <div>
-              <p className="text-xs font-bold text-white/80">
-                {gpsStatus === "ok"
-                  ? formatCoord(lat, lng)
-                  : gpsStatus === "loading"
-                  ? t("gpsLoading")
-                  : t("gpsUnavailable")}
-              </p>
-              {gpsStatus === "ok" && (
-                <p className="text-[10px] text-white/30 mt-0.5">{t("gpsTagged")}</p>
-              )}
-            </div>
-          </div>
+        {/* 짧은 메모(주) · 제목(선택) */}
+        <label className="block mt-4 text-[12px] font-semibold" htmlFor="moment-memo" style={{ color: FAINT }}>{t("memoLabel")}</label>
+        <textarea
+          id="moment-memo" value={memo} onChange={e => setMemo(e.target.value)} placeholder={t("memoPlaceholder")}
+          maxLength={300} rows={3}
+          className="gkm-focus mt-1 w-full rounded-xl px-3.5 py-3 text-[14px] leading-relaxed resize-none" style={{ border: `1px solid ${LINE}`, backgroundColor: "#fff", color: INK }}
+        />
+        <input
+          id="moment-title" type="text" value={title} onChange={e => setTitle(e.target.value)} maxLength={60}
+          placeholder={t("titlePlaceholder")} aria-label={t("titleLabel")}
+          className="gkm-focus mt-2 w-full rounded-xl px-3.5 py-2.5 text-[14px] font-semibold" style={{ border: `1px solid ${LINE}`, backgroundColor: "#fff", color: INK }}
+        />
 
-          {/* 카테고리 선택 */}
-          <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("categoryLabel")}</p>
-            <div className="flex gap-2 flex-wrap">
-              {MOMENT_CATEGORIES.map(cat => (
-                <button
-                  key={cat.key}
-                  onClick={() => setCategory(cat.key)}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-black transition-all cursor-pointer ${
-                    category === cat.key
-                      ? "text-[#1a1a2e]"
-                      : "text-white/50 bg-white/8 hover:bg-white/15"
-                  }`}
-                  style={category === cat.key ? { backgroundColor: "#FF4A2D" } : {}}
-                >
-                  <span>{cat.emoji}</span>
-                  <span>{catLabel(cat.key)}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* 메모 */}
-          {isBound ? (
-            /* 일정 장소에서 시작한 순간 — 장소는 이미 정해져 있다. 이름을 고치게 두면
-               보이는 이름과 숨은 관계(city_spot_id)가 서로 다른 장소를 가리킬 수 있어
-               읽기 전용으로 보여 준다. 장소를 바꾸고 싶으면 자유 순간으로 남기면 된다. */
-            <div className="mb-4" data-bound-place="true">
-              <p className="block text-xs font-bold text-white/50 mb-1.5">{t("fieldPlace")}</p>
-              <p className="w-full bg-white/8 border border-white/10 rounded-2xl px-4 py-3.5 text-sm text-white">{boundPlaceName}</p>
-              <p className="mt-1.5 text-[11px] text-white/30">{t("placeBound")}</p>
-            </div>
-          ) : (
-          <div className="mb-4">
-            <label className="block text-xs font-bold text-white/50 mb-1.5">
-              {t("fieldPlace")} <span className="font-normal text-white/30">{t("placeOptional")}</span>
-            </label>
-            <input
-              type="text"
-              value={placeName}
-              onChange={e => setPlaceName(e.target.value)}
-              maxLength={200}
-              placeholder={t("phPlace")}
-              className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#FF4A2D]/60"
-            />
-            <p className="mt-1.5 text-[11px] text-white/30">{t("placeHint")}</p>
-          </div>
+        {/* 위치 — 원할 때만. 묻기 전에는 오류를 보여 주지 않는다 */}
+        <div className="mt-3 flex items-center gap-2 text-[12px]" style={{ color: FAINT }}>
+          {gpsStatus === "idle" && (
+            <button type="button" onClick={requestLocation} data-capture-location="" className="gkm-focus min-h-11 px-1 font-semibold underline underline-offset-2" style={{ color: SUB }}>
+              {t("addLocation")}
+            </button>
           )}
-          <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
-            {/* AI 3안(제목+본문) — 정보가 준비되면 자동 제안, 고른 안은 아래
-                필드에 채워지고 그대로 고칠 수 있다. 저장값이 Story 의 SSOT 다. */}
-            {/* 기록(사진)별 AI 제안은 따로 부르지 않는다 — 전체 여행 AI 글쓰기가 한 번의 요청으로
-                모든 기록의 제목·내용을 함께 제안한다(Owner 교정 2026-09-30). 여기서는 직접 쓴다. */}
-            <label className="block text-xs font-bold text-white/50 mb-1.5" htmlFor="moment-title">{t("titleLabel")}</label>
-            <input
-              id="moment-title"
-              type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              maxLength={60}
-              placeholder={t("titlePlaceholder")}
-              className="w-full mb-3 bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/25 placeholder:font-normal focus:outline-none focus:border-[#FF4A2D]/60"
-            />
-            <textarea
-              value={memo}
-              onChange={e => setMemo(e.target.value)}
-              placeholder={t("memoPlaceholder")}
-              maxLength={300}
-              rows={4}
-              className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#FF4A2D]/60 resize-none leading-relaxed"
-            />
-            <p className="text-right text-[10px] text-white/25 mt-1">{memo.length}/300</p>
-          </div>
-
-          {/* 날짜/시간 */}
-          <div className="flex items-center gap-2 text-xs text-white/30">
-            <span>🕐</span>
-            <span>{new Date().toLocaleString(locale, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
-            {dayNumber !== null && <span>· Day {dayNumber}</span>}
-            <span>· {catInfo.emoji} {catLabel(catInfo.key)}</span>
-          </div>
+          {gpsStatus === "loading" && <span>{t("gpsLoading")}</span>}
+          {gpsStatus === "ok" && <span>✓ {t("locationAdded")}</span>}
+          {gpsStatus === "denied" && <span>{t("locationFailed")}</span>}
         </div>
+      </div>
       </div>
 
       <style>{`

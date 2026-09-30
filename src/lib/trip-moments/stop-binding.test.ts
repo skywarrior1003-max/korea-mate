@@ -82,25 +82,25 @@ test("G3: 서버 POST 는 city_spot_id 를 그대로 보낸다 (기존 경로)",
 });
 
 // ── R1: 표시 장소명과 city_spot_id 가 어긋날 수 없다 ──────────────────────────
-test("R1: 결합된 Capture 는 장소 입력을 그리지 않고 stop 이름을 읽기 전용으로 보여 준다", () => {
+test("R1: 결합된 Capture 는 stop 이름·열쇠를 한 쌍(bound)으로 들고, 저장 시 입력값이 아니라 그 쌍을 쓴다", () => {
   const src = read("src/components/TripMomentCapture.tsx");
-  assert.match(src, /const isBound\s*=\s*typeof citySpotId === "number"/);
-  assert.match(src, /isBound \? \(/, "결합 시 읽기 전용 분기");
-  assert.match(src, /data-bound-place="true"/);
-  // 저장 시에도 입력값이 아니라 stop 이름을 쓴다 — 관계와 이름이 한 쌍으로 움직인다
+  // 2026-09-30 교정: 저장 전에 이 여행의 다른 일정 장소로 바꾸거나 "장소 없이"로 돌릴 수 있다 —
+  // 바꿀 때도 이름·열쇠·city_spot_id 가 한 객체로 함께 바뀐다(관계와 이름이 어긋나지 않는다).
+  assert.match(src, /const isBound\s*=\s*bound !== null/);
+  assert.match(src, /setBound\(\{ stopKey: o\.stopKey, name: o\.name, dayNumber: o\.dayNumber, citySpotId: o\.citySpotId \}\)/);
+  assert.match(src, /data-capture-place=\{isBound \? boundStopKey \?\? "" : "free"\}/);
   assert.match(src, /place_name: isBound \? boundPlaceName : placeName\.trim\(\)/);
   assert.match(src, /\.\.\.\(typeof citySpotId === "number" \? \{ city_spot_id: citySpotId \} : \{\}\)/);
   assert.match(src, /\.\.\.\(boundStopKey \? \{ stop_key: boundStopKey \} : \{\}\)/);
-  assert.match(src, /const isBound\s*=\s*typeof citySpotId === "number" \|\| boundStopKey !== null/);
 });
 
-test("R2: 자유 순간(citySpotId 없음)은 장소 입력이 그대로 편집 가능하다", () => {
+test("R2: 자유 순간(결합 없음)은 장소 입력이 그대로 편집 가능하다", () => {
   const src = read("src/components/TripMomentCapture.tsx");
+  assert.match(src, /\{!isBound && \(/);
   assert.match(src, /onChange=\{e => setPlaceName\(e\.target\.value\)\}/);
-  assert.match(src, /t\("placeBound"\)/);
   for (const l of ["en", "ko", "ja", "zh"]) {
     const d = JSON.parse(read(`src/messages/${l}.json`)) as { memo: Record<string, string> };
-    assert.ok(d.memo.placeBound && d.memo.placeBound.trim() !== "", `${l}.memo.placeBound`);
+    for (const k of ["changePlace", "noPlaceOption", "dayN"]) assert.ok(d.memo[k] && d.memo[k].trim() !== "", `${l}.memo.${k}`);
   }
 });
 
