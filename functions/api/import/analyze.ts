@@ -234,6 +234,12 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   // 비 Production 전용 연결 진단 — ?diag=route. Worker /health 는 provider 를 부르지 않는다(비용 0).
   // 키 값·형식은 싣지 않는다(있는지만).
   const isProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() === "production";
+  // 비 Production 전용 — ?diag=probe&v=plain|thinking0|json|all: Preview Worker 의 아주 작은 요청으로 오류 원인 진단
+  if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "probe" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
+    const variant = new URL(ctx.request.url).searchParams.get("v") ?? "plain";
+    const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/probe", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ variant, model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+    return json({ ok: true, probe: await r.json().catch(() => ({ http: r.status })) });
+  }
   // 비 Production 전용 — ?diag=models: 이 환경 Worker 키로 쓸 수 있는 모델 이름(생성 호출 아님 · 비용 0)
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "models" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
     try {

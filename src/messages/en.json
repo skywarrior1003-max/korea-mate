@@ -2000,6 +2000,9 @@
     "skip_load_failed": "couldn't load",
     "skip_unsupported": "unsupported format",
     "tagPhotoSeen": "photo seen",
-    "tagPhotoMissed": "photo not used"
+    "tagPhotoMissed": "photo not used",
+    "planPhotos": "The AI will look at {used} of {total} records with photos (only the first photo of each record, up to 12 per request).",
+    "planSkipped": "{count} photo(s) will be left out of this request ({reasons}).",
+    "planNoPhotos": "No records have photos — it will write from places, dates and notes only."
   }
 }

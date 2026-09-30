@@ -58,6 +58,21 @@ const refused = (b: unknown, status: number) =>
 const PROVIDER_BODY_DEFAULT = 64_000;
 const PROVIDER_BODY_MAX = 12_000_000;
 /** 이 Worker 가 부르는 모델 — 환경 변수가 있으면 그것(Preview 전용), 없으면 공용 MODEL */
+/**
+ * 모델 세대에 맞게 요청 설정을 고친다 — 3.x 는 thinkingBudget:0 을 받지 않는다(400 INVALID_ARGUMENT, 2026-09-30 실측).
+ * 호출측은 2.5 기준 본문을 그대로 보내고, 여기서 3.x 일 때만 thinkingLevel "low" 로 바꾼다(2.5 본문은 그대로).
+ */
+export function adaptProviderBody(raw: string, model: string): string {
+  if (model.startsWith("gemini-2.")) return raw;
+  try {
+    const b = JSON.parse(raw) as { generationConfig?: { thinkingConfig?: Record<string, unknown> } };
+    const tc = b.generationConfig?.thinkingConfig;
+    if (!tc || !("thinkingBudget" in tc)) return raw;
+    b.generationConfig!.thinkingConfig = { thinkingLevel: "low" }; // minimal 은 3.8 Flash 에서 400(2026-09-30 실측) — 공통으로 low
+    return JSON.stringify(b);
+  } catch { return raw; }
+}
+
 const modelOf = (env: Env): string => {
   const m = (env.GEMINI_MODEL ?? "").trim();
   return /^[a-z0-9.\-]{3,60}$/.test(m) ? m : MODEL;
@@ -211,6 +226,32 @@ export default {
       } catch { return json({ error: "list_failed" }, 502); }
     }
 
+    if (path === "/probe" && (env.WORKER_ENV ?? "").trim() === "preview") {
+      // Preview 전용 원인 진단 — 아주 작은 요청 하나(수 토큰). 상태·오류 앞부분만(키 값·본문 원문 없음)
+      let variant = "plain", probeModel = modelOf(env);
+      try {
+        const pb = (await request.json()) as { variant?: unknown; model?: unknown };
+        variant = String(pb.variant ?? "plain");
+        if (typeof pb.model === "string" && ["gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.8-flash"].includes(pb.model)) probeModel = pb.model;
+      } catch { /* 기본 */ }
+      const gc: Record<string, unknown> = { maxOutputTokens: 32 };
+      if (variant === "thinking0" || variant === "all") gc.thinkingConfig = { thinkingBudget: 0 };
+      if (variant.startsWith("level_")) { gc.thinkingConfig = { thinkingLevel: variant.slice(6) }; gc.responseMimeType = "application/json"; gc.responseSchema = { type: "object", properties: { a: { type: "string", nullable: true } } }; }
+      if (variant === "json" || variant === "all") { gc.responseMimeType = "application/json"; gc.responseSchema = { type: "object", properties: { a: { type: "string", nullable: true } } }; }
+      const started = Date.now();
+      try {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${probeModel}:generateContent?key=${apiKey}`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc }),
+          signal: AbortSignal.timeout(20_000),
+        });
+        const t = await r.text();
+        const colo = await executionColo();
+        return json({ variant, model: probeModel, http: r.status, ms: Date.now() - started, colo, cfRay: r.headers.get("cf-ray"), server: r.headers.get("server"),
+          body: t.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").slice(0, 240) });
+      } catch (e) { return json({ variant, error: e instanceof Error ? e.name : "error", ms: Date.now() - started, colo: await executionColo() }); }
+    }
+
     if (path === "/canary") {
       // 본문은 읽지 않는다 — provider 로 나가는 입력은 서버 고정값뿐이다.
       const fixed = {
@@ -259,7 +300,7 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             signal: controller.signal,
-            body: raw,
+            body: adaptProviderBody(raw, modelOf(env)),
           },
         );
         clearTimeout(timer);

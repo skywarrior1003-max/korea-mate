@@ -2000,6 +2000,9 @@
     "skip_load_failed": "无法加载",
     "skip_unsupported": "不支持的格式",
     "tagPhotoSeen": "已看照片",
-    "tagPhotoMissed": "照片未使用"
+    "tagPhotoMissed": "照片未使用",
+    "planPhotos": "有照片的 {total} 条记录中，AI 会看 {used} 张（每条记录只看第一张，每次最多 12 张）。",
+    "planSkipped": "有 {count} 张不会包含在这次请求中（{reasons}）。",
+    "planNoPhotos": "没有带照片的记录 — 只根据地点、日期和备注撰写。"
   }
 }

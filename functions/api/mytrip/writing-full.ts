@@ -162,6 +162,33 @@ async function loadPhotos(env: Env, cands: readonly PhotoCandidate[]): Promise<{
   return { images, skipped };
 }
 
+/**
+ * 사용권을 쓰기 전에 보여 줄 사진 계획 — 내려받지 않고 크기 머리글만 본다(HEAD). 크기를 모르면 들어가는 것으로 본다.
+ * 실제 요청 때 loadPhotos 가 같은 상한으로 다시 판정한다(결과가 다르면 응답의 photos 가 정본).
+ */
+async function planPhotos(env: Env, cands: readonly PhotoCandidate[]): Promise<{ candidates: number; will_use: number; skipped: { momentId: string; reason: PhotoSkipReason }[] }> {
+  const L = FULL_TRIP_PHOTO_LIMITS;
+  const skipped: { momentId: string; reason: PhotoSkipReason }[] = [];
+  let use = 0, total = 0;
+  for (const c of cands) {
+    if (use >= L.maxPhotos) { skipped.push({ momentId: c.momentId, reason: "over_count" }); continue; }
+    let size: number | null = null, ok = true;
+    try {
+      const r = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/${PHOTO_BUCKET}/${c.path.split("/").map(encodeURIComponent).join("/")}`, {
+        method: "HEAD", headers: { Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, apikey: env.SUPABASE_SERVICE_ROLE_KEY ?? "" }, signal: AbortSignal.timeout(4_000),
+      });
+      ok = r.ok || r.status === 405;
+      const n = Number(r.headers.get("content-length") ?? "");
+      size = Number.isFinite(n) && n > 0 ? n : null;
+    } catch { ok = true; }
+    if (!ok) { skipped.push({ momentId: c.momentId, reason: "load_failed" }); continue; }
+    if (size !== null && size > L.maxBytesEach) { skipped.push({ momentId: c.momentId, reason: "too_large" }); continue; }
+    if (size !== null && total + size > L.maxBytesTotal) { skipped.push({ momentId: c.momentId, reason: "total_limit" }); continue; }
+    use += 1; total += size ?? 0;
+  }
+  return { candidates: cands.length, will_use: use, skipped };
+}
+
 export async function onRequestPost(ctx: { request: Request; env: Env }): Promise<Response> {
   let body: { itineraryId?: unknown; locale?: unknown; mode?: unknown; forceFresh?: unknown };
   try { body = await ctx.request.json(); } catch { return json({ error: "invalid_request" }, 400); }
@@ -192,7 +219,9 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
 
   if (mode === "load") {
     const saved = await latestSaved();
-    return json({ ok: true, ai_status: saved ? "saved" : "none", proposal: saved?.result?.proposal ?? null, photos: saved?.result?.photos ?? null,
+    // 사용권을 쓰기 전에 알리는 사진 계획(기록마다 첫 사진 · 최대 12장 · 빠지는 사진과 이유)
+    const photo_plan = await planPhotos(ctx.env, facts.photoCandidates);
+    return json({ ok: true, ai_status: saved ? "saved" : "none", proposal: saved?.result?.proposal ?? null, photos: saved?.result?.photos ?? null, photo_plan,
       generation_id: saved?.id ?? null, created_at: saved?.created_at ?? null, stale: saved ? saved.context_hash !== contextHash : null });
   }
 

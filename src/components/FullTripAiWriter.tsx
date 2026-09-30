@@ -17,7 +17,7 @@ import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import ConsentSheet from "@/components/auth/ConsentSheet";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
-import { apiFullTrip, apiFullTripBalance, type FullTripPhotoCoverage } from "@/lib/mytrip-writing/full-trip-api";
+import { apiFullTrip, apiFullTripBalance, type FullTripPhotoCoverage, type FullTripPhotoPlan } from "@/lib/mytrip-writing/full-trip-api";
 import { FULL_TRIP_STYLES, defaultSelected, type FullTripProposal, type FullTripStyle } from "@/lib/mytrip-writing/full-trip-core";
 
 export interface FullTripMomentView { id: string; title: string | null; memo: string | null; place: string | null; day: number | null; synced: boolean }
@@ -39,6 +39,7 @@ export default function FullTripAiWriter(props: {
   const [phase, setPhase] = useState<Phase>("idle");
   const [proposal, setProposal] = useState<FullTripProposal | null>(null);
   const [photos, setPhotos] = useState<FullTripPhotoCoverage | null>(null);
+  const [photoPlan, setPhotoPlan] = useState<FullTripPhotoPlan | null>(null);
   const [savedView, setSavedView] = useState(false);
   const [style, setStyle] = useState<FullTripStyle>("calm");
   const [picked, setPicked] = useState<Record<string, boolean>>({});
@@ -69,6 +70,7 @@ export default function FullTripAiWriter(props: {
     let alive = true;
     void (async () => {
       const r = await apiFullTrip({ itineraryId: props.itineraryId, deviceId: props.deviceId, locale, mode: "load" });
+      if (alive && (r.kind === "proposal" || r.kind === "none")) setPhotoPlan(r.photoPlan ?? null);
       if (alive && r.kind === "proposal") {
         const first = FULL_TRIP_STYLES.find(s => r.proposal[s]) ?? "calm";
         setProposal(r.proposal); setPhotos(r.photos); setSavedView(true); setStyle(first); resetPicks(r.proposal, first); setPhase("result");
@@ -175,6 +177,11 @@ export default function FullTripAiWriter(props: {
           <div className="mt-3" data-full-trip-confirm="">
             <p className="text-[13.5px] font-bold text-[#131b2e]">{t("confirmTitle")}</p>
             <p className="mt-1 text-[12px] text-[#565D66]">{t("confirmBody")}</p>
+            {/* 사용권을 쓰기 전에 — 기록마다 첫 사진만 · 최대 12장, 빠지는 사진과 이유 */}
+            <p className="mt-1 text-[12px] font-bold text-[#131b2e]" data-full-trip-plan={photoPlan ? `${photoPlan.will_use}/${photoPlan.candidates}` : "unknown"}>
+              {!photoPlan || photoPlan.candidates === 0 ? t("planNoPhotos") : t("planPhotos", { used: photoPlan.will_use, total: photoPlan.candidates })}
+              {photoPlan && photoPlan.skipped.length > 0 && ` ${t("planSkipped", { count: photoPlan.skipped.length, reasons: [...new Set(photoPlan.skipped.map(x => t(`skip_${x.reason}` as "skip_over_count")))].join(", ") })}`}
+            </p>
             <div className="mt-2 flex gap-2">
               <button type="button" data-full-trip-go="" onClick={() => void generate(savedView && !!proposal)} className="gkm-focus px-4 py-2 rounded-xl text-sm font-black text-white bg-[#131b2e]">{t("confirmYes")}</button>
               <button type="button" onClick={() => setPhase(proposal ? "result" : "idle")} className="gkm-focus px-4 py-2 rounded-xl text-sm font-bold border border-black/15 text-[#565D66]">{t("confirmNo")}</button>

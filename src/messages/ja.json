@@ -2000,6 +2000,9 @@
     "skip_load_failed": "読み込めませんでした",
     "skip_unsupported": "未対応の形式",
     "tagPhotoSeen": "写真あり",
-    "tagPhotoMissed": "写真未反映"
+    "tagPhotoMissed": "写真未反映",
+    "planPhotos": "写真のある記録{total}件のうち{used}枚をAIが見ます（記録ごとに最初の1枚のみ、1回最大12枚）。",
+    "planSkipped": "{count}枚は今回のリクエストから外れます（{reasons}）。",
+    "planNoPhotos": "写真のある記録がありません — 場所・日付・メモだけで書きます。"
   }
 }

@@ -2000,6 +2000,9 @@
     "skip_load_failed": "불러오지 못함",
     "skip_unsupported": "지원하지 않는 형식",
     "tagPhotoSeen": "사진 봄",
-    "tagPhotoMissed": "사진 반영 안 됨"
+    "tagPhotoMissed": "사진 반영 안 됨",
+    "planPhotos": "사진이 있는 기록 {total}곳 중 {used}장을 AI가 봐요(기록마다 첫 사진만, 한 번에 최대 12장).",
+    "planSkipped": "{count}장은 이번 요청에서 빠져요({reasons}).",
+    "planNoPhotos": "사진이 있는 기록이 없어요 — 장소·날짜·메모로만 써요."
   }
 }

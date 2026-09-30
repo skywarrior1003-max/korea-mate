@@ -33,3 +33,6 @@ region = "gcp:asia-northeast3"
 [env.preview.vars]
 AI_WRITING_WORKER_MODE = "live"
 WORKER_ENV = "preview"
+# Preview 전용 Google 프로젝트는 새 사용자라 gemini-2.5-flash 생성이 거절된다(404, 2026-09-30).
+# 단가가 같은 3.5 Flash-Lite 로 Preview 만 시험한다. Production(최상위)은 설정하지 않는다 — writing-core MODEL 그대로.
+GEMINI_MODEL = "gemini-3.5-flash-lite"
