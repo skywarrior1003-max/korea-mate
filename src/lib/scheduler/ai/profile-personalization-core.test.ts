@@ -144,7 +144,8 @@ test("D gate·응답 계약이 그대로다", () => {
   assert.match(routeCode, /resolveAiMode/);
   assert.match(routeCode, /modeAllowsProviderCall/);
   assert.match(routeCode, /validateProfile\(parsed, allowedIds\)/);
-  assert.match(routeCode, /json\(\{ profile, ai_status \}\)/);
+  // 9d2d4e1a: 같은 응답 모양 + 선택 필드(next_free_at 등) — reply() 가 한 곳에서 만든다
+  assert.match(routeCode, /json\(\{ profile, ai_status, \.\.\.extra \}\)/);
   assert.match(routeCode, /onRequestPost/);
   assert.match(routeCode, /onRequestOptions/);
 });

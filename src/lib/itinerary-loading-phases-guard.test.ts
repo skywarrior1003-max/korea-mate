@@ -159,8 +159,18 @@ test("★일정 생성 경로·handler 를 바꾸지 않았다", () => {
 test("★검증되지 않은 provider 고유명사를 사용자 문구에 쓰지 않는다", () => {
   // 실제로 배포된 생성 경로는 /api/trip/plan 하나뿐이고 with_ai=false 다.
   // Gemini 를 쓰는 functions/api/generate-itinerary.ts 는 클라이언트 호출처가 0 이다.
+  // 예외(2026-09-30, 외부 가져오기 V2): 사용자가 일정을 **복사해 온 곳**을 가리키는 가져오기 안내 4개 키만.
+  // 우리 AI 가 무엇인지 말하는 문구가 아니다 — 늘 ChatGPT 와 나란히 "어디서 복사했나"로만 쓴다.
+  const SOURCE_APP_KEYS = new Set(["importer.textLabel", "journey.optImportBody", "journey.importCan", "journey.steps.pasteLink.say_tut-import-text"]);
   for (const l of LOCALES) {
-    const s = JSON.stringify(msg(l));
+    const flat: [string, string][] = [];
+    const walk = (o: Record<string, unknown>, pre: string) => { for (const [k, v] of Object.entries(o)) { if (v && typeof v === "object") walk(v as Record<string, unknown>, `${pre}${k}.`); else if (typeof v === "string") flat.push([`${pre}${k}`, v]); } };
+    walk(msg(l) as unknown as Record<string, unknown>, "");
+    for (const [k, v] of flat.filter(([, v]) => v.includes("Gemini"))) {
+      assert.ok(SOURCE_APP_KEYS.has(k), `${l} 번역에 Gemini 표기가 남았다: ${k}`);
+      assert.ok(v.includes("ChatGPT"), `${l}.${k}: 복사해 온 곳 목록이 아니라 제공자 표기로 읽힐 수 있다`);
+    }
+    const s = JSON.stringify(Object.fromEntries(flat.filter(([k]) => !SOURCE_APP_KEYS.has(k))));
     assert.ok(!s.includes("Gemini"), `${l} 번역에 Gemini 표기가 남았다`);
   }
   assert.doesNotMatch(BODY, /Gemini/);
@@ -213,7 +223,8 @@ test("★S2-B 에서 번역한 일반 화면 키가 그대로 남아 있다", ()
                    "moveUp", "removePlace", "somethingWrong", "loadingItinerary", "loadingShared"]) {
     assert.equal(typeof en[k], "string", k);
   }
-  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 3);
+  // 3→5: 115254a 가 ItineraryResult 에 tAutoTitle 훅을 더했고(master 4), 7aad5336 이 NoLocationNote 를 분리했다(5)
+  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 5);
 });
 
 // ── 12. migration ──────────────────────────────────────────────────────────
@@ -224,10 +235,11 @@ test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 
   // 목록의 digest 를 고정하므로 추가·삭제·개명 모두 잡힌다. 정식 목록은
   // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
   const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 83, `migration 수가 변했다: ${files.length}`);
+  // 083→087 (2026-09-30): 외부 가져오기 V2 브랜치의 084~087(20efe635·7aad5336·17c95ab8) — Staging 적용·Production 미적용
+  assert.equal(files.length, 87, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "083_retention_purge_activation_gate.sql"); // 077~083 — 081 은 Production 적용 CLOSED — 081 은 Production 적용 CLOSED(재실행 금지)
+  assert.equal(files[files.length - 1], "087_ai_user_usage_monthly_plan_writing.sql"); // 077~083 — 081 은 Production 적용 CLOSED — 081 은 Production 적용 CLOSED(재실행 금지)
   assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
-    "00fa45bf3361243ae1c2117a6cbb5069c8109bf235912ad7414b946666bbe9d6",
+    "5631bc081d728b774dca0de733fe4d8fee886b70d89a325ef11542938c0be9f7",
     "승인 목록 밖의 migration 변경");
 });

@@ -39,7 +39,8 @@ test("unit — reorder 는 membership 불변: 모르는 신규 항목을 결정�
 
 test("080 — 원자성·멱등·경계 계약(정적)", () => {
   const files = readdirSync(join(ROOT, "supabase/migrations"));
-  assert.equal(files.filter(f => f.endsWith(".sql")).length, 83); // +081 RLS hotfix(Production 기적용) 합류 · +082 파기 · +083 파기 활성화 관문
+  // 083→087 (2026-09-30): 외부 가져오기 V2 브랜치의 084~087(20efe635·7aad5336·17c95ab8) — Staging 적용·Production 미적용
+  assert.equal(files.filter(f => f.endsWith(".sql")).length, 87); // +081 RLS hotfix(Production 기적용) 합류 · +082 파기 · +083 파기 활성화 관문
   assert.equal(files.filter(f => f.startsWith("080")).length, 1);
   const s = read("supabase/migrations/080_trip_draft_operations.sql");
   assert.match(s, /FOR UPDATE/);                                   // row lock — 단일 프로세스 메모리 잠금 아님

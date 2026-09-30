@@ -173,7 +173,8 @@ test("G provider 는 환경변수·secret 을 읽지 않는다", () => {
 
 test("route 는 자기 fetch 를 갖지 않고 공용 provider 를 부른다", () => {
   const route = code("functions", "api", "trip", "personalize.ts");
-  assert.match(route, /fetchFn: ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
+  // 45ecc002: 주입 fetch(canary) 또는 서울 Worker 를 baseFetch 로 받고, 거절·실제 모델 헤더만 읽는 얇은 감싸기로 넘긴다
+  assert.match(route, /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)[\s\S]*fetchFn: baseFetch \?/);
   // route 안에 provider 호출 코드가 남아 있으면 두 벌이 된다
   for (const gone of ["generativelanguage.googleapis.com", "new AbortController", "generationConfig"]) {
     assert.ok(!route.includes(gone), `route 에 ${gone} 이 남아 있다`);
@@ -188,5 +189,6 @@ test("route 의 응답 계약이 그대로다", () => {
     assert.ok(route.includes(s), `${s} 가 사라졌다`);
   }
   assert.match(route, /validateProfile\(parsed, allowedIds\)/);
-  assert.match(route, /json\(\{ profile, ai_status \}\)/);
+  // 9d2d4e1a: 같은 응답 모양 + 선택 필드(next_free_at 등) — reply() 가 한 곳에서 만든다
+  assert.match(route, /json\(\{ profile, ai_status, \.\.\.extra \}\)/);
 });

@@ -84,6 +84,7 @@ test("인벤토리 완전성 — provider 호출부 파일 집합 고정", () =>
   assert.deepEqual(out, [
     "functions/api/generate-itinerary.ts",
     "functions/api/import/analyze.ts",
+    "functions/api/mytrip/writing-full.ts",     // 여행 전체 글쓰기 1요청(17c95ab8) — 회사 원장 예약(aiOpsReserve) 후 호출
     "functions/api/mytrip/writing.ts",          // Preview/로컬 직호출 fallback 경로
     "src/app/api/generate-itinerary/route.ts",  // legacy: 정적 export 미포함(로컬 전용)
     "src/lib/scheduler/ai/canary-fixture.ts",   // fixture 상수(호출 아님)
@@ -93,8 +94,17 @@ test("인벤토리 완전성 — provider 호출부 파일 집합 고정", () =>
     "workers/trend-curator/src/index.ts",       // 주간 cron·Staging 전용 선언
   ], "provider 호출부가 늘었다 — 원가 감사·프로파일 갱신 필요");
   // 모델 단일성(테스트 제외)
-  const models = execSync('git grep -hoE "gemini-[0-9][a-z0-9.-]+" -- "*.ts"', { cwd: ROOT, encoding: "utf8" })
-    .trim().split("\n").filter(m => /^gemini-[0-9]/.test(m) && !m.includes("flash-lite"));
+  // 호출 대상이 아닌 곳의 모델 이름은 파일 단위로만 허용한다(2026-09-30, 외부 가져오기 V2 브랜치):
+  //  · functions/_lib/ai-ops-guard.ts — 모델별 공식 단가표(MODEL_PRICES) · 실제 모델은 Worker 가 x-gkm-model 로 알린다
+  //  · workers/ai-writing/src/index.ts — Preview 전용 /probe 허용 모델 목록 · 3.x 요청 설정 변환("gemini-2." 접두 판별)
+  // 기본 호출 모델은 여전히 MODEL_SKU 하나다.
+  const NAMED_NOT_CALLED = new Set(["functions/_lib/ai-ops-guard.ts", "workers/ai-writing/src/index.ts"]);
+  const models = execSync('git grep -oE "gemini-[0-9][a-z0-9.-]+" -- "*.ts"', { cwd: ROOT, encoding: "utf8" })
+    .trim().split("\n")
+    .map(l => { const i = l.indexOf(":"); return { file: l.slice(0, i), m: l.slice(i + 1) }; })
+    .filter(x => !x.file.endsWith(".test.ts") && !NAMED_NOT_CALLED.has(x.file))
+    .map(x => x.m)
+    .filter(m => /^gemini-[0-9]/.test(m) && !m.includes("flash-lite"));
   assert.ok(models.length > 0 && models.every(m => m === MODEL_SKU || m === "gemini-2"),
     `모델 단일성 위반: ${[...new Set(models)].join(",")}`);
   assert.ok(models.includes(MODEL_SKU));
@@ -112,8 +122,15 @@ test("AI_MODE=off 차단 — 4개 공개 route + canary 경유 전부 provider �
   }
   // Production writing 실호출 Worker 는 x-internal-auth fail-closed
   const wk = read("workers/ai-writing/src/index.ts");
-  assert.ok(wk.includes("x-internal-auth") && wk.includes('json({ error: "unauthorized" }, 401)'),
+  // 45ecc002 부터 거절 응답은 refused(...) — 같은 401 이고 x-gkm-provider-called: 0(과금 없음 표시)을 싣는다
+  assert.ok(wk.includes("x-internal-auth") && wk.includes('refused({ error: "unauthorized" }, 401)'),
     "ai-writing worker 인증 소실");
+  // 여행 전체 글쓰기(17c95ab8): 소유 확인·저장 결과 읽기 뒤에 게이트가 오지만, provider 호출보다는 반드시 먼저
+  const wf = read("functions/api/mytrip/writing-full.ts");
+  const wfGate = wf.indexOf("if (!aiAllowed(", wf.search(/onRequestPost[^=]*[=(]/));
+  const wfCall = wf.indexOf("generativelanguage.googleapis.com");
+  const wfFetch = wf.indexOf("const pf = providerFetch(ctx.env)");
+  assert.ok(wfGate > 0 && wfFetch > wfGate && wfCall > wfGate, "writing-full: AI_MODE 게이트가 provider 호출보다 먼저가 아니다");
   // canary 는 personalize handler 를 import — 동일 게이트 경유
   const c = read("functions/api/admin/ai-personalization-canary.ts");
   assert.ok(c.includes('from "../trip/personalize"'), "canary 경유 경로 변경 — 감사 갱신 필요");

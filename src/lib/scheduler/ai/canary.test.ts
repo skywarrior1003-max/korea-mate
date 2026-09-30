@@ -451,7 +451,8 @@ test("C23 일반 요청은 주입 없이 런타임 기본 fetch 를 쓴다", () 
   const prov = code(readFileSync("src/lib/scheduler/ai/profile-gemini-provider.ts", "utf8"));
   assert.match(per,  /fetchFn\?: typeof fetch;/);
   // canary 의 ctx.fetchFn 이 최우선이고, 없으면 서울 Worker binding 경유다.
-  assert.match(per,  /fetchFn: ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
+  // 45ecc002: 주입 fetch(canary) 또는 서울 Worker 를 baseFetch 로 받고, 거절·실제 모델 헤더만 읽는 얇은 감싸기로 넘긴다
+  assert.match(per,  /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)[\s\S]*fetchFn: baseFetch \?/);
   assert.match(prov, /const providerFetch = args\.fetchFn \?\? fetch;/);
   // Cloudflare 가 넘기는 ctx 에는 fetchFn 이 없다 → 기본 fetch
   assert.equal((prov.match(/await providerFetch\(/g) ?? []).length, 1);

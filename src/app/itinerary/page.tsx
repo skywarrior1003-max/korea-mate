@@ -3842,7 +3842,7 @@ function ItineraryResult() {
 
               {/* 고른 자리와 시각이 부딪힌 경우 — 규칙을 드러내고 사용자가 고친다 */}
               {orderNotice && orderNotice.dayIdx === editDay && (
-                <div role="status" data-order-notice className="rounded-2xl border px-3 py-3 text-xs" style={{ borderColor: "#E5E7EA", backgroundColor: "#fff" }}>
+                <div role="status" data-order-notice className="rounded-2xl border px-3 py-3 text-xs" style={{ borderColor: "var(--gkm-line)", backgroundColor: "var(--gkm-surface)" }}>
                   <p className="font-bold text-ink">{tPlanner(orderNotice.fixed ? "orderNoticeFixed" : "orderNoticeTimed", { name: orderNotice.name, time: orderNotice.time })}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {!orderNotice.fixed && (
@@ -3882,7 +3882,7 @@ function ItineraryResult() {
                         aria-checked={newPlaceKind === k}
                         onClick={() => setNewPlaceKind(k)}
                         className="gkm-focus min-h-11 px-3.5 rounded-full text-xs font-bold border"
-                        style={newPlaceKind === k ? { backgroundColor: "var(--gkm-ink)", color: "#fff", borderColor: "var(--gkm-ink)" } : { borderColor: "#E5E7EA", color: "#565D66", backgroundColor: "#fff" }}
+                        style={newPlaceKind === k ? { backgroundColor: "var(--gkm-ink)", color: "var(--gkm-surface)", borderColor: "var(--gkm-ink)" } : { borderColor: "var(--gkm-line)", color: "var(--gkm-text-sub)", backgroundColor: "var(--gkm-surface)" }}
                       >{tPlanner(`newPlaceKind_${k}`)}</button>
                     ))}
                   </div>
@@ -4365,7 +4365,7 @@ function ItineraryResult() {
                                             <img src={rec.photo_data} alt="" className="w-7 h-7 rounded-lg object-cover shrink-0 border border-line" />
                                           )}
                                           <span className="min-w-0 flex-1 text-[11px] font-bold text-ink truncate">{line || tMemo("memoriesTitle")}</span>
-                                          {justSavedStop === sk && <span role="status" className="shrink-0 text-[11px] font-black" style={{ color: "#1D9A6C" }}>✓ {tMemo("savedHere")}</span>}
+                                          {justSavedStop === sk && <span role="status" className="shrink-0 text-[11px] font-black" style={{ color: "var(--gkm-status-ok)" }}>✓ {tMemo("savedHere")}</span>}
                                           {/* 방금 저장한 동안에는 "저장됨"이 그 자리를 쓴다 — 모바일 한 줄에서 메모가 "노…"로 잘리지 않게 */}
                                           {justSavedStop !== sk && <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>}
                                         </button>
