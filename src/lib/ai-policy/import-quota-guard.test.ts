@@ -87,3 +87,11 @@ test("원인 진단(?diag=raw)은 진단을 마친 뒤 제거했다 — 모델 �
   // 재발 시 원인 구분은 로그의 짧은 분류값만 — 오류 문장·입력은 싣지 않는다
   assert.match(ANALYZE, /fail_class: providerFailClass\(ai\.providerStatus\)/);
 });
+
+test("AI 스케줄러 회사 원장 열쇠는 사용자 예약마다 새로 — 같은 일정을 고른 다른 사용자·실패 뒤 재시도가 중복으로 막히지 않는다(2026-09-30)", () => {
+  const P = read("functions", "api", "trip", "personalize.ts");
+  assert.match(P, /idempotencyKey: `personalize:\$\{quota\.id\}:\$\{crypto\.randomUUID\(\)\.slice\(0, 8\)\}`/);
+  assert.doesNotMatch(P, /idempotencyKey: `personalize:\$\{requestId\}`/);
+  // 동시 요청 차단·재요청 무차감은 사용자 무료 횟수가 맡는다 — 예약이 reserved 일 때만 회사 원장으로 간다
+  assert.ok(P.indexOf('if (quota.status !== "reserved")') < P.indexOf("await aiOpsReserve("));
+});

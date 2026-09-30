@@ -200,7 +200,11 @@ export async function onRequestPost(
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
     feature: "personalize", model: MODEL,
     worstUsdMicro: 2_500, // cost-model personalize 최악 ≈$0.0025
-    idempotencyKey: `personalize:${requestId}`,
+    // 회사 원장 열쇠는 이 사용자의 이번 예약(quota.id)마다 새로 — 2026-09-30 확인: request_id 는 도시·날짜·장소로 정해지는
+    // 결정적 값이라 `personalize:${shortHash(request_id)}` 는 같은 일정을 고른 **다른 사용자**와 겹치고, 실패 뒤 같은 사용자의
+    // 재시도도 영구히 중복으로 거절됐다. 동시 요청 차단은 사용자 무료 횟수(in_progress)가, 재요청 무차감은 replay 가 맡는다
+    // (가져오기와 같은 방식).
+    idempotencyKey: `personalize:${quota.id}:${crypto.randomUUID().slice(0, 8)}`,
     actorHash: actor,
     featureDailyCalls: 200, featureDailyUsdMicro: 1_000_000, // $1/day
   });
