@@ -4289,7 +4289,8 @@ function ItineraryResult() {
                                           )}
                                           <span className="min-w-0 flex-1 text-[11px] font-bold text-ink truncate">{line || tMemo("memoriesTitle")}</span>
                                           {justSavedStop === sk && <span role="status" className="shrink-0 text-[11px] font-black" style={{ color: "#1D9A6C" }}>✓ {tMemo("savedHere")}</span>}
-                                          <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>
+                                          {/* 방금 저장한 동안에는 "저장됨"이 그 자리를 쓴다 — 모바일 한 줄에서 메모가 "노…"로 잘리지 않게 */}
+                                          {justSavedStop !== sk && <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>}
                                         </button>
                                       );
                                     }
