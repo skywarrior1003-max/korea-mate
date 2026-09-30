@@ -214,6 +214,7 @@ export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): str
     "- A plan without explicit days (for example one afternoon) is external_itinerary with a single day, day_number 1.",
     "- A stop is a NAMED place. Unnamed activities (\"a small cafe nearby\", \"lunch\") are not stops — mention them in the note of the stop they belong to.",
     "- time: the start time only if written, as HH:MM 24h (\"02:00 PM\" → \"14:00\"). end_time: the end time if a range is written, same format. time_text: the time exactly as written (e.g. \"12:00 PM - 02:00 PM\"). If a time range covers several stops, give each of those stops the same range.",
+    "- trip_title: only if the text states a short title or heading for the plan (max ~40 characters). A descriptive sentence is not a title → null.",
     "- date: only if unambiguous, format YYYY-MM-DD. Relative words like \"today\" are NOT dates → null.",
     "- city: if the plan is in busan/seoul/jeju/gyeongju/jeonju use that lowercase English word; otherwise the main city or region name as written in the text; null if unclear.",
     "- place names: as written in the text (keep language). Max 40 places total.",
@@ -339,7 +340,8 @@ export function parseAnalyzed(text: string): AnalyzedContent | null {
   const ed = cleanStr(j.end_date, 10);
   return {
     kind,
-    trip_title: cleanStr(j.trip_title, 80),
+    // 문장형 설명은 제목이 아니다 — 40자 넘으면 버린다(화면은 자동 제목을 쓴다)
+    trip_title: (() => { const tt = cleanStr(j.trip_title, 80); return tt && tt.length <= 40 ? tt : null; })(),
     city: (() => { const c = cleanStr(j.city, 40); return c ? (/^[a-z -]+$/i.test(c) ? c.toLowerCase() : c) : null; })(),
     start_date: sd && YMD.test(sd) ? sd : null,
     end_date: ed && YMD.test(ed) ? ed : null,
