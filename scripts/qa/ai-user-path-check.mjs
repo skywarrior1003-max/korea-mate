@@ -139,7 +139,8 @@ try {
     const rid = `qa-aipath-a1-${randomUUID()}`;
     const before = await ledgerCount("personalize");
     const r1 = await personalize(u, rid);
-    const led1 = (await rest(`ai_ops_ledger?select=status,committed_usd_micro,input_tokens,output_tokens&idempotency_key=eq.personalize:${rid}`)).data?.[0] ?? null;
+    // 회사 원장 열쇠는 personalize:<사용자 예약 id>:<임의값>(6d796299) — 이번 실행 이후의 가장 새 행을 본다
+    const led1 = (await rest(`ai_ops_ledger?select=status,committed_usd_micro,input_tokens,output_tokens,idempotency_key&route=eq.personalize&created_at=gte.${encodeURIComponent(since)}&order=id.desc&limit=1`)).data?.[0] ?? null;
     const us1 = await usage(u.id);
     const applied = r1.ai_status === "applied";
     check("A1 real call settles both ledgers", (await ledgerCount("personalize")) === before + 1 && (applied
