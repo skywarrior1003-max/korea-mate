@@ -11,7 +11,8 @@
 //              provider 1회(서울 Worker /provider) → 검증 → 저장 → 사용권 확정.
 //              실패·timeout·무효 결과 = 사용권 되돌림(차감 0).
 //
-// 입력은 서버가 DB 에서 읽은 텍스트 사실뿐 — 클라가 보낸 문맥·사진은 쓰지 않는다. 사진 이미지는 보내지 않는다.
+// 입력은 서버가 DB 에서 읽은 사실과, 소유가 확인된 여행의 기록 사진(기록마다 첫 장 · 상한 안)뿐 — 클라가 보낸 문맥·사진은 쓰지 않는다.
+// 사진도 같은 한 번의 요청에 싣는다. 싣지 못한 사진은 이유와 함께 응답에 남긴다.
 // 결과는 제안이다. 적용은 화면에서 사용자가 고른 항목만 기존 저장 API(PATCH)로 한다.
 
 import { createClient } from "@supabase/supabase-js";
@@ -23,7 +24,8 @@ import { quotaIdemKey, quotaReserve, quotaSettle, quotaBalance } from "../../_li
 import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
 import { AI_CACHE_TTL_DAYS, sha256Hex, ownerHashHmac, ownerHash, computeCacheKey } from "../../../src/lib/mytrip-writing/generation-cache";
 import {
-  FULL_TRIP_PROMPT_VERSION, FULL_TRIP_MAX_MOMENTS, FULL_TRIP_TIMEOUT_MS,
+  FULL_TRIP_PROMPT_VERSION, FULL_TRIP_MAX_MOMENTS, FULL_TRIP_TIMEOUT_MS, FULL_TRIP_PHOTO_LIMITS, FULL_TRIP_PHOTO_MIME,
+  type FullTripImage, type PhotoSkipReason,
   buildFullTripPrompt, buildFullTripProviderBody, parseFullTripProposal, daysFromItinerary,
   type FullTripFacts, type FullTripProposal,
 } from "../../../src/lib/mytrip-writing/full-trip-core";
@@ -63,7 +65,11 @@ function providerFetch(env: Env): typeof fetch | null {
   if (!direct && binding && typeof binding.fetch === "function" && key) {
     return ((_url: RequestInfo | URL, init?: RequestInit) => binding.fetch("https://ai-writing.internal/provider", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": String(FULL_TRIP_TIMEOUT_MS) },
+      headers: {
+        "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": String(FULL_TRIP_TIMEOUT_MS),
+        // 사진을 실은 요청의 본문 상한(서울 Worker 가 12MB 로 다시 제한한다)
+        "x-provider-max-bytes": new Headers(init?.headers).get("x-provider-max-bytes") ?? "64000",
+      },
       body: init?.body ?? null, signal: init?.signal ?? undefined,
     })) as typeof fetch;
   }
@@ -71,8 +77,13 @@ function providerFetch(env: Env): typeof fetch | null {
 }
 
 type Admin = NonNullable<ReturnType<typeof admin>>;
+/** 이 제안에 실제로 실린 사진(기록 id)과 싣지 못한 사진(이유) — 화면이 그대로 알린다 */
+interface PhotoCoverage { shown: string[]; skipped: { momentId: string; reason: PhotoSkipReason }[]; candidates: number }
 
-async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["locale"]): Promise<FullTripFacts | null> {
+/** 기록마다 첫 사진(여러 장이면 sort_index 가 가장 작은 것, 없으면 기록 본 사진) — 소유가 확인된 여행의 것만 */
+interface PhotoCandidate { momentId: string; path: string }
+
+async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["locale"]): Promise<(FullTripFacts & { photoCandidates: PhotoCandidate[] }) | null> {
   const { data: it } = await db.from("itineraries")
     .select("city, start_date, end_date, days, trip_title, story_title, story_intro").eq("id", itineraryId).maybeSingle();
   if (!it) return null;
@@ -81,8 +92,20 @@ async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["
     .eq("itinerary_id", itineraryId).order("day_number", { ascending: true }).order("captured_at", { ascending: true })
     .limit(FULL_TRIP_MAX_MOMENTS);
   const r = it as Record<string, unknown>;
+  const { data: extra } = await db.from("trip_moment_photos").select("moment_id, storage_path, sort_index")
+    .eq("itinerary_id", itineraryId).order("sort_index", { ascending: true });
+  const firstExtra = new Map<string, string>();
+  for (const row of (extra ?? []) as { moment_id: string; storage_path: string | null }[]) {
+    if (row.storage_path && !firstExtra.has(row.moment_id)) firstExtra.set(row.moment_id, row.storage_path);
+  }
+  const photoCandidates: PhotoCandidate[] = [];
+  for (const m of (ms ?? []) as Record<string, unknown>[]) {
+    const id = String(m.moment_id);
+    const path = firstExtra.get(id) ?? (typeof m.storage_path === "string" && m.storage_path !== "" ? m.storage_path : null);
+    if (path) photoCandidates.push({ momentId: id, path });
+  }
   return {
-    locale,
+    locale, photoCandidates,
     city: String(r.city ?? ""), startDate: String(r.start_date ?? ""), endDate: String(r.end_date ?? ""),
     tripTitle: typeof r.trip_title === "string" ? r.trip_title : null,
     storyTitle: typeof r.story_title === "string" ? r.story_title : null,
@@ -94,10 +117,46 @@ async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["
         id: String(x.moment_id), day: typeof x.day_number === "number" ? x.day_number : null,
         place: typeof x.place_name === "string" ? x.place_name : null,
         title: typeof x.title === "string" ? x.title : null, memo: typeof x.memo === "string" ? x.memo : null,
-        hasPhoto: typeof x.storage_path === "string" && x.storage_path !== "",
+        hasPhoto: (typeof x.storage_path === "string" && x.storage_path !== "") || firstExtra.has(String(x.moment_id)),
       };
     }),
   };
+}
+
+const PHOTO_BUCKET = "moments";
+function toBase64(bytes: Uint8Array): string {
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+/**
+ * 기록 순서대로 사진을 내려받아 상한 안에서만 싣는다(장수·장당·합계·형식). 넘치거나 못 불러온 사진은 이유를 남긴다.
+ * 서버가 service role 로 저장소에서 직접 읽는다 — 클라이언트가 보낸 이미지는 받지 않는다.
+ */
+async function loadPhotos(env: Env, cands: readonly PhotoCandidate[]): Promise<{ images: FullTripImage[]; skipped: { momentId: string; reason: PhotoSkipReason }[] }> {
+  const L = FULL_TRIP_PHOTO_LIMITS;
+  const images: FullTripImage[] = [];
+  const skipped: { momentId: string; reason: PhotoSkipReason }[] = [];
+  let total = 0;
+  for (const c of cands) {
+    if (images.length >= L.maxPhotos) { skipped.push({ momentId: c.momentId, reason: "over_count" }); continue; }
+    let res: Response | null = null;
+    try {
+      res = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/${PHOTO_BUCKET}/${c.path.split("/").map(encodeURIComponent).join("/")}`, {
+        headers: { Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, apikey: env.SUPABASE_SERVICE_ROLE_KEY ?? "" },
+        signal: AbortSignal.timeout(8_000),
+      });
+    } catch { res = null; }
+    if (!res || !res.ok) { skipped.push({ momentId: c.momentId, reason: "load_failed" }); continue; }
+    const mime = (res.headers.get("content-type") ?? "").split(";")[0]!.trim().toLowerCase();
+    if (!(FULL_TRIP_PHOTO_MIME as readonly string[]).includes(mime)) { skipped.push({ momentId: c.momentId, reason: "unsupported" }); continue; }
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    if (bytes.length > L.maxBytesEach) { skipped.push({ momentId: c.momentId, reason: "too_large" }); continue; }
+    if (total + bytes.length > L.maxBytesTotal) { skipped.push({ momentId: c.momentId, reason: "total_limit" }); continue; }
+    total += bytes.length;
+    images.push({ momentId: c.momentId, mimeType: mime, data: toBase64(bytes) });
+  }
+  return { images, skipped };
 }
 
 export async function onRequestPost(ctx: { request: Request; env: Env }): Promise<Response> {
@@ -121,7 +180,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     const { data } = await db.from(GEN_TABLE).select("id, result, created_at, context_hash")
       .eq("itinerary_id", itineraryId).eq("feature", "fullTrip").eq("locale", locale).eq("status", "succeeded")
       .order("created_at", { ascending: false }).limit(1).maybeSingle();
-    return data as { id: string; result: { proposal?: FullTripProposal } | null; created_at: string; context_hash: string } | null;
+    return data as { id: string; result: { proposal?: FullTripProposal; photos?: PhotoCoverage } | null; created_at: string; context_hash: string } | null;
   };
 
   const facts = await loadFacts(db, itineraryId, locale);
@@ -130,7 +189,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
 
   if (mode === "load") {
     const saved = await latestSaved();
-    return json({ ok: true, ai_status: saved ? "saved" : "none", proposal: saved?.result?.proposal ?? null,
+    return json({ ok: true, ai_status: saved ? "saved" : "none", proposal: saved?.result?.proposal ?? null, photos: saved?.result?.photos ?? null,
       generation_id: saved?.id ?? null, created_at: saved?.created_at ?? null, stale: saved ? saved.context_hash !== contextHash : null });
   }
 
@@ -139,10 +198,10 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const cacheKey = await computeCacheKey({ feature: "fullTrip", direction: null, itineraryId, locale, contextHash, imageSha: null, promptVersion: FULL_TRIP_PROMPT_VERSION, trendPackVersion: null });
   const forceFresh = body.forceFresh === true;
   const { data: cur } = await db.from(GEN_TABLE).select("id, status, result, expires_at").eq("cache_key", cacheKey).eq("superseded", false).maybeSingle();
-  const c = cur as { id: string; status: string; result: { proposal?: FullTripProposal } | null; expires_at: string } | null;
+  const c = cur as { id: string; status: string; result: { proposal?: FullTripProposal; photos?: PhotoCoverage } | null; expires_at: string } | null;
   if (!forceFresh && c?.status === "succeeded" && c.result?.proposal && new Date(c.expires_at).getTime() > Date.now()) {
-    // 같은 내용의 저장 결과 — 추가 요청·차감 0
-    return json({ ok: true, ai_status: "cache_server", proposal: c.result.proposal, generation_id: c.id, charged: false });
+    // 같은 내용(사진 목록 포함)의 저장 결과 — 추가 요청·차감 0
+    return json({ ok: true, ai_status: "cache_server", proposal: c.result.proposal, photos: c.result.photos ?? null, generation_id: c.id, charged: false });
   }
   if (c && (c.status === "reserved" || c.status === "provider_started")) return json({ ok: false, ai_status: "fallback_busy" });
 
@@ -150,6 +209,14 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   if (!auth.ok) return auth.response;
   const pf = providerFetch(ctx.env);
   if (!pf) return json({ ok: false, ai_status: "fallback_unavailable" });
+
+  // 사진 — 소유가 확인된 여행의 기록 사진만, 상한 안에서(사용권 예약 전: 불러오기 실패로 차감이 생기지 않게)
+  const { images, skipped } = await loadPhotos(ctx.env, facts.photoCandidates);
+  const shownIds = new Set(images.map(i => i.momentId));
+  const skippedIds = new Set(skipped.map(x => x.momentId));
+  for (const m of facts.moments) m.photo = shownIds.has(m.id) ? "shown" : skippedIds.has(m.id) ? "not_shown" : m.hasPhoto ? "not_shown" : "none";
+  const photos: PhotoCoverage = { shown: [...shownIds], skipped, candidates: facts.photoCandidates.length };
+  const providerBody = buildFullTripProviderBody(buildFullTripPrompt(facts), images);
 
   const genId = crypto.randomUUID();
   const qEnv = ctx.env as Parameters<typeof quotaReserve>[0];
@@ -186,11 +253,14 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FULL_TRIP_TIMEOUT_MS + 3_000);
   let proposal: FullTripProposal | null = null, inTok: number | null = null, outTok: number | null = null, fail: string | null = null;
+  let notSent = false;
   try {
     const res = await pf(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${ctx.env.GEMINI_API_KEY ?? ""}`, {
-      method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.signal,
-      body: buildFullTripProviderBody(buildFullTripPrompt(facts)),
+      method: "POST", headers: { "Content-Type": "application/json", "x-provider-max-bytes": String(providerBody.length + 1_000) }, signal: controller.signal,
+      body: providerBody,
     });
+    // 서울 Worker 가 모델에 보내기 전에 거절했다(인증·스위치·키 없음·본문 크기) — 과금 없음이 확정이다
+    notSent = res.headers.get("x-gkm-provider-called") === "0";
     if (!res.ok) fail = `http_${res.status}`;
     else {
       const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } };
@@ -205,19 +275,20 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const latency = Date.now() - started;
 
   if (!proposal) {
-    // 요청은 전송됐다 — 회사 원장은 예약액 보존(unknown_billed), 사용자 사용권은 되돌림(차감 0)
-    await db.from(GEN_TABLE).update({ status: "failed", fail_code: fail, latency_ms: latency }).eq("id", genId);
-    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
+    // 모델에 보내기 전 거절이면 회사 원장 예약을 되돌린다(released). 보낸 뒤 결과를 모르면(시간 초과·오류 응답)
+    // 예약액을 보존한다(unknown_billed). 사용자 사용권은 어느 경우든 되돌림(차감 0).
+    await db.from(GEN_TABLE).update({ status: "failed", fail_code: `${fail}${notSent ? ":not_sent" : ""}`, latency_ms: latency }).eq("id", genId);
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, notSent ? "released" : "unknown_billed");
     await release();
-    log({ ok: false, fail, latencyMs: latency, moments: facts.moments.length });
-    return json({ ok: false, ai_status: `fallback_${fail}` });
+    log({ ok: false, fail, notSent, latencyMs: latency, moments: facts.moments.length, photos: images.length });
+    return json({ ok: false, ai_status: `fallback_${fail}`, not_sent: notSent });
   }
   const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok) : WORST_USD_MICRO;
-  await db.from(GEN_TABLE).update({ status: "succeeded", result: { proposal }, in_tok: inTok, out_tok: outTok, latency_ms: latency }).eq("id", genId);
+  await db.from(GEN_TABLE).update({ status: "succeeded", result: { proposal, photos }, in_tok: inTok, out_tok: outTok, latency_ms: latency }).eq("id", genId);
   await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usd });
   await quotaSettle(qEnv, quota.id, auth.userId, "committed", { generation_id: genId });
-  log({ ok: true, latencyMs: latency, moments: facts.moments.length, inTok, outTok, usdMicro: usd, styles: Object.keys(proposal).length });
-  return json({ ok: true, ai_status: "live", proposal, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd } });
+  log({ ok: true, latencyMs: latency, moments: facts.moments.length, photos: images.length, skipped: skipped.length, inTok, outTok, usdMicro: usd, styles: Object.keys(proposal).length });
+  return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, latency_ms: latency } });
 }
 
 // GET — 이번 달 남은 전체 여행 AI 글쓰기 사용권(화면 안내용). 로그인 사용자만. AI 호출 없음.

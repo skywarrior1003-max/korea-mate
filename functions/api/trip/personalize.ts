@@ -210,9 +210,16 @@ export async function onRequestPost(
     return reply(null, "fallback_guard");
   }
 
+  // 서울 Worker 가 모델에 보내기 전에 거절했는지(x-gkm-provider-called: 0) — 그때만 회사 원장 예약을 되돌린다
+  let workerRefusedBeforeProvider = false;
+  const baseFetch = ctx.fetchFn ?? bindingProviderFetch(ctx.env);
   const call = await callProfileProvider({
     prompt, apiKey,
-    fetchFn: ctx.fetchFn ?? bindingProviderFetch(ctx.env),
+    fetchFn: baseFetch ? (async (u: RequestInfo | URL, i?: RequestInit) => {
+      const r = await baseFetch(u, i);
+      if (r.headers.get("x-gkm-provider-called") === "0") workerRefusedBeforeProvider = true;
+      return r;
+    }) as typeof fetch : baseFetch,
   });
 
   if (!call.ok) {
@@ -220,7 +227,8 @@ export async function onRequestPost(
       // 400·401·403·404·408·429·5xx 전부 여기로 온다. 재호출하지 않는다.
       // 정산(CORRECTION-V1 §2): 요청은 이미 전송됐다 — HTTP 오류 응답이라는
       // 사실만으로 무과금을 단정할 공식 근거가 없다. 예약액 보존.
-      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "unknown_billed");
+      // 예외: 서울 Worker 가 모델에 보내기 전에 거절했다고 표시한 경우만 무과금 확정 → 되돌림.
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, workerRefusedBeforeProvider ? "released" : "unknown_billed");
       await releaseQuota(); // 사용자에게 완성 결과가 없다 — 사용자 차감 0
       log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: call.httpStatus,
             latency: call.latencyMs, status: "fallback_provider_error" });

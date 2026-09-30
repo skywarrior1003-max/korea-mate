@@ -46,6 +46,16 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
+/** 모델에 요청을 보내기 전의 거절 — 호출측이 회사 원장 예약을 되돌릴 수 있게 표시한다(x-gkm-provider-called: 0) */
+const refused = (b: unknown, status: number) =>
+  new Response(JSON.stringify(b), {
+    status,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "0" },
+  });
+/** /provider 기본 본문 상한(텍스트 요청) · 사진을 싣는 요청이 x-provider-max-bytes 로 늘릴 수 있는 최대치 */
+const PROVIDER_BODY_DEFAULT = 64_000;
+const PROVIDER_BODY_MAX = 12_000_000;
+
 const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null, set: MomentSuggestionSet3 | null = null) =>
   json({ suggestion, moment, set, ai_status });
 
@@ -160,11 +170,11 @@ async function executionColo(): Promise<string> {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+    if (request.method !== "POST") return refused({ error: "method_not_allowed" }, 405);
 
     const provided = request.headers.get("x-internal-auth") ?? "";
     if (!env.INTERNAL_KEY || !provided || !(await keysMatch(provided, env.INTERNAL_KEY))) {
-      return json({ error: "unauthorized" }, 401);
+      return refused({ error: "unauthorized" }, 401);
     }
     // 연결 진단 — provider 를 부르지 않는다(비용 0). 키는 있는지만(값·형식 없음).
     if (new URL(request.url).pathname === "/health") {
@@ -177,12 +187,12 @@ export default {
     // V2-HARDCAP §8 — Worker 자체 kill switch(누락·오타=차단). Pages 게이트와
     // 독립으로, binding·직접 호출 어느 경로든 이 스위치가 꺼져 있으면 provider 0.
     if ((env.AI_WRITING_WORKER_MODE ?? "").trim().toLowerCase() !== "live") {
-      return json({ error: "worker_disabled" }, 503);
+      return refused({ error: "worker_disabled" }, 503);
     }
     const apiKey = env.GEMINI_API_KEY;
     const path = new URL(request.url).pathname;
     // /provider 호출측은 HTTP 상태로 분기한다 — 키 누락을 200 빈 응답이 아니라 503 코드로 알린다
-    if (!apiKey) return path === "/provider" ? json({ error: "no_key" }, 503) : reply(null, "no_key");
+    if (!apiKey) return path === "/provider" ? refused({ error: "no_key" }, 503) : reply(null, "no_key");
 
     if (path === "/canary") {
       // 본문은 읽지 않는다 — provider 로 나가는 입력은 서버 고정값뿐이다.
@@ -209,12 +219,15 @@ export default {
       // 모델·키·URL 은 이 Worker 가 고정하고, 호출측은 자기 계약의 요청 본문
       // (contents + generationConfig)만 보낸다. 접근은 binding + x-internal-auth 뿐.
       let raw = "";
-      try { raw = await request.text(); } catch { return json({ error: "invalid_body" }, 400); }
-      if (raw.length > 64_000) return json({ error: "body_too_large" }, 413);
+      try { raw = await request.text(); } catch { return refused({ error: "invalid_body" }, 400); }
+      // 사진을 싣는 요청(전체 여행 글쓰기)만 x-provider-max-bytes 로 상한을 올린다 — 12MB 를 넘지 않는다
+      const askedMax = Number(request.headers.get("x-provider-max-bytes") ?? "");
+      const bodyMax = Number.isFinite(askedMax) && askedMax > PROVIDER_BODY_DEFAULT ? Math.min(PROVIDER_BODY_MAX, Math.floor(askedMax)) : PROVIDER_BODY_DEFAULT;
+      if (raw.length > bodyMax) return refused({ error: "body_too_large" }, 413);
       let parsed: unknown;
-      try { parsed = JSON.parse(raw); } catch { return json({ error: "invalid_body" }, 400); }
+      try { parsed = JSON.parse(raw); } catch { return refused({ error: "invalid_body" }, 400); }
       if (!parsed || typeof parsed !== "object" || !Array.isArray((parsed as { contents?: unknown }).contents)) {
-        return json({ error: "invalid_body" }, 400);
+        return refused({ error: "invalid_body" }, 400);
       }
       const controller = new AbortController();
       // 호출측이 긴 작업(가져오기 분석·전체 여행 글쓰기)이면 x-provider-timeout-ms 로 늘린다 — 8~45초로 제한
@@ -234,14 +247,15 @@ export default {
         );
         clearTimeout(timer);
         const [text, colo] = await Promise.all([res.text(), executionColo()]);
-        log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length });
+        log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length, inBytes: raw.length });
         // 상태·본문을 그대로 넘긴다 — 호출측의 기존 오류 분기(!res.ok)가 그대로 동작한다.
-        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
+        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1" } });
       } catch (err) {
         clearTimeout(timer);
         const isAbort = err instanceof Error && err.name === "AbortError";
         log({ kind: "provider", ok: false, err: isAbort ? "timeout" : "error", latencyMs: Date.now() - started });
-        return json({ error: isAbort ? "timeout" : "unreachable" }, 502);
+        // 요청을 보낸 뒤의 시간 초과·연결 실패 — 결과를 알 수 없다(과금 불확실)
+        return new Response(JSON.stringify({ error: isAbort ? "timeout" : "unreachable" }), { status: 502, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1" } });
       }
     }
 

@@ -1963,7 +1963,7 @@
   },
   "fullTripAi": {
     "heading": "一次写好整趟旅行",
-    "desc": "放好全部行程和记录后再点。一次请求就会用三种表达，建议旅行标题、故事简介以及每条记录的标题和内容。AI 不看照片，只读取地点、日期和你自己写的备注。",
+    "desc": "放好全部行程和记录后再点。一次请求会同时读取记录里的照片（每条记录的第一张）以及地点、日期和你自己写的备注，用三种表达建议旅行标题、故事简介以及每条记录的标题和内容。",
     "remaining": "本月还剩 {count} 次免费 AI 写作（每月 2 次，My Trip 与故事共用）。",
     "ask": "获取整趟旅行的 AI 建议",
     "retry": "重试",
@@ -1990,6 +1990,16 @@
     "applied": "已应用。随时可以自行修改。",
     "applyFailed": "部分内容未能保存。请再次应用。",
     "regenerate": "重新获取建议（再用 1 次）",
-    "noPhotoNote": "AI 看不到照片内容，只根据地点、日期和你自己写的备注来写。"
+    "noPhotoNote": "照片只看每条记录的第一张，每次最多 12 张。没能看到的照片会在上方单独说明。不会写出人物身份或个人信息。",
+    "photosShown": "看了 {count} 张照片后撰写。",
+    "photosNone": "未使用照片，仅根据地点、日期和备注撰写。",
+    "photosSkipped": "有 {count} 张未能使用（{reasons}）。",
+    "skip_over_count": "单次超过 12 张",
+    "skip_too_large": "照片过大",
+    "skip_total_limit": "总大小超限",
+    "skip_load_failed": "无法加载",
+    "skip_unsupported": "不支持的格式",
+    "tagPhotoSeen": "已看照片",
+    "tagPhotoMissed": "照片未使用"
   }
 }

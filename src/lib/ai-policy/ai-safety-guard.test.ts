@@ -92,7 +92,15 @@ test("정산 매트릭스 — provider 도달 후 release 금지 (CORRECTION-V1 
   // 이 가드는 회사 비용 원장(aiOpsSettle) 의 released 만 센다.
   const opsReleased = (src: string) => src.split("\n").filter(l => l.includes("aiOpsSettle") && l.includes('"released"'));
   const pers = read("functions/api/trip/personalize.ts");
-  assert.equal(opsReleased(pers).length, 0, "personalize 도 reserve 후 전 실패가 전송 후 — release 금지");
+  // 2026-09-30: 서울 Worker 가 모델에 보내기 전 거절(x-gkm-provider-called: 0)한 경우만 되돌림이 허용된다
+  const persRel = opsReleased(pers);
+  assert.ok(persRel.length <= 1, "personalize 회사 원장 released 는 최대 1곳");
+  if (persRel.length === 1) assert.ok(persRel[0]!.includes("workerRefusedBeforeProvider ?"), "personalize released 는 Worker 사전 거절 조건부만");
+  const worker = read("workers/ai-writing/src/index.ts");
+  assert.match(worker, /const refused = \(b: unknown, status: number\) =>/);
+  assert.match(worker, /return refused\(\{ error: "unauthorized" \}, 401\)/);
+  assert.match(worker, /return refused\(\{ error: "worker_disabled" \}, 503\)/);
+  assert.match(worker, /"x-gkm-provider-called": "1"/, "모델 응답·전송 후 실패는 호출됨(1)으로 표시");
   const wr = read("functions/api/mytrip/writing.ts");
   assert.equal(opsReleased(wr).length, 0, "writing 은 committed/unknown_billed 만(회사 원장)");
   // analyze 의 회사 원장 released 는 정확히 한 곳 — 전송 전 확정(sent=false = analyze_unavailable) 조건부만

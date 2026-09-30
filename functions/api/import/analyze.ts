@@ -191,7 +191,8 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
         // 오류 문장 앞부분만 — 키처럼 보이는 문자열은 가린다(키 값을 응답·로그에 싣지 않는다)
         if (typeof e.error === "object" && e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
       } catch { /* ignore */ }
-      return { ok: false, error: "analyze_failed", sent: true, providerStatus: st };
+      // 서울 Worker 가 모델에 보내기 전에 거절했다(x-gkm-provider-called: 0) — 과금 없음 확정
+      return { ok: false, error: "analyze_failed", sent: res.headers.get("x-gkm-provider-called") !== "0", providerStatus: st };
     }
     const raw = (await res.json()) as {
       candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[];

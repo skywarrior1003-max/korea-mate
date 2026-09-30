@@ -987,8 +987,9 @@ async function generateWithNewApi(
   return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime, personalizationApplied: personalizationProfile != null, freeAiUsed };
 }
 
-function getCategoryColor(category: string): string {
-  const c = category.toLowerCase();
+// 카테고리가 없는 장소(가져온 장소·내 장소)도 멈추지 않게 — 없는 값을 만들어 저장하지 않고 기본 색만 쓴다
+function getCategoryColor(category: string | null | undefined): string {
+  const c = (category ?? "").toLowerCase();
   if (c.includes("restaurant") || c.includes("food")) return "var(--gkm-accent-coral)";
   if (c.includes("cafe") || c.includes("coffee")) return "#d97706";
   if (c.includes("market")) return "#dc2626";

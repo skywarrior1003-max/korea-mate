@@ -5,7 +5,8 @@
 // 사용자가 My Trip 에 일정·사진·메모를 다 담은 뒤, 이 버튼을 **직접 눌렀을 때만** 한 번의 요청으로
 // 여행 제목·Story 제목·소개와 각 기록(사진)의 제목·내용을 세 가지 표현으로 함께 제안받는다.
 //  · 자동 호출 없음. 이 화면을 열면 저장된 지난 제안만 불러온다(AI 호출·차감 0).
-//  · AI 는 사진 이미지를 보지 않는다 — 장소·날짜·직접 쓴 메모만 읽는다(화면 문구도 그렇게 말한다).
+//  · 같은 한 번의 요청에 기록 사진(기록마다 첫 장, 상한 안)을 함께 싣는다. 실제로 본 사진 수와 반영하지 못한
+//    사진(이유)을 화면에 따로 알린다 — 보지 못한 사진을 본 것처럼 표시하지 않는다.
 //  · 제안은 적용이 아니다. 비어 있는 칸만 기본 선택되고, 직접 쓴 내용은 지금 값과 제안을 나란히
 //    보여 준 뒤 사용자가 고를 때만 바뀐다.
 //  · 성공한 새 제안 1건 = 전체 여행 AI 글쓰기 사용권 1회(월 2회 · My Trip·Story 공통). 실패 = 0.
@@ -16,7 +17,7 @@ import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import ConsentSheet from "@/components/auth/ConsentSheet";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
 import { withAuthHeader } from "@/lib/auth/device-auth-headers";
-import { apiFullTrip, apiFullTripBalance } from "@/lib/mytrip-writing/full-trip-api";
+import { apiFullTrip, apiFullTripBalance, type FullTripPhotoCoverage } from "@/lib/mytrip-writing/full-trip-api";
 import { FULL_TRIP_STYLES, defaultSelected, type FullTripProposal, type FullTripStyle } from "@/lib/mytrip-writing/full-trip-core";
 
 export interface FullTripMomentView { id: string; title: string | null; memo: string | null; place: string | null; day: number | null; synced: boolean }
@@ -37,6 +38,7 @@ export default function FullTripAiWriter(props: {
   const locale = useLocale();
   const [phase, setPhase] = useState<Phase>("idle");
   const [proposal, setProposal] = useState<FullTripProposal | null>(null);
+  const [photos, setPhotos] = useState<FullTripPhotoCoverage | null>(null);
   const [savedView, setSavedView] = useState(false);
   const [style, setStyle] = useState<FullTripStyle>("calm");
   const [picked, setPicked] = useState<Record<string, boolean>>({});
@@ -69,7 +71,7 @@ export default function FullTripAiWriter(props: {
       const r = await apiFullTrip({ itineraryId: props.itineraryId, deviceId: props.deviceId, locale, mode: "load" });
       if (alive && r.kind === "proposal") {
         const first = FULL_TRIP_STYLES.find(s => r.proposal[s]) ?? "calm";
-        setProposal(r.proposal); setSavedView(true); setStyle(first); resetPicks(r.proposal, first); setPhase("result");
+        setProposal(r.proposal); setPhotos(r.photos); setSavedView(true); setStyle(first); resetPicks(r.proposal, first); setPhase("result");
       }
       const b = await apiFullTripBalance();
       if (alive && b) { setRemaining(b.remaining); setNextFreeAt(b.resetsAt); }
@@ -86,7 +88,7 @@ export default function FullTripAiWriter(props: {
     setPhase("busy"); setApplied(false); setApplyFailed(false);
     const r = await apiFullTrip({ itineraryId: props.itineraryId, deviceId: props.deviceId, locale, mode: "generate", forceFresh });
     if (r.kind === "proposal") {
-      setProposal(r.proposal); setSavedView(!r.charged); setPhase("result");
+      setProposal(r.proposal); setPhotos(r.photos); setSavedView(!r.charged); setPhase("result");
       const firstStyle = FULL_TRIP_STYLES.find(s => r.proposal[s]) ?? "calm";
       setStyle(firstStyle); resetPicks(r.proposal, firstStyle);
       const b = await apiFullTripBalance(); if (b) setRemaining(b.remaining);
@@ -190,6 +192,11 @@ export default function FullTripAiWriter(props: {
         {(phase === "result" || phase === "applying") && proposal && (
           <div className="mt-3" data-full-trip-result="">
             {savedView && <p className="text-[11.5px] text-[#8A919B]" data-full-trip-saved="">{t("savedView")}</p>}
+            {/* 실제로 본 사진 · 반영하지 못한 사진(이유) — 보지 못한 사진을 본 것처럼 말하지 않는다 */}
+            <p className="text-[11.5px] text-[#565D66]" data-full-trip-photos={photos ? `${photos.shown.length}/${photos.candidates}` : "none"}>
+              {photos && photos.shown.length > 0 ? t("photosShown", { count: photos.shown.length }) : t("photosNone")}
+              {photos && photos.skipped.length > 0 && ` ${t("photosSkipped", { count: photos.skipped.length, reasons: [...new Set(photos.skipped.map(x => t(`skip_${x.reason}` as "skip_over_count")))].join(", ") })}`}
+            </p>
             <div role="tablist" aria-label={t("styleLabel")} className="mt-2 flex flex-wrap gap-2">
               {FULL_TRIP_STYLES.filter(s => proposal[s]).map(s => (
                 <button key={s} type="button" role="tab" aria-selected={style === s} data-full-trip-style={s} onClick={() => { setStyle(s); resetPicks(proposal, s); }}
@@ -206,7 +213,9 @@ export default function FullTripAiWriter(props: {
                 {sp.moments.map(m => {
                   const meta = momentMeta.get(m.id);
                   if (!meta) return null;
-                  const label = [meta.day ? t("dayN", { n: meta.day }) : null, meta.place].filter(Boolean).join(" · ") || t("fieldMoment");
+                  const seen = photos?.shown.includes(m.id);
+                  const missed = photos?.skipped.some(x => x.momentId === m.id);
+                  const label = [meta.day ? t("dayN", { n: meta.day }) : null, meta.place, seen ? t("tagPhotoSeen") : missed ? t("tagPhotoMissed") : null].filter(Boolean).join(" · ") || t("fieldMoment");
                   return row(`m:${m.id}`, label, [m.title, m.memo].filter(Boolean).join(" — "));
                 })}
               </div>

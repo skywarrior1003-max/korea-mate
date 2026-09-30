@@ -61,7 +61,12 @@ test("전체 여행 글쓰기 — 재열람·같은 내용은 원장 밖, 성공
   assert.ok(post.indexOf('ai_status: "cache_server"') < post.indexOf("quotaReserve("), "같은 내용 저장 결과는 예약 전에 반환");
   assert.match(FULL, /quotaSettle\(qEnv, quota\.id, auth\.userId, "committed"/);
   assert.match(FULL, /const release = \(\) => quotaSettle\(qEnv, quota\.id, auth\.userId, "released"\)/);
-  assert.doesNotMatch(FULL, /inlineData|image\/jpeg/, "사진 이미지를 보내지 않는다");
+  // 사진은 한 번의 요청에 함께 — 서버가 소유 확인 뒤 저장소에서 직접 읽는다(클라이언트가 보낸 이미지는 받지 않는다)
+  assert.doesNotMatch(FULL, /body\.image|body\.images|body\.photos/, "클라이언트 이미지 입력 없음");
+  assert.match(FULL, /\/storage\/v1\/object\/\$\{PHOTO_BUCKET\}\//);
+  assert.ok(post.indexOf("resolveOwnership(") < post.indexOf("loadPhotos("), "소유 확인 뒤에만 사진을 읽는다");
+  assert.equal((FULL.match(/await pf\(/g) ?? []).length, 1, "사진 수와 무관하게 모델 호출 1회");
+  assert.match(FULL, /photos: PhotoCoverage = \{ shown: \[\.\.\.shownIds\], skipped/, "본 사진·못 본 사진을 응답에 남긴다");
 });
 
 test("차감은 완성 결과에만 — 실패·무효는 해제", () => {

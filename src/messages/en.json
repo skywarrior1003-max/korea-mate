@@ -1963,7 +1963,7 @@
   },
   "fullTripAi": {
     "heading": "Write the whole trip at once",
-    "desc": "Tap this once your plan and records are in. One request suggests the trip title, story intro and a title and text for every record, in three styles. The AI doesn't look at your photos — it reads only places, dates and your own notes.",
+    "desc": "Tap this once your plan and records are in. In one request, the AI reads your record photos (the first photo of each record) together with places, dates and your own notes, and suggests a trip title, story intro and a title and text for every record in three styles.",
     "remaining": "{count} free AI writing request(s) left this month (2 per month, shared by My Trip and Story).",
     "ask": "Get AI suggestions for the whole trip",
     "retry": "Try again",
@@ -1990,6 +1990,16 @@
     "applied": "Applied. You can edit anything yourself anytime.",
     "applyFailed": "Some items couldn't be saved. Please apply again.",
     "regenerate": "Get new suggestions (uses 1 more)",
-    "noPhotoNote": "The AI doesn't see what's in your photos. It writes only from places, dates and your own notes."
+    "noPhotoNote": "The AI looks at the first photo of each record, up to 12 photos per request. Photos it couldn't see are listed above. It doesn't write about people's identities or personal details.",
+    "photosShown": "Written after looking at {count} photo(s).",
+    "photosNone": "Written from places, dates and notes only — no photos were used.",
+    "photosSkipped": "{count} photo(s) couldn't be used ({reasons}).",
+    "skip_over_count": "over 12 per request",
+    "skip_too_large": "photo too large",
+    "skip_total_limit": "total size limit",
+    "skip_load_failed": "couldn't load",
+    "skip_unsupported": "unsupported format",
+    "tagPhotoSeen": "photo seen",
+    "tagPhotoMissed": "photo not used"
   }
 }

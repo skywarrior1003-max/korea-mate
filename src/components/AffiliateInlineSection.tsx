@@ -14,8 +14,8 @@ const CATEGORY_EMOJI: Record<string, string> = {
   shopping:      "🛍️",
 };
 
-function categoryEmoji(category: string): string {
-  return CATEGORY_EMOJI[category.toLowerCase()] ?? "🇰🇷";
+function categoryEmoji(category: string | null | undefined): string {
+  return CATEGORY_EMOJI[(category ?? "").toLowerCase()] ?? "🇰🇷";
 }
 
 interface Props {
