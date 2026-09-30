@@ -74,8 +74,8 @@ const json = (b: unknown, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-const reply = (profile: PersonalizationProfile | null, ai_status: AiStatus) =>
-  json({ profile, ai_status });
+const reply = (profile: PersonalizationProfile | null, ai_status: AiStatus, extra: { next_free_at?: string | null } = {}) =>
+  json({ profile, ai_status, ...extra });
 
 /** 로그에는 개인정보를 넣지 않는다. 식별은 짧은 해시로만 한다. */
 function shortHash(s: string): string {
@@ -187,6 +187,11 @@ export async function onRequestPost(
   const quota = await quotaReserve(qEnv, auth.userId, "personalize", await quotaIdemKey(auth.userId, "personalize", requestId));
   if (quota.status !== "reserved") {
     log({ requestId, mode, providerCalled: false, status: "fallback_quota", quota: quota.status });
+    // 같은 요청을 다시 보낸 경우 — 이미 확정된 결과를 돌려준다(추가 차감 0)
+    const prev = quota.status === "replay" ? (quota.result as { profile?: PersonalizationProfile | null } | null)?.profile ?? null : null;
+    if (prev) return reply(prev, "applied");
+    if (quota.status === "in_progress") return reply(null, "fallback_duplicate");
+    if (quota.status === "exhausted") return reply(null, "fallback_quota", { next_free_at: quota.resetsAt || null });
     return reply(null, quota.status === "unavailable" ? "fallback_guard" : "fallback_quota");
   }
   const releaseQuota = () => quotaSettle(qEnv, quota.id, auth.userId, "released");
@@ -273,7 +278,7 @@ export async function onRequestPost(
           status: profile ? "applied" : "fallback_invalid_response" });
 
     // 사용자 차감은 적용 가능한 프로필을 받았을 때만 확정한다
-    await quotaSettle(qEnv, quota.id, auth.userId, profile ? "committed" : "released");
+    await quotaSettle(qEnv, quota.id, auth.userId, profile ? "committed" : "released", profile ? { profile } : undefined);
     return profile ? reply(profile, "applied") : reply(null, "fallback_invalid_response");
   }
 }

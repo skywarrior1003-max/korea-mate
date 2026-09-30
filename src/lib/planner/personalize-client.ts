@@ -41,6 +41,15 @@ export function personalizationRequestKey(r: PersonalizeRequest): string {
 /** 한 생성 흐름 안에서의 중복 차단. 프로세스 전역 exactly-once 를 주장하지 않는다. */
 const inFlight = new Map<string, Promise<PersonalizationProfile | null>>();
 
+/**
+ * 무료 AI 도움(30일 이동 구간 1회)을 이미 쓴 경우의 마지막 응답 — 화면이 다음 가능 날짜를 알린다
+ * (일정은 규칙 기반 그대로). 한 번 읽으면 비운다.
+ */
+let lastFreeAiUsed: { nextFreeAt: string | null } | null = null;
+export function takeFreeAiUsed(): { nextFreeAt: string | null } | null {
+  const v = lastFreeAiUsed; lastFreeAiUsed = null; return v;
+}
+
 export async function fetchPersonalizationProfile(
   req: PersonalizeRequest,
 ): Promise<PersonalizationProfile | null> {
@@ -64,7 +73,8 @@ export async function fetchPersonalizationProfile(
         body:    JSON.stringify({ ...req, request_id: key }),
       });
       if (!res.ok) return null;                       // 재시도하지 않는다
-      const body = await res.json() as { profile?: PersonalizationProfile | null };
+      const body = await res.json() as { profile?: PersonalizationProfile | null; ai_status?: string; next_free_at?: string | null };
+      if (body.ai_status === "fallback_quota") lastFreeAiUsed = { nextFreeAt: typeof body.next_free_at === "string" ? body.next_free_at : null };
       return body.profile ?? null;
     } catch {
       return null;                                   // 네트워크 실패도 그냥 넘어간다

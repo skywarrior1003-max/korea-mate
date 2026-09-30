@@ -92,7 +92,8 @@ import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
 import PlannerDayNav from "@/components/planner/PlannerDayNav";
 import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
-import { fetchPersonalizationProfile } from "@/lib/planner/personalize-client";
+import { fetchPersonalizationProfile, takeFreeAiUsed } from "@/lib/planner/personalize-client";
+import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import { getCurrentUser, signInWithGoogle } from "@/lib/auth/auth-client";
 import ConsentSheet from "@/components/auth/ConsentSheet";
 import TimelineIcon from "@/components/planner/TimelineIcon";
@@ -436,7 +437,7 @@ async function generateWithNewApi(
    * 사용자가 "AI로 내 취향 반영하기" 를 눌렀을 때만 true 로 다시 부른다.
    */
   aiPersonalize = false,
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; fixedOutOfHoursNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null; personalizationApplied: boolean }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; fixedOutOfHoursNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null; personalizationApplied: boolean; freeAiUsed: { nextFreeAt: string | null } | null }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -589,6 +590,7 @@ async function generateWithNewApi(
       category: (cartItemByKey[String(h.place_id)]?.type ?? undefined),
     })),
   });
+  const freeAiUsed = aiPersonalize ? takeFreeAiUsed() : null;
 
 
   /**
@@ -981,7 +983,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime, personalizationApplied: personalizationProfile != null };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, fixedOutOfHoursNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime, personalizationApplied: personalizationProfile != null, freeAiUsed };
 }
 
 function getCategoryColor(category: string): string {
@@ -1577,7 +1579,8 @@ function ItineraryResult() {
   // 기본 생성은 AI 0 이다. 이 상태 기계가 유일한 AI 진입점이고, busy 이외의
   // 어떤 전이도 provider 를 부르지 않는다. unavailable 은 "이번에 안 됐다"는
   // 사실만 담는다 — 잔여 횟수·내부 사유는 화면에 내지 않는다.
-  const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "login" | "confirm" | "busy" | "applied" | "unavailable">("idle");
+  const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "login" | "confirm" | "busy" | "applied" | "unavailable" | "freeUsed">("idle");
+  const [aiFreeUsedAt, setAiFreeUsedAt] = useState<string | null>(null);
   // CONSENT-V1 §C — Google 로 보내기 전 동의 sheet. intent 성공 후에만 OAuth.
   const [aiConsentOpen, setAiConsentOpen] = useState(false);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
@@ -1851,6 +1854,8 @@ function ItineraryResult() {
         exactStay, paramTripPace, paramArrivalType || undefined,
         true, // aiPersonalize — 이 한 곳이 유일한 opt-in 진입점
       );
+      // 무료 AI 도움을 이미 썼으면 일반 '사용 불가' 대신 다음 가능 날짜를 알린다(유료 잔액은 없다)
+      if (!r.personalizationApplied && r.freeAiUsed) { setAiFreeUsedAt(r.freeAiUsed.nextFreeAt); setAiOptInPhase("freeUsed"); return; }
       if (!r.personalizationApplied) { setAiOptInPhase("unavailable"); return; }
       setDays(sanitizeDays(r.days));
       setCheckinTime(r.checkinTime);
@@ -3001,6 +3006,8 @@ function ItineraryResult() {
             </div>
           ) : aiOptInPhase === "unavailable" ? (
             <p className="text-sm text-violet-700 font-medium">{t("aiUnavailableNotice")}</p>
+          ) : aiOptInPhase === "freeUsed" ? (
+            <FreeAiUsedNote nextFreeAt={aiFreeUsedAt} className="text-sm text-violet-700 font-medium" />
           ) : aiOptInPhase === "busy" ? (
             <p className="text-sm text-violet-700 font-medium">{t("aiOptInBusy")}</p>
           ) : aiOptInPhase === "confirm" ? (

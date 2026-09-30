@@ -49,12 +49,14 @@ export type AiStatus =
   | "disabled" | "mock" | "applied"
   | "fallback_missing_key" | "fallback_timeout" | "fallback_provider_error"
   | "fallback_invalid_response" | "fallback_duplicate" | "fallback_guard"
-  /** 이번 달 무료 개인화(가져오기와 공유) 횟수 소진 — 기본 일정은 그대로 만들어진다 */
+  /** 무료 AI 도움(30일 이동 구간 1회 · 개인화·스토리 AI 글쓰기·가져오기 공유) 소진 — 기본 일정은 그대로 만들어진다 */
   | "fallback_quota";
 
 export interface PersonalizeResponse {
   profile:   PersonalizationProfile | null;
   ai_status: AiStatus;
+  /** fallback_quota 일 때 — 다음 무료 사용 가능 시각(ISO UTC) */
+  next_free_at?: string | null;
 }
 
 // ── 모드 계약 ────────────────────────────────────────────────────────────────
