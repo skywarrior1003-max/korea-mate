@@ -139,6 +139,16 @@ export async function aiOpsSettle(
 /** 공식 단가(cost-model 과 동일 원장) — 실비 commit 계산용 */
 export const USD_MICRO_PER_IN_TOK = 0.30;   // $0.30/1M = 0.30 µ$/tok
 export const USD_MICRO_PER_OUT_TOK = 2.50;  // $2.50/1M
-export function usdMicroFromUsage(inTok: number | null | undefined, outTok: number | null | undefined): number {
-  return Math.ceil((inTok ?? 0) * USD_MICRO_PER_IN_TOK + (outTok ?? 0) * USD_MICRO_PER_OUT_TOK);
+/**
+ * 모델별 공식 단가(유료 · 1M 토큰당 $ = 토큰당 µ$) — ai.google.dev/gemini-api/docs/pricing 2026-09-30 확인.
+ * 3.8 Flash 는 2027-01-01 부터 두 배(공지). 서울 Worker 가 x-gkm-model 로 실제 모델을 알려 준다.
+ */
+const MODEL_PRICES: Record<string, (at: Date) => { inTok: number; outTok: number }> = {
+  "gemini-2.5-flash": () => ({ inTok: 0.30, outTok: 2.50 }),
+  "gemini-3.5-flash-lite": () => ({ inTok: 0.30, outTok: 2.50 }),
+  "gemini-3.8-flash": at => at.getTime() < Date.UTC(2027, 0, 1) ? { inTok: 0.75, outTok: 3.75 } : { inTok: 1.50, outTok: 7.50 },
+};
+export function usdMicroFromUsage(inTok: number | null | undefined, outTok: number | null | undefined, model?: string | null): number {
+  const p = model && MODEL_PRICES[model] ? MODEL_PRICES[model]!(new Date()) : { inTok: USD_MICRO_PER_IN_TOK, outTok: USD_MICRO_PER_OUT_TOK };
+  return Math.ceil((inTok ?? 0) * p.inTok + (outTok ?? 0) * p.outTok);
 }

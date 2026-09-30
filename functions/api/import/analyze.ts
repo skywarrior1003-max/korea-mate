@@ -152,7 +152,7 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
     })) as typeof fetch;
 }
 
-interface AiUsage { inTok: number | null; outTok: number | null }
+interface AiUsage { inTok: number | null; outTok: number | null; model?: string | null }
 
 async function analyzeWithAi(env: Env, prompt: string): Promise<
   | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
@@ -206,6 +206,7 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
       inTok: typeof u?.promptTokenCount === "number" ? u.promptTokenCount : null,
       outTok: typeof u?.candidatesTokenCount === "number" || typeof u?.thoughtsTokenCount === "number"
         ? (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0) : null,
+      model: res.headers.get("x-gkm-model"), // 서울 Worker 가 실제로 부른 모델(단가 계산용)
     };
     return { ok: true, analysis, usage };
   } catch (err) {
@@ -233,6 +234,13 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   // 비 Production 전용 연결 진단 — ?diag=route. Worker /health 는 provider 를 부르지 않는다(비용 0).
   // 키 값·형식은 싣지 않는다(있는지만).
   const isProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() === "production";
+  // 비 Production 전용 — ?diag=models: 이 환경 Worker 키로 쓸 수 있는 모델 이름(생성 호출 아님 · 비용 0)
+  if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "models" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
+    try {
+      const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/models", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "" } });
+      return json({ ok: true, models: await r.json().catch(() => null) });
+    } catch { return json({ ok: false, error: "unreachable" }); }
+  }
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "route") {
     const direct = (ctx.env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct";
     const binding = ctx.env.AI_WRITING;
@@ -365,7 +373,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus, key_shape: keyShape }) : fail(ai.error);
   }
   // 회사 원장 — 실제 토큰으로 정산(usage 가 없으면 예약액 보수 commit)
-  const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok) : 12_100;
+  const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok, ai.usage.model) : 12_100;
   await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
     { inTok: ai.usage.inTok, outTok: ai.usage.outTok, usdMicro: usd });
 

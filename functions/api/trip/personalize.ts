@@ -212,12 +212,14 @@ export async function onRequestPost(
 
   // 서울 Worker 가 모델에 보내기 전에 거절했는지(x-gkm-provider-called: 0) — 그때만 회사 원장 예약을 되돌린다
   let workerRefusedBeforeProvider = false;
+  let workerModel: string | null = null; // 서울 Worker 가 실제로 부른 모델(단가 계산용)
   const baseFetch = ctx.fetchFn ?? bindingProviderFetch(ctx.env);
   const call = await callProfileProvider({
     prompt, apiKey,
     fetchFn: baseFetch ? (async (u: RequestInfo | URL, i?: RequestInit) => {
       const r = await baseFetch(u, i);
       if (r.headers.get("x-gkm-provider-called") === "0") workerRefusedBeforeProvider = true;
+      workerModel = r.headers.get("x-gkm-model");
       return r;
     }) as typeof fetch : baseFetch,
   });
@@ -250,7 +252,7 @@ export async function onRequestPost(
     await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", {
       inTok: u?.promptTokenCount ?? null,
       outTok: (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0),
-      usdMicro: usdMicroFromUsage(u?.promptTokenCount, (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0)),
+      usdMicro: usdMicroFromUsage(u?.promptTokenCount, (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0), workerModel),
     });
   }
 

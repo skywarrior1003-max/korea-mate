@@ -38,6 +38,8 @@ export interface Env {
   AI_WRITING_WORKER_MODE?: string;
   /** 진단용 표식 — Preview 전용 Worker 는 "preview"(없으면 production 으로 본다) */
   WORKER_ENV?: string;
+  /** 환경별 모델(없으면 writing-core MODEL). Preview 전용 Worker 에서만 설정한다 — Production 은 설정하지 않는다 */
+  GEMINI_MODEL?: string;
 }
 
 const json = (b: unknown, status = 200) =>
@@ -55,6 +57,11 @@ const refused = (b: unknown, status: number) =>
 /** /provider 기본 본문 상한(텍스트 요청) · 사진을 싣는 요청이 x-provider-max-bytes 로 늘릴 수 있는 최대치 */
 const PROVIDER_BODY_DEFAULT = 64_000;
 const PROVIDER_BODY_MAX = 12_000_000;
+/** 이 Worker 가 부르는 모델 — 환경 변수가 있으면 그것(Preview 전용), 없으면 공용 MODEL */
+const modelOf = (env: Env): string => {
+  const m = (env.GEMINI_MODEL ?? "").trim();
+  return /^[a-z0-9.\-]{3,60}$/.test(m) ? m : MODEL;
+};
 
 const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null, set: MomentSuggestionSet3 | null = null) =>
   json({ suggestion, moment, set, ai_status });
@@ -194,6 +201,16 @@ export default {
     // /provider 호출측은 HTTP 상태로 분기한다 — 키 누락을 200 빈 응답이 아니라 503 코드로 알린다
     if (!apiKey) return path === "/provider" ? refused({ error: "no_key" }, 503) : reply(null, "no_key");
 
+    if (path === "/models") {
+      // 이 키로 쓸 수 있는 모델 이름만(생성 호출 아님 · 비용 0). 키 값은 응답에 싣지 않는다.
+      try {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=${apiKey}`);
+        const j = (await r.json()) as { models?: { name?: string; supportedGenerationMethods?: string[] }[] };
+        const names = (j.models ?? []).filter(m => (m.supportedGenerationMethods ?? []).includes("generateContent")).map(m => String(m.name).replace(/^models\//, ""));
+        return json({ http: r.status, current: modelOf(env), models: names });
+      } catch { return json({ error: "list_failed" }, 502); }
+    }
+
     if (path === "/canary") {
       // 본문은 읽지 않는다 — provider 로 나가는 입력은 서버 고정값뿐이다.
       const fixed = {
@@ -237,7 +254,7 @@ export default {
       const started = Date.now();
       try {
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelOf(env)}:generateContent?key=${apiKey}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -249,7 +266,7 @@ export default {
         const [text, colo] = await Promise.all([res.text(), executionColo()]);
         log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length, inBytes: raw.length });
         // 상태·본문을 그대로 넘긴다 — 호출측의 기존 오류 분기(!res.ok)가 그대로 동작한다.
-        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1" } });
+        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1", "x-gkm-model": modelOf(env) } });
       } catch (err) {
         clearTimeout(timer);
         const isAbort = err instanceof Error && err.name === "AbortError";

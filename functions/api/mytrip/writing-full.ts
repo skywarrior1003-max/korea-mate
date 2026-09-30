@@ -257,6 +257,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const timer = setTimeout(() => controller.abort(), FULL_TRIP_TIMEOUT_MS + 3_000);
   let proposal: FullTripProposal | null = null, inTok: number | null = null, outTok: number | null = null, fail: string | null = null;
   let notSent = false;
+  let usedModel: string = MODEL;
   try {
     const res = await pf(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${ctx.env.GEMINI_API_KEY ?? ""}`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-provider-max-bytes": String(providerBody.length + 1_000) }, signal: controller.signal,
@@ -264,6 +265,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     });
     // 서울 Worker 가 모델에 보내기 전에 거절했다(인증·스위치·키 없음·본문 크기) — 과금 없음이 확정이다
     notSent = res.headers.get("x-gkm-provider-called") === "0";
+    usedModel = res.headers.get("x-gkm-model") ?? MODEL;
     if (!res.ok) fail = `http_${res.status}`;
     else {
       const raw = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } };
@@ -286,12 +288,12 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     log({ ok: false, fail, notSent, latencyMs: latency, moments: facts.moments.length, photos: images.length });
     return json({ ok: false, ai_status: `fallback_${fail}`, not_sent: notSent });
   }
-  const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok) : WORST_USD_MICRO;
+  const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok, usedModel) : WORST_USD_MICRO;
   await db.from(GEN_TABLE).update({ status: "succeeded", result: { proposal, photos }, in_tok: inTok, out_tok: outTok, latency_ms: latency }).eq("id", genId);
   await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usd });
   await quotaSettle(qEnv, quota.id, auth.userId, "committed", { generation_id: genId });
   log({ ok: true, latencyMs: latency, moments: facts.moments.length, photos: images.length, skipped: skipped.length, inTok, outTok, usdMicro: usd, styles: Object.keys(proposal).length });
-  return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, latency_ms: latency } });
+  return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, latency_ms: latency, model: usedModel } });
 }
 
 // GET — 이번 달 남은 전체 여행 AI 글쓰기 사용권(화면 안내용). 로그인 사용자만. AI 호출 없음.
