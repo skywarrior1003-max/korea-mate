@@ -191,8 +191,10 @@ export function buildPrivateStoryDays(
     const used = new Set<string>();
 
     day.places.forEach((stop, idx) => {
-      if (!opt.isPast && !stopReached(day.date, stop.time, opt)) return;
       const matched = dayMoments.filter(m => !used.has(m.moment_id) && momentBelongsToStop(m, stop));
+      // 그 장소에 남긴 기록이 있으면 이미 다녀온 곳이다 — 시각이 없거나 아직 안 된 시각이어도 일정 자리에 둔다
+      // (없으면 기록이 Day 끝 "결합되지 않은 순간"으로 밀려 일정 순서를 잃었다 · 2026-09-30 실측)
+      if (matched.length === 0 && !opt.isPast && !stopReached(day.date, stop.time, opt)) return;
       if (matched.length > 0) {
         for (const m of matched) { used.add(m.moment_id); items.push(momentItem(m, s(stop.name) || undefined, idx + 1)); }
       } else {
