@@ -71,19 +71,58 @@ export function stopKeyOf(stop: StopIdentityInput): string | null {
 }
 
 /**
+ * 이 일정 항목에 붙은 기록이 가질 수 있는 열쇠 전부 — 대표 열쇠(stopKeyOf) + 이 여행 항목 열쇠(stop:<stopId>).
+ * 코스 장소에 나중에 공식 id(sourceKey·place_id)가 붙어 대표 열쇠가 바뀌어도, 이미 stop:<stopId> 로
+ * 남긴 기록이 떨어지지 않게 한다(기존 기록 보존). 이름으로는 여전히 붙이지 않는다.
+ */
+export function stopKeysOf(stop: StopIdentityInput): string[] {
+  const primary = stopKeyOf(stop);
+  const sid = typeof stop.stopId === "string" ? stop.stopId.trim() : "";
+  const own = UUID_RE.test(sid) ? tripStopKey(sid) : null;
+  const out: string[] = [];
+  if (primary) out.push(primary);
+  if (own && own !== primary) out.push(own);
+  return out;
+}
+
+/**
+ * 결정적 항목 열쇠 — 같은 여행·같은 Day·같은 자리·같은 이름이면 어느 기기에서 열어도 같은 값.
+ * 두 기기가 저장 전에 동시에 열어도 서로 다른 열쇠가 생기지 않는다. 암호용이 아니다(128bit 섞기).
+ */
+export function deterministicStopId(itineraryId: string, dayNumber: number, index: number, name: string): string {
+  const input = `${itineraryId}|${dayNumber}|${index}|${name}`;
+  let h1 = 1779033703, h2 = 3144134277, h3 = 1013904242, h4 = 2773480762;
+  for (let i = 0; i < input.length; i++) {
+    const k = input.charCodeAt(i);
+    h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+    h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+    h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+    h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+  }
+  h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+  h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+  h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+  h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+  const hex = [h1 ^ h2 ^ h3 ^ h4, h2 ^ h1, h3 ^ h1, h4 ^ h1].map(n => (n >>> 0).toString(16).padStart(8, "0")).join("");
+  // UUID v4 모양(버전 4 · variant 8)으로 — 저장·검증 규칙(UUID_RE)을 그대로 통과한다
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-4${hex.slice(13, 16)}-8${hex.slice(17, 20)}-${hex.slice(20, 32)}`;
+}
+
+/**
  * 열쇠가 없는 일정 항목에 `stopId` 를 한 번 붙인다(숙소 제외 — 숙소는 stay 열쇠를 이미 갖는다).
  * 바뀐 것이 없으면 같은 배열을 그대로 돌려준다(호출측이 불필요한 저장을 하지 않게).
+ * newId 는 (Day 번호, 자리, 항목)을 받는다 — 결정적 열쇠(deterministicStopId)를 쓰기 위해서다.
  */
-export function ensureStopIds<P extends StopIdentityInput & { isAccommodation?: boolean }, D extends { places: P[] }>(
-  days: D[], newId: () => string,
+export function ensureStopIds<P extends StopIdentityInput & { isAccommodation?: boolean; name?: string }, D extends { dayNumber?: number; places: P[] }>(
+  days: D[], newId: (dayNumber: number, index: number, place: P) => string,
 ): D[] {
   let changed = false;
-  const next = days.map(d => {
+  const next = days.map((d, di) => {
     let dayChanged = false;
-    const places = d.places.map(p => {
+    const places = d.places.map((p, pi) => {
       if (p.isAccommodation || stopKeyOf(p) !== null) return p;
       dayChanged = true;
-      return { ...p, stopId: newId() };
+      return { ...p, stopId: newId(typeof d.dayNumber === "number" ? d.dayNumber : di + 1, pi, p) };
     });
     if (!dayChanged) return d;
     changed = true;

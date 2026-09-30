@@ -28,7 +28,7 @@
 
 import type { StoryDay, StoryMemory, StoryPhoto } from "@/components/story/story-types";
 import { resolveDisplayImage } from "../place-detail/place-detail-core.ts";
-import { stopKeyOf } from "../trip-moments/stop-binding.ts";
+import { stopKeysOf } from "../trip-moments/stop-binding.ts";
 
 export interface StoryStopInput {
   name:      string;
@@ -147,10 +147,11 @@ function baselineItem(dayNumber: number, idx: number, stop: StoryStopInput): Sto
  * 순간이 지도와 저널에서 다른 장소에 나타난다. 규칙은 여기 한 벌뿐이다.
  */
 export function momentBelongsToStop(m: StoryMomentInput, stop: StoryStopInput): boolean {
-  const key = stopKeyOf(stop);
-  if (key === null) return false;
+  // 대표 열쇠 + 이 여행 항목 열쇠(stop:<stopId>) — 대표 열쇠가 바뀌어도 이미 남긴 기록은 붙어 있다
+  const keys = stopKeysOf(stop);
+  if (keys.length === 0) return false;
   const mk = s(m.stop_key);
-  if (mk !== "") return mk === key;
+  if (mk !== "") return keys.includes(mk);
   if (stop.source !== "city_spot" || typeof m.city_spot_id !== "number") return false;
   const id = s(stop.place_id);
   return /^\d+$/.test(id) && String(m.city_spot_id) === id;

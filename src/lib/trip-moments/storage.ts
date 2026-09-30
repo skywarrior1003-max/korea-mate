@@ -83,7 +83,9 @@ function mergeMoments(serverMoments: TripMoment[], localMoments: TripMoment[]): 
   });
 
   // 서버에 없는 로컬 moments (pending · photo-only) 보존
-  const localOnly = localMoments.filter(m => !serverIds.has(m.moment_id));
+  // 단, 이미 서버에 올라갔던(synced) 기록이 서버 목록에 없으면 다른 기기에서 지운 것이다 — 되살리지 않는다.
+  // (2026-09-30 실측: A 기기 삭제 후 B 기기 캐시가 +69초·재열기에도 카드·Story 에 남았다. 아직 못 보낸 pending 은 그대로 둔다)
+  const localOnly = localMoments.filter(m => !serverIds.has(m.moment_id) && m.synced !== true);
   return [...localOnly, ...merged];
 }
 

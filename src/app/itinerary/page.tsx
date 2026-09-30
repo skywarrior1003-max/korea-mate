@@ -16,7 +16,7 @@ import { seoulClock } from "@/lib/trips/seoul-clock";
 import { tripBucket } from "@/lib/trips/trips-lifecycle";
 import { todayPosition, findTodayDayIndex, freshClockFor } from "@/lib/planner/execution-core";
 import { remapTripDays } from "@/lib/planner/trip-dates-core";
-import { stopCitySpotId, stopKeyOf, ensureStopIds, type StopIdentityInput as StopIdentityForPhoto } from "@/lib/trip-moments/stop-binding";
+import { stopCitySpotId, stopKeyOf, stopKeysOf, ensureStopIds, deterministicStopId, type StopIdentityInput as StopIdentityForPhoto } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
   withResolvedPhotos, needsPhotoResolution, isResolvedFresh, fetchMomentPhotoUrls,
@@ -1416,6 +1416,8 @@ function ItineraryResult() {
   /** 새 장소(이름만) 입력 — 좌표를 지어내지 않는다. 위치 없이도 일정·사진·메모가 된다 */
   const [newPlaceName,  setNewPlaceName]  = useState("");
   const [newPlaceKind,  setNewPlaceKind]  = useState<"restaurant" | "cafe" | "attraction" | "shopping">("restaurant");
+  /** 고른 자리와 시각이 부딪혀 시간 순서 자리로 간 항목 — 규칙을 알리고 사용자가 직접 고치게 한다(시각을 대신 바꾸지 않는다) */
+  const [orderNotice,   setOrderNotice]   = useState<{ dayIdx: number; key: string; name: string; time: string; fixed: boolean; wanted: number } | null>(null);
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
   // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
   const [plannerDay,    setPlannerDay]    = useState(1);
@@ -1719,15 +1721,16 @@ function ItineraryResult() {
   // 이미 모두 있으면 같은 배열이라 아무 일도 없다.
   useEffect(() => {
     if (!itinId || loading || (shareId && !isOwner) || days.length === 0) return;
-    const next = ensureStopIds(days, () => crypto.randomUUID());
+    // 결정적 열쇠 — 두 기기가 저장 전에 동시에 열어도 같은 장소에 같은 열쇠가 붙는다
+    const next = ensureStopIds(days, (dayNumber, index, p) => deterministicStopId(itinId, dayNumber, index, p.name ?? ""));
     if (next !== days) Promise.resolve().then(() => setDays(next));
   }, [days, itinId, loading, shareId, isOwner]);
 
   /** 이 여행에서 이 장소에 남긴 내 사진(있으면) — 이 여행 화면에서는 공용 장소 사진보다 먼저 보인다. 공용 원본은 그대로 */
   const myStopPhoto = (place: StopIdentityForPhoto): string | null => {
-    const sk = stopKeyOf(place);
-    if (!sk) return null;
-    const rec = displayMoments.find(m => m.stop_key === sk && typeof m.photo_data === "string" && m.photo_data !== "");
+    const keys = stopKeysOf(place);
+    if (keys.length === 0) return null;
+    const rec = displayMoments.find(m => typeof m.stop_key === "string" && keys.includes(m.stop_key) && typeof m.photo_data === "string" && m.photo_data !== "");
     return rec?.photo_data ?? null;
   };
 
@@ -2604,6 +2607,23 @@ function ItineraryResult() {
     return [...places.slice(0, at), item, ...places.slice(at)];
   }
 
+  /** 사용자가 고른 경우에만: 그 항목의 직접 지정 시각을 지우고 고른 자리로 옮긴다. 고정 일정(fixed)은 대상이 아니다 */
+  function keepChosenPosition() {
+    const n = orderNotice;
+    if (!n || n.fixed) return;
+    setDays(prev => prev.map((day, di) => {
+      if (di !== n.dayIdx) return day;
+      const from = day.places.findIndex(pl => pl.sourceKey === n.key);
+      if (from < 0) return day;
+      const moved: Place = { ...day.places[from]!, time: "" };
+      delete moved.timeSource;
+      const rest = day.places.filter((_, i) => i !== from);
+      const at = Math.min(n.wanted, rest.length);
+      return { ...day, places: orderDayPlaces([...rest.slice(0, at), moved, ...rest.slice(at)]) };
+    }));
+    setOrderNotice(null);
+  }
+
   // 새 장소 — 이름만으로 이 여행 일정에 넣는다. 원본 카탈로그·내 장소에는 아무것도 쓰지 않는다.
   // 좌표·시각을 지어내지 않는다: lat/lng 없음, time 비움(시간대만 앞 장소를 따른다).
   function addNewPlaceToDay() {
@@ -2654,6 +2674,14 @@ function ItineraryResult() {
       slot:          assignSlot(placeTime),
       cartSnapshot:  item,
     };
+    // 순서 계약: 시각 있는 항목은 시각이 자리를 정한다. 고른 자리와 다르면 숨기지 않고 알린다.
+    const current = days[editDay]?.places ?? [];
+    const wanted  = addAfter === null || addAfter >= current.length - 1 ? current.length : Math.max(0, addAfter + 1);
+    const placed  = orderDayPlaces(insertAtChosen(current, newPlace));
+    const landed  = placed.indexOf(newPlace);
+    setOrderNotice(landed !== wanted
+      ? { dayIdx: editDay, key: getItemSourceKey(item), name: newPlace.name, time: placeTime, fixed: Boolean(item.fixed), wanted }
+      : null);
     setDays(prev => prev.map((day, di) =>
       di === editDay ? { ...day, places: orderDayPlaces(insertAtChosen(day.places, newPlace)) } : day
     ));
@@ -3783,6 +3811,25 @@ function ItineraryResult() {
                 </label>
               )}
 
+              {/* 고른 자리와 시각이 부딪힌 경우 — 규칙을 드러내고 사용자가 고친다 */}
+              {orderNotice && orderNotice.dayIdx === editDay && (
+                <div role="status" data-order-notice className="rounded-2xl border px-3 py-3 text-xs" style={{ borderColor: "#E5E7EA", backgroundColor: "#fff" }}>
+                  <p className="font-bold text-ink">{tPlanner(orderNotice.fixed ? "orderNoticeFixed" : "orderNoticeTimed", { name: orderNotice.name, time: orderNotice.time })}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {!orderNotice.fixed && (
+                      <button type="button" data-order-keep onClick={keepChosenPosition}
+                        className="gkm-focus min-h-11 px-3.5 rounded-full text-xs font-black text-white" style={{ backgroundColor: "var(--gkm-action-primary)" }}>
+                        {tPlanner("orderKeepChosen")}
+                      </button>
+                    )}
+                    <button type="button" onClick={() => setOrderNotice(null)}
+                      className="gkm-focus min-h-11 px-3.5 rounded-full text-xs font-bold border border-line bg-white text-sub">
+                      {tPlanner("orderKeepTime")}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* 새 장소 — 이름만 있어도 된다. 위치 권한·지도 핀을 요구하지 않고 좌표를 만들지 않는다 */}
               {(!shareId || isOwner) && !isPastTrip && (
                 <div className="rounded-2xl border border-line bg-white p-3" data-add-new-place>
@@ -4272,7 +4319,8 @@ function ItineraryResult() {
                                     if (!itinId) return null;
                                     const sk = stopKeyOf(place);
                                     if (sk === null) return null;
-                                    const rec = displayMoments.find(m => m.stop_key === sk);
+                                    const keys = stopKeysOf(place);
+                                    const rec = displayMoments.find(m => typeof m.stop_key === "string" && keys.includes(m.stop_key));
                                     if (rec) {
                                       const line = (rec.title ?? "").trim() || (rec.memo ?? "").trim();
                                       return (

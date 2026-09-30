@@ -295,3 +295,22 @@ test("대표 cover — 이미지가 하나도 없으면 null (지어내지 않�
   const { representativeCoverUrl } = await import("./story-adapter.ts");
   assert.equal(representativeCoverUrl(coverApi([], [{ name: "A" }])), null);
 });
+
+// ── 서버가 정한 자리(stopIndex) — 추천 코스·새 장소도 공유 Story 에서 제자리에 ──────
+test("★stopIndex 가 있으면 그 Day 그 자리에만 붙는다 — place_id 없는 장소도", () => {
+  const days = toStoryDays(api({
+    days: { __v: 2, scheduled: [
+      { dayNumber: 1, date: "2026-10-12", places: [{ name: "광안리 해변" }, { name: "광안리 조개구이집" }] },
+      { dayNumber: 2, date: "2026-10-13", places: [{ name: "광안리 해변" }] },
+    ] },
+    memories: [
+      mem({ dayNumber: 1, stopIndex: 1, memo: "조개구이", placeName: "광안리 조개구이집" }),
+      mem({ dayNumber: 2, stopIndex: 0, memo: "둘째 날", placeName: "광안리 해변" }),
+    ],
+  }));
+  assert.equal(days[0]!.memories[0]!.kind, "stop");
+  assert.equal(days[0]!.memories[1]!.memo, "조개구이");
+  assert.equal(days[0]!.memories[1]!.order, 2);
+  assert.equal(days[1]!.memories[0]!.memo, "둘째 날");
+  assert.equal(days[0]!.memories.length, 2, "다른 Day 의 같은 이름 장소로 새지 않는다");
+});

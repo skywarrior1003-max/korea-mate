@@ -170,8 +170,14 @@ test("★itin 번역 훅이 필요한 컴포넌트에 붙어 있다", () => {
   // autoTripTitle 용 `tAutoTitle` 훅을 `t` 선언보다 앞서 추가했다 — 같은
   // 네임스페이스의 중복 훅은 next-intl 에서 무해하고 locale 계약 위반이 아니다.
   // (CORRECTION-V1 §3 전수 조사로 판정. 3↔4 가 또 바뀌면 소비처를 다시 세라.)
-  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 4,
-    "PlaceModal 1 · ItineraryResult 2(t + tAutoTitle) · ItineraryPage 1");
+  // 4→5 (2026-09-30 재조사): 7aad5336 이 "지도에 표시되지 않음" 안내를 작은 컴포넌트
+  // NoLocationNote 로 분리하며 자기 훅을 가졌다. 컴포넌트는 4곳이다.
+  assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 5,
+    "NoLocationNote 1 · PlaceModal 1 · ItineraryResult 2(t + tAutoTitle) · ItineraryPage 1");
+  // 개수만 보지 않고 자리도 본다 — 다른 곳에 조용히 늘거나 옮겨 가면 여기서 걸린다
+  for (const owner of ["function NoLocationNote", "function PlaceModal", "function ItineraryResult", "export default function ItineraryPage"]) {
+    assert.ok(BODY.includes(owner), `itin 훅 소비처가 사라졌다: ${owner}`);
+  }
 });
 
 // 예전에는 `t("` 리터럴 호출 개수를 품질 지표로 썼다. 그런데 에러 문구를
@@ -247,7 +253,7 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
 // 사라지면 여기서 걸리고, 의도적 DB 작업만 이 스냅숏을 갱신한다.
 // (RELEASE-CLEANUP-V1 보고에서 stale 로 확인되어 PLANNER-SPOTS-SEPARATION-V1
 //  에서 현실 반영 — assertion 약화가 아니라 오히려 파일명 전수 고정이다.)
-test("★migration 집합 스냅숏 — 승인된 77개 그대로, 예상 밖 추가/삭제 없음", () => {
+test("★migration 집합 스냅숏 — 승인된 87개 그대로, 예상 밖 추가/삭제 없음", () => {
   // CORRECTION-V1 §3: 60→72 는 각 릴리스 TASK 가 승인해 추가한 061~072 의
   // 현실 반영이다(중복·공백·과거 원문 수정 0 을 전수 확인했다).
   // 적용 상태 구분(파일 집합과 별개의 운영 원장):
@@ -259,13 +265,16 @@ test("★migration 집합 스냅숏 — 승인된 77개 그대로, 예상 밖 �
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
   // 081 통합(AUTH-081-INTEGRATION): Auth 077~080 + RLS hotfix 081 합집합 = 81개.
   // 081 은 Production 적용 CLOSED(2026-09-27·sha 7aa68b9d…) — Auth 릴리스에서 재실행 금지.
-  assert.equal(files.length, 83, `migration 수가 변했다: ${files.length}`);
+  // 083→087 (2026-09-30 재조사): 외부 가져오기 V2 브랜치가 추가한 084~087 — Staging 적용·Production 미적용.
+  //  · 084 ai_user_usage_ledger (20efe635) · 085 user_spots_import_source (20efe635)
+  //  · 086 ai_user_usage_shared_30d (7aad5336) · 087 ai_user_usage_monthly_plan_writing (17c95ab8)
+  assert.equal(files.length, 87, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "083_retention_purge_activation_gate.sql",
-    "083(retention 활성화 관문) 이 마지막이어야 한다 — 081 은 Production 기적용");
+  assert.equal(files[files.length - 1], "087_ai_user_usage_monthly_plan_writing.sql",
+    "087(월 사용권) 이 마지막이어야 한다 — 081 은 Production 기적용, 084~087 은 Staging 만");
   // 번호 공백·중복 금지: 001..072 가 정확히 한 번씩.
   const nums = files.map(f => f.slice(0, 3));
-  assert.equal(new Set(nums).size, 83, "번호 중복");
+  assert.equal(new Set(nums).size, 87, "번호 중복");
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
     assert.match(f, new RegExp(
       "^(042_place_reports|043_place_likes|044_admin_notification_events|" +
@@ -281,7 +290,8 @@ test("★migration 집합 스냅숏 — 승인된 77개 그대로, 예상 밖 �
       "064_mytrip_trend_packs|065_mytrip_ai_generation_ledger|066_mytrip_curator_ledger|" +
       "067_curator_search_slots_entity_type|068_community_reactions_submissions|" +
       "069_place_usage_signal|070_new_discovery_foundations|071_community_ranking_rpcs|" +
-      "072_ai_ops_ledger_and_switches|073_place_usage_annual_key|074_place_usage_monthly|075_place_usage_monthly_refresh_exact|076_place_usage_monthly_automation|077_user_consents|078_account_devices|079_trip_drafts|080_trip_draft_operations|081_city_spots_published_read_rls|082_retention_purge_daily|083_retention_purge_activation_gate)\\.sql$"),
+      "072_ai_ops_ledger_and_switches|073_place_usage_annual_key|074_place_usage_monthly|075_place_usage_monthly_refresh_exact|076_place_usage_monthly_automation|077_user_consents|078_account_devices|079_trip_drafts|080_trip_draft_operations|081_city_spots_published_read_rls|082_retention_purge_daily|083_retention_purge_activation_gate|" +
+      "084_ai_user_usage_ledger|085_user_spots_import_source|086_ai_user_usage_shared_30d|087_ai_user_usage_monthly_plan_writing)\\.sql$"),
       `예상치 못한 migration: ${f}`);
   }
 });

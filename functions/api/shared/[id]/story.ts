@@ -32,7 +32,7 @@ import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS, PUBLIC_SELECT_COLUMNS_
 import { buildJourneyScene } from "../../../../src/lib/share/journey-scene-core";
 import {
   serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS, PUBLIC_MEMORY_SELECT_COLUMNS_061,
-  isMemoryPublic, type InternalMemoryRow, type InternalPhotoRow,
+  isMemoryPublic, bindMemoriesToStops, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
 import { isMissingColumnError } from "../../../../src/lib/trip-moments/stop-binding";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
@@ -162,6 +162,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     photoPathsByMoment,
     consentVersion: MEMORY_PUBLIC_CONSENT_VERSION,
     validCitySpotIds,
+    // 일정 장소 결합 — 소유자 Story 와 같은 규칙으로 서버에서만. 밖으로는 Day 안 자리만 나간다
+    stopIndexByMoment: bindMemoriesToStops((data as { days?: unknown }).days, rows),
   });
 
   return json({ ...itinerary, journeyMap, memories });

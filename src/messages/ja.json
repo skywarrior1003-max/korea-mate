@@ -547,7 +547,11 @@
     "newPlaceKind_attraction": "観光",
     "newPlaceKind_shopping": "ショッピング",
     "newPlaceNoPin": "名前だけで大丈夫です。地図の位置なしでこの旅行にだけ追加されます。",
-    "newPlaceAdd": "Day {n}に追加"
+    "newPlaceAdd": "Day {n}に追加",
+    "orderNoticeTimed": "‘{name}’には自分で決めた時刻 {time} があるため、時刻順の位置に置かれました。時刻のある場所は時刻が順番を決めます。",
+    "orderNoticeFixed": "‘{name}’は {time} の固定予定のため時刻順の位置に置かれました。位置を変えるには編集で時刻を直してください。",
+    "orderKeepChosen": "時刻を消して選んだ位置に置く",
+    "orderKeepTime": "時刻どおりにする"
   },
   "common": {
     "language": "言語",

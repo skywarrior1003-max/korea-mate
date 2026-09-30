@@ -27,6 +27,8 @@ export interface ApiMemory {
   title?:    string | null;
   placeName: string | null;
   placeId:   string | null;
+  /** 서버가 결합한 그 Day 안 장소 자리(0부터). 옛 응답에는 없다 */
+  stopIndex?: number | null;
   photos:    { ref: string }[];
 }
 
@@ -91,8 +93,14 @@ function baselineItem(dayNumber: number, idx: number, place: ApiPlace): StoryMem
   };
 }
 
-/** Memory ↔ 일정 장소 결합 — 정본 열쇠(place_id)로만 한다. 장소명으로 추측하지 않는다. */
-function memoryBelongsToPlace(m: ApiMemory, place: ApiPlace): boolean {
+/**
+ * Memory ↔ 일정 장소 결합 — 장소명으로 추측하지 않는다.
+ *   ① 서버가 결합한 자리(stopIndex)가 있으면 그것만 본다(같은 Day · 같은 자리).
+ *      추천 코스 장소·새로 넣은 장소처럼 place_id 가 없는 곳도 여기서 붙는다.
+ *   ② 없는 옛 응답은 정본 열쇠(place_id)로.
+ */
+export function memoryBelongsToPlace(m: ApiMemory, place: ApiPlace, dayNumber?: number, idx?: number): boolean {
+  if (typeof m.stopIndex === "number") return dayNumber !== undefined && idx !== undefined && m.dayNumber === dayNumber && m.stopIndex === idx;
   if (typeof m.placeId !== "string" || m.placeId === "") return false;
   const pid = place.place_id;
   if (typeof pid !== "string" && typeof pid !== "number") return false;
@@ -156,7 +164,7 @@ export function toStoryDays(api: ApiStory): StoryDay[] {
     const items: StoryMemory[] = [];
 
     places.forEach((place, idx) => {
-      const matched = dayMemories.filter(e => !used.has(e.idx) && memoryBelongsToPlace(e.m, place));
+      const matched = dayMemories.filter(e => !used.has(e.idx) && memoryBelongsToPlace(e.m, place, n, idx));
       if (matched.length > 0) {
         for (const e of matched) { used.add(e.idx); items.push(memoryItem(e.m, e.idx, n, str(place.name) || undefined, idx + 1)); }
       } else {

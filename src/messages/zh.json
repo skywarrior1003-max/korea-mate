@@ -547,7 +547,11 @@
     "newPlaceKind_attraction": "景点",
     "newPlaceKind_shopping": "购物",
     "newPlaceNoPin": "只填名称就行。不设地图位置，仅添加到本次行程。",
-    "newPlaceAdd": "添加到 Day {n}"
+    "newPlaceAdd": "添加到 Day {n}",
+    "orderNoticeTimed": "‘{name}’有你设定的时间 {time}，因此按时间顺序放置。有时间的地点由时间决定顺序。",
+    "orderNoticeFixed": "‘{name}’是 {time} 的固定行程，因此按时间顺序放置。要移动它，请在编辑中修改时间。",
+    "orderKeepChosen": "清除时间，放在我选的位置",
+    "orderKeepTime": "按时间保留"
   },
   "common": {
     "language": "语言",

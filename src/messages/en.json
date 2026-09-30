@@ -547,7 +547,11 @@
     "newPlaceKind_attraction": "Sight",
     "newPlaceKind_shopping": "Shopping",
     "newPlaceNoPin": "A name is enough. It's added to this trip only, without a map pin.",
-    "newPlaceAdd": "Add to Day {n}"
+    "newPlaceAdd": "Add to Day {n}",
+    "orderNoticeTimed": "‘{name}’ has a time you set ({time}), so it sits in time order. Places with a time are ordered by that time.",
+    "orderNoticeFixed": "‘{name}’ is fixed at {time}, so it sits in time order. To move it, change its time in Edit.",
+    "orderKeepChosen": "Clear the time and keep my spot",
+    "orderKeepTime": "Keep it by time"
   },
   "common": {
     "language": "Language",

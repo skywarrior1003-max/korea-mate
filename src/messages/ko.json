@@ -547,7 +547,11 @@
     "newPlaceKind_attraction": "관광",
     "newPlaceKind_shopping": "쇼핑",
     "newPlaceNoPin": "이름만 있어도 돼요. 지도 위치는 없이 이 여행에만 추가돼요.",
-    "newPlaceAdd": "Day {n}에 추가"
+    "newPlaceAdd": "Day {n}에 추가",
+    "orderNoticeTimed": "‘{name}’에는 직접 정한 시각 {time}이 있어 시간 순서 자리에 놓였어요. 시각이 있는 장소는 시각이 순서를 정해요.",
+    "orderNoticeFixed": "‘{name}’은 {time} 고정 일정이라 시간 순서 자리에 놓였어요. 자리를 바꾸려면 편집에서 시각을 고치세요.",
+    "orderKeepChosen": "시각 지우고 고른 자리에 두기",
+    "orderKeepTime": "시각대로 두기"
   },
   "common": {
     "language": "언어",

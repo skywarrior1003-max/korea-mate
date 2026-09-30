@@ -17,10 +17,17 @@
 // 장소 이름
 //   `place_name` 만 쓴다. 없으면 없는 채로 내보낸다. `location_label` 로
 //   떨어지지 않는다 — 그건 좌표 문자열이라 내보내면 위치를 흘리는 것이다.
+//
+// 장소 결합(2026-09-30)
+//   소유자 Story 와 같은 규칙(stop_key → 옛 행은 city_spot_id)으로 **서버에서** 결합하고,
+//   밖으로는 그 Day 안의 자리(stopIndex)만 내보낸다. stop_key·stopId·user_spot id 는 나가지 않는다.
+//   추천 코스에만 있는 장소·사용자가 새로 넣은 장소도 공개 링크에서 제자리에 붙는다.
+
+import { stopKeysOf } from "../trip-moments/stop-binding.ts";
 
 /** 서버가 읽어야 하는 Memory 컬럼. 이 목록 밖의 값은 가져오지 않는다. */
 export const PUBLIC_MEMORY_SELECT_COLUMNS =
-  "moment_id, memo, place_name, city_spot_id, day_number, captured_at, storage_path, is_public, public_consent_at, public_consent_version";
+  "moment_id, memo, place_name, city_spot_id, stop_key, day_number, captured_at, storage_path, is_public, public_consent_at, public_consent_version";
 /** 061(title) 적용 환경용 — 미적용이면 호출부가 위 목록으로 fallback 한다. */
 export const PUBLIC_MEMORY_SELECT_COLUMNS_061 = `${PUBLIC_MEMORY_SELECT_COLUMNS}, title`;
 
@@ -32,6 +39,8 @@ export interface InternalMemoryRow {
   title?:                 string | null;
   place_name:             string | null;
   city_spot_id:           number | null;
+  /** 일정 항목 열쇠(055). 서버 안에서 결합에만 쓰고 밖으로 내보내지 않는다 */
+  stop_key?:              string | null;
   day_number:             number | null;
   captured_at:            string | null;
   storage_path:           string | null;
@@ -64,6 +73,8 @@ export interface PublicMemory {
   placeName: string | null;
   /** 공식 장소일 때만. 나중에 "내 Saved 로" 를 붙일 때 쓴다. */
   placeId:   string | null;
+  /** 결합된 일정 장소의 그 Day 안 자리(0부터). 서버가 소유자 Story 와 같은 규칙으로 정한다. 없으면 null */
+  stopIndex: number | null;
   photos:    PublicMemoryPhoto[];
 }
 
@@ -145,6 +156,8 @@ export interface SerializeInput {
   consentVersion: string;
   /** 실재가 확인된 city_spot id 들. 없어진 장소는 여기 없다. */
   validCitySpotIds?: ReadonlySet<number>;
+  /** moment_id → 그 Day 안 장소 자리(bindMemoriesToStops). 없으면 결합하지 않는다 */
+  stopIndexByMoment?: ReadonlyMap<string, number>;
 }
 
 /**
@@ -179,8 +192,54 @@ export async function serializePublicMemories(input: SerializeInput): Promise<Pu
       title:     title === "" ? null : title,
       placeName: clean(r.place_name) === "" ? null : clean(r.place_name),
       placeId,
+      stopIndex: input.stopIndexByMoment?.get(r.moment_id) ?? null,
       photos,
     });
   }
+  return out;
+}
+
+// ── 일정 장소 결합 (서버 전용) ──────────────────────────────────────────────
+type RawStop = { place_id?: unknown; source?: unknown; sourceKey?: unknown; stopId?: unknown };
+
+function rawScheduled(raw: unknown): { dayNumber?: unknown; places?: unknown }[] {
+  if (Array.isArray(raw)) return raw as { dayNumber?: unknown; places?: unknown }[];
+  if (raw && typeof raw === "object") {
+    const v2 = raw as { __v?: unknown; scheduled?: unknown };
+    if (v2.__v === 2 && Array.isArray(v2.scheduled)) return v2.scheduled as { dayNumber?: unknown; places?: unknown }[];
+  }
+  return [];
+}
+
+/**
+ * 공개 Memory → 그 Day 안 장소 자리. 소유자 Story(momentBelongsToStop)와 같은 규칙이다:
+ *   ① stop_key 가 있으면 그 열쇠로만  ② 없는 옛 행은 공식 장소에 한해 city_spot_id 로.
+ * 같은 Day 안에서만 찾고, 한 기록은 한 장소에만 붙는다. 장소명으로 추측하지 않는다.
+ */
+export function bindMemoriesToStops(rawDays: unknown, rows: InternalMemoryRow[]): Map<string, number> {
+  const out = new Map<string, number>();
+  rawScheduled(rawDays).forEach((day, di) => {
+    const dayNumber = typeof day.dayNumber === "number" ? day.dayNumber : di + 1;
+    const places = Array.isArray(day.places) ? (day.places as RawStop[]) : [];
+    const dayRows = rows.filter(r => r.day_number === dayNumber);
+    places.forEach((p, idx) => {
+      const pid = typeof p.place_id === "string" || typeof p.place_id === "number" ? String(p.place_id) : null;
+      const keys = stopKeysOf({
+        place_id:  pid,
+        source:    typeof p.source === "string" ? p.source : null,
+        sourceKey: typeof p.sourceKey === "string" ? p.sourceKey : null,
+        stopId:    typeof p.stopId === "string" ? p.stopId : null,
+      });
+      if (keys.length === 0) return;
+      for (const r of dayRows) {
+        if (out.has(r.moment_id)) continue;
+        const mk = clean(r.stop_key);
+        const hit = mk !== ""
+          ? keys.includes(mk)
+          : p.source === "city_spot" && typeof r.city_spot_id === "number" && pid !== null && /^\d+$/.test(pid) && String(r.city_spot_id) === pid;
+        if (hit) out.set(r.moment_id, idx);
+      }
+    });
+  });
   return out;
 }

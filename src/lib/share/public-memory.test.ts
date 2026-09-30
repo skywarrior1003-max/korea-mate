@@ -12,7 +12,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  serializePublicMemories, isMemoryPublic, orderMemories,
+  serializePublicMemories, isMemoryPublic, orderMemories, bindMemoriesToStops,
   photoRef, isPhotoRef, PUBLIC_MEMORY_SELECT_COLUMNS,
   type InternalMemoryRow,
 } from "./public-memory.ts";
@@ -190,7 +190,7 @@ test("★나가는 객체에 내부 값이 하나도 없다", async () => {
     assert.ok(!raw.includes(field), `이름이 샌다: ${field}`);
   }
   assert.deepEqual(Object.keys(out[0]!).sort(),
-    ["dayNumber", "memo", "title", "photos", "placeId", "placeName"].sort());
+    ["dayNumber", "memo", "title", "photos", "placeId", "placeName", "stopIndex"].sort());
   assert.deepEqual(Object.keys(out[0]!.photos[0]!), ["ref"]);
 });
 
@@ -259,4 +259,55 @@ test("★공개 story 응답은 기존 필드 + memories + journeyMap 만 더한
 test("★공개 일정 정제기는 여전히 Memory 를 모른다", () => {
   const pub = strip(read("src", "lib", "share", "public-story.ts"));
   assert.doesNotMatch(pub, /trip_moment|memories|place_name|public_consent/);
+});
+
+// ── 일정 장소 결합(2026-09-30) — 소유자 Story 와 같은 규칙, 밖으로는 자리만 ──────
+const S1 = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1", S2 = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2", S3 = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3";
+const tripDays = (d1: object[], d2: object[] = []) => ({ __v: 2, scheduled: [{ dayNumber: 1, places: d1 }, { dayNumber: 2, places: d2 }], unscheduled: [] });
+
+test("★추천 코스 장소·새로 넣은 장소(stopId)도 그 자리에 붙는다 — 같은 이름 다른 Day 는 섞이지 않는다", () => {
+  const days = tripDays(
+    [{ name: "광안리 해변", stopId: S1 }, { name: "광안리 조개구이집", stopId: S3 }],
+    [{ name: "광안리 해변", stopId: S2 }],
+  );
+  const rows = [
+    row({ moment_id: MO(1), day_number: 1, stop_key: `stop:${S1}` }),
+    row({ moment_id: MO(2), day_number: 1, stop_key: `stop:${S3}` }),
+    row({ moment_id: MO(3), day_number: 2, stop_key: `stop:${S2}` }),
+  ];
+  const m = bindMemoriesToStops(days, rows);
+  assert.equal(m.get(MO(1)), 0);
+  assert.equal(m.get(MO(2)), 1);
+  assert.equal(m.get(MO(3)), 0);
+});
+
+test("★순서를 바꾸면 자리가 장소를 따라간다 · 없어진 장소의 기록은 결합하지 않는다", () => {
+  const rows = [row({ moment_id: MO(1), day_number: 1, stop_key: `stop:${S1}` })];
+  assert.equal(bindMemoriesToStops(tripDays([{ name: "b", stopId: S3 }, { name: "a", stopId: S1 }]), rows).get(MO(1)), 1);
+  assert.equal(bindMemoriesToStops(tripDays([{ name: "b", stopId: S3 }]), rows).has(MO(1)), false);
+  // Day 가 다르면 같은 열쇠라도 붙지 않는다
+  assert.equal(bindMemoriesToStops(tripDays([], [{ name: "a", stopId: S1 }]), rows).has(MO(1)), false);
+});
+
+test("★stop_key 없는 옛 행은 공식 장소에 한해 city_spot_id 로 · 이름으로는 붙이지 않는다", () => {
+  const days = tripDays([{ name: "해운대", source: "city_spot", place_id: "1" }, { name: "해운대", stopId: S1 }]);
+  const m = bindMemoriesToStops(days, [
+    row({ moment_id: MO(1), day_number: 1, city_spot_id: 1 }),
+    row({ moment_id: MO(2), day_number: 1, place_name: "해운대" }),
+  ]);
+  assert.equal(m.get(MO(1)), 0);
+  assert.equal(m.has(MO(2)), false);
+});
+
+test("★결합해도 열쇠(stop_key·stopId·user_spot id)는 응답에 나가지 않는다", async () => {
+  const U = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+  const days = tripDays([{ name: "내 장소", source: "user_spot", place_id: U, sourceKey: `user_spot:${U}` }, { name: "코스", stopId: S1 }]);
+  const rows = [row({ moment_id: MO(1), stop_key: `user_spot:${U}` }), row({ moment_id: MO(2), stop_key: `stop:${S1}` })];
+  const out = await serializePublicMemories({
+    itineraryId: IT, rows, photoPathsByMoment: new Map(), consentVersion: MEMORY_PUBLIC_CONSENT_VERSION,
+    stopIndexByMoment: bindMemoriesToStops(days, rows),
+  });
+  assert.deepEqual(out.map(o => o.stopIndex), [0, 1]);
+  const raw = JSON.stringify(out);
+  for (const secret of [U, S1, "stop:", "stop_key", "stopId", "user_spot"]) assert.ok(!raw.includes(secret), `샌다: ${secret}`);
 });

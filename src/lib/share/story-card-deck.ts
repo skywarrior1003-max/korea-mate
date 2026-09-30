@@ -9,7 +9,7 @@
 // 입력은 공개 Story payload(ApiStory)뿐이다 — story-card-source 계약 그대로:
 // 비공개 moment·좌표·내부 id 는 응답에 오지 않으므로 여기서도 만들 수 없다.
 
-import { memoryPhotoUrl, type ApiStory, type ApiMemory } from "./story-adapter";
+import { memoryPhotoUrl, memoryBelongsToPlace, type ApiStory, type ApiMemory } from "./story-adapter";
 import { resolveDisplayImage } from "../place-detail/place-detail-core.ts";
 
 export interface DeckPlace {
@@ -45,12 +45,11 @@ function scheduledDays(raw: unknown): { dayNumber?: number; date?: string; place
 
 interface ApiPlace { name?: unknown; place_id?: unknown; image?: unknown }
 
-function memoryForPlace(memories: ApiMemory[], place: ApiPlace, used: Set<ApiMemory>): ApiMemory | null {
-  const pid = place.place_id;
-  if (typeof pid !== "string" && typeof pid !== "number") return null;
+// 결합 규칙은 공유 Story 와 한 벌(memoryBelongsToPlace) — 서버가 정한 자리가 있으면 그것, 옛 응답은 place_id
+function memoryForPlace(memories: ApiMemory[], place: ApiPlace, used: Set<ApiMemory>, dayNumber: number, idx: number): ApiMemory | null {
   for (const m of memories) {
     if (used.has(m)) continue;
-    if (typeof m.placeId === "string" && m.placeId !== "" && String(pid) === m.placeId) return m;
+    if (memoryBelongsToPlace(m, place, dayNumber, idx)) return m;
   }
   return null;
 }
@@ -73,7 +72,7 @@ export function buildStoryCardDeck(api: ApiStory): StoryCardSpec[] {
     });
     const jd: DeckPlace[] = [];
     places.forEach((place, idx) => {
-      const m = memoryForPlace(memories, place, used);
+      const m = memoryForPlace(memories, place, used, dayNumber, idx);
       if (m) used.add(m);
       const dp: DeckPlace = {
         dayNumber, order: idx + 1,

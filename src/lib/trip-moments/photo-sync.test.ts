@@ -37,7 +37,7 @@ const defaultFetch = async (url: string, init: Record<string, unknown> = {}) => 
 
 const {
   loadMoments, addMomentDetailed, resyncPendingMoments,
-  uploadMomentPhoto, jpegDataUrlToBlob,
+  uploadMomentPhoto, jpegDataUrlToBlob, loadMomentsFromServer,
 } = await import("./storage.ts");
 type TM = Awaited<ReturnType<typeof loadMoments>>[number];
 
@@ -223,4 +223,34 @@ test("재동기화는 moment_id 를 바꾸지 않는다 (행 중복 방지 근�
   await resyncPendingMoments(ITIN, DEV);
   assert.strictEqual(loadMoments(ITIN)[0]!.moment_id, "fixed-id");
   assert.ok(String(metaCalls()[0]!.body).includes("fixed-id"));
+});
+
+// ── 다른 기기 삭제 동기화 (2026-09-30) ─────────────────────────────────────────
+test("다른 기기에서 지운 기록(synced)은 서버 목록에 없으면 되살리지 않는다 · 못 보낸 pending 은 남긴다 · 다른 여행 캐시는 그대로", async () => {
+  const OTHER = "dddddddd-4444-4444-8444-dddddddddddd";
+  const deleted = moment({ moment_id: "11111111-aaaa-4aaa-8aaa-111111111111", synced: true, memo: "지워진 기록" });
+  const pending = moment({ moment_id: "22222222-aaaa-4aaa-8aaa-222222222222", synced: false, memo: "아직 못 보냄" });
+  const kept    = moment({ moment_id: "33333333-aaaa-4aaa-8aaa-333333333333", synced: true, memo: "서버에 있음" });
+  seed([deleted, pending, kept]);
+  store.set(`koreamate_moments_${OTHER}`, JSON.stringify([moment({ itinerary_id: OTHER, synced: true })]));
+  const prev = (globalThis as Record<string, unknown>).fetch;
+  (globalThis as Record<string, unknown>).fetch = async () => ({ ok: true, status: 200, json: async () => [{
+    moment_id: kept.moment_id, itinerary_id: ITIN, device_id: DEV, memo: "서버에 있음", captured_at: kept.captured_at, day_number: 1, has_photo: false,
+  }] });
+  try {
+    const merged = await loadMomentsFromServer(ITIN, DEV);
+    const ids = merged.map(m => m.moment_id).sort();
+    assert.deepEqual(ids, [kept.moment_id, pending.moment_id].sort());
+    assert.deepEqual(loadMoments(ITIN).map(m => m.moment_id).sort(), ids, "로컬 캐시에서도 빠진다");
+    assert.equal(JSON.parse(store.get(`koreamate_moments_${OTHER}`)!).length, 1, "다른 여행 캐시는 건드리지 않는다");
+  } finally { (globalThis as Record<string, unknown>).fetch = prev; }
+});
+
+test("서버를 못 읽으면(오류) 로컬을 그대로 쓴다 — 지우지 않는다", async () => {
+  seed([moment({ moment_id: "44444444-aaaa-4aaa-8aaa-444444444444", synced: true })]);
+  const prev = (globalThis as Record<string, unknown>).fetch;
+  (globalThis as Record<string, unknown>).fetch = async () => ({ ok: false, status: 503, json: async () => ({}) });
+  try {
+    assert.equal((await loadMomentsFromServer(ITIN, DEV)).length, 1);
+  } finally { (globalThis as Record<string, unknown>).fetch = prev; }
 });

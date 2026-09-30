@@ -5,8 +5,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { stopCitySpotId, stopKeyOf, normalizeStopKey, isMissingColumnError } from "./stop-binding.ts";
-import { buildPrivateStoryDays } from "../share/private-story-adapter.ts";
+import { stopCitySpotId, stopKeyOf, stopKeysOf, ensureStopIds, deterministicStopId, normalizeStopKey, isMissingColumnError } from "./stop-binding.ts";
+import { buildPrivateStoryDays, momentBelongsToStop } from "../share/private-story-adapter.ts";
 
 const ROOT = new URL("../../../", import.meta.url);
 const read = (p: string) => readFileSync(new URL(p, ROOT), "utf8");
@@ -215,4 +215,41 @@ test("S2: 일정 생성 시 숙소 체크인 stop 에 stay 열쇠를 저장한�
   assert.match(page, /isAccommodation: true as const,[\s\S]{0,400}sourceKey:\s+staySourceKey\(crypto\.randomUUID\(\)\)/);
   const pi = read("src/lib/place-identity.ts");
   assert.match(pi, /export function staySourceKey\(uuid: string\): string \{\s*return `stay:\$\{uuid\}`;/);
+});
+
+// ── 여행 항목 열쇠(stop:<stopId>) — 2026-09-30 마무리 ─────────────────────────
+const IT_A = "11111111-1111-4111-8111-111111111111", IT_B = "22222222-2222-4222-8222-222222222222";
+
+test("K1: 결정적 열쇠 — 같은 여행·Day·자리·이름이면 어느 기기에서도 같고, 하나라도 다르면 다르다", () => {
+  const a = deterministicStopId(IT_A, 1, 0, "광안리 해변");
+  assert.equal(a, deterministicStopId(IT_A, 1, 0, "광안리 해변"));
+  assert.match(a, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-8[0-9a-f]{3}-[0-9a-f]{12}$/);
+  assert.equal(normalizeStopKey(`stop:${a}`).ok, true);
+  const others = [deterministicStopId(IT_A, 2, 0, "광안리 해변"), deterministicStopId(IT_A, 1, 1, "광안리 해변"),
+                  deterministicStopId(IT_A, 1, 0, "광안리해변"), deterministicStopId(IT_B, 1, 0, "광안리 해변")];
+  assert.equal(new Set([a, ...others]).size, 5, "같은 이름이라도 Day·자리·여행이 다르면 다른 열쇠");
+});
+
+test("K2: ensureStopIds — 두 기기가 따로 붙여도 같은 결과 · 이미 붙은 열쇠·공식 장소·숙소는 그대로 · 두 번째는 저장할 것이 없다", () => {
+  type P = { name: string; stopId?: string; source?: string; place_id?: string; isAccommodation?: boolean };
+  const days: { dayNumber: number; places: P[] }[] = [{ dayNumber: 1, places: [{ name: "광안리 해변" }, { name: "해운대", source: "city_spot", place_id: "1" }, { name: "숙소", isAccommodation: true }] },
+                { dayNumber: 2, places: [{ name: "광안리 해변" }] }];
+  const gen = (d: number, i: number, p: { name?: string }) => deterministicStopId(IT_A, d, i, p.name ?? "");
+  const a = ensureStopIds(days, gen), b = ensureStopIds(days, gen);
+  assert.deepEqual(a, b);
+  assert.notEqual(a[0]!.places[0]!.stopId, a[1]!.places[0]!.stopId, "같은 이름 다른 Day");
+  assert.equal(a[0]!.places[1], days[0]!.places[1], "공식 장소는 손대지 않는다");
+  assert.equal(a[0]!.places[2], days[0]!.places[2], "숙소는 손대지 않는다");
+  assert.equal(ensureStopIds(a, gen), a, "이미 붙어 있으면 같은 배열 — 여는 때마다 저장하지 않는다");
+});
+
+test("K3: 대표 열쇠가 나중에 바뀌어도(코스 장소에 공식 id 가 붙음) stop:<stopId> 로 남긴 기록은 그 장소에 남는다", () => {
+  const sid = deterministicStopId(IT_A, 1, 0, "광안리 해변");
+  const before = { name: "광안리 해변", stopId: sid };
+  const after  = { name: "광안리 해변", stopId: sid, source: "city_spot", place_id: "77", sourceKey: "city_spot:77" };
+  assert.deepEqual(stopKeysOf(before), [`stop:${sid}`]);
+  assert.deepEqual(stopKeysOf(after), ["city_spot:77", `stop:${sid}`]);
+  const m = { moment_id: "m1", memo: "", day_number: 1, captured_at: null, stop_key: `stop:${sid}`, city_spot_id: null } as unknown as Parameters<typeof momentBelongsToStop>[0];
+  assert.equal(momentBelongsToStop(m, after), true);
+  assert.equal(momentBelongsToStop(m, { name: "광안리 해변", stopId: deterministicStopId(IT_A, 2, 0, "광안리 해변") }), false, "같은 이름 다른 항목에는 안 붙는다");
 });
