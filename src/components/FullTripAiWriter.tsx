@@ -136,7 +136,7 @@ export default function FullTripAiWriter(props: {
         <span className="block text-[11.5px] font-bold text-[#8A919B]">{label}</span>
         {cur[key] && (
           <span className="block text-[12.5px] text-[#8A919B]">
-            {t("current")}: <span className="line-through decoration-black/20">{cur[key]}</span>
+            {t("current")}: <span className={picked[key] ? "line-through decoration-black/30" : ""}>{cur[key]}</span>
             <span className="block text-[11.5px] font-bold text-[#B45309]" data-user-written="">{t("userWritten")}</span>
           </span>
         )}
