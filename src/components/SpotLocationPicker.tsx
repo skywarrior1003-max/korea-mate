@@ -192,7 +192,10 @@ export default function SpotLocationPicker({
     setReady(true);
 
     return () => {
-      maps.Event.removeListener(idle);
+      // 지도 인증이 실패하면 SDK 가 자기 내부를 비운다. 그 뒤 리스너를 떼면 SDK 안에서
+      // TypeError("reading 'isArray'") 가 나고, 닫는 순간(언마운트) 화면 전체가
+      // 오류 페이지로 바뀌었다(2026-10-01 Preview 실측). 떼기 실패는 무시한다 — 지도는 이미 없다.
+      try { maps.Event.removeListener(idle); } catch { /* SDK 가 이미 내려갔다 */ }
       mapRef.current = null;
     };
   }, [center, zoomedIn, sdkTick]);
