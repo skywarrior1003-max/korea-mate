@@ -40,9 +40,12 @@ import {
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
   apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
   apiEnrichUserSpot, apiCreateUserSpotFromCanonical,
-  type UserSpot,
+  apiAppendUserSpotPhoto, apiListUserSpotPhotos, apiRemoveUserSpotPhoto, apiReorderUserSpotPhotos,
+  type UserSpot, type UserSpotPhoto,
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
+import PlaceTripActions from "@/components/my-places/PlaceTripActions";
+import { listMyTrips, type TripChoice } from "@/lib/user-spots/start-trip-client";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
 import GlyphIcon from "@/components/ui/GlyphIcon";
 import { runCreateFlow } from "@/lib/user-spots/create-flow";
@@ -159,6 +162,31 @@ function TripStarterCard({ defaultCity, title, hint, cityLabel, startLabel, endL
         >{startLabelBtn}</button>
       </div>
     </Card>
+  );
+}
+
+/**
+ * 내 장소 카드의 대표 사진(1번) + "n/3장". 만료되는 URL 이라 카드가 보일 때 받아 온다.
+ * updatedAt 이 바뀌면(대표 교체·삭제) 다시 받는다.
+ */
+function MyPlaceThumb({ spotId, count, updatedAt }: { spotId: string; count: number; updatedAt: string }) {
+  const t = useTranslations("picks");
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    void apiGetUserSpotPhotoUrl(spotId).then(r => { if (alive) setUrl(r?.signedUrl ?? null); });
+    return () => { alive = false; };
+  }, [spotId, updatedAt]);
+  return (
+    <div className="relative shrink-0 w-16 h-16 rounded-xl overflow-hidden bg-surface-dim" data-testid="card-thumb">
+      {url && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={url} alt={t("photoAlt")} className="w-full h-full object-cover" />
+      )}
+      <span className="absolute right-0.5 bottom-0.5 rounded bg-black/60 px-1 text-[10px] font-bold text-white" data-testid="card-photo-count">
+        {t("photoCount", { n: count, max: 3 })}
+      </span>
+    </div>
   );
 }
 
@@ -324,6 +352,17 @@ function PicksContent() {
   const [photoNotice, setPhotoNotice] = useState<string | null>(null);
   const [photoUrl,    setPhotoUrl]    = useState<string | null>(null);
   const [editingHasPhoto, setEditingHasPhoto] = useState(false);
+  // 사진 여러 장(최대 3장) — 새로 만들 때 고른 파일들, 고칠 때 저장된 사진들.
+  const [photoFiles,   setPhotoFiles]   = useState<File[]>([]);
+  const [storedPhotos, setStoredPhotos] = useState<UserSpotPhoto[] | undefined>(undefined);
+  /** 사용자가 쓰기로 한 사진 촬영 시각 — My Trip 시작 기본값. 장소에는 저장하지 않는다. */
+  const [photoTime,    setPhotoTime]    = useState<{ date: string; time: string } | null>(null);
+  /** 방금 저장한 장소 — 저장 직후 [이 장소로 오늘 My Trip 시작] 을 보여 준다. */
+  const [justSaved,    setJustSaved]    = useState<null | {
+    spot: UserSpot; photosSaved: number; photosFailed: number; photoTime: { date: string; time: string } | null;
+  }>(null);
+  /** 내 여행 목록 — [현재 여행에 추가] 를 보일지·고를 목록. 내 장소 탭을 열 때 한 번 읽는다. */
+  const [trips,        setTrips]        = useState<TripChoice[] | null>(null);
   // 개인 사진이 없을 때만 서버가 장소 사진을 준다.
   const [canonImg,    setCanonImg]    = useState<string | null>(null);
   const [canonSource, setCanonSource] = useState<string | null>(null);
@@ -403,10 +442,73 @@ function PicksContent() {
     setPhotoFile(null); setPhotoBusy(false); setPhotoNotice(null);
     setPhotoUrl(null); setEditingHasPhoto(false);
     setCanonImg(null); setCanonSource(null);
+    setPhotoFiles([]); setStoredPhotos(undefined); setPhotoTime(null);
+  }
+
+  const loadTrips = useCallback(() => {
+    void listMyTrips().then(setTrips).catch(() => setTrips([]));
+  }, []);
+  useEffect(() => { if (tab === "mine" && trips === null) loadTrips(); }, [tab, trips, loadTrips]);
+
+  /** 사진 수 안내 — 일부만 저장됐으면 성공처럼 보이지 않게 그대로 말한다. */
+  function photoResultNotice(saved: number, failed: number): string | null {
+    if (failed === 0) return null;
+    return saved === 0 ? t("photosAllFailed", { failed }) : t("photosPartial", { saved, failed });
+  }
+
+  /** 고치는 중 — 고른 사진을 하나씩 바로 올린다(최대 3장). */
+  async function addStoredPhotos(spotId: string, files: File[]) {
+    if (photoBusy) return;
+    setPhotoBusy(true); setPhotoNotice(null);
+    let saved = 0, failed = 0, lastCode: string | undefined;
+    try {
+      for (const f of files) {
+        try {
+          const blob = await compressPhotoBlob(f);
+          const r = await apiAppendUserSpotPhoto(spotId, blob);
+          if (r.ok) { saved++; if (r.list) setStoredPhotos(r.list.photos); }
+          else { failed++; lastCode = r.code; }
+        } catch { failed++; lastCode = "UNREADABLE"; }
+      }
+    } finally {
+      setPhotoBusy(false);
+    }
+    if (failed > 0) {
+      setPhotoNotice(lastCode === "PLACE_PHOTO_LIMIT" ? t("photoLimitPlace")
+        : lastCode === "DEVICE_PHOTO_LIMIT" ? t("photoLimitDevice")
+        : photoResultNotice(saved, failed));
+    } else {
+      setPhotoNotice(t("photosSaved", { n: saved }));
+    }
+    loadMine();
+  }
+
+  async function removeStoredPhotoKey(spotId: string, key: string) {
+    if (photoBusy) return;
+    setPhotoBusy(true); setPhotoNotice(null);
+    try {
+      const r = await apiRemoveUserSpotPhoto(spotId, key);
+      if (r.ok) { if (r.list) setStoredPhotos(r.list.photos); setPhotoNotice(t("photoDeleted")); loadMine(); }
+      else setPhotoNotice(r.code === "PHOTO_IS_ONLY_ANCHOR" ? t("photoOnlyAnchor") : t("photoFailed"));
+    } finally { setPhotoBusy(false); }
+  }
+
+  async function moveStoredPhoto(spotId: string, key: string, dir: -1 | 1) {
+    if (photoBusy || !storedPhotos) return;
+    const i = storedPhotos.findIndex(p => p.key === key), j = i + dir;
+    if (i < 0 || j < 0 || j >= storedPhotos.length) return;
+    const order = storedPhotos.map(p => p.key);
+    [order[i], order[j]] = [order[j], order[i]];
+    setPhotoBusy(true); setPhotoNotice(null);
+    try {
+      const r = await apiReorderUserSpotPhotos(spotId, order);
+      if (r.ok && r.list) { setStoredPhotos(r.list.photos); if (i === 0 || j === 0) setPhotoNotice(t("photoMainChanged")); loadMine(); }
+      else setPhotoNotice(t("photoFailed"));
+    } finally { setPhotoBusy(false); }
   }
   function openCreate() {
     setForm(EMPTY_USER_SPOT_FORM); setFormError(null); setEditingId(null); setShowCreate(true);
-    resetPhotoState();
+    resetPhotoState(); setJustSaved(null);
   }
   function openEdit(s: UserSpot) {
     setForm({
@@ -420,6 +522,10 @@ function PicksContent() {
     setFormError(null); setShowCreate(false); setEditingId(s.id);
     resetPhotoState();
     setEditingHasPhoto(s.has_photo === true);
+    setJustSaved(null);
+    // 사진 여러 장 — 순서대로 받아 온다(만료되는 URL, 저장하지 않는다).
+    setStoredPhotos([]);
+    void apiListUserSpotPhotos(s.id).then(r => { if (r.ok && r.list) setStoredPhotos(r.list.photos); });
     // 만료되는 URL 이라 폼을 열 때 한 번만 받아 온다. 저장하지 않는다.
     if (s.has_photo) {
       void apiGetUserSpotPhotoUrl(s.id).then(r => { if (r) setPhotoUrl(r.signedUrl); });
@@ -471,7 +577,8 @@ function PicksContent() {
     };
     setSubmitting(true); setFormError(null); setPhotoNotice(null);
     try {
-      const r = await runCreateFlow(input, photoFile, {
+      const files = photoFiles.length > 0 ? photoFiles : (photoFile ? [photoFile] : []);
+      const r = await runCreateFlow(input, files, {
         compress:        compressPhotoBlob,
         createJson:      async i => (await apiCreateUserSpot({
           ...i, lat: i.lat ?? undefined, lng: i.lng ?? undefined,
@@ -483,6 +590,7 @@ function PicksContent() {
           return { ok: res.ok, id: res.spot?.id };
         },
         uploadPhoto:     (id, blob) => apiUploadUserSpotPhoto(id, blob),
+        appendPhoto:     async (id, blob) => ({ ok: (await apiAppendUserSpotPhoto(id, blob)).ok }),
       });
 
       if (!r.created) {
@@ -497,14 +605,26 @@ function PicksContent() {
       // 않는다 — 꺼져 있으면 서버가 즉시 disabled 를 주고, 실패해도 방금
       // 남긴 장소는 그대로다.
       if (r.spotId) void apiEnrichUserSpot(r.spotId, locale);
-      if (r.notice === "savedPhotoFailed") {
+      if (r.notice === "savedPhotoFailed" && files.length <= 1) {
         // 장소는 저장됐다. 폼을 닫지 않고 사진만 다시 시도할 수 있게 둔다.
         setEditingId(r.spotId ?? null); setShowCreate(false);
         setEditingHasPhoto(false);
         setPhotoNotice(t("savedPhotoFailed"));
         return;
       }
+      // 저장 직후 — 무엇이 저장됐는지(사진 n장, 위치 유무)와 다음 행동을 보여 준다.
+      const keptTime = photoTime;
       closeForm();
+      if (r.spotId) {
+        setJustSaved({
+          spot: {
+            id: r.spotId, name: input.name ?? null, address: input.address, note: input.note,
+            category: input.category, lat: input.lat ?? undefined, lng: input.lng ?? undefined,
+            created_at: "", updated_at: "",
+          },
+          photosSaved: r.photosSaved ?? 0, photosFailed: r.photosFailed ?? 0, photoTime: keptTime,
+        });
+      }
     } catch {
       setFormError(t("saveFailed"));
     } finally {
@@ -1128,6 +1248,39 @@ function PicksContent() {
                     mode="create" city={tripCity}
                     photoFile={photoFile} onPickPhoto={setPhotoFile}
                     photoBusy={photoBusy} photoNotice={photoNotice}
+                    multiPhoto={{ files: photoFiles, setFiles: setPhotoFiles }}
+                    photoTime={photoTime} onUsePhotoTime={setPhotoTime}
+                  />
+                </Card>
+              )}
+
+              {/* 저장 직후 — 실제로 저장된 것만 말한다(사진 일부 실패는 그대로 알린다) */}
+              {justSaved && !showCreate && (
+                <Card className="p-4 mb-3" data-testid="just-saved">
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-bold text-ink text-sm">
+                      {t("justSavedTitle", { name: userSpotDisplayName(justSaved.spot, t("displayFallback")) })}
+                    </p>
+                    <button
+                      type="button" onClick={() => setJustSaved(null)} aria-label={t("cancel")}
+                      className="gkm-focus text-faint text-sm px-2 min-h-8 cursor-pointer"
+                    >✕</button>
+                  </div>
+                  <p className="text-xs text-sub mt-1" data-testid="just-saved-summary">
+                    {[
+                      t("justSavedPhotos", { n: justSaved.photosSaved, max: 3 }),
+                      isValidCoordinate(justSaved.spot.lat, justSaved.spot.lng) ? t("justSavedLocated") : t("justSavedNoLocation"),
+                    ].join(" · ")}
+                  </p>
+                  {photoResultNotice(justSaved.photosSaved, justSaved.photosFailed) && (
+                    <p role="alert" className="text-xs font-bold text-[#8A5A00] mt-1" data-testid="just-saved-photo-failed">
+                      {photoResultNotice(justSaved.photosSaved, justSaved.photosFailed)}
+                    </p>
+                  )}
+                  <PlaceTripActions
+                    spot={justSaved.spot}
+                    displayName={userSpotDisplayName(justSaved.spot, t("displayFallback"))}
+                    trips={trips} photoTime={justSaved.photoTime} onTripsChanged={loadTrips}
                   />
                 </Card>
               )}
@@ -1180,18 +1333,29 @@ function PicksContent() {
                                 onRemoveExistingPhoto={() => void removeStoredPhoto(s.id)}
                                 photoBusy={photoBusy} photoNotice={photoNotice}
                                 canonicalImageUrl={canonImg} canonicalSourceUrl={canonSource}
+                                multiPhoto={{
+                                  files: [], setFiles: () => {},
+                                  stored: storedPhotos ?? [],
+                                  onStoredAdd:    fs  => void addStoredPhotos(s.id, fs),
+                                  onStoredRemove: key => void removeStoredPhotoKey(s.id, key),
+                                  onStoredMove:   (key, dir) => void moveStoredPhoto(s.id, key, dir),
+                                }}
                               />
                             </>
                           ) : (
                             <>
                               <div className="flex items-start justify-between gap-3">
-                                <div className="min-w-0">
+                                {s.has_photo && <MyPlaceThumb spotId={s.id} count={s.photo_count ?? 1} updatedAt={s.updated_at} />}
+                                <div className="min-w-0 flex-1">
                                   <p className="font-semibold text-ink text-[15px]">{display}</p>
                                   <p className="text-xs text-faint mt-0.5">
                                     {/* 도시는 언어별 이름으로(저장값 gangneung·강릉 → 강릉 / Gangneung) — trip-city.ts */}
                                     {[catLabel, s.city ? tripCityLabel(s.city, locale) : null, s.address].filter(Boolean).join(" · ")}
                                   </p>
                                   {s.note && <p className="text-sm text-sub mt-2 leading-relaxed">{s.note}</p>}
+                                  {!isValidCoordinate(s.lat, s.lng) && (
+                                    <p className="text-[11px] font-bold text-[#8A5A00] mt-1" data-testid="card-no-location">{t("cardNoLocation")}</p>
+                                  )}
                                 </div>
                                 <Badge kind="editorial" className="shrink-0 inline-flex items-center gap-1"><GlyphIcon kind="lock" size={11} />{t("privateLabel")}</Badge>
                               </div>
@@ -1227,6 +1391,9 @@ function PicksContent() {
                                   <Button variant="icon" aria-label={`${t("delete")}: ${display}`} onClick={() => setConfirmId(s.id)}><GlyphIcon kind="trash" size={18} /></Button>
                                 )}
                               </div>
+                              <PlaceTripActions
+                                spot={s} displayName={display} trips={trips} onTripsChanged={loadTrips}
+                              />
                             </>
                           )}
                         </Card>

@@ -253,7 +253,7 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
 // 사라지면 여기서 걸리고, 의도적 DB 작업만 이 스냅숏을 갱신한다.
 // (RELEASE-CLEANUP-V1 보고에서 stale 로 확인되어 PLANNER-SPOTS-SEPARATION-V1
 //  에서 현실 반영 — assertion 약화가 아니라 오히려 파일명 전수 고정이다.)
-test("★migration 집합 스냅숏 — 승인된 87개 그대로, 예상 밖 추가/삭제 없음", () => {
+test("★migration 집합 스냅숏 — 승인된 88개 그대로, 예상 밖 추가/삭제 없음", () => {
   // CORRECTION-V1 §3: 60→72 는 각 릴리스 TASK 가 승인해 추가한 061~072 의
   // 현실 반영이다(중복·공백·과거 원문 수정 0 을 전수 확인했다).
   // 적용 상태 구분(파일 집합과 별개의 운영 원장):
@@ -268,13 +268,14 @@ test("★migration 집합 스냅숏 — 승인된 87개 그대로, 예상 밖 �
   // 083→087 (2026-09-30 재조사): 외부 가져오기 V2 브랜치가 추가한 084~087 — Staging 적용·Production 미적용.
   //  · 084 ai_user_usage_ledger (20efe635) · 085 user_spots_import_source (20efe635)
   //  · 086 ai_user_usage_shared_30d (7aad5336) · 087 ai_user_usage_monthly_plan_writing (17c95ab8)
-  assert.equal(files.length, 87, `migration 수가 변했다: ${files.length}`);
+  // 087→088 (2026-10-01): 내 장소 사진 3장 088 user_spot_photos — Staging 적용·Production 미적용.
+  assert.equal(files.length, 88, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "087_ai_user_usage_monthly_plan_writing.sql",
-    "087(월 사용권) 이 마지막이어야 한다 — 081 은 Production 기적용, 084~087 은 Staging 만");
+  assert.equal(files[files.length - 1], "088_user_spot_photos.sql",
+    "088(내 장소 사진 3장) 이 마지막이어야 한다 — 081 은 Production 기적용, 084~088 은 Staging 만");
   // 번호 공백·중복 금지: 001..072 가 정확히 한 번씩.
   const nums = files.map(f => f.slice(0, 3));
-  assert.equal(new Set(nums).size, 87, "번호 중복");
+  assert.equal(new Set(nums).size, 88, "번호 중복");
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
     assert.match(f, new RegExp(
       "^(042_place_reports|043_place_likes|044_admin_notification_events|" +
@@ -291,7 +292,7 @@ test("★migration 집합 스냅숏 — 승인된 87개 그대로, 예상 밖 �
       "067_curator_search_slots_entity_type|068_community_reactions_submissions|" +
       "069_place_usage_signal|070_new_discovery_foundations|071_community_ranking_rpcs|" +
       "072_ai_ops_ledger_and_switches|073_place_usage_annual_key|074_place_usage_monthly|075_place_usage_monthly_refresh_exact|076_place_usage_monthly_automation|077_user_consents|078_account_devices|079_trip_drafts|080_trip_draft_operations|081_city_spots_published_read_rls|082_retention_purge_daily|083_retention_purge_activation_gate|" +
-      "084_ai_user_usage_ledger|085_user_spots_import_source|086_ai_user_usage_shared_30d|087_ai_user_usage_monthly_plan_writing)\\.sql$"),
+      "084_ai_user_usage_ledger|085_user_spots_import_source|086_ai_user_usage_shared_30d|087_ai_user_usage_monthly_plan_writing|088_user_spot_photos)\\.sql$"),
       `예상치 못한 migration: ${f}`);
   }
 });

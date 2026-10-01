@@ -3298,7 +3298,7 @@ function ItineraryResult() {
             {/* VISUAL-POLISH V2 §6 — "RELAXED TRIP" 혼합 언어 제거: pace 네임스페이스
                 라벨(4locale)로 렌더. 알 수 없는 값만 기존 영문 fallback 유지. */}
             {travelStyle
-              ? (["relaxed", "balanced", "active", "imported"].includes(travelStyle) ? tPace(travelStyle) : `${travelStyle} Trip`) /* IMPORT-V2: 가져온 일정도 locale 라벨 */
+              ? (["relaxed", "balanced", "active", "imported", "my_place"].includes(travelStyle) ? tPace(travelStyle) : `${travelStyle} Trip`) /* IMPORT-V2: 가져온 일정도 locale 라벨 */
               : t("tripTitleFallback")}
           </span>
 

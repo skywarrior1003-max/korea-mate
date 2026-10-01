@@ -45,6 +45,8 @@ export interface UserSpot {
   has_photo?:         boolean;
   /** 사진을 다른 여행자에게 공개해도 된다는 동의. 기본 false. */
   photo_public?:      boolean;
+  /** 대표 사진 포함 저장된 사진 수(최대 3 · 088). */
+  photo_count?:       number;
   /**
    * 관련 있는 공개 장소(city_spots.id). 게시 상태가 아니다 — 게시는 city_spot_id.
    * city_spots.id 는 BIGINT 지만 이 저장소는 이미 number 로 다룬다(admin 화면 동일).
@@ -376,6 +378,98 @@ export async function apiDeleteUserSpotPhoto(
     error = body.error ?? error;
   } catch { /* ignore */ }
   return { ok: false, code, error };
+}
+
+// ── 사진 여러 장 (최대 3장 · 088) ─────────────────────────────────────────────
+//
+// 화면은 storage path 를 보지 않는다. 사진마다 key(파일 이름의 UUID)만 받아
+// 순서 바꾸기·빼기에 그대로 돌려보낸다. URL 은 600초 만료라 저장하지 않는다.
+
+export const USER_SPOT_PHOTO_LIMIT = 3;
+
+export interface UserSpotPhoto {
+  key:  string;
+  /** 1번(대표) 사진인가. */
+  main: boolean;
+  url:  string | null;
+  expiresAt: string | null;
+}
+
+export interface UserSpotPhotoList {
+  photos: UserSpotPhoto[];
+  count:  number;
+  limit:  number;
+  photo_public: boolean;
+}
+
+export interface UserSpotPhotoResult {
+  ok: boolean;
+  list?: UserSpotPhotoList;
+  /** PLACE_PHOTO_LIMIT · DEVICE_PHOTO_LIMIT · TOO_LARGE · BAD_TYPE · UPLOAD_FAILED · ORDER_MISMATCH · PHOTO_IS_ONLY_ANCHOR … */
+  code?: string;
+  error?: string;
+}
+
+async function photoListResult(res: Response): Promise<UserSpotPhotoResult> {
+  let body: Record<string, unknown> = {};
+  try { body = (await res.json()) as Record<string, unknown>; } catch { /* ignore */ }
+  if (res.ok) {
+    const list = Array.isArray(body.photos) ? (body as unknown as UserSpotPhotoList) : undefined;
+    return { ok: true, list };
+  }
+  return {
+    ok: false,
+    code: typeof body.code === "string" ? body.code : undefined,
+    error: typeof body.error === "string" ? body.error : `HTTP ${res.status}`,
+  };
+}
+
+export async function apiListUserSpotPhotos(id: string): Promise<UserSpotPhotoResult> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photos`, { headers: await getHeader(deviceId) });
+    return await photoListResult(res);
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+}
+
+/** 한 장 덧붙이기. 대표 사진이 없으면 대표가 된다. */
+export async function apiAppendUserSpotPhoto(id: string, photo: Blob): Promise<UserSpotPhotoResult> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photos`, {
+      method: "POST", headers: await getHeader(deviceId), body: photoBody(photo),
+    });
+    return await photoListResult(res);
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+}
+
+/** 순서 바꾸기 — order[0] 이 대표 사진이 된다. 대표가 바뀌면 공개 동의는 꺼진다. */
+export async function apiReorderUserSpotPhotos(id: string, order: string[]): Promise<UserSpotPhotoResult> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photos`, {
+      method: "PUT", headers: await deviceHeader(deviceId), body: JSON.stringify({ order }),
+    });
+    return await photoListResult(res);
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+}
+
+export async function apiRemoveUserSpotPhoto(id: string, key: string): Promise<UserSpotPhotoResult> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photos?key=${encodeURIComponent(key)}`, {
+      method: "DELETE", headers: await getHeader(deviceId),
+    });
+    return await photoListResult(res);
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
 }
 
 async function errorMessage(res: Response): Promise<string> {

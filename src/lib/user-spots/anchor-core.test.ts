@@ -39,11 +39,16 @@ test("근거가 없으면 만들 수 없다", () => {
   assert.equal(canCreate({ lat: null, lng: null, hasPhoto: false }), false);
 });
 
-test("canCreate 는 이름을 보지 않는다", () => {
-  // 인자에 name 자리가 아예 없다 — 이름으로 저장 여부가 바뀔 길이 없다.
+// 2026-10-01 Owner 결정 — "위치 미정" 저장을 연다. 예전 테스트("canCreate 는 이름을
+// 보지 않는다")는 지도가 열리지 않는 환경에서 저장 자체를 막아 장소를 잃게 했다.
+// 이제 이름 2자 이상이면 좌표 없이 만든다(좌표는 지어내지 않는다).
+test("canCreate — 이름 2자 이상이면 위치 미정으로 만든다, 1자·공백은 아니다", () => {
   assert.equal(canCreate.length, 1);
   const noAnchor = { lat: null, lng: null, hasPhoto: false };
-  assert.equal(canCreate({ ...noAnchor, name: "적어 봤자" } as never), false);
+  assert.equal(canCreate({ ...noAnchor, name: "광안리" }), true);
+  assert.equal(canCreate({ ...noAnchor, name: "가" }), false);
+  assert.equal(canCreate({ ...noAnchor, name: "   " }), false);
+  assert.equal(canCreate(noAnchor), false);
 });
 
 // ── 수정 조건 ─────────────────────────────────────────────────────────────────
@@ -167,10 +172,12 @@ test("읽을 수 없는 이미지는 네트워크를 쓰기 전에 멈춘다", a
 
 // ── 서버·폼 계약 ──────────────────────────────────────────────────────────────
 
-test("JSON create 는 좌표를 요구하고 안정적인 code 를 준다", () => {
+test("JSON create 는 좌표 또는 이름(2자 이상)을 요구하고 안정적인 code 를 준다", () => {
   assert.ok(LIST.includes("ANCHOR_REQUIRED"), "error code 필요");
-  assert.match(LIST, /if \(!\(hasLat && hasLng\)\)/, "좌표가 유일한 근거다");
-  assert.ok(!LIST.includes('Provide a name, or a location'), "이름을 대안으로 안내하지 않는다");
+  // 2026-10-01 — 위치 미정 저장: 좌표가 없으면 이름 2자 이상만 받는다. 좌표를 만들지 않는다.
+  assert.match(LIST, /const nameOnly = !\(hasLat && hasLng\) && typeof name === "string" && name\.trim\(\)\.length >= 2;/);
+  assert.match(LIST, /if \(!\(hasLat && hasLng\) && !nameOnly\)/);
+  assert.ok(!/row\.lat = (?!body\.lat)/.test(LIST), "좌표를 지어내지 않는다");
 });
 
 test("폼은 저장 조건을 anchor-core 에서 가져다 쓴다", () => {
@@ -178,8 +185,8 @@ test("폼은 저장 조건을 anchor-core 에서 가져다 쓴다", () => {
   // 만들기는 지도에서 확인한 좌표만 본다. 예전에는 `canCreate`(좌표 또는 사진)
   // 였고, 사진만 붙이면 지도를 열지 않고 좌표 없는 장소가 만들어졌다.
   // `canCreate` 자체는 서버·legacy 계약으로 남아 있고 폼이 쓰지 않을 뿐이다.
-  assert.match(FORM, /mode === "create"[\s\S]{0,80}hasCompleteGps/, "만들기는 확인된 좌표");
-  assert.ok(!FORM.includes("canCreate("), "만들기 버튼에 사진 대안을 다시 연결하지 않는다");
+  // 2026-10-01 — 만들기는 canCreate(좌표·사진·이름 2자) — 위치 미정 저장(Owner 결정)
+  assert.match(FORM, /mode === "create"[\s\S]{0,80}canCreate\(\{ \.\.\.anchorInput, name: form\.name \}\)/, "만들기는 canCreate");
   assert.match(FORM, /canEdit\(/, "고치기는 canEdit");
   assert.ok(!FORM.includes("hasMinimumIdentity"), "이름 기반 옛 조건 제거");
 });

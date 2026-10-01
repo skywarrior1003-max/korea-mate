@@ -13,6 +13,19 @@ export interface AnchorInput {
   lng:  number | null;
   /** 이번에 새로 고른 사진이 있는가. */
   hasPhoto: boolean;
+  /**
+   * 사용자가 적은 이름. 2026-10-01 Owner 결정으로 "위치 미정" 저장이 열리면서
+   * 새 장소의 근거가 될 수 있다(2자 이상). 좌표는 지어내지 않는다 — 위치는 비운다.
+   */
+  name?: string;
+}
+
+/** 위치 없이 이름만으로 저장할 수 있는 최소 길이. 서버 POST /api/user-spots 와 같은 값이다. */
+export const NAME_ONLY_MIN_LENGTH = 2;
+
+/** 이름만으로 "위치 미정" 장소가 될 수 있는가. */
+export function hasUsableName(name: string | null | undefined): boolean {
+  return (name ?? "").trim().length >= NAME_ONLY_MIN_LENGTH;
 }
 
 /** 좌표는 짝일 때만 위치다. 한쪽만 있는 값은 지도에 찍을 수도 고칠 수도 없다. */
@@ -27,7 +40,10 @@ export function hasCompleteGps(v: { lat: number | null; lng: number | null }): b
  * 그것들만 있는 행은 나중에 그게 무엇이었는지 아무도 알 수 없다.
  */
 export function canCreate(v: AnchorInput): boolean {
-  return hasCompleteGps(v) || v.hasPhoto;
+  // 2026-10-01 — 이름(2자 이상)만으로도 "위치 미정" 으로 만들 수 있다. 위 설명의
+  // "이름은 근거가 아니다" 는 지도가 열리지 않아 아무것도 저장하지 못하던 결함을
+  // 낳았고, Owner 가 위치 미정 저장을 요구했다. 좌표·주소는 여전히 지어내지 않는다.
+  return hasCompleteGps(v) || v.hasPhoto || hasUsableName(v.name);
 }
 
 /**
@@ -66,7 +82,9 @@ export type CreateRoute =
  * 없으므로 한 요청으로 처리하고, 실패하면 아무것도 만들지 않는다.
  */
 export function decideCreateRoute(v: AnchorInput): CreateRoute {
-  const gps = hasCompleteGps(v);
+  // 위치 미정(이름만) 장소도 사진 없이 성립하므로 좌표가 있을 때와 같은 길을 탄다 —
+  // 사진이 실패해도 방금 저장한 장소를 지우지 않는다.
+  const gps = hasCompleteGps(v) || hasUsableName(v.name);
   if (gps && v.hasPhoto)  return "json-then-photo";
   if (gps)                return "json";
   if (v.hasPhoto)         return "with-photo";

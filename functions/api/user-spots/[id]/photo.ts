@@ -247,6 +247,26 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     return json({ ok: true, has_photo: false, photo_public: false });
   }
 
+  // ── 2·3번째 사진(088)이 있으면 다음 사진을 대표로 올리며 뺀다 ────────────────
+  // 이 길로 대표만 비우면 남은 사진이 대표 없이 떠 있게 된다. 088 함수가 한 번에
+  // 대표 교체·공개 동의 내림·순서 재정렬을 한다.
+  const { count: kids } = await admin
+    .from("user_spot_photos")
+    .select("photo_id", { count: "exact", head: true })
+    .eq("spot_id", spot.id);
+  if ((kids ?? 0) > 0) {
+    const { data: removed, error: rpcErr } = await admin.rpc("user_spot_photos_remove", {
+      p_spot: spot.id, p_path: spot.photo_storage_path,
+    });
+    if (rpcErr || removed !== spot.photo_storage_path) {
+      console.error("[user-spots/:id/photo DELETE] promote failed:", rpcErr?.code ?? String(removed));
+      return json({ error: "Failed to delete photo" }, 500);
+    }
+    const rmErr = await removeUserSpotPhoto(admin.storage, spot.photo_storage_path);
+    if (rmErr) console.error("[user-spots/:id/photo DELETE] storage remove failed", JSON.stringify({ orphaned_path: spot.photo_storage_path, error: rmErr }));
+    return json({ ok: true, has_photo: true, photo_public: false });
+  }
+
   // ── 사진이 유일한 근거이면 지우지 않는다 ────────────────────────────────────
   // 사진만으로 만들어진 장소에서 그 사진을 빼면 아무것도 남지 않는다. 그건
   // "사진 삭제" 가 아니라 "장소 삭제" 인데, 사용자는 후자를 누른 적이 없다.

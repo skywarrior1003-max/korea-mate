@@ -15,6 +15,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { isValidCoordinate } from "@/lib/geo";
+import { NAVER_AUTH_FAILURE_EVENT } from "./NaverMap";
+
+/** SDK 가 늦게 오는 휴대폰을 기다리는 최대 시간. 넘으면 실패 화면으로 바꾼다. */
+const SDK_WAIT_MS = 8_000;
 
 /** 디자이너 시안의 브랜드 블루. 핀과 CTA 가 같은 색이라 한 곳에 둔다. */
 const PIN_BLUE = "#0057ff";
@@ -30,6 +34,13 @@ export interface SpotLocationPickerProps {
   seedNote?:  string | null;
   onConfirm:  (lat: number, lng: number) => void;
   onCancel:   () => void;
+  /**
+   * 지원하는 지도 링크에서 읽은 좌표. 지도를 못 띄웠을 때만 "링크 좌표로 저장" 을
+   * 보여 준다 — 링크가 아닌 근거(현재 위치·도시 중심)는 확인 없이 저장하지 않는다.
+   */
+  linkCoordinate?: { lat: number; lng: number } | null;
+  /** 지도를 못 띄웠을 때 "위치 없이 진행". 없으면 닫기만 보여 준다. */
+  onNoLocation?: () => void;
 }
 
 /** 화면 한가운데 붙는 핀. 지도 위에 떠 있을 뿐 지리 좌표에 묶이지 않는다. */
@@ -86,6 +97,7 @@ function CenterPin({ still }: { still: boolean }) {
 
 export default function SpotLocationPicker({
   center, zoomedIn = false, placeName, seedNote = null, onConfirm, onCancel,
+  linkCoordinate = null, onNoLocation,
 }: SpotLocationPickerProps) {
   const t = useTranslations("picks");
   const boxRef = useRef<HTMLDivElement>(null);
@@ -95,6 +107,13 @@ export default function SpotLocationPicker({
   const mapRef = useRef<NaverMapInstance | null>(null);
 
   const [ready, setReady] = useState(false);
+  /**
+   * 지도를 띄우지 못한 이유. 예전에는 SDK 가 없으면 "불러오는 중" 에 영원히 멈추고
+   * 저장 버튼도 잠긴 채였다(2026-10-01 Preview 실측: 지도 인증 실패 → naver.maps 사라짐).
+   *   auth — 지도 서비스가 이 주소를 허용하지 않았다(콘솔의 웹 서비스 URL 설정)
+   *   sdk  — 지도 스크립트가 제시간에 오지 않았다(네트워크·차단)
+   */
+  const [failed, setFailed] = useState<null | "auth" | "sdk">(null);
   const [at,    setAt]    = useState<{ lat: number; lng: number } | null>(center);
 
   // 움직임을 줄여 달라고 한 사람에게는 튀는 핀을 보이지 않는다. 핀은 그대로 있고
@@ -122,11 +141,29 @@ export default function SpotLocationPicker({
     return () => window.removeEventListener("keydown", esc);
   }, [onCancel]);
 
+  // SDK 를 기다린다 — 늦게 오면 받아서 다시 그리고, 인증 실패나 시간 초과면 실패 화면.
+  const [sdkTick, setSdkTick] = useState(0);
+  useEffect(() => {
+    const authFailed = () => Boolean((window as Window & { __gkmNaverMapAuthFailed?: boolean }).__gkmNaverMapAuthFailed);
+    const onAuth = () => { setReady(false); setFailed("auth"); };
+    window.addEventListener(NAVER_AUTH_FAILURE_EVENT, onAuth);
+    if (authFailed()) { onAuth(); return () => window.removeEventListener(NAVER_AUTH_FAILURE_EVENT, onAuth); }
+    const started = Date.now();
+    const iv = window.setInterval(() => {
+      if (authFailed()) { onAuth(); window.clearInterval(iv); return; }
+      if (window.naver?.maps) { setSdkTick(n => n + 1); window.clearInterval(iv); return; }
+      if (Date.now() - started > SDK_WAIT_MS) { setFailed("sdk"); window.clearInterval(iv); }
+    }, 300);
+    return () => { window.clearInterval(iv); window.removeEventListener(NAVER_AUTH_FAILURE_EVENT, onAuth); };
+  }, []);
+
   useEffect(() => {
     const el = boxRef.current;
     const naver = typeof window !== "undefined" ? window.naver : undefined;
     // SDK 가 아직 안 왔을 수 있다. 그때도 화면은 닫을 수 있어야 한다.
+    // 위의 대기 효과가 SDK 를 받으면 sdkTick 으로 이 효과를 다시 부른다.
     if (!el || !naver?.maps) return;
+    if ((window as Window & { __gkmNaverMapAuthFailed?: boolean }).__gkmNaverMapAuthFailed) return;
 
     // 시작점이 전혀 없어도 지도는 열어야 한다. locSeedNone 문구가 "지도를 움직여
     // 직접 정하세요" 라고 이미 약속한다 — center 없음 → 지도 없음이면 그 약속이
@@ -158,7 +195,7 @@ export default function SpotLocationPicker({
       maps.Event.removeListener(idle);
       mapRef.current = null;
     };
-  }, [center, zoomedIn]);
+  }, [center, zoomedIn, sdkTick]);
 
   function confirm() {
     // 저장되는 값은 지금 이 순간의 지도 중심이다. `idle` 을 기다리다 놓친
@@ -212,10 +249,49 @@ export default function SpotLocationPicker({
       </div>
 
       {/* 지도를 못 띄웠을 때 — 빈 화면으로 두지 않는다 */}
-      {!ready && (
+      {!ready && !failed && (
         <p className="absolute inset-x-0 top-1/2 z-10 mt-28 text-center text-xs text-[#565D66]" role="status">
           {t("locMapLoading")}
         </p>
+      )}
+
+      {/* 지도를 끝내 못 띄웠을 때 — 이유를 말하고, 갈 수 있는 길을 준다.
+          좌표는 지어내지 않는다: 링크에서 읽은 좌표가 있을 때만 그것으로 저장할 수 있다. */}
+      {failed && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-white/95 px-6" role="alert" data-testid="spot-picker-failed">
+          <div className="w-full max-w-sm rounded-2xl border border-[#E5E7EA] bg-white p-5 shadow-sm">
+            <h2 className="text-sm font-black text-[#191C21]">{t("locMapFailedTitle")}</h2>
+            <p className="mt-1.5 text-xs leading-relaxed text-[#565D66]">
+              {t(failed === "auth" ? "locMapFailedAuth" : "locMapFailedSdk")}
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              {linkCoordinate && isValidCoordinate(linkCoordinate.lat, linkCoordinate.lng) && (
+                <button
+                  type="button"
+                  onClick={() => onConfirm(linkCoordinate.lat, linkCoordinate.lng)}
+                  className="gkm-focus w-full min-h-11 rounded-xl text-sm font-black text-white cursor-pointer"
+                  style={{ backgroundColor: PIN_BLUE }}
+                >
+                  {t("locMapFailedUseLink", { lat: linkCoordinate.lat.toFixed(5), lng: linkCoordinate.lng.toFixed(5) })}
+                </button>
+              )}
+              {onNoLocation && (
+                <button
+                  type="button" onClick={onNoLocation}
+                  className="gkm-focus w-full min-h-11 rounded-xl text-sm font-bold border border-[#E5E7EA] text-[#191C21] cursor-pointer"
+                >
+                  {t("locMapFailedNoLocation")}
+                </button>
+              )}
+              <button
+                type="button" onClick={onCancel}
+                className="gkm-focus w-full min-h-11 rounded-xl text-sm font-bold text-[#565D66] cursor-pointer"
+              >
+                {t("locConfirmClose")}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* 화면에 못 그리는 값은 읽어 준다 */}

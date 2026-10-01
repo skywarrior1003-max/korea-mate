@@ -119,33 +119,37 @@ test("★상단 안내와 하단 저장 CTA 가 있다", () => {
 });
 
 // ── 사진은 위치를 대신하지 않는다 ────────────────────────────────────────────
-test("★새로 만들 때는 확인된 좌표가 있어야만 저장된다 — 사진으로 우회할 수 없다", () => {
+// 2026-10-01 Owner 결정 — 지도 인증 실패 등으로 지도를 못 여는 사람이 저장 자체를 못 하던
+// 결함 때문에 "위치 미정" 저장을 연다. 좌표는 여전히 지어내지 않는다(확인한 좌표·링크 좌표·
+// 사용자가 고른 촬영 위치만). 이 테스트는 옛 규칙("확인된 좌표만") 대신 새 규칙을 지킨다.
+test("★새로 만들 때 — 확인한 좌표·사진·이름(2자) 중 하나면 저장, 좌표는 만들지 않는다", () => {
   const s = strip(FORM);
-  assert.match(s, /mode === "create"\s*\n?\s*\?\s*hasCompleteGps\(\{ lat: form\.lat, lng: form\.lng \}\)/);
-  // `좌표 또는 사진` 규칙을 create 버튼에 다시 연결하지 않는다
-  assert.doesNotMatch(s, /canCreate\(/);
-  assert.doesNotMatch(FORM, /import \{ canCreate/);
+  assert.match(s, /mode === "create"\s*\n?\s*\?\s*canCreate\(\{ \.\.\.anchorInput, name: form\.name \}\)/);
+  // 위치 없이 저장하면 무엇을 못 쓰는지 화면이 말한다
+  assert.match(s, /locUnknownNote/);
 });
 
 test("★고칠 때 규칙은 그대로다 — 예전 행의 메모를 막지 않는다", () => {
   assert.match(strip(FORM), /:\s*canEdit\(\{ \.\.\.anchorInput, name: form\.name, hasExistingPhoto \}\)/);
 });
 
-test("★anchor-core 의 legacy 규칙 자체는 손대지 않았다", () => {
+test("★anchor-core — 좌표 또는 사진 또는 이름(2자 이상)", () => {
   const core = read("src", "lib", "user-spots", "anchor-core.ts");
-  assert.match(core, /export function canCreate\(v: AnchorInput\): boolean \{\s*\n\s*return hasCompleteGps\(v\) \|\| v\.hasPhoto;/);
+  assert.match(core, /return hasCompleteGps\(v\) \|\| v\.hasPhoto \|\| hasUsableName\(v\.name\);/);
+  assert.match(core, /export const NAME_ONLY_MIN_LENGTH = 2;/);
   assert.match(core, /export function hasCompleteGps/);
 });
 
-test("★막힌 이유를 만들 때와 고칠 때 다르게 말한다", () => {
+test("★막힌 이유를 만들 때와 고칠 때 다르게, 지금 빠진 것에 맞춰 말한다", () => {
   const s = strip(FORM);
-  assert.match(s, /t\(mode === "create" \? "needLocation" : "needAnchor"\)/);
+  assert.match(s, /t\("needNameLonger"\) : t\("needAnythingCreate"\)/);
+  assert.match(s, /: t\("needAnchor"\)/);
   for (const locale of ["en", "ko", "ja", "zh"]) {
     const picks = JSON.parse(read("src", "messages", `${locale}.json`)).picks;
-    assert.equal(typeof picks?.needLocation, "string", `${locale}.picks.needLocation`);
-    assert.ok(picks.needLocation.trim().length > 0, `${locale}.picks.needLocation 가 비었다`);
-    // 만들 때 문구가 사진을 대안으로 제시하면 안 된다
-    assert.doesNotMatch(picks.needLocation, /photo|사진|写真|照片/i, `${locale} needLocation`);
+    for (const k of ["needNameLonger", "needAnythingCreate", "locUnknownNote"]) {
+      assert.equal(typeof picks?.[k], "string", `${locale}.picks.${k}`);
+      assert.ok(picks[k].trim().length > 0, `${locale}.picks.${k} 가 비었다`);
+    }
   }
 });
 

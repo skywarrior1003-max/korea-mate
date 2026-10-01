@@ -26,13 +26,20 @@ export interface CreateFlowDeps {
   createWithPhoto:(input: CreateFlowInput, photo: Blob) => Promise<{ ok: boolean; id?: string }>;
   /** 이미 만들어진 장소에 사진 붙이기. */
   uploadPhoto:    (id: string, photo: Blob) => Promise<{ ok: boolean }>;
+  /**
+   * 2·3번째 사진 덧붙이기(088 user_spot_photos). 없으면 첫 사진만 올린다 —
+   * 예전 호출부(한 장)와 같은 동작이다.
+   */
+  appendPhoto?:   (id: string, photo: Blob) => Promise<{ ok: boolean }>;
 }
 
 export type CreateFlowNotice =
   /** 사진을 읽지 못했다 (형식·손상) */
   | "photoUnreadable"
   /** 장소는 저장됐고 사진만 실패했다 */
-  | "savedPhotoFailed";
+  | "savedPhotoFailed"
+  /** 장소는 저장됐고 사진 일부만 올라갔다 — 몇 장인지는 photosSaved/photosFailed */
+  | "savedPhotosPartial";
 
 export interface CreateFlowResult {
   /** 장소가 만들어졌는가. 사진만 실패한 경우에도 true 다. */
@@ -42,6 +49,10 @@ export interface CreateFlowResult {
   notice?:  CreateFlowNotice;
   /** 만들지 못한 이유 (i18n 키). */
   errorKey?: "needAnchor" | "saveFailed";
+  /** 실제로 저장된 사진 수. 성공처럼 보이지 않게 화면이 그대로 알린다. */
+  photosSaved?:  number;
+  /** 저장하지 못한 사진 수(읽지 못함·업로드 실패). */
+  photosFailed?: number;
 }
 
 /**
@@ -56,10 +67,48 @@ export interface CreateFlowResult {
  */
 export async function runCreateFlow(
   input:  CreateFlowInput,
+  photos: File | File[] | null,
+  deps:   CreateFlowDeps,
+): Promise<CreateFlowResult> {
+  // 한 장(예전 호출부)과 여러 장(최대 3장)을 같은 흐름으로 받는다. 첫 장이 대표 사진이다.
+  const list  = Array.isArray(photos) ? photos.slice(0, 3) : photos ? [photos] : [];
+  const photo = list[0] ?? null;
+  const rest  = list.slice(1);
+  const first = await runFirst(input, photo, deps);
+  if (!first.created || !first.spotId || rest.length === 0 || !deps.appendPhoto) {
+    if (first.created && photo) {
+      const ok = first.notice ? 0 : 1;
+      return { ...first, photosSaved: ok, photosFailed: list.length - ok };
+    }
+    return first;
+  }
+  // 나머지 사진은 하나씩 — 하나가 실패해도 다음 사진과 장소는 남는다.
+  let saved  = first.notice ? 0 : 1;
+  let failed = first.notice ? 1 : 0;
+  for (const f of rest) {
+    try {
+      const blob = await deps.compress(f);
+      const r = await deps.appendPhoto(first.spotId, blob);
+      if (r.ok) saved++; else failed++;
+    } catch {
+      failed++;
+    }
+  }
+  if (failed === 0) return { created: true, spotId: first.spotId, photosSaved: saved, photosFailed: 0 };
+  return {
+    created: true, spotId: first.spotId,
+    notice: saved === 0 ? "savedPhotoFailed" : "savedPhotosPartial",
+    photosSaved: saved, photosFailed: failed,
+  };
+}
+
+/** 첫 사진(대표)까지의 예전 흐름. */
+async function runFirst(
+  input:  CreateFlowInput,
   photo:  File | null,
   deps:   CreateFlowDeps,
 ): Promise<CreateFlowResult> {
-  const route = decideCreateRoute({ lat: input.lat, lng: input.lng, hasPhoto: photo !== null });
+  const route = decideCreateRoute({ lat: input.lat, lng: input.lng, hasPhoto: photo !== null, name: input.name });
 
   if (route === "blocked") return { created: false, errorKey: "needAnchor" };
 

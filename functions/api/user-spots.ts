@@ -71,11 +71,28 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to fetch spots" }, 500);
   }
 
+  // 2·3번째 사진(088) 수 — 카드가 "n/3장" 을 보여 줄 수 있게 한 번에 센다.
+  // 읽기 실패는 목록을 막지 않는다(대표 사진 유무만으로 센다).
+  const ids = (data ?? []).map(r => (r as { id: string }).id);
+  const extra = new Map<string, number>();
+  if (ids.length > 0) {
+    const { data: kids, error: kidsErr } = await admin
+      .from("user_spot_photos")
+      .select("spot_id")
+      .in("spot_id", ids);
+    if (kidsErr) console.error("[user-spots GET] photo count error:", kidsErr.code);
+    for (const k of kids ?? []) {
+      const sid = (k as { spot_id: string }).spot_id;
+      extra.set(sid, (extra.get(sid) ?? 0) + 1);
+    }
+  }
+
   // 목록에도 storage path 는 내보내지 않는다. 사진 유무와 공개 동의만 준다.
   const rows = (data ?? []).map(raw => {
     const row = raw as Record<string, unknown>;
     const { photo_storage_path: _path, ...rest } = row;
-    return { ...rest, ...toPhotoMeta(row) };
+    const meta = toPhotoMeta(row);
+    return { ...rest, ...meta, photo_count: (meta.has_photo ? 1 : 0) + (extra.get(row.id as string) ?? 0) };
   });
 
   return json(rows);
@@ -152,9 +169,16 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   //
   // DB CHECK 의 legacy name 항은 그대로 둔다 — 이름만으로 만들어진 예전 행이
   // 아직 있고, 그 행을 고치는 길까지 막을 이유는 없다. 새로 만드는 길만 닫는다.
-  if (!(hasLat && hasLng)) {
+  //
+  // 2026-10-01 Owner 결정으로 바뀌었다 — "위치 미정" 저장을 연다. 지도가 열리지
+  // 않거나(지도 인증 실패) 링크에서 자리를 못 읽은 사람이 저장 자체를 못 하면
+  // 그 장소는 기록되지 못하고 사라진다. 대신 좌표를 지어내지 않는다: 이름(2자 이상)
+  // 만 받고, 위치는 비운 채 저장한다. 화면은 "위치 미정 — 지도·길찾기 불가" 를
+  // 따로 보여 준다. DB CHECK(047)의 name 항이 이 행을 그대로 받아 준다.
+  const nameOnly = !(hasLat && hasLng) && typeof name === "string" && name.trim().length >= 2;
+  if (!(hasLat && hasLng) && !nameOnly) {
     return json({
-      error: "A new place needs a location. Use the photo endpoint to save a place from a photo.",
+      error: "A new place needs a location or a name (2+ characters). Use the photo endpoint to save a place from a photo.",
       code:  "ANCHOR_REQUIRED",
     }, 400);
   }

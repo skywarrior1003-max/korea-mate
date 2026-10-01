@@ -189,10 +189,11 @@ test("★migration 집합이 승인 스냅숏 그대로다 — 이 작업은 DB 
   // itinerary-i18n-guard 의 스냅숏 테스트가 이름 단위로 든다.
   const files = readdirSync(join(ROOT, "supabase", "migrations")).filter(f => f.endsWith(".sql")).sort();
   // 083→087 (2026-09-30): 외부 가져오기 V2 브랜치의 084~087(20efe635·7aad5336·17c95ab8) — Staging 적용·Production 미적용
-  assert.equal(files.length, 87, `migration 수가 변했다: ${files.length}`);
+  // 087→088 (2026-10-01): 내 장소 사진 3장 088 user_spot_photos — Staging 적용·Production 미적용
+  assert.equal(files.length, 88, `migration 수가 변했다: ${files.length}`);
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
-  assert.equal(files[files.length - 1], "087_ai_user_usage_monthly_plan_writing.sql"); // 077~083 — 081 은 Production 적용 CLOSED — 081 은 Production 적용 CLOSED(재실행 금지)
+  assert.equal(files[files.length - 1], "088_user_spot_photos.sql"); // 077~083 — 081 은 Production 적용 CLOSED — 081 은 Production 적용 CLOSED(재실행 금지)
   assert.equal(createHash("sha256").update(files.join("\n")).digest("hex"),
-    "5631bc081d728b774dca0de733fe4d8fee886b70d89a325ef11542938c0be9f7",
+    "ac86d06edaaedab029c624d647e42f1a72bd743561a8548b05928273a82fa9b2",
     "승인 목록 밖의 migration 변경");
 });

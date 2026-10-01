@@ -36,6 +36,7 @@ export function isShortMapLink(raw: string): boolean {
   if (!host) return false;
   return (
     host === "naver.me" ||
+    host === "kko.to" ||
     host === "maps.app.goo.gl" ||
     host === "goo.gl" ||
     host === "maps.google.com.hk" ||
@@ -69,6 +70,14 @@ export function parseMapLinkCoordinate(raw: string): SeedCoordinate | null {
   const s = (raw ?? "").trim();
   if (!s) return null;
   if (isShortMapLink(s)) return null;
+
+  // Kakao 공유 링크: map.kakao.com/link/map/<이름>,<위도>,<경도> · /link/to/… · /link/roadview/…
+  // 이름 안에 쉼표가 들어갈 수 있어 끝의 숫자 두 개만 읽는다.
+  const kakao = s.match(/map\.kakao\.com\/link\/(?:map|to|roadview)\/[^?#]*?,(-?\d{1,3}(?:\.\d+)?),(-?\d{1,3}(?:\.\d+)?)(?:[?#/]|$)/);
+  if (kakao) {
+    const hit = pair(parseFloat(kakao[1]), parseFloat(kakao[2]));
+    if (hit) return hit;
+  }
 
   // Google 상세: !3d<lat>!4d<lng> — 장소를 특정한 뒤에 붙는 값이라 가장 정확하다.
   const g3d = s.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
@@ -147,4 +156,50 @@ export function chooseSeed(v: {
   if (v.gps     && valid(v.gps.lat,     v.gps.lng))     return { coordinate: v.gps,     source: "gps"     };
   if (v.city    && valid(v.city.lat,    v.city.lng))    return { coordinate: v.city,    source: "city"    };
   return { coordinate: null, source: "none" };
+}
+
+/**
+ * 붙여넣은 링크가 무엇인지 — 입력칸 바로 아래에서 사용자에게 알려 줄 상태.
+ *
+ *   coords      지원하는 지도 링크이고 좌표를 읽었다
+ *   short       짧은 링크라 어디로 가는지 열어 봐야 안다 — 열지 않는다(서버가 임의
+ *               주소를 열면 내부망으로 요청을 보내는 통로가 된다)
+ *   map         지도 링크는 맞지만 주소 안에 좌표가 없다(장소 이름·ID 만 있음)
+ *   reference   지도 링크가 아닌 일반 링크(블로그·가게 홈페이지) — 참고용일 뿐 위치가 아니다
+ *   invalid     링크로 읽을 수 없는 글자
+ *   empty       비어 있음
+ *
+ * 외부 일정 가져오기(글·링크에서 여행 전체를 읽는 기능)와는 다른 일이다 — 여기서는
+ * 장소 하나의 자리만 찾는다.
+ */
+export type PlaceLinkKind = "coords" | "short" | "map" | "reference" | "invalid" | "empty";
+export type PlaceLinkProvider = "google" | "naver" | "kakao" | null;
+
+export interface PlaceLinkStatus {
+  kind:       PlaceLinkKind;
+  provider:   PlaceLinkProvider;
+  coordinate: SeedCoordinate | null;
+}
+
+function providerOf(host: string): PlaceLinkProvider {
+  if (host === "naver.me" || host.endsWith("map.naver.com") || host === "m.place.naver.com" || host === "place.naver.com") return "naver";
+  if (host === "kko.to" || host.endsWith("map.kakao.com")) return "kakao";
+  if (host === "maps.app.goo.gl" || host === "goo.gl" || host.startsWith("maps.google.") || host.endsWith(".page.link")
+      || (/^(?:[a-z]+\.)?google\.[a-z.]+$/.test(host))) return "google";
+  return null;
+}
+
+export function classifyPlaceLink(raw: string): PlaceLinkStatus {
+  const s = (raw ?? "").trim();
+  if (!s) return { kind: "empty", provider: null, coordinate: null };
+  const host = hostOf(s);
+  if (!host || !host.includes(".") || /\s/.test(s)) return { kind: "invalid", provider: null, coordinate: null };
+  let provider = providerOf(host);
+  // google.com 자체는 검색 등 지도가 아닌 주소도 많다 — /maps 경로일 때만 지도 링크로 본다.
+  if (provider === "google" && /^(?:[a-z]+\.)?google\./.test(host) && !/\/maps(?:[/?]|$)/.test(s)) provider = null;
+  if (isShortMapLink(s)) return { kind: "short", provider, coordinate: null };
+  const coordinate = parseMapLinkCoordinate(s);
+  if (coordinate) return { kind: "coords", provider, coordinate };
+  if (provider) return { kind: "map", provider, coordinate: null };
+  return { kind: "reference", provider: null, coordinate: null };
 }

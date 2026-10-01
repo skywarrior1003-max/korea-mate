@@ -330,7 +330,10 @@ test("with-photo 응답에 storage path 가 없다", () => {
 test("사진이 유일한 Anchor 면 사진 DELETE 를 거부한다", () => {
   const del      = CODE.photo.slice(CODE.photo.indexOf("onRequestDelete"));
   const guard    = del.indexOf("hasNonPhotoAnchor");
-  const removeAt = del.indexOf("removeUserSpotPhoto");
+  // 2·3번째 사진(088)이 있으면 그 앞에서 다음 사진을 대표로 올리며 뺀다 — 그때는 사진이
+  // 유일한 근거가 아니다(088 함수가 ONLY_ANCHOR 를 따로 지킨다). 가드는 마지막 한 장 경로의
+  // Storage 삭제보다 앞이어야 한다.
+  const removeAt = del.lastIndexOf("removeUserSpotPhoto");
   assert.ok(guard >= 0, "가드 필요");
   assert.ok(guard < removeAt, "Storage 를 건드리기 전에 막아야 한다");
   assert.ok(del.includes("PHOTO_IS_ONLY_ANCHOR"), "안정적인 error code 필요");
