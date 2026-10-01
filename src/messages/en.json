@@ -1044,7 +1044,7 @@
     "photoLimitDevice": "You've used all 100 photo slots.",
     "photosSaved": "Saved {n} photo(s).",
     "photoMainChanged": "The cover photo changed. Sharing was turned off for the new cover.",
-    "justSavedTitle": "Saved '{name}'",
+    "justSavedTitle": "Saved “{name}”",
     "justSavedPhotos": "{n}/{max} photos",
     "justSavedLocated": "Location set",
     "justSavedNoLocation": "Location unknown (no map or directions)",

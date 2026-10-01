@@ -207,3 +207,12 @@ test("여행 시작은 AI 를 부르지 않고, 기록은 비공개로 만든다
   // 5개 도시 강요 금지 — 장소 도시를 그대로(없으면 빈 값)
   assert.match(client, /city: tripCityKey\(input\.spot\.city \?\? ""\)/);
 });
+
+test("문구 — 곧은 따옴표가 {자리}를 가리지 않는다(ICU 에서 '{name}' 은 글자 그대로 찍힌다)", () => {
+  for (const locale of ["ko", "en", "ja", "zh"]) {
+    const picks = JSON.parse(read("src", "messages", `${locale}.json`)).picks as Record<string, string>;
+    for (const [k, v] of Object.entries(picks)) {
+      if (typeof v === "string") assert.doesNotMatch(v, /'[{}#|]/, `${locale}.picks.${k}`);
+    }
+  }
+});

@@ -1044,7 +1044,7 @@
     "photoLimitDevice": "저장할 수 있는 사진 수(100장)를 모두 썼어요.",
     "photosSaved": "사진 {n}장을 저장했어요.",
     "photoMainChanged": "대표 사진이 바뀌었어요. 공개 설정은 새 사진에 맞춰 꺼졌어요.",
-    "justSavedTitle": "'{name}'을(를) 저장했어요",
+    "justSavedTitle": "‘{name}’을(를) 저장했어요",
     "justSavedPhotos": "사진 {n}/{max}장",
     "justSavedLocated": "위치 있음",
     "justSavedNoLocation": "위치 미정(지도·길찾기 불가)",
