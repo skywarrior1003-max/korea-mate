@@ -193,3 +193,7 @@ test("parseAnalyzed: 선택·대안으로 소개된 곳은 optional 로 남기�
   assert.ok(!("optional" in a.days[0]!.stops[0]!), "false 는 필드 자체를 남기지 않는다");
   assert.ok(buildAnalyzePrompt({ title: "", description: "", text: "x".repeat(100) }, null).includes("skipped, not visited"), "건너뛴 곳 규칙");
 });
+
+test("프롬프트: 이름이 있는 식당·카페에서 먹었다고 쓴 곳은 일정 장소다(2026-10-01 저녁 식당 누락 대응)", () => {
+  assert.ok(buildAnalyzePrompt({ title: "", description: "", text: "x".repeat(100) }, null).includes("For dinner we went to X"));
+});
