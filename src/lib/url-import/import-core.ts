@@ -227,7 +227,7 @@ export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): str
     "- Keep the ORIGINAL order of days and stops exactly as written. Do not reorder or optimize, and do not add or drop stops. Do not change the plan.",
     "- A plan without explicit days (for example one afternoon) is external_itinerary with a single day, day_number 1.",
     "- A stop is a NAMED place. Unnamed activities (\"a small cafe nearby\", \"lunch\") are not stops — mention them in the note of the stop they belong to.",
-    "- Places the text says were skipped, not visited, closed or not recommended are NOT stops (you may mention them in the note of a nearby stop). Transport used only to get somewhere (a station, an escalator, a cable car ride) is not a separate stop unless the text treats it as a destination.",
+    "- Places the text says were skipped, not visited, closed or not recommended are NOT stops (you may mention them in the note of a nearby stop).",
     "- optional: true when the text presents the stop as optional or as one of alternatives (\"if you have time\", \"you can also\", \"either ... or\", \"option\"); otherwise false.",
     "- time: the start time only if written, as HH:MM 24h (\"02:00 PM\" → \"14:00\"). end_time: the end time if a range is written, same format. time_text: the time exactly as written (e.g. \"12:00 PM - 02:00 PM\"). If a time range covers several stops, give each of those stops the same range.",
     "- date: only if unambiguous, format YYYY-MM-DD. Relative words like \"today\" are NOT dates → null.",
