@@ -94,7 +94,7 @@ test("★endpoint 에 재시도 루프가 없다 — fetch 는 정확히 한 번
   // 없으면 서울 placement Worker binding 경유 fetch 를 넘긴다(HKG egress 차단 회피).
   assert.match(s, /const providerFetch = args\.fetchFn \?\? fetch;/);
   // 2026-09-30: Worker 사전 거절 표시(x-gkm-provider-called)를 읽는 얇은 감싸기 — 주입 순서는 그대로, 호출은 한 번
-  assert.match(s, /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)/);
+  assert.match(s, /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env, bound\.usdMicro\)/);
   assert.equal((s.match(/await baseFetch\(/g) ?? []).length, 1);
   assert.doesNotMatch(s, /for\s*\([^)]*attempt/);
   assert.doesNotMatch(s, /while\s*\(/);

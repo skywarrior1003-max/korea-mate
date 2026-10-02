@@ -1,6 +1,7 @@
 import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 import { aiAllowed, aiUnavailableResponse } from "../_lib/app-env";
-import { aiOpsReserve, aiOpsSettle, aiFeatureUnavailable } from "../_lib/ai-ops-guard";
+import { aiOpsReserve, aiOpsSettle, aiFeatureUnavailable, usdMicroFromUsage } from "../_lib/ai-ops-guard";
+import { providerBodyBound } from "../../src/lib/ai-cost/provider-bound";
 import { requireActiveUser, userActorHash } from "../_lib/user-auth";
 import { quotaIdemKey, quotaReserve, quotaSettle, quotaRelease } from "../_lib/ai-user-quota";
 interface Env {
@@ -289,28 +290,38 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** 모델에 보낼 본문 — 예약액(provider-bound)과 실제 호출이 같은 본문을 쓴다 */
+function buildLegacyBody(prompt: string): string {
+  return JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      responseMimeType: "application/json",
+      temperature: 0.7,
+      // V2-HARDCAP §6 — 출력 무제한(모델 65,536)이 최악 226원/회의 원인이었다.
+      // 8,192 캡으로 최악 원가를 ≈30원/회로 고정한다(v2-ai-cost-audit §9-1).
+      maxOutputTokens: 8192,
+      // 2.5 의 사고 토큰은 출력 상한 밖일 수 있다 — 끄지 않으면 최악 비용을 계산할 수 없다(2026-10-02)
+      thinkingConfig: { thinkingBudget: 0 },
+    },
+  });
+}
+/** 한 번 시도의 시간 상한 — 예전에는 없었다(응답이 오지 않으면 Functions 가 끝날 때까지 기다렸다) */
+const LEGACY_TIMEOUT_MS = 30_000;
+
 async function callGemini(
   apiKey: string,
   model: string,
   prompt: string
-): Promise<unknown> {
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: "application/json",
-          temperature: 0.7,
-          // V2-HARDCAP §6 — 출력 무제한(모델 65,536)이 최악 226원/회의 원인이었다.
-          // 8,192 캡으로 최악 원가를 ≈30원/회로 고정한다(v2-ai-cost-audit §9-1).
-          maxOutputTokens: 8192,
-        },
-      }),
-    }
-  );
+): Promise<{ result: unknown; inTok: number | null; outTok: number | null }> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), LEGACY_TIMEOUT_MS);
+  let response: Response;
+  try {
+    response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.signal, body: buildLegacyBody(prompt) },
+    );
+  } finally { clearTimeout(timer); }
 
   if (!response.ok) {
     let detail = response.statusText;
@@ -328,6 +339,7 @@ async function callGemini(
 
   const data = (await response.json()) as {
     candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+    usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number };
   };
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!rawText) throw new Error(`Empty response from model: ${model}`);
@@ -336,7 +348,23 @@ async function callGemini(
   const trimmed = rawText.trim();
   const jsonStart = trimmed.search(/[{[]/);
   const cleaned = jsonStart > 0 ? trimmed.slice(jsonStart) : trimmed;
-  return JSON.parse(cleaned);
+  const u = data.usageMetadata;
+  return {
+    result: JSON.parse(cleaned),
+    inTok: u?.promptTokenCount ?? null,
+    outTok: u ? (u.candidatesTokenCount ?? 0) + (u.thoughtsTokenCount ?? 0) : null,
+  };
+}
+
+/** 사용자 입력 칸 길이 상한(2026-10-02) — 예전에는 자르지 않고 프롬프트 여러 곳에 넣었다 */
+function clipLegacyBody(b: RequestBody): RequestBody {
+  const c = (v: unknown, n: number) => (typeof v === "string" ? v.slice(0, n) : v);
+  return {
+    ...b,
+    city: c(b.city, 40), startDate: c(b.startDate, 10), endDate: c(b.endDate, 10),
+    travelers: c(b.travelers, 20), travelStyle: c(b.travelStyle, 40), startLocation: c(b.startLocation, 120),
+    arrivalTime: c(b.arrivalTime, 5), departurePlace: c(b.departurePlace, 120), departureTime: c(b.departureTime, 5),
+  } as RequestBody;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -768,7 +796,10 @@ export const onRequestPost: (context: {
   // Request body 파싱
   let body: RequestBody;
   try {
-    body = (await request.json()) as RequestBody;
+    // content-length 머리글만 믿지 않는다 — 실제 바이트로 다시 잰다(머리글이 없거나 chunked 면 0 으로 통과했다)
+    const text = await request.text();
+    if (new TextEncoder().encode(text).length > 512 * 1024) return aiFeatureUnavailable(413);
+    body = (JSON.parse(text)) as RequestBody;
   } catch {
     return new Response(
       JSON.stringify({ error: "Invalid request body — expected JSON." }),
@@ -786,7 +817,7 @@ export const onRequestPost: (context: {
     arrivalTime = "14:00",
     departurePlace = "",
     departureTime = "",
-  } = body;
+  } = clipLegacyBody(body);
 
   if (!startDate || !endDate) {
     return new Response(
@@ -833,9 +864,18 @@ export const onRequestPost: (context: {
   const releaseQuota = () => quotaRelease(qEnv, quota.id, userAuth.userId);
   const actorSecret = (env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
   const userActor = actorSecret ? await userActorHash(userAuth.userId, actorSecret) : null;
+  const arrivalHourEarly = arrivalTime ? parseInt(arrivalTime.split(":")[0] ?? "14", 10) : 14;
+  const promptForBound = buildPrompt(
+    city, startDate, endDate, numDays, travelers, travelStyle,
+    startLocation, arrivalTime, arrivalHourEarly, departurePlace || undefined, departureTime || undefined,
+  );
+  // 회사 비용 예약 — 한 번 시도의 최대 비용(provider-bound) × 시도 수(503 재시도까지 한 예약 안에서 쓴다, 2026-10-02).
+  // 예전 고정 22,000 은 출력 상한만 반영했고 입력·재시도를 세지 않았다.
+  const perAttempt = providerBodyBound(buildLegacyBody(promptForBound));
+  if (!perAttempt.ok) { await releaseQuota(); return aiFeatureUnavailable(); }
   const opsGate = await aiOpsReserve(env as Parameters<typeof aiOpsReserve>[0], {
     feature: "itinerary_legacy", model: "gemini-2.5-flash",
-    worstUsdMicro: 22_000, // 8192 출력캡 반영 최악 ≈$0.022
+    worstUsdMicro: perAttempt.usdMicro * MAX_RETRIES,
     idempotencyKey: `itinerary:${crypto.randomUUID()}`,
     actorHash: userActor,
     featureDailyCalls: 20, featureDailyUsdMicro: 500_000, // 20/day·$0.5/day
@@ -862,8 +902,10 @@ export const onRequestPost: (context: {
         console.log(
           `[Gemini Live Call] ${new Date().toISOString()} | route=cloudflare-pages-fn | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | mock=false`
         );
-        const result = await callGemini(apiKey, model, prompt);
-        await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "committed", { usdMicro: 22_000 }); // usage 미수집 — 보수 commit
+        const { result, inTok, outTok } = await callGemini(apiKey, model, prompt);
+        // 실제 사용량으로 확정 + 앞선 실패 시도는 결과를 모르므로 한 번 최대치씩 보수 합산(2026-10-02, 예전에는 고정 22,000)
+        const usd = (inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok, model) : perAttempt.usdMicro) + attempt * perAttempt.usdMicro;
+        await aiOpsSettle(env as Parameters<typeof aiOpsReserve>[0], opsGate.ledgerId, "committed", { inTok, outTok, usdMicro: usd }, perAttempt.usdMicro * MAX_RETRIES);
         // 사용자 무료 횟수 — 완성 일정일 때만 확정. 같은 요청 재응답용 결과는 64KB 이하일 때만 보관
         const resultJson = JSON.stringify(result);
         await quotaSettle(qEnv, quota.id, userAuth.userId, "committed", resultJson.length <= 60_000 ? result : null);

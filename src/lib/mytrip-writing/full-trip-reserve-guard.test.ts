@@ -50,9 +50,11 @@ test("예약식 — 입력 ≤ 본문 바이트×1 + 사진×560, 출력 ≤ 8,1
 
 test("서버 — 요청마다 보낼 본문으로 예약하고, 상한을 넘는 요청은 사용권·예약 전에 멈춘다", () => {
   const w = read("functions", "api", "mytrip", "writing-full.ts");
-  assert.match(w, /const reserveUsdMicro = fullTripReserveUsdMicro\(fullTripTextBytes\(prompt, images\), images\.length\);/);
+  // 2026-10-02(전 경로 점검): 공용 상한 함수(provider-bound)로 예약하고, 전체 여행 식(fullTripReserveUsdMicro)보다 작으면 거절한다
+  assert.match(w, /const bound = providerBodyBound\(providerBody\);/);
+  assert.match(w, /reserveUsdMicro < fullTripReserveUsdMicro\(fullTripTextBytes\(prompt, images\), images\.length\)/);
   assert.match(w, /worstUsdMicro: reserveUsdMicro,/);
-  const cap = w.indexOf("if (reserveUsdMicro > WORST_USD_MICRO)");
+  const cap = w.indexOf("if (reserveUsdMicro > WORST_USD_MICRO");
   assert.ok(cap > 0 && cap < w.indexOf("quotaReserve(") && cap < w.indexOf("aiOpsReserve("));
   assert.equal((w.match(/await pf\(/g) ?? []).length, 1, "모델 호출 1회");
   assert.match(w, /mediaResolution|buildFullTripProviderBody/);

@@ -32,7 +32,8 @@ import {
   MODEL, TIMEOUT_MS, MAX_OUTPUT_TOKENS,
   type PlaceHint, type Body,
 } from "../../../src/lib/scheduler/ai/profile-personalization-core";
-import { callProfileProvider } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
+import { callProfileProvider, buildProviderRequestBody } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
+import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
 
 interface Env {
   GEMINI_API_KEY?:           string;
@@ -52,14 +53,15 @@ interface Env {
  * 요청 URL(우리 key 포함)은 버리고 본문만 보낸다 — key 는 Worker 것을 쓴다.
  * binding 이 없는 로컬/테스트 환경은 undefined 를 돌려 기존 직결로 간다.
  */
-function bindingProviderFetch(env: Env): typeof fetch | undefined {
+function bindingProviderFetch(env: Env, reservedUsdMicro: number): typeof fetch | undefined {
   const binding = env.AI_WRITING;
   const key = env.INTERNAL_KEY;
   if (!binding || typeof binding.fetch !== "function" || !key) return undefined;
   return ((_url: RequestInfo | URL, init?: RequestInit) =>
     binding.fetch("https://ai-writing.internal/provider", {
       method:  "POST",
-      headers: { "Content-Type": "application/json", "x-internal-auth": key },
+      // 회사 원장에 예약한 금액 — Worker 가 본문 최대 비용과 비교해 넘으면 보내지 않는다(provider-bound)
+      headers: { "Content-Type": "application/json", "x-internal-auth": key, [RESERVED_HEADER]: String(reservedUsdMicro) },
       body:    init?.body ?? null,
       signal:  init?.signal ?? undefined,
     })) as typeof fetch;
@@ -203,9 +205,17 @@ export async function onRequestPost(
   const releaseQuota = () => quotaSettle(qEnv, quota.id, auth.userId, "released");
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
   const actor = actorSecret ? await userActorHash(auth.userId, actorSecret) : null;
+  // 회사 비용 예약 — 보낼 본문의 최대 비용(provider-bound: 본문 바이트 + 출력 상한 700)으로(2026-10-02, 고정 2,500 대신).
+  // 프롬프트는 6,000자로 잘리지만 이름이 드문 문자·이스케이프로 채워지면 고정값을 넘을 수 있었다.
+  const bound = providerBodyBound(buildProviderRequestBody(prompt));
+  if (!bound.ok) {
+    await releaseQuota();
+    log({ requestId, mode, providerCalled: false, status: "fallback_ops_gate", bound: bound.reason });
+    return reply(null, "fallback_guard");
+  }
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
     feature: "personalize", model: MODEL,
-    worstUsdMicro: 2_500, // cost-model personalize 최악 ≈$0.0025
+    worstUsdMicro: bound.usdMicro,
     // 회사 원장 열쇠는 이 사용자의 이번 예약(quota.id)마다 새로 — 2026-09-30 확인: request_id 는 도시·날짜·장소로 정해지는
     // 결정적 값이라 `personalize:${shortHash(request_id)}` 는 같은 일정을 고른 **다른 사용자**와 겹치고, 실패 뒤 같은 사용자의
     // 재시도도 영구히 중복으로 거절됐다. 동시 요청 차단은 사용자 무료 횟수(in_progress)가, 재요청 무차감은 replay 가 맡는다
@@ -223,7 +233,7 @@ export async function onRequestPost(
   // 서울 Worker 가 모델에 보내기 전에 거절했는지(x-gkm-provider-called: 0) — 그때만 회사 원장 예약을 되돌린다
   let workerRefusedBeforeProvider = false;
   let workerModel: string | null = null; // 서울 Worker 가 실제로 부른 모델(단가 계산용)
-  const baseFetch = ctx.fetchFn ?? bindingProviderFetch(ctx.env);
+  const baseFetch = ctx.fetchFn ?? bindingProviderFetch(ctx.env, bound.usdMicro);
   const call = await callProfileProvider({
     prompt, apiKey,
     fetchFn: baseFetch ? (async (u: RequestInfo | URL, i?: RequestInit) => {
@@ -263,7 +273,7 @@ export async function onRequestPost(
       inTok: u?.promptTokenCount ?? null,
       outTok: (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0),
       usdMicro: usdMicroFromUsage(u?.promptTokenCount, (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0), workerModel),
-    });
+    }, bound.usdMicro);
   }
 
   {

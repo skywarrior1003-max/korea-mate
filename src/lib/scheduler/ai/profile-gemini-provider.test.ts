@@ -174,7 +174,7 @@ test("G provider 는 환경변수·secret 을 읽지 않는다", () => {
 test("route 는 자기 fetch 를 갖지 않고 공용 provider 를 부른다", () => {
   const route = code("functions", "api", "trip", "personalize.ts");
   // 45ecc002: 주입 fetch(canary) 또는 서울 Worker 를 baseFetch 로 받고, 거절·실제 모델 헤더만 읽는 얇은 감싸기로 넘긴다
-  assert.match(route, /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env\)[\s\S]*fetchFn: baseFetch \?/);
+  assert.match(route, /const baseFetch = ctx\.fetchFn \?\? bindingProviderFetch\(ctx\.env, bound\.usdMicro\)[\s\S]*fetchFn: baseFetch \?/);
   // route 안에 provider 호출 코드가 남아 있으면 두 벌이 된다
   for (const gone of ["generativelanguage.googleapis.com", "new AbortController", "generationConfig"]) {
     assert.ok(!route.includes(gone), `route 에 ${gone} 이 남아 있다`);

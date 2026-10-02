@@ -125,6 +125,29 @@ export async function aiOpsReserve(env: OpsEnv, input: ReserveInput): Promise<Op
 }
 
 /**
+ * 운영 점검 전용 예약(2026-10-02) — 관리자 모델 가용성 점검처럼 **AI 스위치가 꺼진 상태에서도** 돌아야 하는 아주 작은 호출을
+ * 회사 원장에 남기고(감사), route 별 일일 호출·금액 상한과 회사 일·월 상한을 그대로 적용한다. 스위치만 보지 않는다.
+ * 사용자 기능에는 쓰지 않는다(그쪽은 aiOpsReserve).
+ */
+export async function aiOpsReserveOpsCheck(env: OpsEnv, input: { route: string; worstUsdMicro: number; dailyCalls: number; dailyUsdMicro: number; actorHash?: string | null }): Promise<{ ok: true; ledgerId: number } | { ok: false; reason: string }> {
+  // 원장을 쓰지 못하면(설정 없음·연결 실패) 부르지 않는다 — fail-closed
+  const r = await rest(env, "rpc/ai_ops_reserve", {
+    method: "POST",
+    body: JSON.stringify({
+      p_route: input.route, p_model: "ops-check",
+      p_worst_usd_micro: Math.max(1, Math.ceil(input.worstUsdMicro)),
+      p_idem_key: `${input.route}:${crypto.randomUUID()}`,
+      p_actor_hash: input.actorHash ?? null,
+      p_feature_daily_calls: input.dailyCalls,
+      p_feature_daily_usd_micro: input.dailyUsdMicro,
+    }),
+  }).catch(() => ({ ok: false, data: null }));
+  const row = r.ok && Array.isArray(r.data) ? r.data[0] as { ok: boolean; reason: string; ledger_id: number | null } : null;
+  if (!row) return { ok: false, reason: "ledger_unavailable" };
+  return row.ok ? { ok: true, ledgerId: Number(row.ledger_id) } : { ok: false, reason: row.reason };
+}
+
+/**
  * 오늘 이 기능에 확정 비용 > 예약액 인 행이 있는가. 조회 실패는 "있다"로 본다(스위치와 같은 fail-closed).
  * 하루 행 수는 기능별 일일 호출 상한(writing 100 등) 안이라 한 번에 읽는다.
  */
@@ -145,7 +168,13 @@ export async function aiOpsSettle(
   env: OpsEnv, ledgerId: number,
   status: "committed" | "released" | "unknown_billed",
   usage?: { inTok?: number | null; outTok?: number | null; usdMicro?: number | null },
+  /** 이 호출의 예약액 — 넘기면 확정액이 더 클 때 "초과 지출" 을 따로 기록한다(이후 차단 기록 ai_ops_overrun_block 과 구분) */
+  reservedUsdMicro?: number,
 ): Promise<void> {
+  const committed = status === "committed" ? Math.max(0, Math.ceil(usage?.usdMicro ?? 0)) : null;
+  if (committed !== null && typeof reservedUsdMicro === "number" && committed > reservedUsdMicro) {
+    console.error(JSON.stringify({ event: "ai_ops_overrun", ledgerId, reservedUsdMicro, committedUsdMicro: committed, inTok: usage?.inTok ?? null, outTok: usage?.outTok ?? null }));
+  }
   await rest(env, "rpc/ai_ops_settle", {
     method: "POST",
     body: JSON.stringify({

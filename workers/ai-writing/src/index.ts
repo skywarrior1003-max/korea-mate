@@ -32,6 +32,7 @@ import {
   // eslint 없음 — 계약: functions 와 동일 배선
 } from "../../../src/lib/mytrip-writing/writing-core";
 import { buildProviderRequestBody } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
+import { providerBodyBound, PRICED_MODELS, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
 
 export interface Env {
   GEMINI_API_KEY?: string;
@@ -329,11 +330,23 @@ export default {
       // 사진을 싣는 요청(전체 여행 글쓰기)만 x-provider-max-bytes 로 상한을 올린다 — 12MB 를 넘지 않는다
       const askedMax = Number(request.headers.get("x-provider-max-bytes") ?? "");
       const bodyMax = Number.isFinite(askedMax) && askedMax > PROVIDER_BODY_DEFAULT ? Math.min(PROVIDER_BODY_MAX, Math.floor(askedMax)) : PROVIDER_BODY_DEFAULT;
-      if (raw.length > bodyMax) return refused({ error: "body_too_large" }, 413);
+      // 바이트로 잰다(2026-10-02) — 글자 수로 재면 한글·이모지 본문은 상한의 몇 배가 들어온다
+      if (new TextEncoder().encode(raw).length > bodyMax) return refused({ error: "body_too_large" }, 413);
       let parsed: unknown;
       try { parsed = JSON.parse(raw); } catch { return refused({ error: "invalid_body" }, 400); }
       if (!parsed || typeof parsed !== "object" || !Array.isArray((parsed as { contents?: unknown }).contents)) {
         return refused({ error: "invalid_body" }, 400);
+      }
+      // 비용 상한 확인(2026-10-02) — 단가를 아는 모델로만 부르고, 이 본문의 최대 비용(provider-bound)이 호출측이
+      // 회사 원장에 예약한 금액보다 크면 보내지 않는다. 도구·출력 상한 없음·사고 무제한 본문도 보내지 않는다.
+      // 모두 보내기 전 거절이라 provider-called: 0 → 호출측은 예약을 released 로 정산한다.
+      if (!PRICED_MODELS[modelOf(env)]) return refused({ error: "model_not_priced" }, 503);
+      const bound = providerBodyBound(parsed);
+      if (!bound.ok) return refused({ error: bound.reason }, 400);
+      const declared = Number(request.headers.get(RESERVED_HEADER) ?? "");
+      if (!Number.isFinite(declared) || declared < bound.usdMicro) {
+        log({ kind: "provider", refused: "reservation_below_bound", declared: Number.isFinite(declared) ? declared : null, bound: bound.usdMicro });
+        return refused({ error: "reservation_below_bound" }, 409);
       }
       const controller = new AbortController();
       // 호출측이 긴 작업(가져오기 분석·전체 여행 글쓰기)이면 x-provider-timeout-ms 로 늘린다 — 8~45초로 제한

@@ -28,7 +28,8 @@
 //  · AI 는 추출만 한다 — 순서·시간·내용을 바꾸거나 동선을 최적화하지 않는다(프롬프트·파서 계약).
 
 import { aiAllowed, aiUnavailableResponse } from "../../_lib/app-env";
-import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage } from "../../_lib/ai-ops-guard";
+import { aiOpsReserve, aiOpsSettle, usdMicroFromUsage, aiOpsReserveOpsCheck } from "../../_lib/ai-ops-guard";
+import { checkAdminAuth } from "../../_lib/admin-auth.ts";
 import { requireActiveUser, userActorHash } from "../../_lib/user-auth";
 import { quotaIdemKey, quotaReserve, quotaSettle, quotaBalance } from "../../_lib/ai-user-quota";
 import {
@@ -38,6 +39,7 @@ import {
   type AnalyzedContent, type ExtractedPage,
 } from "../../../src/lib/url-import/import-core";
 import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
+import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
 
 interface Env {
   GEMINI_API_KEY?: string;
@@ -136,7 +138,7 @@ async function safeFetchPage(startUrl: URL): Promise<
 }
 
 // ── provider (서울 Worker 경유 우선 — personalize 와 동일 패턴) ──────────────
-function bindingProviderFetch(env: Env): typeof fetch | undefined {
+function bindingProviderFetch(env: Env, reservedUsdMicro = 0, bodyBytes = 0): typeof fetch | undefined {
   const isProd = (env.APP_ENV ?? "").trim().toLowerCase() === "production";
   if (!isProd && (env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct") return undefined;
   const binding = env.AI_WRITING;
@@ -146,7 +148,9 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
     binding.fetch("https://ai-writing.internal/provider", {
       method: "POST",
       // 긴 블로그·일정 글은 8초를 넘는다(실측 8.6~13초) — Worker 에 이 요청의 상한(20초)을 알린다
-      headers: { "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": "20000" },
+      // 예약액(Worker 가 본문 최대 비용과 비교)·본문 바이트(Worker 상한은 바이트로 잰다 — 한국어 18,000자는 기본 64,000 을 넘을 수 있다)
+      headers: { "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": "20000",
+        [RESERVED_HEADER]: String(reservedUsdMicro), "x-provider-max-bytes": String(bodyBytes + 1_000) },
       body: init?.body ?? null,
       signal: init?.signal ?? undefined,
     })) as typeof fetch;
@@ -154,15 +158,9 @@ function bindingProviderFetch(env: Env): typeof fetch | undefined {
 
 interface AiUsage { inTok: number | null; outTok: number | null; model?: string | null }
 
-async function analyzeWithAi(env: Env, prompt: string): Promise<
-  | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
-  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number; usage?: AiUsage }
-> {
-  const apiKey = env.GEMINI_API_KEY ?? "";
-  const providerFetch = bindingProviderFetch(env) ?? (apiKey ? fetch : null);
-  if (!providerFetch) return { ok: false, error: "analyze_unavailable", sent: false };
-
-  const body = JSON.stringify({
+/** 모델에 보낼 본문 — 예약액 계산(provider-bound)과 실제 호출이 같은 본문을 쓴다 */
+function buildAnalyzeBody(prompt: string): string {
+  return JSON.stringify({
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: {
       maxOutputTokens: 4096,
@@ -172,6 +170,16 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
       thinkingConfig: { thinkingBudget: 0 },
     },
   });
+}
+
+async function analyzeWithAi(env: Env, body: string, reservedUsdMicro: number): Promise<
+  | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
+  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number; usage?: AiUsage }
+> {
+  const apiKey = env.GEMINI_API_KEY ?? "";
+  const providerFetch = bindingProviderFetch(env, reservedUsdMicro, new TextEncoder().encode(body).length) ?? (apiKey ? fetch : null);
+  if (!providerFetch) return { ok: false, error: "analyze_unavailable", sent: false };
+
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 20_000);
   const t0 = Date.now();
@@ -237,10 +245,28 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   // 비 Production 전용 연결 진단 — ?diag=route. Worker /health 는 provider 를 부르지 않는다(비용 0).
   // 키 값·형식은 싣지 않는다(있는지만).
   const isProd = (ctx.env.APP_ENV ?? "").trim().toLowerCase() === "production";
+  // 실제 모델을 부르는 진단(probe·model-check)은 로그인 사용자 누구나가 아니라 관리자 키가 있을 때만(2026-10-02) —
+  // 원장 밖 호출이었다. 이제 회사 원장에 route 'model_check' 로 남기고 일일 상한(20회)을 둔다.
+  const diagKind = new URL(ctx.request.url).searchParams.get("diag");
+  let diagLedger: number | null = null;
+  if (!isProd && (diagKind === "probe" || diagKind === "model-check")) {
+    const adminErr = checkAdminAuth(ctx.request, (ctx.env as { ADMIN_KEY?: string }).ADMIN_KEY);
+    if (adminErr) return adminErr;
+    // probe 는 출력 700 토큰·3.8 Flash 단가까지 → 5,000µ$ 보수 · model-check 는 출력 8 토큰 → 100µ$
+    const g = await aiOpsReserveOpsCheck(ctx.env as Parameters<typeof aiOpsReserveOpsCheck>[0], { route: "model_check", worstUsdMicro: diagKind === "probe" ? 5_000 : 100, dailyCalls: 20, dailyUsdMicro: 20_000 });
+    if (!g.ok) return json({ ok: false, error: "ledger_refused", reason: g.reason }, 429);
+    diagLedger = g.ledgerId;
+  }
+  /** 진단 호출 정산 — 사용량을 돌려받지 않으므로 응답 상태와 무관하게 예약액 그대로 확정한다(작은 금액 · 되돌림 없음 — CORRECTION-V1 §2) */
+  const settleDiag = async () => {
+    if (diagLedger === null) return;
+    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], diagLedger, "committed", { usdMicro: diagKind === "probe" ? 5_000 : 100 });
+  };
   // 비 Production 전용 — ?diag=probe&v=plain|thinking0|json|all: Preview Worker 의 아주 작은 요청으로 오류 원인 진단
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "probe" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
     const variant = new URL(ctx.request.url).searchParams.get("v") ?? "plain";
     const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/probe", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ variant, model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+    await settleDiag();
     return json({ ok: true, probe: await r.json().catch(() => ({ http: r.status })) });
   }
   // 비 Production 전용 — ?diag=models: 이 환경 Worker 키로 쓸 수 있는 모델 이름(생성 호출 아님 · 비용 0)
@@ -254,8 +280,12 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "model-check" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
     try {
       const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/model-check", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+      await settleDiag();
       return json({ ok: true, check: await r.json().catch(() => ({ http: r.status })) });
-    } catch { return json({ ok: false, error: "unreachable" }); }
+    } catch {
+      if (diagLedger !== null) await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], diagLedger, "unknown_billed");
+      return json({ ok: false, error: "unreachable" });
+    }
   }
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "route") {
     const direct = (ctx.env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct";
@@ -362,9 +392,17 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   // ── 회사 스위치·비용 원자 예약(provider 이전) — V2-HARDCAP §7·§8 ─────────
   const actorSecret = (ctx.env as { MYTRIP_HASH_SECRET?: string }).MYTRIP_HASH_SECRET ?? "";
   const actor = actorSecret ? await userActorHash(userId, actorSecret) : null;
+  // 회사 비용 예약 — 보낼 본문의 최대 비용(provider-bound: 본문 바이트 + 출력 상한 4,096)으로(2026-10-02).
+  // 예전 고정 12,100 은 "18,000자·영문 가정" 이라 한국어 본문(바이트 3배)·자르지 않던 제목·설명에서 실제 최악보다 작았다.
+  const analyzeBody = buildAnalyzeBody(buildAnalyzePrompt(page, mode === "url" ? pageUrl!.toString() : null));
+  const bound = providerBodyBound(analyzeBody);
+  if (!bound.ok) {
+    await release();
+    return fail("ai_paused");
+  }
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
     feature: "import_analyze", model: "gemini-2.5-flash",
-    worstUsdMicro: 12_100, // cost-model analyze 가정 상한 ≈$0.0121(입력 18,000자·출력 4,096 토큰 기준 — 절대 최악 아님)
+    worstUsdMicro: bound.usdMicro,
     idempotencyKey: `import:${quotaId}:${crypto.randomUUID().slice(0, 8)}`,
     actorHash: actor,
     featureDailyCalls: 100, featureDailyUsdMicro: 1_500_000, // $1.5/day
@@ -374,7 +412,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return fail("ai_paused");
   }
 
-  const ai = await analyzeWithAi(ctx.env, buildAnalyzePrompt(page, mode === "url" ? pageUrl!.toString() : null));
+  const ai = await analyzeWithAi(ctx.env, analyzeBody, bound.usdMicro);
   if (!ai.ok) {
     // 정산(CORRECTION-V1 §2): 요청을 만들기 전 실패(sent=false)만 회사 원장 released.
     // 그 외(analyze_failed/timeout/parse)는 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
@@ -383,7 +421,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     const billedUsage = ai.usage && (ai.usage.inTok !== null || ai.usage.outTok !== null) ? ai.usage : null;
     if (billedUsage) {
       await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
-        { inTok: billedUsage.inTok, outTok: billedUsage.outTok, usdMicro: usdMicroFromUsage(billedUsage.inTok, billedUsage.outTok, billedUsage.model) });
+        { inTok: billedUsage.inTok, outTok: billedUsage.outTok, usdMicro: usdMicroFromUsage(billedUsage.inTok, billedUsage.outTok, billedUsage.model) }, bound.usdMicro);
     } else {
       // CORRECTION-V1 §2 — 전송 후 받은 HTTP 오류(404 모델 접근 거절 포함)는 과금 여부를 확정할 수 없다 → unknown_billed.
       // (2026-10-02 되돌림: Google 오류 본문을 무과금으로 본 규칙은 승인된 정산 계약과 맞지 않았다.)
@@ -399,9 +437,9 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     return nonProd && ai.providerStatus ? json({ ok: false, error: ai.error, provider_status: ai.providerStatus, key_shape: keyShape }) : fail(ai.error);
   }
   // 회사 원장 — 실제 토큰으로 정산(usage 가 없으면 예약액 보수 commit)
-  const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok, ai.usage.model) : 12_100;
+  const usd = ai.usage.inTok !== null || ai.usage.outTok !== null ? usdMicroFromUsage(ai.usage.inTok, ai.usage.outTok, ai.usage.model) : bound.usdMicro;
   await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
-    { inTok: ai.usage.inTok, outTok: ai.usage.outTok, usdMicro: usd });
+    { inTok: ai.usage.inTok, outTok: ai.usage.outTok, usdMicro: usd }, bound.usdMicro);
 
   const a = ai.analysis;
   const useful = a.kind !== "unsupported" && (a.days.some(d => d.stops.length > 0) || a.places.length > 0);

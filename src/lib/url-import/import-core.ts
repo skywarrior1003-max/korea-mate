@@ -25,6 +25,9 @@ export const MAX_REDIRECTS = 3;
 export const FETCH_TIMEOUT_MS = 12_000;
 export const MAX_RESPONSE_BYTES = 1_500_000;   // 1.5MB — 여행 글이면 충분, 남용 차단
 export const MAX_TEXT_CHARS = 18_000;          // AI 로 보내는 추출 텍스트 상한
+/** 페이지 제목·설명을 AI 에 보낼 때의 상한(2026-10-02) — 1.5MB HTML 에서 뽑은 값이라 자르지 않으면 상한이 없다 */
+export const MAX_TITLE_PROMPT_CHARS = 300;
+export const MAX_DESCRIPTION_PROMPT_CHARS = 600;
 export const ALLOWED_CONTENT_TYPES = ["text/html", "application/xhtml+xml", "text/plain"];
 /** 붙여넣은 일정 글 — 너무 짧으면 일정이 아니고, 길면 AI 입력 상한(MAX_TEXT_CHARS)에서 자른다 */
 export const MIN_PASTED_TEXT_CHARS = 20;
@@ -238,9 +241,10 @@ export function buildAnalyzePrompt(page: ExtractedPage, url: string | null): str
     "- time_text is REQUIRED whenever any time is written for that stop (including a time range written above a group of stops).",
     "- Example: text \"12:00 PM - 02:00 PM | Walk\nDongbaekseom\nWalk slowly around the island along the coastal deck.\" → stop {name: \"Dongbaekseom\", time_text: \"12:00 PM - 02:00 PM\", time: \"12:00\", end_time: \"14:00\", note: \"Walk slowly around the island along the coastal deck\"}.",
     "- For external_itinerary fill days[]; also list all place names in places[]. For single_place put exactly one entry in places[]. For multi_place_content fill places[] only.",
-    `Source: ${url ?? "pasted text"}`,
-    `Page title: ${page.title || "(none)"}`,
-    `Page description: ${page.description || "(none)"}`,
+    // 출처·제목·설명은 페이지가 정한다 — 서버에서 잘라 입력(=비용) 상한을 둔다(2026-10-02, 예전에는 자르지 않았다)
+    `Source: ${(url ?? "pasted text").slice(0, 2048)}`,
+    `Page title: ${(page.title || "(none)").slice(0, MAX_TITLE_PROMPT_CHARS)}`,
+    `Page description: ${(page.description || "(none)").slice(0, MAX_DESCRIPTION_PROMPT_CHARS)}`,
     "Page text:",
     '"""',
     page.text,

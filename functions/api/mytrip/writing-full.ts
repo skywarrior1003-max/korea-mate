@@ -30,6 +30,7 @@ import {
   buildFullTripPrompt, buildFullTripProviderBody, parseFullTripProposal, daysFromItinerary,
   type FullTripFacts, type FullTripProposal,
 } from "../../../src/lib/mytrip-writing/full-trip-core";
+import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
 
 interface Env extends OwnershipEnv {
   APP_ENV?: string;
@@ -72,6 +73,8 @@ function providerFetch(env: Env): typeof fetch | null {
         "Content-Type": "application/json", "x-internal-auth": key, "x-provider-timeout-ms": String(FULL_TRIP_TIMEOUT_MS),
         // 사진을 실은 요청의 본문 상한(서울 Worker 가 12MB 로 다시 제한한다)
         "x-provider-max-bytes": new Headers(init?.headers).get("x-provider-max-bytes") ?? "64000",
+        // 회사 원장 예약액 — Worker 가 본문 최대 비용(provider-bound)과 비교해 넘으면 보내지 않는다
+        [RESERVED_HEADER]: new Headers(init?.headers).get(RESERVED_HEADER) ?? "0",
       },
       body: init?.body ?? null, signal: init?.signal ?? undefined,
     })) as typeof fetch;
@@ -270,8 +273,10 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const providerBody = buildFullTripProviderBody(prompt, images);
   // 이 요청의 회사 비용 예약액 — 실제로 보낼 글 바이트와 사진 장수로 계산한다(입력 토큰 ≤ 바이트 실측).
   // 상한을 넘으면 계산이 틀렸다는 뜻이라 사용권·예약 전에 멈춘다(차감 0 · 모델 호출 0).
-  const reserveUsdMicro = fullTripReserveUsdMicro(fullTripTextBytes(prompt, images), images.length);
-  if (reserveUsdMicro > WORST_USD_MICRO) {
+  // 2026-10-02(V2 전 경로 점검): 다른 기능과 같은 상한 함수(provider-bound)로 센다 — 같은 본문이면 fullTripReserveUsdMicro 와 같은 값
+  const bound = providerBodyBound(providerBody);
+  const reserveUsdMicro = bound.ok ? bound.usdMicro : Number.POSITIVE_INFINITY;
+  if (reserveUsdMicro > WORST_USD_MICRO || reserveUsdMicro < fullTripReserveUsdMicro(fullTripTextBytes(prompt, images), images.length)) {
     log({ ok: false, fail: "over_reserve_cap", reserveUsdMicro, moments: facts.moments.length, photos: images.length });
     return json({ ok: false, ai_status: "fallback_ops_gate" });
   }
@@ -315,7 +320,8 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   let usedModel: string = MODEL;
   try {
     const res = await pf(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${ctx.env.GEMINI_API_KEY ?? ""}`, {
-      method: "POST", headers: { "Content-Type": "application/json", "x-provider-max-bytes": String(providerBody.length + 1_000) }, signal: controller.signal,
+      // 본문 상한은 바이트로 알린다(Worker 가 바이트로 잰다 — 글자 수는 한국어에서 바이트보다 작다)
+      method: "POST", headers: { "Content-Type": "application/json", "x-provider-max-bytes": String(new TextEncoder().encode(providerBody).length + 1_000), [RESERVED_HEADER]: String(reserveUsdMicro) }, signal: controller.signal,
       body: providerBody,
     });
     // 서울 Worker 가 모델에 보내기 전에 거절했다(인증·스위치·키 없음·본문 크기) — 과금 없음이 확정이다
@@ -338,14 +344,20 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     // 모델에 보내기 전 거절이면 회사 원장 예약을 되돌린다(released). 보낸 뒤 결과를 모르면(시간 초과·오류 응답)
     // 예약액을 보존한다(unknown_billed). 사용자 사용권은 어느 경우든 되돌림(차감 0).
     await db.from(GEN_TABLE).update({ status: "failed", fail_code: `${fail}${notSent ? ":not_sent" : ""}`, latency_ms: latency }).eq("id", genId);
-    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, notSent ? "released" : "unknown_billed");
+    // 응답과 사용량은 받았는데 형식이 틀린 경우(invalid_result)는 과금이 확정이다 — 실제 토큰으로 committed(가져오기와 같은 규칙, 2026-10-02).
+    // 사용량이 없으면 예전처럼 보내기 전 거절 = released · 보낸 뒤 결과 모름 = unknown_billed(예약액 보존).
+    if (!notSent && (inTok !== null || outTok !== null)) {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usdMicroFromUsage(inTok, outTok, usedModel) }, reserveUsdMicro);
+    } else {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, notSent ? "released" : "unknown_billed");
+    }
     await release();
     log({ ok: false, fail, notSent, latencyMs: latency, moments: facts.moments.length, photos: images.length });
     return json({ ok: false, ai_status: `fallback_${fail}`, not_sent: notSent });
   }
   const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok, usedModel) : reserveUsdMicro;
   await db.from(GEN_TABLE).update({ status: "succeeded", result: { proposal, photos }, in_tok: inTok, out_tok: outTok, latency_ms: latency }).eq("id", genId);
-  await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usd });
+  await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usd }, reserveUsdMicro);
   await quotaSettle(qEnv, quota.id, auth.userId, "committed", { generation_id: genId });
   log({ ok: true, latencyMs: latency, moments: facts.moments.length, photos: images.length, skipped: skipped.length, inTok, outTok, usdMicro: usd, styles: Object.keys(proposal).length });
   return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, reserved_usd_micro: reserveUsdMicro, latency_ms: latency, model: usedModel } });
