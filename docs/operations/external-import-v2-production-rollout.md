@@ -185,3 +185,24 @@
 - **동시성(자동 검사 `scripts/ai-ops-reserve-concurrency-check.mjs`, Staging 실제 예약 함수):** 기능 $1/일에 95,000µ$ 20건 동시 → 10건 · 기능 100회/일에 120건 → 100건 · 회사 일 $5 남은 금액 초과 → 남은 금액만큼만 · 같은 요청 열쇠 5건 → 1행. 시험 행은 모두 released.
 - **10-02 오전 보고의 "예약 6건 중 1건"**: route `qa_concurrency` 에 33,000µ$ 6건을 **시험용 기능 상한 50,000µ$(함수 인자로만 넘김, 스위치 변경 없음)** 로 보낸 결과다. 그 행은 released 로 정리했다. 평소 상한(글쓰기 기능 $1/일·100회, 회사 $5/일·$60/월)에서 1건만 통과한다는 뜻이 아니다.
 - **다른 기능(가져오기 12,100 · 개인화 2,500 · 기록 문장 9,500/22,000)의 예약액은 이번에 다시 계산하지 않았다** — 초과 차단은 공통으로 적용된다.
+
+## 12. AI 비용 경로 전수 (2026-10-02 · ab7ccf87 · Preview Worker ba9a5d7e)
+
+모든 경로의 예약은 **보낼 본문으로 계산한 상한**(\`src/lib/ai-cost/provider-bound.ts\`)이다:
+입력 ≤ (사진 데이터를 뺀 본문 UTF-8 바이트) × 1 + 사진 × 280/560/1120(해상도, 지정 없으면 1120) · 출력 ≤ maxOutputTokens(≤ 8,192, 3.x 는 사고 포함) · 단가 = 받는 모델 중 최댓값($0.30/$2.50). 서울 Worker \`/provider\` 가 같은 함수로 다시 계산해 **예약액 < 상한·단가 없는 모델·도구(grounding)·출력 상한 없음·사고 무제한**이면 보내지 않는다(provider-called 0 → released). 본문 크기는 바이트로 잰다.
+
+| 경로 | 엔드포인트 · 모델 경로 | 서버 입력 상한 · 출력 | 예약(최악 / Preview 실측 예약→확정) | 사용권 · 재전송 | 기능 상한 |
+|---|---|---|---|---|---|
+| 개인화 | POST /api/trip/personalize · Worker /provider(GEMINI_MODEL) | 장소 40+40·이름 60자·프롬프트 6,000자 · 700 | 13,184 / 2,935→877 | plan 풀 · request_id 재전송 replay(차감 0) | 200회·$1/일 |
+| 가져오기 | POST /api/import/analyze · Worker /provider | 본문 18,000자·제목 300·설명 600·출처 2,048(이번에 자름) · 4,096 | 46,207 / 11,683→1,701 | plan 풀 · 같은 글/URL·같은 날 replay | 100회·$1.5/일 |
+| 전체 여행 글쓰기 | POST /api/mytrip/writing-full · Worker /provider | §11 · 8,192 | 95,000 / 22,035→1,845 | writing 풀(월 2) · 같은 내용 cache_server(차감 0) | 100회·$1/일(기록 문장과 공유) |
+| 레거시 일정 | POST /api/generate-itinerary · **직결** 2.5 Flash (env off·스위치 off) | 칸별 자르기·본문 512KB 실바이트(이번) · 8,192·사고 끔(이번) | 1회 상한 × 3회 ≈ 80,000(추정·미호출) | personalize 풀 | 20회·$0.5/일 |
+| 관리자 모델 점검 | POST /api/admin/ai-model-check · Worker /model-check | 허용 모델만 · 8 | 100(원장 기록·스위치 무관, 이번) | — | 20회·2,000µ$/일 |
+| Preview 진단 | GET /api/import/analyze?diag=probe·model-check (Production 차단) | **관리자 키 필요(이번)** · 700/8 | 5,000/100 원장 기록(이번) | — | 20회/일 |
+
+- 공통: 회사 일 $5·월 $60(\`ai_ops_reserve\`, advisory lock) · 확정 > 예약이면 \`ai_ops_overrun\`(초과 지출) 기록 + 그날 그 기능 예약 거절(\`ai_ops_overrun_block\`) · 표에 없는 모델 이름은 최고 단가로 기록.
+- 정산: 보내기 전 거절 = released · 보낸 뒤 HTTP 오류·시간 초과 = unknown_billed(예약액 보존) · 응답·사용량을 받은 형식 오류 = committed(실사용량, 전체 여행 글쓰기도 이번에 맞춤). 사용자 사용권은 실패마다 되돌림.
+- **원장 밖 남은 경로:** Worker \`/canary\`·\`/generate\`(INTERNAL_KEY 보유자만, Pages 호출처 없음 — \`/generate\` 를 부르던 writing.ts 대상은 모두 은퇴) · trend curator Worker(별도 키·주 4회 슬롯·grounding 과금은 원장 밖, Staging CURATOR_MODE off).
+- **Preview 관찰:** Preview Pages 에 ADMIN_KEY 가 없어 관리자 점검은 503(fail-closed, 원장 0) — 실제 점검은 Production 전환 직전에 운영 확인. 10-02 Staging 원장 411(writing·unknown_billed 9,500)은 같은 시각 photo-hotfix Preview(master 코드)의 기록 AI 제안 호출로 추정(스위치를 잠깐 켠 동안) — 정산 계약대로 예약액 보존.
+- **상한의 성격:** "본문 바이트 ≥ 토큰" 은 countTokens 9가지 문자 종류 실측(최대 1.000)으로 확인한 전제이고 Google 문서가 보장한 값이 아니다. 사진 토큰은 공식 표 값, 출력은 maxOutputTokens(3.x 사고 포함은 실측). 이 전제 위에서는 허용되는 모든 입력에 대해 상한이 성립하고, 전제가 깨지면 \`ai_ops_overrun\` 이 그날 그 기능을 멈춘다.
+- **Production 전환 순서:** Pages 먼저(예약 머리글을 보낸다 — 옛 Worker 는 무시) → Worker. 반대로 하면 새 Worker 가 머리글 없는 옛 Pages 요청을 모두 거절한다(보내기 전이라 과금 0, 기능만 멈춤).
