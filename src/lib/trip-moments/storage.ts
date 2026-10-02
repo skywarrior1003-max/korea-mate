@@ -366,7 +366,8 @@ const resyncInFlight = new Set<string>();
  * 공개 보호가 있다고 알린 서버에만 올린다(latePhotoGuard). 올린 장수를 돌려준다.
  */
 async function uploadPendingExtras(itinId: string, momentId: string, deviceId: string): Promise<number> {
-  if (!latePhotoGuard) return 0;
+  // 올리기 직전에 다시 묻는다 — 화면을 연 뒤 서버가 보호 없는 옛 배포로 되돌려졌을 수 있다(열린 탭)
+  if (!(await refreshLatePhotoGuard(itinId, deviceId))) return 0;
   let n = 0;
   const cur = loadMoments(itinId).find(m => m.moment_id === momentId);
   for (const extra of cur?.photo_data_extra ?? []) {
@@ -379,6 +380,19 @@ async function uploadPendingExtras(itinId: string, momentId: string, deviceId: s
     n++;
   }
   return n;
+}
+
+/** 서버가 지금도 "추가 사진을 올려도 된다(공개 보호 있음·정지 아님)" 고 하는가 — 기록 목록 응답의 머리글로 본다 */
+async function refreshLatePhotoGuard(itinId: string, deviceId: string): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/trip-moments?itinerary_id=${encodeURIComponent(itinId)}`, {
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
+    });
+    latePhotoGuard = res.ok && guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER));
+  } catch {
+    latePhotoGuard = false;
+  }
+  return latePhotoGuard;
 }
 
 /** 추가 사진 한 장 — 응답에 보호 머리글이 없으면(보호 없는 서버) 그 뒤로는 올리지 않는다 */

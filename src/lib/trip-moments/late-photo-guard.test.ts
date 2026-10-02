@@ -46,7 +46,8 @@ test("업로드 허용 표시 — 목록·추가 사진 응답에 단다, 정지
   assert.match(post, /const r = await postExtraPhoto\(ctx\);\n\s+r\.headers\.set\(LATE_PHOTO_GUARD_HEADER, "1"\);/);
   const st = read("src", "lib", "trip-moments", "storage.ts");
   assert.match(st, /latePhotoGuard = guardAllowsUpload\(res\.headers\?\.get\?\.\(LATE_PHOTO_GUARD_HEADER\)\);/);
-  assert.match(st, /if \(!latePhotoGuard\) return 0;/);
+  assert.match(st, /if \(!\(await refreshLatePhotoGuard\(itinId, deviceId\)\)\) return 0;/, "올리기 직전에 다시 묻는다");
+  assert.match(st, /if \(!latePhotoGuard\) break;/);
   // 첫 사진(/photo)은 정지·표시와 무관 — 기존 저장 경로 그대로
   assert.doesNotMatch(read("functions", "api", "trip-moments", "[momentId]", "photo.ts"), /extraPhotosPaused|LATE_PHOTO_GUARD/);
 });
