@@ -127,6 +127,12 @@ export async function onRequestPost(
     ? shortHash(String(body.request_id))
     : shortHash([body.city, body.start_date, body.end_date, ...selected].join("|"));
 
+  // ── 반영할 취향이 없다 — 일정이 바뀌지 않는데 사용권을 쓰지 않게, 사용권·비용 예약·provider 이전에 끝낸다(2026-10-02 실측 결함) ──
+  if (selected.length === 0 && liked.length === 0) {
+    log({ requestId, mode, providerCalled: false, status: "fallback_no_input" });
+    return reply(null, "fallback_no_input");
+  }
+
   // ── off: provider 를 부르지 않는다 ──
   if (mode === "off") {
     log({ requestId, mode, providerCalled: false, status: "disabled" });

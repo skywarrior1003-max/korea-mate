@@ -66,7 +66,8 @@ test("전체 여행 글쓰기 — 재열람·같은 내용은 원장 밖, 성공
   assert.match(FULL, /\/storage\/v1\/object\/\$\{PHOTO_BUCKET\}\//);
   assert.ok(post.indexOf("resolveOwnership(") < post.indexOf("loadPhotos("), "소유 확인 뒤에만 사진을 읽는다");
   assert.equal((FULL.match(/await pf\(/g) ?? []).length, 1, "사진 수와 무관하게 모델 호출 1회");
-  assert.match(FULL, /photos: PhotoCoverage = \{ shown: \[\.\.\.shownIds\], skipped/, "본 사진·못 본 사진을 응답에 남긴다");
+  // 2026-10-02: 사진 한 장마다 기록 id 하나(같은 기록 여러 장) — 화면이 장수를 센다
+  assert.match(FULL, /photos: PhotoCoverage = \{ shown: images\.map\(i => i\.momentId\), skipped/, "본 사진·못 본 사진을 응답에 남긴다");
 });
 
 test("차감은 완성 결과에만 — 실패·무효는 해제", () => {

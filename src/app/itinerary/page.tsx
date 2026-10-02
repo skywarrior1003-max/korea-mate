@@ -91,7 +91,7 @@ import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
 import PlannerDayNav from "@/components/planner/PlannerDayNav";
 import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
-import { fetchPersonalizationProfile, takeFreeAiUsed } from "@/lib/planner/personalize-client";
+import { fetchPersonalizationProfile, takeFreeAiUsed, takeNoInput } from "@/lib/planner/personalize-client";
 import FreeAiUsedNote from "@/components/FreeAiUsedNote";
 import { tripCityLabel } from "@/data/cities/trip-city";
 import FullTripAiWriter from "@/components/FullTripAiWriter";
@@ -1612,7 +1612,7 @@ function ItineraryResult() {
   // 기본 생성은 AI 0 이다. 이 상태 기계가 유일한 AI 진입점이고, busy 이외의
   // 어떤 전이도 provider 를 부르지 않는다. unavailable 은 "이번에 안 됐다"는
   // 사실만 담는다 — 잔여 횟수·내부 사유는 화면에 내지 않는다.
-  const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "login" | "confirm" | "busy" | "applied" | "unavailable" | "freeUsed">("idle");
+  const [aiOptInPhase, setAiOptInPhase] = useState<"idle" | "login" | "confirm" | "busy" | "applied" | "unavailable" | "freeUsed" | "noInput">("idle");
   const [aiFreeUsedAt, setAiFreeUsedAt] = useState<string | null>(null);
   // CONSENT-V1 §C — Google 로 보내기 전 동의 sheet. intent 성공 후에만 OAuth.
   const [aiConsentOpen, setAiConsentOpen] = useState(false);
@@ -1743,6 +1743,12 @@ function ItineraryResult() {
     const next = ensureStopIds(days, (dayNumber, index, p) => deterministicStopId(itinId, dayNumber, index, p.name ?? ""));
     if (next !== days) Promise.resolve().then(() => setDays(next));
   }, [days, itinId, loading, shareId, isOwner]);
+
+  /** 기록 하나의 사진 수(서버에 올라간 것 + 이 기기에서 올릴 것) — 표시·한도 안내용 */
+  const momentPhotoCount = (m: { photo_data?: string | null; photo_data_extra?: string[] | null }): number =>
+    (typeof m.photo_data === "string" && m.photo_data !== "" ? 1 : 0) + (m.photo_data_extra?.length ?? 0);
+  /** 이 여행 전체 사진 수 — 서버의 여행당 사진 한도와 같은 기준으로 센다 */
+  const tripPhotoCount = displayMoments.reduce((n, m) => n + momentPhotoCount(m), 0);
 
   /** 이 여행에서 이 장소에 남긴 내 사진(있으면) — 이 여행 화면에서는 공용 장소 사진보다 먼저 보인다. 공용 원본은 그대로 */
   const myStopPhoto = (place: StopIdentityForPhoto): string | null => {
@@ -1907,6 +1913,8 @@ function ItineraryResult() {
       );
       // 무료 AI 도움을 이미 썼으면 일반 '사용 불가' 대신 다음 가능 날짜를 알린다(유료 잔액은 없다)
       if (!r.personalizationApplied && r.freeAiUsed) { setAiFreeUsedAt(r.freeAiUsed.nextFreeAt); setAiOptInPhase("freeUsed"); return; }
+      // 고른·저장한 장소가 없어 AI 를 부르지 않았다 — 차감 없음, 장소를 고르라고 안내
+      if (!r.personalizationApplied && takeNoInput()) { setAiOptInPhase("noInput"); return; }
       if (!r.personalizationApplied) { setAiOptInPhase("unavailable"); return; }
       setDays(sanitizeDays(r.days));
       setCheckinTime(r.checkinTime);
@@ -3129,6 +3137,8 @@ function ItineraryResult() {
                 </button>
               </div>
             </div>
+          ) : aiOptInPhase === "noInput" ? (
+            <p className="text-sm text-violet-700 font-medium" data-ai-no-input="">{t("aiNoInputNotice")}</p>
           ) : aiOptInPhase === "unavailable" ? (
             <p className="text-sm text-violet-700 font-medium">{t("aiUnavailableNotice")}</p>
           ) : aiOptInPhase === "freeUsed" ? (
@@ -4349,10 +4359,20 @@ function ItineraryResult() {
                                     const sk = stopKeyOf(place);
                                     if (sk === null) return null;
                                     const keys = stopKeysOf(place);
-                                    const rec = displayMoments.find(m => typeof m.stop_key === "string" && keys.includes(m.stop_key));
+                                    const recs = displayMoments.filter(m => typeof m.stop_key === "string" && keys.includes(m.stop_key));
+                                    const rec = recs[0];
+                                    // 같은 장소에 기록을 더 남긴다 — 사진을 더 넣으려고 가짜 장소를 만들지 않게(2026-10-02)
+                                    const openAddRecord = () => {
+                                      setCaptureDay(day.dayNumber);
+                                      setCaptureStop({ placeName: place.name, aiPlaceName: localizedPlaceName(place.name?.trim() || "", l10nOf(place), locale) || null, citySpotId: stopCitySpotId(place), stopKey: sk });
+                                      setCaptureOpen(true);
+                                    };
                                     if (rec) {
                                       const line = (rec.title ?? "").trim() || (rec.memo ?? "").trim();
+                                      const recPhotos = recs.reduce((n, m) => n + momentPhotoCount(m), 0);
+                                      const syncErr = recs.find(m => m.photo_sync_error)?.photo_sync_error ?? null;
                                       return (
+                                        <>
                                         <button
                                           type="button"
                                           data-stop-card={sk}
@@ -4369,6 +4389,19 @@ function ItineraryResult() {
                                           {/* 방금 저장한 동안에는 "저장됨"이 그 자리를 쓴다 — 모바일 한 줄에서 메모가 "노…"로 잘리지 않게 */}
                                           {justSavedStop !== sk && <span className="shrink-0 text-[10px] font-black text-sub">{tMemo("viewInStory")} ›</span>}
                                         </button>
+                                        <div className="mt-1 flex items-center justify-between gap-2">
+                                          <span className="text-[11px] text-sub" data-stop-record-count={recs.length}>{tMemo("stopRecordSummary", { records: recs.length, photos: recPhotos })}</span>
+                                          <button
+                                            type="button" onClick={openAddRecord} data-stop-add-more={sk}
+                                            className="gkm-focus min-h-9 px-3 rounded-lg border border-line bg-white text-[11px] font-black text-ink/80 hover:text-ink"
+                                          >+ {tMemo("addMoreRecord")}</button>
+                                        </div>
+                                        {syncErr && (
+                                          <p role="alert" className="mt-1 text-[11px] font-bold" style={{ color: "#B42318" }} data-stop-sync-error={syncErr}>
+                                            {tMemo(syncErr === "ITINERARY_LIMIT" ? "syncTripLimit" : syncErr === "DEVICE_LIMIT" ? "syncDeviceLimit" : "syncTooLarge")}
+                                          </p>
+                                        )}
+                                        </>
                                       );
                                     }
                                     return (
@@ -4642,6 +4675,7 @@ function ItineraryResult() {
           aiPlaceName={captureStop?.aiPlaceName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}
           stopKey={captureStop?.stopKey ?? null}
+          tripPhotoCount={tripPhotoCount}
           // 저장 전에 장소를 바꿀 수 있게 — 이 여행의 일정 장소(열쇠가 있는 것)만
           placeOptions={days.flatMap(d => d.places.filter(p => !p.isAccommodation && stopKeyOf(p) !== null).map(p => ({
             stopKey: stopKeyOf(p)!, dayNumber: d.dayNumber, citySpotId: stopCitySpotId(p),

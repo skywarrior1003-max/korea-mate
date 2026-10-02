@@ -67,4 +67,13 @@ export interface TripMoment {
    * 올라간 사진은 이 목록에서 빠진다. 남아 있다는 것은 아직 못 올렸다는 뜻이다.
    */
   photo_data_extra?: string[];
+  /**
+   * 서버가 사진 저장을 거절한 이유(2026-10-02) — 한도는 다시 보내도 같은 결과라 화면이 따로 알린다.
+   * ITINERARY_LIMIT = 이 여행 사진 30장 · DEVICE_LIMIT = 이 기기 사진 100장 · TOO_LARGE = 파일 1MB 초과.
+   * 사진은 지우지 않는다(이 기기에 남아 있고, 한도가 풀리면 다음 동기화에서 다시 올린다).
+   */
+  photo_sync_error?: PhotoSyncError | null;
 }
+
+/** 서버가 사진을 받지 않은 이유 — 한도·크기만(네트워크 오류는 다음 동기화에서 다시 시도한다) */
+export type PhotoSyncError = "ITINERARY_LIMIT" | "DEVICE_LIMIT" | "TOO_LARGE";

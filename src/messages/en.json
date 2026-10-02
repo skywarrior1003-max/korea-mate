@@ -471,7 +471,8 @@
     "autoTripTitle": "My {city} Trip",
     "noLocationTitle": "Location not set",
     "noLocationBody": "This imported place has no location, so the map and directions aren't available. Set it on the map in My Places to use them.",
-    "noLocationCta": "Set the location in My Places"
+    "noLocationCta": "Set the location in My Places",
+    "aiNoInputNotice": "There are no picked or saved places, so there’s no taste for the AI to apply. Pick or save places, then try again. It didn’t count as a use."
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -699,7 +700,7 @@
     "emptyLine2": "Leave the real story of this trip",
     "tapToAddPhoto": "Tap to add photo",
     "choosePhotoSource": "Choose from camera or gallery",
-    "changePhoto": "Change photo",
+    "changePhoto": "Add more photos",
     "photoAlt": "Selected memory photo",
     "optimizing": "Optimizing photo…",
     "gpsLoading": "Getting GPS…",
@@ -772,7 +773,15 @@
     "photoOptional": "A note without a photo is fine too",
     "addLocation": "Add current location",
     "locationAdded": "Location added",
-    "locationFailed": "Couldn't get location — it will save without one"
+    "locationFailed": "Couldn't get location — it will save without one",
+    "recordPhotoCount": "{n} photo(s) in this record",
+    "tripPhotoCount": "Trip photos {n}/{max}",
+    "tripPhotoLimitSkipped": "A trip holds up to {max} photos, so {n} weren’t added. Delete photos from other records to add more.",
+    "stopRecordSummary": "{records} record(s) · {photos} photo(s)",
+    "addMoreRecord": "Add a record here",
+    "syncTripLimit": "Some photos weren’t saved — this trip’s 30-photo limit was reached. They’re still on this device.",
+    "syncDeviceLimit": "Some photos weren’t saved — this device’s 100-photo limit was reached. They’re still on this device.",
+    "syncTooLarge": "Some photos were too large (over 1MB) to save. They’re still on this device."
   },
   "dayDone": {
     "title": "Day {n} complete!",
@@ -2070,7 +2079,7 @@
   },
   "fullTripAi": {
     "heading": "Write the whole trip at once",
-    "desc": "Tap this once your plan and records are in. In one request, the AI reads your record photos (the first photo of each record) together with places, dates and your own notes, and suggests a trip title, story intro and a title and text for every record in three styles.",
+    "desc": "Press this once your plan and records are in. In one request it reads your record photos (up to 15) with places, dates and your own notes, and suggests a trip title, story intro and a title and text for each record in three styles.",
     "remaining": "{count} free AI writing request(s) left this month (2 per month, shared by My Trip and Story).",
     "ask": "Get AI suggestions for the whole trip",
     "retry": "Try again",
@@ -2097,19 +2106,23 @@
     "applied": "Applied. You can edit anything yourself anytime.",
     "applyFailed": "Some items couldn't be saved. Please apply again.",
     "regenerate": "Get new suggestions (uses 1 more)",
-    "noPhotoNote": "The AI looks at the first photo of each record, up to 12 photos per request. Photos it couldn't see are listed above. It doesn't write about people's identities or personal details.",
+    "noPhotoNote": "The AI looks at all photos of each record evenly, up to 15 per request. Suggestions are one title and text per record, not per photo. It never writes about faces or personal details.",
     "photosShown": "Written after looking at {count} photo(s).",
     "photosNone": "Written from places, dates and notes only — no photos were used.",
     "photosSkipped": "{count} photo(s) couldn't be used ({reasons}).",
-    "skip_over_count": "over 12 per request",
+    "skip_over_count": "over 15 in one request",
     "skip_too_large": "photo too large",
     "skip_total_limit": "total size limit",
     "skip_load_failed": "couldn't load",
     "skip_unsupported": "unsupported format",
     "tagPhotoSeen": "photo seen",
     "tagPhotoMissed": "photo not used",
-    "planPhotos": "The AI will look at {used} of {total} records with photos (only the first photo of each record, up to 12 per request).",
+    "planPhotos": "The AI will look at {used} of {total} photos in one request (up to 15, starting with each record’s first photo).",
     "planSkipped": "{count} photo(s) will be left out of this request ({reasons}).",
-    "planNoPhotos": "No records have photos — it will write from places, dates and notes only."
+    "planNoPhotos": "No records have photos — it will write from places, dates and notes only.",
+    "planSkippedWhere": "Left out: {list}",
+    "planSkippedItem": "{place} {n}",
+    "tagPhotoSeenN": "{n} photo(s) seen",
+    "tagPhotoMissedN": "{n} photo(s) not used"
   }
 }

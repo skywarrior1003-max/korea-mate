@@ -471,7 +471,8 @@
     "autoTripTitle": "{city} 여행",
     "noLocationTitle": "위치 미정",
     "noLocationBody": "가져온 장소라 위치 정보가 없어 지도·길찾기를 쓸 수 없어요. 내 장소에서 지도로 위치를 정하면 쓸 수 있어요.",
-    "noLocationCta": "내 장소에서 위치 정하기"
+    "noLocationCta": "내 장소에서 위치 정하기",
+    "aiNoInputNotice": "고른 장소나 저장한 장소가 없어 AI가 반영할 취향이 없어요. 장소를 고르거나 저장한 뒤 다시 눌러 주세요. 횟수는 차감되지 않았어요."
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -699,7 +700,7 @@
     "emptyLine2": "이 여행의 진짜 이야기를 남겨보세요",
     "tapToAddPhoto": "눌러서 사진 추가",
     "choosePhotoSource": "카메라 또는 갤러리에서 선택",
-    "changePhoto": "사진 변경",
+    "changePhoto": "사진 더 넣기",
     "photoAlt": "선택한 기억 사진",
     "optimizing": "사진 최적화 중…",
     "gpsLoading": "위치 확인 중…",
@@ -772,7 +773,15 @@
     "photoOptional": "사진 없이 메모만 남겨도 돼요",
     "addLocation": "현재 위치 붙이기",
     "locationAdded": "위치를 붙였어요",
-    "locationFailed": "위치를 가져오지 못했어요 — 위치 없이 저장돼요"
+    "locationFailed": "위치를 가져오지 못했어요 — 위치 없이 저장돼요",
+    "recordPhotoCount": "이 기록 사진 {n}장",
+    "tripPhotoCount": "이번 여행 사진 {n}/{max}장",
+    "tripPhotoLimitSkipped": "이번 여행 사진은 {max}장까지라 {n}장은 넣지 않았어요. 다른 기록의 사진을 지우면 더 남길 수 있어요.",
+    "stopRecordSummary": "기록 {records}개 · 사진 {photos}장",
+    "addMoreRecord": "이 장소에 기록 추가",
+    "syncTripLimit": "사진 일부가 저장되지 않았어요 — 이번 여행 사진 30장 한도예요. 사진은 이 기기에 남아 있어요.",
+    "syncDeviceLimit": "사진 일부가 저장되지 않았어요 — 이 기기 사진 100장 한도예요. 사진은 이 기기에 남아 있어요.",
+    "syncTooLarge": "사진 일부가 너무 커서(1MB 초과) 저장되지 않았어요. 사진은 이 기기에 남아 있어요."
   },
   "dayDone": {
     "title": "Day {n} 완주!",
@@ -2070,7 +2079,7 @@
   },
   "fullTripAi": {
     "heading": "여행 글 한 번에 쓰기",
-    "desc": "일정과 기록을 모두 담은 뒤 누르세요. 한 번의 요청으로 기록에 올린 사진(기록마다 첫 장)과 장소·날짜·직접 쓴 메모를 함께 읽고, 여행 제목·스토리 소개와 기록마다 제목·내용을 세 가지 표현으로 제안해요.",
+    "desc": "일정과 기록을 모두 담은 뒤 누르세요. 한 번의 요청으로 기록의 사진(최대 15장)과 장소·날짜·직접 쓴 메모를 함께 읽고, 여행 제목·스토리 소개와 기록마다 제목·내용을 세 가지 표현으로 제안해요.",
     "remaining": "이번 달 무료 AI 글쓰기 {count}회 남았어요(월 2회 · My Trip·Story 공통).",
     "ask": "AI로 여행 글 제안 받기",
     "retry": "다시 시도",
@@ -2097,19 +2106,23 @@
     "applied": "적용했어요. 언제든 직접 고칠 수 있어요.",
     "applyFailed": "일부를 저장하지 못했어요. 다시 적용해 주세요.",
     "regenerate": "새로 제안 받기(1회 더 사용)",
-    "noPhotoNote": "사진은 기록마다 첫 장만, 한 번에 최대 12장까지 봐요. 보지 못한 사진은 위에 따로 알려요. 사람 얼굴이나 개인 정보는 글에 쓰지 않아요.",
+    "noPhotoNote": "사진은 기록의 모든 사진을 고르게, 한 번에 최대 15장까지 봐요. 제안은 사진마다가 아니라 기록마다 제목·내용 하나예요. 사람 얼굴이나 개인 정보는 글에 쓰지 않아요.",
     "photosShown": "사진 {count}장을 보고 썼어요.",
     "photosNone": "사진 없이 장소·날짜·메모로만 썼어요.",
     "photosSkipped": "{count}장은 반영하지 못했어요({reasons}).",
-    "skip_over_count": "한 번에 12장 초과",
+    "skip_over_count": "한 번에 15장 초과",
     "skip_too_large": "사진이 너무 큼",
     "skip_total_limit": "전체 크기 초과",
     "skip_load_failed": "불러오지 못함",
     "skip_unsupported": "지원하지 않는 형식",
     "tagPhotoSeen": "사진 봄",
     "tagPhotoMissed": "사진 반영 안 됨",
-    "planPhotos": "사진이 있는 기록 {total}곳 중 {used}장을 AI가 봐요(기록마다 첫 사진만, 한 번에 최대 12장).",
+    "planPhotos": "사진 {total}장 중 {used}장을 AI가 한 번에 봐요(최대 15장 · 기록마다 첫 사진부터 고르게).",
     "planSkipped": "{count}장은 이번 요청에서 빠져요({reasons}).",
-    "planNoPhotos": "사진이 있는 기록이 없어요 — 장소·날짜·메모로만 써요."
+    "planNoPhotos": "사진이 있는 기록이 없어요 — 장소·날짜·메모로만 써요.",
+    "planSkippedWhere": "빠지는 사진: {list}",
+    "planSkippedItem": "{place} {n}장",
+    "tagPhotoSeenN": "사진 {n}장 봄",
+    "tagPhotoMissedN": "사진 {n}장 반영 안 됨"
   }
 }

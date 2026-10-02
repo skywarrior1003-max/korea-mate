@@ -16,6 +16,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
+import { ITINERARY_PHOTO_LIMIT } from "@/lib/photo-validate";
 import { apiWritingMeta } from "@/lib/mytrip-writing/api";
 
 interface Props {
@@ -52,9 +53,14 @@ interface Props {
    */
   onSave:      (moment: TripMoment) => Promise<boolean> | boolean;
   onClose:     () => void;
+  /**
+   * 이 여행에 이미 있는 사진 수(다른 기록 포함 · 서버에 올라간 것과 이 기기에서 올릴 것) — 2026-10-02.
+   * 서버의 여행당 사진 한도(ITINERARY_PHOTO_LIMIT)를 고르기 전에 알리려고 쓴다. 없으면 0.
+   */
+  tripPhotoCount?: number;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: initialDay, initialPlaceName, citySpotId: initialCitySpotId, stopKey, placeOptions = [], onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: initialDay, initialPlaceName, citySpotId: initialCitySpotId, stopKey, placeOptions = [], onSave, onClose, tripPhotoCount = 0 }: Props) {
   const t = useTranslations("memo");
   // 기록 시각 미리보기도 UI locale 을 따른다 (Timeline 과 같은 결함 수정).
   // → 2026-09-30 교정: 입력 화면의 시각 미리보기 줄은 뺐다(필수 행동만). 저장 시각(captured_at)은 그대로 기록한다.
@@ -129,9 +135,19 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: in
     };
   }, [onClose]);
 
+  /** 이 기록에 지금 고른 사진 수 */
+  const pickedCount = (photoData ? 1 : 0) + extraPhotos.length;
+  /** 여행 사진 한도 때문에 넣지 못한 장수(마지막 선택 기준) */
+  const [overLimit, setOverLimit] = useState(0);
+
   const handleFile = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    if (files.length === 0) return;
+    const picked = Array.from(e.target.files ?? []);
+    if (picked.length === 0) return;
+    // 여행당 사진 한도(서버와 같은 값) — 넘는 사진은 고르는 순간 넣지 않고 몇 장인지 알린다(저장 뒤 조용히 실패하지 않게)
+    const room = Math.max(0, ITINERARY_PHOTO_LIMIT - tripPhotoCount - pickedCount);
+    const files = picked.slice(0, room);
+    setOverLimit(picked.length - files.length);
+    if (files.length === 0) { if (fileInputRef.current) fileInputRef.current.value = ""; return; }
     setCompressing(true);
     setErrorKey(null);
     setFailedCount(0);
@@ -161,7 +177,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: in
     setCompressing(false);
     // 파일 input 을 비워 같은 사진 재선택도 change 이벤트가 발생하게 한다
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }, []);
+  }, [tripPhotoCount, pickedCount]);
 
   /** setState 는 이 콜백 안에서 즉시 반영되지 않는다 — 첫 장 여부는 ref 로 본다 */
   const photoDataRef = useRef<string | null>(null);
@@ -320,7 +336,9 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: in
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={photoData} alt={t("photoAlt")} className="w-full rounded-2xl object-cover" style={{ maxHeight: "46vh" }} data-capture-photo="" />
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-[12px]" style={{ color: FAINT }}>{totalPhotos > 1 ? t("photoCount", { n: totalPhotos }) : ""}</span>
+              <span className="text-[12px]" style={{ color: FAINT }} data-capture-photo-count="">
+                {t("recordPhotoCount", { n: totalPhotos })} · {t("tripPhotoCount", { n: tripPhotoCount + totalPhotos, max: ITINERARY_PHOTO_LIMIT })}
+              </span>
               <button type="button" onClick={() => fileInputRef.current?.click()} className="gkm-focus min-h-11 px-3 rounded-xl text-[13px] font-bold" style={{ color: INK, border: `1px solid ${LINE}` }}>
                 {t("changePhoto")}
               </button>
@@ -348,6 +366,9 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber: in
         )}
         {failedCount > 0 && (
           <p role="alert" className="pt-2 text-[12px]" style={{ color: "#D23B2E" }}>{t("photoFailed", { n: failedCount })}</p>
+        )}
+        {overLimit > 0 && (
+          <p role="alert" className="pt-2 text-[12px]" style={{ color: "#D23B2E" }} data-capture-over-limit="">{t("tripPhotoLimitSkipped", { n: overLimit, max: ITINERARY_PHOTO_LIMIT })}</p>
         )}
 
         {/* 짧은 메모(주) · 제목(선택) */}

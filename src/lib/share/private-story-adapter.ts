@@ -65,6 +65,17 @@ export interface StoryMomentInput {
   title?:            string | null;
   photo_data?:       string | null;
   photo_data_extra?: string[] | null;
+  /** 남긴 시각(ISO) — 한 장소의 기록 여러 개를 오래된 것부터 놓는다(공개 Story orderMemories 와 같은 기준). 없으면 뒤로 */
+  captured_at?:      string | null;
+}
+
+/** 같은 장소 기록의 순서 — 남긴 시각 오름차순(공개 Story 와 같은 기준, 2026-10-02) */
+function byCaptured(a: StoryMomentInput, b: StoryMomentInput): number {
+  // 시각이 없는 기록은 뒤로 — 어떤 ISO 시각보다 큰 값
+  const at = a.captured_at ?? "~", bt = b.captured_at ?? "~";
+  if (at !== bt) return at < bt ? -1 : 1;
+  // 시각이 같거나 둘 다 없으면 들어온 순서를 지킨다(Array.sort 는 안정 정렬) — 옛 행의 순서를 바꾸지 않는다
+  return 0;
 }
 
 export interface PrivateStoryClock {
@@ -192,7 +203,7 @@ export function buildPrivateStoryDays(
     const used = new Set<string>();
 
     day.places.forEach((stop, idx) => {
-      const matched = dayMoments.filter(m => !used.has(m.moment_id) && momentBelongsToStop(m, stop));
+      const matched = dayMoments.filter(m => !used.has(m.moment_id) && momentBelongsToStop(m, stop)).sort(byCaptured);
       // 그 장소에 남긴 기록이 있으면 이미 다녀온 곳이다 — 시각이 없거나 아직 안 된 시각이어도 일정 자리에 둔다
       // (없으면 기록이 Day 끝 "결합되지 않은 순간"으로 밀려 일정 순서를 잃었다 · 2026-09-30 실측)
       if (matched.length === 0 && !opt.isPast && !stopReached(day.date, stop.time, opt)) return;

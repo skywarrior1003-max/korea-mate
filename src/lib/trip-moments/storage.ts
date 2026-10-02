@@ -13,7 +13,7 @@
 //
 // photo_data 는 서버에 전송하지 않음 — localStorage에만 보존
 
-import type { TripMoment } from "./types";
+import type { TripMoment, PhotoSyncError } from "./types";
 
 import { withAuthHeader } from "../auth/device-auth-headers.ts";
 const LS_KEY = (itinId: string) => `koreamate_moments_${itinId}`;
@@ -77,9 +77,12 @@ function mergeMoments(serverMoments: TripMoment[], localMoments: TripMoment[]): 
     const base = { ...sm, has_photo: sm.has_photo === true || local?.has_photo === true };
     // 사진은 로컬에만 있다 — 서버 응답에는 없으므로 덮어쓰지 않고 얹는다.
     const withFirst = local?.photo_data ? { ...base, photo_data: local.photo_data } : base;
+    // 서버가 거절한 이유도 이 기기에만 있다 — 남은 사진이 있는 동안만 얹는다
+    const pendingErr = local?.photo_sync_error && (local.photo_data_extra?.length || (local.photo_data && sm.has_photo !== true))
+      ? { photo_sync_error: local.photo_sync_error } : {};
     return local?.photo_data_extra?.length
-      ? { ...withFirst, photo_data_extra: local.photo_data_extra }
-      : withFirst;
+      ? { ...withFirst, photo_data_extra: local.photo_data_extra, ...pendingErr }
+      : { ...withFirst, ...pendingErr };
   });
 
   // 서버에 없는 로컬 moments (pending · photo-only) 보존
@@ -141,20 +144,38 @@ export async function uploadMomentPhoto(
   photoData: string,
   deviceId: string,
 ): Promise<boolean> {
+  return (await uploadMomentPhotoDetailed(momentId, photoData, deviceId, "photo")).ok;
+}
+
+/** 한도·크기 거절 코드 — 서버 응답의 code 만 믿는다(문장은 보지 않는다) */
+function syncErrorOf(code: unknown): PhotoSyncError | null {
+  return code === "ITINERARY_LIMIT" || code === "DEVICE_LIMIT" || code === "TOO_LARGE" ? code : null;
+}
+
+/** 사진 한 장 올리기 — 성공 여부와, 한도·크기로 거절됐으면 그 이유(2026-10-02) */
+export async function uploadMomentPhotoDetailed(
+  momentId: string,
+  photoData: string,
+  deviceId: string,
+  slot: "photo" | "photos",
+): Promise<{ ok: boolean; error: PhotoSyncError | null }> {
   const blob = jpegDataUrlToBlob(photoData);
-  if (!blob) return false;
+  if (!blob) return { ok: false, error: null };
   try {
     const fd = new FormData();
     fd.append("photo", blob, `${momentId}.jpg`);
-    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photo`, {
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/${slot}`, {
       method:  "POST",
       headers: await withAuthHeader({ "x-device-id": deviceId }),
       body:    fd,
     });
-    return res.ok;
+    if (res.ok) return { ok: true, error: null };
+    let code: unknown = null;
+    try { code = ((await res.json()) as { code?: unknown }).code; } catch { /* 본문 없음 */ }
+    return { ok: false, error: syncErrorOf(code) };
   } catch {
     // 오프라인·네트워크 오류 — 로컬 photo_data 는 유지되므로 다음 큐에서 재시도된다
-    return false;
+    return { ok: false, error: null };
   }
 }
 
@@ -170,20 +191,7 @@ export async function uploadMomentExtraPhoto(
   photoData: string,
   deviceId:  string,
 ): Promise<boolean> {
-  const blob = jpegDataUrlToBlob(photoData);
-  if (!blob) return false;
-  try {
-    const fd = new FormData();
-    fd.append("photo", blob, `${momentId}.jpg`);
-    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photos`, {
-      method:  "POST",
-      headers: await withAuthHeader({ "x-device-id": deviceId }),
-      body:    fd,
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
+  return (await uploadMomentPhotoDetailed(momentId, photoData, deviceId, "photos")).ok;
 }
 
 /**
@@ -319,8 +327,9 @@ export async function addMomentDetailed(
   if (!moment.photo_data) {
     return { moments, localSaved: true, metaSynced: true, photoSynced: false };
   }
-  const photoSynced = await uploadMomentPhoto(moment.moment_id, moment.photo_data, deviceId);
-  moments = patchLocal(itinId, moment.moment_id, { has_photo: photoSynced });
+  const up = await uploadMomentPhotoDetailed(moment.moment_id, moment.photo_data, deviceId, "photo");
+  const photoSynced = up.ok;
+  moments = patchLocal(itinId, moment.moment_id, { has_photo: photoSynced, photo_sync_error: up.error });
 
   return { moments, localSaved: true, metaSynced: true, photoSynced };
 }
@@ -368,18 +377,20 @@ export async function resyncPendingMoments(
       if (!cur.photo_data) continue;             // 텍스트 Memory
       if (cur.has_photo === true) continue;      // 이미 서버에 있음 — 재업로드 금지
 
-      const ok = await uploadMomentPhoto(cur.moment_id, cur.photo_data, deviceId);
-      if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true }); out.photoSynced++; }
-      if (!ok) continue;                         // 첫 장이 안 올라갔으면 나머지도 미룬다
+      const first = await uploadMomentPhotoDetailed(cur.moment_id, cur.photo_data, deviceId, "photo");
+      const ok = first.ok;
+      if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true, photo_sync_error: null }); out.photoSynced++; }
+      if (!ok) { if (first.error) patchLocal(itinId, cur.moment_id, { photo_sync_error: first.error }); continue; } // 첫 장이 안 올라갔으면 나머지도 미룬다
 
       // 추가 사진 — 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
       // 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다.
       for (const extra of cur.photo_data_extra ?? []) {
-        const done = await uploadMomentExtraPhoto(cur.moment_id, extra, deviceId);
-        if (!done) break;
+        const r = await uploadMomentPhotoDetailed(cur.moment_id, extra, deviceId, "photos");
+        // 한도·크기 거절은 남은 사진도 같은 결과다 — 이유를 남기고 멈춘다(사진은 이 기기에 그대로)
+        if (!r.ok) { if (r.error) patchLocal(itinId, cur.moment_id, { photo_sync_error: r.error }); break; }
         const now  = loadMoments(itinId).find(m => m.moment_id === cur.moment_id);
         const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
-        patchLocal(itinId, cur.moment_id, { photo_data_extra: rest });
+        patchLocal(itinId, cur.moment_id, { photo_data_extra: rest, ...(rest.length === 0 ? { photo_sync_error: null } : {}) });
         out.photoSynced++;
       }
     }

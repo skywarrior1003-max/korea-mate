@@ -72,7 +72,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   if (cl) {
     const clNum = parseInt(cl, 10);
     if (!isNaN(clNum) && clNum > MAX_PHOTO_BYTES + 256 * 1024) {
-      return json({ error: "Request too large" }, 413);
+      return json({ error: "Request too large", code: "TOO_LARGE" }, 413);
     }
   }
 
@@ -102,7 +102,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   }
 
   const sizeResult = validatePhotoSize(fileBytes.length);
-  if (!sizeResult.ok) return json({ error: sizeResult.error }, sizeResult.status);
+  if (!sizeResult.ok) return json({ error: sizeResult.error, code: "TOO_LARGE" }, sizeResult.status);
 
   // ── 5. JPEG SOI 빠른 검증 ───────────────────────────────────────────────────
   if (!hasJpegSoi(fileBytes)) {
@@ -164,10 +164,10 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     ]);
 
     if (totalPhotoCount(devLegacy.count ?? 0, devChild.count ?? 0) >= DEVICE_PHOTO_LIMIT) {
-      return json({ error: `Device photo limit reached (${DEVICE_PHOTO_LIMIT})` }, 400);
+      return json({ error: `Device photo limit reached (${DEVICE_PHOTO_LIMIT})`, code: "DEVICE_LIMIT" }, 400);
     }
     if (totalPhotoCount(itinLegacy.count ?? 0, itinChild.count ?? 0) >= ITINERARY_PHOTO_LIMIT) {
-      return json({ error: `Itinerary photo limit reached (${ITINERARY_PHOTO_LIMIT})` }, 400);
+      return json({ error: `Itinerary photo limit reached (${ITINERARY_PHOTO_LIMIT})`, code: "ITINERARY_LIMIT" }, 400);
     }
   }
 

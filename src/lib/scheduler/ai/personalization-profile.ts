@@ -50,7 +50,9 @@ export type AiStatus =
   | "fallback_missing_key" | "fallback_timeout" | "fallback_provider_error"
   | "fallback_invalid_response" | "fallback_duplicate" | "fallback_guard"
   /** 무료 AI 도움(30일 이동 구간 1회 · 개인화·스토리 AI 글쓰기·가져오기 공유) 소진 — 기본 일정은 그대로 만들어진다 */
-  | "fallback_quota";
+  | "fallback_quota"
+  /** 고른 장소·저장한 장소가 하나도 없다 — 반영할 취향이 없어 provider·사용권 모두 건드리지 않는다(2026-10-02) */
+  | "fallback_no_input";
 
 export interface PersonalizeResponse {
   profile:   PersonalizationProfile | null;

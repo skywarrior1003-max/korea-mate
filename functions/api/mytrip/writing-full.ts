@@ -24,7 +24,7 @@ import { quotaIdemKey, quotaReserve, quotaSettle, quotaBalance } from "../../_li
 import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
 import { AI_CACHE_TTL_DAYS, sha256Hex, ownerHashHmac, ownerHash, computeCacheKey } from "../../../src/lib/mytrip-writing/generation-cache";
 import {
-  FULL_TRIP_PROMPT_VERSION, FULL_TRIP_MAX_MOMENTS, FULL_TRIP_TIMEOUT_MS, FULL_TRIP_PHOTO_LIMITS, FULL_TRIP_PHOTO_MIME,
+  FULL_TRIP_PROMPT_VERSION, FULL_TRIP_MAX_MOMENTS, FULL_TRIP_TIMEOUT_MS, FULL_TRIP_PHOTO_LIMITS, FULL_TRIP_PHOTO_MIME, FULL_TRIP_WORST_USD_MICRO, interleaveRecordPhotos,
   type FullTripImage, type PhotoSkipReason,
   buildFullTripPrompt, buildFullTripProviderBody, parseFullTripProposal, daysFromItinerary,
   type FullTripFacts, type FullTripProposal,
@@ -43,7 +43,8 @@ interface Env extends OwnershipEnv {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const GEN_TABLE = "mytrip_ai_generations";
-const WORST_USD_MICRO = 22_000; // 입력 ~4k + 출력 상한 8,192 토큰 ≈ $0.021
+// 회사 비용 예약액 — 최악 허용 요청(글 상한·사진 15장·출력 8,192)으로 계산한 값(full-trip-core 참조, 2026-10-02 재계산)
+const WORST_USD_MICRO = FULL_TRIP_WORST_USD_MICRO;
 
 const json = (b: unknown, status = 200) =>
   new Response(JSON.stringify(b), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
@@ -80,8 +81,11 @@ type Admin = NonNullable<ReturnType<typeof admin>>;
 /** 이 제안에 실제로 실린 사진(기록 id)과 싣지 못한 사진(이유) — 화면이 그대로 알린다 */
 interface PhotoCoverage { shown: string[]; skipped: { momentId: string; reason: PhotoSkipReason }[]; candidates: number }
 
-/** 기록마다 첫 사진(여러 장이면 sort_index 가 가장 작은 것, 없으면 기록 본 사진) — 소유가 확인된 여행의 것만 */
-interface PhotoCandidate { momentId: string; path: string }
+/**
+ * 기록의 사진 하나 — 2026-10-02: 기록의 **모든** 사진(1번 = trip_moments.storage_path, 이어서 추가 사진 sort_index 순).
+ * 예전에는 "첫 사진" 이라면서 추가 사진의 첫 장을 골라 표지 사진이 빠졌다. 소유가 확인된 여행의 것만.
+ */
+interface PhotoCandidate { momentId: string; path: string; index: number; of: number }
 
 async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["locale"]): Promise<(FullTripFacts & { photoCandidates: PhotoCandidate[] }) | null> {
   const { data: it } = await db.from("itineraries")
@@ -94,16 +98,23 @@ async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["
   const r = it as Record<string, unknown>;
   const { data: extra } = await db.from("trip_moment_photos").select("moment_id, storage_path, sort_index")
     .eq("itinerary_id", itineraryId).order("sort_index", { ascending: true });
-  const firstExtra = new Map<string, string>();
+  const extras = new Map<string, string[]>();
   for (const row of (extra ?? []) as { moment_id: string; storage_path: string | null }[]) {
-    if (row.storage_path && !firstExtra.has(row.moment_id)) firstExtra.set(row.moment_id, row.storage_path);
+    if (!row.storage_path) continue;
+    const list = extras.get(row.moment_id) ?? [];
+    list.push(row.storage_path);
+    extras.set(row.moment_id, list);
   }
-  const photoCandidates: PhotoCandidate[] = [];
+  // 기록마다 사진 목록(표지 먼저) → 고루 섞기: 모든 기록의 1번, 그다음 모든 기록의 2번 …
+  const perMoment: { id: string; paths: string[] }[] = [];
   for (const m of (ms ?? []) as Record<string, unknown>[]) {
     const id = String(m.moment_id);
-    const path = firstExtra.get(id) ?? (typeof m.storage_path === "string" && m.storage_path !== "" ? m.storage_path : null);
-    if (path) photoCandidates.push({ momentId: id, path });
+    const main = typeof m.storage_path === "string" && m.storage_path !== "" ? [m.storage_path] : [];
+    const paths = [...main, ...(extras.get(id) ?? [])];
+    if (paths.length > 0) perMoment.push({ id, paths });
   }
+  const photoCandidates: PhotoCandidate[] = interleaveRecordPhotos(perMoment);
+  const totals = new Map(perMoment.map(p => [p.id, p.paths.length]));
   return {
     locale, photoCandidates,
     city: String(r.city ?? ""), startDate: String(r.start_date ?? ""), endDate: String(r.end_date ?? ""),
@@ -117,7 +128,8 @@ async function loadFacts(db: Admin, itineraryId: string, locale: FullTripFacts["
         id: String(x.moment_id), day: typeof x.day_number === "number" ? x.day_number : null,
         place: typeof x.place_name === "string" ? x.place_name : null,
         title: typeof x.title === "string" ? x.title : null, memo: typeof x.memo === "string" ? x.memo : null,
-        hasPhoto: (typeof x.storage_path === "string" && x.storage_path !== "") || firstExtra.has(String(x.moment_id)),
+        hasPhoto: (totals.get(String(x.moment_id)) ?? 0) > 0,
+        photosTotal: totals.get(String(x.moment_id)) ?? 0,
       };
     }),
   };
@@ -157,7 +169,7 @@ async function loadPhotos(env: Env, cands: readonly PhotoCandidate[]): Promise<{
     if (bytes.length > L.maxBytesEach) { skipped.push({ momentId: c.momentId, reason: "too_large" }); continue; }
     if (total + bytes.length > L.maxBytesTotal) { skipped.push({ momentId: c.momentId, reason: "total_limit" }); continue; }
     total += bytes.length;
-    images.push({ momentId: c.momentId, mimeType: mime, data: toBase64(bytes) });
+    images.push({ momentId: c.momentId, mimeType: mime, data: toBase64(bytes), index: c.index, of: c.of });
   }
   return { images, skipped };
 }
@@ -246,8 +258,12 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const { images, skipped } = await loadPhotos(ctx.env, facts.photoCandidates);
   const shownIds = new Set(images.map(i => i.momentId));
   const skippedIds = new Set(skipped.map(x => x.momentId));
-  for (const m of facts.moments) m.photo = shownIds.has(m.id) ? "shown" : skippedIds.has(m.id) ? "not_shown" : m.hasPhoto ? "not_shown" : "none";
-  const photos: PhotoCoverage = { shown: [...shownIds], skipped, candidates: facts.photoCandidates.length };
+  for (const m of facts.moments) {
+    m.photo = shownIds.has(m.id) ? "shown" : skippedIds.has(m.id) ? "not_shown" : m.hasPhoto ? "not_shown" : "none";
+    m.photosShown = images.filter(i => i.momentId === m.id).length;
+  }
+  // shown 은 사진 한 장마다 기록 id 하나(같은 기록의 사진 여러 장이면 여러 번) — 화면은 길이로 장수를 센다
+  const photos: PhotoCoverage = { shown: images.map(i => i.momentId), skipped, candidates: facts.photoCandidates.length };
   const providerBody = buildFullTripProviderBody(buildFullTripPrompt(facts), images);
 
   const genId = crypto.randomUUID();

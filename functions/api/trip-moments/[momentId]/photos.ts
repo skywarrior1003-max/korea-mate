@@ -161,7 +161,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   if (cl) {
     const clNum = parseInt(cl, 10);
     if (!isNaN(clNum) && clNum > MAX_PHOTO_BYTES + 256 * 1024) {
-      return json({ error: "Request too large" }, 413);
+      return json({ error: "Request too large", code: "TOO_LARGE" }, 413);
     }
   }
 
@@ -182,7 +182,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   catch { return json({ error: "Failed to read file" }, 400); }
 
   const sizeResult = validatePhotoSize(fileBytes.length);
-  if (!sizeResult.ok) return json({ error: sizeResult.error }, sizeResult.status);
+  if (!sizeResult.ok) return json({ error: sizeResult.error, code: "TOO_LARGE" }, sizeResult.status);
 
   if (!hasJpegSoi(fileBytes)) return json({ error: "Not a valid JPEG" }, 400);
 

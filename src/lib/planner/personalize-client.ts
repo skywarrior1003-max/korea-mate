@@ -50,10 +50,16 @@ export function takeFreeAiUsed(): { nextFreeAt: string | null } | null {
   const v = lastFreeAiUsed; lastFreeAiUsed = null; return v;
 }
 
+/** 고른·저장한 장소가 없어 AI 를 부르지 않았다 — 화면이 이유를 알린다(한 번 읽으면 비운다) */
+let lastNoInput = false;
+export function takeNoInput(): boolean { const v = lastNoInput; lastNoInput = false; return v; }
+
 export async function fetchPersonalizationProfile(
   req: PersonalizeRequest,
 ): Promise<PersonalizationProfile | null> {
   const key = personalizationRequestKey(req);
+  // 반영할 취향이 없으면 서버로 보내지 않는다 — 네트워크·사용권 0(서버도 같은 규칙으로 막는다)
+  if (req.selected_place_ids.length === 0 && req.liked_place_ids.length === 0) { lastNoInput = true; return null; }
 
   const existing = inFlight.get(key);
   if (existing) return existing;   // 같은 흐름의 중복 호출 — 서버로 다시 나가지 않는다

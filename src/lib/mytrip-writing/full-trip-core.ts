@@ -12,18 +12,51 @@
 
 import { MAX_TITLE_CHARS, MAX_MEMO_CHARS } from "./writing-core.ts";
 
-export const FULL_TRIP_PROMPT_VERSION = "fulltrip-v3-photos-no-invented-actions";
+export const FULL_TRIP_PROMPT_VERSION = "fulltrip-v4-all-record-photos";
 export const FULL_TRIP_STYLES = ["calm", "witty", "warm"] as const;
 export type FullTripStyle = typeof FULL_TRIP_STYLES[number];
 /** 한 요청에 넣는 기록 상한 — 출력이 길어져 잘리지 않게. 넘으면 앞에서부터(날짜순) 자른다 */
 export const FULL_TRIP_MAX_MOMENTS = 30;
 export const FULL_TRIP_TIMEOUT_MS = 40_000;
 export const FULL_TRIP_MAX_OUTPUT_TOKENS = 8192;
-/** 사진 상한 — 기록마다 첫 장만, 최대 장수·장당·합계 크기(원본 바이트). 넘으면 싣지 않고 이유를 알린다 */
-export const FULL_TRIP_PHOTO_LIMITS = { maxPhotos: 12, maxBytesEach: 1_500_000, maxBytesTotal: 8_000_000 } as const;
+/**
+ * 사진 상한 — 한 요청에 최대 15장(2026-10-02: 기록마다 첫 장만 → 기록의 모든 사진을 고루). 장당·합계 크기(원본 바이트)도 본다.
+ * 고르는 순서: 모든 기록의 1번 사진 → 모든 기록의 2번 사진 → … (한 기록이 사진을 독차지하지 않게). 넘으면 싣지 않고 이유를 알린다.
+ * 합계 8MB 는 Worker 본문 상한 12MB(base64 4/3배) 안쪽이다. 기록 사진은 이 기기에서 600px 로 줄여 올려 장당 약 40~100KB 다.
+ */
+export const FULL_TRIP_PHOTO_LIMITS = { maxPhotos: 15, maxBytesEach: 1_500_000, maxBytesTotal: 8_000_000 } as const;
+/**
+ * 최악 입력 글 토큰(2026-10-02 실측) — 서버가 자르는 상한을 모두 채운 한국어 사실(14일×20곳·기록 30개·각 글자 상한)과
+ * 사진 15장 꼬리표를 buildFullTripPrompt 로 만들어 countTokens(3.5 Flash-Lite)로 센 값. 한국어가 토큰이 가장 많이 드는 경우다.
+ */
+export const FULL_TRIP_WORST_TEXT_TOKENS = 30_265;
+/** Gemini 3 사진 1장 토큰 — mediaResolution MEDIUM(공식 문서: low 280 · medium 560 · high 1120) */
+export const FULL_TRIP_IMAGE_TOKENS_MEDIUM = 560;
+/**
+ * 회사 비용 예약액(µ$) — 최악 허용 요청: 입력 (30,265 + 15×560) × $0.30/1M + 출력 8,192(사고 토큰 포함 상한, 10-02 실측) × $2.50/1M
+ * = 11,600 + 20,480 = 32,080 → 33,000(약 3% 여유). 예전 22,000 은 2.5 시절 '입력 약 4k' 가정이라 부족했다.
+ */
+export const FULL_TRIP_WORST_USD_MICRO = 33_000;
+/**
+ * 기록별 사진 목록(표지 먼저) → 한 요청에 실을 순서. 모든 기록의 1번 사진 → 모든 기록의 2번 사진 → …
+ * 상한(maxPhotos)에서 잘려도 사진 있는 기록이 먼저 하나씩은 들어가게 한다.
+ */
+export function interleaveRecordPhotos(perMoment: readonly { id: string; paths: readonly string[] }[]): { momentId: string; path: string; index: number; of: number }[] {
+  const out: { momentId: string; path: string; index: number; of: number }[] = [];
+  const rounds = Math.max(0, ...perMoment.map(p => p.paths.length));
+  for (let r = 0; r < rounds; r++) {
+    for (const p of perMoment) if (p.paths[r]) out.push({ momentId: p.id, path: p.paths[r]!, index: r + 1, of: p.paths.length });
+  }
+  return out;
+}
+
+export function fullTripWorstUsdMicro(): number {
+  const inTok = FULL_TRIP_WORST_TEXT_TOKENS + FULL_TRIP_PHOTO_LIMITS.maxPhotos * FULL_TRIP_IMAGE_TOKENS_MEDIUM;
+  return Math.ceil(inTok * 0.30 + FULL_TRIP_MAX_OUTPUT_TOKENS * 2.50);
+}
 export const FULL_TRIP_PHOTO_MIME = ["image/jpeg", "image/png", "image/webp"] as const;
 export type PhotoSkipReason = "over_count" | "too_large" | "total_limit" | "load_failed" | "unsupported";
-export interface FullTripImage { momentId: string; mimeType: string; data: string }
+export interface FullTripImage { momentId: string; mimeType: string; data: string; /** 그 기록의 몇 번째 사진(1부터) · 전체 장수 */ index?: number; of?: number }
 const STORY_INTRO_MAX = 200;
 
 export interface FullTripMomentFact {
@@ -35,6 +68,9 @@ export interface FullTripMomentFact {
   hasPhoto: boolean;
   /** shown = 이 요청에 사진이 실렸다 · not_shown = 사진은 있지만 싣지 못했다 · none = 사진 없음 */
   photo?: "shown" | "not_shown" | "none";
+  /** 이 기록의 사진 수와 이번 요청에 실린 수 */
+  photosTotal?: number;
+  photosShown?: number;
 }
 export interface FullTripFacts {
   locale: "ko" | "en" | "ja" | "zh";
@@ -76,6 +112,7 @@ export function buildFullTripPrompt(f: FullTripFacts): string {
     moments: f.moments.slice(0, FULL_TRIP_MAX_MOMENTS).map(m => ({
       id: m.id, day: m.day, place: clip(m.place, 60), traveler_title: clip(m.title, 80), traveler_memo: clip(m.memo, 300),
       photo_status: m.photo ?? (m.hasPhoto ? "not_shown" : "none"),
+      ...(typeof m.photosTotal === "number" ? { photos_total: m.photosTotal, photos_shown: m.photosShown ?? 0 } : {}),
     })),
   };
   return [
@@ -89,7 +126,7 @@ export function buildFullTripPrompt(f: FullTripFacts): string {
     `  moments: for EVERY moment id below, a title (max ${MAX_TITLE_CHARS} characters) and a memo (1–2 sentences, max ${MAX_MEMO_CHARS} characters).`,
     "Strict rules:",
     "  - Use only the facts below. Do not invent places, food, people, weather, prices, events or activities.",
-    "  - Photos: images follow this text, each preceded by \"Photo for moment <id>\". Only moments with photo_status \"shown\" have an image.",
+    "  - Photos: images follow this text, each preceded by \"Photo for moment <id> (k of n)\". A moment may have several photos — write ONE title and memo per moment using all of its shown photos together. Only moments with photo_status \"shown\" have images; photos_shown may be less than photos_total.",
     "    For those, you may mention what is clearly visible (scenery, food, objects, weather, colors). Do not guess who people are,",
     "    do not read out personal details (faces, names, plates, documents), and do not add places not given in the facts.",
     "    For photo_status \"not_shown\" or \"none\", you have NOT seen any photo: never describe or guess photo contents.",
@@ -127,7 +164,7 @@ export const FULL_TRIP_SCHEMA = {
 export function buildFullTripProviderBody(prompt: string, images: readonly FullTripImage[] = []): string {
   const parts: unknown[] = [{ text: prompt }];
   for (const im of images) {
-    parts.push({ text: `Photo for moment ${im.momentId}:` });
+    parts.push({ text: im.index && im.of ? `Photo for moment ${im.momentId} (${im.index} of ${im.of}):` : `Photo for moment ${im.momentId}:` });
     parts.push({ inlineData: { mimeType: im.mimeType, data: im.data } });
   }
   return JSON.stringify({

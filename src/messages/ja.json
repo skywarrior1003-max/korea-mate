@@ -471,7 +471,8 @@
     "autoTripTitle": "{city} の旅",
     "noLocationTitle": "位置未設定",
     "noLocationBody": "取り込んだ場所のため位置情報がなく、地図・経路案内は使えません。マイプレイスで地図から位置を決めると使えます。",
-    "noLocationCta": "マイプレイスで位置を決める"
+    "noLocationCta": "マイプレイスで位置を決める",
+    "aiNoInputNotice": "選んだ場所や保存した場所がないため、AIが反映できる好みがありません。場所を選ぶか保存してから、もう一度押してください。回数は減っていません。"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -699,7 +700,7 @@
     "emptyLine2": "この旅の本当の物語を残しましょう",
     "tapToAddPhoto": "タップして写真を追加",
     "choosePhotoSource": "カメラまたはギャラリーから選択",
-    "changePhoto": "写真を変更",
+    "changePhoto": "写真を追加",
     "photoAlt": "選択した記憶の写真",
     "optimizing": "写真を最適化中…",
     "gpsLoading": "位置情報を取得中…",
@@ -772,7 +773,15 @@
     "photoOptional": "写真なしでメモだけでも大丈夫です",
     "addLocation": "現在地を付ける",
     "locationAdded": "位置を付けました",
-    "locationFailed": "位置を取得できませんでした — 位置なしで保存されます"
+    "locationFailed": "位置を取得できませんでした — 位置なしで保存されます",
+    "recordPhotoCount": "この記録の写真 {n}枚",
+    "tripPhotoCount": "この旅の写真 {n}/{max}枚",
+    "tripPhotoLimitSkipped": "この旅の写真は{max}枚までのため、{n}枚は追加しませんでした。ほかの記録の写真を消すと追加できます。",
+    "stopRecordSummary": "記録 {records}件 · 写真 {photos}枚",
+    "addMoreRecord": "この場所に記録を追加",
+    "syncTripLimit": "一部の写真が保存されませんでした — この旅の写真30枚の上限です。写真はこの端末に残っています。",
+    "syncDeviceLimit": "一部の写真が保存されませんでした — この端末の写真100枚の上限です。写真はこの端末に残っています。",
+    "syncTooLarge": "一部の写真が大きすぎて（1MB超）保存されませんでした。写真はこの端末に残っています。"
   },
   "dayDone": {
     "title": "Day {n} 完走！",
@@ -2070,7 +2079,7 @@
   },
   "fullTripAi": {
     "heading": "旅の文章をまとめて作成",
-    "desc": "日程と記録をすべて入れてから押してください。1回のリクエストで記録の写真（記録ごとに最初の1枚）と場所・日付・自分で書いたメモを一緒に読み、旅のタイトル・ストーリー紹介と記録ごとのタイトル・内容を3つの表現で提案します。",
+    "desc": "日程と記録をすべて入れてから押してください。1回のリクエストで記録の写真（最大15枚）と場所・日付・自分のメモを一緒に読み、旅のタイトル・ストーリー紹介と記録ごとのタイトル・本文を3つの表現で提案します。",
     "remaining": "今月の無料AI文章作成は残り{count}回です（月2回・My Trip・ストーリー共通）。",
     "ask": "AIで旅の文章の提案を受け取る",
     "retry": "もう一度試す",
@@ -2097,19 +2106,23 @@
     "applied": "適用しました。いつでも自分で直せます。",
     "applyFailed": "一部を保存できませんでした。もう一度適用してください。",
     "regenerate": "新しく提案を受け取る（もう1回使用）",
-    "noPhotoNote": "写真は記録ごとに最初の1枚、1回に最大12枚まで見ます。見られなかった写真は上に別途表示します。人物の特定や個人情報は書きません。",
+    "noPhotoNote": "各記録の写真を均等に、1回最大15枚まで見ます。提案は写真ごとではなく記録ごとにタイトル・本文1つです。人の顔や個人情報は書きません。",
     "photosShown": "写真{count}枚を見て書きました。",
     "photosNone": "写真なしで、場所・日付・メモだけで書きました。",
     "photosSkipped": "{count}枚は反映できませんでした（{reasons}）。",
-    "skip_over_count": "1回12枚を超過",
+    "skip_over_count": "1回15枚超過",
     "skip_too_large": "写真が大きすぎる",
     "skip_total_limit": "合計サイズ超過",
     "skip_load_failed": "読み込めませんでした",
     "skip_unsupported": "未対応の形式",
     "tagPhotoSeen": "写真あり",
     "tagPhotoMissed": "写真未反映",
-    "planPhotos": "写真のある記録{total}件のうち{used}枚をAIが見ます（記録ごとに最初の1枚のみ、1回最大12枚）。",
+    "planPhotos": "写真{total}枚のうち{used}枚をAIが一度に見ます（最大15枚・各記録の1枚目から均等に）。",
     "planSkipped": "{count}枚は今回のリクエストから外れます（{reasons}）。",
-    "planNoPhotos": "写真のある記録がありません — 場所・日付・メモだけで書きます。"
+    "planNoPhotos": "写真のある記録がありません — 場所・日付・メモだけで書きます。",
+    "planSkippedWhere": "外れる写真: {list}",
+    "planSkippedItem": "{place} {n}枚",
+    "tagPhotoSeenN": "写真{n}枚を見た",
+    "tagPhotoMissedN": "写真{n}枚は反映なし"
   }
 }
