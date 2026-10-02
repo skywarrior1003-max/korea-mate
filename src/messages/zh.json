@@ -1707,7 +1707,14 @@
     "balancePlanWithBonus": "剩余 {count} 次免费 AI 行程制作（每月 1 次 + 首次额外 1 次，导入与 AI 行程共用）。",
     "optionalBadge": "可选",
     "optionalHint": "原文把这里写成“有时间可以去”或“二选一”。请自行决定是否保留。",
-    "errFetchFailed": "无法加载此页面，未计次数。请稍后再试，或复制文字后粘贴。"
+    "errFetchFailed": "无法加载此页面，未计次数。请稍后再试，或复制文字后粘贴。",
+    "addMissingLabel": "为 Day {day} 添加遗漏的地点",
+    "addMissingPlaceholder": "遗漏的地点名称",
+    "addMissingTime": "时间（可选）",
+    "addMissingButton": "添加",
+    "addMissingDup": "这个地点已在该 Day 中。",
+    "userAddedBadge": "自己添加",
+    "removeAdded": "移除"
   },
   "community": {
     "reactionGroup": "对此内容的反馈",

@@ -1707,7 +1707,14 @@
     "balancePlanWithBonus": "{count} free AI trip build(s) left (1 per month + 1 extra the first time, shared by import and AI planning).",
     "optionalBadge": "Optional",
     "optionalHint": "The source presents this as optional or as an alternative. Decide whether to keep it.",
-    "errFetchFailed": "We couldn’t load this page, and it didn’t count as a use. Try again shortly, or copy and paste the text instead."
+    "errFetchFailed": "We couldn’t load this page, and it didn’t count as a use. Try again shortly, or copy and paste the text instead.",
+    "addMissingLabel": "Add a missing place to Day {day}",
+    "addMissingPlaceholder": "Missing place name",
+    "addMissingTime": "Time (optional)",
+    "addMissingButton": "Add",
+    "addMissingDup": "That place is already in this day.",
+    "userAddedBadge": "Added by you",
+    "removeAdded": "Remove"
   },
   "community": {
     "reactionGroup": "Reactions to this content",

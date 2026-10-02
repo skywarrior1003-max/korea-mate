@@ -1707,7 +1707,14 @@
     "balancePlanWithBonus": "무료 AI 일정 만들기 {count}회 남았어요(월 1회 + 처음 한 번 추가 1회 · 가져오기·AI 일정 공통).",
     "optionalBadge": "선택",
     "optionalHint": "원문에서 ‘시간이 되면’·‘둘 중 하나’로 소개한 곳이에요. 넣을지 직접 정하세요.",
-    "errFetchFailed": "이 페이지를 불러오지 못했어요. 횟수는 차감되지 않았어요. 잠시 후 다시 시도하거나 글을 복사해 붙여 넣어 주세요."
+    "errFetchFailed": "이 페이지를 불러오지 못했어요. 횟수는 차감되지 않았어요. 잠시 후 다시 시도하거나 글을 복사해 붙여 넣어 주세요.",
+    "addMissingLabel": "Day {day}에 빠진 장소 추가",
+    "addMissingPlaceholder": "빠진 장소 이름",
+    "addMissingTime": "시각(선택)",
+    "addMissingButton": "추가",
+    "addMissingDup": "이미 이 Day에 있는 장소예요.",
+    "userAddedBadge": "직접 추가",
+    "removeAdded": "빼기"
   },
   "community": {
     "reactionGroup": "이 콘텐츠에 대한 반응",

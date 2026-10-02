@@ -101,8 +101,32 @@ function ImportInner() {
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [doneMsg, setDoneMsg] = useState<string | null>(null);
+  /**
+   * 사용자가 확인 화면에서 직접 더한 장소(AI 가 빠뜨린 곳) — Day 번호별. AI 결과의 순서·시각은 건드리지 않고
+   * 그 Day 의 끝에 붙는다. 저장은 다른 장소와 같은 길(공식 장소 연결 → 아니면 내 장소로 보존)을 탄다.
+   */
+  const [added, setAdded] = useState<Record<number, AnalyzedStop[]>>({});
+  const [addDraft, setAddDraft] = useState<Record<number, { name: string; time: string }>>({});
+  const [addDup, setAddDup] = useState<number | null>(null);
 
   const analysis: AnalyzedContent | null = result?.ok ? result.analysis : null;
+  /** 확인 화면·저장에 쓰는 Day 목록 — AI 결과 + 사용자가 더한 장소 */
+  const daysWithAdded = analysis
+    ? analysis.days.map(d => ({ ...d, stops: [...d.stops, ...(added[d.day_number] ?? [])] }))
+    : [];
+  const isAdded = (dayNumber: number, name: string) => (added[dayNumber] ?? []).some(s => s.name === name);
+  function addMissing(dayNumber: number) {
+    const draft = addDraft[dayNumber] ?? { name: "", time: "" };
+    const name = draft.name.replace(/\s+/g, " ").trim().slice(0, 120);
+    if (name.length < 2) return;
+    const exists = (analysis?.days.find(d => d.day_number === dayNumber)?.stops ?? []).concat(added[dayNumber] ?? [])
+      .some(s => s.name.trim().toLowerCase() === name.toLowerCase());
+    if (exists) { setAddDup(dayNumber); return; }
+    const time = /^\d{2}:\d{2}$/.test(draft.time) ? draft.time : null;
+    setAdded(prev => ({ ...prev, [dayNumber]: [...(prev[dayNumber] ?? []), { name, time, end_time: null, time_text: null, note: null }] }));
+    setAddDraft(prev => ({ ...prev, [dayNumber]: { name: "", time: "" } }));
+    setAddDup(null);
+  }
   /** 다음 무료 사용 가능 날짜(서버는 ISO UTC) — 한국 시간 날짜로 보인다 */
   const fmtDate = (iso: string | null): string => {
     if (!iso) return "";
@@ -165,6 +189,7 @@ function ImportInner() {
     setStartDate(sd);
     setEndDate(a.end_date ?? addDays(sd, dayCount - 1));
     setExcluded(new Set());
+    setAdded({}); setAddDraft({}); setAddDup(null);
     setAccepted(new Set());
     setSelected(new Set(a.places.map(p => p.name)));
     setPhase("preview");
@@ -432,8 +457,8 @@ function ImportInner() {
                 </div>
                 {!dateFromSource && <p className="text-xs" style={{ color: "var(--qh-clay)" }}>{t("dateAssumed")}</p>}
                 <p className="text-xs" style={ui.faint}>{t("excludeHint")}</p>
-                {analysis.days.map(day => (
-                  <div key={day.day_number} className="rounded-2xl border p-4" style={ui.line}>
+                {daysWithAdded.map(day => (
+                  <div key={day.day_number} className="rounded-2xl border p-4" style={ui.line} data-import-day={day.day_number}>
                     <p className="text-sm font-bold" style={ui.ink}>Day {day.day_number}</p>
                     <ul className="mt-2 flex flex-col gap-2.5">
                       {day.stops.map(stop => {
@@ -449,6 +474,15 @@ function ImportInner() {
                                 {(stop.time_text || stop.time) && <span className="text-xs font-bold tabular-nums" style={ui.faint}>{stop.time_text ?? stop.time}</span>}
                                 <span className="text-sm" style={{ ...ui.ink, opacity: on ? 1 : 0.4 }}>{stop.name}</span>
                                 {badge(hit, !!linked)}
+                                {isAdded(day.day_number, stop.name) && (
+                                  <>
+                                    <span data-import-user-added className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border" style={{ ...ui.line, color: "var(--qh-navy)" }}>{t("userAddedBadge")}</span>
+                                    <button type="button" className="gkm-focus text-[11px] underline" style={ui.faint}
+                                      onClick={() => setAdded(prev => ({ ...prev, [day.day_number]: (prev[day.day_number] ?? []).filter(s => s.name !== stop.name) }))}>
+                                      {t("removeAdded")}
+                                    </button>
+                                  </>
+                                )}
                                 {stop.optional && (
                                   <span data-import-optional className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border" style={{ ...ui.line, color: "var(--qh-clay)" }}>{t("optionalBadge")}</span>
                                 )}
@@ -466,11 +500,28 @@ function ImportInner() {
                         );
                       })}
                     </ul>
+                    {/* AI 가 빠뜨린 장소를 저장 전에 직접 더한다 — 원문에 없는 장소를 AI 가 지어내지 않게, 사람만 더한다 */}
+                    <div className="mt-3 flex items-center gap-2 flex-wrap" data-import-add-missing={day.day_number}>
+                      <input type="text" value={addDraft[day.day_number]?.name ?? ""} maxLength={120}
+                        onChange={e => setAddDraft(prev => ({ ...prev, [day.day_number]: { name: e.target.value, time: prev[day.day_number]?.time ?? "" } }))}
+                        onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); addMissing(day.day_number); } }}
+                        placeholder={t("addMissingPlaceholder")} aria-label={t("addMissingLabel", { day: day.day_number })}
+                        className="gkm-focus flex-1 min-w-[10rem] rounded-xl border px-3 py-2 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
+                      <input type="time" value={addDraft[day.day_number]?.time ?? ""} aria-label={t("addMissingTime")}
+                        onChange={e => setAddDraft(prev => ({ ...prev, [day.day_number]: { name: prev[day.day_number]?.name ?? "", time: e.target.value } }))}
+                        className="gkm-focus rounded-xl border px-2 py-2 text-sm bg-transparent" style={{ ...ui.line, ...ui.ink }} />
+                      <button type="button" onClick={() => addMissing(day.day_number)}
+                        disabled={(addDraft[day.day_number]?.name ?? "").trim().length < 2}
+                        className="gkm-focus rounded-xl border px-3 py-2 text-sm font-bold disabled:opacity-40" style={{ ...ui.line, ...ui.ink }}>
+                        {t("addMissingButton")}
+                      </button>
+                    </div>
+                    {addDup === day.day_number && <p className="mt-1 text-xs" role="status" style={{ color: "var(--qh-clay)" }}>{t("addMissingDup")}</p>}
                   </div>
                 ))}
                 <p className="text-xs leading-relaxed" style={ui.faint}>{t("mineExplain")}</p>
                 {doneMsg === "errSave" && <p className="text-xs" role="alert" style={{ color: "var(--qh-clay)" }}>{t("errSave")}</p>}
-                <button data-tut="tut-import-confirm" onClick={() => void saveTrip(analysis.days)} disabled={phase === "saving"}
+                <button data-tut="tut-import-confirm" onClick={() => void saveTrip(daysWithAdded)} disabled={phase === "saving"}
                   className={primary} style={{ backgroundColor: "var(--qh-navy)" }}>
                   {phase === "saving" ? t("importing") : t("importToMyTrip")}
                 </button>
