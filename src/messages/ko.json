@@ -742,7 +742,9 @@
     "addStopRecord": "사진·메모 남기기",
     "noRecordPlaces": "기록 없는 일정 {n}곳",
     "manageRecords": "기록 관리",
-    "viewInStory": "스토리에서 보기"
+    "viewInStory": "스토리에서 보기",
+    "publicPendingPhotos": "공개한 기록에 나중에 올라온 사진 {n}장은 아직 공개되지 않았어요.",
+    "publicPendingConfirm": "확인하고 함께 공개"
   },
   "dayDone": {
     "title": "Day {n} 완주!",

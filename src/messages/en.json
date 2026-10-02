@@ -742,7 +742,9 @@
     "addStopRecord": "Add photo & note",
     "noRecordPlaces": "{n} places without records",
     "manageRecords": "Manage records",
-    "viewInStory": "View in Story"
+    "viewInStory": "View in Story",
+    "publicPendingPhotos": "{n, plural, one {# photo} other {# photos}} added after you shared this record {n, plural, one {isn’t} other {aren’t}} public yet.",
+    "publicPendingConfirm": "Review and share them too"
   },
   "dayDone": {
     "title": "Day {n} complete!",

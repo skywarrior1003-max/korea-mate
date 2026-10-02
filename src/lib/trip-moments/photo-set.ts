@@ -83,6 +83,24 @@ export function photoPathsToRemove(
   return mergePhotoSet(legacyPath, childRows).map(s => s.path);
 }
 
+/**
+ * 같은 기록에 같은 사진을 다시 보낼 때 같은 이름이 나오게 하는 열쇠(2026-10-02).
+ *
+ * 추가 사진은 "올라간 뒤 이 기기 목록에서 뺀다" 순서라, 서버 저장과 목록 정리 사이에 앱이 멈추거나
+ * 같은 기기의 두 탭이 동시에 동기화하면 같은 사진이 다시 올라간다. 예전에는 매번 새 uuid 경로라
+ * 파일·행이 둘씩 생겼다. 이제 (기록 id + 저장할 바이트)의 SHA-256 으로 경로를 정해, 서버가 이미 있는
+ * 사진이면 새로 만들지 않는다. 기록 id 를 섞으므로 다른 기록의 같은 사진과는 겹치지 않는다.
+ * uuid 모양(8-4-4-4-12 hex)으로 돌려준다 — 기존 경로 모양과 같다.
+ */
+export async function photoContentKey(momentId: string, bytes: Uint8Array): Promise<string> {
+  const head = new TextEncoder().encode(`${momentId}\n`);
+  const buf = new Uint8Array(head.length + bytes.length);
+  buf.set(head, 0); buf.set(bytes, head.length);
+  const hex = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", buf)))
+    .map(b => b.toString(16).padStart(2, "0")).join("");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`;
+}
+
 /** 다음 사진이 받을 순서 값 */
 export function nextSortIndex(childRows: ChildPhotoRow[]): number {
   let max = 0;

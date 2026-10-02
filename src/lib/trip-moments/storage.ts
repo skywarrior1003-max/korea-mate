@@ -16,7 +16,16 @@
 import type { TripMoment } from "./types";
 
 import { withAuthHeader } from "../auth/device-auth-headers.ts";
+import { LATE_PHOTO_GUARD_HEADER, guardAllowsUpload } from "./late-photo-guard.ts";
 const LS_KEY = (itinId: string) => `koreamate_moments_${itinId}`;
+
+/**
+ * 마지막으로 받은 기록 목록 응답이 "추가 사진을 올려도 된다(공개 보호 있음)" 고 했는가.
+ * 목록을 받기 전·보호 없는 서버·운영 정지 = false → 추가 사진은 이 기기에 그대로 둔다.
+ */
+let latePhotoGuard = false;
+/** 테스트 전용 */
+export function _setLatePhotoGuard(v: boolean): void { latePhotoGuard = v; }
 
 // ── localStorage ─────────────────────────────────────────────────────────────
 
@@ -56,6 +65,8 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     // 를 알 수 없어, 이미 공개인 Memory 에도 계속 "공개하기" 를 그리고
     // 재공개 정리(reconciliation)도 지난 상태를 볼 수 없게 된다.
     is_public:      r.is_public === true,
+    // 공개 동의 뒤에 올라와 아직 공개되지 않은 추가 사진 수(2026-10-02) — 기록 관리에서 다시 확인할 때 쓴다
+    ...(typeof r.public_pending_photos === "number" && r.public_pending_photos > 0 ? { public_pending_photos: r.public_pending_photos } : {}),
     // 사람이 읽는 장소 이름. 이것도 서버가 주는데 버리고 있었다 — 그래서 공개
     // 선택 화면의 모든 줄이 "Day 1" 로만 보였다. 좌표 문자열(`location_label`)
     // 과 다른 값이고, 없는 Memory 가 더 흔하므로 없으면 없는 대로 둔다.
@@ -101,6 +112,8 @@ export async function loadMomentsFromServer(
       { headers: await withAuthHeader({ "x-device-id": deviceId }) },
     );
     if (!res.ok) return local;
+    // 추가 사진을 올려도 되는 서버인가(공개 보호 있음·정지 아님) — 이 응답으로 정한다(late-photo-guard)
+    latePhotoGuard = guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER));
     const rows = (await res.json()) as Array<Record<string, unknown>>;
     const serverMoments = rows.map(r => rowToMoment(r, deviceId, itinId));
     const merged = mergeMoments(serverMoments, local);
@@ -319,6 +332,12 @@ export async function addMomentDetailed(
   }
   const photoSynced = await uploadMomentPhoto(moment.moment_id, moment.photo_data, deviceId);
   moments = patchLocal(itinId, moment.moment_id, { has_photo: photoSynced });
+  // 추가 사진 — 첫 장이 올라간 뒤 바로 올린다(2026-10-02). 예전에는 첫 장이 바로 올라가면(정상 온라인 저장)
+  // has_photo=true 라 재동기화도 건너뛰어, 나머지 사진이 이 기기에만 남았다.
+  if (photoSynced && moment.photo_data_extra?.length) {
+    await uploadPendingExtras(itinId, moment.moment_id, deviceId);
+    moments = loadMoments(itinId);
+  }
 
   return { moments, localSaved: true, metaSynced: true, photoSynced };
 }
@@ -340,6 +359,46 @@ export async function addMoment(
 // 실패가 다음 항목을 막지 않는다. single-flight 로 중복 실행을 막는다.
 
 const resyncInFlight = new Set<string>();
+
+/**
+ * 이 기기에 남은 추가 사진을 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
+ * 올라간 사진이 다시 올라가지 않고(서버가 같은 사진을 알아본다), 못 올린 사진은 다음 큐에 남는다.
+ * 공개 보호가 있다고 알린 서버에만 올린다(latePhotoGuard). 올린 장수를 돌려준다.
+ */
+async function uploadPendingExtras(itinId: string, momentId: string, deviceId: string): Promise<number> {
+  if (!latePhotoGuard) return 0;
+  let n = 0;
+  const cur = loadMoments(itinId).find(m => m.moment_id === momentId);
+  for (const extra of cur?.photo_data_extra ?? []) {
+    if (!latePhotoGuard) break;               // 보호 없는 서버를 만났으면 남은 사진은 이 기기에 둔다
+    const r = await uploadExtraWithGuard(momentId, extra, deviceId);
+    if (!r) break;
+    const now  = loadMoments(itinId).find(m => m.moment_id === momentId);
+    const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
+    patchLocal(itinId, momentId, { photo_data_extra: rest });
+    n++;
+  }
+  return n;
+}
+
+/** 추가 사진 한 장 — 응답에 보호 머리글이 없으면(보호 없는 서버) 그 뒤로는 올리지 않는다 */
+async function uploadExtraWithGuard(momentId: string, photoData: string, deviceId: string): Promise<boolean> {
+  const blob = jpegDataUrlToBlob(photoData);
+  if (!blob) return false;
+  try {
+    const fd = new FormData();
+    fd.append("photo", blob, `${momentId}.jpg`);
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photos`, {
+      method:  "POST",
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
+      body:    fd,
+    });
+    if (!guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER))) latePhotoGuard = false;
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
 
 export interface ResyncResult { metaSynced: number; photoSynced: number; skipped: number; }
 
@@ -364,22 +423,14 @@ export async function resyncPendingMoments(
       }
       if (!meta) continue;                       // 다음 항목으로 (전체 중단 아님)
       if (!cur.photo_data) continue;             // 텍스트 Memory
-      if (cur.has_photo === true) continue;      // 이미 서버에 있음 — 재업로드 금지
-
-      const ok = await uploadMomentPhoto(cur.moment_id, cur.photo_data, deviceId);
-      if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true }); out.photoSynced++; }
-      if (!ok) continue;                         // 첫 장이 안 올라갔으면 나머지도 미룬다
-
-      // 추가 사진 — 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
-      // 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다.
-      for (const extra of cur.photo_data_extra ?? []) {
-        const done = await uploadMomentExtraPhoto(cur.moment_id, extra, deviceId);
-        if (!done) break;
-        const now  = loadMoments(itinId).find(m => m.moment_id === cur.moment_id);
-        const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
-        patchLocal(itinId, cur.moment_id, { photo_data_extra: rest });
-        out.photoSynced++;
+      // 첫 장이 이미 서버에 있으면 첫 장은 다시 올리지 않는다(재업로드 금지) — 남은 추가 사진만 올린다(2026-10-02)
+      if (cur.has_photo !== true) {
+        const ok = await uploadMomentPhoto(cur.moment_id, cur.photo_data, deviceId);
+        if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true }); out.photoSynced++; }
+        if (!ok) continue;                       // 첫 장이 안 올라갔으면 나머지도 미룬다
       }
+
+      out.photoSynced += await uploadPendingExtras(itinId, cur.moment_id, deviceId);
     }
   } finally {
     resyncInFlight.delete(itinId);

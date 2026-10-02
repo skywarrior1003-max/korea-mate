@@ -26,6 +26,9 @@ import { normalizeMemo, normalizeMomentTitle } from "../../../src/lib/trip-momen
 import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-moments/public-consent-core";
 import { normalizeStopKey, isMissingColumnError } from "../../../src/lib/trip-moments/stop-binding";
 import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
+import { consentedChildPhotos } from "../../../src/lib/share/public-memory";
+import { LATE_PHOTO_GUARD_HEADER } from "../../../src/lib/trip-moments/late-photo-guard";
+import { extraPhotosPaused } from "../../_lib/late-photo-guard";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
@@ -94,7 +97,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   // storage_path 는 내부 판정에만 쓰고 응답에는 넣지 않는다
   // stop_key(055)는 아직 적용되지 않은 환경이 있을 수 있다 — 컬럼 없음 오류면
   // 그 컬럼 없이 한 번 더 읽는다(cover-state-core 의 031 fallback 과 같은 방식).
-  const MOMENT_COLS      = "moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public";
+  const MOMENT_COLS      = "moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public, public_consent_at";
   const MOMENT_COLS_055  = `${MOMENT_COLS}, stop_key`;
   const MOMENT_COLS_061  = `${MOMENT_COLS_055}, title`; // 순간 제목(061 초안) — 미적용 환경 fallback 아래
   const listMoments = (cols: string) => admin
@@ -113,12 +116,36 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   }
 
   // storage_path 를 has_photo 로 축약해 원문 경로가 클라이언트로 나가지 않게 한다
-  const rows = (data ?? []).map((r) => {
-    const { storage_path, ...rest } = r as Record<string, unknown>;
-    return { ...rest, has_photo: Boolean(storage_path) };
+  // 공개 기록의 추가 사진 중 공개 동의 뒤에 올라와 아직 공개되지 않은 장수(2026-10-02) — 소유자가 기록 관리에서
+  // 확인하고 다시 공개할 수 있게 숫자만 알린다(경로·시각은 내보내지 않는다)
+  const all = ((data ?? []) as unknown[]).map(r => r as Record<string, unknown>);
+  const publicIds = all.filter(r => r.is_public === true).map(r => String(r.moment_id));
+  const pendingByMoment = new Map<string, number>();
+  if (publicIds.length > 0) {
+    const { data: kids } = await admin
+      .from("trip_moment_photos")
+      .select("moment_id, created_at")
+      .in("moment_id", publicIds);
+    const consentAt = new Map(all.map(r => [String(r.moment_id), r.public_consent_at as string | null]));
+    for (const id of publicIds) {
+      const mine = ((kids ?? []) as { moment_id: string; created_at: string | null }[]).filter(k => k.moment_id === id);
+      const pending = mine.length - consentedChildPhotos(mine, consentAt.get(id)).length;
+      if (pending > 0) pendingByMoment.set(id, pending);
+    }
+  }
+
+  const rows = all.map((r) => {
+    // 동의 시각도 내보내지 않는다 — 소유자 화면에는 아직 공개되지 않은 장수만 필요하다
+    const { storage_path, public_consent_at: _consentAt, ...rest } = r;
+    void _consentAt;
+    const pending = pendingByMoment.get(String(rest.moment_id)) ?? 0;
+    return { ...rest, has_photo: Boolean(storage_path), ...(pending > 0 ? { public_pending_photos: pending } : {}) };
   });
 
-  return json(rows);
+  // 이 서버는 공개 동의 뒤 사진을 공개하지 않는다 — 앱이 추가 사진을 올려도 된다는 표시(운영 정지면 "0")
+  const res = json(rows);
+  res.headers.set(LATE_PHOTO_GUARD_HEADER, (await extraPhotosPaused(ctx.env)) ? "0" : "1");
+  return res;
 }
 
 // ── POST — 새 text moment 생성 ────────────────────────────────────────────────

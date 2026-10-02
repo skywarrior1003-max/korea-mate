@@ -22,6 +22,8 @@
 // - service_role key·내부 오류 문구를 응답에 담지 않는다
 
 import { createClient } from "@supabase/supabase-js";
+import { LATE_PHOTO_GUARD_HEADER } from "../../../../src/lib/trip-moments/late-photo-guard";
+import { extraPhotosPaused } from "../../../_lib/late-photo-guard";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { stripJpegApp1 } from "../../../../src/lib/jpeg-strip-exif";
 import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
@@ -36,7 +38,7 @@ import {
   makeStoragePath,
 } from "../../../../src/lib/photo-validate";
 import {
-  mergePhotoSet, nextSortIndex, totalPhotoCount, withinPhotoLimit,
+  mergePhotoSet, nextSortIndex, totalPhotoCount, withinPhotoLimit, photoContentKey,
   type ChildPhotoRow,
 } from "../../../../src/lib/trip-moments/photo-set";
 
@@ -146,7 +148,23 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 }
 
 // ── POST — 사진 한 장 추가 ───────────────────────────────────────────────────
+/**
+ * 추가 사진 올리기. 모든 응답에 공개 보호 표시(late-photo-guard)를 단다 — 앱은 이 표시가 없는 서버에는
+ * 더 올리지 않는다. 운영 정지(ai_ops_switches 'moment_extra_photos' = 'paused')면 받지 않고 503 PAUSED
+ * (사진은 앱 기기에 그대로 남는다). 첫 사진(/photo)·열람·메모에는 영향 없음.
+ */
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
+  if (await extraPhotosPaused(ctx.env)) {
+    const r = json({ error: "Extra photo upload paused", code: "PAUSED" }, 503);
+    r.headers.set(LATE_PHOTO_GUARD_HEADER, "0");
+    return r;
+  }
+  const r = await postExtraPhoto(ctx);
+  r.headers.set(LATE_PHOTO_GUARD_HEADER, "1");
+  return r;
+}
+
+async function postExtraPhoto(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.momentId as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 
@@ -197,6 +215,19 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const moment = await ownedMoment(admin, momentId, deviceScope);
   if (!moment) return json({ error: "Not found" }, 404);
 
+  // 같은 사진을 다시 보낸 경우(앱 중단 뒤 재시도·같은 기기 두 탭 동시 동기화, 2026-10-02) — 경로를 내용으로
+  // 정하고, 이미 저장돼 있으면 새 파일·행을 만들지 않고 성공으로 답한다. 한도 판정보다 먼저 본다 —
+  // 이미 저장된 사진의 재전송을 "한도 초과" 로 거절하면 이 기기에서 영영 대기로 남는다.
+  const storagePath = makeStoragePath(moment.itinerary_id, momentId, await photoContentKey(momentId, stripped));
+  const alreadySaved = async (): Promise<{ id: string; isFirst: boolean } | null> => {
+    const { data: cur } = await admin.from("trip_moments").select("storage_path").eq("moment_id", momentId).maybeSingle();
+    if ((cur as { storage_path?: string | null } | null)?.storage_path === storagePath) return { id: "legacy", isFirst: true };
+    const row = (await childRows(admin, momentId)).find(r => r.storage_path === storagePath);
+    return row ? { id: row.photo_id, isFirst: false } : null;
+  };
+  const dup = await alreadySaved();
+  if (dup) return json({ ...dup, duplicate: true }, 200);
+
   // ── 한도 — 실제 사진 개수로 센다 ─────────────────────────────────────────
   // 예전에는 `storage_path` 가 있는 moment 행 수만 셌다. 사진이 moment 당 한
   // 장이던 시절에는 그게 곧 사진 수였지만 지금은 아니다 — 그대로 두면 한
@@ -222,16 +253,22 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   }
 
   // ── Storage ──────────────────────────────────────────────────────────────
-  const versionUuid = crypto.randomUUID();
-  const storagePath = makeStoragePath(moment.itinerary_id, momentId, versionUuid);
-
   const { error: uploadError } = await admin.storage
     .from(PHOTO_BUCKET)
     .upload(storagePath, stripped, { contentType: "image/jpeg", upsert: false });
 
   if (uploadError) {
-    console.error("[moment photos POST] upload error:", uploadError.message);
-    return json({ error: "Failed to store photo" }, 500);
+    // 같은 이름(= 같은 기록·같은 사진)의 파일이 이미 있다 — 동시에 온 같은 요청이 행을 만드는 중이거나,
+    // 앞선 요청이 파일만 남기고 끝났다. 잠깐 뒤 다시 보고 행이 있으면 그것으로 답한다.
+    // 행이 끝내 없으면 같은 내용의 그 파일로 아래에서 행을 만든다(파일을 하나 더 만들지 않는다).
+    const exists = (uploadError as { statusCode?: string }).statusCode === "409" || /exist|duplicate/i.test(uploadError.message);
+    if (!exists) {
+      console.error("[moment photos POST] upload error:", uploadError.message);
+      return json({ error: "Failed to store photo" }, 500);
+    }
+    await new Promise(r => setTimeout(r, 1500));
+    const again = await alreadySaved();
+    if (again) return json({ ...again, duplicate: true }, 200);
   }
 
   // ── DB ───────────────────────────────────────────────────────────────────

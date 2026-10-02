@@ -742,7 +742,9 @@
     "addStopRecord": "写真・メモを残す",
     "noRecordPlaces": "記録のない予定 {n}件",
     "manageRecords": "記録の管理",
-    "viewInStory": "ストーリーで見る"
+    "viewInStory": "ストーリーで見る",
+    "publicPendingPhotos": "公開した記録にあとから追加された写真{n}枚は、まだ公開されていません。",
+    "publicPendingConfirm": "確認して一緒に公開"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

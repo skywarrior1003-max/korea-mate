@@ -31,6 +31,8 @@ import { resolveOwnership, type OwnershipEnv } from "../../../../_lib/ownership.
 import {
   planLegacyPhotoDelete, LEGACY_PHOTO_ID, type ChildPhotoRow,
 } from "../../../../../src/lib/trip-moments/photo-set";
+import { consentedChildPhotos } from "../../../../../src/lib/share/public-memory";
+import { buildPublicPatch } from "../../../../../src/lib/trip-moments/public-consent-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -79,7 +81,7 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   // 소유권 — 이 기기의 moment 가 아니면 여기서 끝난다
   const { data: moment } = await admin
     .from("trip_moments")
-    .select("moment_id, itinerary_id, storage_path")
+    .select("moment_id, itinerary_id, storage_path, is_public, public_consent_at")
     .eq("moment_id", momentId)
     .in("device_id", deviceScope)
     .maybeSingle();
@@ -136,10 +138,20 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to delete photo" }, 500);
   }
 
+  // 공개 기록에서 첫 장 자리로 올라갈 사진이 공개 동의 **뒤에** 올라온 것이면(2026-10-02) 그대로 올리면
+  // 확인받지 않은 사진이 공개 첫 장이 된다. 그 기록을 비공개로 돌리고(동의 기록도 지운다) 다시 공개할 때
+  // 소유자가 확인하게 한다. 동의 뒤 사진이 아니면 공개 상태를 건드리지 않는다.
+  const pub = moment as { is_public?: boolean | null; public_consent_at?: string | null };
+  const promotedRow = plan.promotedId ? ((rows ?? []) as ChildPhotoRow[]).find(r => r.photo_id === plan.promotedId) : undefined;
+  const unpublish = pub.is_public === true && promotedRow !== undefined
+    && consentedChildPhotos([promotedRow], pub.public_consent_at).length === 0;
+
   // 다음 사진을 첫 장 자리로 올린다 (없으면 비운다)
   const { error: updErr } = await admin
     .from("trip_moments")
-    .update({ storage_path: plan.nextLegacy })
+    .update(unpublish
+      ? { storage_path: plan.nextLegacy, ...buildPublicPatch(false, new Date().toISOString()) }
+      : { storage_path: plan.nextLegacy })
     .eq("moment_id", momentId)
     .in("device_id", deviceScope);
 
@@ -163,5 +175,5 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     }
   }
 
-  return json({ deleted: true, promoted: plan.promotedId !== null });
+  return json({ deleted: true, promoted: plan.promotedId !== null, ...(unpublish ? { unpublished: true } : {}) });
 }

@@ -14,7 +14,7 @@ import {
 } from "./ranking-page-core.ts";
 import { editorialSpotOrder } from "./editorial-order-core.ts";
 import {
-  isMemoryPublic, orderMemories, photoRef, type InternalMemoryRow, type InternalPhotoRow,
+  isMemoryPublic, orderMemories, photoRef, consentedChildPhotos, type InternalMemoryRow, type InternalPhotoRow,
 } from "../share/public-memory.ts";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../trip-moments/public-consent-core.ts";
 import { mergePhotoSet, type ChildPhotoRow } from "../trip-moments/photo-set.ts";
@@ -235,7 +235,7 @@ export async function coverRefByStory(env: RecoEnv, storyIds: string[]): Promise
   }
   for (const [storyId, list] of byStory) {
     for (const r of orderMemories(list)) {
-      const paths = mergePhotoSet(r.storage_path, childByMoment.get(r.moment_id) ?? []).map(s => s.path);
+      const paths = mergePhotoSet(r.storage_path, consentedChildPhotos(childByMoment.get(r.moment_id) ?? [], r.public_consent_at)).map(s => s.path);
       if (paths.length === 0) continue;
       out.set(storyId, await photoRef(storyId, r.moment_id, paths[0]));
       break;
