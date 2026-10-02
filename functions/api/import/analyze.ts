@@ -250,6 +250,13 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
       return json({ ok: true, models: await r.json().catch(() => null) });
     } catch { return json({ ok: false, error: "unreachable" }); }
   }
+  // 비 Production 전용 — ?diag=model-check&m=<모델>: Worker /model-check(아주 작은 생성 1회)로 실제 생성 가능 여부(10-02)
+  if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "model-check" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
+    try {
+      const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/model-check", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+      return json({ ok: true, check: await r.json().catch(() => ({ http: r.status })) });
+    } catch { return json({ ok: false, error: "unreachable" }); }
+  }
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "route") {
     const direct = (ctx.env.AI_PROVIDER_ROUTE ?? "").trim().toLowerCase() === "direct";
     const binding = ctx.env.AI_WRITING;

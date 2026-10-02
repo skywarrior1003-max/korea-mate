@@ -57,6 +57,8 @@ const refused = (b: unknown, status: number) =>
   });
 /** /provider 기본 본문 상한(텍스트 요청) · 사진을 싣는 요청이 x-provider-max-bytes 로 늘릴 수 있는 최대치 */
 const PROVIDER_BODY_DEFAULT = 64_000;
+/** /model-check 로 확인할 수 있는 모델 — 지금 쓰는 것(2.5)과 전환 대상(3.5 Flash-Lite)만 */
+export const MODEL_CHECK_ALLOW = ["gemini-2.5-flash", "gemini-3.5-flash-lite"];
 const PROVIDER_BODY_MAX = 12_000_000;
 /** 이 Worker 가 부르는 모델 — 환경 변수가 있으면 그것(Preview 전용), 없으면 공용 MODEL */
 /**
@@ -225,6 +227,40 @@ export default {
         const names = (j.models ?? []).filter(m => (m.supportedGenerationMethods ?? []).includes("generateContent")).map(m => String(m.name).replace(/^models\//, ""));
         return json({ http: r.status, current: modelOf(env), models: names });
       } catch { return json({ error: "list_failed" }, 502); }
+    }
+
+    if (path === "/model-check") {
+      // 운영자 확인(2026-10-02) — 이 Worker 의 키로 대상 모델이 **실제로 생성되는지**. 모델 목록에 이름이 있어도
+      // 생성은 거절될 수 있다(실측: 2.5 Flash 가 목록엔 있고 생성은 404 "no longer available to new users").
+      // 아주 작은 요청 1회(수 토큰) · 재시도 0 · 사용자 입력 없음. 응답에는 상태만 — 생성 문장·키 값을 싣지 않는다.
+      let target = modelOf(env);
+      try {
+        const pb = (await request.json()) as { model?: unknown };
+        if (typeof pb.model === "string" && MODEL_CHECK_ALLOW.includes(pb.model)) target = pb.model;
+      } catch { /* 지금 모델 */ }
+      const started = Date.now();
+      try {
+        const body = adaptProviderBody(JSON.stringify({
+          contents: [{ parts: [{ text: "Reply with the word ok." }] }],
+          generationConfig: { maxOutputTokens: 8, thinkingConfig: { thinkingBudget: 0 } },
+        }), target);
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${target}:generateContent?key=${apiKey}`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body, signal: AbortSignal.timeout(15_000),
+        });
+        let errorStatus: string | null = null, inTok: number | null = null, outTok: number | null = null;
+        try {
+          const j = (await r.json()) as { error?: { status?: string }; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number } };
+          errorStatus = j.error?.status ?? null;
+          inTok = j.usageMetadata?.promptTokenCount ?? null; outTok = j.usageMetadata?.candidatesTokenCount ?? null;
+        } catch { /* 본문 없음 */ }
+        const res = { model: target, current: modelOf(env), http: r.status, ok: r.ok, error_status: errorStatus, ms: Date.now() - started, in_tok: inTok, out_tok: outTok };
+        log({ kind: "model_check", ...res });
+        return json(res);
+      } catch (e) {
+        const res = { model: target, current: modelOf(env), ok: false, error: e instanceof Error && e.name === "TimeoutError" ? "timeout" : "error", ms: Date.now() - started };
+        log({ kind: "model_check", ...res });
+        return json(res);
+      }
     }
 
     if (path === "/probe" && (env.WORKER_ENV ?? "").trim() === "preview") {
