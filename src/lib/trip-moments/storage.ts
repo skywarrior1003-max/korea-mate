@@ -330,6 +330,12 @@ export async function addMomentDetailed(
   const up = await uploadMomentPhotoDetailed(moment.moment_id, moment.photo_data, deviceId, "photo");
   const photoSynced = up.ok;
   moments = patchLocal(itinId, moment.moment_id, { has_photo: photoSynced, photo_sync_error: up.error });
+  // 추가 사진 — 첫 장이 올라간 뒤 바로 올린다. 예전에는 첫 장이 바로 올라가면(정상 온라인 저장)
+  // has_photo=true 라 재동기화도 건너뛰어, 나머지 사진이 이 기기에만 남고 서버·다른 기기·Story·AI 에 가지 않았다(2026-10-02 실측).
+  if (photoSynced && moment.photo_data_extra?.length) {
+    await uploadPendingExtras(itinId, moment.moment_id, deviceId);
+    moments = loadMoments(itinId);
+  }
 
   return { moments, localSaved: true, metaSynced: true, photoSynced };
 }
@@ -351,6 +357,25 @@ export async function addMoment(
 // 실패가 다음 항목을 막지 않는다. single-flight 로 중복 실행을 막는다.
 
 const resyncInFlight = new Set<string>();
+
+/**
+ * 이 기기에 남은 추가 사진을 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
+ * 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다. 올린 장수를 돌려준다.
+ */
+async function uploadPendingExtras(itinId: string, momentId: string, deviceId: string): Promise<number> {
+  let n = 0;
+  const cur = loadMoments(itinId).find(m => m.moment_id === momentId);
+  for (const extra of cur?.photo_data_extra ?? []) {
+    const r = await uploadMomentPhotoDetailed(momentId, extra, deviceId, "photos");
+    // 한도·크기 거절은 남은 사진도 같은 결과다 — 이유를 남기고 멈춘다(사진은 이 기기에 그대로)
+    if (!r.ok) { if (r.error) patchLocal(itinId, momentId, { photo_sync_error: r.error }); break; }
+    const now  = loadMoments(itinId).find(m => m.moment_id === momentId);
+    const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
+    patchLocal(itinId, momentId, { photo_data_extra: rest, ...(rest.length === 0 ? { photo_sync_error: null } : {}) });
+    n++;
+  }
+  return n;
+}
 
 export interface ResyncResult { metaSynced: number; photoSynced: number; skipped: number; }
 
@@ -375,24 +400,15 @@ export async function resyncPendingMoments(
       }
       if (!meta) continue;                       // 다음 항목으로 (전체 중단 아님)
       if (!cur.photo_data) continue;             // 텍스트 Memory
-      if (cur.has_photo === true) continue;      // 이미 서버에 있음 — 재업로드 금지
-
-      const first = await uploadMomentPhotoDetailed(cur.moment_id, cur.photo_data, deviceId, "photo");
-      const ok = first.ok;
-      if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true, photo_sync_error: null }); out.photoSynced++; }
-      if (!ok) { if (first.error) patchLocal(itinId, cur.moment_id, { photo_sync_error: first.error }); continue; } // 첫 장이 안 올라갔으면 나머지도 미룬다
-
-      // 추가 사진 — 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
-      // 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다.
-      for (const extra of cur.photo_data_extra ?? []) {
-        const r = await uploadMomentPhotoDetailed(cur.moment_id, extra, deviceId, "photos");
-        // 한도·크기 거절은 남은 사진도 같은 결과다 — 이유를 남기고 멈춘다(사진은 이 기기에 그대로)
-        if (!r.ok) { if (r.error) patchLocal(itinId, cur.moment_id, { photo_sync_error: r.error }); break; }
-        const now  = loadMoments(itinId).find(m => m.moment_id === cur.moment_id);
-        const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
-        patchLocal(itinId, cur.moment_id, { photo_data_extra: rest, ...(rest.length === 0 ? { photo_sync_error: null } : {}) });
-        out.photoSynced++;
+      // 첫 장이 이미 서버에 있으면 첫 장은 다시 올리지 않는다(재업로드 금지) — 남은 추가 사진만 올린다
+      if (cur.has_photo !== true) {
+        const first = await uploadMomentPhotoDetailed(cur.moment_id, cur.photo_data, deviceId, "photo");
+        const ok = first.ok;
+        if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true, photo_sync_error: null }); out.photoSynced++; }
+        if (!ok) { if (first.error) patchLocal(itinId, cur.moment_id, { photo_sync_error: first.error }); continue; } // 첫 장이 안 올라갔으면 나머지도 미룬다
       }
+
+      out.photoSynced += await uploadPendingExtras(itinId, cur.moment_id, deviceId);
     }
   } finally {
     resyncInFlight.delete(itinId);

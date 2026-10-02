@@ -254,3 +254,36 @@ test("서버를 못 읽으면(오류) 로컬을 그대로 쓴다 — 지우지 �
     assert.equal((await loadMomentsFromServer(ITIN, DEV)).length, 1);
   } finally { (globalThis as Record<string, unknown>).fetch = prev; }
 });
+
+// ── 추가 사진(2026-10-02 실측 결함: 정상 온라인 저장에서 추가 사진이 서버에 가지 않았다) ──
+const extraCalls = () => calls.filter(c => /\/photos$/.test(c.url) && c.method === "POST");
+
+test("온라인 저장 — 첫 장이 올라가면 추가 사진도 바로 올리고, 이 기기 대기 목록에서 뺀다", async () => {
+  const r = await addMomentDetailed(ITIN, moment({ photo_data_extra: [JPEG, JPEG] }), DEV);
+  assert.strictEqual(r.photoSynced, true);
+  assert.strictEqual(photoCalls().length, 1);
+  assert.strictEqual(extraCalls().length, 2);
+  assert.deepStrictEqual(loadMoments(ITIN)[0]!.photo_data_extra ?? [], []);
+});
+
+test("첫 장이 이미 서버에 있어도 남은 추가 사진은 재동기화가 올린다(첫 장은 다시 올리지 않음)", async () => {
+  seed([moment({ synced: true, has_photo: true, photo_data_extra: [JPEG, JPEG] })]);
+  const r = await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(photoCalls().length, 0);
+  assert.strictEqual(extraCalls().length, 2);
+  assert.strictEqual(r.photoSynced, 2);
+  assert.deepStrictEqual(loadMoments(ITIN)[0]!.photo_data_extra ?? [], []);
+});
+
+test("추가 사진이 한도로 거절되면 멈추고 이유를 남긴다 — 사진은 이 기기에 그대로", async () => {
+  (globalThis as Record<string, unknown>).fetch = async (url: string, init: Record<string, unknown> = {}) => {
+    calls.push({ url, method: String(init.method ?? "GET"), isForm: true, body: init.body, headers: {} });
+    const lim = /\/photos$/.test(url);
+    return { ok: !lim, status: lim ? 422 : 200, json: async () => (lim ? { code: "ITINERARY_LIMIT" } : []) };
+  };
+  await addMomentDetailed(ITIN, moment({ photo_data_extra: [JPEG, JPEG] }), DEV);
+  const m = loadMoments(ITIN)[0]!;
+  assert.strictEqual(extraCalls().length, 1, "첫 거절 뒤 남은 사진은 보내지 않는다");
+  assert.strictEqual(m.photo_data_extra?.length, 2);
+  assert.strictEqual(m.photo_sync_error, "ITINERARY_LIMIT");
+});
