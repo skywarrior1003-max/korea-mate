@@ -156,7 +156,7 @@ interface AiUsage { inTok: number | null; outTok: number | null; model?: string 
 
 async function analyzeWithAi(env: Env, prompt: string): Promise<
   | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
-  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number }
+  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number; usage?: AiUsage }
 > {
   const apiKey = env.GEMINI_API_KEY ?? "";
   const providerFetch = bindingProviderFetch(env) ?? (apiKey ? fetch : null);
@@ -202,13 +202,15 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
     const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     const u = raw.usageMetadata;
     const analysis = parseAnalyzed(text);
-    if (!analysis) return { ok: false, error: "analyze_failed", sent: true, providerStatus: `parse_failed:${raw.candidates?.[0]?.finishReason ?? "none"}:${text.length}`, ms: Date.now() - t0 };
     const usage: AiUsage = {
       inTok: typeof u?.promptTokenCount === "number" ? u.promptTokenCount : null,
       outTok: typeof u?.candidatesTokenCount === "number" || typeof u?.thoughtsTokenCount === "number"
         ? (u?.candidatesTokenCount ?? 0) + (u?.thoughtsTokenCount ?? 0) : null,
       model: res.headers.get("x-gkm-model"), // 서울 Worker 가 실제로 부른 모델(단가 계산용)
     };
+    // 응답은 받았는데 형식이 맞지 않음(예: 출력 상한 MAX_TOKENS) — 모델이 실제로 토큰을 만들었고 사용량도 왔다.
+    // 과금은 불확실이 아니라 확정이므로 usage 를 함께 돌려 회사 원장을 실비로 정산하게 한다(2026-10-02).
+    if (!analysis) return { ok: false, error: "analyze_failed", sent: true, providerStatus: `parse_failed:${raw.candidates?.[0]?.finishReason ?? "none"}:${text.length}`, ms: Date.now() - t0, usage };
     return { ok: true, analysis, usage };
   } catch (err) {
     clearTimeout(timer);
@@ -370,7 +372,14 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     // 정산(CORRECTION-V1 §2): 요청을 만들기 전 실패(sent=false)만 회사 원장 released.
     // 그 외(analyze_failed/timeout/parse)는 요청 전송 후의 실패라 무과금을 증명할 수 없다 — 예약 보존.
     // 사용자 횟수는 어느 쪽이든 차감하지 않는다(완성 작업이 아니다).
-    await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent ? "unknown_billed" : "released");
+    // 응답·사용량을 받은 실패(형식 오류)는 과금이 확정이다 — 실제 토큰으로 committed. 사용자 차감은 여전히 0.
+    const billedUsage = ai.usage && (ai.usage.inTok !== null || ai.usage.outTok !== null) ? ai.usage : null;
+    if (billedUsage) {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
+        { inTok: billedUsage.inTok, outTok: billedUsage.outTok, usdMicro: usdMicroFromUsage(billedUsage.inTok, billedUsage.outTok, billedUsage.model) });
+    } else {
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent ? "unknown_billed" : "released");
+    }
     await release();
     // fail_class: 재발 시 520·시간 초과·출력 상한 등을 가르는 짧은 분류값만 — 본문·키·사용자 입력은 싣지 않는다
     log({ ok: false, mode, host, error: ai.error, fail_class: providerFailClass(ai.providerStatus), provider_ms: ai.ms ?? null, ms: Date.now() - started });
