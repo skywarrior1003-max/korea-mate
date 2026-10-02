@@ -456,7 +456,7 @@
     "aiOptInConfirmNo": "Not now",
     "aiOptInBusy": "Applying your taste…",
     "aiOptInApplied": "AI personalization applied.",
-    "aiUnavailableNotice": "AI features are temporarily unavailable. You can still create your basic itinerary.",
+    "aiUnavailableNotice": "AI isn’t available right now. Your basic itinerary stays as it is. Trying again with the same trip won’t use your free AI help twice.",
     "fixedOutTitle": "Some fixed times fall outside that day's schedule window.",
     "fixedOutHint": "Open Picks and adjust the date or time.",
     "fixedHoursTitle": "Some fixed times fall outside that place's known opening hours.",

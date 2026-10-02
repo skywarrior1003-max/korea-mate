@@ -456,7 +456,7 @@
     "aiOptInConfirmNo": "暂时不用",
     "aiOptInBusy": "正在融入你的喜好…",
     "aiOptInApplied": "已应用AI喜好调整。",
-    "aiUnavailableNotice": "AI功能暂时不可用。基础行程仍可正常创建。",
+    "aiUnavailableNotice": "AI 功能暂时无法使用。基本行程保持不变。用相同条件再次点击也不会重复计次。",
     "fixedOutTitle": "有些指定时间超出了当天的行程时间段，未能安排。",
     "fixedOutHint": "请在“精选”中调整日期或时间。",
     "fixedHoursTitle": "有些指定时间超出了该地点的已知营业时间，未能安排。",

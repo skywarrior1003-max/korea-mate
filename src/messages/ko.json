@@ -456,7 +456,7 @@
     "aiOptInConfirmNo": "다음에 할게요",
     "aiOptInBusy": "취향을 반영하는 중…",
     "aiOptInApplied": "AI 취향 반영이 적용되었어요.",
-    "aiUnavailableNotice": "AI 기능을 잠시 사용할 수 없어요. 기본 일정은 계속 만들 수 있습니다.",
+    "aiUnavailableNotice": "AI 기능을 잠시 사용할 수 없어요. 기본 일정은 그대로예요. 같은 조건으로 다시 눌러도 횟수가 두 번 차감되지 않아요.",
     "fixedOutTitle": "정한 시간이 그날 일정 시간대를 벗어나 넣지 못한 장소가 있어요.",
     "fixedOutHint": "픽에서 날짜나 시간을 조정해 주세요.",
     "fixedHoursTitle": "정한 시간이 그 장소의 알려진 운영시간 밖이라 넣지 못한 장소가 있어요.",

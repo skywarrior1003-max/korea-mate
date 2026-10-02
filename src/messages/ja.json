@@ -456,7 +456,7 @@
     "aiOptInConfirmNo": "また今度",
     "aiOptInBusy": "好みを反映しています…",
     "aiOptInApplied": "AIによる好み反映を適用しました。",
-    "aiUnavailableNotice": "AI機能は一時的に利用できません。基本の日程は引き続き作成できます。",
+    "aiUnavailableNotice": "AI 機能は現在使えません。基本の日程はそのままです。同じ条件でもう一度押しても回数は二重に減りません。",
     "fixedOutTitle": "指定した時間がその日の予定時間帯の外にあり、入れられなかった場所があります。",
     "fixedOutHint": "ピックで日付や時間を調整してください。",
     "fixedHoursTitle": "指定した時間がその場所の営業時間外のため、入れられなかった場所があります。",

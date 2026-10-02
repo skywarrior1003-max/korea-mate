@@ -14,10 +14,9 @@ test("형식 오류(MAX_TOKENS 등)는 사용량과 함께 돌려주고 회사 �
   assert.match(AN, /const billedUsage = ai\.usage && \(ai\.usage\.inTok !== null \|\| ai\.usage\.outTok !== null\) \? ai\.usage : null;/);
   assert.match(AN, /if \(billedUsage\) \{\s*await aiOpsSettle\([^)]*"committed"/);
   // 사용량이 없는 실패는 예전 규칙 그대로(보낸 뒤 실패 = unknown_billed, 보내기 전 = released)
-  assert.match(AN, /ai\.sent && !ai\.notBilled \? "unknown_billed" : "released"/);
-  // Google 오류 본문 + 문서가 명시한 400·500 만 과금 없음(released). 404·403·429·503·52x·시간 초과는 unknown_billed
-  assert.match(AN, /googleError = res\.status === 400 \|\| res\.status === 500; \}/);
-  assert.doesNotMatch(AN, /googleError = res\.status >= 400/);
+  // CORRECTION-V1 §2 — 전송 후 받은 HTTP 오류(404 포함)는 unknown_billed. Google 오류 본문을 무과금으로 보지 않는다.
+  assert.match(AN, /ai\.sent \? "unknown_billed" : "released"/);
+  assert.doesNotMatch(AN, /googleError|notBilled/);
 });
 
 test("어떤 분석 실패든 사용자 횟수는 되돌린다", () => {
