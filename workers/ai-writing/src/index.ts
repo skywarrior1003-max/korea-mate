@@ -278,9 +278,15 @@ export default {
       const started = Date.now();
       try {
         // variant "profile": AI 스케줄러와 같은 요청 본문(스키마·설정)에 짧은 프롬프트 — 3.x 호환성 진단
-        const body = variant === "profile"
-          ? adaptProviderBody(JSON.stringify(buildProviderRequestBody("Return a travel preference profile for a relaxed 2-day Busan trip. Places: 39, 966, 1460.")), probeModel)
-          : JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc });
+        // variant "profile_<low|minimal|medium|none>": 같은 개인화 본문을 사고 수준만 바꿔 토큰 내역 비교(10-02 비용 대조)
+        const profileBody = () => JSON.parse(JSON.stringify(buildProviderRequestBody("Return a travel preference profile for a relaxed 2-day Busan trip. Places: 39, 966, 1460."))) as { generationConfig?: Record<string, unknown> };
+        let body: string;
+        if (variant === "profile") body = adaptProviderBody(JSON.stringify(buildProviderRequestBody("Return a travel preference profile for a relaxed 2-day Busan trip. Places: 39, 966, 1460.")), probeModel);
+        else if (variant.startsWith("profile_")) {
+          const pbody = profileBody(); const lv = variant.slice(8);
+          pbody.generationConfig = { ...(pbody.generationConfig ?? {}), thinkingConfig: lv === "none" ? undefined : { thinkingLevel: lv } };
+          body = JSON.stringify(pbody);
+        } else body = JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc });
         const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${probeModel}:generateContent?key=${apiKey}`, {
           method: "POST", headers: { "Content-Type": "application/json" },
           body,
@@ -289,7 +295,8 @@ export default {
         const t = await r.text();
         const colo = await executionColo();
         return json({ variant, model: probeModel, http: r.status, ms: Date.now() - started, colo, cfRay: r.headers.get("cf-ray"), server: r.headers.get("server"),
-          body: t.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").slice(0, 240) });
+          body: t.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").slice(0, 240),
+          usage: (() => { try { return (JSON.parse(t) as { usageMetadata?: unknown }).usageMetadata ?? null; } catch { return null; } })() });
       } catch (e) { return json({ variant, error: e instanceof Error ? e.name : "error", ms: Date.now() - started, colo: await executionColo() }); }
     }
 
