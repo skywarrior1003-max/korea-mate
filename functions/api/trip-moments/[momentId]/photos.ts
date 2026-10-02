@@ -22,6 +22,8 @@
 // - service_role key·내부 오류 문구를 응답에 담지 않는다
 
 import { createClient } from "@supabase/supabase-js";
+import { LATE_PHOTO_GUARD_HEADER } from "../../../../src/lib/trip-moments/late-photo-guard";
+import { extraPhotosPaused } from "../../../_lib/late-photo-guard";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { stripJpegApp1 } from "../../../../src/lib/jpeg-strip-exif";
 import { resolveOwnership, type OwnershipEnv } from "../../../_lib/ownership.ts";
@@ -146,7 +148,23 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 }
 
 // ── POST — 사진 한 장 추가 ───────────────────────────────────────────────────
+/**
+ * 추가 사진 올리기. 모든 응답에 공개 보호 표시(late-photo-guard)를 단다 — 앱은 이 표시가 없는 서버에는
+ * 더 올리지 않는다. 운영 정지(ai_ops_switches 'moment_extra_photos' = 'paused')면 받지 않고 503 PAUSED
+ * (사진은 앱 기기에 그대로 남는다). 첫 사진(/photo)·열람·메모에는 영향 없음.
+ */
 export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
+  if (await extraPhotosPaused(ctx.env)) {
+    const r = json({ error: "Extra photo upload paused", code: "PAUSED" }, 503);
+    r.headers.set(LATE_PHOTO_GUARD_HEADER, "0");
+    return r;
+  }
+  const r = await postExtraPhoto(ctx);
+  r.headers.set(LATE_PHOTO_GUARD_HEADER, "1");
+  return r;
+}
+
+async function postExtraPhoto(ctx: PagesCtx): Promise<Response> {
   const momentId = ctx.params.momentId as string;
   if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
 

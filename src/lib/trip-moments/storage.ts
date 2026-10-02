@@ -16,7 +16,16 @@
 import type { TripMoment, PhotoSyncError } from "./types";
 
 import { withAuthHeader } from "../auth/device-auth-headers.ts";
+import { LATE_PHOTO_GUARD_HEADER, guardAllowsUpload } from "./late-photo-guard.ts";
 const LS_KEY = (itinId: string) => `koreamate_moments_${itinId}`;
+
+/**
+ * 마지막으로 받은 기록 목록 응답이 "추가 사진을 올려도 된다(공개 보호 있음)" 고 했는가.
+ * 목록을 받기 전·보호 없는 서버·운영 정지 = false → 추가 사진은 이 기기에 그대로 둔다.
+ */
+let latePhotoGuard = false;
+/** 테스트 전용 */
+export function _setLatePhotoGuard(v: boolean): void { latePhotoGuard = v; }
 
 // ── localStorage ─────────────────────────────────────────────────────────────
 
@@ -108,6 +117,8 @@ export async function loadMomentsFromServer(
       { headers: await withAuthHeader({ "x-device-id": deviceId }) },
     );
     if (!res.ok) return local;
+    // 추가 사진을 올려도 되는 서버인가(공개 보호 있음·정지 아님) — 이 응답으로 정한다(late-photo-guard)
+    latePhotoGuard = guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER));
     const rows = (await res.json()) as Array<Record<string, unknown>>;
     const serverMoments = rows.map(r => rowToMoment(r, deviceId, itinId));
     const merged = mergeMoments(serverMoments, local);
@@ -171,6 +182,8 @@ export async function uploadMomentPhotoDetailed(
       headers: await withAuthHeader({ "x-device-id": deviceId }),
       body:    fd,
     });
+    // 추가 사진 응답에 공개 보호 표시가 없으면(보호 없는 옛 서버·운영 정지) 그 뒤로는 올리지 않는다(late-photo-guard)
+    if (slot === "photos" && !guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER))) latePhotoGuard = false;
     if (res.ok) return { ok: true, error: null };
     let code: unknown = null;
     try { code = ((await res.json()) as { code?: unknown }).code; } catch { /* 본문 없음 */ }
@@ -362,12 +375,16 @@ const resyncInFlight = new Set<string>();
 
 /**
  * 이 기기에 남은 추가 사진을 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
- * 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다. 올린 장수를 돌려준다.
+ * 올라간 사진이 다시 올라가지 않고(서버가 같은 사진을 알아본다), 못 올린 사진은 다음 큐에 남는다.
+ * 공개 보호가 있다고 알린 서버에만 올린다(latePhotoGuard — 추가 사진 단독 수정과 같은 동작). 올린 장수를 돌려준다.
  */
 async function uploadPendingExtras(itinId: string, momentId: string, deviceId: string): Promise<number> {
+  // 올리기 직전에 다시 묻는다 — 화면을 연 뒤 서버가 보호 없는 옛 배포로 되돌려졌을 수 있다(열린 탭)
+  if (!(await refreshLatePhotoGuard(itinId, deviceId))) return 0;
   let n = 0;
   const cur = loadMoments(itinId).find(m => m.moment_id === momentId);
   for (const extra of cur?.photo_data_extra ?? []) {
+    if (!latePhotoGuard) break;               // 보호 없는 서버를 만났으면 남은 사진은 이 기기에 둔다
     const r = await uploadMomentPhotoDetailed(momentId, extra, deviceId, "photos");
     // 한도·크기 거절은 남은 사진도 같은 결과다 — 이유를 남기고 멈춘다(사진은 이 기기에 그대로)
     if (!r.ok) { if (r.error) patchLocal(itinId, momentId, { photo_sync_error: r.error }); break; }
@@ -377,6 +394,19 @@ async function uploadPendingExtras(itinId: string, momentId: string, deviceId: s
     n++;
   }
   return n;
+}
+
+/** 서버가 지금도 "추가 사진을 올려도 된다(공개 보호 있음·정지 아님)" 고 하는가 — 기록 목록 응답의 머리글로 본다 */
+async function refreshLatePhotoGuard(itinId: string, deviceId: string): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/trip-moments?itinerary_id=${encodeURIComponent(itinId)}`, {
+      headers: await withAuthHeader({ "x-device-id": deviceId }),
+    });
+    latePhotoGuard = res.ok && guardAllowsUpload(res.headers?.get?.(LATE_PHOTO_GUARD_HEADER));
+  } catch {
+    latePhotoGuard = false;
+  }
+  return latePhotoGuard;
 }
 
 export interface ResyncResult { metaSynced: number; photoSynced: number; skipped: number; }

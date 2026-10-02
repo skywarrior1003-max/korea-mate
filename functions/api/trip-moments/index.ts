@@ -27,6 +27,8 @@ import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-m
 import { normalizeStopKey, isMissingColumnError } from "../../../src/lib/trip-moments/stop-binding";
 import { resolveOwnership, type OwnershipEnv } from "../../_lib/ownership.ts";
 import { consentedChildPhotos } from "../../../src/lib/share/public-memory";
+import { LATE_PHOTO_GUARD_HEADER } from "../../../src/lib/trip-moments/late-photo-guard";
+import { extraPhotosPaused } from "../../_lib/late-photo-guard";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
@@ -140,7 +142,10 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return { ...rest, has_photo: Boolean(storage_path), ...(pending > 0 ? { public_pending_photos: pending } : {}) };
   });
 
-  return json(rows);
+  // 이 서버는 공개 동의 뒤 사진을 공개하지 않는다 — 앱이 추가 사진을 올려도 된다는 표시(운영 정지면 "0")
+  const res = json(rows);
+  res.headers.set(LATE_PHOTO_GUARD_HEADER, (await extraPhotosPaused(ctx.env)) ? "0" : "1");
+  return res;
 }
 
 // ── POST — 새 text moment 생성 ────────────────────────────────────────────────

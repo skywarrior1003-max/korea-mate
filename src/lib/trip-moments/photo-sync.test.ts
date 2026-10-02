@@ -255,10 +255,25 @@ test("서버를 못 읽으면(오류) 로컬을 그대로 쓴다 — 지우지 �
   } finally { (globalThis as Record<string, unknown>).fetch = prev; }
 });
 
-// ── 추가 사진(2026-10-02 실측 결함: 정상 온라인 저장에서 추가 사진이 서버에 가지 않았다) ──
+// ── 추가 사진(2026-10-02 단독 수정): 정상 온라인 저장에서 추가 사진이 서버에 가지 않던 결함 · 공개 보호 서버에만 올림 ──
+const { _setLatePhotoGuard } = await import("./storage.ts");
+/** 서로 다른 사진(같은 사진은 대기 목록에서 함께 빠진다) */
+const J = (n: number) => "data:image/jpeg;base64," + Buffer.from([0xff, 0xd8, n, 0xff, 0xd9]).toString("base64");
 const extraCalls = () => calls.filter(c => /\/photos$/.test(c.url) && c.method === "POST");
+/** /photos 응답에 공개 보호 머리글을 단(새 서버) 또는 달지 않은(옛 서버) fetch */
+function serverWithGuard(guard: string | null, status = 201, listGuard: string | null = guard) {
+  (globalThis as Record<string, unknown>).fetch = async (url: string, init: Record<string, unknown> = {}) => {
+    calls.push({ url, method: String(init.method ?? "GET"), isForm: true, body: init.body, headers: {} });
+    const extra = /\/photos$/.test(url);
+    // 기록 목록(올리기 직전 확인)과 추가 사진 응답의 보호 머리글을 따로 정한다
+    const h = extra ? guard : /\/api\/trip-moments\?/.test(url) ? listGuard : null;
+    const headers = new Headers(h !== null ? { "x-gkm-late-photo-guard": h } : {});
+    return { ok: extra ? status < 300 : true, status: extra ? status : 200, headers, json: async () => [] };
+  };
+}
 
-test("온라인 저장 — 첫 장이 올라가면 추가 사진도 바로 올리고, 이 기기 대기 목록에서 뺀다", async () => {
+test("새 서버(보호 머리글 1) — 첫 장 뒤 추가 사진을 바로 올리고 기기 대기 목록에서 뺀다", async () => {
+  _setLatePhotoGuard(true); serverWithGuard("1");
   const r = await addMomentDetailed(ITIN, moment({ photo_data_extra: [JPEG, JPEG] }), DEV);
   assert.strictEqual(r.photoSynced, true);
   assert.strictEqual(photoCalls().length, 1);
@@ -266,22 +281,72 @@ test("온라인 저장 — 첫 장이 올라가면 추가 사진도 바로 올�
   assert.deepStrictEqual(loadMoments(ITIN)[0]!.photo_data_extra ?? [], []);
 });
 
-test("첫 장이 이미 서버에 있어도 남은 추가 사진은 재동기화가 올린다(첫 장은 다시 올리지 않음)", async () => {
+test("첫 장이 이미 서버에 있어도 남은 추가 사진은 재동기화가 올린다(첫 장 재업로드 없음)", async () => {
+  _setLatePhotoGuard(true); serverWithGuard("1");
   seed([moment({ synced: true, has_photo: true, photo_data_extra: [JPEG, JPEG] })]);
   const r = await resyncPendingMoments(ITIN, DEV);
   assert.strictEqual(photoCalls().length, 0);
   assert.strictEqual(extraCalls().length, 2);
   assert.strictEqual(r.photoSynced, 2);
-  assert.deepStrictEqual(loadMoments(ITIN)[0]!.photo_data_extra ?? [], []);
 });
 
-test("추가 사진이 한도로 거절되면 멈추고 이유를 남긴다 — 사진은 이 기기에 그대로", async () => {
+test("공개 보호를 알리지 않은 서버(목록 머리글 없음)에는 추가 사진을 올리지 않는다 — 기기에 그대로", async () => {
+  _setLatePhotoGuard(true); serverWithGuard("1", 201, null);
+  seed([moment({ synced: true, has_photo: true, photo_data_extra: [JPEG, JPEG] })]);
+  await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(extraCalls().length, 0);
+  assert.strictEqual(loadMoments(ITIN)[0]!.photo_data_extra?.length, 2);
+});
+
+test("올리는 도중 옛 서버로 바뀌면(응답에 머리글 없음) 그 뒤 사진은 올리지 않는다", async () => {
+  _setLatePhotoGuard(true); serverWithGuard(null, 201, "1");
+  seed([moment({ synced: true, has_photo: true, photo_data_extra: [J(1), J(2), J(3)] })]);
+  await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(extraCalls().length, 1, "첫 응답에서 보호 없음을 알고 멈춘다");
+  assert.strictEqual(loadMoments(ITIN)[0]!.photo_data_extra?.length, 2);
+  await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(extraCalls().length, 2, "다시 물으면(목록 1) 한 장 — 응답에 머리글이 없어 또 멈춘다");
+});
+
+test("운영 정지(머리글 0·503) — 사진은 기기에 남고 거짓 성공 없음", async () => {
+  _setLatePhotoGuard(true); serverWithGuard("0", 503);
+  seed([moment({ synced: true, has_photo: true, photo_data_extra: [JPEG, JPEG] })]);
+  await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(loadMoments(ITIN)[0]!.photo_data_extra?.length, 2);
+});
+
+test("목록 응답의 머리글로 허용 여부를 정한다(1=허용 · 0·없음=금지)", async () => {
+  for (const [h, want] of [["1", 2], ["0", 0], [null, 0]] as const) {
+    store.clear(); calls = [];
+    (globalThis as Record<string, unknown>).fetch = async (url: string, init: Record<string, unknown> = {}) => {
+      calls.push({ url, method: String(init.method ?? "GET"), isForm: true, body: init.body, headers: {} });
+      if (/\/api\/trip-moments\?/.test(url)) return { ok: true, status: 200, headers: new Headers(h === null ? {} : { "x-gkm-late-photo-guard": h }), json: async () => [{ moment_id: moment().moment_id, itinerary_id: ITIN, memo: "m", has_photo: true, captured_at: "2026-09-01T00:00:00.000Z", day_number: 1 }] };
+      return { ok: true, status: 201, headers: new Headers({ "x-gkm-late-photo-guard": "1" }), json: async () => [] };
+    };
+    seed([moment({ synced: true, has_photo: true, photo_data_extra: [JPEG, JPEG] })]);
+    await loadMomentsFromServer(ITIN, DEV);
+    await resyncPendingMoments(ITIN, DEV);
+    assert.strictEqual(extraCalls().length, want, `header ${h}`);
+  }
+});
+
+test("열린 탭이 옛 서버로 되돌려지면(목록 머리글 없음) 이전에 허용을 받았어도 한 장도 올리지 않는다", async () => {
+  _setLatePhotoGuard(true); serverWithGuard(null, 201, null);
+  seed([moment({ synced: true, has_photo: true, photo_data_extra: [J(1), J(2)] })]);
+  await resyncPendingMoments(ITIN, DEV);
+  assert.strictEqual(extraCalls().length, 0);
+  assert.strictEqual(loadMoments(ITIN)[0]!.photo_data_extra?.length, 2);
+});
+
+test("추가 사진이 한도로 거절되면 멈추고 이유를 남긴다 — 사진은 이 기기에 그대로(V2 거절 코드)", async () => {
+  _setLatePhotoGuard(true);
   (globalThis as Record<string, unknown>).fetch = async (url: string, init: Record<string, unknown> = {}) => {
     calls.push({ url, method: String(init.method ?? "GET"), isForm: true, body: init.body, headers: {} });
-    const lim = /\/photos$/.test(url);
-    return { ok: !lim, status: lim ? 422 : 200, json: async () => (lim ? { code: "ITINERARY_LIMIT" } : []) };
+    const lim = url.endsWith("/photos");
+    // 새 서버: 목록·추가 사진 응답 모두 공개 보호 표시 1
+    return { ok: !lim, status: lim ? 422 : 200, headers: new Headers({ "x-gkm-late-photo-guard": "1" }), json: async () => (lim ? { code: "ITINERARY_LIMIT" } : []) };
   };
-  await addMomentDetailed(ITIN, moment({ photo_data_extra: [JPEG, JPEG] }), DEV);
+  await addMomentDetailed(ITIN, moment({ photo_data_extra: [J(1), J(2)] }), DEV);
   const m = loadMoments(ITIN)[0]!;
   assert.strictEqual(extraCalls().length, 1, "첫 거절 뒤 남은 사진은 보내지 않는다");
   assert.strictEqual(m.photo_data_extra?.length, 2);
