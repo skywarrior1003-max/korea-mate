@@ -781,7 +781,9 @@
     "addMoreRecord": "Add a record here",
     "syncTripLimit": "Some photos weren’t saved — this trip’s 30-photo limit was reached. They’re still on this device.",
     "syncDeviceLimit": "Some photos weren’t saved — this device’s 100-photo limit was reached. They’re still on this device.",
-    "syncTooLarge": "Some photos were too large (over 1MB) to save. They’re still on this device."
+    "syncTooLarge": "Some photos were too large (over 1MB) to save. They’re still on this device.",
+    "publicPendingPhotos": "{n, plural, one {# photo} other {# photos}} added after you shared this record {n, plural, one {isn’t} other {aren’t}} public yet.",
+    "publicPendingConfirm": "Review and share them too"
   },
   "dayDone": {
     "title": "Day {n} complete!",

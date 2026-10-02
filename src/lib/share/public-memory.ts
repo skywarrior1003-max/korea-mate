@@ -97,6 +97,30 @@ export function isMemoryPublic(
   return true;
 }
 
+// ── 공개 동의 뒤에 올라온 추가 사진 (2026-10-02) ────────────────────────────
+/**
+ * 공개해도 되는 추가 사진 — 그 Memory 의 공개 동의 시각 **이전에** 서버에 올라온 것만.
+ *
+ * 왜 필요한가: 예전 앱은 기록의 추가 사진을 기기에만 남겼다. 고친 앱은 여행을 다시 열 때 그 사진을
+ * 뒤늦게 올린다. 이미 공개한 기록이면 재방문만으로 사용자가 "올라가지 않은 줄 안" 사진이 공개됐다
+ * (Preview 실측). 공개 동의는 동의할 때 있던 사진에 대한 것이다 — 그 뒤 사진의 묵시적 허가가 아니다.
+ * 소유자가 기록 관리에서 다시 공개를 확인하면(동의 시각이 새로 찍힌다) 그때 함께 나간다.
+ *
+ * 올라온 시각(created_at)을 읽을 수 없는 행은 공개하지 않는다(모르면 막는다).
+ * 첫 장(`storage_path`)은 여기서 보지 않는다 — 동의할 때 이미 공개 대상이던 사진이다.
+ */
+export function consentedChildPhotos<T extends { created_at?: string | null }>(
+  children: readonly T[],
+  publicConsentAt: string | null | undefined,
+): T[] {
+  const consent = Date.parse(clean(publicConsentAt));
+  if (!Number.isFinite(consent)) return [];
+  return children.filter(c => {
+    const at = Date.parse(clean(c.created_at));
+    return Number.isFinite(at) && at <= consent;
+  });
+}
+
 // ── 사진 주소 ────────────────────────────────────────────────────────────────
 /** 되돌릴 수 없는 값의 길이. 128비트면 맞혀 볼 수 없다. */
 const REF_HEX_LEN = 32;

@@ -781,7 +781,9 @@
     "addMoreRecord": "이 장소에 기록 추가",
     "syncTripLimit": "사진 일부가 저장되지 않았어요 — 이번 여행 사진 30장 한도예요. 사진은 이 기기에 남아 있어요.",
     "syncDeviceLimit": "사진 일부가 저장되지 않았어요 — 이 기기 사진 100장 한도예요. 사진은 이 기기에 남아 있어요.",
-    "syncTooLarge": "사진 일부가 너무 커서(1MB 초과) 저장되지 않았어요. 사진은 이 기기에 남아 있어요."
+    "syncTooLarge": "사진 일부가 너무 커서(1MB 초과) 저장되지 않았어요. 사진은 이 기기에 남아 있어요.",
+    "publicPendingPhotos": "공개한 기록에 나중에 올라온 사진 {n}장은 아직 공개되지 않았어요.",
+    "publicPendingConfirm": "확인하고 함께 공개"
   },
   "dayDone": {
     "title": "Day {n} 완주!",

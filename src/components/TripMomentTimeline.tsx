@@ -410,6 +410,21 @@ export default function TripMomentTimeline({
                 </>
               )}
 
+              {/* 공개한 기록에 동의 뒤 올라온 사진(2026-10-02) — 저절로 공개하지 않는다. 같은 동의 창으로 다시 확인받는다 */}
+              {onSetPublic && m.is_public === true && (m.public_pending_photos ?? 0) > 0 && (
+                <div data-moment-public-pending className="flex flex-wrap items-center gap-2 rounded-lg bg-[#F6F7F8] px-3 py-2 text-xs text-[#191C21]">
+                  <span>{t("publicPendingPhotos", { n: m.public_pending_photos ?? 0 })}</span>
+                  <button
+                    type="button"
+                    onClick={() => openConsent(m)}
+                    disabled={publicBusy === m.moment_id}
+                    className="gkm-focus font-bold underline underline-offset-2 disabled:opacity-50 cursor-pointer"
+                  >
+                    {t("publicPendingConfirm")}
+                  </button>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-xs text-[#565D66]/60">
                   {/* V1 §5 — 작성시각은 여행일(Day 헤더)과 구분되는 "작성 …" 라벨 */}

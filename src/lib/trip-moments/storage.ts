@@ -56,6 +56,8 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     // 를 알 수 없어, 이미 공개인 Memory 에도 계속 "공개하기" 를 그리고
     // 재공개 정리(reconciliation)도 지난 상태를 볼 수 없게 된다.
     is_public:      r.is_public === true,
+    // 공개 동의 뒤에 올라와 아직 공개되지 않은 추가 사진 수(2026-10-02) — 기록 관리에서 다시 확인할 때 쓴다
+    ...(typeof r.public_pending_photos === "number" && r.public_pending_photos > 0 ? { public_pending_photos: r.public_pending_photos } : {}),
     // 사람이 읽는 장소 이름. 이것도 서버가 주는데 버리고 있었다 — 그래서 공개
     // 선택 화면의 모든 줄이 "Day 1" 로만 보였다. 좌표 문자열(`location_label`)
     // 과 다른 값이고, 없는 Memory 가 더 흔하므로 없으면 없는 대로 둔다.

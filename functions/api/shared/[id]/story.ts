@@ -32,7 +32,7 @@ import { serializePublicItinerary, PUBLIC_SELECT_COLUMNS, PUBLIC_SELECT_COLUMNS_
 import { buildJourneyScene } from "../../../../src/lib/share/journey-scene-core";
 import {
   serializePublicMemories, PUBLIC_MEMORY_SELECT_COLUMNS, PUBLIC_MEMORY_SELECT_COLUMNS_061,
-  isMemoryPublic, bindMemoriesToStops, type InternalMemoryRow, type InternalPhotoRow,
+  isMemoryPublic, bindMemoriesToStops, consentedChildPhotos, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
 import { isMissingColumnError } from "../../../../src/lib/trip-moments/stop-binding";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
@@ -144,7 +144,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   for (const r of rows) {
     photoPathsByMoment.set(
       r.moment_id,
-      mergePhotoSet(r.storage_path, childByMoment.get(r.moment_id) ?? []).map(s => s.path),
+      // 공개 동의 뒤에 올라온 추가 사진은 소유자가 다시 확인할 때까지 내보내지 않는다(consentedChildPhotos)
+      mergePhotoSet(r.storage_path, consentedChildPhotos(childByMoment.get(r.moment_id) ?? [], r.public_consent_at)).map(s => s.path),
     );
   }
 

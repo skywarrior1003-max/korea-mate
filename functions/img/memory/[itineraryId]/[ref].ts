@@ -29,7 +29,7 @@ import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
 import { PHOTO_BUCKET } from "../../../../src/lib/photo-validate";
 import {
-  photoRef, isPhotoRef, isMemoryPublic,
+  photoRef, isPhotoRef, isMemoryPublic, consentedChildPhotos,
   PUBLIC_MEMORY_SELECT_COLUMNS, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
@@ -110,7 +110,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   //    비공개 Memory 의 사진은 여기 들어오지도 않는다.
   let match: string | null = null;
   for (const r of rows) {
-    for (const slot of mergePhotoSet(r.storage_path, childByMoment.get(r.moment_id) ?? [])) {
+    // 동의 뒤에 올라온 추가 사진은 비교 대상에도 넣지 않는다 — 주소를 알아도 열리지 않는다
+    for (const slot of mergePhotoSet(r.storage_path, consentedChildPhotos(childByMoment.get(r.moment_id) ?? [], r.public_consent_at))) {
       if (await photoRef(itineraryId, r.moment_id, slot.path) === ref) { match = slot.path; break; }
     }
     if (match) break;
