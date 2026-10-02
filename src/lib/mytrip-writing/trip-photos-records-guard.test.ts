@@ -79,3 +79,10 @@ test("사진 저장 거절 코드 — 한도·크기를 화면이 구분하도�
   const st = read("src", "lib", "trip-moments", "storage.ts");
   assert.match(st, /photo_sync_error: up\.error/);
 });
+
+test("저장된 제안을 다시 열어도 직접 쓴 기록은 기본 선택되지 않는다 — 기본값은 렌더마다 지금 값으로(10-02 실측 결함)", () => {
+  const w = read("src", "components", "FullTripAiWriter.tsx");
+  assert.doesNotMatch(w, /setPicked\(/, "열 때 한 번 계산해 저장하는 선택 상태 없음");
+  assert.match(w, /const picked: Record<string, boolean> = \{ \.\.\.defaultPicks\(proposal, style\), \.\.\.overrides \};/);
+  assert.match(w, /next\[`m:\$\{m\.id\}`\] = known && defaultSelected\(cur\[`m:\$\{m\.id\}`\]\);/, "화면에 아직 없는 기록은 고르지 않는다");
+});

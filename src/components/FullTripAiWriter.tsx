@@ -42,7 +42,8 @@ export default function FullTripAiWriter(props: {
   const [photoPlan, setPhotoPlan] = useState<FullTripPhotoPlan | null>(null);
   const [savedView, setSavedView] = useState(false);
   const [style, setStyle] = useState<FullTripStyle>("calm");
-  const [picked, setPicked] = useState<Record<string, boolean>>({});
+  /** 사용자가 직접 바꾼 선택만 기억한다 — 기본값은 아래 picked 가 매번 지금 값으로 계산한다 */
+  const [overrides, setOverrides] = useState<Record<string, boolean>>({});
   const [remaining, setRemaining] = useState<number | null>(null);
   const [nextFreeAt, setNextFreeAt] = useState<string | null>(null);
   const [consentOpen, setConsentOpen] = useState(false);
@@ -54,16 +55,24 @@ export default function FullTripAiWriter(props: {
     for (const x of props.moments) m[`m:${x.id}`] = [x.title, x.memo].filter(v => v && v.trim()).join(" · ") || null;
     return m;
   };
-  // 비어 있는 칸만 기본 선택 — 직접 쓴 내용은 고를 때만 바뀐다
-  const resetPicks = (p: FullTripProposal | null, s: FullTripStyle) => {
+  // 비어 있는 칸만 기본 선택 — 직접 쓴 내용은 고를 때만 바뀐다.
+  // 기본값은 렌더마다 지금 값으로 계산한다(2026-10-02). 예전에는 제안을 받거나 저장된 제안을 열 때 한 번 계산해 두었는데,
+  // 다시 열 때는 기록 목록이 아직 비어 있던 첫 렌더의 값을 써서 직접 쓴 기록까지 "빈 칸 = 선택" 이 됐다
+  // (Preview 실측: 기록 5개 모두 선택 → 적용 1번에 직접 쓴 메모 5개가 바뀜). 아직 화면에 없는 기록은 고르지 않는다.
+  const defaultPicks = (p: FullTripProposal | null, s: FullTripStyle): Record<string, boolean> => {
     const cur = current(), sp = p?.[s];
     const next: Record<string, boolean> = {};
     if (sp?.tripTitle) next.tripTitle = defaultSelected(cur.tripTitle);
     if (sp?.storyTitle) next.storyTitle = defaultSelected(cur.storyTitle);
     if (sp?.storyIntro) next.storyIntro = defaultSelected(cur.storyIntro);
-    for (const m of sp?.moments ?? []) next[`m:${m.id}`] = defaultSelected(cur[`m:${m.id}`]);
-    setPicked(next);
+    for (const m of sp?.moments ?? []) {
+      const known = props.moments.some(x => x.id === m.id);
+      next[`m:${m.id}`] = known && defaultSelected(cur[`m:${m.id}`]);
+    }
+    return next;
   };
+  const picked: Record<string, boolean> = { ...defaultPicks(proposal, style), ...overrides };
+  const resetPicks = () => setOverrides({});
 
   // 열 때는 저장된 지난 제안만(재열람 = 요청·차감 0) + 남은 횟수 안내
   useEffect(() => {
@@ -73,7 +82,7 @@ export default function FullTripAiWriter(props: {
       if (alive && (r.kind === "proposal" || r.kind === "none")) setPhotoPlan(r.photoPlan ?? null);
       if (alive && r.kind === "proposal") {
         const first = FULL_TRIP_STYLES.find(s => r.proposal[s]) ?? "calm";
-        setProposal(r.proposal); setPhotos(r.photos); setSavedView(true); setStyle(first); resetPicks(r.proposal, first); setPhase("result");
+        setProposal(r.proposal); setPhotos(r.photos); setSavedView(true); setStyle(first); resetPicks(); setPhase("result");
       }
       const b = await apiFullTripBalance();
       if (alive && b) { setRemaining(b.remaining); setNextFreeAt(b.resetsAt); }
@@ -92,7 +101,7 @@ export default function FullTripAiWriter(props: {
     if (r.kind === "proposal") {
       setProposal(r.proposal); setPhotos(r.photos); setSavedView(!r.charged); setPhase("result");
       const firstStyle = FULL_TRIP_STYLES.find(s => r.proposal[s]) ?? "calm";
-      setStyle(firstStyle); resetPicks(r.proposal, firstStyle);
+      setStyle(firstStyle); resetPicks();
       const b = await apiFullTripBalance(); if (b) setRemaining(b.remaining);
     } else if (r.kind === "freeUsed") { setNextFreeAt(r.nextFreeAt); setPhase("freeUsed"); }
     else if (r.kind === "login") setPhase("login");
@@ -145,7 +154,7 @@ export default function FullTripAiWriter(props: {
   const pickCount = Object.values(picked).filter(Boolean).length;
   const row = (key: string, label: string, proposed: string) => (
     <label key={key} className="flex items-start gap-3 py-2.5 border-t border-black/5 cursor-pointer" data-full-trip-row={key}>
-      <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" checked={!!picked[key]} onChange={e => setPicked(p => ({ ...p, [key]: e.target.checked }))} />
+      <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" checked={!!picked[key]} onChange={e => { const v = e.target.checked; setOverrides(o => ({ ...o, [key]: v })); }} />
       <span className="min-w-0">
         <span className="block text-[11.5px] font-bold text-[#8A919B]">{label}</span>
         {cur[key] && (
@@ -221,7 +230,7 @@ export default function FullTripAiWriter(props: {
             </p>
             <div role="tablist" aria-label={t("styleLabel")} className="mt-2 flex flex-wrap gap-2">
               {FULL_TRIP_STYLES.filter(s => proposal[s]).map(s => (
-                <button key={s} type="button" role="tab" aria-selected={style === s} data-full-trip-style={s} onClick={() => { setStyle(s); resetPicks(proposal, s); }}
+                <button key={s} type="button" role="tab" aria-selected={style === s} data-full-trip-style={s} onClick={() => { setStyle(s); resetPicks(); }}
                   className={`gkm-focus px-3 py-1.5 rounded-full text-xs font-black border ${style === s ? "bg-[#131b2e] text-white border-[#131b2e]" : "border-black/15 text-[#131b2e]"}`}>
                   {tDir(s === "calm" ? "dir_calm" : s === "witty" ? "dir_witty" : "dir_warm")}
                 </button>
