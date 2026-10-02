@@ -26,17 +26,47 @@ export const FULL_TRIP_MAX_OUTPUT_TOKENS = 8192;
  */
 export const FULL_TRIP_PHOTO_LIMITS = { maxPhotos: 15, maxBytesEach: 1_500_000, maxBytesTotal: 8_000_000 } as const;
 /**
- * 최악 입력 글 토큰(2026-10-02 실측) — 서버가 자르는 상한을 모두 채운 한국어 사실(14일×20곳·기록 30개·각 글자 상한)과
- * 사진 15장 꼬리표를 buildFullTripPrompt 로 만들어 countTokens(3.5 Flash-Lite)로 센 값. 한국어가 토큰이 가장 많이 드는 경우다.
+ * 한국어로 상한을 모두 채운 사실(14일×20곳·기록 30개·각 글자 상한)과 사진 15장 꼬리표를 countTokens(3.5 Flash-Lite)로
+ * 센 값(2026-10-02). **최악값이 아니다** — 같은 날 문자 종류별로 다시 재 보니 흔한 한글은 글자당 1토큰이지만
+ * 드문 기호·사용자 정의 문자는 글자당 3토큰, 제어 문자는 JSON 이스케이프(\u0001)로 글자당 약 5.5토큰이었다.
+ * 그래서 예약액은 이 값이 아니라 아래 바이트 상한으로 정한다. 기록용으로만 남긴다.
  */
 export const FULL_TRIP_WORST_TEXT_TOKENS = 30_265;
 /** Gemini 3 사진 1장 토큰 — mediaResolution MEDIUM(공식 문서: low 280 · medium 560 · high 1120) */
 export const FULL_TRIP_IMAGE_TOKENS_MEDIUM = 560;
 /**
- * 회사 비용 예약액(µ$) — 최악 허용 요청: 입력 (30,265 + 15×560) × $0.30/1M + 출력 8,192(사고 토큰 포함 상한, 10-02 실측) × $2.50/1M
- * = 11,600 + 20,480 = 32,080 → 33,000(약 3% 여유). 예전 22,000 은 2.5 시절 '입력 약 4k' 가정이라 부족했다.
+ * 글 1바이트당 토큰 상한 — countTokens(3.5 Flash-Lite) 실측(10-02): ASCII·한글(흔한/드문)·CJK 확장 B·이모지·
+ * 사용자 정의 문자·결합 문자·제어 문자(이스케이프)·드문 기호 9종 모두 토큰 ≤ UTF-8 바이트(최대 1.000).
+ * 토큰 하나는 적어도 1바이트를 덮는다(바이트 대체 토큰이 가장 작은 단위)는 뜻이다.
  */
-export const FULL_TRIP_WORST_USD_MICRO = 33_000;
+export const FULL_TRIP_TOKENS_PER_TEXT_BYTE = 1;
+/** 단가(µ$/토큰) — 3.5 Flash-Lite $0.30/$2.50 per 1M. 회사 원장 정산과 같은 값(ai-ops-guard USD_MICRO_PER_*) */
+const IN_RATE = 0.30, OUT_RATE = 2.50;
+/**
+ * 한 요청의 회사 비용 예약액(µ$) — 실제로 보낼 요청 본문에서 계산한다(2026-10-02, 고정 33,000 대신).
+ *   입력 ≤ (사진 데이터를 뺀 본문 바이트 × 1) + 사진 장수 × 560 · 출력 ≤ maxOutputTokens(사고 토큰 포함)
+ * 본문 바이트는 지시문·사실 JSON(이스케이프 포함)·사진 꼬리표·generationConfig(응답 스키마 포함)를 모두 센다 —
+ * 모델이 읽는 글보다 크거나 같다(이스케이프는 바이트를 늘리기만 한다).
+ */
+export function fullTripReserveUsdMicro(textBytes: number, imageCount: number): number {
+  const inTok = Math.ceil(textBytes * FULL_TRIP_TOKENS_PER_TEXT_BYTE) + imageCount * FULL_TRIP_IMAGE_TOKENS_MEDIUM;
+  return Math.ceil(inTok * IN_RATE + FULL_TRIP_MAX_OUTPUT_TOKENS * OUT_RATE);
+}
+/** 예약 계산용 본문 바이트 — 실제 본문과 같은 모양에서 사진 데이터만 비운다 */
+export function fullTripTextBytes(prompt: string, images: readonly FullTripImage[]): number {
+  return new TextEncoder().encode(buildFullTripProviderBody(prompt, images.map(im => ({ ...im, data: "" })))).length;
+}
+/**
+ * 서버가 자르는 상한 안에서 가능한 가장 큰 본문 바이트 — 모든 칸을 JSON 이스케이프가 가장 긴 문자(제어 문자,
+ * 본문에서 글자당 7바이트)로 채우고 14일×20곳·기록 30개·사진 15장 꼬리표까지 넣어 만든 값(테스트가 다시 만들어 확인한다).
+ * 이보다 큰 요청은 상한 계산이 틀렸다는 뜻이라 보내지 않는다.
+ */
+export const FULL_TRIP_MAX_TEXT_BYTES = 240_000;
+/**
+ * 회사 비용 예약 상한(µ$) = fullTripReserveUsdMicro(FULL_TRIP_MAX_TEXT_BYTES, 15).
+ * 평소 요청은 본문이 작아 훨씬 적게 예약한다(광안리 사진 15장 예: 약 2만 µ$ — 대부분 출력 상한 8,192 토큰 몫).
+ */
+export const FULL_TRIP_WORST_USD_MICRO = fullTripReserveUsdMicro(FULL_TRIP_MAX_TEXT_BYTES, FULL_TRIP_PHOTO_LIMITS.maxPhotos);
 /**
  * 기록별 사진 목록(표지 먼저) → 한 요청에 실을 순서. 모든 기록의 1번 사진 → 모든 기록의 2번 사진 → …
  * 상한(maxPhotos)에서 잘려도 사진 있는 기록이 먼저 하나씩은 들어가게 한다.
@@ -50,9 +80,9 @@ export function interleaveRecordPhotos(perMoment: readonly { id: string; paths: 
   return out;
 }
 
+/** 예약 상한 — 서버가 허용하는 가장 큰 요청(FULL_TRIP_MAX_TEXT_BYTES · 사진 15장)의 예약액 */
 export function fullTripWorstUsdMicro(): number {
-  const inTok = FULL_TRIP_WORST_TEXT_TOKENS + FULL_TRIP_PHOTO_LIMITS.maxPhotos * FULL_TRIP_IMAGE_TOKENS_MEDIUM;
-  return Math.ceil(inTok * 0.30 + FULL_TRIP_MAX_OUTPUT_TOKENS * 2.50);
+  return fullTripReserveUsdMicro(FULL_TRIP_MAX_TEXT_BYTES, FULL_TRIP_PHOTO_LIMITS.maxPhotos);
 }
 export const FULL_TRIP_PHOTO_MIME = ["image/jpeg", "image/png", "image/webp"] as const;
 export type PhotoSkipReason = "over_count" | "too_large" | "total_limit" | "load_failed" | "unsupported";
@@ -99,18 +129,21 @@ const clip = (s: unknown, n: number): string | null => {
   const t = s.replace(/\s+/g, " ").trim();
   return t ? t.slice(0, n) : null;
 };
+/** 날짜 번호 — 일정 JSON 에서 오는 숫자라 아무 값이나 올 수 있다. 정수 0~999 만 싣는다(길이 상한) */
+const dayNo = (n: unknown): number | null => (typeof n === "number" && Number.isInteger(n) && n >= 0 && n < 1000 ? n : null);
 
 /** 사실 목록(모델 입력) — 사용자가 직접 쓴 제목·메모는 그대로 싣는다(뜻을 지키고 다듬기만 하라는 지시와 함께) */
 export function buildFullTripPrompt(f: FullTripFacts): string {
   const facts = {
     city: clip(f.city, 40),
-    dates: `${f.startDate} – ${f.endDate}`,
+    // 날짜 칸은 DB 에서 text 다 — 자르지 않으면 입력 길이(=비용) 상한이 없다(2026-10-02)
+    dates: `${clip(f.startDate, 10) ?? ""} – ${clip(f.endDate, 10) ?? ""}`,
     current_trip_title: clip(f.tripTitle, 80),
     current_story_title: clip(f.storyTitle, 80),
     current_story_intro: clip(f.storyIntro, 300),
-    itinerary: f.days.slice(0, 14).map(d => ({ day: d.day, places: d.places.slice(0, 20).map(p => clip(p, 60)).filter(Boolean) })),
+    itinerary: f.days.slice(0, 14).map(d => ({ day: dayNo(d.day), places: d.places.slice(0, 20).map(p => clip(p, 60)).filter(Boolean) })),
     moments: f.moments.slice(0, FULL_TRIP_MAX_MOMENTS).map(m => ({
-      id: m.id, day: m.day, place: clip(m.place, 60), traveler_title: clip(m.title, 80), traveler_memo: clip(m.memo, 300),
+      id: clip(m.id, 36), day: dayNo(m.day), place: clip(m.place, 60), traveler_title: clip(m.title, 80), traveler_memo: clip(m.memo, 300),
       photo_status: m.photo ?? (m.hasPhoto ? "not_shown" : "none"),
       ...(typeof m.photosTotal === "number" ? { photos_total: m.photosTotal, photos_shown: m.photosShown ?? 0 } : {}),
     })),

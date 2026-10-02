@@ -35,10 +35,11 @@ test("서버는 표지 사진을 빼지 않는다 — 기록의 모든 사진(�
   assert.equal(body.generationConfig.mediaResolution, "MEDIA_RESOLUTION_MEDIUM", "MEDIUM 유지");
 });
 
-test("회사 비용 예약액 — 최악 허용 요청(글 상한·사진 15장·출력 상한)을 덮는다", () => {
+test("회사 비용 예약액 — 상한은 최악 허용 요청(바이트 상한·사진 15장·출력 상한)을 덮는다(10-02 재계산은 full-trip-reserve-guard)", () => {
   const worst = fullTripWorstUsdMicro();
-  assert.equal(worst, Math.ceil((FULL_TRIP_WORST_TEXT_TOKENS + 15 * FULL_TRIP_IMAGE_TOKENS_MEDIUM) * 0.30 + FULL_TRIP_MAX_OUTPUT_TOKENS * 2.50));
-  assert.ok(FULL_TRIP_WORST_USD_MICRO >= worst, `${FULL_TRIP_WORST_USD_MICRO} >= ${worst}`);
+  assert.equal(worst, FULL_TRIP_WORST_USD_MICRO);
+  // 한국어로만 잰 30,265 토큰 기준값보다 크다(그 값은 최악이 아니었다)
+  assert.ok(worst > Math.ceil((FULL_TRIP_WORST_TEXT_TOKENS + 15 * FULL_TRIP_IMAGE_TOKENS_MEDIUM) * 0.30 + FULL_TRIP_MAX_OUTPUT_TOKENS * 2.50));
   assert.match(read("functions", "api", "mytrip", "writing-full.ts"), /const WORST_USD_MICRO = FULL_TRIP_WORST_USD_MICRO;/);
 });
 

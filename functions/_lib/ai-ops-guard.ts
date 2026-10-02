@@ -95,6 +95,13 @@ export async function aiOpsReserve(env: OpsEnv, input: ReserveInput): Promise<Op
   if (!sw) return { ok: false, response: aiFeatureUnavailable() };
   if (sw.get("ai_master") !== "live") return { ok: false, response: aiFeatureUnavailable() };
   if (sw.get(FEATURE_KEY[input.feature]) !== "live") return { ok: false, response: aiFeatureUnavailable() };
+  // ②-b 예약 초과 차단(2026-10-02) — 오늘(UTC, 예약 함수의 날짜 기준과 같다) 이 기능에서 실제 비용이 예약액을
+  //   넘은 호출이 하나라도 있으면 예약 계산이 틀린 것이다. 그날은 더 보내지 않는다 — 초과가 쌓이지 않게.
+  //   일·월·기능 상한은 확정 비용(committed)으로 다시 계산되므로 이미 생긴 초과분도 이후 예약에 반영된다.
+  if (await hasOverrunToday(env, input.feature)) {
+    console.error(JSON.stringify({ event: "ai_ops_overrun_block", feature: input.feature }));
+    return { ok: false, response: aiFeatureUnavailable() };
+  }
   // ③ 원자 비용 예약 — 실패 시 provider 미호출
   const r = await rest(env, "rpc/ai_ops_reserve", {
     method: "POST",
@@ -115,6 +122,19 @@ export async function aiOpsReserve(env: OpsEnv, input: ReserveInput): Promise<Op
     return { ok: false, response: aiFeatureUnavailable(status) };
   }
   return { ok: true, ledgerId: Number(row.ledger_id) };
+}
+
+/**
+ * 오늘 이 기능에 확정 비용 > 예약액 인 행이 있는가. 조회 실패는 "있다"로 본다(스위치와 같은 fail-closed).
+ * 하루 행 수는 기능별 일일 호출 상한(writing 100 등) 안이라 한 번에 읽는다.
+ */
+export async function hasOverrunToday(env: OpsEnv, feature: AiFeature, now: Date = new Date()): Promise<boolean> {
+  const day = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())).toISOString();
+  const r = await rest(env, `ai_ops_ledger?route=eq.${encodeURIComponent(feature)}&status=eq.committed` +
+    `&created_at=gte.${encodeURIComponent(day)}&select=reserved_usd_micro,committed_usd_micro&limit=5000`);
+  if (!r.ok || !Array.isArray(r.data)) return true;
+  return (r.data as { reserved_usd_micro: number | null; committed_usd_micro: number | null }[])
+    .some(x => typeof x.committed_usd_micro === "number" && typeof x.reserved_usd_micro === "number" && x.committed_usd_micro > x.reserved_usd_micro);
 }
 
 /**
@@ -148,7 +168,18 @@ const MODEL_PRICES: Record<string, (at: Date) => { inTok: number; outTok: number
   "gemini-3.5-flash-lite": () => ({ inTok: 0.30, outTok: 2.50 }),
   "gemini-3.8-flash": at => at.getTime() < Date.UTC(2027, 0, 1) ? { inTok: 0.75, outTok: 3.75 } : { inTok: 1.50, outTok: 7.50 },
 };
+/**
+ * 표에 없는 모델 이름이 오면(Worker 설정이 바뀌었는데 이 표를 고치지 않은 경우, 2026-10-02) 기본 단가로 적으면
+ * 실제보다 싸게 기록되어 예약 초과도 숨는다. 표에서 가장 비싼 단가로 적는다 — 초과가 드러나 그날 그 기능이 멈춘다.
+ * 모델 이름을 넘기지 않는 예전 호출부는 그대로 기본 단가다.
+ */
+function highestKnownPrice(at: Date): { inTok: number; outTok: number } {
+  const all = Object.values(MODEL_PRICES).map(f => f(at));
+  return { inTok: Math.max(...all.map(p => p.inTok)), outTok: Math.max(...all.map(p => p.outTok)) };
+}
 export function usdMicroFromUsage(inTok: number | null | undefined, outTok: number | null | undefined, model?: string | null): number {
-  const p = model && MODEL_PRICES[model] ? MODEL_PRICES[model]!(new Date()) : { inTok: USD_MICRO_PER_IN_TOK, outTok: USD_MICRO_PER_OUT_TOK };
+  const p = model
+    ? (MODEL_PRICES[model] ? MODEL_PRICES[model]!(new Date()) : highestKnownPrice(new Date()))
+    : { inTok: USD_MICRO_PER_IN_TOK, outTok: USD_MICRO_PER_OUT_TOK };
   return Math.ceil((inTok ?? 0) * p.inTok + (outTok ?? 0) * p.outTok);
 }

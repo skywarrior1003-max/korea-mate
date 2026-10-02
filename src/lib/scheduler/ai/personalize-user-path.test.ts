@@ -92,6 +92,8 @@ globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
     if (!r) return jsonRes(false);
     r.status = body.p_status; r.result = body.p_result; return jsonRes(true);
   }
+  // 예약 초과 차단(2026-10-02) — 오늘 확정 행의 예약액·확정액을 읽는다
+  if (path.startsWith("/rest/v1/ai_ops_ledger?")) return jsonRes(ledger.filter(x => x.status === "committed").map(x => ({ reserved_usd_micro: x.reserved, committed_usd_micro: x.committed })));
   if (path === "/rest/v1/rpc/ai_ops_reserve") return jsonRes(opsReserve(body));
   if (path === "/rest/v1/rpc/ai_ops_settle") {
     const l = ledger.find(x => x.id === body.p_ledger_id && x.status === "reserved");

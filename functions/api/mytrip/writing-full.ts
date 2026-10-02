@@ -25,6 +25,7 @@ import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
 import { AI_CACHE_TTL_DAYS, sha256Hex, ownerHashHmac, ownerHash, computeCacheKey } from "../../../src/lib/mytrip-writing/generation-cache";
 import {
   FULL_TRIP_PROMPT_VERSION, FULL_TRIP_MAX_MOMENTS, FULL_TRIP_TIMEOUT_MS, FULL_TRIP_PHOTO_LIMITS, FULL_TRIP_PHOTO_MIME, FULL_TRIP_WORST_USD_MICRO, interleaveRecordPhotos,
+  fullTripReserveUsdMicro, fullTripTextBytes,
   type FullTripImage, type PhotoSkipReason,
   buildFullTripPrompt, buildFullTripProviderBody, parseFullTripProposal, daysFromItinerary,
   type FullTripFacts, type FullTripProposal,
@@ -43,7 +44,8 @@ interface Env extends OwnershipEnv {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const GEN_TABLE = "mytrip_ai_generations";
-// 회사 비용 예약액 — 최악 허용 요청(글 상한·사진 15장·출력 8,192)으로 계산한 값(full-trip-core 참조, 2026-10-02 재계산)
+// 회사 비용 예약 상한 — 서버가 허용하는 가장 큰 요청의 예약액(full-trip-core 참조). 실제 예약은 요청마다
+// 보낼 본문에서 계산하고(fullTripReserveUsdMicro), 이 값을 넘는 요청은 보내지 않는다(2026-10-02).
 const WORST_USD_MICRO = FULL_TRIP_WORST_USD_MICRO;
 
 const json = (b: unknown, status = 200) =>
@@ -264,7 +266,15 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   }
   // shown 은 사진 한 장마다 기록 id 하나(같은 기록의 사진 여러 장이면 여러 번) — 화면은 길이로 장수를 센다
   const photos: PhotoCoverage = { shown: images.map(i => i.momentId), skipped, candidates: facts.photoCandidates.length };
-  const providerBody = buildFullTripProviderBody(buildFullTripPrompt(facts), images);
+  const prompt = buildFullTripPrompt(facts);
+  const providerBody = buildFullTripProviderBody(prompt, images);
+  // 이 요청의 회사 비용 예약액 — 실제로 보낼 글 바이트와 사진 장수로 계산한다(입력 토큰 ≤ 바이트 실측).
+  // 상한을 넘으면 계산이 틀렸다는 뜻이라 사용권·예약 전에 멈춘다(차감 0 · 모델 호출 0).
+  const reserveUsdMicro = fullTripReserveUsdMicro(fullTripTextBytes(prompt, images), images.length);
+  if (reserveUsdMicro > WORST_USD_MICRO) {
+    log({ ok: false, fail: "over_reserve_cap", reserveUsdMicro, moments: facts.moments.length, photos: images.length });
+    return json({ ok: false, ai_status: "fallback_ops_gate" });
+  }
 
   const genId = crypto.randomUUID();
   const qEnv = ctx.env as Parameters<typeof quotaReserve>[0];
@@ -276,7 +286,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const secret = ctx.env.MYTRIP_HASH_SECRET ?? "";
   const actor = secret ? await userActorHash(auth.userId, secret) : null;
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {
-    feature: "writing", model: MODEL, worstUsdMicro: WORST_USD_MICRO,
+    feature: "writing", model: MODEL, worstUsdMicro: reserveUsdMicro,
     idempotencyKey: `writing-full:${genId}`, actorHash: actor,
     featureDailyCalls: 100, featureDailyUsdMicro: 1_000_000, // writing 과 공유 $1/day
   });
@@ -333,12 +343,12 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     log({ ok: false, fail, notSent, latencyMs: latency, moments: facts.moments.length, photos: images.length });
     return json({ ok: false, ai_status: `fallback_${fail}`, not_sent: notSent });
   }
-  const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok, usedModel) : WORST_USD_MICRO;
+  const usd = inTok !== null || outTok !== null ? usdMicroFromUsage(inTok, outTok, usedModel) : reserveUsdMicro;
   await db.from(GEN_TABLE).update({ status: "succeeded", result: { proposal, photos }, in_tok: inTok, out_tok: outTok, latency_ms: latency }).eq("id", genId);
   await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed", { inTok, outTok, usdMicro: usd });
   await quotaSettle(qEnv, quota.id, auth.userId, "committed", { generation_id: genId });
   log({ ok: true, latencyMs: latency, moments: facts.moments.length, photos: images.length, skipped: skipped.length, inTok, outTok, usdMicro: usd, styles: Object.keys(proposal).length });
-  return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, latency_ms: latency, model: usedModel } });
+  return json({ ok: true, ai_status: "live", proposal, photos, generation_id: genId, charged: true, usage: { in_tok: inTok, out_tok: outTok, usd_micro: usd, reserved_usd_micro: reserveUsdMicro, latency_ms: latency, model: usedModel } });
 }
 
 // GET — 이번 달 남은 전체 여행 AI 글쓰기 사용권(화면 안내용). 로그인 사용자만. AI 호출 없음.
