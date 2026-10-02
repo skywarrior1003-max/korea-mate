@@ -14,7 +14,9 @@ test("형식 오류(MAX_TOKENS 등)는 사용량과 함께 돌려주고 회사 �
   assert.match(AN, /const billedUsage = ai\.usage && \(ai\.usage\.inTok !== null \|\| ai\.usage\.outTok !== null\) \? ai\.usage : null;/);
   assert.match(AN, /if \(billedUsage\) \{\s*await aiOpsSettle\([^)]*"committed"/);
   // 사용량이 없는 실패는 예전 규칙 그대로(보낸 뒤 실패 = unknown_billed, 보내기 전 = released)
-  assert.match(AN, /ai\.sent \? "unknown_billed" : "released"/);
+  assert.match(AN, /ai\.sent && !ai\.notBilled \? "unknown_billed" : "released"/);
+  // Google 이 오류 본문으로 거절(4xx·5xx, 52x 가장자리 제외)하면 과금 없음 — released
+  assert.match(AN, /googleError = res\.status >= 400 && res\.status < 600 && !\(res\.status >= 520 && res\.status <= 527\)/);
 });
 
 test("어떤 분석 실패든 사용자 횟수는 되돌린다", () => {

@@ -156,7 +156,7 @@ interface AiUsage { inTok: number | null; outTok: number | null; model?: string 
 
 async function analyzeWithAi(env: Env, prompt: string): Promise<
   | { ok: true; analysis: AnalyzedContent; usage: AiUsage }
-  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number; usage?: AiUsage }
+  | { ok: false; error: string; sent: boolean; providerStatus?: string; ms?: number; usage?: AiUsage; notBilled?: boolean }
 > {
   const apiKey = env.GEMINI_API_KEY ?? "";
   const providerFetch = bindingProviderFetch(env) ?? (apiKey ? fetch : null);
@@ -184,16 +184,20 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
     if (!res.ok) {
       // 비밀·본문 없이 상태만 — 운영 진단용(비 Production 응답에만 싣는다)
       let st = `http_${res.status}`;
+      // Google 이 직접 돌려준 오류 본문(error.status)이면 과금 없음 확정 — 공식 문서: "If your request fails with
+      // a 400 or 500 error, you won't be charged for the tokens used."(ai.google.dev/gemini-api/docs/billing, 2026-10-02 확인)
+      // Cloudflare 가장자리 52x·시간 초과처럼 Google 본문이 없는 실패는 여전히 불확실로 둔다.
+      let googleError = false;
       try {
         const e = (await res.json()) as { error?: string | { status?: string; message?: string } };
         // 서울 Worker 의 거절은 문자열 코드(unauthorized·worker_disabled 등) — 그대로 싣는다
         if (typeof e.error === "string") st += `:worker_${e.error.replace(/[^a-z_]/g, "").slice(0, 40)}`;
-        else if (e.error?.status) st += `:${e.error.status}`;
+        else if (e.error?.status) { st += `:${e.error.status}`; googleError = res.status >= 400 && res.status < 600 && !(res.status >= 520 && res.status <= 527); }
         // 오류 문장 앞부분만 — 키처럼 보이는 문자열은 가린다(키 값을 응답·로그에 싣지 않는다)
         if (typeof e.error === "object" && e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
       } catch { /* ignore */ }
       // 서울 Worker 가 모델에 보내기 전에 거절했다(x-gkm-provider-called: 0) — 과금 없음 확정
-      return { ok: false, error: "analyze_failed", sent: res.headers.get("x-gkm-provider-called") !== "0", providerStatus: st };
+      return { ok: false, error: "analyze_failed", sent: res.headers.get("x-gkm-provider-called") !== "0", providerStatus: st, notBilled: googleError };
     }
     const raw = (await res.json()) as {
       candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[];
@@ -378,7 +382,7 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
       await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, "committed",
         { inTok: billedUsage.inTok, outTok: billedUsage.outTok, usdMicro: usdMicroFromUsage(billedUsage.inTok, billedUsage.outTok, billedUsage.model) });
     } else {
-      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent ? "unknown_billed" : "released");
+      await aiOpsSettle(ctx.env as Parameters<typeof aiOpsReserve>[0], gate.ledgerId, ai.sent && !ai.notBilled ? "unknown_billed" : "released");
     }
     await release();
     // fail_class: 재발 시 520·시간 초과·출력 상한 등을 가르는 짧은 분류값만 — 본문·키·사용자 입력은 싣지 않는다
