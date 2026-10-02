@@ -17,6 +17,7 @@ import {
   type SeedCoordinate, type SeedSource,
 } from "@/lib/user-spots/location-seed";
 import { readPhotoExif, exifConflict, type PhotoExif } from "@/lib/photo-exif";
+import { checkPhotoPick } from "@/lib/photo-decode";
 import type { UserSpotPhoto } from "@/lib/user-spots-api";
 import { geocodeAddress } from "@/lib/maps/naver-geocode";
 import { CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
@@ -758,6 +759,8 @@ function PhotoSlots({ multi, busy, notice, onPicked }: {
   const t = useTranslations("picks");
   const stored = multi.stored ?? [];
   const total  = stored.length + multi.files.length;
+  const [checking,  setChecking]  = useState(false);
+  const [pickError, setPickError] = useState<string | null>(null);
   // 미리보기 Object URL — 파일 목록이 바뀌거나 사라질 때 반드시 되돌려준다.
   const previews = useMemo(() => multi.files.map(f => URL.createObjectURL(f)), [multi.files]);
   useEffect(() => () => previews.forEach(u => URL.revokeObjectURL(u)), [previews]);
@@ -830,14 +833,30 @@ function PhotoSlots({ multi, busy, notice, onPicked }: {
             <span className="text-lg leading-none" aria-hidden="true">＋</span>
             <span className="mt-1">{t("photoAdd")}</span>
             <input
-              type="file" accept="image/*" multiple className="sr-only" disabled={busy}
+              type="file" accept="image/*" multiple className="sr-only" disabled={busy || checking}
               data-testid="photo-input"
-              onChange={e => {
+              onChange={async e => {
                 const picked = Array.from(e.target.files ?? []);
                 // 같은 파일을 다시 골라도 change 가 나도록 비운다.
                 e.target.value = "";
                 if (picked.length === 0) return;
-                const take = picked.slice(0, PHOTO_MAX - total);
+                const room = PHOTO_MAX - total;
+                // 이 브라우저가 열 수 없는 사진(예: Chrome 의 HEIC)은 넣지 않는다 — 저장 단계에서
+                // 실패해 장소 전체가 저장되지 않던 결함. 넣지 않은 이유를 바로 말한다.
+                setChecking(true); setPickError(null);
+                const checks = await Promise.all(picked.map(f => checkPhotoPick(f)));
+                setChecking(false);
+                const okFiles = picked.filter((_, i) => checks[i].ok);
+                const heic = checks.filter(c => !c.ok && c.reason === "heic").length;
+                const bad  = checks.filter(c => !c.ok && c.reason === "unreadable").length;
+                const take = okFiles.slice(0, room);
+                const over = okFiles.length - take.length;
+                const msgs: string[] = [];
+                if (heic) msgs.push(t("photoHeicUnsupported", { n: heic }));
+                if (bad)  msgs.push(t("photoUnreadablePick", { n: bad }));
+                if (over) msgs.push(t("photoOverLimit", { n: over }));
+                setPickError(msgs.length ? msgs.join(" ") : null);
+                if (take.length === 0) return;
                 onPicked(take);
                 if (multi.stored !== undefined && multi.onStoredAdd) multi.onStoredAdd(take);
                 else multi.setFiles([...multi.files, ...take]);
@@ -847,6 +866,8 @@ function PhotoSlots({ multi, busy, notice, onPicked }: {
         )}
       </div>
       <p className="mt-1 text-[11px] text-[#565D66]/70">{t("photoMainRule")}</p>
+      {checking && <p role="status" className="mt-1 text-[11px] text-[#565D66]">{t("photoChecking")}</p>}
+      {pickError && <p role="alert" className="mt-1 text-[11px] font-bold text-[#8A5A00]" data-testid="photo-pick-error">{pickError}</p>}
       {notice && <p role="status" className="mt-1 text-[11px] font-bold text-[#565D66]" data-testid="photo-notice">{notice}</p>}
     </div>
   );

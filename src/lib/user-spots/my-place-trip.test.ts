@@ -216,3 +216,24 @@ test("문구 — 곧은 따옴표가 {자리}를 가리지 않는다(ICU 에서 
     }
   }
 });
+
+// ── HEIC (2026-10-02) ───────────────────────────────────────────────────────
+// 시험 파일: libheif(x265)로 만든 HEIC, EXIF 촬영 시각 2026-09-30 14:20 · GPS 35.1532,129.1186.
+test("HEIC — ftyp 로 알아보고, Exif 항목에서 촬영 시각·위치를 읽는다", async () => {
+  const { isHeif, readPhotoExif } = await import("../photo-exif.ts");
+  const buf = readFileSync(join(ROOT, "src", "lib", "__fixtures__", "exif-gwangalli.heic"));
+  assert.equal(isHeif(new Uint8Array(buf.subarray(0, 64))), true);
+  const e = await readPhotoExif(new Blob([buf]));
+  assert.deepEqual(e, { date: "2026-09-30", time: "14:20", lat: 35.1532, lng: 129.1186 });
+  assert.equal(isHeif(new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0, 0, 0, 0, 0, 0, 0, 0])), false);
+});
+
+test("열 수 없는 사진은 고를 때 걸러 내고 이유를 말한다(HEIC 따로)", () => {
+  const form = read("src", "components", "UserSpotForm.tsx");
+  assert.match(form, /checkPhotoPick\(f\)/);
+  assert.match(form, /photoHeicUnsupported/);
+  for (const locale of ["ko", "en", "ja", "zh"]) {
+    const picks = JSON.parse(read("src", "messages", `${locale}.json`)).picks;
+    for (const k of ["photoHeicUnsupported", "photoUnreadablePick", "photoOverLimit", "photoChecking"]) assert.ok(picks[k], `${locale}.${k}`);
+  }
+});

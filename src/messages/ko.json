@@ -1064,7 +1064,11 @@
     "tripPhotosPartial": "여행을 저장했어요. 사진 {ok}장은 옮겼지만 {failed}장은 옮기지 못했어요.",
     "tripMomentFailed": "여행은 저장했지만 사진·메모를 여행 기록으로 옮기지 못했어요. 여행의 장소 카드에서 다시 남길 수 있어요.",
     "tripSaveFailed": "여행을 저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.",
-    "openTrip": "여행 열기"
+    "openTrip": "여행 열기",
+    "photoHeicUnsupported": "HEIC(아이폰 고효율) 사진 {n}장은 이 브라우저에서 열 수 없어 넣지 않았어요. 아이폰 Safari 에서 올리거나, 사진을 JPEG 로 저장해 다시 골라 주세요(아이폰: 설정 › 카메라 › 포맷 › 높은 호환성).",
+    "photoUnreadablePick": "열 수 없는 사진 {n}장은 넣지 않았어요. 다른 사진을 골라 주세요.",
+    "photoOverLimit": "한 장소에는 3장까지라 {n}장은 넣지 않았어요.",
+    "photoChecking": "사진을 확인하는 중…"
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

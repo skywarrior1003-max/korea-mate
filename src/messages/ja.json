@@ -1064,7 +1064,11 @@
     "tripPhotosPartial": "旅を保存しました。写真{ok}枚は移しましたが、{failed}枚は移せませんでした。",
     "tripMomentFailed": "旅は保存しましたが、写真・メモを旅の記録に移せませんでした。旅の場所カードからもう一度残せます。",
     "tripSaveFailed": "旅を保存できませんでした。しばらくしてからもう一度お試しください。",
-    "openTrip": "旅を開く"
+    "openTrip": "旅を開く",
+    "photoHeicUnsupported": "HEIC（iPhoneの高効率）写真{n}枚はこのブラウザで開けないため追加しませんでした。iPhoneのSafariからアップロードするか、JPEGで保存して選び直してください（iPhone：設定 › カメラ › フォーマット › 互換性優先）。",
+    "photoUnreadablePick": "開けない写真{n}枚は追加しませんでした。別の写真を選んでください。",
+    "photoOverLimit": "1つの場所は3枚までのため、{n}枚は追加しませんでした。",
+    "photoChecking": "写真を確認しています…"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

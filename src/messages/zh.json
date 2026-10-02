@@ -1064,7 +1064,11 @@
     "tripPhotosPartial": "旅行已保存。{ok}张照片已移入，但{failed}张未能移入。",
     "tripMomentFailed": "旅行已保存，但照片和备注未能移入旅行记录。你可以在旅行的地点卡片中再次记录。",
     "tripSaveFailed": "无法保存旅行，请稍后再试。",
-    "openTrip": "打开旅行"
+    "openTrip": "打开旅行",
+    "photoHeicUnsupported": "{n}张 HEIC（iPhone 高效）照片无法在此浏览器中打开，因此未添加。请在 iPhone 的 Safari 中上传，或将照片存为 JPEG 后重新选择（iPhone：设置 › 相机 › 格式 › 兼容性最佳）。",
+    "photoUnreadablePick": "{n}张无法打开的照片未添加，请选择其他照片。",
+    "photoOverLimit": "一个地点最多3张，因此{n}张未添加。",
+    "photoChecking": "正在检查照片…"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

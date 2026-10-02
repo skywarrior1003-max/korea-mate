@@ -1064,7 +1064,11 @@
     "tripPhotosPartial": "Trip saved. {ok} photo(s) moved, but {failed} couldn't be moved.",
     "tripMomentFailed": "Trip saved, but the photos and memo couldn't be added to the trip record. You can add them from the place card in the trip.",
     "tripSaveFailed": "Couldn't save the trip. Please try again shortly.",
-    "openTrip": "Open trip"
+    "openTrip": "Open trip",
+    "photoHeicUnsupported": "{n} HEIC (iPhone high-efficiency) photo(s) can’t be opened in this browser, so they weren’t added. Upload from Safari on iPhone, or save the photo as JPEG and pick it again (iPhone: Settings › Camera › Formats › Most Compatible).",
+    "photoUnreadablePick": "{n} photo(s) couldn’t be opened and weren’t added. Please pick another photo.",
+    "photoOverLimit": "A place holds up to 3 photos, so {n} weren’t added.",
+    "photoChecking": "Checking photos…"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

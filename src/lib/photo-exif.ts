@@ -25,11 +25,120 @@ const HEAD_BYTES = 256 * 1024;
 
 export async function readPhotoExif(file: Blob): Promise<PhotoExif> {
   try {
-    const buf = await file.slice(0, HEAD_BYTES).arrayBuffer();
-    return parseExif(new Uint8Array(buf));
+    const head = new Uint8Array(await file.slice(0, HEAD_BYTES).arrayBuffer());
+    if (isHeif(head)) {
+      // HEIC/HEIF(아이폰 기본 형식) — Exif 는 별도 항목(item)이고 파일 어디에 있는지 iloc 이 말해 준다.
+      const at = locateHeifExif(head);
+      if (!at) return EMPTY;
+      const item = new Uint8Array(await file.slice(at.offset, at.offset + at.length).arrayBuffer());
+      return parseHeifExifItem(item);
+    }
+    return parseExif(head);
   } catch {
     return EMPTY;
   }
+}
+
+// ── HEIC/HEIF ────────────────────────────────────────────────────────────────
+// ISOBMFF 상자 구조: [크기 4][종류 4] … meta(FullBox) 안의 iinf(항목 목록)에서 종류가 'Exif' 인
+// 항목 번호를 찾고, iloc(항목 위치)에서 그 번호의 파일 내 위치·길이를 읽는다.
+
+const HEIF_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "heim", "heis", "hevm", "hevs", "mif1", "msf1", "avif"]);
+
+/** 파일 앞머리가 HEIF 계열(ftyp)인가 — 확장자·MIME 을 믿지 않고 바이트로 본다. */
+export function isHeif(b: Uint8Array): boolean {
+  if (b.length < 12) return false;
+  const typ = String.fromCharCode(b[4], b[5], b[6], b[7]);
+  if (typ !== "ftyp") return false;
+  const size = ((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]) >>> 0;
+  const end = Math.min(b.length, size || b.length);
+  for (let o = 8; o + 4 <= end; o += 4) {
+    if (o === 12) continue; // minor_version
+    if (HEIF_BRANDS.has(String.fromCharCode(b[o], b[o + 1], b[o + 2], b[o + 3]))) return true;
+  }
+  return false;
+}
+
+type Box = { type: string; start: number; body: number; end: number };
+function boxes(b: Uint8Array, from: number, to: number): Box[] {
+  const out: Box[] = [];
+  let o = from;
+  while (o + 8 <= to) {
+    let size = ((b[o] << 24) | (b[o + 1] << 16) | (b[o + 2] << 8) | b[o + 3]) >>> 0;
+    const type = String.fromCharCode(b[o + 4], b[o + 5], b[o + 6], b[o + 7]);
+    let body = o + 8;
+    if (size === 1) {
+      if (o + 16 > to) break;
+      // 64비트 크기 — 사진 파일에서 2^53 을 넘을 일은 없어 곱셈으로 충분하다(BigInt 는 빌드 대상 밖).
+      size = 0;
+      for (let i = 8; i < 16; i++) size = size * 256 + b[o + i];
+      body = o + 16;
+    } else if (size === 0) {
+      size = to - o;
+    }
+    if (size < 8) break;
+    out.push({ type, start: o, body, end: Math.min(to, o + size) });
+    o += size;
+  }
+  return out;
+}
+
+/** Exif 항목의 파일 내 위치. 앞머리(meta 가 들어 있는 범위)만 있으면 된다. 못 찾으면 null. */
+export function locateHeifExif(b: Uint8Array): { offset: number; length: number } | null {
+  const be = (o: number, n: number) => { let v = 0; for (let i = 0; i < n; i++) v = v * 256 + b[o + i]; return v; };
+  const meta = boxes(b, 0, b.length).find(x => x.type === "meta");
+  if (!meta) return null;
+  const kids = boxes(b, meta.body + 4, meta.end); // FullBox: version/flags 4바이트
+  const iinf = kids.find(x => x.type === "iinf"), iloc = kids.find(x => x.type === "iloc");
+  if (!iinf || !iloc) return null;
+
+  // iinf → Exif 항목 번호
+  const iv = b[iinf.body];
+  const listFrom = iinf.body + 4 + (iv === 0 ? 2 : 4);
+  let exifId: number | null = null;
+  for (const e of boxes(b, listFrom, iinf.end)) {
+    if (e.type !== "infe") continue;
+    const v = b[e.body];
+    if (v < 2) continue;
+    const idLen = v === 2 ? 2 : 4;
+    const id = be(e.body + 4, idLen);
+    const t = e.body + 4 + idLen + 2;
+    if (String.fromCharCode(b[t], b[t + 1], b[t + 2], b[t + 3]) === "Exif") { exifId = id; break; }
+  }
+  if (exifId === null) return null;
+
+  // iloc → 그 항목의 첫 범위
+  const lv = b[iloc.body];
+  let o = iloc.body + 4;
+  const offSize = b[o] >> 4, lenSize = b[o] & 15, baseSize = b[o + 1] >> 4, idxSize = lv >= 1 ? b[o + 1] & 15 : 0;
+  o += 2;
+  const count = lv < 2 ? be(o, 2) : be(o, 4); o += lv < 2 ? 2 : 4;
+  for (let i = 0; i < count && o < iloc.end; i++) {
+    const id = lv < 2 ? be(o, 2) : be(o, 4); o += lv < 2 ? 2 : 4;
+    let method = 0;
+    if (lv >= 1) { method = be(o, 2) & 15; o += 2; }
+    o += 2; // data_reference_index
+    const base = baseSize ? be(o, baseSize) : 0; o += baseSize;
+    const extents = be(o, 2); o += 2;
+    let first: { offset: number; length: number } | null = null;
+    for (let x = 0; x < extents; x++) {
+      if (lv >= 1 && idxSize) o += idxSize;
+      const eo = offSize ? be(o, offSize) : 0; o += offSize;
+      const el = lenSize ? be(o, lenSize) : 0; o += lenSize;
+      if (x === 0) first = { offset: base + eo, length: el };
+    }
+    if (id === exifId) return method === 0 && first && first.length > 0 && first.length < 1_000_000 ? first : null;
+  }
+  return null;
+}
+
+/** HEIF Exif 항목 데이터: [TIFF 머리까지의 거리 4바이트][보통 "Exif\0\0"][TIFF…] */
+export function parseHeifExifItem(item: Uint8Array): PhotoExif {
+  if (item.length < 12) return EMPTY;
+  const skip = ((item[0] << 24) | (item[1] << 16) | (item[2] << 8) | item[3]) >>> 0;
+  const start = 4 + skip;
+  if (start + 8 > item.length) return EMPTY;
+  return parseTiff(item, start, item.length);
 }
 
 /** 순수 함수 — 테스트용으로 바이트를 직접 받는다. */
