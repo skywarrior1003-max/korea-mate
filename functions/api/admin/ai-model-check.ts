@@ -56,7 +56,8 @@ export const onRequestPost = async ({ request, env }: Ctx): Promise<Response> =>
   }
   try {
     const r = await env.AI_WRITING.fetch("https://ai-writing.internal/model-check", {
-      method: "POST", headers: { "x-internal-auth": env.INTERNAL_KEY ?? "", "content-type": "application/json" }, body: JSON.stringify({ model }),
+      // 원장 예약액 — Worker 가 점검 본문의 최대 비용과 비교한다(원장 밖 호출 금지)
+      method: "POST", headers: { "x-internal-auth": env.INTERNAL_KEY ?? "", "content-type": "application/json", "x-gkm-reserved-usd-micro": String(MODEL_CHECK_RESERVE_USD_MICRO) }, body: JSON.stringify({ model }),
     });
     const j = (await r.json().catch(() => null)) as Record<string, unknown> | null;
     // Worker 가 모델에 보내기 전에 거절했다고 알리면(x-gkm-provider-called: 0 — 내부 인증·kill switch) 되돌린다.

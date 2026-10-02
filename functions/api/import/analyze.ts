@@ -40,6 +40,7 @@ import {
 } from "../../../src/lib/url-import/import-core";
 import { MODEL } from "../../../src/lib/mytrip-writing/writing-core";
 import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
+import { workerSupportsV2 } from "../../_lib/worker-caps";
 
 interface Env {
   GEMINI_API_KEY?: string;
@@ -265,7 +266,7 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   // 비 Production 전용 — ?diag=probe&v=plain|thinking0|json|all: Preview Worker 의 아주 작은 요청으로 오류 원인 진단
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "probe" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
     const variant = new URL(ctx.request.url).searchParams.get("v") ?? "plain";
-    const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/probe", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ variant, model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+    const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/probe", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json", [RESERVED_HEADER]: "5000" }, body: JSON.stringify({ variant, model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
     await settleDiag();
     return json({ ok: true, probe: await r.json().catch(() => ({ http: r.status })) });
   }
@@ -279,7 +280,7 @@ export async function onRequestGet(ctx: { request: Request; env: Env }): Promise
   // 비 Production 전용 — ?diag=model-check&m=<모델>: Worker /model-check(아주 작은 생성 1회)로 실제 생성 가능 여부(10-02)
   if (!isProd && new URL(ctx.request.url).searchParams.get("diag") === "model-check" && ctx.env.AI_WRITING && typeof ctx.env.AI_WRITING.fetch === "function") {
     try {
-      const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/model-check", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json" }, body: JSON.stringify({ model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
+      const r = await ctx.env.AI_WRITING.fetch("https://ai-writing.internal/model-check", { method: "POST", headers: { "x-internal-auth": ctx.env.INTERNAL_KEY ?? "", "Content-Type": "application/json", [RESERVED_HEADER]: "100" }, body: JSON.stringify({ model: new URL(ctx.request.url).searchParams.get("m") ?? undefined }) });
       await settleDiag();
       return json({ ok: true, check: await r.json().catch(() => ({ http: r.status })) });
     } catch {
@@ -398,6 +399,12 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const bound = providerBodyBound(analyzeBody);
   if (!bound.ok) {
     await release();
+    return fail("ai_paused");
+  }
+  // 배포 순서 호환(2026-10-02) — Worker 경유면 V2 요청을 처리할 수 있는 Worker 인지 먼저 본다. 옛 Worker 면 모델·예약·차감 0 으로 끝낸다
+  if (bindingProviderFetch(ctx.env) && !(await workerSupportsV2(ctx.env as Parameters<typeof workerSupportsV2>[0]))) {
+    await release();
+    log({ ok: false, mode, error: "ai_paused", worker: "no_v2_caps" });
     return fail("ai_paused");
   }
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {

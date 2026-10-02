@@ -31,6 +31,7 @@ import {
   type FullTripFacts, type FullTripProposal,
 } from "../../../src/lib/mytrip-writing/full-trip-core";
 import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
+import { workerSupportsV2 } from "../../_lib/worker-caps";
 
 interface Env extends OwnershipEnv {
   APP_ENV?: string;
@@ -258,6 +259,8 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   if (!auth.ok) return auth.response;
   const pf = providerFetch(ctx.env);
   if (!pf) return json({ ok: false, ai_status: "fallback_unavailable" });
+  // 배포 순서 호환(2026-10-02) — Worker 경유면 V2 요청을 처리할 수 있는 Worker 인지 먼저 본다. 옛 Worker 면 모델·예약·차감 0 으로 끝낸다
+  if (pf !== fetch && !(await workerSupportsV2(ctx.env))) return json({ ok: false, ai_status: "fallback_ops_gate" });
 
   // 사진 — 소유가 확인된 여행의 기록 사진만, 상한 안에서(사용권 예약 전: 불러오기 실패로 차감이 생기지 않게)
   const { images, skipped } = await loadPhotos(ctx.env, facts.photoCandidates);

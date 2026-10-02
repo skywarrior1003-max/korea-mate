@@ -34,6 +34,7 @@ import {
 } from "../../../src/lib/scheduler/ai/profile-personalization-core";
 import { callProfileProvider, buildProviderRequestBody } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
 import { providerBodyBound, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
+import { workerSupportsV2 } from "../../_lib/worker-caps";
 
 interface Env {
   GEMINI_API_KEY?:           string;
@@ -211,6 +212,12 @@ export async function onRequestPost(
   if (!bound.ok) {
     await releaseQuota();
     log({ requestId, mode, providerCalled: false, status: "fallback_ops_gate", bound: bound.reason });
+    return reply(null, "fallback_guard");
+  }
+  // 배포 순서 호환(2026-10-02) — Worker 경유면 V2 요청을 처리할 수 있는 Worker 인지 먼저 본다. 옛 Worker 면 모델·예약·차감 0 으로 끝낸다
+  if (!ctx.fetchFn && bindingProviderFetch(ctx.env, bound.usdMicro) && !(await workerSupportsV2(ctx.env))) {
+    await releaseQuota();
+    log({ requestId, mode, providerCalled: false, status: "fallback_ops_gate", worker: "no_v2_caps" });
     return reply(null, "fallback_guard");
   }
   const gate = await aiOpsReserve(ctx.env as Parameters<typeof aiOpsReserve>[0], {

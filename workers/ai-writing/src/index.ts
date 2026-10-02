@@ -32,7 +32,22 @@ import {
   // eslint 없음 — 계약: functions 와 동일 배선
 } from "../../../src/lib/mytrip-writing/writing-core";
 import { buildProviderRequestBody } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
-import { providerBodyBound, PRICED_MODELS, RESERVED_HEADER } from "../../../src/lib/ai-cost/provider-bound";
+import { providerBodyBound, PRICED_MODELS, RESERVED_HEADER, WORKER_CAPS_HEADER, WORKER_CAPS, LEGACY_RESERVED_USD_MICRO } from "../../../src/lib/ai-cost/provider-bound";
+
+/** 호출측이 알린 예약액 — 머리글이 없으면(배포 전 옛 Pages) 그 경로에서 옛 Pages 가 고정 예약하는 값 */
+function declaredReserve(request: Request, legacy: number | null): number {
+  const raw = request.headers.get(RESERVED_HEADER);
+  if (raw === null) return legacy ?? 0;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : 0;
+}
+/** 이 본문을 보내도 되는가 — 단가 아는 모델·계산 가능한 본문·상한 ≤ 예약액. 아니면 거절 사유 */
+function costGate(body: unknown, model: string, declared: number): string | null {
+  if (!PRICED_MODELS[model]) return "model_not_priced";
+  const b = providerBodyBound(body);
+  if (!b.ok) return b.reason;
+  return declared >= b.usdMicro ? null : "reservation_below_bound";
+}
 
 export interface Env {
   GEMINI_API_KEY?: string;
@@ -82,6 +97,9 @@ const modelOf = (env: Env): string => {
   return /^[a-z0-9.\-]{3,60}$/.test(m) ? m : MODEL;
 };
 
+/** 응답에 이 Worker 의 할 수 있는 일 표시를 단다 */
+function withCaps(r: Response): Response { r.headers.set(WORKER_CAPS_HEADER, WORKER_CAPS); return r; }
+
 const reply = (suggestion: string | null, ai_status: string, moment: MomentSuggestion | null = null, set: MomentSuggestionSet3 | null = null) =>
   json({ suggestion, moment, set, ai_status });
 
@@ -119,10 +137,17 @@ async function callProvider(
   apiKey: string, prompt: string, target: "title" | "memo" | "moment" | "moment3" | "storyHero",
   direction?: "calm" | "witty" | "warm", image?: WritingImage | null, trendEntries: readonly TrendPromptEntry[] = [],
   locale: "ko" | "en" | "ja" | "zh" = "ko",
+  reservedUsdMicro: number = LEGACY_RESERVED_USD_MICRO.generate,
 ): Promise<ProviderOutcome> {
   const controller = new AbortController();
   const started = Date.now();
   const isMultimodal = target === "moment3" && !!image;
+  // 원장 밖 비용 금지(2026-10-02) — 이 본문의 최대 비용이 호출측 예약액보다 크면 보내지 않는다
+  const gate = costGate(buildProviderBody(prompt, direction, target, isMultimodal ? image : null), MODEL, reservedUsdMicro);
+  if (gate) {
+    log({ kind: "generate", refused: gate, reservedUsdMicro });
+    return { suggestion: null, moment: null, hero: null, set: null, creativeMeta: null, ai_status: "fallback_cost_bound", httpStatus: null, latencyMs: 0, errSnippet: gate };
+  }
   // 멀티모달은 12s(QA 실측 ja 8.0s 초과) — 재시도 0 계약은 그대로다.
   const timer = setTimeout(() => controller.abort(), isMultimodal ? MOMENT3_MULTIMODAL_TIMEOUT_MS : TIMEOUT_MS);
   try {
@@ -204,11 +229,12 @@ export default {
     }
     // 연결 진단 — provider 를 부르지 않는다(비용 0). 키는 있는지만(값·형식 없음).
     if (new URL(request.url).pathname === "/health") {
-      return json({
+      // V2 Pages 는 이 표시(provider-bound-v1)가 있는 Worker 에만 AI 요청을 보낸다(배포 순서 호환, 2026-10-02)
+      return withCaps(json({
         worker_env: (env.WORKER_ENV ?? "production").trim() || "production",
         mode: (env.AI_WRITING_WORKER_MODE ?? "").trim().toLowerCase() === "live" ? "live" : "off",
         has_key: !!env.GEMINI_API_KEY, colo: await executionColo(),
-      });
+      }));
     }
     // V2-HARDCAP §8 — Worker 자체 kill switch(누락·오타=차단). Pages 게이트와
     // 독립으로, binding·직접 호출 어느 경로든 이 스위치가 꺼져 있으면 provider 0.
@@ -240,11 +266,12 @@ export default {
         if (typeof pb.model === "string" && MODEL_CHECK_ALLOW.includes(pb.model)) target = pb.model;
       } catch { /* 지금 모델 */ }
       const started = Date.now();
+      // 원장 밖 호출 금지(2026-10-02) — 호출측(관리자 점검·Preview 진단)이 원장에 예약한 금액 안에서만
+      const checkRaw = { contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: { maxOutputTokens: 8, thinkingConfig: { thinkingBudget: 0 } } };
+      const checkGate = costGate(checkRaw, target, declaredReserve(request, null));
+      if (checkGate) return refused({ error: checkGate }, checkGate === "reservation_below_bound" ? 409 : 400);
       try {
-        const body = adaptProviderBody(JSON.stringify({
-          contents: [{ parts: [{ text: "Reply with the word ok." }] }],
-          generationConfig: { maxOutputTokens: 8, thinkingConfig: { thinkingBudget: 0 } },
-        }), target);
+        const body = adaptProviderBody(JSON.stringify(checkRaw), target);
         const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${target}:generateContent?key=${apiKey}`, {
           method: "POST", headers: { "Content-Type": "application/json" }, body, signal: AbortSignal.timeout(15_000),
         });
@@ -270,7 +297,8 @@ export default {
       try {
         const pb = (await request.json()) as { variant?: unknown; model?: unknown };
         variant = String(pb.variant ?? "plain");
-        if (typeof pb.model === "string" && ["gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.8-flash"].includes(pb.model)) probeModel = pb.model;
+        // 단가를 아는 모델만(2026-10-02) — 3.5 Flash·3.8 Flash 는 회사 원장 단가표 밖이라 뺐다
+        if (typeof pb.model === "string" && PRICED_MODELS[pb.model]) probeModel = pb.model;
       } catch { /* 기본 */ }
       const gc: Record<string, unknown> = { maxOutputTokens: 32 };
       if (variant === "thinking0" || variant === "all") gc.thinkingConfig = { thinkingBudget: 0 };
@@ -288,6 +316,9 @@ export default {
           pbody.generationConfig = { ...(pbody.generationConfig ?? {}), thinkingConfig: lv === "none" ? undefined : { thinkingLevel: lv } };
           body = JSON.stringify(pbody);
         } else body = JSON.stringify({ contents: [{ parts: [{ text: "Reply with the word ok." }] }], generationConfig: gc });
+        // 원장 밖 호출 금지 — 진단 경로가 예약한 금액 안에서만(사고 설정 없는 변형은 계산할 수 없어 거절)
+        const probeGate = costGate(JSON.parse(body), probeModel, declaredReserve(request, null));
+        if (probeGate) return refused({ error: probeGate }, probeGate === "reservation_below_bound" ? 409 : 400);
         const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${probeModel}:generateContent?key=${apiKey}`, {
           method: "POST", headers: { "Content-Type": "application/json" },
           body,
@@ -302,6 +333,9 @@ export default {
     }
 
     if (path === "/canary") {
+      // 2026-10-02 닫음 — 부르는 코드가 없고(Pages 의 관리자 canary 는 개인화 처리기를 직접 부른다) 회사 원장을 거치지 않는
+      // 경로였다. 모델에 보내지 않는다(provider 0). 아래 본문은 다시 열 때를 위해 남겨 둔다.
+      if (path === "/canary") return refused({ error: "canary_disabled" }, 410);
       // 본문은 읽지 않는다 — provider 로 나가는 입력은 서버 고정값뿐이다.
       const fixed = {
         target: "memo" as const, direction: "calm" as const, locale: "en" as const,
@@ -343,9 +377,10 @@ export default {
       if (!PRICED_MODELS[modelOf(env)]) return refused({ error: "model_not_priced" }, 503);
       const bound = providerBodyBound(parsed);
       if (!bound.ok) return refused({ error: bound.reason }, 400);
-      const declared = Number(request.headers.get(RESERVED_HEADER) ?? "");
-      if (!Number.isFinite(declared) || declared < bound.usdMicro) {
-        log({ kind: "provider", refused: "reservation_below_bound", declared: Number.isFinite(declared) ? declared : null, bound: bound.usdMicro });
+      // 머리글이 없으면 배포 전 옛 Pages(개인화 고정 예약 2,500) — 그 금액 안의 본문만 보낸다(배포 순서 호환)
+      const declared = declaredReserve(request, LEGACY_RESERVED_USD_MICRO.provider);
+      if (declared < bound.usdMicro) {
+        log({ kind: "provider", refused: "reservation_below_bound", declared, bound: bound.usdMicro, legacy: request.headers.get(RESERVED_HEADER) === null });
         return refused({ error: "reservation_below_bound" }, 409);
       }
       const controller = new AbortController();
@@ -370,7 +405,7 @@ export default {
         const errHead = res.ok ? undefined : text.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/\s+/g, " ").slice(0, 160);
         log({ kind: "provider", httpStatus: res.status, latencyMs: Date.now() - started, colo, bytes: text.length, inBytes: raw.length, model: modelOf(env), ...(errHead ? { errHead } : {}) });
         // 상태·본문을 그대로 넘긴다 — 호출측의 기존 오류 분기(!res.ok)가 그대로 동작한다.
-        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1", "x-gkm-model": modelOf(env) } });
+        return new Response(text, { status: res.status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "x-gkm-provider-called": "1", "x-gkm-model": modelOf(env), [WORKER_CAPS_HEADER]: WORKER_CAPS } });
       } catch (err) {
         clearTimeout(timer);
         const isAbort = err instanceof Error && err.name === "AbortError";
@@ -412,7 +447,7 @@ export default {
 
     // colo 는 placement 상시 관측용 — provider 호출과 병렬이라 지연을 더하지 않는다.
     const [outcome, colo] = await Promise.all([
-      callProvider(apiKey, prompt, body.target, body.direction, image, trendEntries, body.locale),
+      callProvider(apiKey, prompt, body.target, body.direction, image, trendEntries, body.locale, declaredReserve(request, LEGACY_RESERVED_USD_MICRO.generate)),
       executionColo(),
     ]);
     // 좁은 결정적 guard(LOCALE-FACT-GROUNDING-V1 §11) — 한글 오염/사진행동 발명만.

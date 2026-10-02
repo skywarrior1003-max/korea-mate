@@ -122,3 +122,49 @@ test("원장 밖 호출 — 관리자 모델 점검·Preview 진단은 원장 �
   assert.match(og, /event: "ai_ops_overrun", ledgerId, reservedUsdMicro/, "초과 지출 기록");
   assert.match(og, /event: "ai_ops_overrun_block"/, "이후 차단 기록");
 });
+
+// ── 배포 순서 호환·원장 밖 경로 (2026-10-02) ──────────────────────────────────
+test("사고 예산(2.x)은 출력에 더해 센다 · thinkingLevel(3.x)은 출력 상한 안 · 설정 없음은 거절", () => {
+  const withBudget = providerBodyBound(body({}, { maxOutputTokens: 700, thinkingConfig: { thinkingBudget: 1024 } }));
+  const zero = providerBodyBound(body({}, { maxOutputTokens: 700, thinkingConfig: { thinkingBudget: 0 } }));
+  const level = providerBodyBound(body({}, { maxOutputTokens: 700, thinkingConfig: { thinkingLevel: "low" } }));
+  assert.ok(withBudget.ok && zero.ok && level.ok);
+  assert.ok(withBudget.usdMicro >= zero.usdMicro + 1024 * 2.5);
+  assert.equal(providerBodyBound(body({}, { thinkingConfig: {} })).ok, false);
+});
+
+test("Worker — 할 수 있는 일 표시 · 머리글 없는 옛 Pages 는 그 경로의 옛 고정 예약 안에서만 · /canary 닫음 · 모든 생성 경로에 예약 확인", async () => {
+  const { WORKER_CAPS_HEADER, WORKER_CAPS, LEGACY_RESERVED_USD_MICRO } = await import("./provider-bound.ts");
+  assert.equal(WORKER_CAPS_HEADER, "x-gkm-worker-caps"); assert.equal(WORKER_CAPS, "provider-bound-v1");
+  assert.deepEqual(LEGACY_RESERVED_USD_MICRO, { provider: 2_500, generate: 9_500 });
+  const w = read("workers", "ai-writing", "src", "index.ts");
+  assert.match(w, /return withCaps\(json\(\{/, "/health 가 표시를 단다");
+  assert.match(w, /if \(path === "\/canary"\) return refused\(\{ error: "canary_disabled" \}, 410\);/);
+  assert.match(w, /const declared = declaredReserve\(request, LEGACY_RESERVED_USD_MICRO\.provider\);/);
+  assert.match(w, /declaredReserve\(request, LEGACY_RESERVED_USD_MICRO\.generate\)\)/);
+  assert.match(w, /const checkGate = costGate\(checkRaw, target, declaredReserve\(request, null\)\);/, "/model-check");
+  assert.match(w, /const probeGate = costGate\(JSON\.parse\(body\), probeModel, declaredReserve\(request, null\)\);/, "/probe");
+  assert.match(w, /if \(typeof pb\.model === "string" && PRICED_MODELS\[pb\.model\]\) probeModel = pb\.model;/);
+  // /generate 는 보내기 전에 막는다
+  const cp = w.slice(w.indexOf("async function callProvider("));
+  assert.ok(cp.indexOf("const gate = costGate(") < cp.indexOf("await fetch("));
+});
+
+test("V2 Pages — Worker 표시가 없으면(옛 Worker) 사용권·예약·모델 이전에 끝낸다(세 기능)", async () => {
+  for (const [f, anchor] of [
+    [["functions", "api", "trip", "personalize.ts"], "const gate = await aiOpsReserve("],
+    [["functions", "api", "import", "analyze.ts"], "const gate = await aiOpsReserve("],
+    [["functions", "api", "mytrip", "writing-full.ts"], "const quota = await quotaReserve("],
+  ] as const) {
+    const s = read(...f);
+    const i = s.indexOf("await workerSupportsV2(");
+    assert.ok(i > 0 && i < s.indexOf(anchor), f.join("/"));
+  }
+  await import("../../../scripts/ts-resolve-hook.mjs");
+  const { workerSupportsV2, _resetWorkerCaps } = await import("../../../functions/_lib/worker-caps.ts");
+  const bind = (h: Record<string, string>) => ({ fetch: (async () => new Response("{}", { status: 200, headers: h })) as typeof fetch });
+  _resetWorkerCaps(); assert.equal(await workerSupportsV2({ AI_WRITING: bind({ "x-gkm-worker-caps": "provider-bound-v1" }), INTERNAL_KEY: "k" }), true);
+  _resetWorkerCaps(); assert.equal(await workerSupportsV2({ AI_WRITING: bind({}), INTERNAL_KEY: "k" }), false, "옛 Worker(표시 없음)");
+  _resetWorkerCaps(); assert.equal(await workerSupportsV2({ AI_WRITING: { fetch: (async () => new Response("nf", { status: 404 })) as typeof fetch }, INTERNAL_KEY: "k" }), false, "옛 Worker 에는 /health 가 없다(404)");
+  _resetWorkerCaps();
+});
