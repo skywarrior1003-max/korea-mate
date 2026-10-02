@@ -59,32 +59,35 @@
 - **`plan` 풀을 가져오기와 개인화가 함께 쓴다.** 가져오기 1회 뒤에는 그 달 개인화가 막힌다(정책 그대로).
 - 비로그인 가져오기 요청은 AI 이전에 `authentication_required`(10-02 Preview 재확인).
 
-## 3. 적용 순서와 중단 지점 (모델 결정 2026-10-02: 3.5 Flash-Lite · 방향 (가) 기능 공용)
+## 3. 적용 순서와 중단 지점 (10-02 개정 · Pages/Worker 순서 무관 · 5d5ad183)
 
-**모델은 기능별이 아니다.** Worker 하나의 `GEMINI_MODEL` 이 가져오기·AI 개인화·기록 문장·전체 여행 글쓰기에 **함께** 적용된다. 전환하면 네 기능이 동시에 바뀐다(§2 표).
+**왜 순서가 바뀌었나.** 예전 판은 "Worker 먼저"(옛 Worker 는 8초·64,000자 고정이라 V2 요청을 못 받는다), 직전 보고는 "Pages 먼저"(새 Worker 는 예약 머리글 없는 옛 Pages 요청을 거절)였다. 이제 **섞인 조합은 모두 요청 전에 닫힌다** — 사용권 순차감 0·회사 원장 확정 0·모델 호출 0 — 그래서 Pages·Worker 순서는 결과를 바꾸지 않는다. AI 는 새 Pages + 새 Worker 에서만 열린다. Production 은 지금 AI 가 전부 꺼져 있어(ai_master off·Worker MODE off) 전환 중 사용자가 잃는 기능도 없다.
 
-1. **사전 기록.** Production 스위치 값(현재 전부 off)·Pages 배포 id·Worker 버전 id 를 적어 둔다.
-2. **DB 084 → 085 → 086 → 087 → 088** 을 순서대로 각 1회만 적용한다.
-   - master 코드는 이 테이블·함수를 부르지 않으므로 먼저 적용해도 현재 서비스에 영향이 없다.
-   - 086·087은 084의 함수를 `CREATE OR REPLACE`로 교체하고 제약을 다시 만든다. 순서를 바꾸면 087 정책이 086으로 덮인다.
-   - 088 이 없으면 새 Pages 의 내 장소 사진 추가(`/photos`)가 500 이 된다.
-   - 적용 뒤 함수 존재와 grant(service_role만 실행 가능)를 읽기로 확인한다.
-3. **Production Worker 배포 — 모델은 아직 바꾸지 않는다.** Pages 보다 먼저.
-   - 이 단계의 배포에는 `GEMINI_MODEL` 을 넣지 않는다(= 지금과 같은 2.5). `wrangler.toml` 의 Production `[vars]` 에도 아직 넣지 않는다.
-   - 이유: master Worker는 8초에 끊는다(블로그 가져오기 5~12초). 전체 여행 글쓰기의 긴 제한·큰 본문도 master Worker 는 존중하지 않는다. 새 Worker 는 2.5 요청을 바꾸지 않아 master Pages 와 호환된다.
-   - `AI_WRITING_WORKER_MODE` 는 Production `wrangler.toml` 에 `off` 로 적혀 있다. 대시보드 값과 대조해 기록하고, live 로 할 때만 provider 가 열린다.
-   - 배포 뒤 `/health` 에서 `worker_env=production` 확인(provider 호출 0).
-4. **Pages 병합·배포.** 반드시 2·3 이후. DB 가 없으면 사용자 횟수를 셀 수 없어 AI 기능이 전부 "사용 불가"가 된다(fail-closed).
-5. **■ 중단 지점 A — 모델 가용성 확인(기능 스위치는 모두 off 인 채로).**
-   - 운영자가 관리자 키로 `POST /api/admin/ai-model-check` · 본문 `{"confirm":"CHECK-MODEL","model":"gemini-3.5-flash-lite"}`.
-   - Worker 가 그 환경의 키로 **수 토큰짜리 실제 생성 1회**를 보내고 상태만 돌려준다(문장·키 없음, DB·원장·스위치 무접촉). Worker kill switch 가 off 면 `worker_refused` — 이때는 provider 0.
-   - `status: "available"` 일 때만 6 으로 간다. `not_available`(예: 404 NOT_FOUND)·`worker_refused`·`worker_unreachable` 이면 **멈춘다** — 모델을 바꾸지 않고, 스위치를 켜지 않는다. 2.5 는 그대로 동작한다.
-   - 모델 **목록**만으로 판단하지 않는다 — 10-02 실측: 2.5 Flash 는 목록에 있었지만 생성은 404 였다.
-   - Preview 실측(10-02): 3.5 Flash-Lite 200·6/1 토큰, 2.5 Flash 404 NOT_FOUND 를 같은 경로로 구분했다.
-6. **모델 전환 — 별도 Worker 버전.** `GEMINI_MODEL=gemini-3.5-flash-lite` 를 넣은 Worker 를 배포한다. 재배포 때 사라지지 않게 `wrangler.toml` Production `[vars]` 에 넣은 **별도 커밋**으로 한다(그 커밋을 3 보다 먼저 병합하지 않는다). 이전 버전 id 를 기록한다.
-   - 전환 직후 `ai-model-check`(model 생략 = 현재 모델) 1회 → `available` 확인.
-7. **■ 중단 지점 B — 스위치는 기능별로.** `ai_master` → `feature_import_analyze` 만 live → 합성 계정 스모크(가져오기 1건·저장·재방문) → `feature_personalize` → `feature_writing`(기록 문장과 전체 여행 글쓰기가 함께 열린다). 예산 값은 바꾸지 않는다.
-   - 스모크 도구 `scripts/qa/ai-user-path-check.mjs` 기본 모드(AI 0)는 Staging·Preview 전용이다. Production 스모크는 별도 승인.
+Preview 실측(10-02, Staging 원장 대조):
+
+| Pages \ Worker | 기존(master, e940970d 와 같은 코드 · Preview d47a04ae) | 새(V2, Preview e21dce36) |
+|---|---|---|
+| **기존(master AI 코드)** | 개인화 → 모델 호출(Preview 키는 2.5 생성 불가라 오류) · 원장 과금 불확실 2,500 | 개인화 → **Worker 가 보내기 전 거절**(머리글 없으면 옛 고정 예약 2,500 으로 보고, 개인화 본문 상한은 빈 프롬프트도 2,384·실제 2,935 > 2,500) · 옛 Pages 계약상 원장엔 과금 불확실 2,500(실제 모델 호출 0) |
+| **새(V2)** | 가져오기·개인화·전체 여행 글쓰기 → Worker 표시 없음 → **예약·모델 0**(사용권은 잡았다 바로 되돌림, 글쓰기는 사용권 전 단계) | 세 기능 정상 · 예약 → 확정 11,658→1,721 / 2,935→564 / 22,033→1,785 |
+
+- 옛 Worker 의 8초 상한·크기 머리글 무시는 이제 영향이 없다 — V2 Pages 가 옛 Worker 에는 보내지 않는다.
+- 옛 Pages 의 기록 문장 자동 제안(`/generate`)도 새 Worker 에서 옛 고정 예약 9,500 안의 본문만 보낸다.
+
+### 전환 당일 순서 (각 단계 뒤 확인 → 아니면 멈춤·되돌림)
+
+| # | 할 일 | 확인할 응답 | 멈춤·되돌림 |
+|---|---|---|---|
+| 0 | 기록: Production 스위치 전부 off · Pages 배포 id · Worker 버전 id(현재 e940970d) · `AI_WRITING_WORKER_MODE`=off | 값 기록 | — |
+| 1 | DB **084 → 085 → 086 → 087 → 088** 각 1회(순서 고정: 086·087 이 084 함수를 교체, 088 없으면 내 장소 사진 500) | 함수 존재·grant(service_role 만) 읽기 확인 | master 는 이 테이블을 안 쓴다 — 되돌리지 않고 다음 단계로 가지 않는다 |
+| 2 | Worker 배포(V2 코드, **`GEMINI_MODEL` 넣지 않음 = 2.5**, MODE 는 off 유지) | Worker `/health` 200·`x-gkm-worker-caps: provider-bound-v1`·`mode: off` | 이전 버전으로 `wrangler rollback` |
+| 3 | Pages 병합·배포(V2) | 홈·내 여행·공유 Story 정상 · AI 기능은 "지금 쓸 수 없어요"(스위치 off) | Pages 이전 배포로 rollback(사진 공개 필터 포함 판으로 — 사진 단독 수정 문서 §5) |
+| 4 | Worker `AI_WRITING_WORKER_MODE=live`(DB 스위치는 여전히 전부 off → 사용자 요청은 Pages 에서 막힌다) | `/health` `mode: live` | MODE off |
+| 5 | **■ 모델 확인** `POST /api/admin/ai-model-check` `{"confirm":"CHECK-MODEL","model":"gemini-3.5-flash-lite"}` | `status: "available"`(원장 route `model_check` 1행·100µ$) | `not_available`·`worker_refused`·`ledger_refused` 면 **여기서 끝** — 모델 전환·AI 스위치 켜기 없음, MODE off 로 되돌림 |
+| 6 | 모델 전환: `GEMINI_MODEL=gemini-3.5-flash-lite` 를 `wrangler.toml` Production `[vars]` 에 넣은 **별도 커밋**으로 Worker 배포 | `/health` · model-check(model 생략) `available` | 이전 Worker 버전으로 rollback |
+| 7 | **■ 스위치 기능별**: `ai_master` → `feature_import_analyze` → 합성 계정 스모크 1건 → `feature_personalize` → `feature_writing` | 원장: 예약 ≥ 확정, `ai_ops_overrun` 로그 0 · 사용권 차감 1 | 해당 기능 스위치 off(즉시) · 전체는 `ai_master` off |
+
+- 예산 값(일 $5·월 $60)은 바꾸지 않는다. Production 스모크 실호출은 별도 승인.
+- 사진 단독 수정이 먼저 나가 있어도 V2 는 그 커밋을 포함한다(병합 f7d4bcc7) — 사진 동작은 한 가지다.
 
 ## 4. 중단 조건과 즉시 되돌림
 
@@ -205,4 +208,4 @@
 - **원장 밖 남은 경로:** Worker \`/canary\`·\`/generate\`(INTERNAL_KEY 보유자만, Pages 호출처 없음 — \`/generate\` 를 부르던 writing.ts 대상은 모두 은퇴) · trend curator Worker(별도 키·주 4회 슬롯·grounding 과금은 원장 밖, Staging CURATOR_MODE off).
 - **Preview 관찰:** Preview Pages 에 ADMIN_KEY 가 없어 관리자 점검은 503(fail-closed, 원장 0) — 실제 점검은 Production 전환 직전에 운영 확인. 10-02 Staging 원장 411(writing·unknown_billed 9,500)은 같은 시각 photo-hotfix Preview(master 코드)의 기록 AI 제안 호출로 추정(스위치를 잠깐 켠 동안) — 정산 계약대로 예약액 보존.
 - **상한의 성격:** "본문 바이트 ≥ 토큰" 은 countTokens 9가지 문자 종류 실측(최대 1.000)으로 확인한 전제이고 Google 문서가 보장한 값이 아니다. 사진 토큰은 공식 표 값, 출력은 maxOutputTokens(3.x 사고 포함은 실측). 이 전제 위에서는 허용되는 모든 입력에 대해 상한이 성립하고, 전제가 깨지면 \`ai_ops_overrun\` 이 그날 그 기능을 멈춘다.
-- **Production 전환 순서:** Pages 먼저(예약 머리글을 보낸다 — 옛 Worker 는 무시) → Worker. 반대로 하면 새 Worker 가 머리글 없는 옛 Pages 요청을 모두 거절한다(보내기 전이라 과금 0, 기능만 멈춤).
+- **Production 전환 순서:** §3(10-02 개정) — 섞인 조합은 모두 요청 전에 닫히므로 Pages·Worker 순서 무관. 예전의 'Pages 먼저'·'Worker 먼저' 문구는 폐기.

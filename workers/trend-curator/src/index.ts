@@ -47,6 +47,8 @@ export interface Env {
 }
 
 export const CURATOR_MODEL = "gemini-2.5-flash";
+/** 회사 비용 원장 연결 여부 — false 인 동안 실제 provider 호출은 막힌다(run 참조) */
+export const CURATOR_OPS_LEDGER_INTEGRATED = false;
 export const CURATOR_BILLING_UNIT_CONTRACT = "grounded_prompt";
 const LOCALES = ["ko-KR", "ja-JP", "en", "zh-CN"] as const;
 const REGION: Record<string, string> = { "ko-KR": "KR", "ja-JP": "JP", en: "global-safe", "zh-CN": "CN-neutral" };
@@ -264,6 +266,12 @@ export async function run(env: Env, trigger: "cron" | "manual", locales: readonl
   // V2-HARDCAP §8 — cron 포함 전 트리거 공통 kill switch(누락=차단)
   if ((env.CURATOR_MODE ?? "").trim().toLowerCase() !== "live") {
     return { skipped: true, reason: "curator_mode_not_live", trigger };
+  }
+  // 2026-10-02 — 실제 모델(검색 grounding 포함)은 회사 비용 원장(ai_ops_reserve)·비용 상한을 거치기 전에는 부르지 않는다.
+  // 지금 이 Worker 는 자체 주간 슬롯만 있고 회사 원장에 예약하지 않는다. CURATOR_MODE 를 live 로 바꿔도 여기서 멈춘다.
+  // 원장 연결을 구현한 작업이 CURATOR_OPS_LEDGER_INTEGRATED 를 true 로 바꾼다(시험은 deps.research 를 넣어 이 검사와 무관하다).
+  if (!CURATOR_OPS_LEDGER_INTEGRATED && !deps.research) {
+    return { skipped: true, reason: "ops_ledger_not_integrated", trigger };
   }
   const rest = deps.rest ?? restReal;
   const research = deps.research ?? researchReal;
