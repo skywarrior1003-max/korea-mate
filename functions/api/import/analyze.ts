@@ -187,12 +187,13 @@ async function analyzeWithAi(env: Env, prompt: string): Promise<
       // Google 이 직접 돌려준 오류 본문(error.status)이면 과금 없음 확정 — 공식 문서: "If your request fails with
       // a 400 or 500 error, you won't be charged for the tokens used."(ai.google.dev/gemini-api/docs/billing, 2026-10-02 확인)
       // Cloudflare 가장자리 52x·시간 초과처럼 Google 본문이 없는 실패는 여전히 불확실로 둔다.
+      // 2026-10-02 좁힘: 문서가 명시한 400·500 만. 404(모델 접근 거절)·403·429·503 등은 문서에 없어 불확실로 둔다.
       let googleError = false;
       try {
         const e = (await res.json()) as { error?: string | { status?: string; message?: string } };
         // 서울 Worker 의 거절은 문자열 코드(unauthorized·worker_disabled 등) — 그대로 싣는다
         if (typeof e.error === "string") st += `:worker_${e.error.replace(/[^a-z_]/g, "").slice(0, 40)}`;
-        else if (e.error?.status) { st += `:${e.error.status}`; googleError = res.status >= 400 && res.status < 600 && !(res.status >= 520 && res.status <= 527); }
+        else if (e.error?.status) { st += `:${e.error.status}`; googleError = res.status === 400 || res.status === 500; }
         // 오류 문장 앞부분만 — 키처럼 보이는 문자열은 가린다(키 값을 응답·로그에 싣지 않는다)
         if (typeof e.error === "object" && e.error?.message) st += `:${e.error.message.replace(/AIza[0-9A-Za-z_-]{10,}/g, "[key]").replace(/[A-Za-z0-9_-]{30,}/g, "[redacted]").slice(0, 140)}`;
       } catch { /* ignore */ }
